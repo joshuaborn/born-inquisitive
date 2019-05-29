@@ -1,0 +1,46 @@
+[
+	{
+		"id": "krebs",
+		"type": "book",
+		"title": "An Introduction to Behavioural Ecology",
+		"publisher": "Blackwell",
+		"edition": "Third Edition",
+		"author": [
+			{
+				"family": "Krebs",
+				"given": "J. R."
+			},
+			{
+				"family": "Davies",
+				"given": "N. B."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1993"
+				]
+			]
+		}
+	},
+	{
+		"id": "larsen",
+		"type": "book",
+		"title": "Our Origins: Discovering Physical Anthropology",
+		"publisher": "W. W. Norton & Company",
+		"edition": "Third Edition",
+		"author": [
+			{
+				"family": "Larsen",
+				"given": "Clark Spencer"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2014"
+				]
+			]
+		}
+	}
+]

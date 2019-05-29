@@ -1,0 +1,98 @@
+---
+title: "Four Teloi of Human Nature"
+date: 2016-12-18
+tags: ["evolution", "tribalism", "mythology"]
+bibliography: "../bibliographies/four-teloi-of-human-nature.json"
+csl: "../bibliographies/apa.csl"
+link-citations: true
+---
+
+Human nature is profound in its banality. The objectives of much of human behavior are the same few ultimate end goals, over and over and over again. Because of their frequency, I have taken to numbering them and labeling them the "Four _Teloi."_ They are survival, reproduction, tribalism, and mythology.
+
+
+## Survival and Reproduction
+
+Humans are living organisms and, like all living things, are products of evolution by natural selection. Natural selection promotes traits that tended to increase the propagation of their corresponding alleles in ancestral organisms. Two of the most prolific ways for an organism to propagate its alleles are to continue to survive and to reproduce itself in some manner. Thus the first _telos_ in the Four _Teloi_ is survival, and the second _telos_ in the Four _Teloi_ is reproduction.
+
+Examples of drives in human nature that are a result of the survival _telos_ are ubiquitous and familiar to the human experience. On a mundane level, we have a drive of thirst, a drive of hunger, and a drive for shelter and warmth. It is clear how the continued survival of a human is facilitated by having these drives, since humans are organisms that like all osmoregulators must maintain an internal balance of water to solutes, like all heterotrophs must ingest external sources of nutrition, and like all homeotherms must maintain a body temperature within a certain range. More dramatic examples of the survival _telos_ are attendant to our attitudes toward death.
+
+Survival may be the most obvious of the Four _Teloi_, but the second _telos_, reproduction, is just as common if slightly more subtle.
+
+We might feel lonely, we might have a sex drive, we might fall in love with a sexual partner, we might perceive babies as cute, and we might love our children. Similarly to how we possess many drives &ndash; such as thirst, hunger, etc. &ndash; that act together in such a way to lead us toward our continued survival, we possess many drives that taken individually may not amount to much, but taken together cooperate in such a way as to lead us to procreating. Indeed the _telos_ of reproduction is so fundamental to human nature that the atomic building block of human societies is an association of individuals defined either by their involvement in procreating and rearing offspring or by their being a result of it, i.e., the family.
+
+After reflecting on just the first two of the Four _Teloi_, we can already make a few observations about them. For one, they are a result of an imperfect and unconscious process, i.e., evolution by natural selection. It should not surprise us therefore that while sometimes pursuit of a _telos_ is a conscious goal, often times it is not something of which the pursuer is consciously aware.
+
+A classic example from behavioral ecology is that of populations of passerines (perching birds), which vary in the number of eggs they lay in clutch. Humans can observe and calculate, for a given population of birds in a new ecosystem, the optimal number of eggs per clutch. Given enough time, the birds in the population will converge upon this optimum clutch size. [@krebs] As far as we know, birds cannot do statistics and mathematics. Rather the unconscious process of natural selection is running its course, causing the birds to better pursue the _telos_ of reproduction.
+
+Thus while humans might sometimes be very direct and conscious about their pursuit of _teloi_, saying things like "I want to live" or "I want to have children," they can also be unaware of their pursuit of _teloi_, such as when they reflexively recoil from a loud noise or first see someone they find attractive.
+
+
+## Tribalism and Mythology
+
+Like other social animals that have evolved similar strategies, humans form groups. This strategy assists in survival and reproduction, since it leads to a mutual support network for the acquisition of sustenance and the rearing of offspring. A group of elephants we call a "herd," a group of non-human primates, a "troop," and a group of humans, a "tribe." For most of human existence, groups of humans were literal tribes, i.e., small bands of a hundred or so foragers who were mostly relatives of one another and who were personally acquainted with one another. This instinct to form, join, and maintain groups is tribalism, which is the third _telos_ in the Four _Teloi._
+
+We can observe that tribalism is a slightly different _telos_ than the first two. The instinct for tribalism evolved because it facilitates survival and reproduction, the first two _teloi._ We can think therefore of tribalism as a derived _telos._ Furthermore, tribalism is a _telos_ just of social animals, whereas survival and reproduction are _teloi_ of all living things. Thus the third _telos_ has greater specificity to humans than the first two, inasmuch as it applies to less kinds of organisms other than humans.
+
+At some point humans developed a propensity toward mythology. Myths allowed our tribes to expand beyond the limit of a hundred or so humans imposed by the exigencies of personal acquaintance and physical proximity. Instead of recognizing faces and names, humans started to belong to a tribe by recognizing the same symbols and rituals. As a result we have some tribes today that comprise even billions of humans. This instinct for mythology is the fourth _telos_ in the Four _Teloi._
+
+The _telos_ of mythology is once again a derived _telos,_ since it developed in order to better facilitate the pursuit of the third _telos_ of tribalism. It is therefore doubly derived from the first two _teloi_ of survival and reproduction. Furthermore, mythology is even more specific to humans. It may very well be that no non-human species engage in mythology, but it is difficult for us to know exactly what non-human organisms are thinking. At the very least, non-human species certainly do not create mythology at the scale that humans do.
+
+The _telos_ of mythology is also different from the first three in a more subtle, but more profound way. The first three of the Four _Teloi_ are a result of natural selection, but the _telos_ of mythology is the result of a cultural analogue to natural selection. Whereas natural selection entails that alleles that were best at propagating in previous generations will be more abundant today, cultural selection entails that tribes that were best at garnering members in previous generations will be more abundant today. The phenomena are similar, but the object of selection differs. Natural selection and cultural selection could and often do coincide, but the proliferation of a tribe does not necessitate the proliferation of the genetic line of its original members, as seen in cosmopolitan empires that grew faster than their founders could have populated them.
+
+In so allowing tribes to expand, what constitutes a tribe and who is a member of what tribe is made far more complicated by mythology. Indeed humans today are usually members of many tribes. These tribes can be nation-states, religions, political parties, ethnic groups, racial groups, or limited liability companies. These tribes are usually subdivided into more tribes which in turn can be subdivided into even more tribes. An individual’s membership in a tribe could be recognized by certain individuals, but not by others. All of this makes modern tribal affiliation a complicated affair.
+
+Often we concentrate on the falsehood of myths and so speak in a derogatory manner about them. It is important to note that myths in the sense used here serve a purpose. A myth is a shared belief in something that has no literal truth and that unites humans into feeling as though they belong to a group. Myths are thus the foundation of tribes, and even when the myths are no longer literally believed, the tribes continue, and so the myths are preserved. Whether or not one literally thinks the goddess Athena exists, one participates in her festival to demonstrate one's membership in the society of Athens.
+
+
+## Human Nature versus Enlightenment
+
+All of the Four _Teloi_ are of various consequence.
+
+On the one hand, the _telos_ of survival gives us instincts that help us live long lives, during which we can presumably find more fulfillment, but on the other hand, it gives us fear and anxiety around death, a fate that inevitably befalls all of us.
+
+On the one hand, the _telos_ of reproduction leads us to continue our species and experience the [great love parents have for their offspring](love-and-other-supposed-counterexamples.html) , but on the other hand, this great love evolved precisely because rearing offspring gives us great stress and imposes great demands of time and energy upon us.
+
+On the one hand, the _telos_ of tribalism gives us a sense of belonging and community that all but the few of us who can tolerate the hermit's life crave, but on the other hand, it creates the sectarian boundaries and divisions from which come conflict, animosity, prejudice, and war.
+
+If we define enlightenment as the pursuit of truth, the first three of the Four _Teloi_ are orthogonal to it. One can pursue knowledge while simultaneously pursuing survival, reproduction, and tribalism. One can also pursue survival, reproduction, and tribalism while taking no interest in the truth _per se,_ paying attention to truth or falsity only inasmuch as it facilitates these three _teloi_. In this way the first three of the Four _Teloi_ represent the great indifference of human nature to enlightenment.
+
+However, the fourth _telos,_ mythology, is in direct conflict with enlightenment. The human proclivities to invent untrue beliefs, to believe untrue beliefs, and to perpetuate untrue beliefs even when not literally believing them  stand in opposition to the pursuit of enlightenment.
+
+Furthermore, the _telos_ of mythology does not stand alone, but rather facilitates the _telos_ of tribalism. Thus when we pursue our instincts to belong we often do so by pursuing our instincts for mythology, as does a new citizen of Rome participating in the festival of Saturn. Inasmuch as the _telos_ of tribalism is facilitated by the _telos_ of mythology, our proclivity to form and join groups stands in opposition to the pursuit of enlightenment, albeit indirectly.
+
+Of course, the _telos_ of tribalism itself arose as a way of facilitating the _teloi_ of survival and reproduction. Indeed there were likely many times when individual humans saw their participation in mythology as not just fulfilling an emotional need to belong, but also important to their ability to make a living and raise a family due to the risks that would come from ostracization from their social group.
+
+Because of the interconnectedness of the _Four Teloi,_ the _telos_ of mythology makes human nature, which could be something at least indifferent to enlightenment, into something opposed to enlightenment. This explains in part why modern science is in the grand scheme of things so rare. The beginnings of modern science likely developed in a variety of human societies in a variety of different times. However, questioning received wisdom and challenging the mythology of a tribe would have been seen as a threat and eliminated by one human society after the next.
+
+Modern _homo sapiens_ have existed 200,000 years, [@larsen] but the knowledge acquired through science in the past few centuries makes the knowledge that was acquired during the hundreds of millennia that came before seem small. People were not intellectually dead during those millennia. They had a lot of beliefs. So many of the beliefs were just untrue. This is not surprising after having reflected on how human nature is inclined to pursue the _Four Teloi,_ rather than to pursue enlightenment.
+
+
+## A Fog of Fiction 
+
+When we think of mythology, our minds usually go to [metaphysical examples](metaphysics-spirituality-and-religion.html), such as those of Athena and Saturn mentioned previously. However, most of our lives are concerned with our myths. This is not limited to the grandiose, but also includes minutiae we do not typically think of as mythological.
+
+We go about our daily jobs to acquire money. Money once had a physical existence during earlier days of human civilization in economies which used some staple good as currency, but no longer. It is now entirely a social convention, often times represented by nothing more than bits and bytes in electronic storage somewhere. It has value to us only inasmuch as other humans are willing to exchange real physical goods for it.
+
+Marriage also has no physical existence. It may have tokens that represent it, such as a wedding ring, but if the ring is lost we understand that the marriage itself is not lost. Even if we recognize marriage to be a figment of our collective imaginations, we disregard its importance to human societies only at our own peril. Indeed it is a source of great emotions and drama.
+
+No matter what nation-state we claim citizenship of, if all the citizens of the nation-state woke up one day forgetting about it, it would effectively cease to exist. However, if all the citizens of a nation-state woke up one day forgetting about oxygen, they would not magically discover the ability to continue on without breathing.
+
+The _telos_ of mythology is so strong that most of us live our lives today concerned with things that do not exist outside of our imaginations. It is a peculiar situation. Humanity is a part of reality, but it is a part of reality whose thoughts are mostly of a fictional world of its own creation. Any time spent inventing fictions is time not spent contemplating the reality of our existence. In this way most of us are surrounded by what may be termed a "fog of fiction" that precludes us from seeing reality.
+
+To many, both the methods and content of science are foreign and strange. The fictions we encounter in our daily lives seem more "real" to these individuals than the talk of atoms and molecules they might encounter in a science context. That should not surprise us. We tend to think of what is familiar to us as "real" and things unfamiliar somehow "less real," and the fog of fiction is ubiquitous throughout human society.
+
+One of the most appealing things about modern science is that it is a way to pierce through this fog of fiction and perceive reality. By piercing through this fog we can finally see the reality of the external world, but perhaps more remarkably, we can finally see the reality of ourselves.
+
+
+## The Life Script
+
+The preceding is a descriptive, not normative work. It is a sincere attempt to understand my place in the cosmos, not a prescription of how we should live. The interconnected system of cause and effect that has resulted in our existence may lead us toward the Four _Teloi,_ but I have no desire that we should devote our lives only to better ensuring our continued survival, reproducing as many offspring as possible, enforcing our tribal boundaries, and believing our myths.
+
+In fact, my desire is just the opposite. I hope that in becoming more self-aware about our nature, we might be able to transcend it. Perhaps we can make our lives amount to more than those of single-celled organisms, whose efficiency at surviving and reproducing is difficult to rival. Perhaps not. Regardless if any of us succeed, a prerequisite of our success is an awareness of the inclinations that we have inherited.
+
+These inclinations lead many of us to live our lives under what might be called a "life script." To a human living in the 21st century in industrialized societies, this script might be going to a good school, getting a high paying job, buying a nice house, having two cars and three kids, voting for a popular political party, subscribing to one of the world's major religions, and generally celebrating the banality of human existence. Self-awareness about the Four _Teloi_ allows us to see this script for what it actually is.
+
+The liberating thing to realize is there is no life script. There is no director. There is no audience. The only one who is really deciding what the purpose of your life should be is you.
+
+
+## Inline Citations
