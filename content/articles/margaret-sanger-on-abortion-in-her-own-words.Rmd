@@ -1,0 +1,513 @@
+---
+title: "Margaret Sanger on Abortion in Her Own Words"
+date: 2018-11-11
+tags: ["abortion", "contraception"]
+bibliography: "../bibliographies/margaret-sanger-on-abortion-in-her-own-words.json"
+csl: "../bibliographies/apa.csl"
+link-citations: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+---
+
+Margaret Sanger, pioneer of birth control in the United States and founder of the organizations that became Planned Parenthood, felt that abortion is "taking life," excluded abortion from her birth control movement, and had the explicit goal of ending the use of abortion as a method of family limitation. This causes her legacy to conflict with the false dichotomy surrounding abortion today, both with the so-called "pro-life" movement that vilifies her and with the so-called "pro-choice" movement that exalts her.
+
+<figure>
+  <img src="/margaret-sanger.jpeg" alt="Margaret Sanger seated holding an open book in 1916." />
+  <figcaption>
+    Library of Congress, Prints & Photographs Division, <a href="http://www.loc.gov/pictures/item/2014700793/">[LC-DIG-ggbain-20859]</a>
+    <br/>
+    <em>Margaret Sanger seated holding an open book in 1916.</em>
+  </figcaption>
+</figure>
+
+
+## Who Was Margaret Sanger?
+
+Margaret Higgins Sanger (1879–1966) lived at a time when the dissemination of information about contraception and the distribution of contraceptive devices were illegal in the United States. Much of this proscription came from laws at the state or local level, but a federal statute &ndash; the Comstock Law of 1873 &ndash; made illegal the dissemination of information about contraception through the U.S. Mail as part of prohibition against obscenity. [@sanger_1938,  77]
+
+Margaret Sanger was born and raised in Corning, New York. [@sanger_1938, 1-32] As an adult she had a career as a nurse, settled down in and around New York City, and started a family. [@sanger_1938, 45-67] It was while working as a nurse that she observed the conditions excessive childbearing had created, particularly amongst New York City's poor. She observed families living in tenements with more children than they could care for, how prevalent infant mortality was, how women's bodies taxed into ill health and premature death, and how women were resorting to abortion[^definition] in desperation. [@sanger_1938, 86-89]
+
+[^definition]: Unless otherwise noted, in this article the word "abortion" is used to mean induced abortion of pregnancy.
+
+    Technically, the word "abortion" is a generic term. Any process that is aborted before it comes to completion can, in theory, be labeled "abortion." However, because of its association with abortion of pregnancy and the emotional weight of such occurrence, the word "abortion" is usually used to mean abortion of pregnancy.
+
+    Furthermore, even if we just consider "abortion" to mean abortion of pregnancy, there is ambiguity because in the medical literature the word "abortion" is used to mean two different things: spontaneous abortion, which is commonly called "miscarriage" in the vernacular, occurs when a pregnancy terminates without anyone's intervention; induced abortion occurs when a pregnancy is terminated on purpose. When "abortion" is used in the vernacular it is commonly used to mean induced abortion.
+
+    This ambiguity can lead to misinterpretation. For instance, if a study were to report on abortions in a given population, it could be including both spontaneous and induced abortions if it were using the medical literature definition, but it could be excluding what are commonly called "miscarriages" if it were using the common definition.
+
+    This was an ambiguity that Margaret Sanger encountered. She wrote:
+     
+    > In the first part of this subject I said that if the process of labor occurs before the seventh month (which is the earliest time the foetus can live for any length of time outside the womb) it is known as abortion or miscarriage. When labor occurs later than this or within two weeks before term, it is known as premature labor.
+    > 
+    > The average girl in using the word abortion, has in mind a criminal act, whereby the process of pregnancy is purposely interrupted. She prefers the word miscarriage. [@sanger_1913]
+
+    Most of the time it appears as though Margaret Sanger used the word "abortion" with the vernacular to mean induced abortion of pregnancy. See note 2 for an instance in which this might create ambiguity. 
+
+Margaret Sanger would often tell an anecdote that left a lasting impression on her. The case was a house call to the tenements around Grand Street to care for a young woman who &ndash; already a mother of three and, with her working-class husband, struggling to get by &ndash; had induced abortion of her pregnancy all by herself. The patient was unsurprisingly in very poor condition, and her prognosis was grim. Margaret Sanger attended to her patient over the next three weeks, and to much surprise, she recovered. While the attending physician was saying his goodbyes, the patient begged for information on how to prevent a repetition of what had occurred, but the physician left without giving any such information. The patient then turned to Margaret Sanger, who also had no good answer. Three months later Margaret Sanger would receive a frantic phone call in the middle of the night. The same woman had become pregnant again and had induced another abortion, but this time the woman died that very same morning. [@sanger_1916; @sanger_1936; @sanger_1938, 89-92]
+
+After these experiences, Margaret Sanger made birth control &ndash; a phrase she popularized &ndash; her life's work. She founded the National Birth Control League and, in March 1914, began publishing the periodical _Woman Rebel_ to express "the conviction that [women] must be empowered to decide for themselves when they should fulfill the supreme function of motherhood." [@sanger_1938, 106-110] This quickly caught the ire of the aforementioned Comstock laws, and the U.S. Post Office declared the publication "unmailable." [@sanger_1938, 110–111] _Woman Rebel_ merely included discussion on the need for contraception, rather than advice on how to perform contraception.  Already facing legal prosecution, Margaret Sanger decided to write a pamphlet giving advice on how to perform contraception entitled _Family Limitation,_ which was based on knowledge she had accumulated from travel in France. [@sanger_1938, 111–112]
+
+Before she could get _Family Limitation_ published, Margaret Sanger was indicted on nine counts alleging violation of federal statutes. Conviction on these charges could have resulted in maximum punishment of forty-five years in prison. [@sanger_1938, 114] In October 1914, she fled to Europe and while there acquired more information on contraception. [@sanger_1938, 118-122] She particularly appreciated the approach she found in the Netherlands of clinics for the dissemination of contraception staffed by physicians and medical personnel. In September 1915, she returned to stand trial. The trial was such a source of media attention and public controversy that it was delayed several times. Finally on February 18, 1916, the prosecution formally abandoned the case. [@sanger_1938, 179-191]
+
+Following these events, Margaret Sanger went on a three-month speaking tour of the United States. When she was in in Portland on this trip, she was arrested and with several others spent the night in jail. [@sanger_1938, 192-209] Upon her return to New York City, she went about looking for a physician to staff a birth control clinic, but she was unable to find one and decided to proceed anyway. After acquiring funding from a benefactor and meeting with women in the Brownsville neighborhood of Brooklyn, she opened a clinic in Brownsville at 46 Amboy Street with Ethel Byrne, her sister and also a nurse, and Fania Mindell. The clinic operated for nine days before the three women were arrested and their landlord forced to sign eviction papers. [@sanger_1938, 210-223]
+
+<figure>
+  <img src="/margaret-sanger-fania-mindell-courthouse.png" alt="Margaret Sanger and Fania Mindell are surrounded by a crowd after appearing in court in 1917." />
+  <figcaption>
+    From <i>The history of the birth control movement</i> [Public domain], via <a href="https://commons.wikimedia.org/wiki/File:SangerCourthouse.tiff">Wikimedia Commons</a>.
+    <br/>
+    <em>Margaret Sanger and Fania Mindell are surrounded by a crowd after appearing in court in 1917. Margaret Sanger, Fania Mindell, and Ethel Byrne (not pictured) were put on trial for operating a birth control clinic.</em>
+  </figcaption>
+</figure>
+
+Ethel Byrne was tried first on January 7, 1917, found guilty of distributing contraceptives, and sentenced to thirty days in jail, where she staged a hunger strike that provoked much attention in the press. Fania Mindell was next tried, convicted, and given a fine. Finally, Margaret Sanger was tried and also convicted. During sentencing the possibility of "extreme clemency" was raised if she would promise not to violate the law again. Ultimately, she stated she could not make such a promise or respect the law as it currently stood, and she was also sentenced to thirty days in jail. [@sanger_1938, 226-237]
+
+These events brought Margaret Sanger much notoriety and made her name synonymous with the birth control movement. This early part of her career as a birth control advocate also set the pattern for her activities from 1917 until 1937. She spent these years traveling, speaking, raising funds, publishing periodicals, writing books, founding clinics, organizing conventions, and occasionally running afoul of the law.
+
+
+## Founder of Planned Parenthood
+
+Margaret Sanger also spent these years starting organizations. This is made more complicated by the fact that she sometimes separated from the organizations she founded. As early as 1915, when she returned to the United States to stand trial, she was surprised to find the new leadership of the National Birth Control League repudiating her, stating they could not support someone who openly violated the law. [@sanger_1938, 180-181] They would, however, later come to support her during her trial. [@sanger_1938, 189]
+
+In 1921, Margaret Sanger began organizing the First National Birth Control Conference to be held in New York City. In order to help organize this event, she founded the American Birth Control League. [@sanger_1938, 298-305] Women sometimes came to the American Birth Control League offices in order to ask her for birth control personally, which precipitated the idea of starting a clinic at the location. In 1923, the Clinical Research Bureau was opened in an adjacent office. [@sanger_1938, 358-360]
+
+On June 12, 1928, differences in opinion about how best to proceed between Margaret Sanger and other leadership caused her to resign her presidency of the American Birth Control League. She eventually focused her work on the Clinical Research Bureau, which would later be renamed the Birth Control Clinical Research Bureau. [@sanger_1938, 392-397]
+
+In 1937, the Birth Control Council of America was formed with Margaret Sanger as chairman to coordinate efforts between the American Birth Control League and the Birth Control Clinical Research Bureau. However, Margaret Sanger resigned as chairman of the Birth Control Council of America in June of 1937 due to her perception that the position lacked any real power. [@bcca] 
+
+On January 19, 1939, the American Birth Control League and the Birth Control Clinical Research Bureau merged into the Birth Control Federation of America, again with Margaret Sanger as honorary chairman. By this time, she had moved to Arizona and was not involved with the daily operations of the organization. On January 29, 1942, the Birth Control Federation of America changed its name to the Planned Parenthood Federation of America. [@bcfa]
+
+
+## Legacy
+
+Another organization led by Margaret Sanger was the National Committee on Federal Legislation on Birth Control, which in 1931 began lobbying the United States Congress to amend the Comstock laws to remove prohibitions on contraception. Despite much money and effort over the next six years, these efforts would turn out to be fruitless. [@sanger_1938, 413-427]
+
+However, after a trip to East Asia in 1930, Margaret Sanger had ordered contraceptives from Japan only later to find they were destroyed by U.S. Customs. The Birth Control Clinical Research Bureau sent another order, this time addressed to its physician Dr. Hannah M. Stone. Customs again blocked the shipment, and a case was brought to the Federal District Court of Southern New York, which on January 6, 1936 ruled that the federal statue prohibiting contraception should be interpreted to allow for a physician's exemption. Later that fall, this ruling was affirmed by the Circuit Court of Appeals, which asserted that physicians could legally import contraceptives, send them through the U.S. Mail, and prescribe them for the well-being of their patients. The Attorney General later stated that the government would take no further action in the case. [@sanger_1938, 427-428]
+
+Finally, in June of 1937, the American Medical Association asserted that physicians had the legal right to prescribe contraceptives and recommended that standards be researched and that contraception be taught in medical schools. Margaret Sanger considered this the fulfillment of her work. [@sanger_1938, 430] She soon dissolved the National Committee on Federal Legislation on Birth Control and moved to Arizona.
+
+Despite her partial retirement from public life, Margaret Sanger would continue to be involved in efforts that would have a lasting impact on the state of contraception. Today, the most popular form of contraception practiced amongst women in the United States is the use of the combined oral contraceptive pill. [@nsfg] In the 1950s, Margaret Sanger was instrumental in securing funding for research and development of Enovid, the first such pill brought to market in the United States. [@eig]
+
+
+## Margaret Sanger's Views on Abortion
+
+There is an all too common practice of construing Margaret Sanger as supporting whatever someone wants her to be supporting. As shall be seen, many factions have vested interests in obscuring her beliefs in this way. This article attempts to avoid this by using Margaret Sanger herself as a nearly exclusive source for claims about her beliefs, which is the origin of the "in her own words" portion of the title.
+
+Unfortunately, relying on Margaret Sanger's own words is not in and of itself sufficient to avoid the tradition of deception around her beliefs. Oftentimes those who attempt to construe her beliefs to suit their agendas will take her quotes out of context in order make it seem as though she is saying something she actually is not. This article attempts to avoid this by, first, quoting Margaret Sanger at length instead of in small fragments and, second, providing a short summary of context to her quotes, where appropriate. 
+
+The fondness Margaret Sanger had for her Grand Street anecdote indicates that a desire to prevent abortions was foremost amongst her motives for advocating birth control. Because the woman in the anecdote died, one might interpret this antipathy toward abortion as reflecting a desire for women to avoid risk of serious bodily injury and death. This was certainly a prominent motive in Margaret Sanger's thinking. However, there was more to her opposition to abortion than just this.
+
+
+### "Taking Life"
+
+When Margaret Sanger opened her first birth control clinic, she advertised it by printing five thousand flyers that read:
+
+> MOTHERS! Can you afford to have a large family? Do you want any more children? If not, why do you have them? DO NOT KILL, DO NOT TAKE LIFE, BUT PREVENT
+>
+> Safe, Harmless Information can be obtained of trained Nurses at 46 AMBOY STREET NEAR PITKIN AVE.—BROOKLYN. Tell Your Friends and Neighbors. All Mothers Welcome
+>
+> A registration fee of 10 cents entitles any mother to this information. [@sanger_1936;  @sanger_1938, 216]
+
+<figure>
+    <img src="/brownsville-clinic.jpeg" alt="Women with strollers sit outside of Margaret Sanger's first birth control clinic." />
+    <figcaption>
+        Library of Congress, Prints & Photographs Division, NYWT&S Collection, <a href="https://www.loc.gov/item/2010645731/">[LC-USZ62-138888]</a>
+        <br />
+        <em>Women with strollers sit outside of Margaret Sanger's first birth control clinic, which was opened in the Brownsville neighborhood of Brooklyn on October 16, 1916 and closed by the authorities after only nine days.</em>
+    </figcaption>
+</figure>
+
+In her autobiography, Margaret Sanger describes what she told those who answered these advertisements:
+
+> The morning of October 16, 1916—crisp but sunny and bright after days of rain—Ethel, Fania, and I opened the doors of the first birth control clinic in America, the first anywhere in the world except the Netherlands. I still believe this was an event of social significance.
+>
+> Would the women come? Did they come? Nothing, not even the ghost of Anthony Comstock, could have kept them away. We had arrived early, but before we could get the place dusted and ourselves ready for the official reception, Fania called, “Do come outside and look.” Halfway to the corner they were standing in line, at least one hundred and fifty, some shawled, some hatless, their red hands clasping the cold, chapped, smaller ones of their children.
+>
+> Fania began taking names, addresses, object in coming to the clinic, histories—married or single, any miscarriages or abortions, how many children, where born, what ages. Remembering how the Netherlands clinics in recording nothing had made it almost hopeless to measure what they had accomplished from the human point of view, I had resolved that our files should be as complete as it was possible to make them. Fania had a copy of _What Every Girl Should Know_ on her desk, and, if she had a free moment, read from it. When asked, she told where it could be bought, and later kept a few copies for the convenience of those who wanted them.
+> 
+> Children were left with her and mothers ushered in to Ethel or me in the rear room, from seven to ten at once. To each group we explained simply what contraception was; that abortion was the wrong way&mdash;no matter how early it was performed it was taking life; that contraception was the better way, the safer way&mdash;it took a little time, a little trouble, but was well worth while in the long run, because life had not yet begun. [@sanger_1938, 216-217]
+
+<figure>
+    <img src="/brownsville-clinic-inside.jpeg" alt="Fania Mindell and Margaret Sanger inside of the birth control clinic in Brownsville, Brooklyn." />
+    <figcaption>
+        Library of Congress, Prints & Photographs Division, <a href="http://www.loc.gov/pictures/item/2014703168/">[LC-DIG-ggbain-23218]</a>
+        <br />
+        <em>Fania Mindell (seated) and Margaret Sanger (standing) inside of the birth control clinic in Brownsville, Brooklyn.</em>
+    </figcaption>
+</figure>
+
+While it is true that Margaret Sanger often spoke and wrote critically of abortion because of its potential to do harm to the woman involved, we see here that she had the moral sentiment that abortion is "taking life," as well.
+
+
+### Abortion and Infanticide
+
+This moral sentiment can also be seen in Margaret Sanger's frequent conjunction of abortion with infanticide in her writings and speeches.
+
+When contemplating whether to pursue approaches for the promotion of contraception that had less risk of legal repercussions than the ones she was taking, Margaret Sanger opined:
+
+> There was nothing new or radical in birth control, which Aristotle and Plato as well as many modern thinkers had demonstrated. But the ideas of wise men and scientists were sterile and did not affect the tremendous facts of life among the disinherited. All the while their discussions had been proceeding, the people themselves had been and still were blindly, desperately, practicing birth control by the most barbaric methods&mdash;infanticide, abortion, and other crude ways. [@sanger_1938, 188]
+
+Infanticide and abortion are, according to Margaret Sanger, the violent results of the misdirection of women's natural desire for family limitation. She wrote:
+
+> Women in all lands and all ages have instinctively desired family limitation. Usually this desire has been laid to economic pressure. Frequently the pressure has existed, but the driving force behind woman's aspiration _toward freedom_ has lain deeper. It has asserted itself among the rich and among the poor, among the intelligent and the unintelligent. It has been manifested in such horrors as infanticide, child abandonment and abortion.
+>
+> The only term sufficiently comprehensive to define this motive power of woman's nature is the _feminine spirit_. That spirit manifests itself most frequently in motherhood, but it is greater than maternity. Woman herself, all that she is, all that she has ever been, all that she may be, is but the outworking of this inner spiritual urge. Given free play, this supreme law of her nature asserts itself in beneficent ways; interfered with, it becomes destructive. Only when we understand this can we comprehend the efforts of the feminine spirit to liberate itself.
+>
+> When the outerworking of this force within her is hampered by the bearing and the care of too many children, woman rebels. Hence it is that, from time immemorial, she has sought some form of family limitation. When she has not employed such measures consciously, she has done so instinctively. Where laws, customs and religious restrictions do not prevent, she has recourse to contraceptives. Otherwise, she resorts to child abandonment, abortion and infanticide, or resigns herself hopelessly to enforced maternity. [@sanger_1920, 10–11]
+
+Thus, according to Margaret Sanger, women intrinsically possess a motive for family limitation as part of a desire for freedom, regardless of social context. What does vary based on social context is whether this intrinsic desire manifests itself in violent means or not. 
+
+In the rest of the second chapter of her _Woman and the New Race_ entitled "Woman's Struggle for Freedom," Margaret Sanger surveys how infanticide, child abandonment, and abortion have been ubiquitous across all societies in human history, regardless of geographic region or level of technological development. [@sanger_1920, 11–24] Therefore, no society has thus far provided the proper social context for complete fulfillment of what Margaret Sanger calls the "feminine spirit" because abortion, at least, persists. She wrote:
+
+> Society has not yet learned the significance of the age-long effort of the feminine spirit to free itself of the burden of excessive childbearing. It has been singularly blind to the real forces underlying the cause of infanticide, child abandonment and abortion. It has permitted the highest and most powerful thing in woman's nature to be hindered, diverted, repressed and confused. Society has permitted this inner urge of woman to be rendered violent by repression until it has expressed itself in cruel forms of family limitation, which this same society has promptly labeled "crimes" and sought to punish. It has gone on blindly forcing women into these "crimes," deaf alike to their entreaties and to the lessons of history.
+> 
+> As we have seen in the second chapter of this book, child abandonment and infanticide are by no means obsolete practices. As for abortion, it has not decreased but increased with the advance of civilization. [@sanger_1920, 118]
+
+While much of this may seem ideological, there is a very important practical point here. Margaret Sanger wishes to distinguish between the desire to limit family size, which she emphatically encourages, and violent methods &ndash; including abortion &ndash; for accomplishing family limitation, which she condemns.
+
+
+### "Killing of Babies in the Womb"
+
+One of the goals of Margaret Sanger's birth control movement is to halt this misdirection of the feminine spirit into violence. Indeed, Margaret Sanger is known today primarily as a prolific proponent of women's liberation, but she saw embedded in her advocacy for women's rights an advocacy for children's rights, as well. She wrote:
+
+> Shall we pause here to speak again of the rights of womanhood, in itself and of itself, to be absolutely free? We have talked of this right so much in these pages, only to learn that in the end, a free womanhood turns of its own desire to a free and happy motherhood, a motherhood which does not submerge the woman, but which is enriched because she is unsubmerged. When we voice, then, the necessity of setting the feminine spirit utterly and absolutely free, thought turns naturally not to rights of the woman, nor indeed of the mother, but to the rights of the child—of all children in the world. For this is the miracle of free womanhood, that in its freedom it becomes the race mother and opens its heart in fruitful affection for humanity.
+>
+> How narrow, how pitifully puny has become motherhood in its chains! The modern motherhood enfolds one or two adoring children of its own blood, and cherishes, protects and loves them. It does not reach out to all children. When motherhood is a high privilege, not a sordid, slavish requirement, it will encircle all. Its deep, passionate intensity will overflow the limits of blood relationship. Its beauty will shine upon all, for its beauty is of the soul, whose power of enfoldment is unbounded.
+>
+> When motherhood becomes the fruit of a deep yearning, not the result of ignorance or accident, its children will become the foundation of a new race. There will be no killing of babies in the womb by abortion, nor through neglect in foundling homes, nor will there be infanticide. Neither will children die by inches in mills and factories. No man will dare to break a child's life upon the wheel of toil. [@sanger_1920, 231–232]
+
+This is Margaret Sanger writing at her most quixotic in the conclusion of _Woman and the New Race_. Such sentiments are the source of the "race" part of the title. (Margaret Sanger uses "race" here in a meaning similar to "progeny" or "posterity," which may seem archaic to contemporary readers who are accustomed to the word "race" used to mean categorizing people based on skin color and appearance.)
+
+It should be noted &ndash; especially by those who believe Margaret Sanger only objected to abortion because of the danger she perceived it posed to the health of women &ndash; that when pouring her heart out upon the page to paint a picture of the future she wished to bring about, she described abortion as "killing of babies in the womb" and envisioned that it would be no more.
+
+
+### Sometimes Necessary to Save Life of Mother
+
+While Margaret Sanger was vociferous in her condemnation of abortion, such condemnation was directed toward abortion _as a method of family limitation._ She was well aware that sometimes abortion was necessary to save the life of the mother, and she had no qualms with such a practice. In an article criticizing the papal position on birth control, she wrote:
+
+> Before going farther I wish to quote the very Reverend W. R. Inge, Dean of St. Paul’s Cathedral, London, who has written that “the real alternative to birth control is abortion.” It is an alternative that I cannot too strongly condemn. Although abortion may be resorted to in order to save the life of the mother, the practice of it merely for limitation of offspring is dangerous and vicious. I bring up the subject here only because some ill-informed persons have the notion that when we speak of birth control we include abortion as a method. We certainly do not. Abortion destroys the already fertilized ovum or the embryo; contraception, as I have carefully explained, prevents the fertilizing of the ovum by keeping the male cells away. Thus it prevents the beginning of life. [@sanger_1932]
+
+
+### "Birth Control" Does Not Include Abortion
+
+The preceding passage brings up a theme that occurs in Margaret Sanger's writings and speeches: her annoyance with the belief that her birth control movement included abortion. This is perhaps due to the unfortunate ambiguity in the phrase "birth control," since abortion by terminating a pregnancy can be construed to prevent a birth and so be "birth control." She wrote:
+
+> Some of the persons who maintain that preventative measures are injurious are so ignorant of the whole subject that they in opposing abortion call it Birth Control. Still others believe that harmful drugs are given internally as contraceptives. They, of course, confuse abortives with the means of preventing conception. Anyone who knows anything about either Birth Control or abortion knows that scientific Birth Control methods would do away with abortions which occur in appalling numbers in America every year. [@sanger_1919_prudence]
+
+Indeed, Margaret Sanger related how her clinics handled women who, out of confusion of birth control with abortion, came seeking abortions at her first clinic in Brownsville:
+
+> As was inevitable many were kept away by the report that the police were to raid us for performing abortions. “Clinic” was a word which to the uneducated usually signified such a place. We would not have minded particularly being raided on this charge, because we could easily disprove it. But these rumors also brought the most pitiful of all, the reluctantly expectant mothers who hoped to find some means of getting out of their dilemmas. Their desperate threats of suicide haunted you at night.
+>
+> One Jewish wife, after bringing eight children to birth, had had two abortions and heaven knows how many miscarriages. Worn out, beaten down, not only by toiling in her own kitchen, but by taking in extra work from a sweatshop making hats, she was now at the end of her strength, nervous beyond words, and in a state of morbid excitement. “If you don’t help me, I’m going to chop up a glass and swallow it tonight.”
+>
+> A woman wrought to the pitch of killing herself was sick&mdash;a community responsibility. She, most of all, required concentrated attention and devotion, and I could not let any such go out of the clinic until her mood had been altered. Building up hope for the future seemed the best deterrent. “Your husband and your children need you. One more won’t make so much difference.” I had to make each promise to go ahead and have this baby and myself promise in return, “You won’t ever have to again. We’re going to take care of you.” [@sanger_1938, 218]
+
+
+These encounters continued at subsequent clinics:
+
+> Shortly after young John and Mrs. John had left the clinic, armed with information which will give them a good chance for happiness, a frightened, bedraggled woman rang the door bell. A child clung to her skirt, she carried a sickly baby in her arms. Before the nurse had time even to ask her name, she cried out: “Thees one, and thees one,” pointing to the baby, “and mucha plenty more bambino at home. Now comes again bambino, I no can do . . . you feex . . .” and she burst into a flood of Italian, sobbing and rocking to and fro.
+>
+> A woman doctor who spoke Italian soothed and quieted her and got her story. Husband out of work; three children at home&mdash;one a cripple. The baby always ailing, six months old, and now she was again pregnant. She wanted an abortion. But birth control is not abortion, and there was no help for her. She had come too late. Earnestly the doctor urged her to be brave, to have this baby, and then come again after the baby’s birth, and find out about birth control. [@sanger_1936]
+
+
+### Knowledge of Safe, Legal Abortions and of Abortion Advocacy
+
+Sometimes Margaret Sanger's views on abortion are minimized with the glib dismissal that such views were common "back then." These "back then" dismissals usually contain some variation of two claims: that it was common to perceive abortion as dangerous to the health of women in Margaret Sanger's time, and that sentiments condemning abortion were the norm in Margaret Sanger's time. The implication of these claims is that Margaret Sanger was not aware abortion could be done with the relative safety of the woman involved, that Margaret Sanger was merely conforming to popular sentiment of her time, or both. However, both of these claims are contradicted by the fact that Margaret Sanger visited interwar Germany &ndash; in which abortion was common and safe for the mother &ndash; and the interwar Soviet Union &ndash; in which abortion was legal, common, and safe for the mother. She wrote about her 1920 trip to Germany:
+
+> A Neo-Malthusian congress had been held in Dresden in 1912, but the movement then organized by Maria Stritt had practically gone out of existence and its place taken by a more popular demand for the right to abortion. For a single year the statistics of Berlin indicated that out of forty-four thousand known pregnancies twenty-three thousand were terminated by this means, though it was technically illegal. Women were now campaigning for a bill before the Reichstag to permit operations to be performed lawfully in hospitals, where fatalities could be reduced by proper sanitary care. Not one of those with whom I talked believed in abortion as a practice; it was the principle for which they were standing. They were resolved to have no more babies for cannon fodder, nor until they could rear them properly.
+> 
+> Most of the doctors whom I interviewed said that what Germany needed was children and lots of them. I asked one if the medical profession, as a whole, were doing anything to prevent entrance into the world of those children whose backs were so weak that they could never sit up straight, whose bones were too soft to hold the weight of their bodies. He answered abruptly, "By aborting the mothers we are doing our best to cope with conditions as we find them. It is not our work to change them."
+> 
+> I was hounding everybody to learn the whereabouts of the contraceptive formula for which I was searching, and was finally given the name of a gynecologist who should know, if anybody did, where it could be found. I made an appointment, and he greeted me in the most cordial way. When I questioned him about the reported sterility of German women, he agreed with the argument that, the situation being what it was in the country, the population should be checked for the next five years. “Here is a friend indeed,” I said to myself.
+>  
+> I then gently brought up the subject of abortion. “Doesn’t this seem a ridiculous substitute for contraceptives?”
+>  
+> The doctor rose, his chest sticking out; he buttoned his coat, bowed formally, and inquired, "Where did you say you came from?"
+> 
+> “New York City.”
+> 
+> "Are you sure you are not from France or Belgium?"
+> 
+> "Certainly not."
+> 
+> “Nobody who has the welfare of Germany at heart could talk to me as you have this morning. Only enemies could come here to give such information to our women.”
+> 
+> I wished he would sit down; he made me nervous. But I went on. “Why is it such an act of enmity to advocate contraceptives rather than abortions? Abortions, as you know yourself, may be quite dangerous, whereas reliable contraceptives are harmless. Why do you oppose them?”
+> 
+> To my horror he replied, "We will never give over the control of our numbers to the women themselves. What, let them control the future of the human race? With abortions it is in our hands; we make the decisions, and they must come to us." 
+> 
+> That was not the tone of this doctor alone but also that of most of his confrères. [@sanger_1938, 285-286]
+
+Margaret Sanger remembered this experience during a later trip to Germany in 1927, about which she wrote:
+
+> When I spoke in the Town Hall of Charlottenburg-Berlin I was reminded of the birth strike German women had been carrying on when I had last been there. German men seemed to have remembered little of this, still thinking they could keep their wives to childbearing, “their race function,” as it was called. But the women had now definitely directed their thoughts from race preservation to self-preservation. As I said to my audience, “Birth control has always been practiced, beginning with infanticide, which is abhorred, and then by abortion, nearly as bad. Contraception, on the other hand, is harmless.” [@sanger_1938, 388]
+
+During her 1934 trip to the Soviet Union, Margaret Sanger met Dr. Grigory Kaminsky, Commissariat of Public Health. About that encounter,  she wrote:
+
+> I took my cue. “Has Russia a population policy? Has she formulated any program for the rate of increase of her people?”
+> 
+> The audience stirred as though I had hurled a grenade. The interpreter leaped to his feet and shrieked, “Malthusianism! We will not have Malthusianism here! We do not need it. Do you think or imply that Soviet Russia has to advance Malthusian ideas? We can have all the children we want and Russia can do with twice the population she now has.” He went on and on.
+> 
+> After waiting a few moments for the air to clear, I continued, “I have asked Dr. Kaminsky a simple question which I will repeat. I said nothing about Malthusianism. But I should like to know whether Russia has a population policy. She has had five- and even ten-year plans for agriculture and manufacture and everything she is making. But what has she done about the most important issue today—population, its growth and distribution?”
+> 
+> Fischer was whispering to Dr. Kaminsky, evidently telling him what I wanted to know. The doctor replied, “If I understood correctly, you are asking if there is any policy from the biological or economic point of view.”
+> 
+> “I am asking whether Russia, in planning her industries, has any plan also as to the eventual control of families. I know you have much freedom for women and a fine technique for abortions. To us that is extremely significant, because after a woman has been aborted she returns to the same conditions and becomes pregnant again. Four hundred thousand abortions a year indicate women do not want to have so many children; in my opinion it is a terrific nervous strain and an exhausting physical hardship.”
+> 
+> Dr. Kaminsky’s answer was not encouraging. “There is no question as to the increase of population. There is no policy as to the question of biological restrictions; on the contrary there is a policy of increasing the population. For six years we have had a great shortage, not only of skilled workers, but of labor in general.”
+> 
+> Obviously, I was not a particularly welcome visitor.
+> 
+> By chance I was fortunate enough to encounter again Dr. Marthe Ruben-Wolf, who with her husband and children had escaped from Nazi Germany and was then at the head of a Moscow abortorium. Because of her wide experience in Germany, where clinics had been under municipal guidance, she was one of the few Communists who was sane on the subject of population. She very kindly helped me with interviews.
+> 
+> Any woman in Russia who requested it was entitled to abortion on application to a doctor. She was told of the dangers, warned it might result in sterility, charged about two dollars and a half. We talked to about fifty patients who had already been there three days. None had temperatures. They were very jolly and going home that afternoon to rest for another week or two. Then they would go back to work with no deduction in wages. Though some of these women had had five abortions in two years and one had had eight, they could not sing too highly the praises of their country for allowing the operations. When I asked whether they would not prefer to have some information as to how to avoid further ones by protecting themselves from pregnancy, each and all replied, “We have no such thing. We hear of it, but we have nothing. Russia is too poor. We hope she will soon get it.” [@sanger_1938, 448-450]
+
+Margaret Sanger goes on to describe her visits to Russian birth control clinics, only to be disappointed to find that they appeared to be in complete disuse. When visiting the old summer palace of Nicholas II, she encountered a group of Communist party members who engaged her in conversation. She wrote of them challenging her radicalism: 
+
+> He answered something to the effect, “You [Americans] have opinions but no convictions. We have been to prison for ours.”
+>
+> Tanya volunteered, pointing to me, “This lady has been to prison eight times for hers.”
+> 
+> Astonishment was registered, and one man spoke hurriedly to Tanya who translated, “He wants to know who you are. Shall I tell him?” She then explained I was advocating birth control.
+> 
+> “Well, we have that. Haven’t you visited any of our hospitals? Thousands of women have it.”
+>
+> “No, that’s abortion. We don’t want that. Birth control is different.”
+> 
+> The conversation had shifted to something concrete and real; we had struck up an entente that was very cordiale. The group gathered closer. “Come on. Come on. This is important.” They had never heard of contraception. [@sanger_1938, 458]
+
+Curiously, these encounters are sometimes taken out of context as examples of Margaret Sanger giving approval to abortion as a method of family limitation. Upon perusing her full description of these encounters, the reader ought to be left with the impression that she considered abortion and her birth control movement to be two different things.
+
+These encounters underscore how Margaret Sanger was well aware that abortion could be practiced with the relative safety of mother. Indeed, she said as much in a speech advocating the replacement of therapeutic abortions with contraception:
+
+> We know that abortion, when performed by skilled hands, under right conditions, brings almost no danger to the life of the patient, and we also know that particular diseases can be more easily combated after such an abortion than during a pregnancy allowed to come to full term. But why not adopt the easier, safer, less repulsive course and prevent conception altogether? [@sanger_1919_why]
+
+Furthermore, these encounters illustrate that Margaret Sanger was well aware of contemporaries who were advocating for abortion as a method of family limitation. Indeed, she was encountering such advocates of abortion during the conferences she organized. Included amongst the many of her anecdotes from the Sixth International Malthusian and Birth Control Conference held in New York City in March of 1925 is the following:
+
+> At every meeting Dr. Ferdinand Goldstein of Berlin, who was hard of hearing, sat in the front row. The mention of any phase of population, on which he was an expert, brought him promptly to his feet. Standing directly in front of the speaker, he cupped his ear in order not to miss a single word. The one discordant note occurred on the last day when the committee declined to embody in its program any endorsement of abortion. He not only left the Conference but went back to Germany without saying good-by to anyone. [@sanger_1938, 373]
+
+A narrative found in these "back then" arguments is that Margaret Sanger's views are old-fashioned and from a bygone era. This line of reasoning would allege that if Margaret Sanger could see abortion today practiced with the safety of the woman involved or experience a society in which abortion is more accepted, she would have a different view of abortion than her quaint, archaic view.
+
+Such an attitude is presumptuous of Margaret Sanger's ignorance. She was not ignorant in this regard. She was, in fact, aware of abortion being practiced with the safety of the woman involved. She was, in fact, aware of whole countries in which abortion as a method of family limitation was legal. She was, in fact, aware of contemporaries who advocated she endorse abortion as method of family limitation. Her reaction to such examples as the interwar Soviet Union was not to become an advocate for abortion as a method of family limitation, but to say bluntly "we don't want that."
+
+
+## Margaret Sanger and the "Pro-Life" versus "Pro-Choice" Dichotomy
+
+Abortion today is a very political issue in the United States, and politics tends to produce the basest excuse for dialogue known to humankind. One aspect of this baseness is the tendency to divide the world to "us" and "them." This division around abortion is typically expressed in the dichotomy between so-called "pro-life" and "pro-choice" factions.
+
+Margaret Sanger's views have substantial differences with both of these factions and do not fit neatly into either of side of this false dichotomy. At the same time, one will find in the writings and speeches of Margaret Sanger what would eventually become the core rhetoric for *both* the "pro-life" and "pro-choice" factions, nearly half a century before this dichotomy arose.
+
+Furthermore, much of the misunderstanding of Margaret Sanger's views on abortion occurs because elements of both the "pro-life" and "pro-choice" factions have an interest in misleading the public into thinking that Margaret Sanger was an enthusiast of abortion when, as we have seen, her views were the exact opposite.
+
+
+## Differences with the So-Called "Pro-Life" Faction
+
+The so-called "pro-life" faction has in common an opposition to abortion as a method of family limitation. Since Margaret Sanger regarded abortion as killing and sought to end its use as a method of family limitation, one might think that she would be well remembered by the "pro-life" faction. However, the lies commonly spread in attempts to attack Margaret Sanger and her legacy typically come from the "pro-life" faction.
+
+Some of these attacks may be due to sheer ignorance. Margaret Sanger is the founder of the organizations that became the Planned Parenthood Federation of America, which after her death went on to campaign for the legalization of abortion and to run abortion clinics. Thus, elements of the "pro-life" faction may simply be attacking the founder of Planned Parenthood in an attempt to discredit enthusiasts of abortion, without bothering to check what Margaret Sanger's views on abortion actually were.
+
+Some of these attacks, furthermore, may be the posthumous continuation of attacks on Margaret Sanger from opponents of contraception. At least one major opponent of contraception, the Roman Catholic church, is a prominent part of the "pro-life" faction.
+
+Some of these attacks, finally, may be due to that most petty tendency of political movements to attack anyone who does not construe the world in accord with their exact political ideology. Much as socialist governments are infamous for purging rival forms of socialism from their ranks and history books, these petty attacks are usually upon those who represent a worldview similar, but slightly different, and thus present an alternative.
+
+
+### Accusations of Attempting to Exterminate Ethnic Groups
+
+The most common lie spread to attack Margaret Sanger's legacy is that she wanted to use birth control to get rid of some ethnic group. On its face, this seems a silly proposition, since even if someone had such an abominable goal, distributing information about and devices for contraception would be a very roundabout and ineffectual way to pursue such an outcome. Furthermore, these are not new lies. Even when Margaret Sanger was awaiting trial for opening her first birth control clinic, she wrote about such allegations in her autobiography:
+
+> Trial was marked for January 4, 1917, but the first case, that of Ethel, was reached so late in the afternoon it had to be postponed. Four days afterwards, in spite of our attempts to be tried together, she appeared alone. She freely admitted she had described birth control methods but denied the District Attorney’s accusation that our ten-cent registration fee made it a “money making” affair. This and other sensational charges, such as “the clinic was intended to do away with the Jews” were often inserted in the records for reporters to pick up, make good stories of them, and in consequence influence newspaper readers against us. They were great stumbling blocks. [@sanger_1938, 226]
+
+The clinic was opened in a neighborhood with a large Jewish population in part because Judaism, relative to other religions at that time, gave less opposition to contraception. Margaret Sanger wrote:
+
+> I preferred a Jewish landlord, and Mr. Rabinowitz was the answer. He was willing to let us have Number 46 Amboy Street at fifty dollars a month, a reduction from the regular rent because he realized what we were trying to do. Here in this Jewish community I need have no misgivings over breaking of windows or hurling of epithets, but I was scarcely prepared for the friendliness offered from that day on. [@sanger_1938, 215]
+
+As recently as October 13, 2015, U.S. Senator Ted Cruz and a group of twenty-five members of the U.S. House of Representatives sent a letter to the director of the National Portrait Gallery of the Smithsonian Institution demanding the removal of a bust of Margaret Sanger. The letter reads in part: 
+
+> Ms. Sanger was a founder of Planned Parenthood and famously espoused birth control as a method for controlling the population of minorities. In a letter from 1939, Ms. Sanger stated, “We do not want word to go out that we want to exterminate the Negro population.”
+>
+> Honoring Ms. Sanger is an outrage.
+>
+> We echo the recent petition of pastors and supporters affiliated with S.T.A.N.D. who similarly demanded that Ms. Sanger’s bust be removed. As they rightfully stated in their letter, Ms. Sanger was no hero. Her racist views have had a very real and devastating impact on the widespread destruction of unborn human life&mdash;especially in minority communities. [@cruz]
+
+This is likely the most common of Margaret Sanger's quotes taken out of context in attempts to defame her. It is part of a letter in which she writes to one Dr. Clarence J. Gamble to convince him, when staffing a birth control clinic, of the utility of hiring a full-time physician of what was called in those days the "Negro" community. The sentence itself comes from a paragraph about the importance of explaining the goal of the birth control movement to ministers in this community. She wrote:
+
+> Miss Rose sent me a copy of your letter of December 5th and I note that you doubt it worthwhile to employ a full time Negro physician. It seems to me from my experience where I have been in North Carolina, Georgia, Tennessee and Texas, that while the colored Negroes have great respect for white doctors they can get closer to their own members and more or less lay their cards on the table which means their ignorance, superstitions and doubts. They do not do this with the white people and if we can train the Negro doctor at the Clinic he can go among them with enthusiasm and with knowledge, which, I believe, will have far-reaching results among the colored people. His work in my opinion should be entirely with the Negro profession and the nurses, hospital, and social workers, as well as the County's white doctors. His success will depend upon his personality and his training by us.
+>
+> The ministers work is also important and also he should be trained, perhaps by the Federation as to our ideals and the goal that we hope to reach. We do not want word to go out that we want to exterminate the Negro population and the minister is the man who can straighten out that idea if it ever occurs to any of their more rebellious members. [@sanger_1939]
+
+The great irony of quoting this sentence out of context in order to spread false beliefs about the goals of Margaret Sanger is that the actual meaning of the quote in context is to warn about such a possibility. Undoubtedly when Margaret Sanger was advising Dr. Gamble about communicating with African-American ministers, she had memories of the false allegations that she wished to "do away with the Jews" which hounded her in the press after she opened her first birth control clinic more than twenty years earlier.
+
+It is notable that the letter of Senator Cruz, et al, refers to the "destruction of unborn human life." Perhaps this particular attack on Margaret Sanger is motivated by ignorance of her actual beliefs. The "exterminate" quote, taken out of context, appears in much of the attack literature against her. Senator Cruz, et al, may have simply copied the quote from such attack literature into their letter without much research.
+
+<figure>
+    <img src="/margaret-sanger-bust.jpg" alt="A bust of Margaret Sanger that appears in the National Portrait Gallery of the Smithsonian Institution." />
+    <figcaption>
+        <a href="https://www.flickr.com/photos/nostri-imago/3011393385">"Margaret Higgins Sanger"</a> by <a href="https://www.flickr.com/photos/nostri-imago/">Cliff</a> is licensed under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> and is not modified.
+        <br />
+        <em>A bust of Margaret Sanger that appears in the National Portrait Gallery of the Smithsonian Institution and was the object of petitions for removal in 2015.</em>
+    </figcaption>
+</figure>
+
+Long before Senator Cruz, et al, would demand Margaret Sanger's bust be removed from the Smithsonian out of concern for "destruction of unborn human life," she herself wrote:
+
+> Birth Control will prevent abortion. It will do away with the practice of taking drugs and poisonous nostrums to end undesired pregnancies. It will put an end to the tens of thousands of illegal operations to which women resort in despair. Mothers will not submit to the murder of unborn children when they can control conception. [@sanger_1923]
+
+
+### Opposition to Contraception
+
+More intentional attacks, however, come from the opponents of contraception. Indeed, the biggest difference between Margaret Sanger's views and the views of the "pro-life" faction occurs with those elements of the "pro-life" faction that oppose contraception. The most notable of these elements is the Roman Catholic church.
+
+An insight into the views that Margaret Sanger faced from the Roman Catholic church in her day can be gleaned from a Christmas pastoral denouncing birth control issued on December 17, 1921 by Archbishop Patrick J. Hayes and read in the more than three hundred churches of the Archdiocese of New York:
+
+> "Heinous is the sin committed against the creative act of God, who through the marriage contract invites man and woman to co-operate with him in the propagation of the human family. To take life after its inception is a horrible crime; but to prevent human life the Creator is about to bring into being is satanic. In the first instance, the body is killed, while the soul lives on; in the latter, not only a body but an immortal soul is denied existence in time and in eternity. It has been reserved to our day to see advocated shamelessly the legalizing of such a diabolical thing." [@hayes]
+
+To Margaret Sanger, abortion is killing, and contraception is harmless. Therefore, the goal of advancing contraception in order to prevent abortion is extremely obvious. By the logic of Archbishop Hayes, however, contraception is worse than abortion. Therefore, Archbishop Hayes would view the goal of eliminating abortion through the advancement of contraception as actually making human society worse, not better. This stems from a fundamental difference in worldview.
+
+<figure>
+  <img src="/patrick-joseph-hayes.jpeg" alt="A photograph of Patrick J. Hayes in 1931." />
+  <figcaption>
+    Library of Congress, Prints & Photographs Division, <a href="http://www.loc.gov/pictures/item/99471529/">[LC-USZ62-123860]</a>
+    <br />
+    <em>A photograph of Patrick J. Hayes in 1931, who declared contraception a worse sin than abortion in his Christmas pastoral of 1921 while Archbishop of New York.</em>
+  </figcaption>
+</figure>
+
+While the assessment that contraception is worse than abortion may not be common amongst Catholics today, the official church stance is still that of Pope Paul VI's _Humanae Vitae_ of July 25, 1968, which affirmed that "artificial" contraception is a sin _per se._ "Artificial" contraception in this context includes nearly every form of contraception, allowing only methods based on restriction of sexual intercourse to the infertile periods of a woman's reproductive cycle.
+
+The inability of the Roman Catholic church to eliminate abortion is something that Margaret Sanger was well aware of in her time. She wrote:
+
+> It is apparent that nothing short of contraceptives can put an end to the horrors of abortion and infanticide. The Roman Catholic church, which has fought these practices from the beginning, has been unable to check them; and no more powerful agency could have been brought into play. It took that church, even in the days of its unlimited power, many centuries to come to its present sweeping condemnation of abortion. [@sanger_1920, 25]
+
+The Roman Catholic church is a powerful force in human society worldwide. In its persistent and prolific opposition to contraception, it obstructs the advancement of contraception from eliminating the use of abortion as a method of family limitation. Thus, the Roman Catholic church perpetuates abortion.
+
+Margaret Sanger was fond of a particular quote by one Dr. Max Hirsch pointing out how opponents of contraception were obstacles to progress against abortion. She wrote:
+
+> "He who would combat abortion" says Dr. Hirsch, "and at the same time combat contraceptive measures may be likened to the person who would fight contagious diseases and forbid disinfection. For contraceptive measures are important weapons in the fight against abortion." [@sanger_1918_birth]
+
+Indeed, Margaret Sanger believed contraception and only contraception could provide the ultimate answer to abortion, writing:
+
+> No one can doubt that there are times where an abortion is justifiable but they will become _unnecessary when care is taken to prevent conception._
+>
+> This is the _only_ cure for abortions. [@sanger_1918_family]
+
+
+### The Ineffectiveness of Politics
+
+One of the things that characterizes the "pro-life" faction is that, being one half of a political dichotomy, it sees the problem of abortion as essentially a political problem. Margaret Sanger, on the other hand, acknowledged the vanity of attempts to address infanticide, child abandonment, and abortion with purely political methods, instead seeing the problem of abortion as one to be solved by the advancement of contraception. This is a subtle difference, but as alluded to earlier, sometimes a faction attacks those closest to the faction's ideology in order to stamp out alternatives.
+
+Margaret Sanger lived at a time when abortion was predominantly illegal in the United States, yet while working as a nurse in New York City, she noted:
+
+> "On Saturday nights I have seen groups of from fifty to one hundred with their shawls over their heads waiting outside the office of a five-dollar abortionist." [@sanger_1938, 89]
+
+Indeed, by her estimates, the number of abortions in the United States in her day was at least in the hundreds of thousands per year and probably in the millions per year.[^estimates] She wrote:
+
+[^estimates]: This is a case in which Margaret Sanger is using "abortion" to mean induced abortion while at least one physician, Dr. Hirsch, is using "abortion" to refer to both induced abortion and spontaneous abortion. However, even if one removes the 20% of estimated spontaneous abortions, Dr. Hirsch's is still the high estimate at 1,600,000.
+
+> In the very nature of the case, it is impossible to get accurate figures upon the number of abortions performed annually in the United States. It is often said, however, that one in five pregnancies end in abortion. One estimate is that 150,000 occur in the United States each year and that 25,000 women die of the effects of such operations in every twelve months. Dr. William J. Robinson asserts that there are 1,000,000 abortions every year in this country and adds that the estimate is conservative. He quotes Justice John Proctor Clark as saying that there are at least 100,000 in the same length of time in New York City alone.
+>
+> Dr. Max Hirsch, a famous authority quotes an opinion that there are 2,000,000 abortions in the United States every year!
+>
+> "I believe" declares Dr. Hirsch, "that I may say without exaggeration that absolutely spontaneous or unprovoked abortions are extremely rare, that a vast majority&mdash;I should estimate it at 80 per cent&mdash;have a criminal origin."
+>
+> "Our examinations have informed us that the largest number of abortions are performed on married women. This fact brings us to the conclusion that contraceptive measures among the upper classes and the practice of abortion among the lower class, are the real means employed to regulate the number of offspring." [@sanger_1918_birth]
+
+If abortion could be eliminated by purely legal means, then it would have been in Margaret Sanger's day, when it was with few exceptions illegal in the United States.
+
+The fundamental flaw of the political approach to abortion is that abortion is part of a spectrum of behavior with infanticide that has existed in nearly every civilization in recorded human history, and so mere laws are unlikely to end it. Margaret Sanger discussed this, writing:
+
+> As it was with the fight of the church against abortion, so it is with the effort to prevent abortion in the United States to-day. All efforts to stop the practice are futile. Apparently, the numbers of these illegal operations are increasing from year to year. From year to year more women will undergo the humiliation, the danger and the horror of them, and the terrible record, begun with the infanticide of the primitive peoples, will go on piling up its volume of human misery and racial damage, until society awakens to the fact that a fundamental remedy must be applied.
+>
+> To apply such a remedy, society must recognize the terrible lesson taught by the innumerable centuries of infanticide and foeticide. If these abhorrent practices could have been ended by punishment and suppression, they would have ceased long ago. But to continue suppression and punishment, and let the matter rest there, is only to miss the lesson&mdash;only to permit conditions to go from bad to worse. [@sanger_1920, 27]
+
+
+## Differences with the So-Called "Pro-Choice" Faction
+
+The so-called "pro-choice" faction has in common the goal of keeping abortion as a method of family limitation legal. The use of the "pro-choice" branding instead of "pro-abortion" branding allows the faction to be more inclusive. Allegiance to the faction is only a political stance. This leaves open the door to individuals who are personally against abortion, but politically against government interference in the choice of whether or not to kill unwanted fetuses and embryos. This emphasis on personal choices resonates with the classical liberal or libertarian aspect of the political [mythology](/four-teloi-of-human-nature.html) of the United States.
+
+Recent U.S. Vice President Joe Biden considers himself "pro-choice" along these lines.[^biden] During an interview when he was campaigning for office, he said:
+
+[^biden]: Unfortunately, Vice President Biden appears to be conflating moral sentiments about abortion with religion. He makes the case that there are religions that do not view abortion as killing, but the converse is also true. There are also atheists who condemn abortion as killing, such as Margaret Sanger.
+
+> For me, as a Roman Catholic, I'm prepared to accept the teachings of my church. But let me tell you. There are an awful lot of people of great confessional faiths&mdash;Protestants, Jews, Muslims and others&mdash;who have a different view. They believe in God as strongly as I do. They're intensely as religious as I am religious. They believe in their faith and they believe in human life, and they have differing views as to when life&mdash;I'm prepared as a matter of faith to accept that life begins at the moment of conception. But that is my judgment. For me to impose that judgment on everyone else who is equally and maybe even more devout than I am seems to me is inappropriate in a pluralistic society. [@biden]
+
+Even under this broad definition, however, it is incorrect to construe Margaret Sanger as "pro-choice" with regard to abortion. It is important to remember social context. Margaret Sanger lived at a time when abortion as a method of family limitation was, for the most part, illegal in the United States. To be "pro-choice" in her social context would not have been inaction, but lobbying for the legalization of abortion. This is something she did not do, despite being emphatic in her lobbying for the legalization of contraception. Her aversion to abortion politics is not an actively "pro-choice" stance just because it does not fit exactly into a "pro-life" stance.
+
+
+### Personal Choices and Society's Choice
+
+For those who, on libertarian grounds, wish the government not to interfere in reproductive matters, but personally are unenthusiastic about abortion or perhaps are even troubled by abortion, the "pro-choice" rhetoric distracts from a larger point. Margaret Sanger made this point nearly a century ago when she wrote:
+
+> The woman who goes to the abortionist's table is not a criminal but a martyr&mdash;a martyr to the bitter, unthinkable conditions brought about by the blindness of society at large. These conditions give her the choice between the surgeon's instruments and the sacrificing of what is highest and holiest in her&mdash;her aspiration to freedom, her desire to protect the children already hers. These conditions&mdash;not the woman&mdash;outface society with this question:
+>
+> "Contraceptives or Abortion&mdash;which shall it be?" [@sanger_1920, 129]
+
+These words that were written nearly a century ago &ndash; when contraceptive methods were even more primitive, and their dissemination legally forbidden in the United States &ndash; are sadly just as applicable today. Human civilization is a system of cause and effect, one that currently results in over 80 million unintended pregnancies every year worldwide. [@sedgh]
+
+To look at abortion _only_ as a personal choice made by those left carrying a pregnancy is to ignore the choices of all those who participate in a system that leaves over 80 million women annually to be confronted with a choice they did not want, and to be content with a system of fertility control predicated on over 40 million abortions every year. There is much that all of members of human society could be doing to address this state of affairs, regardless of whether one is "pro-choice" or not. 
+
+
+### Equivocation of Criticism of Abortion with Misogyny 
+
+The reaction of members of the "pro-choice" faction to the description of abortion as the "killing of babies in the womb" or "the murder of unborn children" is often angry, featuring allegations that the holder of such beliefs "hates women" or "is against women's rights."
+
+This equivocation of criticism of abortion to misogyny is usually justified by a rhetoric about bodies, specifically how a woman owns her own body. This rhetoric was not invented in the 1960s as part of the movement to legalize abortion. Decades earlier, Margaret Sanger wrote:
+
+> No woman can call herself free who does not own and control her body. No woman can call herself free until she can choose consciously whether she will or will not be a mother. [@sanger_1920, 94]
+
+Margaret Sanger was happy to report that, while the Comstock laws once kept people in ignorance:
+
+> Since then the feeling of the awakened women of America has intensified. The rapidity with which women are going into industry, the increasing hardship and poverty of the lower strata of society, the arousing of public conscience, have all operated to give force to the demand for woman's right to control her own body that she may work out her own salvation. [@sanger_1920, 193-194]
+
+About opponents of birth control, she wrote:
+
+> Sneers and jests at birth control are giving way to a reverent understanding of the needs of woman. They who to-day deny the right of a woman to control her own body speak with the hardihood of invincible ignorance or with the folly of those blind ones who in all ages have opposed the light of progress. [@sanger_1920, 211]
+
+Margaret Sanger saw no contradiction between her sentiment that a woman has a right to control her own body and her sentiment that abortion is the murder of unborn children. Those who would equivocate the sentiment that abortion is taking life to misogyny are left to call Margaret Sanger &ndash; a woman who is a feminist icon and who herself popularized the very rhetoric they use &ndash; "a misogynist."
+
+Clearly, when enthusiasts of abortion reuse the rhetoric that Margaret Sanger popularized decades earlier, the difference between these two positions is not that Margaret Sanger is against women's rights. Rather, the difference is that abortion enthusiasts subscribe to some version of the proposition that the killing of fetuses and embryos does not count morally. There are many different [arguments](moral-arguments-are-self-delusional.html) for this proposition. Regardless of which particular argument an individual subscribes to, Margaret Sanger's example highlights that it is the moral perception of prenatal organisms, not antipathy to women's rights, that is the point of fundamental difference between so-called "pro-choice" positions and their dissenters.
+
+
+### Misappropriation of Margaret Sanger's Ideology
+
+Furthermore, this explains how the ideology popularized by Margaret Sanger is misappropriated for enthusiasm for the very practice she was trying to end. For those who feel that the killing of fetuses and embryos does not count, there is no moral compunction about abortion, and abortion can be done under conditions found in modern industrialized society with minimal risk to the mother. At that point, one can simply take the case Margaret Sanger made for contraception and substitute abortion.
+
+The advancement of contraception to the point at which unintended pregnancies are so rare that public demand for abortion dissipates is a great challenge. From a purely technical standpoint, abortion is relatively easy to do. In this way, those who have no moral compunction about abortion feel like they are already living in the future of voluntary motherhood about which Margaret Sanger dreamed. Unsurprisingly, this leads to individuals who are enthusiastic about abortion in a way similar to Margaret Sanger's enthusiasm about contraception. This is a facile appropriation of the vision that Margaret Sanger had, one that would likely have disturbed her to see. 
+
+
+### Misappropriation of Margaret Sanger's Name
+
+The Planned Parenthood Federation of America issues the "Margaret Sanger Awards" supposedly in her honor. Sometimes these awards are given to individuals who have advanced contraception, such as Dr. John Rock, or to social luminaries in general, such as Martin Luther King, Jr. However, these awards are all too often given to individuals who have done nothing to advance contraception, but instead recognize individuals for their work in the advancement of abortion. While organizations can have whatever ideology their constituency prefers and call attention to whomever embodies such ideology, these instances of "Margaret Sanger" awards are misappropriations of her name.
+
+One of Margaret Sanger's anecdotes from her travels embodies the very spirit of this section:
+
+> The most painful experience I had in Japan was in addressing the Tokyo medical association. The volunteer interpreter was a young doctor who had been on a three weeks’ tour of America, and his command of English was correspondingly slight. From the attitude of the audience I could tell whenever he was not conveying my meaning as I had intended it, though I did not always know what specifically was wrong. The Baroness [Ishimoto], unable to bear his mis-translation of “prevention of conception” as abortion, which she knew would distress me intensely, finally rose and attempted to correct the erroneous impression he was giving. But the meeting was over before she could make it clear. [@sanger_1938, 328]
+
+<figure>
+  <img src="/margaret-sanger-and-ishimoto-shizuko.jpg" alt="A photograph of Ishimoto Shizuko, Margaret Sanger, and her son Grant Sanger in 1922." />
+  <figcaption>
+    "Margaret Sanger and Ishimoto Shizuko, 1922" (『アサヒグラフ』 1951 年新年号) [Public domain], via <a href="https://commons.wikimedia.org/wiki/File:Margaret_Sanger_and_Ishimoto_Shizuko_1922.jpg">Wikimedia Commons</a>.
+    <br />
+    <em>A photograph of Ishimoto Shizuko, Margaret Sanger, and her son Grant Sanger in 1922. </em>
+  </figcaption>
+</figure>
+
+This article is trying to do what the Baroness Ishimoto tried to do so many decades ago, i.e., correct public perception of Margaret Sanger's work. Much as the young doctor mistranslated what Margaret Sanger was advocating for as abortion instead of contraception, so too is use of her legacy as advocacy for abortion a misappropriation. Indeed, this misappropriation would, if Margaret Sanger were alive today, "distress her intensely." 
+
+
+## Further Reading
+
+Margaret Sanger's published books are in the public domain. Many are freely available from [Project Gutenberg](http://www.gutenberg.org/ebooks/author/693), from Google Books, or from public or university libraries. Most of the discussion of abortion in [_Margaret Sanger: an autobiography_](http://www.gutenberg.org/ebooks/56610) is already included in this article. Small portions of "Woman's Struggle for Freedom" and "Contraceptives or Abortion," the second and tenth chapters of _[Woman and the New Race](http://www.gutenberg.org/ebooks/8660),_ respectively, are included in this article, but the rest of those chapters include substantial discussion of abortion.
+
+New York University maintains a [Margaret Sanger Papers Project](http://www.nyu.edu/projects/sanger/) and have made a portion of their collection available online. This was used as a source for most of the periodical articles authored by Margaret Sanger cited herein.
+
+The Sophia Smith Collection at Smith College is a repository for many [Margaret Sanger papers](http://asteria.fivecolleges.edu/findaids/sophiasmith/mnsss43_main.html). This was used as a source for the letter containing the infamous "word to go out that we want to exterminate the Negro population" quote.
+
+
+## Inline Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
