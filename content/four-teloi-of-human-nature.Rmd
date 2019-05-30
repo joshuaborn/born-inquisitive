@@ -2,8 +2,8 @@
 title: "Four Teloi of Human Nature"
 date: 2016-12-18
 tags: ["evolution", "tribalism", "mythology"]
-bibliography: "../bibliographies/four-teloi-of-human-nature.json"
-csl: "../bibliographies/apa.csl"
+bibliography: "../data/four-teloi-of-human-nature.json"
+csl: "../data/apa.csl"
 link-citations: true
 ---
 

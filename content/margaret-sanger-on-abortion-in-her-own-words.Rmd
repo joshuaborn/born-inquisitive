@@ -2,8 +2,8 @@
 title: "Margaret Sanger on Abortion in Her Own Words"
 date: 2018-11-11
 tags: ["abortion", "contraception"]
-bibliography: "../bibliographies/margaret-sanger-on-abortion-in-her-own-words.json"
-csl: "../bibliographies/apa.csl"
+bibliography: "../data/margaret-sanger-on-abortion-in-her-own-words.json"
+csl: "../data/apa.csl"
 link-citations: true
 output:
   blogdown::html_page:
