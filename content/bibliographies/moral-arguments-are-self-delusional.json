@@ -1,0 +1,338 @@
+[
+	{
+		"id": "adler",
+		"type": "book",
+		"title": "Reasoning: Studies of Human Inference and Its Foundations",
+		"publisher": "Cambridge University Press",
+		"editor": [
+			{
+				"family": "Adler",
+				"given": "Jonathan Eric"
+			},
+			{
+				"family": "Rips",
+				"given": "Lance J."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2008"
+				]
+			]
+		}
+	},
+	{
+		"id": "bargh",
+		"type": "article-journal",
+		"title": "The unbearable automaticity of being",
+		"container-title": "American Psychologist",
+		"page": "462-479",
+		"volume": "54",
+		"issue": "7",
+		"source": "APA PsycNET",
+		"abstract": "What was noted by E. J. Langer (1978) remains true today: that much of contemporary psychological research is based on the assumption that people are consciously and systematically processing incoming information in order to construe and interpret their world and to plan and engage in courses of action. As did Langer, the authors question this assumption. First, they review evidence that the ability to exercise such conscious, intentional control is actually quite limited, so that most of moment-to-moment psychological life must occur through nonconscious means if it is to occur at all. The authors then describe the different possible mechanisms that produce automatic, environmental control over these various phenomena and review evidence establishing both the existence of these mechanisms as well as their consequences for judgments, emotions, and behavior. Three major forms of automatic self-regulation are identified: an automatic effect of perception on action, automatic goal pursuit, and a continual automatic evaluation of one's experience. From the accumulating evidence, the authors conclude that these various nonconscious mental systems perform the lion's share of the self-regulatory burden, beneficently keeping the individual grounded in his or her current environment. (PsycINFO Database Record (c) 2016 APA, all rights reserved)",
+		"DOI": "10.1037/0003-066X.54.7.462",
+		"ISSN": "1935-990X(Electronic),0003-066X(Print)",
+		"author": [
+			{
+				"family": "Bargh",
+				"given": "John A."
+			},
+			{
+				"family": "Chartrand",
+				"given": "Tanya L."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1999"
+				]
+			]
+		}
+	},
+	{
+		"id": "batson",
+		"type": "article-journal",
+		"title": "Influence of self-reported distress and empathy on egoistic versus altruistic motivation to help",
+		"container-title": "Journal of Personality and Social Psychology",
+		"page": "706-718",
+		"volume": "45",
+		"issue": "3",
+		"source": "APA PsycNET",
+		"abstract": "Proposed that a distinction be made between 2 emotional responses to seeing another person suffer—personal distress and empathy—and that these 2 emotions lead to 2 different kinds of motivation to help: Personal distress leads to egoistic motivation; empathy, to altruistic motivation. These distinctions were tested in 3 studies, each using 10 male and 10 female undergraduates. Across the 3 studies, factor analysis of Ss' self-reported emotional response indicated that feelings of personal distress and empathy, although positively correlated, were experienced as qualitatively distinct. The pattern of helping in Studies 1 and 2 indicated that a predominance of personal distress led to egoistic motivation, whereas a predominance of empathy led to altruistic motivation. In Study 3, the cost of helping was made especially high. Results suggest an important qualification on the link between empathic emotion and altruistic motivation: Ss reporting a predominance of empathy displayed an egoistic pattern of helping. Apparently, making helping costly evoked self-concern, which overrode any altruistic impulse produced by feeling empathy. (12 ref) (PsycINFO Database Record (c) 2016 APA, all rights reserved)",
+		"DOI": "10.1037/0022-3514.45.3.706",
+		"ISSN": "1939-1315(Electronic),0022-3514(Print)",
+		"author": [
+			{
+				"family": "Batson",
+				"given": "C. Daniel"
+			},
+			{
+				"family": "O'Quin",
+				"given": "Karen"
+			},
+			{
+				"family": "Fultz",
+				"given": "Jim"
+			},
+			{
+				"family": "Vanderplas",
+				"given": "Mary"
+			},
+			{
+				"family": "Isen",
+				"given": "Alice M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1983"
+				]
+			]
+		}
+	},
+	{
+		"id": "blasi",
+		"type": "article-journal",
+		"title": "Bridging moral cognition and moral action: A critical review of the literature",
+		"container-title": "Psychological Bulletin",
+		"page": "1-45",
+		"volume": "88",
+		"issue": "1",
+		"source": "APA PsycNET",
+		"abstract": "Discusses conceptual and empirical issues concerning the relations between moral reasoning and moral action. Two opposite views of the relations between moral cognition and moral action are described; one is an essentially irrational view that emphasizes need and action tendencies, while the other considers moral functioning as essentially rational. Their contrasting assumptions and implications are clarified. Available empirical literature is reviewed; research relating moral reasoning to delinquency, honesty, altruism, conformity, and other real-life moral behaviors is summarized, with special attention given to problems of design, measurement, and interpretation. Although overall these studies seem to support the cognitive–developmental perspective, this support needs to be qualified and interpreted in each area. At a more general level, the importance of clarifying the meaning of consistency between moral cognition and moral action and the need for a process approach to research in this area are emphasized. (4 p ref) (PsycINFO Database Record (c) 2016 APA, all rights reserved)",
+		"DOI": "10.1037/0033-2909.88.1.1",
+		"ISSN": "1939-1455(Electronic),0033-2909(Print)",
+		"shortTitle": "Bridging moral cognition and moral action",
+		"author": [
+			{
+				"family": "Blasi",
+				"given": "Augusto"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1980"
+				]
+			]
+		}
+	},
+	{
+		"id": "cleckley",
+		"type": "book",
+		"title": "The Mask of Sanity: An Attempt to Clarify Some Issues about the So-Called Psychopathic Personality",
+		"publisher": "Mosby",
+		"URL": "https://books.google.com/books?id=ksw4DwAAQBAJ",
+		"author": [
+			{
+				"family": "Cleckley",
+				"given": "H.M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1955"
+				]
+			]
+		}
+	},
+	{
+		"id": "davis",
+		"type": "article-journal",
+		"title": "Attitude alignment in close relationships",
+		"container-title": "Journal of Personality and Social Psychology",
+		"page": "65-84",
+		"volume": "81",
+		"issue": "1",
+		"source": "APA PsycNET",
+		"abstract": "On the basis of principles of balance theory and interdependence theory, this research examined a phenomenon termed attitude alignment, or the tendency of interacting partners to modify their attitudes in such a manner as to achieve altitudinal congruence. The results of three experiments generally were consistent with the proposed model. First, tendencies toward attitude alignment were greater to the extent that attitudinal discrepancies were salient. Second, alignment tendencies were greater to the extent that an issue was central to the partner; there was also evidence that the degree to which an issue was peripheral to the self affected alignment processes (e.g., for changes in centrality of issue, with regard to persuasion methods). Third, degree of alignment tended to be greater in dating-partner interactions than in stranger interactions and tended to be greater among couples with high adjustment than among those with low adjustment. (PsycINFO Database Record (c) 2016 APA, all rights reserved)",
+		"DOI": "10.1037/0022-3514.81.1.65",
+		"ISSN": "1939-1315(Electronic),0022-3514(Print)",
+		"author": [
+			{
+				"family": "Davis",
+				"given": "Jody L."
+			},
+			{
+				"family": "Rusbult",
+				"given": "Caryl E."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2001"
+				]
+			]
+		}
+	},
+	{
+		"id": "gazzaniga",
+		"type": "article-journal",
+		"title": "Some functional effects of sectioning the cerebral commissures in man",
+		"container-title": "Proceedings of the National Academy of Sciences",
+		"page": "1765-1769",
+		"volume": "48",
+		"issue": "10",
+		"source": "www.pnas.org",
+		"abstract": "It has been possible in studies of callosum-sectioned cats and monkeys in recent years to obtain consistent demonstration of a variety of interhemispheric integrational functions mediated by the corpus callosum.1, 2 These animal findings stand in marked contrast to the apparent lack of corresponding functional deficits produced by similar surgery in human patients.3⇓⇓⇓⇓⇓–9 The general picture of callosal functions based on the animal studies tends to be supported in current early testing of a 48-year-old male war veteran with recent complete section of the corpus callosum, anterior and hippocampal commissures.\n\nThe patient (W. J.) had been having grand mal convulsions for fifteen years subsequent to war injuries suffered in 1944. The seizures were refractory to medical management with a frequency, at best, of about 1 per week and, at worst, of 7 to 10 per day culminating in status epilepticus every 2–3 months. The subject was right handed, had an I.Q. of 113, and showed no significant sensory, motor, or associative disturbances in a battery of visual, tactile, and motor tests applied prior to surgery, excepting a mild hypesthesia on the left side.\n\nThe commissures were sectioned in a single operation by exposure and retraction of right frontal and occipital lobes. The massa intermedia was judged by the surgeons10 to be absent and some atrophy of the exposed right frontal pole was observed. Generalized weakness, akinesis, and mutism were evident immediately after surgery but had largely cleared when postoperative testing was started. Anticonvulsant medication was reinstated shortly after surgery. There have since been three brief attacks with loss of consciousness but as yet no major convulsions. Occasional brief episodes of clonic-like tremor confined to the distal portions of the right arm or leg have also …",
+		"URL": "http://www.pnas.org/content/48/10/1765",
+		"DOI": "10.1073/pnas.48.10.1765",
+		"ISSN": "0027-8424, 1091-6490",
+		"note": "PMID: 13946939",
+		"journalAbbreviation": "PNAS",
+		"language": "en",
+		"author": [
+			{
+				"family": "Gazzaniga",
+				"given": "M. S."
+			},
+			{
+				"family": "Bogen",
+				"given": "J. E."
+			},
+			{
+				"family": "Sperry",
+				"given": "R. W."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1962",
+					10,
+					1
+				]
+			]
+		},
+		"accessed": {
+			"date-parts": [
+				[
+					"2018",
+					9,
+					2
+				]
+			]
+		}
+	},
+	{
+		"id": "haidt_2001",
+		"type": "article-journal",
+		"title": "The emotional dog and its rational tail: A social intuitionist approach to moral judgment",
+		"container-title": "Psychological Review",
+		"page": "814-834",
+		"volume": "108",
+		"issue": "4",
+		"source": "APA PsycNET",
+		"abstract": "Research on moral judgment has been dominated by rationalist models, in which moral judgment is thought to be caused by moral reasoning. The author gives 4 reasons for considering the hypothesis that moral reasoning does not cause moral judgment; rather, moral reasoning is usually a post hoc construction, generated after a judgment has been reached. The social intuitionist model is presented as an alternative to rationalist models. The model is a social model in that it deemphasizes the private reasoning done by individuals and emphasizes instead the importance of social and cultural influences. The model is an intuitionist model in that it states that moral judgment is generally the result of quick, automatic evaluations (intuitions). The model is more consistent than rationalist models with recent findings in social, cultural, evolutionary, and biological psychology, as well as in anthropology and primatology. (PsycINFO Database Record (c) 2016 APA, all rights reserved)",
+		"DOI": "10.1037/0033-295X.108.4.814",
+		"ISSN": "1939-1471(Electronic),0033-295X(Print)",
+		"shortTitle": "The emotional dog and its rational tail",
+		"author": [
+			{
+				"family": "Haidt",
+				"given": "Jonathan"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2001"
+				]
+			]
+		}
+	},
+	{
+		"id": "kunda",
+		"type": "article-journal",
+		"title": "The case for motivated reasoning",
+		"container-title": "Psychological Bulletin",
+		"page": "480-498",
+		"volume": "108",
+		"issue": "3",
+		"source": "APA PsycNET",
+		"abstract": "It is proposed that motivation may affect reasoning through reliance on a biased set of cognitive processes—that is, strategies for accessing, constructing, and evaluating beliefs. The motivation to be accurate enhances use of those beliefs and strategies that are considered most appropriate, whereas the motivation to arrive at particular conclusions enhances use of those that are considered most likely to yield the desired conclusion. There is considerable evidence that people are more likely to arrive at conclusions that they want to arrive at, but their ability to do so is constrained by their ability to construct seemingly reasonable justifications for these conclusions. These ideas can account for a wide variety of research concerned with motivated reasoning. (PsycINFO Database Record (c) 2017 APA, all rights reserved)",
+		"DOI": "10.1037/0033-2909.108.3.480",
+		"ISSN": "1939-1455(Electronic),0033-2909(Print)",
+		"author": [
+			{
+				"family": "Kunda",
+				"given": "Ziva"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1990"
+				]
+			]
+		}
+	},
+	{
+		"id": "lord",
+		"type": "article-journal",
+		"title": "Biased assimilation and attitude polarization: The effects of prior theories on subsequently considered evidence",
+		"container-title": "Journal of Personality and Social Psychology",
+		"page": "2098-2109",
+		"volume": "37",
+		"issue": "11",
+		"source": "APA PsycNET",
+		"abstract": "People who hold strong opinions on complex social issues are likely to examine relevant empirical evidence in a biased manner. They are apt to accept \"confirming\" evidence at face value while subjecting \"disconfirming\" evidence to critical evaluation, and, as a result, draw undue support for their initial positions from mixed or random empirical findings. Thus, the result of exposing contending factions in a social dispute to an identical body of relevant empirical evidence may be not a narrowing of disagreement but rather an increase in polarization. To test these assumptions, 48 undergraduates supporting and opposing capital punishment were exposed to 2 purported studies, one seemingly confirming and one seemingly disconfirming their existing beliefs about the deterrent efficacy of the death penalty. As predicted, both proponents and opponents of capital punishment rated those results and procedures that confirmed their own beliefs to be the more convincing and probative ones, and they reported corresponding shifts in their beliefs as the various results and procedures were presented. The net effect of such evaluations and opinion shifts was the postulated increase in attitude polarization. (28 ref) (PsycINFO Database Record (c) 2016 APA, all rights reserved)",
+		"DOI": "10.1037/0022-3514.37.11.2098",
+		"ISSN": "1939-1315(Electronic),0022-3514(Print)",
+		"shortTitle": "Biased assimilation and attitude polarization",
+		"author": [
+			{
+				"family": "Lord",
+				"given": "Charles G."
+			},
+			{
+				"family": "Ross",
+				"given": "Lee"
+			},
+			{
+				"family": "Lepper",
+				"given": "Mark R."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1979"
+				]
+			]
+		}
+	},
+	{
+		"id": "haidt_2000",
+		"type": "manuscript",
+		"title": "Moral dumbfounding: When intuition finds no reason",
+		"genre": "Unpublished Manuscript",
+		"author": [
+			{
+				"family": "Haidt",
+				"given": "Jonathan"
+			},
+			{
+				"family": "Bjorklund",
+				"given": "F."
+			},
+			{
+				"family": "Murphy",
+				"given": "S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2000"
+				]
+			]
+		}
+	}
+]
