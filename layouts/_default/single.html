@@ -1,0 +1,42 @@
+{{ define "title" }}
+  {{ .Title }} | {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+  <article>
+    <h1>{{ .Title }}</h1>
+    <p class="meta">
+      <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
+      {{ with .Params.tags }}
+        <span class="tags">
+          Tags:
+          {{ range . }}
+            <a href="{{ "tags" | absURL }}/{{ . | urlize }}">{{ . }}</a>
+          {{ end }}
+        </span>
+      {{ end }}
+    </p>
+    {{ .Content }}
+  </article>
+  <aside>
+    <section>
+      <h2>Tags</h2>
+      <ul>
+        {{ range .Site.Taxonomies.tags }}
+          <li><a href="{{ "tags" | absURL }}/{{ .Page.Title | urlize }}">{{ .Page.Title }}</a> ({{ .Count }})</li>
+        {{ end }}
+      </ul>
+    </section>
+    <section>
+      <h2>Archive</h2>
+      {{ range (.Site.RegularPages.GroupByDate "January 2006") }}
+        <h3>{{ .Key }}</h3>
+        <ul class="archive-list">
+          {{ range .Pages }}
+            <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+          {{ end }}
+        </ul>
+      {{ end }}
+    </section>
+  </aside>
+{{ end }}

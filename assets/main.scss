@@ -1,0 +1,386 @@
+/* LAYOUT */
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+header {
+  margin: 0.5rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+
+  > nav {
+    > h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    article {
+      margin-bottom: 1.5rem;
+      padding: 0 1rem;
+
+      h2 {
+        margin-top: 1rem;
+      }
+
+      .meta {
+        margin: 0.5rem 0;
+      }
+    }
+
+    article:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  > article {
+    margin: 0 1rem;
+
+    .meta {
+      margin: 0.5rem 0 0;
+    }
+  }
+
+  > aside {
+    flex: 0 0 13rem;
+    margin: 1.5rem auto;
+    padding: 1rem;
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    section:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    .date {
+      flex: 1;
+      white-space: nowrap;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  header {
+    margin: 1.5rem;
+  }
+
+  main {
+    padding: 0 1.5rem 1.5rem;
+
+    > nav {
+      > h2 {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    flex-direction: row;
+    margin: 0 auto;
+    max-width: 1024px;
+    padding: 0 1rem 1rem;
+
+    > * {
+      margin-right: 1.5rem;
+    }
+
+    > aside {
+      margin: 0;
+      max-width: 13rem;
+    }
+  }
+}
+
+
+/* STYLING */
+
+@mixin non-body-font() {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+@mixin bold() {
+  font-weight: 600;
+}
+
+@mixin deemphasize() {
+  opacity: 0.6;
+}
+
+@mixin smaller() {
+  font-size: 0.8rem;
+}
+
+@mixin smallest() {
+  font-size: 0.7rem;
+}
+
+@mixin hanging-indent() {
+  margin-left: 0;
+  padding-left: 2rem;
+  text-indent: -2rem;
+}
+
+html {
+  font-family: 'Sorts Mill Goudy', serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+body {
+  color: #333;
+  line-height: 1.4;
+}
+
+p {
+  text-align: justify;
+}
+
+a {
+  color: #333;
+}
+
+strong, b {
+  @include bold();
+}
+
+em, i {
+  font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @include non-body-font();
+  @include bold();
+}
+
+sup {
+  vertical-align: super;
+}
+
+header {
+  text-align: center;
+
+  h1 {
+    @include bold();
+    font-size: 1.3rem;
+    text-transform: uppercase;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .description {
+    @include deemphasize();
+    @include smaller();
+  }
+}
+
+main {
+  > nav {
+    > h2 {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    article {
+      h2 {
+        font-size: 1.2rem;
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .pagination {
+      @include non-body-font();
+      @include smaller();
+      text-align: center;
+    }
+  }
+
+  > article {
+
+    h1 {
+      font-size: 1.3rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+    }
+
+    h2, h3, h4, h5, h6 {
+      margin-top: 1.25rem;
+    }
+
+    .citation {
+      @include deemphasize();
+    }
+
+    blockquote {
+      border-left: 2px solid #eaeaea;
+      margin: 0 0.5rem;
+      padding: 0 0.5rem;
+    }
+
+    figure {
+      @include smaller();
+      max-width: 100%;
+      text-align: center;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    ul {
+      list-style-type: circle;
+    }
+
+    ol {
+      li {
+        list-style-type: decimal;
+        list-style-position: outside;
+        margin-left: 1rem;
+      }
+    }
+
+    #refs {
+      margin: 1rem 0 0;
+
+      div {
+        @include hanging-indent();
+        p {
+          text-align: left;
+        }
+      }
+    }
+
+    .footnotes hr {
+      display:none;
+    }
+  }
+
+  > aside {
+    background-color: #eaeaea;
+
+    h2, h3, ul {
+      text-align: center;
+    }
+
+    h2 {
+      @include non-body-font();
+      @include bold();
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin-top: 0.5rem;
+      @include smaller();
+    }
+
+    p {
+      @include smaller();
+    }
+
+    ul {
+      @include non-body-font();
+      @include smaller();
+    }
+  }
+
+  .meta, .read-more {
+    @include non-body-font();
+    @include deemphasize();
+    @include smaller();
+  }
+}
+
+@media (min-width: 768px) {
+  header {
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .description {
+      @include deemphasize();
+      font-size: 1rem;
+    }
+  }
+
+  main {
+    > nav {
+
+      > h2 {
+        font-size: 1.3rem;
+      }
+
+      article {
+        border: 1px solid #eaeaea;
+        h2 {
+          font-size: 1.3rem;
+        }
+      }
+    }
+    > article {
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        margin-top: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.1rem;
+        margin-top: 1.25rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    > aside {
+      ul, h3 {
+        text-align: left;
+
+        li {
+          @include hanging-indent();
+        }
+      }
+    }
+  }
+}
