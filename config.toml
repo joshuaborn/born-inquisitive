@@ -1,7 +1,6 @@
 baseurl = "https://fecundity.blog/"
 languageCode = "en-us"
 title = "Fecundity Blog"
-theme = "hugo-lithium"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 uglyURLS = true
 
