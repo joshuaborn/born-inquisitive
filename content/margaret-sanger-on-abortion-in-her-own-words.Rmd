@@ -16,7 +16,7 @@ Margaret Sanger, pioneer of birth control in the United States and founder of th
 
 
 <figure>
-  <img src="/margaret-sanger.jpeg" alt="Margaret Sanger seated holding an open book in 1916." />
+  <img src="/images/margaret-sanger.jpeg" alt="Margaret Sanger seated holding an open book in 1916." />
   <figcaption>
     Library of Congress, Prints & Photographs Division, <a href="http://www.loc.gov/pictures/item/2014700793/">[LC-DIG-ggbain-20859]</a>
     <br/>
@@ -56,7 +56,7 @@ Before she could get _Family Limitation_ published, Margaret Sanger was indicted
 Following these events, Margaret Sanger went on a three-month speaking tour of the United States. When she was in in Portland on this trip, she was arrested and with several others spent the night in jail. [@sanger_1938, 192-209] Upon her return to New York City, she went about looking for a physician to staff a birth control clinic, but she was unable to find one and decided to proceed anyway. After acquiring funding from a benefactor and meeting with women in the Brownsville neighborhood of Brooklyn, she opened a clinic in Brownsville at 46 Amboy Street with Ethel Byrne, her sister and also a nurse, and Fania Mindell. The clinic operated for nine days before the three women were arrested and their landlord forced to sign eviction papers. [@sanger_1938, 210-223]
 
 <figure>
-  <img src="/margaret-sanger-fania-mindell-courthouse.png" alt="Margaret Sanger and Fania Mindell are surrounded by a crowd after appearing in court in 1917." />
+  <img src="/images/margaret-sanger-fania-mindell-courthouse.png" alt="Margaret Sanger and Fania Mindell are surrounded by a crowd after appearing in court in 1917." />
   <figcaption>
     From <i>The history of the birth control movement</i> [Public domain], via <a href="https://commons.wikimedia.org/wiki/File:SangerCourthouse.tiff">Wikimedia Commons</a>.
     <br/>
@@ -113,7 +113,7 @@ When Margaret Sanger opened her first birth control clinic, she advertised it by
 > A registration fee of 10 cents entitles any mother to this information. [@sanger_1936;  @sanger_1938, 216]
 
 <figure>
-    <img src="/brownsville-clinic.jpeg" alt="Women with strollers sit outside of Margaret Sanger's first birth control clinic." />
+    <img src="/images/brownsville-clinic.jpeg" alt="Women with strollers sit outside of Margaret Sanger's first birth control clinic." />
     <figcaption>
         Library of Congress, Prints & Photographs Division, NYWT&S Collection, <a href="https://www.loc.gov/item/2010645731/">[LC-USZ62-138888]</a>
         <br />
@@ -132,7 +132,7 @@ In her autobiography, Margaret Sanger describes what she told those who answered
 > Children were left with her and mothers ushered in to Ethel or me in the rear room, from seven to ten at once. To each group we explained simply what contraception was; that abortion was the wrong way&mdash;no matter how early it was performed it was taking life; that contraception was the better way, the safer way&mdash;it took a little time, a little trouble, but was well worth while in the long run, because life had not yet begun. [@sanger_1938, 216-217]
 
 <figure>
-    <img src="/brownsville-clinic-inside.jpeg" alt="Fania Mindell and Margaret Sanger inside of the birth control clinic in Brownsville, Brooklyn." />
+    <img src="/images/brownsville-clinic-inside.jpeg" alt="Fania Mindell and Margaret Sanger inside of the birth control clinic in Brownsville, Brooklyn." />
     <figcaption>
         Library of Congress, Prints & Photographs Division, <a href="http://www.loc.gov/pictures/item/2014703168/">[LC-DIG-ggbain-23218]</a>
         <br />
@@ -344,7 +344,7 @@ The great irony of quoting this sentence out of context in order to spread false
 It is notable that the letter of Senator Cruz, et al, refers to the "destruction of unborn human life." Perhaps this particular attack on Margaret Sanger is motivated by ignorance of her actual beliefs. The "exterminate" quote, taken out of context, appears in much of the attack literature against her. Senator Cruz, et al, may have simply copied the quote from such attack literature into their letter without much research.
 
 <figure>
-    <img src="/margaret-sanger-bust.jpg" alt="A bust of Margaret Sanger that appears in the National Portrait Gallery of the Smithsonian Institution." />
+    <img src="/images/margaret-sanger-bust.jpg" alt="A bust of Margaret Sanger that appears in the National Portrait Gallery of the Smithsonian Institution." />
     <figcaption>
         <a href="https://www.flickr.com/photos/nostri-imago/3011393385">"Margaret Higgins Sanger"</a> by <a href="https://www.flickr.com/photos/nostri-imago/">Cliff</a> is licensed under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> and is not modified.
         <br />
@@ -368,7 +368,7 @@ An insight into the views that Margaret Sanger faced from the Roman Catholic chu
 To Margaret Sanger, abortion is killing, and contraception is harmless. Therefore, the goal of advancing contraception in order to prevent abortion is extremely obvious. By the logic of Archbishop Hayes, however, contraception is worse than abortion. Therefore, Archbishop Hayes would view the goal of eliminating abortion through the advancement of contraception as actually making human society worse, not better. This stems from a fundamental difference in worldview.
 
 <figure>
-  <img src="/patrick-joseph-hayes.jpeg" alt="A photograph of Patrick J. Hayes in 1931." />
+  <img src="/images/patrick-joseph-hayes.jpeg" alt="A photograph of Patrick J. Hayes in 1931." />
   <figcaption>
     Library of Congress, Prints & Photographs Division, <a href="http://www.loc.gov/pictures/item/99471529/">[LC-USZ62-123860]</a>
     <br />
@@ -487,7 +487,7 @@ One of Margaret Sanger's anecdotes from her travels embodies the very spirit of 
 > The most painful experience I had in Japan was in addressing the Tokyo medical association. The volunteer interpreter was a young doctor who had been on a three weeks’ tour of America, and his command of English was correspondingly slight. From the attitude of the audience I could tell whenever he was not conveying my meaning as I had intended it, though I did not always know what specifically was wrong. The Baroness [Ishimoto], unable to bear his mis-translation of “prevention of conception” as abortion, which she knew would distress me intensely, finally rose and attempted to correct the erroneous impression he was giving. But the meeting was over before she could make it clear. [@sanger_1938, 328]
 
 <figure>
-  <img src="/margaret-sanger-and-ishimoto-shizuko.jpg" alt="A photograph of Ishimoto Shizuko, Margaret Sanger, and her son Grant Sanger in 1922." />
+  <img src="/images/margaret-sanger-and-ishimoto-shizuko.jpg" alt="A photograph of Ishimoto Shizuko, Margaret Sanger, and her son Grant Sanger in 1922." />
   <figcaption>
     "Margaret Sanger and Ishimoto Shizuko, 1922" (『アサヒグラフ』 1951 年新年号) [Public domain], via <a href="https://commons.wikimedia.org/wiki/File:Margaret_Sanger_and_Ishimoto_Shizuko_1922.jpg">Wikimedia Commons</a>.
     <br />
