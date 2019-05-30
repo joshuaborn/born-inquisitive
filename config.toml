@@ -1,4 +1,4 @@
-baseurl = "https://fecundity.blog/"
+baseURL = "https://fecundity.blog/"
 languageCode = "en-us"
 title = "Fecundity"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
@@ -13,3 +13,15 @@ disableKinds = ["taxonomyTerm"]
 
 [params]
   subtitle = "Writings about contraception, critical thinking, and other things"
+
+[mediaTypes]
+[mediaTypes."application/atom"]
+  suffixes = ["xml"]
+
+[outputFormats.Atom]
+  mediaType = "application/atom"
+  baseName = "feed"
+  isPlainText = false
+
+[outputs]
+  home = ["HTML", "Atom"]

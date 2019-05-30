@@ -1,0 +1,18 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{- .Site.Title -}}</title>
+  <subtitle>{{- .Site.Params.Subtitle -}}</subtitle>
+  <id>{{- .Site.BaseURL -}}</id>
+  <link href="{{- .Site.BaseURL -}}"/>
+  <link href="{{- .Permalink -}}" rel="self"/>
+  <updated>{{- .Date.Format "2006-01-02T15:04:05-0700" | safeHTML -}}</updated>
+  {{ range .Data.Pages }}
+  <entry>
+    <title>{{ .Title }}</title>
+    <link rel="alternate" href="{{ .Permalink }}"/>
+    <id>{{ .Permalink }}</id>
+    <published>{{ .Date.Format "2006-01-02T15:04:05-0700" | safeHTML }}</published>
+    <summary>{{ .Summary | html }}</summary>
+    <content type="html">{{ .Summary | html }} {{ .Content | html }}</content>
+  </entry>
+  {{ end }}
+</feed>
