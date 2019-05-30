@@ -7,5 +7,8 @@ uglyURLS = true
 [permalinks]
     post = "/:slug/"
 
+[Taxonomies]
+  tags = "tags"
+
 [params]
     description = "Writings about contraception, critical thinking, and other things"
