@@ -6,10 +6,10 @@ uglyURLS = true
 disableKinds = ["taxonomyTerm"]
 
 [permalinks]
-    post = "/:slug/"
+  post = "/:slug/"
 
 [Taxonomies]
   tags = "tags"
 
 [params]
-    subtitle = "Writings about contraception, critical thinking, and other things"
+  subtitle = "Writings about contraception, critical thinking, and other things"
