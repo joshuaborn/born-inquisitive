@@ -10,7 +10,7 @@
         {{ .Site.Title }}
       {{ end }}
     </title>
-    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="/reset.css" />
     {{ $style := resources.Get "main.scss" | toCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $style.Permalink }}" />
     <link href="https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400i,600|Open+Sans:400,600" rel="stylesheet" />

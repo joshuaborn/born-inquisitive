@@ -1,0 +1,11 @@
+<p class="meta">
+  <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
+  {{ with .Params.tags }}
+    <span class="tags">
+      Tags:
+      {{ range . }}
+        <a href="{{ "tags" | absURL }}/{{ . | urlize }}.html">{{ . }}</a>
+      {{ end }}
+    </span>
+  {{ end }}
+</p>

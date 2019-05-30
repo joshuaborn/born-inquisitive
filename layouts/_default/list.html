@@ -1,0 +1,13 @@
+{{ define "main" }}
+  <nav>
+    {{ range .Pages }}
+      <article>
+        <h2><a href="{{.Permalink}}">{{.Title}}</a></h2>
+        {{ partial "meta" . }}
+        <p>{{ .Summary }}</p>
+        <p class="read-more"><a href="{{.Permalink}}">Read more &raquo;</a></p>
+      </article>
+    {{ end }}
+  </nav>
+  {{ partial "aside" . }}
+{{ end }}

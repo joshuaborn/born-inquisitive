@@ -1,0 +1,31 @@
+{{ $this := . }}
+
+<aside>
+  <section>
+    <h2>Tags</h2>
+    <ul>
+      {{ range .Site.Taxonomies.tags }}
+        {{ if eq .Page $this }}
+          <li><em>{{ .Page.Title }}</em> ({{ .Count }})</li>
+        {{ else }}
+          <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> ({{ .Count }})</li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  </section>
+  <section>
+    <h2>Archive</h2>
+    {{ range (.Site.RegularPages.GroupByDate "January 2006") }}
+      <h3>{{ .Key }}</h3>
+      <ul class="archive-list">
+        {{ range .Pages }}
+          {{ if eq . $this }}
+            <li><em>{{ .Title }}</em></li>
+          {{ else }}
+            <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    {{ end }}
+  </section>
+</aside>
