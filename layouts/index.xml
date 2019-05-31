@@ -3,16 +3,21 @@
   <subtitle>{{- .Site.Params.Subtitle -}}</subtitle>
   <id>{{- .Site.BaseURL -}}</id>
   <link href="{{- .Site.BaseURL -}}"/>
-  <link href="{{- .Permalink -}}" rel="self"/>
-  <updated>{{- .Date.Format "2006-01-02T15:04:05-0700" | safeHTML -}}</updated>
+  <link href="{{- "feed.xml" | absURL -}}" rel="self"/>
+  <updated>{{- .Date.Format "2006-01-02T15:04:05Z" | safeHTML -}}</updated>
   {{ range .Data.Pages }}
   <entry>
-    <title>{{ .Title }}</title>
-    <link rel="alternate" href="{{ .Permalink }}"/>
-    <id>{{ .Permalink }}</id>
-    <published>{{ .Date.Format "2006-01-02T15:04:05-0700" | safeHTML }}</published>
-    <summary>{{ .Summary | html }}</summary>
-    <content type="html">{{ .Summary | html }} {{ .Content | html }}</content>
+    <title>{{- .Title -}}</title>
+    <link rel="alternate" href="{{- .Permalink -}}"/>
+    <id>{{- .Permalink -}}</id>
+    <published>{{- .Date.Format "2006-01-02T15:04:05Z" | safeHTML -}}</published>
+    <updated>{{- .Date.Format "2006-01-02T15:04:05Z" | safeHTML -}}</updated>
+    <author>
+      <name>FecundityBlog</name>
+      <uri>{{- .Site.BaseURL -}}</uri>
+    </author>
+    <summary type="html">{{- .Summary | html -}}</summary>
+    <content type="html">{{- .Summary | html -}} {{- .Content | html -}}</content>
   </entry>
   {{ end }}
 </feed>
