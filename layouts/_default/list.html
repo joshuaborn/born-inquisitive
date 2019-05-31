@@ -1,3 +1,11 @@
+{{ define "title" }}
+  {{ if eq .Page.Kind "taxonomy" }}
+    {{ .Title }} | {{ .Site.Title }}
+  {{ else }}
+    {{ .Site.Title }} | {{ .Site.Params.Subtitle }}
+  {{ end }}
+{{ end }}
+
 {{ define "main" }}
   <nav>
     {{ range .Pages }}

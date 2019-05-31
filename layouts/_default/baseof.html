@@ -6,9 +6,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>
-      {{ block "title" . }}
-        {{ .Site.Title }}
-      {{ end }}
+      {{ block "title" . }}{{ end }}
     </title>
     <link rel="stylesheet" href="/stylesheets/reset.css" />
     {{ $style := resources.Get "stylesheets/main.scss" | toCSS | minify | fingerprint }}
