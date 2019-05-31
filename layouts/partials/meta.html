@@ -1,5 +1,5 @@
 <p class="meta">
-  <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
+  <span class="date">{{ .Date.Format "January 2, 2006" }}<br/>{{ lang.NumFmt 0 .WordCount }} words (~{{ lang.NumFmt 0 (div .WordCount 200) }} minutes)</span>
   {{ with .Params.tags }}
     <span class="tags">
       Tags:
