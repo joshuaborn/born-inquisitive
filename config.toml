@@ -15,11 +15,11 @@ disableKinds = ["taxonomyTerm"]
   subtitle = "Writings about contraception, critical thinking, and other things"
 
 [mediaTypes]
-[mediaTypes."application/atom"]
+[mediaTypes."application/atom+xml"]
   suffixes = ["xml"]
 
 [outputFormats.Atom]
-  mediaType = "application/atom"
+  mediaType = "application/atom+xml"
   baseName = "feed"
   isPlainText = false
 
