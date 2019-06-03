@@ -8,11 +8,13 @@ link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
+    toc: true
+    toc_depth: 5
+include-before: |
+  <p>Margaret Sanger, pioneer of birth control in the United States and founder of the organizations that became Planned Parenthood, felt that abortion is "taking life," excluded abortion from her birth control movement, and had the explicit goal of ending the use of abortion as a method of family limitation. This causes her legacy to conflict with the false dichotomy surrounding abortion today, both with the so-called "pro-life" movement that vilifies her and with the so-called "pro-choice" movement that exalts her.</p>
+  <!--more-->
+  ## Table of Contents
 ---
-
-Margaret Sanger, pioneer of birth control in the United States and founder of the organizations that became Planned Parenthood, felt that abortion is "taking life," excluded abortion from her birth control movement, and had the explicit goal of ending the use of abortion as a method of family limitation. This causes her legacy to conflict with the false dichotomy surrounding abortion today, both with the so-called "pro-life" movement that vilifies her and with the so-called "pro-choice" movement that exalts her.
-
-<!--more-->
 
 
 <figure>
@@ -69,7 +71,7 @@ Ethel Byrne was tried first on January 7, 1917, found guilty of distributing con
 These events brought Margaret Sanger much notoriety and made her name synonymous with the birth control movement. This early part of her career as a birth control advocate also set the pattern for her activities from 1917 until 1937. She spent these years traveling, speaking, raising funds, publishing periodicals, writing books, founding clinics, organizing conventions, and occasionally running afoul of the law.
 
 
-## Founder of Planned Parenthood
+### Founder of Planned Parenthood
 
 Margaret Sanger also spent these years starting organizations. This is made more complicated by the fact that she sometimes separated from the organizations she founded. As early as 1915, when she returned to the United States to stand trial, she was surprised to find the new leadership of the National Birth Control League repudiating her, stating they could not support someone who openly violated the law. [@sanger_1938, 180-181] They would, however, later come to support her during her trial. [@sanger_1938, 189]
 
@@ -82,7 +84,7 @@ In 1937, the Birth Control Council of America was formed with Margaret Sanger as
 On January 19, 1939, the American Birth Control League and the Birth Control Clinical Research Bureau merged into the Birth Control Federation of America, again with Margaret Sanger as honorary chairman. By this time, she had moved to Arizona and was not involved with the daily operations of the organization. On January 29, 1942, the Birth Control Federation of America changed its name to the Planned Parenthood Federation of America. [@bcfa]
 
 
-## Legacy
+### Legacy
 
 Another organization led by Margaret Sanger was the National Committee on Federal Legislation on Birth Control, which in 1931 began lobbying the United States Congress to amend the Comstock laws to remove prohibitions on contraception. Despite much money and effort over the next six years, these efforts would turn out to be fruitless. [@sanger_1938, 413-427]
 
@@ -304,7 +306,7 @@ Margaret Sanger's views have substantial differences with both of these factions
 Furthermore, much of the misunderstanding of Margaret Sanger's views on abortion occurs because elements of both the "pro-life" and "pro-choice" factions have an interest in misleading the public into thinking that Margaret Sanger was an enthusiast of abortion when, as we have seen, her views were the exact opposite.
 
 
-## Differences with the So-Called "Pro-Life" Faction
+### Differences with the So-Called "Pro-Life" Faction
 
 The so-called "pro-life" faction has in common an opposition to abortion as a method of family limitation. Since Margaret Sanger regarded abortion as killing and sought to end its use as a method of family limitation, one might think that she would be well remembered by the "pro-life" faction. However, the lies commonly spread in attempts to attack Margaret Sanger and her legacy typically come from the "pro-life" faction.
 
@@ -315,7 +317,7 @@ Some of these attacks, furthermore, may be the posthumous continuation of attack
 Some of these attacks, finally, may be due to that most petty tendency of political movements to attack anyone who does not construe the world in accord with their exact political ideology. Much as socialist governments are infamous for purging rival forms of socialism from their ranks and history books, these petty attacks are usually upon those who represent a worldview similar, but slightly different, and thus present an alternative.
 
 
-### Accusations of Attempting to Exterminate Ethnic Groups
+#### Accusations of Attempting to Exterminate Ethnic Groups
 
 The most common lie spread to attack Margaret Sanger's legacy is that she wanted to use birth control to get rid of some ethnic group. On its face, this seems a silly proposition, since even if someone had such an abominable goal, distributing information about and devices for contraception would be a very roundabout and ineffectual way to pursue such an outcome. Furthermore, these are not new lies. Even when Margaret Sanger was awaiting trial for opening her first birth control clinic, she wrote about such allegations in her autobiography:
 
@@ -357,7 +359,7 @@ Long before Senator Cruz, et al, would demand Margaret Sanger's bust be removed 
 > Birth Control will prevent abortion. It will do away with the practice of taking drugs and poisonous nostrums to end undesired pregnancies. It will put an end to the tens of thousands of illegal operations to which women resort in despair. Mothers will not submit to the murder of unborn children when they can control conception. [@sanger_1923]
 
 
-### Opposition to Contraception
+#### Opposition to Contraception
 
 More intentional attacks, however, come from the opponents of contraception. Indeed, the biggest difference between Margaret Sanger's views and the views of the "pro-life" faction occurs with those elements of the "pro-life" faction that oppose contraception. The most notable of these elements is the Roman Catholic church.
 
@@ -395,7 +397,7 @@ Indeed, Margaret Sanger believed contraception and only contraception could prov
 > This is the _only_ cure for abortions. [@sanger_1918_family]
 
 
-### The Ineffectiveness of Politics
+#### The Ineffectiveness of Politics
 
 One of the things that characterizes the "pro-life" faction is that, being one half of a political dichotomy, it sees the problem of abortion as essentially a political problem. Margaret Sanger, on the other hand, acknowledged the vanity of attempts to address infanticide, child abandonment, and abortion with purely political methods, instead seeing the problem of abortion as one to be solved by the advancement of contraception. This is a subtle difference, but as alluded to earlier, sometimes a faction attacks those closest to the faction's ideology in order to stamp out alternatives.
 
@@ -424,7 +426,7 @@ The fundamental flaw of the political approach to abortion is that abortion is p
 > To apply such a remedy, society must recognize the terrible lesson taught by the innumerable centuries of infanticide and foeticide. If these abhorrent practices could have been ended by punishment and suppression, they would have ceased long ago. But to continue suppression and punishment, and let the matter rest there, is only to miss the lesson&mdash;only to permit conditions to go from bad to worse. [@sanger_1920, 27]
 
 
-## Differences with the So-Called "Pro-Choice" Faction
+### Differences with the So-Called "Pro-Choice" Faction
 
 The so-called "pro-choice" faction has in common the goal of keeping abortion as a method of family limitation legal. The use of the "pro-choice" branding instead of "pro-abortion" branding allows the faction to be more inclusive. Allegiance to the faction is only a political stance. This leaves open the door to individuals who are personally against abortion, but politically against government interference in the choice of whether or not to kill unwanted fetuses and embryos. This emphasis on personal choices resonates with the classical liberal or libertarian aspect of the political [mythology](/four-teloi-of-human-nature.html) of the United States.
 
@@ -437,7 +439,7 @@ Recent U.S. Vice President Joe Biden considers himself "pro-choice" along these 
 Even under this broad definition, however, it is incorrect to construe Margaret Sanger as "pro-choice" with regard to abortion. It is important to remember social context. Margaret Sanger lived at a time when abortion as a method of family limitation was, for the most part, illegal in the United States. To be "pro-choice" in her social context would not have been inaction, but lobbying for the legalization of abortion. This is something she did not do, despite being emphatic in her lobbying for the legalization of contraception. Her aversion to abortion politics is not an actively "pro-choice" stance just because it does not fit exactly into a "pro-life" stance.
 
 
-### Personal Choices and Society's Choice
+#### Personal Choices and Society's Choice
 
 For those who, on libertarian grounds, wish the government not to interfere in reproductive matters, but personally are unenthusiastic about abortion or perhaps are even troubled by abortion, the "pro-choice" rhetoric distracts from a larger point. Margaret Sanger made this point nearly a century ago when she wrote:
 
@@ -450,7 +452,7 @@ These words that were written nearly a century ago &ndash; when contraceptive me
 To look at abortion _only_ as a personal choice made by those left carrying a pregnancy is to ignore the choices of all those who participate in a system that leaves over 80 million women annually to be confronted with a choice they did not want, and to be content with a system of fertility control predicated on over 40 million abortions every year. There is much that all of members of human society could be doing to address this state of affairs, regardless of whether one is "pro-choice" or not. 
 
 
-### Equivocation of Criticism of Abortion with Misogyny 
+#### Equivocation of Criticism of Abortion with Misogyny 
 
 The reaction of members of the "pro-choice" faction to the description of abortion as the "killing of babies in the womb" or "the murder of unborn children" is often angry, featuring allegations that the holder of such beliefs "hates women" or "is against women's rights."
 
@@ -471,14 +473,14 @@ Margaret Sanger saw no contradiction between her sentiment that a woman has a ri
 Clearly, when enthusiasts of abortion reuse the rhetoric that Margaret Sanger popularized decades earlier, the difference between these two positions is not that Margaret Sanger is against women's rights. Rather, the difference is that abortion enthusiasts subscribe to some version of the proposition that the killing of fetuses and embryos does not count morally. There are many different [arguments](moral-arguments-are-self-delusional.html) for this proposition. Regardless of which particular argument an individual subscribes to, Margaret Sanger's example highlights that it is the moral perception of prenatal organisms, not antipathy to women's rights, that is the point of fundamental difference between so-called "pro-choice" positions and their dissenters.
 
 
-### Misappropriation of Margaret Sanger's Ideology
+#### Misappropriation of Margaret Sanger's Ideology
 
 Furthermore, this explains how the ideology popularized by Margaret Sanger is misappropriated for enthusiasm for the very practice she was trying to end. For those who feel that the killing of fetuses and embryos does not count, there is no moral compunction about abortion, and abortion can be done under conditions found in modern industrialized society with minimal risk to the mother. At that point, one can simply take the case Margaret Sanger made for contraception and substitute abortion.
 
 The advancement of contraception to the point at which unintended pregnancies are so rare that public demand for abortion dissipates is a great challenge. From a purely technical standpoint, abortion is relatively easy to do. In this way, those who have no moral compunction about abortion feel like they are already living in the future of voluntary motherhood about which Margaret Sanger dreamed. Unsurprisingly, this leads to individuals who are enthusiastic about abortion in a way similar to Margaret Sanger's enthusiasm about contraception. This is a facile appropriation of the vision that Margaret Sanger had, one that would likely have disturbed her to see. 
 
 
-### Misappropriation of Margaret Sanger's Name
+#### Misappropriation of Margaret Sanger's Name
 
 The Planned Parenthood Federation of America issues the "Margaret Sanger Awards" supposedly in her honor. Sometimes these awards are given to individuals who have advanced contraception, such as Dr. John Rock, or to social luminaries in general, such as Martin Luther King, Jr. However, these awards are all too often given to individuals who have done nothing to advance contraception, but instead recognize individuals for their work in the advancement of abortion. While organizations can have whatever ideology their constituency prefers and call attention to whomever embodies such ideology, these instances of "Margaret Sanger" awards are misappropriations of her name.
 
@@ -500,7 +502,7 @@ This article is trying to do what the Baroness Ishimoto tried to do so many deca
 
 ## Further Reading
 
-Margaret Sanger's published books are in the public domain. Many are freely available from [Project Gutenberg](http://www.gutenberg.org/ebooks/author/693), from Google Books, or from public or university libraries. Most of the discussion of abortion in [_Margaret Sanger: an autobiography_](http://www.gutenberg.org/ebooks/56610) is already included in this article. Small portions of "Woman's Struggle for Freedom" and "Contraceptives or Abortion," the second and tenth chapters of _[Woman and the New Race](http://www.gutenberg.org/ebooks/8660),_ respectively, are included in this article, but the rest of those chapters include substantial discussion of abortion.
+Margaret Sanger's published books are in the public domain. Many are freely available from [Project Gutenberg](http://www.gutenberg.org/ebooks/author/693), from [Google Books](https://www.google.com/search?tbo=p&tbm=bks&q=inauthor:%22Margaret+Sanger%22), or from public or university libraries. Most of the discussion of abortion in [_Margaret Sanger: an autobiography_](http://www.gutenberg.org/ebooks/56610) is already included in this article. Small portions of "Woman's Struggle for Freedom" and "Contraceptives or Abortion," the second and tenth chapters of _[Woman and the New Race](https://books.google.com/books?id=a-skAAAAYAAJ),_ respectively, are included in this article, but the rest of those chapters include substantial discussion of abortion.
 
 New York University maintains a [Margaret Sanger Papers Project](http://www.nyu.edu/projects/sanger/) and have made a portion of their collection available online. This was used as a source for most of the periodical articles authored by Margaret Sanger cited herein.
 

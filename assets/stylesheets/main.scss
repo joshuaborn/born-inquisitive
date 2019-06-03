@@ -290,6 +290,15 @@ main {
     .footnotes hr {
       display:none;
     }
+
+    #TOC {
+      margin: 1rem 0;
+
+      ul {
+        list-style: circle;
+        padding-left: 1rem;
+      }
+    }
   }
 
   > aside {
