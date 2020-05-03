@@ -12,7 +12,7 @@ disableKinds = ["taxonomyTerm"]
   tags = "tags"
 
 [params]
-  subtitle = "Writings about contraception, critical thinking, and other things"
+  subtitle = "Independent, critical thinking"
 
 [mediaTypes]
 [mediaTypes."application/atom+xml"]
