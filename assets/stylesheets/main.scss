@@ -256,13 +256,18 @@ main {
       padding: 0 0.5rem;
     }
 
-    figure {
+    figure, .figure {
       @include smaller();
       max-width: 100%;
       text-align: center;
 
       img {
         max-width: 100%;
+      }
+
+      .caption {
+        margin: 0;
+        text-align: inherit;
       }
     }
 
