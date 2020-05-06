@@ -1,7 +1,7 @@
 ---
 title: "Margaret Sanger on Abortion in Her Own Words"
 date: 2018-11-11
-tags: ["abortion", "contraception"]
+tags: ["abortion", "contraception", "history"]
 bibliography: "../bibliographies/margaret-sanger-on-abortion-in-her-own-words.json"
 csl: "../bibliographies/apa.csl"
 link-citations: true
@@ -78,7 +78,7 @@ In 1937, the Birth Control Council of America was formed with Margaret Sanger as
 On January 19, 1939, the American Birth Control League and the Birth Control Clinical Research Bureau merged into the Birth Control Federation of America, again with Margaret Sanger as honorary chairman. By this time, she had moved to Arizona and was not involved with the daily operations of the organization. On January 29, 1942, the Birth Control Federation of America changed its name to the Planned Parenthood Federation of America. [@bcfa]
 
 
-### Legacy
+### Legacy for Contraception
 
 Another organization led by Margaret Sanger was the National Committee on Federal Legislation on Birth Control, which in 1931 began lobbying the United States Congress to amend the Comstock Law to remove prohibitions on contraception. Despite much money and effort over the next six years, these efforts would turn out to be fruitless. [@sanger_1938, 413-427]
 
