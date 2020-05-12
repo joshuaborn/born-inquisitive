@@ -1,0 +1,61 @@
+---
+draft: true
+title: "The Fallacy of Generic Generalizations"
+date: '`r format(Sys.Date(), "%Y-%m-%d")`'
+tags: ["fallacies"]
+csl: "../bibliographies/apa.csl"
+link-citations: true
+implicit-figures: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+    toc: false
+    toc_depth: 5
+---
+
+A generic generalization is an unquantified belief about a population of numerous individuals. Such beliefs are too imprecise to constitute knowledge. However, unlike other fallacies which might lead to patently false beliefs, a generic generalization can be too imprecise to be easily demonstrated to be false. Thus, generic generalizations constitute a particularly pernicious kind of fallacy.
+
+<!--more-->
+
+## Definition and Examples of Generic Generalizations
+
+> My friend Leslie got an 'A' on the exam.
+
+> 70.97% of students got an 'A' on the exam.
+
+> Some students got an 'A' on the exam.
+
+> All students got an 'A' on the exam.
+
+> Students got an 'A' on the exam.
+
+> Cagots are dirty liars.
+
+
+## Why This Is a Fallacy
+
+
+## How To Avoid This Fallacy
+
+
+### In One's Own Thinking
+
+All true beliefs about a population of individuals necessarily describe a distribution.
+
+
+### In Others' Thinking
+
+
+## The Psychology of Generic Generalizations
+
+
+## Generic Thinking Generally
+
+
+## Inline Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
