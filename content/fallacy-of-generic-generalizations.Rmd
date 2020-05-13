@@ -2,7 +2,7 @@
 draft: true
 title: "The Fallacy of Generic Generalizations"
 date: '`r format(Sys.Date(), "%Y-%m-%d")`'
-tags: ["fallacies"]
+tags: ["fallacies", "third-person"]
 csl: "../bibliographies/apa.csl"
 link-citations: true
 implicit-figures: true
