@@ -2,7 +2,7 @@
 draft: true
 title: "The Fallacy of Generic Generalization"
 date: '`r format(Sys.Date(), "%Y-%m-%d")`'
-tags: ["fallacies", "third-person"]
+tags: ["fallacy", "third-person"]
 csl: "../bibliographies/apa.csl"
 link-citations: true
 implicit-figures: true
@@ -13,19 +13,24 @@ output:
     toc_depth: 5
 ---
 
-A generic generalization is an unquantified belief about a population of numerous individuals. Such beliefs are too imprecise to constitute knowledge. However, unlike other fallacies which might lead to patently false beliefs, a generic generalization can be too imprecise to be easily demonstrated to be false. Thus, generic generalizations constitute a particularly pernicious kind of fallacy.
+
+A generic generalization is a belief about a population of numerous individuals, but that lacks quantification. Such beliefs are too imprecise to constitute knowledge. However, unlike other fallacies that might lead to patently false beliefs, a generic generalization is too imprecise to be evaluated as either true or false. Thus, generic generalizations constitute a particularly pernicious kind of fallacy.
+
 
 <!--more-->
 
-## Definition and Examples of Generic Generalizations
+
+## Examples and Definition
 
 > My friend Leslie got an 'A' on the exam.
-
-> 70.97% of students got an 'A' on the exam.
 
 > Some students got an 'A' on the exam.
 
 > All students got an 'A' on the exam.
+
+> Most students got an 'A' on the exam.
+
+> 70.97% of students got an 'A' on the exam.
 
 > Students got an 'A' on the exam.
 
@@ -35,7 +40,9 @@ A generic generalization is an unquantified belief about a population of numerou
 ## Why This Is a Fallacy
 
 
-### Philosophical Attempts to Rescue Semantics of Generic Generalizations
+### The Psychology of Generic Generalization
+
+* Asymmetric interpretation of scope of generic generalizations
 
 
 ## How To Avoid This Fallacy
@@ -46,13 +53,10 @@ A generic generalization is an unquantified belief about a population of numerou
 All true beliefs about a population of individuals necessarily describe a distribution.
 
 
+#### Philosophical Attempts to Rescue the Semantics of Generic Generalizations
+
+
 ### In Others' Thinking
-
-
-## The Psychology of Generic Generalization
-
-
-## Generic Thinking Generally
 
 
 ## Inline Citations
