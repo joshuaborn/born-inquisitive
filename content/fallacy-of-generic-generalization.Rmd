@@ -1,6 +1,6 @@
 ---
 draft: true
-title: "The Fallacy of Generic Generalizations"
+title: "The Fallacy of Generic Generalization"
 date: '`r format(Sys.Date(), "%Y-%m-%d")`'
 tags: ["fallacies", "third-person"]
 csl: "../bibliographies/apa.csl"
@@ -46,7 +46,7 @@ All true beliefs about a population of individuals necessarily describe a distri
 ### In Others' Thinking
 
 
-## The Psychology of Generic Generalizations
+## The Psychology of Generic Generalization
 
 
 ## Generic Thinking Generally
