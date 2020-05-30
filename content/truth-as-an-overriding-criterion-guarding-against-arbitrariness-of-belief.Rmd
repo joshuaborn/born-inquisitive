@@ -1,0 +1,38 @@
+---
+draft: true
+title: "Truth as an Overriding Criterion Guarding against Arbitrariness of Belief"
+date: '`r format(Sys.Date(), "%Y-%m-%d")`'
+tags: ["worldview", "first-person"]
+csl: "../bibliographies/apa.csl"
+link-citations: true
+implicit-figures: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+    toc: false
+    toc_depth: 5
+---
+
+The lead-in paragraph goes here.
+
+<!--more-->
+
+## Definition of Overriding Criterion
+
+I hold truth to be a necessary condition of my beliefs. In other words, propositions that are untrue are not eligible to be beliefs of mine. Furthermore, I hold truth to be a sufficient condition for my beliefs. Thus, a proposition being true compels me to believe the proposition.
+
+Therefore, the property of truth constitutes an overriding criterion that prevents my beliefs from being arbitrary. One's beliefs are arbitrary when one allows oneself to believe whatever one _wants_ to believe.
+
+
+## Not "Truth" as in "Speak My Truth"
+
+This is in contrast to the worldviews of those who might say "speak _my_ truth" or "speak _your_ truth." These worldviews seem to use the word "truth" to mean personal conviction. These meanings for the word "truth" are declarations of willfulness and thus endorsements of arbitrariness of belief, not overriding criteria that prevent arbitrariness of belief.
+
+
+## Importance of Defining Truth
+
+Because the property of truth is an overriding criterion for my beliefs, it is important for me to define what I mean by the word "truth."
+
+Language is just symbols, and the same symbol can be used for different purposes. Much as the symbol _"x"_ represents one unknown quantity in one math problem and a different unknown quantity in a different math problem, other uses of "truth" may use the same symbol, but refer to a different property.
+
+I have already pointed out one such usage of the word "truth" that is different from my worldview. In [a subsequent article,](/arbitrariness-of-truth-from-argumentation.html) I further clarify that my usage of the word "truth" refers to correspondence with empirical reality, not in the sort of "truth" that comes from argumentation.
