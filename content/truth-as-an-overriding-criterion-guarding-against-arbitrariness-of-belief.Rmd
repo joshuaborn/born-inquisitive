@@ -13,20 +13,22 @@ output:
     toc_depth: 5
 ---
 
-The lead-in paragraph goes here.
+I begin articulating my worldview in this article by defining why the property of truth occupies an important place in it and by differentiating my usage of the word "truth" from one other usage.
 
 <!--more-->
 
-## Definition of Overriding Criterion
+## Introduction to the Worldview Articles
 
-I hold truth to be a necessary condition of my beliefs. In other words, propositions that are untrue are not eligible to be beliefs of mine. Furthermore, I hold truth to be a sufficient condition for my beliefs. Thus, a proposition being true compels me to believe the proposition.
+One's worldview includes not just _what_ one believes, but _how_ one evaluates beliefs. One's worldview also includes ones' values, sentiments, and biases. Thus, differences in worldview can lead two different people to radically different reactions to the same stimulus.
 
-Therefore, the property of truth constitutes an overriding criterion that prevents my beliefs from being arbitrary. One's beliefs are arbitrary when one allows oneself to believe whatever one _wants_ to believe.
+In the [eponymous section of this blog](tags/worldview.html), I articulate my own worldview. Everyone has a worldview, even if it is not written down in so many words. In articulating mine, I hope by making explicit what otherwise would be left unsaid to make the differences I have with others clearer and to understand myself better.
 
 
-## Not "Truth" as in "Speak My Truth"
+## Definition of Overriding Criterion and of Arbitrariness of Belief
 
-This is in contrast to the worldviews of those who might say "speak _my_ truth" or "speak _your_ truth." These worldviews seem to use the word "truth" to mean personal conviction. These meanings for the word "truth" are declarations of willfulness and thus endorsements of arbitrariness of belief, not overriding criteria that prevent arbitrariness of belief.
+I hold truth to be a necessary condition of my beliefs. In other words, propositions that are untrue are ineligible to be beliefs of mine. Furthermore, I hold truth to be a sufficient condition for my beliefs; a proposition being true compels me to believe the proposition.
+
+Therefore, the property of truth constitutes an overriding criterion for my beliefs. The purpose of this criterion is to prevent my beliefs from being arbitrary. One's beliefs are arbitrary when one allows oneself to believe whatever one _wants_ to believe.
 
 
 ## Importance of Defining Truth
@@ -35,4 +37,12 @@ Because the property of truth is an overriding criterion for my beliefs, it is i
 
 Language is just symbols, and the same symbol can be used for different purposes. Much as the symbol _"x"_ represents one unknown quantity in one math problem and a different unknown quantity in a different math problem, other uses of "truth" may use the same symbol, but refer to a different property.
 
-I have already pointed out one such usage of the word "truth" that is different from my worldview. In [a subsequent article,](/arbitrariness-of-truth-from-argumentation.html) I further clarify that my usage of the word "truth" refers to correspondence with empirical reality, not in the sort of "truth" that comes from argumentation.
+
+## Not "Truth" as in "Speak My Truth"
+
+Use of the word "truth" in my worldview can immediately be contrasted with worldviews of those who might say "speak _my_ truth" or "speak _your_ truth." These worldviews seem to use the word "truth" to mean personal conviction. These uses of the word "truth" are declarations of willfulness and thus markers of arbitrariness of belief, not guards against arbitrariness of belief.
+
+
+## Continuation
+
+In [the sequel,](/arbitrariness-of-truth-from-argumentation.html) I further clarify that my usage of the word "truth" refers to correspondence with empirical reality, in contrast to usage of the word "truth" referring to a property that comes from argumentation.
