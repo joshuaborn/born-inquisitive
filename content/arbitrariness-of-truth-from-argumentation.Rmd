@@ -1,7 +1,7 @@
 ---
 draft: true
 title: "The Arbitrariness of Truth from Argumentation"
-date: '`r format(Sys.Date(), "%Y-%m-%d")`'
+date: 2020-06-01
 tags: ["worldview", "first-person"]
 csl: "../bibliographies/apa.csl"
 bibliography: "../bibliographies/arbitrariness-of-truth-from-argumentation.bib"
@@ -20,12 +20,12 @@ The lead-in paragraph goes here.
 
 ## Two Kinds of Truth
 
-In order to help define what I mean by "truth," I borrow a dichotomy^[This dichotomy is sometimes called "Hume's Fork" after David Hume (1711 - 1776).] that has been repeatedly used in various forms by thinkers in Western philosophy. This dichotomy separates uses of "truth" into two kinds of truth. There are various pairs of labels for these two kinds of truth depending on the particular thinker and depending on the exact context in which the dichotomy is construed, but all the concepts are related.
+In order to continue to delineate how the word "truth" is used in my worldview in contrast to others, I borrow a dichotomy^[This dichotomy is sometimes called "Hume's Fork" after David Hume (1711 - 1776).] that has been repeatedly used in various forms by thinkers in Western philosophy. This dichotomy separates uses of "truth" into two kinds. There are various pairs of labels for these two kinds of truth depending on the particular thinker and depending on the exact context in which the dichotomy is construed, but all the concepts are related.
 
 
 ### Truth as Coherence
 
-On one side of the dichotomy lies what might be termed "coherence" truth, _"a priori"_ truth, "analytic" truth, or "necessary" truth. This kind of truth includes statements such as:
+On one side of the dichotomy lies what might be termed "coherence" truth, _"a priori"_ truth, "analytic" truth, or "necessary" truth. This kind of truth includes true statements such as:
 
 > Bachelors are unmarried men.
 
@@ -59,7 +59,7 @@ The definition of "widow" includes "women who have been married to someone who h
 
 #### Names for Coherence-Truth
 
-Coherence-truths are called _"a priori"_ because they can be determined to be coherence-true _prior_ to acquiring empirical evidence. They are called "analytic" because they can be determined to be coherence-true merely by _analyzing_ the language and ideas used to express them. They are "necessary" because the there is no possible world in which a coherence-truth could even be false, so long as the same definitions are used. In everyday speech, coherence-truths are the sort of things that are labeled with the phrase "by definition."
+Coherence-truths are called _"a priori"_ because they can be determined to be coherence-true _prior_ to acquiring empirical evidence. They are called "analytic" because they can be determined to be coherence-true merely by _analyzing_ the language and ideas used to express them. They are "necessary" because there is no possible world in which a coherence-truth could even be false, so long as the same definitions are used. In everyday speech, coherence-truths are the sort of things that are labeled with the phrase "by definition."
 
 
 #### Coherence-Truths as Tautologies
@@ -77,7 +77,7 @@ Tautologies are common in everyday language when they use different symbols to r
 > Unmarried men are bachelors.
 
 
-#### Mathematics
+##### Mathematics
 
 Since coherence-truths are tautologies, coherence-truth might seem like a frivolous concept. However, there are propositions such as:
 
@@ -87,7 +87,7 @@ Since coherence-truths are tautologies, coherence-truth might seem like a frivol
 
 > Two lines that are parallel never intersect, regardless of how far they are extended.
 
-Mathematics largely consists of coherence-truths, and yet it has been one of the more profound intellectual accomplishments of human civilization. Indeed, if one has encountered a proof by contradiction, it is likely to have been during mathematics instruction. Mathematics heavily relies on equations, which are tautologies, in which the left side of the equation and the right side of the equation refer to the same thing, but with different symbols.
+Mathematics heavily relies on equations, which are tautologies, in which the left side of the equation and the right side of the equation refer to the same thing, but with different symbols. Indeed, if one has encountered a proof by contradiction, it is likely to have been during mathematics instruction. Still, mathematics has been one of the more profound intellectual accomplishments of human civilization. 
 
 
 ### Truth as Correspondence
@@ -98,26 +98,30 @@ On the other side of the dichotomy between two kinds of truth is what might be t
 
 > The average salary of podiatrists is less than the average salary of plastic surgeons. (4)
 
-Whether a proposition is coherence-true could be established entirely by processes within one's mind, by examining relations between ideas and definitions of symbols used to express them. This second kind of truth, on the other hand, is called "correspondence" because the criterion for this kind of truth is that a belief must accurately describe some fact in the world external to the mind holding the belief.
+Whether a proposition is coherence-true could be established entirely by processes within one's mind, by examining relations between definitions of symbols used to express them. This second kind of truth, on the other hand, is called "correspondence" because the criterion for this kind of truth is that a belief must accurately describe some fact in the world external to the mind holding the belief.
 
 
 #### Names for Correspondence-Truth^[Henceforth, this kind of truth is called "correspondence-truth." Other forms are similarly prefixed with "correspondence-."]
 
-Correspondence-truths are called _"a posteriori"_ because they can only be established as correspondence-true _after_ experiencing some empirical evidence. They are called "synthetic" because they _join together_ two different things, rather than being two different ways of describing the same thing. They are "contingent" because they are correspondence-true _only if_ they accurately describe how things are in this world, but one can imagine possible worlds in which they are correspondence-false. Nothing is correspondence-true merely "by definition."
+Correspondence-truths are called _"a posteriori"_ because they can only be established as correspondence-true _after_ experiencing some empirical evidence. They are called "synthetic" because they _join together_ two different things, rather than being two different ways of describing the same thing. They are "contingent" because they are correspondence-true _only if_ they accurately describe how things are in this world, but one can imagine possible worlds in which they are correspondence-false.
 
 
 #### Empirical Evidence
 
-Whereas coherence-truths can be established by proofs or arguments, correspondence-truths necessarily require empirical investigation to differentiate them from correspondence-falsehoods.
+Whereas coherence-truths can be established by proofs or arguments alone, correspondence-truths necessarily require empirical evidence to differentiate them from correspondence-falsehoods.
 
-In order to establish whether proposition (3) is correspondence-true or correspondence-false, one would need to count the total number of bachelors and the total number of widows in the specified city. In order to establish whether proposition (4) is correspondence-true or not, one would first need to stipulate the relevant population, then take a survey of podiatrist salaries and a survey of plastic surgeon salaries from the specified population.
+In doing empirical investigation to determine correspondence-truth from correspondence-falsity, there might still be reasoning. The reasoning might even be articulated in the form of an argument. However, what differentiates correspondence-truth from coherence-truth is that evaluating correspondence-truth necessarily involves empirical evidence, whereas coherence-truth can be evaluated with _nothing but_ pure reasoning.
 
-Therefore, correspondence-truth places an emphasis on empirical evidence. Whereas coherence-truth is exemplified by the proofs of pure mathematics, correspondence-truth is characterized by the messiness of empirical science and statistics.
+In order to establish whether proposition (3) is correspondence-true or correspondence-false, one would need to count the total number of bachelors and the total number of widows in the specified city of Greenville. One might involve some reasoning in this process. Most likely this reasoning would be in the form of statistical inference in order to count bachelors and widows by way of a survey instead of enumerating the entire population in a census. However, the empirical evidence, i.e., the result of the survey, is necessary to evaluate the correspondence-truth or correspondence-falsity of the proposition.
+
+Similarly, in order to establish whether proposition (4) is correspondence-true or not, one would first need to stipulate the relevant population, then take a survey of podiatrist salaries and a survey of plastic surgeon salaries from the specified population, using good statistical practices in order to make a valid inference from the survey evidence to the larger population.
+
+Whereas coherence-truth is exemplified by the proofs of pure mathematics, correspondence-truth is characterized by the messiness of empirical science and statistics.
 
 
 ## Two Kinds of Consistency
 
-All the beliefs within a single mind relevant to some subject might be termed a "mental model" of that subject. Both coherence-truth and correspondence-truth have in common that the criterion used to establish truth involves a claim about consistency between a mental model and something. Correspondence-truth makes the claim that a mental model is consistent with the external world. Coherence-truth makes the claim that a mental model is consistent with itself.
+All the beliefs within a single mind relevant to some subject might be termed a "mental model" of that subject. Both coherence-truth and correspondence-truth have in common that the criterion used to establish truth involves a claim about consistency between a mental model and _something._ Correspondence-truth makes the claim that a mental model is consistent with the external world. Coherence-truth makes the claim that a mental model is consistent with itself.
 
 Thus, to believe in coherence-truth, one need only believe in the existence of oneself. To believe in correspondence-truth, one needs to believe also that there is an external world independent of one's own mind and that it is possible to be more accurate or less accurate at describing this external world.
 
@@ -135,9 +139,9 @@ Mathematical proofs consist of strict logical entailment.^[Strict logical entail
 
 However, this just moves the question of whether the conclusion of an argument is coherence-true back to the questions of whether the premises of the argument are coherence-true. In a mathematical context, these premises might also be theorems that are themselves established with proofs. These proofs would be arguments that again pass the question of coherence-truth back to their premises. 
 
-This chain of passing the question of coherence-truth back to the premises of yet another argument must stop at some point. Otherwise, this would constitute what is called an "infinite regress." This is usually handled in mathematics by establishing a finite set of axioms. These axioms are the propositions that are just accepted as coherent-true. Unlike theorems, there is no attempt to prove the axioms. Thus, axioms constitute the first premises of all arguments within an axiomatic system; they are the assumptions upon which the entire axiomatic system rests.
+This chain of passing the question of coherence-truth back to the premises of yet another argument must stop at some point. Otherwise, this would constitute what is called an "infinite regress." This is usually handled in mathematics by establishing a finite set of axioms. These axioms are the propositions that are just accepted as coherence-true. Unlike theorems, there is no attempt to prove the axioms. Thus, axioms constitute the first premises of all arguments within an axiomatic system; they are the assumptions upon which the entire axiomatic system rests.
 
-The arbitrariness of coherence-truth is the result of the arbitrariness of choosing axioms. One can subscribe to whatever axiomatic system one wants to, as long as none of the axioms of the system contradict each other.
+The arbitrariness of coherence-truth is the result of the arbitrariness of choosing axioms. One can subscribe to whatever axiomatic system one wants to, as long as none of the axioms of the system contradict each other, either directly or by implication.
 
 
 ### Non-Euclidean Geometry
@@ -150,7 +154,7 @@ The axioms of geometry as written by Euclid were divided into what is translated
 
 This is sometimes called the "parallel postulate" because it implies that parallel lines never intersect. 
 
-Over the past few centuries, there has been widespread acceptance in the mathematical community of systems of non-Euclidean geometry, which are similar to Euclidean geometry except that the fifth postulate is removed. This has the consequence that, in these systems, parallel lines do not have properties that we intuitively think of parallel lines as having.
+Over the past few centuries, there has been acceptance in the mathematical community of systems of non-Euclidean geometry, which are similar to Euclidean geometry except that the fifth postulate is removed. This has the consequence that, in these systems, parallel lines do not have properties that we intuitively think of parallel lines as having.
 
 These systems of non-Euclidean geometry are just as coherence-true as Euclidean geometry. Depending on the application, one can use whichever system of geometry is appropriate. Thus, there is an arbitrariness in what constitutes coherence-truth, even for an axiomatic system that has been a widespread standard in use for more than two millennia.
 
@@ -163,12 +167,12 @@ These criticisms of arguments and of coherence-truth are applicable to fields ot
 
 All forms of argumentation suffer from the phenomenon in which arguments merely pass the burden of judging the alleged of truth of the conclusion to the alleged truth of the premises of an argument. However, rarely does argumentation outside of mathematics have the strict logical entailment that is a feature of mathematical proofs, so even if one were to accept the premises of their arguments, the conclusions would remain dubious.
 
-Furthermore, rarely do arguments outside of mathematics reach the level of an axiomatic system. Thus, most arguments are vulnerable to an infinite regress. In practice, however, lines of argumentation eventually stop, revealing first premises, and one could just arbitrarily reject the first premises to reject the whole line of argumentation. 
+Furthermore, rarely do arguments outside of mathematics reach the level of an axiomatic system. Thus, most arguments are vulnerable to an infinite regress. In practice, however, lines of argumentation eventually stop, revealing _ad hoc_ first premises, which can be arbitrarily rejected, which in turn arbitrarily rejects the whole line of argumentation. 
 
 
 ## Conclusion
 
-Because coherence-truth is arbitrary, when I assert that truth is an overriding criterion for my beliefs, this applies exclusively to correspondence-truth, not to coherence-truth. Unless otherwise specified, "truth" in this blog refers to correspondence-truth.
+Because coherence-truth is arbitrary, and because I use truth specifically as a [criterion guarding against arbitrariness of belief](/truth-as-an-overriding-criterion-guarding-against-arbitrariness-of-belief.html), when I assert that truth is an overriding criterion for my beliefs, this applies exclusively to correspondence-truth, not to coherence-truth. Unless otherwise specified, "truth" in this blog refers to correspondence-truth.
 
 The implications for my worldview are that I do not value argumentation and logic very much, but I do value empirical inquiry and statistical analysis quite heavily. Indeed, I can assert without hyperbole that I regard the investigation of empirical evidence as the highest calling of the human mind.
 
