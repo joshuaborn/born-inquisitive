@@ -1,7 +1,6 @@
 ---
-draft: true
 title: "Truth as an Overriding Criterion Guarding against Arbitrariness of Belief"
-date: '`r format(Sys.Date(), "%Y-%m-%d")`'
+date: 2019-05-31
 tags: ["worldview", "first-person"]
 csl: "../bibliographies/apa.csl"
 link-citations: true
