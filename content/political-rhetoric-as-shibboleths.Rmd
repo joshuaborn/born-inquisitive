@@ -1,6 +1,6 @@
 ---
 title: "Political Rhetoric as Shibboleths"
-date: 2020-06-04
+date: 2020-06-06
 tags: ["worldview", "first-person"]
 csl: "../bibliographies/apa.csl"
 bibliography: "../bibliographies/political-rhetoric-as-shibboleths.bib"
@@ -13,13 +13,15 @@ output:
     toc_depth: 5
 ---
 
-Lead-in paragraph goes here.
+Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, I use the example of the word _"shibboleth"_ in a story from the Hebrew Bible to explain a function of slogans in the context of political rhetoric, and I examine how my worldview deals with such shibboleths.
 
 <!--more-->
 
-Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. Inasmuch as a conversation consists of two or more individuals engaged in at least two activities -- communicating their own thoughts and understanding the other party’s thoughts -- political rhetoric often fails to merit being labeled a "conversation." It can fail to be a conversation in the latter activity when one has no genuine interest in even attempting to understand what the other party is communicating.
+## Introduction
 
-However, this article examines a different, but also common, failure related to the former activity: political rhetoric often fails to communicate any tangible thoughts because it consists of slogans, catch-phrases, or more generally, superficial ideas commonly passed around by a faction amongst themselves.
+Inasmuch as a conversation consists of two or more individuals engaged in at least two activities -- communicating their own thoughts and understanding the other party’s thoughts -- political rhetoric often fails to merit being labeled a "conversation." It can fail to be a conversation in the sense of the latter activity when one has no genuine interest in even attempting to understand what the other party is communicating.
+
+However, this article examines a different, but also common, failure in the sense of the former activity: political rhetoric often fails to communicate any tangible thoughts because it consists of slogans, catch-phrases, or more generally, superficial ideas commonly passed around by a faction amongst themselves.
 
 It is naive to believe that the purpose of all usage of language is to communicate information, and I do not believe such is the purpose of the sort of political rhetoric identified here. Therefore, I do not believe one can be enlightened _by_ political rhetoric. However, one can be enlightened in how one thinks _about_ political rhetoric.
 
@@ -30,9 +32,9 @@ The word "shibboleth" comes to the English language from the Hebrew Bible. In th
 
 > Then Jephthah gathered all the men of Gilead and fought with Ephraim; and the men of Gilead defeated Ephraim, because they said, "You are fugitives from Ephraim, you Gileadites—--in the heart of Ephraim and Manasseh."^[This passage can be difficult to read because there are two different usages of what is rendered in the English as "fugitives." In this instance, the Ephraimites are calling the Gileadites "fugitives from Ephraim." Ephraim and Manasseh were named after two sons of Joseph and are considered to be two subtribes of the tribe of Joseph. The tribe of Gilead is sometimes itself considered to be a subtribe of the tribe of Manasseh.] Then the Gileadites took the fords of the Jordan against the Ephraimites. Whenever one of the fugitives of Ephraim^[In this case, the passage is using "fugitives of Ephraim" to describe the Ephraimites fleeing their defeat. It is not referring to the Gileadites as in the earlier "fugitives from Ephraim" passage.] said, "Let me go over," the men of Gilead would say to him, "Are you an Ephraimite?" When he said, "No," they said to him, "Then say Shibboleth," and he said, "Sibboleth," for he could not pronounce it right. Then they seized him and killed him at the fords of the Jordan. Forty-two thousand of the Ephraimites fell at that time. [@coogan_new_2010, Judges 12:4-6 NRSV]
 
-According to the passage, the Ephraimites had invaded Gilead, but had been defeated by the Gileadites. Not wanting to spare any Ephraimites, the Gileadites blockaded the river Jordan so that no Ephraimites could escape the massacre.
+According to the passage, the Ephraimites had invaded Gilead, but had been defeated by the Gileadites. Not wanting to spare any Ephraimites, the Gileadites blockaded the River Jordan so that no Ephraimites could escape the massacre.
 
-This led to a problem for the Gileadites blockading the river. How would a Gileadite know if any given person caught crossing the river Jordan were a fleeing Ephraimite or just a Gileadite going about one's business? The solution related by the passage is that the Gileadites blockading the river challenged the river crossers to say a specific word, which was pronounced one way in the Gileadite dialect and another way in the Ephraimite dialect. If one pronounced it the Gileadite way, one would be spared, but if one pronounced it the Ephraimite way, one would be killed.
+This led to a problem for the Gileadites blockading the river. How would a Gileadite know if any given person caught crossing the River Jordan were a fleeing Ephraimite or just a Gileadite going about one's business? The solution related by the passage is that the Gileadites blockading the river challenged the river crossers to say a specific word, which was pronounced one way in the Gileadite dialect and another way in the Ephraimite dialect. If one pronounced it the Gileadite way, one would be spared, but if one pronounced it the Ephraimite way, one would be killed.
 
 What was important was not what the word _"shibboleth"_ meant.^[Incidentally, there is some debate amongst modern scholarship as to what the word did mean.] Indeed, any ancient Hebrew word with a leading _"sh"_ sound might have served the same function. What was important was that the pronunciation of the word could be used as a marker to differentiate members of one tribe from another.
 
@@ -45,7 +47,7 @@ This broadened concept of the shibboleth to include sayings denotes precisely th
 
 ## Implication for Worldview
 
-As the subtitle of this blog exhibits, my worldview values its independence. Thus, sayings passed around a group in order for individuals to proclaim their allegiance to the group are antithetical to my worldview.
+As the subtitle of this blog might suggest, my worldview values its independence. Thus, sayings passed around a group in order for individuals to proclaim their allegiance to the group are antithetical to my worldview.
 
 This has straightforward implications for my own thinking. Generally, I do not think, speak, or write in terms of shibboleths.
 
