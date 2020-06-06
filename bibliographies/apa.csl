@@ -450,10 +450,6 @@
                 </if>
               </choose>
             </if>
-            <else-if type="post post-weblog webpage" match="any">
-              <!-- This should be localized -->
-              <text variable="container-title" suffix=" website:"/>
-            </else-if>
           </choose>
           <text variable="URL"/>
         </group>
