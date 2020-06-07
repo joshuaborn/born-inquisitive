@@ -13,7 +13,7 @@ output:
     toc_depth: 5
 ---
 
-Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, I use the example of the word _"shibboleth"_ in a story from the Hebrew Bible to explain a function of slogans in the context of political rhetoric, and I examine how my worldview deals with such shibboleths.
+Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, I use the concept of a shibboleth, which comes from a story in the Hebrew Bible, to explain a function of slogans in the context of political rhetoric, and I examine how my worldview deals with such shibboleths.
 
 <!--more-->
 
@@ -32,7 +32,17 @@ The word "shibboleth" comes to the English language from the Hebrew Bible. In th
 
 > Then Jephthah gathered all the men of Gilead and fought with Ephraim; and the men of Gilead defeated Ephraim, because they said, "You are fugitives from Ephraim, you Gileadites—--in the heart of Ephraim and Manasseh."^[This passage can be difficult to read because there are two different usages of what is rendered in the English as "fugitives." In this instance, the Ephraimites are calling the Gileadites "fugitives from Ephraim." Ephraim and Manasseh were named after two sons of Joseph and are considered to be two subtribes of the tribe of Joseph. The tribe of Gilead is sometimes itself considered to be a subtribe of the tribe of Manasseh.] Then the Gileadites took the fords of the Jordan against the Ephraimites. Whenever one of the fugitives of Ephraim^[In this case, the passage is using "fugitives of Ephraim" to describe the Ephraimites fleeing their defeat. It is not referring to the Gileadites as in the earlier "fugitives from Ephraim" passage.] said, "Let me go over," the men of Gilead would say to him, "Are you an Ephraimite?" When he said, "No," they said to him, "Then say Shibboleth," and he said, "Sibboleth," for he could not pronounce it right. Then they seized him and killed him at the fords of the Jordan. Forty-two thousand of the Ephraimites fell at that time. [@coogan_new_2010, Judges 12:4-6 NRSV]
 
-According to the passage, the Ephraimites had invaded Gilead, but had been defeated by the Gileadites. Not wanting to spare any Ephraimites, the Gileadites blockaded the River Jordan so that no Ephraimites could escape the massacre.
+According to the passage, the Ephraimites had been defeated by the Gileadites. Not wanting to spare any Ephraimites, the Gileadites blockaded the River Jordan so that no Ephraimites could escape the massacre.
+
+![
+_The Jordan River, pictured in 2009, was the site of a massacre of fleeing Ephraimites by Gileadites in ancient times._<br/>
+["Jordan River"](https://www.flickr.com/photos/tony709/6107292778/)
+by
+[Cycling Man](https://www.flickr.com/photos/tony709/)
+is licensed under
+[CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
+and is not modified.
+](/images/jordan-river.jpg)
 
 This led to a problem for the Gileadites blockading the river. How would a Gileadite know if any given person caught crossing the River Jordan were a fleeing Ephraimite or just a Gileadite going about one's business? The solution related by the passage is that the Gileadites blockading the river challenged the river crossers to say a specific word, which was pronounced one way in the Gileadite dialect and another way in the Ephraimite dialect. If one pronounced it the Gileadite way, one would be spared, but if one pronounced it the Ephraimite way, one would be killed.
 
@@ -45,7 +55,7 @@ As the concept of shibboleth has evolved in modern English, it has grown beyond 
 This broadened concept of the shibboleth to include sayings denotes precisely the kind of political rhetoric that is the subject of this article.
 
 
-## Implication for Worldview
+## Implications for Worldview
 
 As the subtitle of this blog might suggest, my worldview values its independence. Thus, sayings passed around a group in order for individuals to proclaim their allegiance to the group are antithetical to my worldview.
 
@@ -53,9 +63,14 @@ This has straightforward implications for my own thinking. Generally, I do not t
 
 The implications for how my worldview deals with the shibboleths of others are slightly more subtle. Generally, once I identify some verbiage as a shibboleth, I stop trying to make sense of it _per se._ I make note that so-and-so an individual has expressed allegiance to some group defined by this shibboleth, and that is the end of it.
 
-Furthermore, the information gleaned from this is not very useful. Knowing that an individual identifies as a member of a group does not reveal the details of the individual's beliefs, attitudes, and experiences because any large population exhibits variation. To think otherwise is to subject oneself to the fallacies of generic thinking.
-
 For candidate shibboleths posted to social media or shouted at a rally, the initial encounter with them is the end of my interaction with them entirely. If I am engaged in an actual conversation with someone who uses what might be a shibboleth, I try to give my interlocutor the benefit of the doubt and ask questions that might lead to more substantial thinking. If this is successful, then critical thinking can be applied. If nothing substantial is produced, then I am left to identify the original verbiage as a shibboleth, and no further critical thinking need take place.
+
+
+## Limitations of Utility
+
+Even when learning _about_ shibboleth usage instead of _from_ shibboleths, the information gleaned is not much. Knowing that an individual identifies as a member of a group does not reveal the details of the individual's beliefs, attitudes, and experiences, because any large population exhibits variation. To think otherwise is to subject oneself to the fallacies of generic thinking.
+
+Thus, inasmuch as the work of partisan politics consists of encouraging and identifying factions, shibboleths have some utility, but when it comes to critical thinking, shibboleths have little import.
 
 
 ## Citations
