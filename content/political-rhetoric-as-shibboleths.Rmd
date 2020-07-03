@@ -13,7 +13,7 @@ output:
     toc_depth: 5
 ---
 
-Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, I use the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, to explain a function of slogans in the context of political rhetoric, and I examine how my worldview deals with such shibboleths.
+Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, is used to explain a function of slogans in the context of political rhetoric, and the characteristics of such shibboleths that make them inimical to my worldview are examined.
 
 <!--more-->
 
@@ -55,20 +55,37 @@ As the concept of shibboleth has evolved in modern English, it has grown beyond 
 This broadened concept of the shibboleth to include sayings denotes precisely the kind of political rhetoric that is the subject of this article.
 
 
-## Implications for Worldview
+## Characteristics of Shibboleths
 
-As the subtitle of this blog might suggest, my worldview values its independence. Thus, sayings passed around a group in order for individuals to proclaim their allegiance to the group are antithetical to my worldview.
+Much as the ancient _"shibboleth"_ was a word used to identify to what tribe an individual belonged, the modern shibolleths of political rhetoric are slogans used to identify to what political tribe an individual belongs. For instance, in the United States, there are certain slogans that one can use to be associated with the conservative tribe, and there are other slogans that one can use to be associated with the leftist tribe.
 
-This has a straightforward implication for my own thinking. Generally, I do not think, speak, or write in terms of shibboleths.
-
-How my worldview deals with the shibboleths of others is less direct. Generally, once I identify some verbiage as a shibboleth, I stop trying to make sense of it _per se._ I make note that so-and-so an individual has expressed allegiance to some political faction associated with this shibboleth, and no more critical thinking need be applied.
+Much as the ancient _"shibboleth"_ was used in a tribal conflict to identify enemies, so too do modern political factions use shibboleths to identify their enemies. This can occur either directly, in which conservatives notice leftists use certain slogans or leftists notice conservatives use certain slogans, or indirectly by construing a sin of omission, in which members of a political tribe proclaim their shibboleths and react with hostility to anyone who does not echo back a similar shibboleth. This latter use of shibboleths is of the "anyone who is not with us is against us" variety.
 
 
-## Limitations of Utility
+### Conformity
 
-Even when learning _about_ shibboleth usage instead of trying to learn _from_ shibboleths, the information gleaned is not much. Knowing that an individual identifies as a member of a group does not reveal the details of the individual's beliefs, attitudes, and experiences, because any large population exhibits variation. To think otherwise is to subject oneself to the fallacies of generic thinking.
+Thus, one of the most conspicuous characteristics of shibboleths is that they are expressions of conformity.
 
-Thus, inasmuch as the work of partisan politics consists of encouraging and identifying factions, shibboleths have some utility, but when it comes to critical thinking, shibboleths have little import.
+![
+_A sign consisting of nothing but left-wing shibboleths, found in front of a house in the author's neighborhood._^[A right-wing version of such a sign would have been included in this article, but the author does not live in a area where these are easily found.]
+](/images/shibboleths.jpg)
+
+For instance, consider the above sign. The sign contains eight shibboleths. All of these shibboleths demonstrate affiliation with the leftist political tribe. Is it the case that the individual who posted this sign just happened to come to the left-wing position on all eight issues, and the individual found someone else who was making signs who also just happened to come to the left-wing position on all eight issues?
+
+It is far more likely the case that, because an individual's moral sentiments are influenced by the individual's social milieu, that both the sign buyer and the sign maker are influenced by the same social forces. Much as the ancient Ephriamites' similar pronounciation of  _"shibboleth"_ was due to a common origin, shibboleths today are expressions of conformity to the same political tribe.
+
+
+### Exclusion of Viewpoints Other than a Binary Rivalary
+
+If it is assumed that each of these eight shibboleths allude to a logically independent issue, and that there are at least two possible opinions one might have about each issue, then there are 2<sup>8</sup>&nbsp;=&nbsp;256 possible viewpoints that any one person could have about these eight issues.^[Here, by "viewpoint" is meant a unique combination opinions on each of the eight issues.] This is actually a minimum bound and likely an underestimate, as there are far more than two possible opinions that any one person could reasonable have about an issue, so there are likely on the order of magnitude of 5<sup>8</sup>&nbsp;=&nbsp;390625 such viewpoints, if not more.
+
+However, note that each of these left-wing shibboleths targets a right-wing policy position, or perhaps more accurately, a straw-man version of a right-wing position. Thus, the use of shibboleths reinforces the dominance of dialogue by two viewpoints to the exclusion of all others.
+
+Leftists, conservative, and occasionally libertarian positions already crowd out the hundreds if not hundreds of thousands of other viewpoints in the United States. Much as the ancient use of _"shibboleth"_ assumed all who attempted to cross the River Jordan were either Gileadite or Ephramite, the use of shibboleths today reinforces the exclusion of all but a few viewpoints.
+
+
+### Superficiality
+
 
 
 ## Citations
