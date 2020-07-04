@@ -1,6 +1,6 @@
 ---
 title: "Political Rhetoric as Shibboleths"
-date: 2020-06-07
+date: 2020-07-04
 tags: ["worldview", "first-person"]
 csl: "../bibliographies/apa.csl"
 bibliography: "../bibliographies/political-rhetoric-as-shibboleths.bib"
