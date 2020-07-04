@@ -13,7 +13,7 @@ output:
     toc_depth: 5
 ---
 
-Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, is used to explain a function of slogans in the context of political rhetoric, and the characteristics of such shibboleths that make them inimical to my worldview are examined.
+Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, is used to explain a function of slogans in the context of political rhetoric, and the characteristics of shibboleths that make them inimical to my worldview are examined.
 
 <!--more-->
 
@@ -57,35 +57,51 @@ This broadened concept of the shibboleth to include sayings denotes precisely th
 
 ## Characteristics of Shibboleths
 
-Much as the ancient _"shibboleth"_ was a word used to identify to what tribe an individual belonged, the modern shibolleths of political rhetoric are slogans used to identify to what political tribe an individual belongs. For instance, in the United States, there are certain slogans that one can use to be associated with the conservative tribe, and there are other slogans that one can use to be associated with the leftist tribe.
+The modern shibboleths of political rhetoric are slogans used to identify to what political sect, which can be thought of as a tribe, an individual belongs. For instance, in the United States, there are certain shibboleths that are associated with the conservative tribe, and there are other shibboleths that are associated with the leftist tribe.
 
-Much as the ancient _"shibboleth"_ was used in a tribal conflict to identify enemies, so too do modern political factions use shibboleths to identify their enemies. This can occur either directly, in which conservatives notice leftists use certain slogans or leftists notice conservatives use certain slogans, or indirectly by construing a sin of omission, in which members of a political tribe proclaim their shibboleths and react with hostility to anyone who does not echo back a similar shibboleth. This latter use of shibboleths is of the "anyone who is not with us is against us" variety.
+![
+_A sign consisting of nothing but left-wing shibboleths, found in front of a house in the author's neighborhood._^[A right-wing version of such a sign would have been included in this article, but the author does not live in an area where these are easily found.]
+](/images/shibboleths.jpg)
 
 
 ### Conformity
 
-Thus, one of the most conspicuous characteristics of shibboleths is that they are expressions of conformity.
+One of the most conspicuous characteristics of shibboleths is that they are expressions of conformity. For instance, consider the above sign. The sign contains eight shibboleths. All of these shibboleths demonstrate affiliation with the leftist political tribe. Is it the case that the individual who posted this sign just happened to independently come to the left-wing position on all eight issues, and the individual found someone else who was making signs who also just happened to independently come to the left-wing position on all eight issues?
 
-![
-_A sign consisting of nothing but left-wing shibboleths, found in front of a house in the author's neighborhood._^[A right-wing version of such a sign would have been included in this article, but the author does not live in a area where these are easily found.]
-](/images/shibboleths.jpg)
+It is far more likely the case that, because an individual's sentiments are influenced by the individual's social milieu, that both the sign buyer and the sign maker are influenced by the same social forces.
 
-For instance, consider the above sign. The sign contains eight shibboleths. All of these shibboleths demonstrate affiliation with the leftist political tribe. Is it the case that the individual who posted this sign just happened to come to the left-wing position on all eight issues, and the individual found someone else who was making signs who also just happened to come to the left-wing position on all eight issues?
-
-It is far more likely the case that, because an individual's moral sentiments are influenced by the individual's social milieu, that both the sign buyer and the sign maker are influenced by the same social forces. Much as the ancient Ephriamites' similar pronounciation of  _"shibboleth"_ was due to a common origin, shibboleths today are expressions of conformity to the same political tribe.
-
-
-### Exclusion of Viewpoints Other than a Binary Rivalary
-
-If it is assumed that each of these eight shibboleths allude to a logically independent issue, and that there are at least two possible opinions one might have about each issue, then there are 2<sup>8</sup>&nbsp;=&nbsp;256 possible viewpoints that any one person could have about these eight issues.^[Here, by "viewpoint" is meant a unique combination opinions on each of the eight issues.] This is actually a minimum bound and likely an underestimate, as there are far more than two possible opinions that any one person could reasonable have about an issue, so there are likely on the order of magnitude of 5<sup>8</sup>&nbsp;=&nbsp;390625 such viewpoints, if not more.
-
-However, note that each of these left-wing shibboleths targets a right-wing policy position, or perhaps more accurately, a straw-man version of a right-wing position. Thus, the use of shibboleths reinforces the dominance of dialogue by two viewpoints to the exclusion of all others.
-
-Leftists, conservative, and occasionally libertarian positions already crowd out the hundreds if not hundreds of thousands of other viewpoints in the United States. Much as the ancient use of _"shibboleth"_ assumed all who attempted to cross the River Jordan were either Gileadite or Ephramite, the use of shibboleths today reinforces the exclusion of all but a few viewpoints.
+Much as the ancient Ephraimites' similar pronunciation of  _"shibboleth"_ was due to a common origin, shibboleths today are expressions of conformity to the same political tribe.
 
 
 ### Superficiality
 
+Another trait of shibboleths is that they are repeated almost word for word by members of a political tribe. In the process of hearing or reading a shibboleth and then regurgitating a nearly identical shibboleth, there is superficiality in at least two ways. For one, a serious treatment of any issue requires more prolonged thought than can be conveyed in a shibboleth-length unit of language.
+
+Secondly, there is no critical thinking exercised in this phenomenon. Any human being with a robust mind has a viewpoint that will agree in some ways with another viewpoint and disagree in other ways. This is one reason that individuals are apt to express their viewpoints in their own words and to protest against "putting words in my mouth." The phenomenon of repeating shibboleths without modification and without inclusion of criticisms is indicative of a lack of substantive thought.
+
+Much as the function of the ancient _"shibboleth"_ occurred without any regard to the actual meaning of the word, modern day shibboleths can fulfill their function just find without substantive thought.
+
+
+### Exclusion of Non-binary Viewpoints
+
+If it is assumed that each of the eight shibboleths in the pictured sign allude to a logically independent issue,^[If these eight issues are not logically independent, the same thought experiment works by picking any eight logically independent issues arbitrarily.] and that there are at least two possible opinions about each issue, then there are 2<sup>8</sup>&nbsp;=&nbsp;256 possible viewpoints^[Here, by "viewpoint" is meant a unique combination opinions on each of the eight issues. This is actually a minimum bound and likely an underestimate, as there are far more than two possible opinions that any one person could reasonable have about an issue, so there are likely on the order of magnitude of 5<sup>8</sup>&nbsp;=&nbsp;390625 such viewpoints, if not more.] that any one person could have about these eight issues.
+
+However, the above sign construes a world in which there are not at least 256 different viewpoints, but just two, since each of the left-wing shibboleths in it targets a right-wing policy position, or perhaps more accurately, a straw-man version of a right-wing position.
+
+Much as the ancient _"shibboleth"_ was used in a tribal conflict to identify enemies, so too do modern political factions use shibboleths to identify their enemies. Sometimes this is done directly. For instance, conservatives might notice leftists use certain shibboleths, or leftists might notice conservatives use certain shibboleths.
+
+Identification of enemies can also occur indirectly by construing a kind of sin of omission. This occurs when members of a political tribe proclaim their shibboleths and react with hostility to anyone who does not parrot back a similar shibboleth, in the fashion of "anyone who is not with us is against us." With this second usage, it is not just the viewpoint of the opposing tribe, but all of the other hundreds if not thousands of viewpoints that do not fit neatly into either left- or right-wing tribes, that are identified as enemies.
+
+Much as the ancient use of _"shibboleth"_ assumed all who attempted to cross the River Jordan were either Gileadite or Ephraimite, the use of shibboleths today reinforces the exclusion of all but a few viewpoints from political discourse.
+
+
+## Implications for Worldview
+
+These traits of shibboleths make them useful for simple-minded, tribal worldviews that construe the intellectual landscape as a battle between "us" and "them." My worldview, however, values independent thinking instead of conformity. It values critical thinking instead of superficiality. It features many of the very sort of viewpoints that the use of shibboleths tends to exclude.
+
+Therefore, I do not think, speak, or write in terms of shibboleths.
+
+I do often encounter _others_ using shibboleths. As previously stated, I do not believe it is worth trying to learn _from_ these shibboleths directly. However, two things can be gleaned _about_ an incident of shibboleth use. The first is that the user of the shibboleth has a proclaimed an association with a certain faction. The second is that the user of the shibboleth has a simplistic worldview characterized by superficiality and conformity.
 
 
 ## Citations
