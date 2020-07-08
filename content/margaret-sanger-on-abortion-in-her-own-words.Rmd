@@ -492,7 +492,7 @@ New York University maintains a [Margaret Sanger Papers Project](http://www.nyu.
 The Sophia Smith Collection at Smith College is a repository for many [Margaret Sanger papers](http://asteria.fivecolleges.edu/findaids/sophiasmith/mnsss43_main.html). This was used as a source for the letter containing the infamous "word to go out that we want to exterminate the Negro population" quote.
 
 
-## Inline Citations
+## Citations
 
 ::: {#refs}
 :::
