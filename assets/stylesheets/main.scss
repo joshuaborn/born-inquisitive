@@ -273,6 +273,10 @@ main {
 
     ul {
       list-style-type: circle;
+      li {
+        margin-left: 1.5rem;
+        padding-left: 0.5rem;
+      }
     }
 
     ol {
@@ -280,6 +284,7 @@ main {
         list-style-type: decimal;
         list-style-position: outside;
         margin-left: 1rem;
+        padding-left: 0.5rem;
       }
     }
 
@@ -303,7 +308,12 @@ main {
 
       ul {
         list-style: circle;
-        padding-left: 1rem;
+        margin-left: 1.5rem;
+
+        li {
+          margin-left: 0;
+          padding-left: 0.25rem;
+        }
       }
     }
   }
