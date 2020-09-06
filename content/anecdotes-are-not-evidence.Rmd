@@ -1,0 +1,68 @@
+---
+title: "Anecdotes Are Not Evidence"
+#date: 2018-11-11
+tags: ["fallacy", "third-person"]
+bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
+csl: "../bibliographies/apa.csl"
+link-citations: true
+implicit-figures: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+    toc: true
+    toc_depth: 5
+include-before: |
+  <p>Anecdotes are stories that consist either of one's own personal experiences or of the retelling of the personal experiences of someone else. This article clarifies the utility of the maxim "anecdotes are not evidence" by discussing the flaws intrinsic to the use of anecdotes, namely, the flaws of memory recall, on the one hand, and flaws in drawing conclusions from an a unrepresentative sample, on the other. The article then explores the kinds of conclusions that such flaws preclude anecdotes from supporting, such as inferences about larger populations and inferences about cause and effect. Finally, the article explores applications for which anecdotes remain a viable, if flawed, source of evidence.</p>
+  <!--more-->
+  ## Table of Contents
+---
+
+
+## Flaws of Anecdotes as Evidence
+
+The telling of anecdotes is flawed in ways that can be broadly categorized as "psychological" or as "statistical." Psychological flaws are a consequence of the flawed way memory actually works. Statistical flaws refer to consequences of drawing conclusions from unrepresentative samples, a practice often warned against in introductory statistics classes.
+
+### Psychological Flaws
+
+Contrary to popular belief, human memory does not work like a video camera, accurately recording the events we see and hear so that we can review and inspect them later, as 63% of respondents in a demographically representative sample of 1,500 people in the United States believed in a recent telephone poll. [@simons_what_2011] Instead, human memory is flawed. People often fail to remember true things about past experiences or believe they remember false things about past experiences. Furthermore, the social experience of recalling memories and sharing them with others can influence how individuals remember past events.
+
+#### Flaws of Memory
+
+The psychological literature around the topic of memory is quite large, and a full review of what has been learned about memory is beyond the scope of this article. Instead, this article summarizes a few seminal experiments in the field in order to establish the core point that human memory, according to the empirical evidence, is quite fallible.
+
+#### Flaws of Serial Reproduction
+
+#### Implications
+
+### Statistical Flaws
+
+#### Insufficient Sample Size
+
+#### Biased or Unrepresentative Sample
+
+## Misuses of Anecdotes
+
+### Inference about Larger Populations
+
+### Inference about Cause and Effect
+
+## Uses of Anecdotes
+
+### Investigation of Specific, Singular Incident
+
+### Counterexample to Universal Assertion
+
+### Precipitation of Further Investigation
+
+### Illustrative Example of Phenomenon Supported by Other Evidence
+
+## Conclusion
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
