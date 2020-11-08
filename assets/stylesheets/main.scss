@@ -246,6 +246,49 @@ main {
       margin-top: 1.25rem;
     }
 
+    table {
+      caption-side: bottom;
+      margin: 0 auto 2rem;
+
+      caption {
+        font-size: small;
+        left: 0;
+        padding: 0.25rem;
+        position: absolute;
+        text-align: center;
+        width: 100%;
+      }
+
+      td.count {
+        border: 1px solid #333;
+        min-width: 3rem;
+        padding: 0.5rem;
+        text-align: center;
+      }
+
+      tr .question-row {
+        padding: 0.25rem;
+      }
+
+      .column-label {
+        border: none;
+        text-align: center;
+        padding: 0.25rem;
+      }
+
+      .row-question {
+        padding: 0.25rem;
+        vertical-align: middle;
+      }
+
+      .row-label {
+        border: none;
+        margin-right: 2px;
+        text-align: right;
+        padding: 0.25rem;
+      }
+    }
+
     .citation {
       @include deemphasize();
     }

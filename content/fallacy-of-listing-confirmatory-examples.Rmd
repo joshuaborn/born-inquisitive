@@ -60,29 +60,36 @@ For instance, if 3.12% of homes that do not have an Acme Z341 grill experience f
 There are four unknowns that must become knowns in order to calculate the two proportions. This can be illustrated by creation of a table. This sort of table of counts is often called a "contingency table."
 
 <table>
-  <caption>Table 1: A 2 by 2 contingency table with information from the list of confirmatory examples.</caption>
   <thead>
-    <tr class="header">
-      <th></th>
-      <th>Fire</th>
-      <th>No Fire</th>
+    <tr class="question-row">
+      <th class="blank"></th>
+      <th class="blank"></th>
+      <th class="column-question" colspan=2>Acme Z341?</th>
+    </tr>
+    <tr>
+      <th class="blank"></th>
+      <th class="blank"></th>
+      <th class="column-label">Yes</th>
+      <th class="column-label">No</th>
     </tr>
   </thead>
   <tbody>
-    <tr class="odd">
-      <td>With Acme Z341</td>
-      <td>≥ 100</td>
-      <td></td>
+    <tr>
+      <th class="row-question" rowspan=2>Fire?</th>
+      <td class="row-label">Yes</td>
+      <td class="count">&ge; 100</td>
+      <td class="count">&nbsp;</td>
     </tr>
-    <tr class="even">
-      <td>Without Acme Z341</td>
-      <td></td>
-      <td></td>
+    <tr>
+      <td class="row-label">No</td>
+      <td class="count">&nbsp;</td>
+      <td class="count">&nbsp;</td>
     </tr>
   </tbody>
+  <caption><strong>Table 1:</strong> A 2 by 2 contingency table with information from the list of confirmatory examples.</caption>
 </table>
 
-The body of the table contains counts of households. The columns separate these counts into households that have experienced a fire and households that have not. The rows separate the counts into households that have Acme Z341 grills and households that do not.
+The body of the table contains counts of households. The rows separate these counts into households that have experienced a fire and households that have not. The columns separate the counts into households that have Acme Z341 grills and households that do not.
 
 In order to find the proportion of homes with an Acme Z341 grill that experience a fire, one would divide the upper left cell by the sum of the upper row. In order to find the proportion of homes without an Acme Z341 grill that experience a fire, one would divide the lower left cell by the sum of the lower row.
 
