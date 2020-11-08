@@ -47,7 +47,7 @@ The practice of making a list of examples of confirmatory cases in which two thi
 These lists of confirmatory examples are nothing more than extended exercises in confirmation bias. Whenever such a list of examples is produced, no conclusion can be drawn about any supposed association. This is a fallacious practice, and it ought to be avoided.
 
 
-## Contingency Table
+## Contingency Tables
 
 In order to see the fallacy of such a practice, one need first consider the implications of the hypothesis being considered. Returning to the Acme grill example, the hypothesis being investigated is that possession of an Acme Z341 grill increases a household's risk of fire.[^converse]
 
@@ -101,6 +101,9 @@ Thus, there is no way to check if the proportion of residential fires is greater
 
 
 ## Selection Bias in Sampling
+
+
+## Arbitrary Beliefs
 
 
 

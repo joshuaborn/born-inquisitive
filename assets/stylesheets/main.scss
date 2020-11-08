@@ -248,7 +248,7 @@ main {
 
     table {
       caption-side: bottom;
-      margin: 0 auto 2rem;
+      margin: 0 auto 2.5rem;
 
       caption {
         font-size: small;
@@ -277,18 +277,27 @@ main {
       }
 
       .row-question {
-        padding: 0.25rem;
         vertical-align: middle;
+        padding: 0.5rem;
       }
 
       .row-label {
         border: none;
         margin-right: 2px;
         text-align: right;
-        padding: 0.25rem;
+        padding: 0.25rem 0.5rem 0.25rem 0.25rem;
       }
     }
 
+<<<<<<< Updated upstream
+=======
+    table + .caption {
+      font-size: 0.8rem;
+      margin: 0.5rem auto 1.25rem;
+      text-align: center;
+    }
+
+>>>>>>> Stashed changes
     .citation {
       @include deemphasize();
     }
