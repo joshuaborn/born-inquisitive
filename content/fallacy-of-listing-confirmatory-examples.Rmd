@@ -44,20 +44,20 @@ After going through several dozen examples, one can imagine the audience of such
 
 The practice of making a list of examples of confirmatory cases in which two things are alleged to be associated, as the above thought experiment illustrates, can leave a powerful impression. Unfortunately, such a list proves absolutely nothing.
 
-These lists of confirmatory examples are nothing more than extended exercises in confirmation bias. Whenever such a list of examples is produced, no conclusion can be drawn. One learns nothing by assembling such a list. This is a fallacious practice, and it ought to be avoided.
+These lists of confirmatory examples are nothing more than extended exercises in confirmation bias. Whenever such a list of examples is produced, no conclusion can be drawn about any supposed association. This is a fallacious practice, and it ought to be avoided.
 
 
-## 2 by 2 Contingency Table
+## Contingency Table
 
 In order to see the fallacy of such a practice, one need first consider the implications of the hypothesis being considered. Returning to the Acme grill example, the hypothesis being investigated is that possession of an Acme Z341 grill increases a household's risk of fire.[^converse]
 
-If that were the case, at the very least, it would be expected that the proportion of homes with an Acme Z341 grill that experience a fire would be greater than the proportion of homes without an Acme Z341 grill that experience a fire.
+If that were the case, at the very least, it would be expected that the proportion of homes _with_ an Acme Z341 grill that experience a fire would be _greater than_ the proportion of homes _without_ an Acme Z341 grill that experience a fire.
 
-For instance, if 3.12% of homes that do not have an Acme Z341 grill experience fires in a given time period, then it would be expected that, all other things being equal, _more than_ 3.12% of homes that do have an Acme Z341 grill would experience fires in the same time period, if indeed the Acme Z341 grill were a fire hazard.
+For instance, if indeed the Acme Z341 grill were a fire hazard, and 3.12% of homes that _do not_ have an Acme Z341 grill experience fires in a given time period, then it would be expected that, all other things being equal, _more than_ 3.12% of homes that _do_ have an Acme Z341 grill would experience fires in the same time period.
 
 [^converse]: It could also be the case that residential fires and possession of an Acme Z341 grill are associated because of the converse relationship: the risk of residential fire explains an increased probability that a household has an Acme Z341 grill. For instance, this could arise if poorer households have an increased risk of fire, and the Acme Z341 is cheaper than other grills and so popular among poorer households. However, for the purposes of this example, any association between the two is framed as possession of the Acme Z341 grill explaining prevelance of residential fires.
 
-There are four unknowns that must become knowns in order to calculate the two proportions. This can be illustrated by creation of a table. This sort of table of counts is often called a "contingency table."
+There are four unknowns that must become knowns in order to calculate the two proportions. This can be illustrated by the creation of a contingency table.
 
 <table>
   <thead>
@@ -91,13 +91,13 @@ There are four unknowns that must become knowns in order to calculate the two pr
 
 The body of the table contains counts of households. The rows separate these counts into households that have experienced a fire and households that have not. The columns separate the counts into households that have Acme Z341 grills and households that do not.
 
-In order to find the proportion of homes with an Acme Z341 grill that experience a fire, one would divide the upper left cell by the sum of the upper row. In order to find the proportion of homes without an Acme Z341 grill that experience a fire, one would divide the lower left cell by the sum of the lower row.
+In order to find the proportion of homes with an Acme Z341 grill that experience a fire, one would divide the upper left cell by the sum of the left column. In order to find the proportion of homes without an Acme Z341 grill that experience a fire, one would divide the upper right cell by the sum of the right column.
 
-Table 1 is filled in with all the information gleaned from the list of confirmatory examples. The upper left cell contains "&ge; 100" because it is known from the list that there are at least 100 homes with the Acme Z341 grill that had fires, and _that is it._
+Table 1 is filled in with all the information gleaned from the list of confirmatory examples. The upper left cell contains "&ge; 100" because it is known from the list that there are at least 100 homes with an Acme Z341 grill that had fires, and _that is it._
 
-The emptiness of the contingency table illustrates the emptiness of the information that comes from making a list of confirmatory examples. In this case, it is not known how many households that have an Acme Z341 have not had a fire (upper right cell), so it is not known what proportion of households with Acme Z341 grills experience fires. It also not known how many households without Acme Z341 grills have experienced fires (lower left cell) and have not experienced fires (lower right cell), so it is not known what proportion of households without Acme Z341 grills experience fires.
+The emptiness of the contingency table illustrates the emptiness of the information that comes from making a list of confirmatory examples. In this case, it is not known how many households that have an Acme Z341 have not had a fire (lower left cell), so it is not known what proportion of households with an Acme Z341 grill experience fires. It also not known how many households without an Acme Z341 grill have experienced fires (upper right cell) and have not experienced fires (lower right cell), so it is not known what proportion of households without an Acme Z341 grill experience fires.
 
-Thus, there is no way to check if the proportion of residential fires is greater among households with the Acme Z341 grill than among households without it.
+Thus, there is no way to check if the proportion of residential fires is greater among households with an Acme Z341 grill than among households without one.
 
 
 ## Selection Bias in Sampling
