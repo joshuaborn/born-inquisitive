@@ -86,8 +86,8 @@ There are four unknowns that must become knowns in order to calculate the two pr
       <td class="count">&nbsp;</td>
     </tr>
   </tbody>
-  <caption><strong>Table 1:</strong> A 2 by 2 contingency table with information from the list of confirmatory examples.</caption>
 </table>
+<p class="caption"><strong>Table 1:</strong> A 2 by 2 contingency table with all of the information from the list of confirmatory examples.</p>
 
 The body of the table contains counts of households. The rows separate these counts into households that have experienced a fire and households that have not. The columns separate the counts into households that have Acme Z341 grills and households that do not.
 

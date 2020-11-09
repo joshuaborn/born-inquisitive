@@ -248,16 +248,7 @@ main {
 
     table {
       caption-side: bottom;
-      margin: 0 auto 2.5rem;
-
-      caption {
-        font-size: small;
-        left: 0;
-        padding: 0.25rem;
-        position: absolute;
-        text-align: center;
-        width: 100%;
-      }
+      margin: 0 auto;
 
       td.count {
         border: 1px solid #333;
@@ -289,15 +280,12 @@ main {
       }
     }
 
-<<<<<<< Updated upstream
-=======
     table + .caption {
       font-size: 0.8rem;
-      margin: 0.5rem auto 1.25rem;
+      margin: 0.25rem auto;
       text-align: center;
     }
 
->>>>>>> Stashed changes
     .citation {
       @include deemphasize();
     }
