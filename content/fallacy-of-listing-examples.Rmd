@@ -2,7 +2,7 @@
 title: "The Fallacy of Listing Examples"
 draft: true
 #date: 2018-11-11
-tags: ["fallacies", "third-person"]
+tags: ["fallacies"]
 #bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
 #csl: "../bibliographies/apa.csl"
 link-citations: true

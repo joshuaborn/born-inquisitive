@@ -1,7 +1,7 @@
 ---
 title: "Political Rhetoric as Shibboleths"
 date: 2020-07-04
-tags: ["worldview", "first-person"]
+tags: ["worldview"]
 csl: "../bibliographies/apa.csl"
 bibliography: "../bibliographies/political-rhetoric-as-shibboleths.bib"
 link-citations: true
@@ -13,17 +13,17 @@ output:
     toc_depth: 5
 ---
 
-Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, is used to explain a function of slogans in the context of political rhetoric, and the characteristics of shibboleths that make them inimical to my worldview are examined.
+Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, is used to explain a function of slogans in the context of political rhetoric, and the characteristics of shibboleths that make them inimical to independent, critical thinking &ndash; namely conformity, superficiality, and exclusion of non-binary viewspoints &ndash; are examined.
 
 <!--more-->
 
 ## Introduction
 
-Inasmuch as a conversation consists of two or more individuals engaged in at least two activities -- communicating their own thoughts and understanding the other party’s thoughts -- political rhetoric often fails to merit being labeled a "conversation." It can fail to be a conversation in the sense of the latter activity when one has no genuine interest in even attempting to understand what the other party is communicating.
+Inasmuch as a conversation consists of two or more individuals engaged in at least two activities -- communicating their own thoughts and understanding their interlocutor's thoughts -- political rhetoric often fails to merit being labeled a "conversation." It can fail to be a conversation in the sense of the latter activity, when one has no genuine interest in even attempting to understand what the other party is communicating.
 
 However, this article examines a different, but also common, failure in the sense of the former activity: political rhetoric often fails to communicate any tangible thoughts because it consists of slogans, catch-phrases, or more generally, superficial ideas commonly passed around by a faction amongst themselves.
 
-It is naive to believe that the purpose of all usage of language is to communicate information, and I do not believe such is the purpose of the sort of political rhetoric identified here. Therefore, I do not believe one can be enlightened _by_ political rhetoric. However, one can be enlightened in how one thinks _about_ political rhetoric.
+It is naive to believe that the purpose of all usage of language is to communicate information. Such is not the purpose of the sort of political rhetoric identified here. Therefore, one cannnot be enlightened _by_ this sort of political rhetoric. However, one can be enlightened in how one thinks _about_ political rhetoric.
 
 
 ## Definition of "Shibboleth"
@@ -44,11 +44,11 @@ is licensed under
 and is not modified.
 ](/images/jordan-river.jpg)
 
-This led to a problem for the Gileadites blockading the river. How would a Gileadite know if any given person caught crossing the River Jordan were a fleeing Ephraimite or just a Gileadite going about one's business? The solution related by the passage is that the Gileadites blockading the river challenged the river crossers to say a specific word, which was pronounced one way in the Gileadite dialect and another way in the Ephraimite dialect. If one pronounced it the Gileadite way, one would be spared, but if one pronounced it the Ephraimite way, one would be killed.
+This led to a problem for the Gileadites blockading the river. How would a Gileadite know if any given person caught crossing the River Jordan were a fleeing Ephraimite or just a Gileadite going about one's business? The solution told by the passage is that the Gileadites blockading the river challenged the river crossers to say a specific word, which was pronounced one way in the Gileadite dialect and another way in the Ephraimite dialect. If a river crosser pronounced it the Gileadite way, the individual would be spared, but if a river crosser pronounced it the Ephraimite way, the individual would be killed.
 
 What was important was not what the word _"shibboleth"_ meant.^[Incidentally, there is some debate amongst modern scholarship as to what the word did mean.] Indeed, any ancient Hebrew word with a leading _"sh"_ sound might have served the same function. What was important was that the pronunciation of the word could be used as a marker to differentiate members of one tribe from another.
 
-As the concept of shibboleth has evolved in modern English, it has grown beyond just the use of the _pronunciation_ of a word as a tribal marker, encompassing definitions such as:
+As the concept of shibboleth has evolved in modern English, it has grown beyond just the use of the _pronunciation_ of a word as a tribal marker, encompassing definitions such as
 
 > a word or saying used by adherents of a party, sect, or belief and usually regarded by others as empty of real meaning [@merriam-webster_shibboleth_nodate]
 
@@ -57,7 +57,7 @@ This broadened concept of the shibboleth to include sayings denotes precisely th
 
 ## Characteristics of Shibboleths
 
-The modern shibboleths of political rhetoric are slogans used to identify to what political sect, which can be thought of as a tribe, an individual belongs. For instance, in the United States, there are certain shibboleths that are associated with the conservative tribe, and there are other shibboleths that are associated with the leftist tribe.
+The modern shibboleths of political rhetoric are slogans used to identify to what political sect, which can be thought of as a tribe, an individual belongs. For instance, in the United States, there are certain shibboleths that are associated with tribe that might loosely be called "conservatives," and there are other shibboleths that are associated with a tribe that might loosely be called "leftists."
 
 ![
 _A sign consisting of nothing but left-wing shibboleths, found in front of a house in the author's neighborhood._^[A right-wing version of such a sign would have been included in this article, but the author does not live in an area where these are easily found.]
@@ -68,9 +68,9 @@ _A sign consisting of nothing but left-wing shibboleths, found in front of a hou
 
 One of the most conspicuous characteristics of shibboleths is that they are expressions of conformity. For instance, consider the above sign. The sign contains eight shibboleths. All of these shibboleths demonstrate affiliation with the leftist political tribe. Is it the case that the individual who posted this sign just happened to independently come to the left-wing position on all eight issues, and the individual found someone else who was making signs who also just happened to independently come to the left-wing position on all eight issues?
 
-It is more likely the case that, because an individual's sentiments are influenced by the individual's social milieu, that both the sign buyer and the sign maker are simply conforming to the same social forces.
+It is more likely the case that, because an individual's sentiments are influenced by the individual's social milieu, both the sign buyer and the sign maker are simply conforming to the same social forces.
 
-Much as the ancient Ephraimites' similar pronunciation of  _"shibboleth"_ was due to a common origin, shibboleths today are expressions of conformity to the same political tribe.
+Much as the ancient Ephraimites' similar pronunciation of _"shibboleth"_ was due to a common social origin, shibboleths today are expressions of conformity to the same political tribe.
 
 
 ### Superficiality
@@ -97,11 +97,9 @@ Much as the ancient use of _"shibboleth"_ assumed all who attempted to cross the
 
 ## Implications for Worldview
 
-These traits of shibboleths make them useful for simple-minded, tribal worldviews that construe the intellectual landscape as a battle between "us" and "them." My worldview, however, values independent thinking instead of conformity. It values critical thinking instead of superficiality. It features many of the very sort of viewpoints that the use of shibboleths tends to exclude.
+These traits of shibboleths make them useful for simple-minded, tribal worldviews that construe the intellectual landscape as a battle between "us" and "them." They serve no use for worldviews that value independent thinking instead of conformity and critical thinking instead of superficiality. Indeed, such worldviews are apt to feature the very sort of viewpoints that the use of shibboleths attempts to exclude.
 
-Therefore, I do not think, speak, or write in terms of shibboleths.
-
-I do often encounter _others_ using shibboleths. As previously stated, I do not believe it is worth trying to learn _from_ these shibboleths directly. However, two things can be gleaned _about_ an incident of shibboleth use. The first is that the user of the shibboleth has proclaimed an association with a certain faction. The second is that the user of the shibboleth has a simplistic worldview characterized by superficiality and conformity.
+Thus, those who value independent, critical thinking are apt to shun the use of shibboleths. However, it is unavoidable to encounter _others_ using shibboleths. There is nothing to be gained from trying to learn _from_ such shibboleth usage directly. However, two things can be gleaned _about_ an incident of shibboleth use. The first is that the user of the shibboleth has indirectly proclaimed an association with a certain faction. The second is that the user of the shibboleth has a simplistic worldview characterized by superficiality and conformity.
 
 
 ## Citations

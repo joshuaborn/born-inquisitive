@@ -2,7 +2,7 @@
 title: "Skeptical Metamorality"
 draft: true
 #date: 2018-11-11
-tags: ["worldview", "third-person"]
+tags: ["worldview"]
 bibliography: "../bibliographies/skeptical-metamorality.bib"
 #csl: "../bibliographies/apa.csl"
 link-citations: true
