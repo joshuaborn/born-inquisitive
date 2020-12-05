@@ -19,11 +19,11 @@ include-before: |
 
 ## Truth or Falsity of Beliefs
 
-The words "true" and "false" are just symbols, and symbols can be used in a variety of ways. The definition of "truth" used here is different than that used by those who are apt to say "speak your truth" to denote things that are subjectively important to someone. Instead, "truth" is used here to describe a relationship between a mental model and the external world.[^external]
+The words "true" and "false" are symbols, and symbols can be used in a variety of ways. The definition of "truth" used here is different than that used by those who are apt to say "speak your truth" to denote things that are subjectively important to someone. Instead, "truth" is used here to describe a relationship between a mental model and the external world.[^external]
 
 [^external]: This article uses the phrase "external world" to denote everything in the cosmos except for the contents of a _specific_ mind.
 
-A mind might have a belief. This is a representation of how the mind perceives the world external to the mind. When a belief accurately models the external world, it is a _true_ belief. When a belief in a mind and the world external to the mind are not in agreement, this is a _false_ belief.[^correspondence]
+A mind might have a belief, which is a representation of how the mind perceives the world external to the mind. When a belief accurately models the external world, it is a _true_ belief. When a belief in a mind and the world external to the mind are not in agreement, this is a _false_ belief.[^correspondence]
 
 [^correspondence]: This is a correspondence definition of truth. There are also coherence definitions of truth, which in philosophical jargon are called _"a priori,"_ "analytic," "necessary," or "relations of ideas." This kind of truth comprises things that are true by definition, such as "1 + 1 = 2" or "bachelors are are unmarried men." These kinds of true beliefs are _tautologies_, i.e., they refer to the same thing twice. These kind of tautologies are only more interesting than more obvious tautologies like "2 = 2" or "bachelors are bachelors" in as much as they refer to the same thing with different symbols. This inquiry regards tautologies as not useful for understanding morality because they merely beg the question. For instance, if one were to be questioned as why one felt that stealing is wrong, and one replied "because I have defined 'wrong' that way," this would not add to anyone's understanding.
 
@@ -150,7 +150,7 @@ Furthermore, statements such as these use language in a way that is used to refe
 [^non-mental]: This article uses the phrase "non-mental world" to denote everything in the cosmos except for the contents of _any_ mind. This is a more restrictive class than what is referred to by "external world."
 
 
-### Delusions of Moral Knowledge
+## Delusions of Moral Knowledge
 
 However, as has been seen, it is a mistake to attempt to apply the properties of truth or falsity to moral sentiments, and thus there is no moral knowledge.
 
@@ -163,19 +163,22 @@ This is not just a theoretical conflict. In contemporary life one need not look 
 The fundamental issue is that moral constructs are themselves invented by a normative mental model and so cannot _justify_ the normative mental model. A good example occurs in the distinction between civil rights and so-called "natural rights" or "human rights."
 
 
-### Interpretations of Statements about Moral Constructs
+## Practical Implications
+
+
+## Interpretations of Statements about Moral Constructs
 
 For morally skeptical worldviews, the issue of how to interpret statements about moral constructs remains. There are at least three major ways.
 
-#### Error Theory
+### Error Theory
 
 One interpretation is to take statements about moral constructs at face value. Statements about "justice," "virtue," "righteousness," etc, are _trying_ to describe some feature of the world external to minds. However, since there are no features of the nonmental world such as such justice, virtue, righteousness, etc, to describe, all of these sort of statements fail. Therefore, all such statements about moral constructs are false, because they are trying to be descriptive beliefs, and judged by the standards of descriptive mental models, they have no truth. This is an _error theory_ of morality. [@mackie_ethics_1977]
 
-#### Noncognitivism
+### Noncognitivism
 
 Another interpretation notes that not all syntactically correct sentences of natural languages form a meaningful thought. For instance, the sentence "purple ideas sleep furiously" is a syntactically correct sentence of the English language, but it is nonsense and meaningless. Puzzling over such a sentence is a waste of time. This interpretation views statements about moral constructs in a similar light, judging them to be meaningless, in a literal sense. (They might still have connotations, even if they refer to nothing.) This is ethical _noncognitivism._ [@ayer_language_1946]
 
-#### Useful Fictions
+### Useful Fictions
 
 A third interpretation of statements about moral constructs is that they are fictions, like a fable. Under this interpretation, one might continue to use moral constructs, provided one realizes they are not to be taken literally. Instead, they are _useful fictions_, intended to remind individuals to act in accord with some moral system. However, this is a dubious interpretation, since it requires everyone speaking, listening, writing, and reading about moral constructs to be consciously aware that moral constructs do not actually exist. The worldview articulated here does not recommend this practice, and this interpretation is included only for the sake of completeness.
 
