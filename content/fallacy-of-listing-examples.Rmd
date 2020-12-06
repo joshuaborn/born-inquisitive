@@ -19,9 +19,7 @@ include-before: |
 
 ## Thought Experiment Scenario
 
-For instance, suppose there is a fear that a popular cooking appliance, the Acme Z341 electric grill, is a fire hazard. In this thought experiment, there is a desire to determine whether there is an association between the use of the Acme Z341 grill and residential fire incidents.
-
-Perhaps suspicion of the Acme Z341 grill stems from testimonials of several recent residential fire victims who report using Acme Z341 grills, or perhaps suspicion is cast on the Acme Z341 because of the reports of several firefighters who recall seeing the Acme Z341 grill present at the scene of recent residential fires.
+For instance, suppose there is a fear that a popular cooking appliance, the Acme Z341 electric grill, is a fire hazard. Perhaps suspicion of the Acme Z341 grill stems from testimonials of several recent residential fire victims who report using Acme Z341 grills, or perhaps suspicion is cast on the Acme Z341 because of the reports of several firefighters who recall seeing the Acme Z341 grill present at the scene of recent residential fires.
 
 ![
 _Firefighters at the scene of a house fire._<br/>
@@ -33,11 +31,11 @@ is licensed under
 and is not modified.
 ](/images/house-fire.jpg)
 
-Regardless of the origin of the suspicion, it might seem an obvious course of action to find examples and make a list of cases in which there was a residential fire and in which there was an Acme Z341 grill in the residence.
+Regardless of the origin of the suspicion, it might seem an obvious course of action to find examples and make a list of cases in which there was a residential fire in a home that had an Acme Z341 grill.
 
 Suppose that such an investigation results in a list of 100 incidents of residential fires in which Acme Z341 grills were present. Some of the fires on this list were extinguished quickly and resulted in minimal property damage. Some of the fires, however, come with stories of loss of property. Some of the fires on the list might include emotionally heart-wrenching tales of the loss of a loved one.
 
-After going through several dozen examples, one can imagine the audience of such a list glazing over as the examples start to pile up. Such an audience learns of so many fires, so many Acme Z341 grills, that it loses count, and all the examples star to blur together. Only the emotional weight of the sheer number of examples and all the stories of loss would remain. This might be a persuasive experience for many in the audience.
+After going through several dozen examples, one can imagine the audience of such a list glazing over as the examples start to pile up. Such an audience would learn of so many fires, so many Acme Z341 grills, that it would lose count, and all the examples would start to blur together. Only the emotional weight of the sheer number of stories of loss would remain. This might be a persuasive experience for many.
 
 The practice of making a list of examples in which two things are alleged to be associated, as the above thought experiment illustrates, can leave a powerful impression. Unfortunately, such a list proves absolutely nothing.
 
@@ -52,9 +50,9 @@ If that were the case, at the very least, it would be expected that the proporti
 
 For instance, if indeed the Acme Z341 grill were a fire hazard, and 0.317% of homes that _do not_ have an Acme Z341 grill experience fires in a given time period, then it would be expected that, all other things being equal, _more than_ 0.317% of homes that _do_ have an Acme Z341 grill would experience fires in the same time period.
 
-[^converse]: It could also be the case that residential fires and possession of an Acme Z341 grill are associated because of the converse relationship: the risk of residential fire explains an increased probability that a household has an Acme Z341 grill. For instance, this could arise if poorer households have an increased risk of fire, and the Acme Z341 is cheaper than other grills and so popular among poorer households. However, for the purposes of this example, any association between the two is framed as possession of the Acme Z341 grill explaining prevelance of residential fires.
+[^converse]: It could also be the case that residential fires and possession of an Acme Z341 grill are associated because of the converse relationship: the risk of residential fire explains an increased probability that a household has an Acme Z341 grill. For instance, this could arise if poorer households have an increased risk of fire, and the Acme Z341 is cheaper than other grills and so popular among poorer households. However, for the purposes of this example, any association between the two is framed as possession of the Acme Z341 grill explaining prevalence of residential fires.
 
-There are four unknowns that must become knowns in order to calculate the two proportions. This can be illustrated by the creation of a contingency table.
+There are four unknowns that must become knowns in order to calculate the two proportions. This can be illustrated by the creation of a contingency table. (Table 1) The body of the table contains counts of households. The rows separate these counts into households that have experienced a fire and households that have not. The columns separate the counts into households that have Acme Z341 grills and households that do not.
 
 <table>
   <thead>
@@ -86,20 +84,19 @@ There are four unknowns that must become knowns in order to calculate the two pr
 </table>
 <p class="caption"><strong>Table 1:</strong> A 2 by 2 contingency table with all of the information from the list of examples generated in the thought experiment.</p>
 
-The body of the table contains counts of households. The rows separate these counts into households that have experienced a fire and households that have not. The columns separate the counts into households that have Acme Z341 grills and households that do not.
 
 In order to find the proportion of homes with an Acme Z341 grill that experience a fire, one would divide the upper left cell by the sum of the left column. In order to find the proportion of homes without an Acme Z341 grill that experience a fire, one would divide the upper right cell by the sum of the right column.
 
 Table 1 is filled in with all the information gleaned from the list of examples generated in the preceding thought experiment. The upper left cell contains "&ge; 100" because it is known from the list that there are at least 100 homes with an Acme Z341 grill that had fires, and _that is it._
 
-The emptiness of the contingency table illustrates the emptiness of the information that comes from making a list of examples. In this case, it is not known how many households that have an Acme Z341 have not had a fire (lower left cell), so it is not known what proportion of households with an Acme Z341 grill experience fires. It is also not known how many households without an Acme Z341 grill have experienced fires (upper right cell) or have not experienced fires (lower right cell), so it is not known what proportion of households without an Acme Z341 grill experience fires.
+The emptiness of the contingency table illustrates the emptiness of the information that comes from making a list of examples. In this case, it is not known how many households with an Acme Z341 have not had a fire (lower left cell), so it is not known what proportion of households with an Acme Z341 grill experience fires. It is also not known how many households without an Acme Z341 grill have experienced fires (upper right cell) or have not experienced fires (lower right cell), so it is not known what proportion of households without an Acme Z341 grill experience fires.
 
 Thus, there is no way to check if the proportion of residential fires is greater among households with an Acme Z341 grill than among households without one.
 
 
 ## Sampling and Selection Bias
 
-For further illustration, suppose that the other three cells in the table were filled out in the same manner, by finding a list of examples for each of them.
+For further illustration, suppose that the other three cells in the table were filled out in the same manner, by finding a list of examples for each of them. (Table 2)
 
 <table>
   <thead>
@@ -134,11 +131,11 @@ For further illustration, suppose that the other three cells in the table were f
 
 This is still not informative. All that is known is that there are at least 100 instances of residential fires in homes that did not have Acme Z341 grills, at least 100 instances of homes without Acme Z341 grills that did not have fires, and at least 100 instances of homes with Acme Z341 grills that did not have fires.
 
-It is not surprising that 100 instances of each of these cases could be found. For instance, in the United States in 2018, there were an estimated 379,600 residential fires. [@national_fire_data_center_residential_2020] Also, there were an estimated 138,516,439 households in the United States. [@us_census_bureau_national_nodate] Given a large enough population, 100 examples of counts for each of the four cells can easily be found.
+It is not surprising that 100 instances of each of these cases could be found. For instance, in the United States in 2018, there were an estimated 379,600 residential fires. [@national_fire_data_center_residential_2020] Also, there were an estimated 138,516,439 households in the United States. [@us_census_bureau_national_nodate] Given a large enough population, 100 examples for each of the four cells can easily be found.
 
 The fundamental issue causing these lists of examples to be uninformative is that _sampling_ is being done, but the sampling is done with _selection bias._ 
 
-Sampling occurs when a smaller number of individuals are observed than the number of individuals in an entire population. This is a common practice. For instance, it is practically impossible to investigate all 119,730,128 households in the United States and find out how many of them have Acme Z341 grills. Inferential statistics is the academic discipline concerned with how to make conclusions about a population based on a smaller sample from it. 
+Sampling occurs when a smaller number of individuals are observed than the number of individuals in an entire population. This is a common practice. For instance, it is practically impossible to investigate all 138,516,439 households in the United States and find out how many of them have Acme Z341 grills. Inferential statistics is the academic discipline concerned with how to make conclusions about a population based on a smaller sample from it. 
 
 In order for statistical inference to work, the sample taken must be representative of the population. This is a deep enough subject enough that there are whole textbooks about sampling. However, the ideal scenario of creating a representative sample is straightforward: in an ideal representative sample, sometimes called a "simple random sample," every individual in the population has the same probability of being included in the sample.
 
@@ -146,16 +143,16 @@ Such a simple random sample, given a large enough sample size, will exhibit prop
 
 Selection bias occurs when there are some criteria that increase or decrease the probability of whether an individual from the population is included in the sample. For instance, if a sample is taken just from a region of the United States with twice the risk of fire as the national average, then around 0.634\% of households in the sample will have experienced a fire.
 
-In the fallacy of making a list of examples, not only is there selection bias, there is nothing but selection bias. Furthermore, the selection bias is directly based on the variables that are the object of interest. Thus, that is learned from making a list of examples is that one can find what one is looking for.
+In the fallacy of making a list of examples, not only is there selection bias, there is _nothing but_ selection bias. Furthermore, the selection bias is directly based on the variables that are the object of interest. Thus, all that is learned from making a list of examples is that one can find what one is looking for.
 
 
 ## Arbitrary Beliefs
 
 A trait of the fallacy of listing examples &ndash; and of many fallacies of interpreting evidence generally &ndash; is that such a practice can lead to _any_ belief. Whenever a practice leads to any arbitrary belief, it is not useful for separating true belief from false belief. 
 
-For instance, there are just under 7.7 billion people in the world. Thus, whatever is feasible to happen to a human being, _has happened_ to _many_ human beings by virtue of the sheer number of chances of occuring. Thus, the fallacy of listing examples can be used to conclude any arbitrary belief about human beings.
+For instance, there are approximately 7.7 billion people in the world. Thus, whatever is feasible to happen to a human being, _has happened_ to _many_ human beings by virtue of the sheer number of chances of occurring. Thus, the fallacy of listing examples can be used to conclude any arbitrary belief about human beings.
 
-One could easily find thousands of examples of people who smoked tobacco products and who died prematurely due to pulmonary disease. However, one could also easily find thousands of examples of people who smoked tobacco products and who lived long, healthy lives into their old age. One could just as easily find thousands of examples of people who drank a glass of water one day and then died the very next day.
+One could easily find thousands of examples of people who smoked tobacco products and died prematurely due to pulmonary disease. However, one could also easily find thousands of examples of people who smoked tobacco products and lived long, healthy lives into their old age. One could just as easily find thousands of examples of people who drank a glass of water one day and then died the very next day.
 
 If one were to be persuaded by the fallacy of listing examples, then one should have numerous arbitrary beliefs, even contradictory ones or absurd ones. One should simultaneously believe that smoking does and does not cause pulmonary disease. One should believe that drinking a glass of water increases one's risk of dying the next day.
 
@@ -176,9 +173,11 @@ The Acme Z341 grill thought experiment happened to use confirmatory cases, but a
 
 ### Representative Samples
 
-If one wants to draw a conclusion when presented with a list of examples, the remedy is straightforward: one needs to define the population of interest and take a representative sample from the population. The list of examples itself is of no use and can be discarded.
+If one wants to draw a conclusion when presented with a list of examples, the remedy is straightforward: one needs to define the population of interest and take a representative sample from the population.[^census] The list of examples itself is of no use and can be discarded.
 
-For instance, in the Acme Z341 grill thought experiment, suppose that the population of interest is defined as all of the households in the United States. Instead of specifically looking for instances of fires in households with Acme Z341 grills, some scheme is devised whereby a simple random sample of 10,000 households in the United States is identified. Of these, all 10,000 are successfully investigated as to whether they had fires in 2018 and whether or not they have Acme Z341 grills. The counts from this are summarized in Table 3.
+[^census]: Alternatively, for small populations, one could investigate the entirety of the population. This is called a "census."
+
+For instance, in the Acme Z341 grill thought experiment, suppose that the population of interest is defined as all of the households in the United States. Instead of specifically looking for instances of fires in households with Acme Z341 grills, some scheme is devised whereby a simple random sample of 10,000 households in the United States is identified. Of these, all 10,000 are successfully investigated as to whether they had fires in 2018 and whether or not they had Acme Z341 grills. The counts from this are summarized in Table 3.
 
 <table>
   <thead>
@@ -213,7 +212,7 @@ For instance, in the Acme Z341 grill thought experiment, suppose that the popula
 
 Unlike with Table 1 and with Table 2, the proportions needed to test the hypothesis can be calculated from Table 3. The proportion of homes with an Acme Z341 grill that had a fire in 2018 is 366 / (366 + 2651) &asymp; 12.1%, and the proportion of homes without an Acme Z341 grill that had a fire in the same time period is 867 / (867 + 6116) &asymp; 12.4%. 
 
-In this case, the homes with an Acme Z341 grill were actually less prone to fires than the comes that did not. Given this, a conclusion can be reached: the hypothesis that Acme Z341 grills cause fires ought to be rejected.
+In this case, the homes with an Acme Z341 grill were actually less prone to fires than the homes that did not. Given this, a conclusion can be reached: the hypothesis that Acme Z341 grills cause fires ought to be rejected.
 
 
 ### Need for Statistical Analysis
@@ -251,40 +250,35 @@ It might be observed that counts in Table 3 are unrealistic, since as was seen e
 
 <p class="caption"><strong>Table 4:</strong> A 2 by 2 contingency table with counts of a more plausible sample random sample taken from households in the United States.</p>
 
-Dividing the upper left cell of Table 4 by the sum of the left column, it can be seen that the proportion of sampled households that experienced a fire in 2018 that had Acme Z341 grills is about 0.365%. Dividing the upper right cell by the sum of the right column, it can be seen that the proportion of sampled households that experienced a fire in 2018 that did not have Acme Z341 grills is about 0.215%. 
+Dividing the upper left cell of Table 4 by the sum of the left column, it can be seen that the proportion of sampled households with Acme Z341 grills that experienced a fire in 2018 is about 0.365%. Dividing the upper right cell by the sum of the right column, it can be seen that the proportion of sampled households without Acme Z341 grills that experienced a fire in 2018 is about 0.215%. 
 
 In Table 4, the proportion of households with an Acme Z341 grill that experienced a fire is greater than the proportion of households without an Acme Z341 grill that experienced a fire. However, this is the case for the proportions among households _in the sample_. What is desired is knowledge as to whether this is the case among all households _in the population_. 
 
 Because this is a thought experiment and Table 4 does not represent real observations, the counts in Table 4 were generated by a computer program. The computer program was instructed that the proportions of households with an Acme Z341 grill that experienced fires is _exactly the same_ as the proportion of households without an Acme Z341 grill that experienced fires.
 
-It is not very unlikely that counts like those in Table 4 would be found in a representative sample from a population where the two proportions of interest are identical. To see this, statistical techniques must be used. This is, however, beyond the scope of this article.[^statistics]
+It is not very unlikely that counts like those in Table 4 would be found in a representative sample from a population where the two proportions of interest are identical. To see this, statistical analysis must be done. This is, however, beyond the scope of this article.[^statistics]
 
-[^statistics]: Determining whether two proportions are equal or not is one of the most elementary statistical analyses that can be done. Numerous techniques exist for this case, and any respectable introductory statistics course should cover at least one of them. For an intuition as to why the sample proportions might be different, given that they are identical in the population, it might be noted the the proportion of households that experienced a fire is quite small. In a simple random sample, there is still randomness as to whether any given individual is included in the sample, and the inclusion of any household that experienced a fire changes the proportions in the sample greatly. This randomness can lead to relatively large fluctuations when the population proportions are small. 
+[^statistics]: Determining whether two proportions are equal or not is one of the most elementary statistical analyses that can be done. Numerous techniques exist for this case, and any respectable introductory statistics course should cover at least one of them. For an intuition as to why the sample proportions might be different, given that they are identical in the population, it might be noted the proportion of households that experienced a fire is quite small. In a simple random sample, there is still randomness as to whether any given individual is included in the sample, and the inclusion of any household that experienced a fire changes the proportions in the sample greatly. This randomness can lead to relatively large fluctuations when the population proportions are small. 
 
 Thus, eliminating the selection bias created by the fallacy of listing examples is the _beginning_ of drawing a valid conclusion, but a representative sample is not _all_ that is needed to reach a valid conclusion.
 
 
 ## More Complex Scenarios
 
-The thought experiment used in this article revolves around a hypothesized association between two categorical variables: whether or not a household has a fire, and whether or not a household has an Acme Z341 grill. This was used because it is a very simple case that can be illustrated in the straightforward representation of a 2 by 2 contingency table.
+The thought experiment used in this article revolves around a hypothesized association between two categorical variables: whether or not a household has a fire, and whether or not a household has an Acme Z341 grill. This was used because it is a very simple case that can be illustrated with a 2 by 2 contingency table, which is a straightforward representation.
 
 However, what makes the practice of listing examples fallacious applies in more complicated scenarios, as well. All such instances of creating lists of examples are fallacies because, in these instances, the examples are themselves _selected because they illustrate some supposed phenomenon_. It is this intentional selection bias that makes lists of examples uninformative, and conclusions drawn from them fallacious.
 
 This fallacy can occur in scenarios where there are more than two variables being investigated. It can occur with variables that are numerical instead of categorical. Indeed, this fallacy can occur with any sort of analysis, because it is a fallacy in how sampling is done, not in how the analysis is done.
 
 
-## Non-fallacies
+## Non-fallacious Use of Lists of Examples
 
 While it is fallacious to attempt to infer a conclusion about a larger population from an unrepresentative sample, sometimes lists of examples can be used in ways that are not fallacious.
 
-### Existential Claims
-
 Of the four cells of Table 1, one of them has content. If all that is concluded from making a list of examples is that the phenomenon under investigation has occurred some finite number of times, with no conclusion about its prevalence, then this is not fallacious.  
 
-### Precipitation of Further Investigation
-
-It is not fallacious for a list of examples to precipitate further investigation. For instance, a first sanity check in investigating whether Acme Z341 grills cause fires is to find out whether _any_ fires occured in homes with an Acme Z341 grill. Thus, lists of examples have a similar status to anecdotes in that, while no conclusion can be drawn from lists of examples directly, they can inspire more rigorous collection of empirical evidence.
-
+Furthermore, it is not fallacious for a list of examples to precipitate further investigation. For instance, a first sanity check in investigating whether Acme Z341 grills cause fires is to find out whether _any_ fires occurred in homes with an Acme Z341 grill. Thus, lists of examples have a similar status to anecdotes in that, while no conclusion can be drawn from them directly, they can inspire more rigorous collection of empirical evidence.
 
 
 ## Conclusion
