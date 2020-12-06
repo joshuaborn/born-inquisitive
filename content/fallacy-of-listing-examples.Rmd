@@ -3,8 +3,8 @@ title: "The Fallacy of Listing Examples"
 draft: true
 date: 2020-12-06
 tags: ["fallacies"]
-#bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
-#csl: "../bibliographies/apa.csl"
+bibliography: "../bibliographies/fallacy-of-listing-examples.bib"
+csl: "../bibliographies/apa.csl"
 link-citations: true
 implicit-figures: true
 output:
@@ -134,7 +134,7 @@ For further illustration, suppose that the other three cells in the table were f
 
 This is still not informative. All that is known is that there are at least 100 instances of residential fires in homes that did not have Acme Z341 grills, at least 100 instances of homes without Acme Z341 grills that did not have fires, and at least 100 instances of homes with Acme Z341 grills that did not have fires.
 
-It is not surprising that 100 instances of each of these cases could be found. For instance, in the United States in 2018, there were an estimated 379,600 residential fires, and there were an estimated 119,730,128 households in the United States. Given a large enough population, 100 examples of counts for each of the four cells can easily be found.
+It is not surprising that 100 instances of each of these cases could be found. For instance, in the United States in 2018, there were an estimated 379,600 residential fires. [@national_fire_data_center_residential_2020] Also, there were an estimated 138,516,439 households in the United States. [@us_census_bureau_national_nodate] Given a large enough population, 100 examples of counts for each of the four cells can easily be found.
 
 The fundamental issue causing these lists of examples to be uninformative is that _sampling_ is being done, but the sampling is done with _selection bias._ 
 
