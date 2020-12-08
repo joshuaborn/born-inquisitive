@@ -276,9 +276,9 @@ This fallacy can occur in scenarios where there are more than two variables bein
 
 While it is fallacious to attempt to infer a conclusion about a larger population from an unrepresentative sample, sometimes lists of examples can be used in ways that are not fallacious.
 
-Of the four cells of Table 1, one of them has content. If all that is concluded from making a list of examples is that the phenomenon under investigation has occurred some finite number of times, with no conclusion about its prevalence, then this is not fallacious.  
+There is nothing fallacious about the use of examples for purely illustrative purposes, as long as there is no claim about the prevalence of the phenomenon being illustrated or about the supposed association of other phenomena with it. Indeed, this article uses an example, albeit a fictional one in the form of the Acme Z341 thought experiment, in order to motivate more concrete discussion of a fallacy, but makes no claim about how frequently this fallacy occurs.
 
-Furthermore, it is not fallacious for a list of examples to precipitate further investigation. For instance, a first sanity check in investigating whether Acme Z341 grills cause fires is to find out whether _any_ fires occurred in homes with an Acme Z341 grill. Thus, lists of examples have a similar status to anecdotes in that, while no conclusion can be drawn from them directly, they can inspire more rigorous collection of empirical evidence.
+Furthermore, it is not fallacious for a list of examples to precipitate further investigation. For instance, a first sanity check in investigating whether Acme Z341 grills cause fires could be to find out whether any fires have occurred in homes with an Acme Z341 grill. Thus, lists of examples have a similar status to anecdotes in that, while no conclusion can be drawn from them directly, they can inspire more rigorous collection of empirical evidence.
 
 
 ## Conclusion
