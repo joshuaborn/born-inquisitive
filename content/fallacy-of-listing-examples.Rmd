@@ -44,13 +44,13 @@ These lists of examples are nothing more than extended exercises in confirmation
 
 ## Contingency Tables
 
-In order to see the fallacy of such a practice, one need first consider the implications of the hypothesis being considered. Returning to the Acme grill example, the hypothesis being investigated is that possession of an Acme Z341 grill increases a household's risk of fire.[^converse]
+In order to see the fallacy of such a practice, one need first consider the implications of the hypothesis being considered. Returning to the Acme grill thought experiment, the hypothesis being investigated is that possession of an Acme Z341 grill increases a household's risk of fire.[^converse]
 
 If that were the case, at the very least, it would be expected that the proportion of homes _with_ an Acme Z341 grill that experience a fire would be _greater than_ the proportion of homes _without_ an Acme Z341 grill that experience a fire.
 
-For instance, if indeed the Acme Z341 grill were a fire hazard, and 0.317% of homes that _do not_ have an Acme Z341 grill experience fires in a given time period, then it would be expected that, all other things being equal, _more than_ 0.317% of homes that _do_ have an Acme Z341 grill would experience fires in the same time period.
+For instance, if indeed the Acme Z341 grill were a fire hazard, and 0.317% of homes that _do not_ have an Acme Z341 grill experience fires in a given time period, then it would be expected that _more than_ 0.317% of homes that _do_ have an Acme Z341 grill would experience fires in the same time period, all other things being equal.
 
-[^converse]: It could also be the case that residential fires and possession of an Acme Z341 grill are associated because of the converse relationship: the risk of residential fire explains an increased probability that a household has an Acme Z341 grill. For instance, this could arise if poorer households have an increased risk of fire, and the Acme Z341 is cheaper than other grills and so popular among poorer households. However, for the purposes of this example, any association between the two is framed as possession of the Acme Z341 grill explaining prevalence of residential fires.
+[^converse]: It could also be the case that residential fires and possession of an Acme Z341 grill are associated because of the converse relationship: the risk of residential fire explains an increased probability that a household has an Acme Z341 grill. For instance, this could arise if poorer households have an increased risk of fire, and the Acme Z341 is cheaper than other grills and so popular among poorer households. However, for the purposes of this thought experiment, any association between the two is framed as possession of the Acme Z341 grill explaining prevalence of residential fires.
 
 There are four unknowns that must become knowns in order to calculate the two proportions. This can be illustrated by the creation of a contingency table. (Table 1) The body of the table contains counts of households. The rows separate these counts into households that have experienced a fire and households that have not. The columns separate the counts into households that have Acme Z341 grills and households that do not.
 
@@ -167,7 +167,7 @@ If one encounters an act of attempted persuasion supported by a list of examples
 
 For instance, in the above thought experiment, it was found that there were at least 100 instances of residential fires in homes that have an Acme Z341 grill, and it was suggested that Acme Z341 grills cause fires. It is correct to reject such a conclusion as fallacious. However, it would also be fallacious to conclude that Acme Z341 grills _do not_ cause fires. The only correct conclusion, given the evidence of Table 1 or Table 2, is that it is not known whether or not Acme Z341 grills cause fires.
 
-The Acme Z341 grill thought experiment happened to use confirmatory cases, but an example using disconfirmatory cases would have proceeded identically. For instance, the Acme company could have suggested that its grills were not causing fires, and its representatives could have produced a list of 100 happy customers who have never experienced a fire. This alternative thought experiment would have proceeded identically, but with the lower left cell of Table 1 filled in, instead of the upper left. The conclusion suggested by the Acme company would be fallacious for the exact same reasons as in the original thought experiment.
+The Acme Z341 grill thought experiment happened to use confirmatory cases, but a thought experiment using disconfirmatory cases would have proceeded identically. For instance, the Acme company could have suggested that its grills were not causing fires, and its representatives could have produced a list of 100 happy customers who have never experienced a fire. This alternative thought experiment would have proceeded identically, but with the lower left cell of Table 1 filled in, instead of the upper left. The conclusion suggested by the Acme company would be fallacious for the exact same reasons as in the original thought experiment.
 
 
 
@@ -254,7 +254,7 @@ Dividing the upper left cell of Table 4 by the sum of the left column, it can be
 
 In Table 4, the proportion of households with an Acme Z341 grill that experienced a fire is greater than the proportion of households without an Acme Z341 grill that experienced a fire. However, this is the case for the proportions among households _in the sample_. What is desired is knowledge as to whether this is the case among all households _in the population_. 
 
-Because this is a thought experiment and Table 4 does not represent real observations, the counts in Table 4 were generated by a computer program. The computer program was instructed that the proportions of households with an Acme Z341 grill that experienced fires is _exactly the same_ as the proportion of households without an Acme Z341 grill that experienced fires.
+Because this is a thought experiment and Table 4 does not represent real observations, the sample used for the counts in Table 4 was generated by a computer program. The computer program was instructed that the proportions of households with an Acme Z341 grill that experienced fires is _exactly the same_ as the proportion of households without an Acme Z341 grill that experienced fires.
 
 It is not very unlikely that counts like those in Table 4 would be found in a representative sample from a population where the two proportions of interest are identical. To see this, statistical analysis must be done. This is, however, beyond the scope of this article.[^statistics]
 
