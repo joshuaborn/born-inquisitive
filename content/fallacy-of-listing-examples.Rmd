@@ -11,15 +11,15 @@ output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: false
-    toc_depth: 5
-include-before: |
-  <p></p>
-  <!--more-->
 ---
 
-## Thought Experiment Scenario
+Advocating a belief by finding some number of supporting examples and listing them is fallacious. This practice is fallacious because it consists of sampling under extreme selection bias, and no valid conclusion can be drawn from it. In this article, the fallaciousness of this practice is explained by way of contingency tables used in a thought experiment in which two variables are claimed to be associated, illustrating the lack of information gleaned from such a practice in a straightforward and quantitative way.
 
-For instance, suppose there is a fear that a popular cooking appliance, the Acme Z341 electric grill, is a fire hazard. Perhaps suspicion of the Acme Z341 grill stems from testimonials of several recent residential fire victims who report using Acme Z341 grills, or perhaps suspicion is cast on the Acme Z341 because of the reports of several firefighters who recall seeing the Acme Z341 grill present at the scene of recent residential fires.
+<!--more-->
+
+## Thought Experiment
+
+Suppose there is a fear that a popular cooking appliance, the Acme Z341 electric grill, is a fire hazard. Perhaps suspicion of the Acme Z341 grill stems from testimonials of several recent residential fire victims who report using Acme Z341 grills, or perhaps suspicion is cast on the Acme Z341 because of the reports of several firefighters who recall seeing the Acme Z341 grill present at the scene of recent residential fires.
 
 ![
 _Firefighters at the scene of a house fire._<br/>
@@ -265,7 +265,7 @@ Thus, eliminating the selection bias created by the fallacy of listing examples 
 
 ## More Complex Scenarios
 
-The thought experiment used in this article revolves around a hypothesized association between two categorical variables: whether or not a household has a fire, and whether or not a household has an Acme Z341 grill. This was used because it is a very simple case that can be illustrated with a 2 by 2 contingency table, which is a straightforward representation.
+The thought experiment used in this article revolves around a hypothesized association between two categorical variables: whether or not a household has a fire, and whether or not a household has an Acme Z341 grill. This was used because it is a very simple case that can be illustrated with a 2 by 2 contingency table.
 
 However, what makes the practice of listing examples fallacious applies in more complicated scenarios, as well. All such instances of creating lists of examples are fallacies because, in these instances, the examples are themselves _selected because they illustrate some supposed phenomenon_. It is this intentional selection bias that makes lists of examples uninformative, and conclusions drawn from them fallacious.
 
@@ -283,7 +283,7 @@ Furthermore, it is not fallacious for a list of examples to precipitate further 
 
 ## Implications
 
-Someone who is advocating a belief might think it an obvious course of action to accumulate individual supporting examples and list them. However, as has been seen, such an exercise is highly fallacious and not informative. It thus behooves those who value the separation of truth from falsity to be on guard against this practice, both in others' acts of persuasion and in their own thinking.
+Someone who is advocating a belief might think it an obvious course of action to accumulate a list of supporting examples. However, as has been seen, such an exercise is highly fallacious and not informative. It thus behooves those who value the separation of truth from falsity to be on guard against this practice, both in others' acts of attempted persuasion and in their own thinking.
 
 
 ## Citations
