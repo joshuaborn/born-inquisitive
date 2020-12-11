@@ -286,6 +286,10 @@ Furthermore, it is not fallacious for a list of examples to precipitate further 
 Someone who is advocating a belief might think it an obvious course of action to accumulate a list of supporting examples. However, as has been seen, such an exercise is highly fallacious and not informative. It thus behooves those who value the separation of truth from falsity to be on guard against this practice, both in others' acts of attempted persuasion and in their own thinking.
 
 
+## Further Reading
+
+The use of a 2 by 2 contingency table to illustrate fallacies in interpreting evidence was inspired by the section "The Excessive Impact of Confirmatory Information" in Chapter 3 of _How We Know What Isn't So_. [@gilovich_how_2008] 
+
 ## Citations
 
 ::: {#refs}
