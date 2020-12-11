@@ -1,10 +1,10 @@
 ---
-title: "Skeptical Metamorality"
+title: "Moral Fictions"
 draft: true
-#date: 2018-11-11
+date: 2020-12-11
 tags: ["worldview"]
-bibliography: "../bibliographies/skeptical-metamorality.bib"
-#csl: "../bibliographies/apa.csl"
+bibliography: "../bibliographies/moral-fictions.bib"
+csl: "../bibliographies/apa.csl"
 link-citations: true
 implicit-figures: true
 output:
