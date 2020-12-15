@@ -17,7 +17,7 @@ include-before: |
   <!--more-->
 ---
 
-## Definition of Descriptive versus Normative Mental Models
+## Descriptive versus Normative Mental Models
 
 ### Truth or Falsity
 
@@ -92,8 +92,6 @@ _A diagram illustrating a moral reaction to the observation of the act of steali
 Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle observations of the external world that contradict the mental model. These contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
 
 
-
-## Implications of Descriptive versus Normative Mental Models
 ### No Moral Truth
 
 For a worldview that accepts these definitions of truth, belief, mental model, and moral sentiment, it must be concluded that inquiring as to the truth or falsity of moral sentiments _is a mistake_, in the same way it is a mistake even to ask about the color of a taste or the odor of a touch. One is simply asking the wrong kind of question in these cases.
@@ -106,6 +104,8 @@ A direct consequence of this and the earlier definition of knowledge is that the
 
 In philosophical jargon, a position that denies the possibility of moral knowledge is termed "moral skepticism."
 
+
+## Separation of Descriptive and Normative Elements
 
 ### Linguistic Mixing
 
@@ -130,7 +130,7 @@ While it makes no sense to attempt to evaluate the truth or falsity of the moral
 _A diagram illustrating a true belief about an attitudinal proposition._<br/>
 ](/images/image.svg)
 
-Such attitudinal propositions make a different kind of claim than the objective statement that "stealing is wrong." They make claims about subjective mental states, claims that are true or false.
+Such attitudinal propositions make a different kind of claim than the objective statement that "stealing is wrong." They make claims about subjective mental states, claims that _are_ true or false.
 
 ![
 _A diagram illustrating truth and falsity for attitudinal propositions. The upper left and lower right diagrams illustrate true beliefs about attitudinal propositions. The upper right and lower left diagrams illustrate false beliefs about attitudinal propositions._<br/>
@@ -138,44 +138,54 @@ _A diagram illustrating truth and falsity for attitudinal propositions. The uppe
 
 Thus, while there are no moral truths and no moral knowledge, there can be truths and knowledge about moral sentiments. 
 
-One can quietly make this sort of translation from moral sentiments to attitudinal propositions in one's own mind. Furthermore, doing so as a matter of habit rescues a truth from a sort of dialogue that consists of untruths. These habitual translations thus create an opportunity to gain new knowledge and make a learning experience out of what, taken at face value, would not be an opportunity to learn.
+For mixed statements with both descriptive information and normative connotations, the method of attitudinal propositions can be used with a conjunction between two propositions. For instance, if someone named Chidi says, "the Liberation Front terrorists were defeated in the battle today," this can be interpreted as two propositions: "the Liberation Front faction lost the battle today," and "Chidi disapproves of the Liberation Front." Similarly if someone named Astrid says, "during the battle today, the Liberation Front was set back in their struggle against oppression," this can be interpreted as "the Liberation Front faction lost the battle today," and "Astrid approves of the Liberation Front."
+
+If social decorum permits, one can make these translations overtly as part of one's conversation. This has the potential to inform one's interlocutor that one has a worldview that includes moral skepticism. Of course, there are social settings where it may not be prudent to make such translations overtly. In these cases, one can quietly make this sort of translation from moral sentiments to attitudinal propositions in one's own mind.
+
+Regardless of whether done overtly or tacitly, making such translations as a matter of habit rescues a truth from a sort of dialogue that consists of untruths. These habitual translations thus create an opportunity to gain new knowledge and make a learning experience out of what, taken at face value, would not be an opportunity to learn.
 
 
-## Definition of Moral Constructs
+## Moral Constructs
 
-Sometimes moral sentiments are expressed in very literal, self-aware terms, e.g., "I am a vegetarian because I am ethically opposed to eating animals." However, sometimes moral sentiments are expressed in terms of abstract concepts, such as justice, virtue, etc. When they appear in the predicate of statements, these normative _moral constructs_ can readily be translated to descriptive beliefs by the method of attitudinal propositions.
+Sometimes moral sentiments are expressed in very literal, self-aware terms, e.g., "I am a vegetarian because I am ethically opposed to raising and harvesting animals for food." However, sometimes moral sentiments are expressed in terms of abstract concepts, such as justice, virtue, etc. When they appear in the predicate of statements, these normative _moral constructs_ can readily be translated to descriptive beliefs by the method of attitudinal propositions.
 
 "This is a just war" can be translated to the belief that the speaker morally approves of the war in question, and "this war is unjust" can be translated to the belief that the speaker morally disapproves of the war. "Practicing birth control is virtuous," can be translated to the belief that the speaker morally approves of birth control, and "using abortion as a method of family limitation is vicious" can be translated to the belief that the speaker [morally disapproves of the use of abortion as a birth control method](/margaret-sanger-on-abortion-in-her-own-words.html).
 
-However, sometimes these moral constructs appear not just in the predicates of statements, but assume an existence of their own, appearing as the subject of statements. For instance, the word "good" is understood to mean something that is desirable when predicated of a physically existing subject, but in ancient Greek philosophy it was fashionable to speak about "the Good," as if it were a thing in and of itself. Likewise, today some individuals create elaborate theories of justice, perhaps with an uppercase "J" in "Justice." For a time it was fashionable for European thinkers to speak of "Nature and Nature's laws" with an uppercase "N."
+However, sometimes these moral constructs are used not just in the predicates of statements, but assume an existence of their own, being used as the subject of statements. For instance, the word "good" is understood to mean something that is desirable when predicated of a physically existing subject, but in ancient Greek philosophy it was fashionable to speak about "the Good," as if it were a thing in and of itself. Likewise, today some individuals create elaborate theories of justice, perhaps with an uppercase "J" in "Justice." For a time it was fashionable for European thinkers to speak of "Nature and Nature's laws" with an uppercase "N."
 
 
 There are at least three major ways morally skeptical worldviews interpret moral constructs.
 
 ### Noncognitivism
 
-One interpretation notes that not all syntactically correct sentences of natural languages form a meaningful thought. For instance, the sentence "purple ideas sleep furiously" is a syntactically correct sentence of the English language, but it is nonsense and meaningless. Puzzling over such a sentence is a waste of time. Under this interpretation, statements about moral constructs are viewed in a similar light, judging them to be meaningless, in a literal sense. (They might still have connotations, even if their denotation is empty because they refer to nothing.) This is ethical _noncognitivism._ [@ayer_language_1946]
+One interpretation notes that not all syntactically correct sentences of natural languages form a meaningful thought. For instance, the sentence "purple ideas sleep furiously" is a syntactically correct sentence of the English language, but it is nonsense and meaningless. Puzzling over such a sentence is a waste of time. Under this interpretation, statements about moral constructs are viewed in a similar light, judging them to be meaningless, in a literal sense. This is ethical _noncognitivism._ [@ayer_language_1946]
 
-This is the most direct extension of the earlier interpretation of moral sentiments. [...]
+This is perhaps the most obvious extension of the earlier interpretation of moral sentiments. Much as it was interpreted to be a mistake to attempt to judge the truth or falsity of moral sentiments, this interpretation believes it a mistake to attempt to judge the truth or falsity of statements about moral constructs.
+
+Statements about moral constructs might still have connotations, even if their denotation is empty because they refer to nothing. When these connotations can be translated with the method of propositional attitudes, there may be a true-or-false belief to be discovered. For instance, if someone named Thomas were to say, "Nature and Nature's Law demands the overthrow of the Republic of Freelandia," then this can be translated to, "Thomas approves of the overthrow of Freelandia." This can be done without engaging in speculative philosophy about what "Nature" wants or "Nature's Law" is, because ethical noncognitivism judges such statements as meaningless.
 
 ### Error Theory
 
-Another interpretation is to take statements about moral constructs at face value. Under this interpretation, statements such as "all unicorns are white" are interpreted as false because there are not, in fact, any unicorns. Similarly, statements about "justice," "virtue," "rights," etc, are _trying_ to describe some feature of the non-mental world.[^non-mental] However, there are no such physically existing things such as justice, virtue, rights, etc, to describe, and all of these sort of statements fail. Therefore, all such statements about moral constructs are false. This is an _error theory_ of morality. [@mackie_ethics_1977]
+Another interpretation is to take statements about moral constructs at face value and to make existence of a subject a criterion of truth. Under this interpretation, statements such as "all unicorns are white" are interpreted as false because there are not, in fact, any unicorns. Similarly, statements about "justice," "virtue," "rights," etc, are _trying_ to describe some feature of the non-mental world.[^non-mental] However, there are no such physically existing things such as justice, virtue, rights, etc, to describe, and all of these sort of statements fail. Therefore, all such statements about moral constructs are false. This is an _error theory_ of morality. [@mackie_ethics_1977]
 
-One can have an error theory for morality generally or just for moral constructs specifically. The former, more general error theory contradicts the earlier interpretation of truth and falsity. [...] However, the latter, more specific error theory is compatible. [...]
+This description of an error theory for morality is a specific to the _subjects_ of statements. One can have a more general error theory for morality, which would contradict the worldview of the first section of this article, since a more general error theory would judge moral sentiments to be false, and earlier it was judged a mistake to apply truth or falsity to moral sentiments. However, a more specific error theory in which the existential criterion is applied only to subjects is compatible with the interpretation of the first section of this article.
+
+Under such a more specific error theory, statements such as "stealing is wrong" are neither false nor true, since the subject of the statement, i.e., stealing, describes a physically existing act. Statements such as "the Good is One" or "Justice is more important than facts" are false because their subjects, i.e., "the Good" and "Justice," do not exist in the non-mental world.
 
 [^non-mental]: This article uses the phrase "non-mental world" to denote everything in the cosmos except for the contents of _any_ mind. This is a more restrictive class than what is referred to by "external world" by exactly one mind.
 
 ### Useful Fictions
 
-A third interpretation of statements about moral constructs is that they are not to be taken literally, but are _useful fictions,_ like a fable, intended to remind individuals to act in accord with some moral system. However, this is a dubious interpretation, since it is predicated on the supposition that everyone speaking, listening, writing, and reading about moral constructs is consciously aware that moral constructs do not actually exist.
+A third interpretation of statements about moral constructs is that they are not to be taken literally, but are _useful fictions,_ like a fable, intended to remind individuals to act in accord with some moral system. However, while it may be the case that moral constructs _should_ be interpreted as useful fictions, many individuals have, in point of fact, not interpreted them as such, but instead taken them literally.
 
-[...]
+Pages and pages of philosophical treatises have been devoted to speculating about "the Good," "justice," "virtue," "rights," etc. Even today, in contemporary news outlet there is much hand-wringing about the nature of "justice" or "rights." One can encounter protesters in any major urban center standing upon soap boxes, either metaphorically or literally, lecturing others about the nature of righteousness.
+
+An issue with the useful fictions interpretation is that, while it may rescue a mind from self-delusion, such a rescue is largely hidden from the external world. An individual who ironically speaks about "justice" or "rights" with the understanding that these are useful fictions is not readily distinguishable from someone who literally speaks about "justice" or "rights." This leaves those with useful fiction interpretations with one of two options: continually call out that moral constructs are fictional every time they are discussed, or maintain a secret worldview indistinguishable from worldviews that are diametrically opposed to it.
 
 
-## Implications of Moral Fictions
+## Implications
 
-Regardless if statements about moral constructs are interpreted as neither true nor false, always false, or false but in a way that has utility, the important point that all these interpretations have in common is that statements about moral constructs are not literally true. Thus, such constructs are _moral fictions._
+Regardless if statements about moral constructs are interpreted as neither true nor false, always false, or false but in a way that has utility, the important point that all these interpretations have in common is that statements about moral constructs are not literally true. Thus, such statements about moral constructs are _moral fictions._
 
 The issue with moral constructs used in this way is that they do not refer to anything. Moral sentiments describe the subjective approval or disapproval made by a mind.
 
