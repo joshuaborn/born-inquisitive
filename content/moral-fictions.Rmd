@@ -21,7 +21,7 @@ include-before: |
 
 ### Truth or Falsity
 
-The words "true" and "false" are symbols, and symbols can be used in a variety of ways. The definition of "truth" used here is different than that used by those who are apt to say "speak your truth" to denote things that are subjectively important to someone. Instead, "truth" is used here to describe a relationship between a mental model and the external world.[^external]
+The words "true" and "false" are symbols, and symbols can be used in a variety of ways. The definition of "truth" used here is different than that used by those who say "speak your truth" to denote things that are subjectively important to someone. Instead, "truth" is used here to describe a relationship between a mental model and the external world.[^external]
 
 [^external]: This article uses the phrase "external world" to denote everything in the cosmos except for the contents of a _specific_ mind.
 
@@ -33,7 +33,7 @@ A mind might have a belief, which is a representation of how the mind perceives 
 _A diagram illustrating truth conditions in which a mental model corresponds to the external world._<br/>
 ](/images/image.svg)
 
-Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain container is approximately 20 kilograms in weight, in order to examine that belief, other beliefs that comprise expectations about how heavier objects behave relative to lighter objects and how to measure weight must also be held in order to examine whether the belief about the sack is true or false.
+Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain container is approximately 20 kilograms in weight, in order to examine that belief, other beliefs that comprise expectations about how heavier objects behave relative to lighter objects must also be held in order to examine whether the belief about the container is true or false.
 
 Because of this, instead of truth or falsity being discussed as properties of individual beliefs, this inquiry examines truth and falsity as properties of a _mental model_. A mental model includes a particular belief and all the other related beliefs necessary in order to test this belief. These kind of mental models are _descriptive,_ in that they attempt to model how things actually are.
 
@@ -66,10 +66,6 @@ _A diagram illustrating a mental model that fails to constitute moral sentiments
 
 Moral sentiments occur when there is a _judgment_ or _prescription_ about the external world. For instance, a moral mental model does not merely believe that there is stealing in the world, but _judges_ stealing to be wrong. Moral mental models are _normative,_ rather than descriptive. They do not have implications that explain or predict phenomena, but instead have implications that prescribe certain behavior (e.g., "be kind to one another") and proscribe other behavior (e.g., "do not steal").
 
-More specifically, moral sentiments judge or prescribe the behavior of certain individuals in the external world. Few human beings morally judge the behavior of rocks or the behavior of plants.[^animals] Human beings tend to judge the behavior of other human beings and of themselves. The individuals whose behavior are judged in this way, by any specific mind, are its _moral agents._
-
-[^animals]: Some human beings do judge the behavior of non-human animals, such as in animal trials in medieval Europe or in circumstances in which there is a household pet, while some human beings do not ascribe moral agency to non-human animals, so this is more of a gray area.
-
 ![
 _A diagram illustrating a moral mental model._<br/>
 ](/images/image.svg)
@@ -83,7 +79,7 @@ While both true-or-false beliefs and moral sentiments constitute kinds of mental
 _A diagram illustrating a moral mental model._<br/>
 ](/images/image.svg)
 
-It is against the spirit of morality to have the moral sentiment that stealing is wrong, observe an incident of stealing, and then conclude, "I guess I was mistaken. Stealing is righteous." Rather, someone who has the moral sentiment that stealing is wrong and who observes an incident of stealing is expected to censure the act, try to prevent the thief from leaving with the stolen item, call the authorities, report the act, or, with a longer view, investigate the root causes of theft in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world or, at the very least, the actions of moral agents.
+It is against the spirit of morality to have the moral sentiment that stealing is wrong, observe an incident of stealing, and then conclude, "I guess I was mistaken. Stealing is righteous." Rather, someone who has the moral sentiment that stealing is wrong and who observes an incident of stealing is expected to censure the act, try to prevent the thief from leaving with the stolen item, call the authorities, report the act, or, with a longer view, investigate the root causes of theft in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world.
 
 ![
 _A diagram illustrating a moral reaction to the observation of the act of stealing._<br/>
@@ -138,11 +134,11 @@ _A diagram illustrating truth and falsity for attitudinal propositions. The uppe
 
 Thus, while there are no moral truths and no moral knowledge, there can be truths and knowledge about moral sentiments. 
 
-For mixed statements with both descriptive information and normative connotations, the method of attitudinal propositions can be used with a conjunction between two propositions. For instance, if someone named Chidi says, "the Liberation Front terrorists were defeated in the battle today," this can be interpreted as two propositions: "the Liberation Front faction lost the battle today," and "Chidi disapproves of the Liberation Front." Similarly if someone named Astrid says, "during the battle today, the Liberation Front was set back in their struggle against oppression," this can be interpreted as "the Liberation Front faction lost the battle today," and "Astrid approves of the Liberation Front."
+For mixed statements with both descriptive information and normative connotations, the method of attitudinal propositions can lead to a conjunction between two propositions: one about a state of affairs and another about a mind's attitude toward the state of affairs. For instance, if someone named Chidi says, "the Liberation Front terrorists were defeated in the battle today," this can be interpreted as two propositions: "the Liberation Front faction lost the battle today," and "Chidi disapproves of the Liberation Front." Similarly if someone named Astrid says, "during the battle today, the Liberation Front was set back in their struggle against oppression," this can be interpreted as "the Liberation Front faction lost the battle today," and "Astrid approves of the Liberation Front."
 
-If social decorum permits, one can make these translations overtly as part of one's conversation. This has the potential to inform one's interlocutor that one has a worldview that includes moral skepticism. Of course, there are social settings where it may not be prudent to make such translations overtly. In these cases, one can quietly make this sort of translation from moral sentiments to attitudinal propositions in one's own mind.
+If social decorum permits, one can make these translations explictly as part of one's conversation. This has the potential to inform one's interlocutor that one has a worldview that includes moral skepticism. Of course, there are social settings where it may not be prudent to make such translations overtly. In these cases, one can quietly make this sort of translation from moral sentiments to attitudinal propositions in one's own mind.
 
-Regardless of whether done overtly or tacitly, making such translations as a matter of habit rescues a truth from a sort of dialogue that consists of untruths. These habitual translations thus create an opportunity to gain new knowledge and make a learning experience out of what, taken at face value, would not be an opportunity to learn.
+Regardless of whether done overtly or tacitly, making such translations as a matter of habit rescues a truth from a sort of dialogue that consists of untruths. These habitual translations thus create opportunities to gain new knowledge and make a learning experiences out of what, taken at face value, would not be opportunities to learn.
 
 
 ## Moral Constructs
@@ -154,7 +150,7 @@ Sometimes moral sentiments are expressed in very literal, self-aware terms, e.g.
 However, sometimes these moral constructs are used not just in the predicates of statements, but assume an existence of their own, being used as the subject of statements. For instance, the word "good" is understood to mean something that is desirable when predicated of a physically existing subject, but in ancient Greek philosophy it was fashionable to speak about "the Good," as if it were a thing in and of itself. Likewise, today some individuals create elaborate theories of justice, perhaps with an uppercase "J" in "Justice." For a time it was fashionable for European thinkers to speak of "Nature and Nature's laws" with an uppercase "N."
 
 
-There are at least three major ways morally skeptical worldviews interpret moral constructs.
+There are at least three major ways morally skeptical worldviews can interpret moral constructs.
 
 ### Noncognitivism
 
@@ -168,24 +164,26 @@ Statements about moral constructs might still have connotations, even if their d
 
 Another interpretation is to take statements about moral constructs at face value and to make existence of a subject a criterion of truth. Under this interpretation, statements such as "all unicorns are white" are interpreted as false because there are not, in fact, any unicorns. Similarly, statements about "justice," "virtue," "rights," etc, are _trying_ to describe some feature of the non-mental world.[^non-mental] However, there are no such physically existing things such as justice, virtue, rights, etc, to describe, and all of these sort of statements fail. Therefore, all such statements about moral constructs are false. This is an _error theory_ of morality. [@mackie_ethics_1977]
 
-This description of an error theory for morality is a specific to the _subjects_ of statements. One can have a more general error theory for morality, which would contradict the worldview of the first section of this article, since a more general error theory would judge moral sentiments to be false, and earlier it was judged a mistake to apply truth or falsity to moral sentiments. However, a more specific error theory in which the existential criterion is applied only to subjects is compatible with the interpretation of the first section of this article.
+This description of an error theory for morality is specific to the _subjects_ of statements. One can have a more general error theory for morality, which would contradict the worldview of the first section of this article, since a more general error theory would judge moral sentiments to be false, and earlier it was judged a mistake to apply truth or falsity to moral sentiments. However, a more specific error theory in which the existential criterion is applied only to subjects is compatible with the interpretation of the first section of this article.
 
-Under such a more specific error theory, statements such as "stealing is wrong" are neither false nor true, since the subject of the statement, i.e., stealing, describes a physically existing act. Statements such as "the Good is One" or "Justice is more important than facts" are false because their subjects, i.e., "the Good" and "Justice," do not exist in the non-mental world.
+Under such a more specific error theory, statements such as "stealing is wrong" are neither false nor true, since the subject of the statement, i.e., stealing, describes something that exists, in this case a physical act. Statements such as "the Good is One" or "Justice is more important than facts" are false because their subjects, i.e., "the Good" and "Justice," do not exist in the non-mental world.
 
 [^non-mental]: This article uses the phrase "non-mental world" to denote everything in the cosmos except for the contents of _any_ mind. This is a more restrictive class than what is referred to by "external world" by exactly one mind.
 
 ### Useful Fictions
 
-A third interpretation of statements about moral constructs is that they are not to be taken literally, but are _useful fictions,_ like a fable, intended to remind individuals to act in accord with some moral system. However, while it may be the case that moral constructs _should_ be interpreted as useful fictions, many individuals have, in point of fact, not interpreted them as such, but instead taken them literally.
+A third interpretation of statements about moral constructs is that they are not to be taken literally, but are _useful fictions,_ like a fable, intended to remind individuals to act in accord with some moral system.
 
-Pages and pages of philosophical treatises have been devoted to speculating about "the Good," "justice," "virtue," "rights," etc. Even today, in contemporary news outlet there is much hand-wringing about the nature of "justice" or "rights." One can encounter protesters in any major urban center standing upon soap boxes, either metaphorically or literally, lecturing others about the nature of righteousness.
+However, while it may be the case that moral constructs _should_ be interpreted as useful fictions, many individuals have, in point of fact, not interpreted them as such, but instead taken them literally. Pages and pages of philosophical treatises have been devoted to speculating about "the Good," "justice," "virtue," "rights," etc. Even today, in contemporary news outlet there is much hand-wringing about the nature of "justice" or "rights."
 
-An issue with the useful fictions interpretation is that, while it may rescue a mind from self-delusion, such a rescue is largely hidden from the external world. An individual who ironically speaks about "justice" or "rights" with the understanding that these are useful fictions is not readily distinguishable from someone who literally speaks about "justice" or "rights." This leaves those with useful fiction interpretations with one of two options: continually call out that moral constructs are fictional every time they are discussed, or maintain a secret worldview indistinguishable from worldviews that are diametrically opposed to it.
+An issue with the useful fictions interpretation is that, while it may make a mind internally consistent, this is largely hidden from the external world. An individual who ironically speaks about "justice" or "rights" with the understanding that these are useful fictions is not readily distinguishable from someone who literally speaks about "justice" or "rights." This leaves those with useful fiction interpretations with one of two options: to call out repeatedly that moral constructs are fictional every time they are discussed, or to maintain a secret worldview indistinguishable from worldviews that are diametrically opposed to it.
 
 
-## Implications
+## Implications of Moral Fictions
 
 Regardless if statements about moral constructs are interpreted as neither true nor false, always false, or false but in a way that has utility, the important point that all these interpretations have in common is that statements about moral constructs are not literally true. Thus, such statements about moral constructs are _moral fictions._
+
+### Delusions of Moral Knowledge
 
 The issue with moral constructs used in this way is that they do not refer to anything. Moral sentiments describe the subjective approval or disapproval made by a mind.
 
@@ -195,19 +193,24 @@ Furthermore, statements such as these use language in a way that is used to refe
 
 However, as has been seen, it is a mistake to attempt to apply the properties of truth or falsity to moral sentiments, and thus there is no moral knowledge.
 
+### Conflict between Moral Skepticism and Moral Realism
+
 Worldviews that purport to have moral sentiments that constitute objective knowledge of the non-mental world are called "moral realism" in the philosophical jargon. Unfortunately, moral realism has been one of the most common if not the most common metaethical positions in the history of Western philosophy taught in academic settings, and so one is liable to encounter many moral constructs when perusing published thinking about ethics.
 
 While academic philosophy is notoriously irrelevant to the daily lives of the masses, this is not just a recondite disagreement. In contemporary life one need not look very far to find those advancing their own pet ideas of what "justice" is. Morally contentious issues such as abortion are often framed in terms of moral constructs such as "personhood" or "human rights."
 
 To the worldview articulated here, those who use moral constructs in a morally realist way are delusional, and they are delusional in a particularly insane way. [...]
 
-Whether interpreted as false, meaningless, or useful lies, statements about moral constructs are not true. No amount of reasoning about moral constructs can constitute knowledge. This metaethical position leads directly to certain practices.
+
+## Practices of Moral Skepticism
+
+[...]
 
 The first practice is, when expressing one's own morality, to do so by referring to one's attitudes directly. [...]
 
 Another practice is, when encountering the moral sentiments of others expressed in a manner not referring directly to their attitudes, to translate these statements into attitudinal propositions. This can be done overtly, when social context allows for it, or silently in one's own mind, when social context does not. [...]
 
-A final practice is to avoid moral constructs entirely. All pontificating about moral constructs is a frivolous and delusion activity. [...]
+A final practice is to avoid moral constructs entirely. [...]
 
 
 ## Conclusion 
@@ -230,7 +233,8 @@ This may seem to have little relevance for anyone outside of academic pursuits. 
 
 There is also an important implication relevant for all individuals, regardless of vocation. It is that moral enlightenment does not come from moral truths, nor does it come from the vain invention of abstract moral constructs intended to rationalize one's moral sentiments, but comes from introspection. The best one can do is to _know thyself,_ as the ancient maxim goes.
 
-An enlightened thinker is compelled to believe what is true and disbelieve what is false. What remains is just how one feels. The only enlightenment that can be attained about this is to be _aware_ of how one feels and to abstain from trying to rationalize it. Then, one can investigate one's self with the same tools of inquiry &ndash; such as empirical evidence, investigation into causes, etc &ndash; that one might use to investigate any other fact.
+A critical thinker is compelled to believe what is true and disbelieve what is false. All that remains is how one feels. The only enlightenment that can be attained about this is to be _aware_ of how one feels and to abstain from trying to post hoc rationalize it. Then, one can investigate one's self with the same tools of inquiry &ndash; such as empirical evidence, investigation into causes, etc &ndash; that one might use to investigate any other fact about the world.
+
 
 ## Citations
 
