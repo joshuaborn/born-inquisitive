@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p></p>
+  <p>Much of moral philosophy would construe morality as a search for truths and moral knowledge, and much of everyday moralizing consists of hand-wringing over constructs such as "justice" or "human rights." This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to implications that truth and falsity apply to the former, but not the latter, which in turn implies practices for dealing with moral sentiments. Finally, several interpretations of moral constructs are considered which have in common the judgement that moral constructs are fictions.</p>
   <!--more-->
 ---
 
@@ -182,8 +182,7 @@ However, while it may be the case that moral constructs _should_ be interpreted 
 
 An issue with the useful fictions interpretation is that, while it may make a mind internally consistent, this is largely hidden from the external world. An individual who ironically speaks about "justice" or "human rights" with the understanding that these are useful fictions is not readily distinguishable from someone who literally speaks about "justice" or "human rights" as if they described actual things. This leaves those with useful fiction interpretations either to call out repeatedly that moral constructs are fictional when using them or to maintain secret worldviews indistinguishable from diametrically opposed worldviews.
 
-
-## Implications of Moral Fictions
+### Moral Fictions
 
 Regardless if statements about moral constructs are interpreted as neither true nor false, always false, or false but in a way that has utility, the important point that all these morally skeptical interpretations have in common is that statements about moral constructs are not literally true. Thus, such statements about moral constructs are _moral fictions._
 
