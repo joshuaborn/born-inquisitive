@@ -13,8 +13,9 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>Much of moral philosophy would construe morality as a search for truths and moral knowledge, and much of everyday moralizing consists of hand-wringing over constructs such as "justice" or "human rights." This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to implications that truth and falsity apply to the former, but not the latter, which in turn implies practices for dealing with moral sentiments. Finally, several interpretations of moral constructs are considered which have in common the judgement that moral constructs are fictions.</p>
+  <p>Much of moral philosophy construes morality as a search for truths and moral knowledge, and much of everyday moralizing consists of hand-wringing over constructs such as "justice" or "human rights." This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to the implication that truth and falsity apply to the former, but not the latter, which in turn implies practices for dealing with moral sentiments, including the rejection of moral constructs as fictions.</p>
   <!--more-->
+  ## Table of Contents
 ---
 
 ## Descriptive versus Normative Mental Models
@@ -30,16 +31,16 @@ A mind might have a belief, which is a representation of how the mind perceives 
 [^correspondence]: This is a correspondence definition of truth, which is a kind of truth also called _"a posteriori,"_ "synthetic," "contingent", or "matters of fact." There are also coherence definitions of truth, which in philosophical jargon are called _"a priori,"_ "analytic," "necessary," or "relations of ideas." This latter kind of truth comprises things that are true by definition, such as "1 + 1 = 2" or "bachelors are unmarried men." These kinds of true beliefs are _tautologies_, i.e., they refer to the same thing twice. These kind of tautologies are only more interesting than more obvious tautologies like "2 = 2" or "bachelors are bachelors" inasmuch as they refer to the same thing with different symbols. This inquiry regards tautologies as not useful for understanding morality because they merely beg the question. For instance, if one were to be questioned as why one felt that stealing is wrong, and one replied "because I have defined 'wrong' that way," this would not be informative.
 
 ![
-_A diagram illustrating truth conditions in which a mental model corresponds to the external world._<br/>
+_A diagram illustrating conditions for truth, in which a mental model corresponds to the external world._
 ](/images/image.svg)
 
 Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain container is approximately 20 kilograms in weight, in order to examine that belief, other beliefs that comprise expectations about how heavier objects behave relative to lighter objects must also be held in order to examine whether the belief about the container is true or false.
 
-Because of this, instead of truth or falsity being discussed as properties of individual beliefs, this inquiry examines truth and falsity as properties of a _mental model_. A mental model includes a particular belief and all the other related beliefs necessary in order to test this belief. These kind of mental models are _descriptive,_ in that they attempt to model how things actually are.
-
 ![
-_A diagram illustrating falsity conditions in which a mental model fails to correspond to the external world._<br/>
+_A diagram illustrating conditions for falsity, in which a mental model fails to correspond to the external world._<br/>
 ](/images/image.svg)
+
+Because of this, instead of truth or falsity being discussed as properties of individual beliefs, this inquiry examines truth and falsity as properties of a _mental model_. A mental model includes a particular belief and all the other related beliefs necessary in order to test this belief. These kind of mental models are _descriptive,_ in that they attempt to model how things actually are.
 
 ### Belief Revision
 
@@ -75,14 +76,14 @@ _A diagram illustrating a moral mental model._<br/>
 
 While both true-or-false beliefs and moral sentiments constitute kinds of mental models, an important difference occurs in how these mental models react to contradiction with observations of the external world. Earlier it was seen that when a descriptive mental model and the external world are in disagreement, it is prudent to amend the mental model to fit the external world. However, with moral sentiments, _when a normative mental model and the external world are in disagreement, the mind tries to amend the external world, not the mental model._
 
-![
-_A diagram illustrating a moral mental model._<br/>
-](/images/image.svg)
-
 It is contrary to the purpose of morality to have the moral sentiment that stealing is wrong, observe an incident of stealing, and then conclude, "I guess I was mistaken. Stealing is righteous." Rather, someone who has the moral sentiment that stealing is wrong and who observes an incident of stealing is expected to censure the act, try to prevent the thief from leaving with the stolen item, call the authorities, report the act, or, with a longer view, investigate the root causes of theft in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world.
 
 ![
-_A diagram illustrating a moral reaction to the observation of the act of stealing._<br/>
+_A diagram illustrating a reaction of a moral mental model to the observation of an act of which it disapproves._
+](/images/image.svg)
+
+![
+_A diagram illustrating a reaction of a moral mental model to the observation of an act of which it disapproves that is opposite to the purpose of moral mental models._
 ](/images/image.svg)
 
 Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle observations of the external world that contradict the mental model. These contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
@@ -129,10 +130,14 @@ _A diagram illustrating a true belief about an attitudinal proposition._<br/>
 Such attitudinal propositions make a different kind of claim than the objective statement that "stealing is wrong." They make claims about subjective mental states, claims that _are_ true or false.
 
 ![
-_A diagram illustrating truth and falsity for attitudinal propositions. The upper left and lower right diagrams illustrate true beliefs about attitudinal propositions. The upper right and lower left diagrams illustrate false beliefs about attitudinal propositions._<br/>
+_A diagram illustrating true beliefs about attitudinal propositions._<br/>
 ](/images/image.svg)
 
 Thus, while there are no moral truths and no moral knowledge, there can be truths and knowledge about moral sentiments.
+
+![
+_A diagram illustrating false beliefs about attitudinal propositions._<br/>
+](/images/image.svg)
 
 Mixed statements with both descriptive information and normative connotations can be interpreted as a conjunction between two propositions: one about a state of affairs and another about a mind's attitude toward the state of affairs. For instance, if someone named Chidi says, "the Liberation Front terrorists were defeated in the battle today," this can be interpreted as two propositions: "the Liberation Front faction lost the battle today," and "Chidi disapproves of the Liberation Front." Similarly, if someone named Astrid says, "during the battle today, the Liberation Front was set back in their struggle against oppression," this can be interpreted as "the Liberation Front faction lost the battle today," and "Astrid approves of the Liberation Front."
 
