@@ -1,9 +1,9 @@
 ---
-title: "Moral Fictions"
+title: "Moral Skepticism"
 draft: true
-date: 2020-12-19
+date: 2020-12-20
 tags: ["worldview"]
-bibliography: "../bibliographies/moral-fictions.bib"
+bibliography: "../bibliographies/moral-skepticism.bib"
 csl: "../bibliographies/apa.csl"
 link-citations: true
 implicit-figures: true
@@ -30,31 +30,33 @@ A mind might have a belief, which is a representation of how the mind perceives 
 
 [^correspondence]: This is a correspondence definition of truth, which is a kind of truth also called _"a posteriori,"_ "synthetic," "contingent", or "matters of fact." There are also coherence definitions of truth, which in philosophical jargon are called _"a priori,"_ "analytic," "necessary," or "relations of ideas." This latter kind of truth comprises things that are true by definition, such as "1 + 1 = 2" or "bachelors are unmarried men." These kinds of true beliefs are _tautologies_, i.e., they refer to the same thing twice. These kind of tautologies are only more interesting than more obvious tautologies like "2 = 2" or "bachelors are bachelors" inasmuch as they refer to the same thing with different symbols. This inquiry regards tautologies as not useful for understanding morality because they merely beg the question. For instance, if one were to be questioned as why one felt that stealing is wrong, and one replied "because I have defined 'wrong' that way," this would not be informative.
 
-![
-_A diagram illustrating conditions for truth, in which a mental model corresponds to the external world._
-](/images/image.svg)
-
 Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain container is approximately 20 kilograms in weight, in order to examine that belief, other beliefs that comprise expectations about how heavier objects behave relative to lighter objects must also be held in order to examine whether the belief about the container is true or false.
 
-![
-_A diagram illustrating conditions for falsity, in which a mental model fails to correspond to the external world._<br/>
-](/images/image.svg)
-
 Because of this, instead of truth or falsity being discussed as properties of individual beliefs, this inquiry examines truth and falsity as properties of a _mental model_. A mental model includes a particular belief and all the other related beliefs necessary in order to test this belief. These kind of mental models are _descriptive,_ in that they attempt to model how things actually are.
+
+![
+_**Figure 1:** Diagrams illustrating conditions for truth, in which mental models correspond to the external world. They illustrate two states of affairs: the left illustrates an individual who believes that a certain road is open when it is indeed open, and the right illustrates an individual who believes that the road is closed when it is indeed closed._
+](/images/two-true-beliefs.svg)
+
+![
+_**Figure 2:** Diagrams illustrating conditions for falsity, in which mental models fail to correspond to the external world. They illustrate two states of affairs: the left illustrates an individual who believes that a certain road is open when it is actually closed, and the right illustrates an individual who believes that the road is closed when it is actually open._
+](/images/two-false-beliefs.svg)
 
 ### Belief Revision
 
 A common definition of knowledge is justified, true belief. Thus, if a mental model is true, and if the mind that has the mental model is justified in having the mental model, then the mind _knows_ something about the external world.
 
-No mind ever has complete and perfect knowledge of the external world. Therefore, it is prudent for a sound mind to allow for revision of its mental models. Descriptive mental models try to explain and predict phenomena in the external world. However, the explanations and predictions of _false_ mental models are flawed. Therefore, a sound mind will always try to amend false mental models in order to make them true.
+No mind ever has complete and perfect knowledge of the external world. Therefore, it is prudent for a sound mind to allow for revision of its mental models. Descriptive mental models try to explain and predict phenomena in the external world. However, the explanations and predictions of _false_ mental models are flawed, and a sound mind will always try to amend false mental models in order to make them true.
+
+For instance, mental models illustrated in Figure 2 are flawed. In the first case, time might be wasted when the individual attempts to travel down the road before finding an impromptu detour. In the second case, the individual might use an unnecessarily circuitous route if the road is part of the most direct way. On the other hand, the individual in either of the cases illustrated in Figure 1 can plan an optimal route without unnecessary detours.
 
 The totality of the external world cannot, in practice, be observed by any given mind. Some specific circumstances of the external world can, however, be partially observed. These observations constitute _empirical evidence._
 
 When a mind encounters evidence that is consistent with a descriptive mental model, then it is prudent for the mental model to persist. _When a mind encounters evidence that contradicts a descriptive mental model, then it is prudent for the mental model to be amended,_ in order to better agree with the external world. Thus, empirical evidence prompts the revision of false beliefs to better approximate true beliefs.
 
 ![
-_A diagram illustrating belief revision, in which the false beliefs of a mental model are changed to be in agreement with the external world after empirical evidence is observed._<br/>
-](/images/image.svg)
+_A diagram illustrating belief revision, in which a mental model is changed to be in agreement with the external world after empirical evidence is observed._
+](/images/belief-revision.svg)
 
 
 ### Moral Sentiments
