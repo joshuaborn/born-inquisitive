@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>Much of moral philosophy construes morality as a search for truths and moral knowledge, and much of everyday moralizing consists of hand-wringing over constructs such as "justice" or "human rights." This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to the implication that truth and falsity apply to the former, but not the latter, which in turn implies practices for dealing with moral sentiments, including the rejection of moral constructs as fictions.</p>
+  <p>Much of moral philosophy construes morality as a search for truths and moral knowledge, and much of everyday moralizing consists of hand-wringing over constructs such as "justice" or "human rights." This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to the implication that truth and falsity apply to the former, but not the latter, which in turn implies practices for dealing with moral sentiments, including the rejection of moral constructs as fictitious.</p>
   <!--more-->
   ## Table of Contents
 ---
@@ -28,18 +28,18 @@ The words "true" and "false" are symbols, and symbols can be used in a variety o
 
 A mind might have a belief, which is a representation of how the mind perceives the external world. When a belief accurately models the external world, it is a _true_ belief. When a belief in a mind and the external world are not in agreement, this is a _false_ belief.[^correspondence]
 
-[^correspondence]: This is a correspondence definition of truth, which is a kind of truth also called _"a posteriori,"_ "synthetic," "contingent", or "matters of fact." There are also coherence definitions of truth, which in philosophical jargon are called _"a priori,"_ "analytic," "necessary," or "relations of ideas." This latter kind of truth comprises things that are true by definition, such as "1 + 1 = 2" or "bachelors are unmarried men." These kinds of true beliefs are _tautologies_, i.e., they refer to the same thing twice. These kind of tautologies are only more interesting than more obvious tautologies like "2 = 2" or "bachelors are bachelors" inasmuch as they refer to the same thing with different symbols. This inquiry regards tautologies as not useful for understanding morality because they merely beg the question. For instance, if one were to be questioned as why one felt that stealing is wrong, and one replied "because I have defined 'wrong' that way," this would not be informative.
+[^correspondence]: This is a correspondence definition of truth, which is a kind of truth also called _"a posteriori,"_ "synthetic," "contingent", or "matters of fact." There are also coherence definitions of truth, which in philosophical jargon are called _"a priori,"_ "analytic," "necessary," or "relations of ideas." This latter kind of truth comprises things that are true by definition, such as "1 + 1 = 2" or "bachelors are unmarried men." These kinds of true beliefs are _tautologies_, i.e., they refer to the same thing twice. These kind of tautologies are only more interesting than more obvious tautologies like "2 = 2" or "bachelors are bachelors" inasmuch as they refer to the same thing with different symbols. This inquiry regards tautologies as not useful for understanding morality because they merely beg the question. For instance, if one were to be questioned as why one felt that murder is wrong, and one replied "because I have defined 'wrong' that way," this would not be informative.
 
 Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain container is approximately 20 kilograms in weight, in order to examine that belief, other beliefs that comprise expectations about how heavier objects behave relative to lighter objects must also be held in order to examine whether the belief about the container is true or false.
 
 Because of this, instead of truth or falsity being discussed as properties of individual beliefs, this inquiry examines truth and falsity as properties of a _mental model_. A mental model includes a particular belief and all the other related beliefs necessary in order to test this belief. These kind of mental models are _descriptive,_ in that they attempt to model how things actually are.
 
 ![
-_**Figure 1:** Diagrams illustrating conditions for truth, in which mental models correspond to the external world. They illustrate two states of affairs: the left illustrates an individual who believes that a certain road is open when it is indeed open, and the right illustrates an individual who believes that the road is closed when it is indeed closed._
+_**Figure 1:** Two diagrams illustrating conditions for truth, in which mental models correspond to the external world. The left diagram illustrates an individual who believes that a certain road is open when it is indeed open, and the right diagram illustrates an individual who believes that the road is closed when it is indeed closed._
 ](/images/two-true-beliefs.svg)
 
 ![
-_**Figure 2:** Diagrams illustrating conditions for falsity, in which mental models fail to correspond to the external world. They illustrate two states of affairs: the left illustrates an individual who believes that a certain road is open when it is actually closed, and the right illustrates an individual who believes that the road is closed when it is actually open._
+_**Figure 2:** Two diagrams illustrating conditions for falsity, in which mental models fail to correspond to the external world. The left diagram illustrates an individual who believes that a certain road is open when it is actually closed, and the right diagram illustrates an individual who believes that the road is closed when it is actually open._
 ](/images/two-false-beliefs.svg)
 
 ### Belief Revision
@@ -52,33 +52,35 @@ For instance, mental models illustrated in Figure 2 are flawed. In the first cas
 
 The totality of the external world cannot, in practice, be observed by any given mind. Some specific circumstances of the external world can, however, be partially observed. These observations constitute _empirical evidence._
 
-When a mind encounters evidence that is consistent with a descriptive mental model, then it is prudent for the mental model to persist. _When a mind encounters evidence that contradicts a descriptive mental model, then it is prudent for the mental model to be amended,_ in order to better agree with the external world. Thus, empirical evidence prompts the revision of false beliefs to better approximate true beliefs.
+When a mind encounters evidence that is consistent with a descriptive mental model, then it is prudent for the mental model to persist. _When a mind encounters evidence that contradicts a descriptive mental model, then it is prudent for the mental model to be amended,_ in order to better agree with the external world, such as in Figure 3. Thus, empirical evidence prompts the revision of false beliefs to better approximate true beliefs.
 
 ![
-_A diagram illustrating belief revision, in which a mental model is changed to be in agreement with the external world after empirical evidence is observed._
+_**Figure 3:** A diagram illustrating belief revision, in which a mental model is changed to be in agreement with the external world after empirical evidence is observed. The left diagram illustrates an individual who believes a certain road is open. The middle diagram illustrates the same individual who has now encountered the road and observed that the road is closed. The right diagram illustrates the individual now believes the road is closed._
 ](/images/belief-revision.svg)
 
 
 ### Moral Sentiments
 
-Morality can also be construed as a kind of mental model. However, moral sentiments do something other than simply try to represent the external world. Mere modeling of _how things are_ does not constitute morality. For instance, merely believing that there is stealing in the world as a matter of fact does not constitute a moral sentiment. Morality models _how things should be._
+Morality can also be construed as a kind of mental model. However, moral sentiments do something other than simply try to represent the external world. Mere modeling of _how things are_ does not constitute morality. For instance, merely believing that there is murder in the world as a matter of fact as in Figure 4 does not constitute a moral sentiment.
 
 ![
-_A diagram illustrating a mental model that fails to constitute moral sentiments._<br/>
-](/images/image.svg)
+_**Figure 4:** A diagram illustrating a descriptive rather than normative mental model, in which an individual witnesses a murder in progress and believes there is a murder taking place._
+](/images/not-moral-sentiment.svg)
 
-Moral sentiments occur when there is a _judgment_ or _prescription_ about the external world. For instance, a moral mental model does not merely believe that there is stealing in the world, but _judges_ stealing to be wrong. Moral mental models are _normative,_ rather than descriptive. They do not have implications that explain or predict phenomena, but instead judge the worth of things (e.g., "stealing is bad" or "charity is good"), prescribe certain behavior (e.g., "be kind to one another"), or proscribe behavior (e.g., "do not steal").
+Morality models _how things should be._ Moral sentiments occur when there is a _judgment_ or _prescription_ about the external world. For instance, a moral mental model does not merely believe that there is murder in the world, but _judges_ murder to be wrong as in Figure 5. Moral mental models are _normative,_ rather than descriptive. They do not have implications that explain or predict phenomena, but instead judge the worth of things (e.g., "murder is bad" or "charity is good"), prescribe certain behavior (e.g., "be kind to one another"), or proscribe behavior (e.g., "do not steal").
 
 ![
-_A diagram illustrating a moral mental model._<br/>
-](/images/image.svg)
+_**Figure 5:** A diagram illustrating a normative mental model, which, unlike Figure 4, contains a red circle-backslash symbol to represent the additional element of moral disapproval._
+](/images/moral-sentiment.svg)
 
 
 ### World Revision
 
 While both true-or-false beliefs and moral sentiments constitute kinds of mental models, an important difference occurs in how these mental models react to contradiction with observations of the external world. Earlier it was seen that when a descriptive mental model and the external world are in disagreement, it is prudent to amend the mental model to fit the external world. However, with moral sentiments, _when a normative mental model and the external world are in disagreement, the mind tries to amend the external world, not the mental model._
 
-It is contrary to the purpose of morality to have the moral sentiment that stealing is wrong, observe an incident of stealing, and then conclude, "I guess I was mistaken. Stealing is righteous." Rather, someone who has the moral sentiment that stealing is wrong and who observes an incident of stealing is expected to censure the act, try to prevent the thief from leaving with the stolen item, call the authorities, report the act, or, with a longer view, investigate the root causes of theft in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world.
+It is contrary to the purpose of morality to have the moral sentiment that murder is wrong, observe an incident of murder, and then conclude, "I guess I was mistaken. murder is righteous." Rather, someone who has the moral sentiment that murder is wrong and who observes an incident of murder is expected to censure the act, try to prevent the thief from leaving with the stolen item, call the authorities, report the act, or, with a longer view, investigate the root causes of theft in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world.
+
+Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle observations of the external world that contradict the mental model. These contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
 
 ![
 _A diagram illustrating a reaction of a moral mental model to the observation of an act of which it disapproves._
@@ -87,8 +89,6 @@ _A diagram illustrating a reaction of a moral mental model to the observation of
 ![
 _A diagram illustrating a reaction of a moral mental model to the observation of an act of which it disapproves that is opposite to the purpose of moral mental models._
 ](/images/image.svg)
-
-Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle observations of the external world that contradict the mental model. These contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
 
 
 ### No Moral Truth
@@ -121,15 +121,15 @@ Thus, true-or-false beliefs and moral sentiments do not come partitioned in a ne
 
 Doing such a mental partitioning can be facilitated by the realization that moral sentiments can readily be translated into descriptive beliefs _about the normative mental models themselves._ Such a belief can be termed an "attitudinal proposition" because it is a belief about a mind's attitude toward something.
 
-For instance, if an individual named Zhaohui says, "stealing is wrong," then the corresponding attitudinal proposition is "Zhaohui disapproves of stealing" or "Zhaohui is morally opposed to stealing" or "Zhaohui feels that stealing is wrong."
+For instance, if an individual named Zhaohui says, "murder is wrong," then the corresponding attitudinal proposition is "Zhaohui disapproves of murder" or "Zhaohui is morally opposed to murder" or "Zhaohui feels that murder is wrong."
 
-While it makes no sense to attempt to evaluate the truth or falsity of the moral sentiment "stealing is wrong" itself, descriptive mental models _can_ be correct or incorrect _about_ Zhaohui's normative mental model. From the perspective of the more than seven billion human minds on the Earth, Zhaohui's mind is part of their external world.
+While it makes no sense to attempt to evaluate the truth or falsity of the moral sentiment "murder is wrong" itself, descriptive mental models _can_ be correct or incorrect _about_ Zhaohui's normative mental model. From the perspective of the more than seven billion human minds on the Earth, Zhaohui's mind is part of their external world.
 
 ![
 _A diagram illustrating a true belief about an attitudinal proposition._<br/>
 ](/images/image.svg)
 
-Such attitudinal propositions make a different kind of claim than the objective statement that "stealing is wrong." They make claims about subjective mental states, claims that _are_ true or false.
+Such attitudinal propositions make a different kind of claim than the objective statement that "murder is wrong." They make claims about subjective mental states, claims that _are_ true or false.
 
 ![
 _A diagram illustrating true beliefs about attitudinal propositions._<br/>
@@ -177,7 +177,7 @@ Another interpretation is to take statements about moral constructs at face valu
 
 This kind of an error theory for morality is specific to the _subjects_ of statements. One can have a more general error theory for morality, which would contradict the earlier sections of this article, since a more general error theory would judge moral sentiments to be false, and earlier it was judged a mistake to apply truth or falsity to moral sentiments. However, a more specific error theory in which the existential criterion is applied only to subjects is compatible with the earlier sections of this article.
 
-Under such a more specific error theory, statements such as "stealing is wrong" are neither false nor true, since the subject of the statement, i.e., stealing, describes something that exists, in this case a physical act. Statements such as "the Good is One" or "justice is more important than facts" are false because their subjects &ndash; i.e., "the Good" and "justice" &ndash; do not exist in the non-mental world.
+Under such a more specific error theory, statements such as "murder is wrong" are neither false nor true, since the subject of the statement, i.e., murder, describes something that exists, in this case a physical act. Statements such as "the Good is One" or "justice is more important than facts" are false because their subjects &ndash; i.e., "the Good" and "justice" &ndash; do not exist in the non-mental world.
 
 [^non-mental]: This article uses the phrase "non-mental world" to denote everything in the cosmos except for the contents of _any_ mind. This is a more restrictive class than what is referred to by "external world" by exactly one mind.
 
@@ -193,7 +193,7 @@ An issue with the useful fictions interpretation is that, while it may make a mi
 
 Regardless if statements about moral constructs are interpreted as neither true nor false, always false, or false but in a way that has utility, the important point that all these morally skeptical interpretations have in common is that statements about moral constructs are not literally true. Thus, such statements about moral constructs are _moral fictions._
 
-Statements about moral constructs are fictional for the same underlying reason that it is a mistake to interpret moral sentiments as true or false. All language describing morality is describing normative mental models, however indirectly this may be. Moral sentiments do this indirectly by ascribing goodness or badness to things in the non-mental world, such as the act of stealing or a thief. Moral constructs take this indirection even further by inventing abstractions that do not describe anything in the non-mental world, such as justice, virtue, etc.
+Statements about moral constructs are fictional for the same underlying reason that it is a mistake to interpret moral sentiments as true or false. All language describing morality is describing normative mental models, however indirectly this may be. Moral sentiments do this indirectly by ascribing goodness or badness to things in the non-mental world, such as the act of murder or a thief. Moral constructs take this indirection even further by inventing abstractions that do not describe anything in the non-mental world, such as justice, virtue, etc.
 
 ### Delusions of Moral Knowledge
 
@@ -246,6 +246,11 @@ At the same time that the metaethical position articulated here implies that tra
 There is also an important implication relevant for all individuals, regardless of vocation. It is that moral enlightenment does not come from discovering supposed moral truths, nor does it come from the vain invention of fictions intended to rationalize one's moral sentiments, but comes from introspection. The best one can do is to _know thyself,_ as the ancient maxim goes.
 
 A critical thinker is compelled to believe what is true and disbelieve what is false. What remains after this is just how one feels. The only enlightenment that can be attained about this remainder is to be _aware_ of how one feels and to abstain from trying to rationalize one's feelings post hoc. Then, one can investigate one's self with the same tools of inquiry &ndash; such as empirical evidence, investigation into causes, etc. &ndash; that one might use to investigate any other fact about the world.
+
+
+## Further Reading
+
+Ethical noncognitivism was popularized in the English speaking world by Ayer [-@ayer_language_1946]. An error theory for morality is advocated by Mackie [-@mackie_ethics_1977].
 
 
 ## Citations

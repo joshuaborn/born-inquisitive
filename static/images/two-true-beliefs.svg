@@ -5,9 +5,9 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   width="1010"
-   height="500"
-   viewBox="0 0 1010 500"
+   width="1011"
+   height="501"
+   viewBox="0 0 1011 501"
    version="1.1"
    id="svg8">
   <defs
@@ -27,107 +27,22 @@
   <g
      id="layer8">
     <rect
-       style="fill:none;stroke:#333333;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect1834"
-       width="500"
-       height="500"
-       x="0"
-       y="0" />
-    <rect
-       style="fill:none;stroke:#333333;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;stroke:#333333;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect2659"
        width="500"
        height="500"
-       x="510"
-       y="0" />
+       x="510.5"
+       y="0.5" />
+    <rect
+       style="fill:none;stroke:#333333;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3071"
+       width="500"
+       height="500"
+       x="0.5"
+       y="0.5" />
   </g>
   <g
      id="layer6">
-    <g
-       id="g1584"
-       transform="translate(32.51363,295.65)"
-       style="display:inline">
-      <g
-         id="g4365"
-         transform="translate(-6.23763,-336.52)">
-        <path
-           id="path3796"
-           d="m 249.33,395.61 h 13.034 l 201.36,135.26 -412.2,-0.15887 z"
-           style="fill:#505654" />
-        <path
-           id="path4325"
-           d="m 240.19,526.52 4.024,-37.98 h 12.126 l -0.10237,37.98 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4331"
-           d="m 246.98,466.73 h 9.2925 v -19.205 h -7.021 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4333"
-           d="m 250.69,438.64 h 5.782 v -9.912 h -4.7495 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4335"
-           d="m 252.55,423.01 3.9526,0.11826 -0.0291,-5.5464 -3.3331,0.0591 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4337"
-           d="m 253.38,414.63 h 3.134 l 0.0591,-3.1931 h -2.72 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4339"
-           d="m 254.11,409.52 2.4072,0.0254 v -2.0696 h -2.1879 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4341"
-           d="m 254.47,406.33 h 2.0354 l -0.0254,-1.4248 h -1.8573 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4343"
-           d="m 254.78,403.94 h 1.7046 l 0.0254,-0.99225 h -1.6283 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4345"
-           d="m 254.96,402.25 h 1.5474 v -0.83711 h -1.4586 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4347"
-           d="m 255.1,400.94 h 1.3952 l -0.0127,-0.65953 h -1.2937 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4349"
-           d="m 255.25,399.93 h 1.2683 l -0.0127,-0.55807 h -1.1922 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4351"
-           d="m 255.36,399.1 h 1.1288 l 0.0127,-0.46929 h -1.1035 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4353"
-           d="m 255.46,398.37 h 1.0147 v -0.35514 h -1.002 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4355"
-           d="m 255.51,397.8 h 0.98918 l -0.009,-0.31811 h -0.93689 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4357"
-           d="m 255.57,397.33 h 0.90639 v -0.20916 h -0.87153 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4359"
-           d="m 255.63,396.99 h 0.82359 v -0.15252 h -0.79308 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4361"
-           d="m 255.67,396.72 h 0.78001 l 0.004,-0.10894 h -0.77566 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path4363"
-           d="m 255.69,396.52 h 0.75387 l 0.004,-0.10458 h -0.74515 z"
-           style="fill:#e1e3e4" />
-      </g>
-    </g>
     <g
        id="g2701"
        transform="translate(542.51363,295.65)"
@@ -214,198 +129,215 @@
       </g>
     </g>
     <g
-       id="g2749"
-       transform="translate(549.38619,320)"
+       id="g3113"
+       transform="translate(33.513629,296.65)"
+       style="display:inline">
+      <g
+         id="g3111"
+         transform="translate(-6.23763,-336.52)">
+        <path
+           id="path3073"
+           d="m 249.33,395.61 h 13.034 l 201.36,135.26 -412.2,-0.15887 z"
+           style="fill:#505654" />
+        <path
+           id="path3075"
+           d="m 240.19,526.52 4.024,-37.98 h 12.126 l -0.10237,37.98 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3077"
+           d="m 246.98,466.73 h 9.2925 v -19.205 h -7.021 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3079"
+           d="m 250.69,438.64 h 5.782 v -9.912 h -4.7495 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3081"
+           d="m 252.55,423.01 3.9526,0.11826 -0.0291,-5.5464 -3.3331,0.0591 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3083"
+           d="m 253.38,414.63 h 3.134 l 0.0591,-3.1931 h -2.72 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3085"
+           d="m 254.11,409.52 2.4072,0.0254 v -2.0696 h -2.1879 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3087"
+           d="m 254.47,406.33 h 2.0354 l -0.0254,-1.4248 h -1.8573 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3089"
+           d="m 254.78,403.94 h 1.7046 l 0.0254,-0.99225 h -1.6283 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3091"
+           d="m 254.96,402.25 h 1.5474 v -0.83711 h -1.4586 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3093"
+           d="m 255.1,400.94 h 1.3952 l -0.0127,-0.65953 h -1.2937 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3095"
+           d="m 255.25,399.93 h 1.2683 l -0.0127,-0.55807 h -1.1922 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3097"
+           d="m 255.36,399.1 h 1.1288 l 0.0127,-0.46929 h -1.1035 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3099"
+           d="m 255.46,398.37 h 1.0147 v -0.35514 h -1.002 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3101"
+           d="m 255.51,397.8 h 0.98918 l -0.009,-0.31811 h -0.93689 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3103"
+           d="m 255.57,397.33 h 0.90639 v -0.20916 h -0.87153 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3105"
+           d="m 255.63,396.99 h 0.82359 v -0.15252 h -0.79308 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3107"
+           d="m 255.67,396.72 h 0.78001 l 0.004,-0.10894 h -0.77566 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3109"
+           d="m 255.69,396.52 h 0.75387 l 0.004,-0.10458 h -0.74515 z"
+           style="fill:#e1e3e4" />
+      </g>
+    </g>
+    <g
+       id="g1039"
+       transform="translate(549.38619,321)"
        style="display:inline;opacity:1">
       <g
          style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421"
-         id="g2747"
+         id="g1037"
          transform="matrix(0.26458333,0,0,0.26458333,109.02247,-185.22819)">
         <g
-           id="g2745">
-        <g
-   transform="matrix(0.745668,0,0,0.845083,40.3358,105.252)"
-   id="g2705">
+           id="g1035">
+          <g
+             transform="matrix(0.745668,0,0,0.845083,40.3358,105.252)"
+             id="g995">
             <rect
-   x="158.595"
-   y="997.47601"
-   width="47.305"
-   height="419.84698"
-   style="fill:#826547"
-   id="rect2703" />
-
-        </g>
-
-        <g
-   transform="matrix(0.745668,0,0,0.845083,716.296,105.252)"
-   id="g2709">
+               x="158.595"
+               y="997.47601"
+               width="47.305"
+               height="419.84698"
+               style="fill:#826547"
+               id="rect993" />
+          </g>
+          <g
+             transform="matrix(0.745668,0,0,0.845083,716.296,105.252)"
+             id="g999">
             <rect
-   x="158.595"
-   y="997.47601"
-   width="47.305"
-   height="419.84698"
-   style="fill:#826547"
-   id="rect2707" />
-
+               x="158.595"
+               y="997.47601"
+               width="47.305"
+               height="419.84698"
+               style="fill:#826547"
+               id="rect997" />
+          </g>
+          <g
+             id="g1033">
+            <g
+               id="g1007">
+              <g
+                 transform="translate(-15.9345,0.592737)"
+                 id="g1003">
+                <rect
+                   x="136.02699"
+                   y="964.04901"
+                   width="784.00201"
+                   height="180.987"
+                   style="fill:#fad243"
+                   id="rect1001" />
+              </g>
+              <path
+                 d="M 120.092,1098.6 254.05,964.642 h 50.11 L 123.173,1145.63 h -3.081 z m 104.34,47.03 h -50.11 L 355.309,964.642 h 50.11 z m 101,0 h -50.11 L 456.309,964.642 h 50.11 z m 102,0 h -50.11 L 558.309,964.642 h 50.11 z m 103,0 h -50.11 L 661.309,964.642 h 50.11 z m 104,0 h -50.11 L 765.309,964.642 h 50.11 z M 904.094,978.966 737.432,1145.63 h -50.11 L 868.309,964.642 h 35.785 z m 0,103.004 -63.662,63.66 h -50.11 L 904.094,1031.86 Z M 120.092,1056.5 v -50.11 l 41.752,-41.748 h 50.11 z"
+                 id="path1005" />
+            </g>
+            <g
+               transform="translate(-0.0386146,-3.73309)"
+               id="g1011">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse1009" />
+            </g>
+            <g
+               transform="translate(-0.0386146,66.004)"
+               id="g1015">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse1013" />
+            </g>
+            <g
+               transform="translate(-0.0386146,140.249)"
+               id="g1019">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse1017" />
+            </g>
+            <g
+               transform="translate(675.921,133.717)"
+               id="g1023">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse1021" />
+            </g>
+            <g
+               transform="translate(675.921,66.004)"
+               id="g1027">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse1025" />
+            </g>
+            <g
+               transform="translate(675.921,-3.73309)"
+               id="g1031">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse1029" />
+            </g>
+          </g>
         </g>
-
-        <g
-   id="g2743">
-            <g
-   id="g2717">
-                <g
-   transform="translate(-15.9345,0.592737)"
-   id="g2713">
-                    <rect
-   x="136.02699"
-   y="964.04901"
-   width="784.00201"
-   height="180.987"
-   style="fill:#fad243"
-   id="rect2711" />
-
-                </g>
-
-                <path
-   d="M 120.092,1098.6 254.05,964.642 h 50.11 L 123.173,1145.63 h -3.081 z m 104.34,47.03 h -50.11 L 355.309,964.642 h 50.11 z m 101,0 h -50.11 L 456.309,964.642 h 50.11 z m 102,0 h -50.11 L 558.309,964.642 h 50.11 z m 103,0 h -50.11 L 661.309,964.642 h 50.11 z m 104,0 h -50.11 L 765.309,964.642 h 50.11 z M 904.094,978.966 737.432,1145.63 h -50.11 L 868.309,964.642 h 35.785 z m 0,103.004 -63.662,63.66 h -50.11 L 904.094,1031.86 Z M 120.092,1056.5 v -50.11 l 41.752,-41.748 h 50.11 z"
-   id="path2715" />
-
-            </g>
-
-            <g
-   transform="translate(-0.0386146,-3.73309)"
-   id="g2721">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2719" />
-
-            </g>
-
-            <g
-   transform="translate(-0.0386146,66.004)"
-   id="g2725">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2723" />
-
-            </g>
-
-            <g
-   transform="translate(-0.0386146,140.249)"
-   id="g2729">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2727" />
-
-            </g>
-
-            <g
-   transform="translate(675.921,133.717)"
-   id="g2733">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2731" />
-
-            </g>
-
-            <g
-   transform="translate(675.921,66.004)"
-   id="g2737">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2735" />
-
-            </g>
-
-            <g
-   transform="translate(675.921,-3.73309)"
-   id="g2741">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2739" />
-
-            </g>
-
-        </g>
-
-    </g>
       </g>
     </g>
   </g>
   <g
      id="layer4"
      style="display:inline">
-    <g
-       id="g1591"
-       transform="translate(195.7681,67.064219)">
-      <g
-         id="g1784">
-        <g
-           id="g1509"
-           transform="translate(-185.2681,-68.561428)">
-          <rect
-             x="37"
-             y="0"
-             width="0"
-             height="0"
-             fill="none"
-             stroke="#000000"
-             pointer-events="all"
-             id="rect1495" />
-          <rect
-             x="0"
-             y="300"
-             width="71.730003"
-             height="190"
-             fill="none"
-             stroke="none"
-             pointer-events="all"
-             id="rect1503" />
-          <ellipse
-             cx="34.900002"
-             cy="315.67999"
-             rx="15.725868"
-             ry="15.682784"
-             fill="transparent"
-             stroke="#000000"
-             pointer-events="all"
-             id="ellipse1505"
-             style="fill:#008080" />
-          <path
-             d="m 16.32,481.31 c 0,4.79 3.95,8.69 8.81,8.69 4.88,0 8.83,-3.88 8.83,-8.69 v -72.82 h 3.93 l -0.02,72.82 c 0,4.79 3.95,8.69 8.81,8.69 4.85,0 8.8,-3.88 8.8,-8.69 l 0.04,-125.56 h 3.88 v 46.28 c 0,9.31 12.33,9.31 12.29,0 v -47.26 c 0,-10.28 -6.13,-20.35 -18.35,-20.35 L 18.1,334.38 C 6.96,334.38 0,343.32 0,354.49 v 47.54 c 0,9.25 12.39,9.25 12.39,0 v -46.28 h 3.95 z"
-             fill="none"
-             stroke="#000000"
-             stroke-miterlimit="10"
-             pointer-events="all"
-             id="path1507"
-             style="fill:#008080" />
-        </g>
-      </g>
-    </g>
     <g
        id="g2763"
        transform="translate(705.7681,67.06422)">
@@ -453,94 +385,56 @@
         </g>
       </g>
     </g>
+    <g
+       id="g3175"
+       transform="translate(196.7681,68.06422)">
+      <g
+         id="g3173">
+        <g
+           id="g3171"
+           transform="translate(-185.2681,-68.561428)">
+          <rect
+             x="37"
+             y="0"
+             width="0"
+             height="0"
+             fill="none"
+             stroke="#000000"
+             pointer-events="all"
+             id="rect3163" />
+          <rect
+             x="0"
+             y="300"
+             width="71.730003"
+             height="190"
+             fill="none"
+             stroke="none"
+             pointer-events="all"
+             id="rect3165" />
+          <ellipse
+             cx="34.900002"
+             cy="315.67999"
+             rx="15.725868"
+             ry="15.682784"
+             fill="transparent"
+             stroke="#000000"
+             pointer-events="all"
+             id="ellipse3167"
+             style="fill:#008080" />
+          <path
+             d="m 16.32,481.31 c 0,4.79 3.95,8.69 8.81,8.69 4.88,0 8.83,-3.88 8.83,-8.69 v -72.82 h 3.93 l -0.02,72.82 c 0,4.79 3.95,8.69 8.81,8.69 4.85,0 8.8,-3.88 8.8,-8.69 l 0.04,-125.56 h 3.88 v 46.28 c 0,9.31 12.33,9.31 12.29,0 v -47.26 c 0,-10.28 -6.13,-20.35 -18.35,-20.35 L 18.1,334.38 C 6.96,334.38 0,343.32 0,354.49 v 47.54 c 0,9.25 12.39,9.25 12.39,0 v -46.28 h 3.95 z"
+             fill="none"
+             stroke="#000000"
+             stroke-miterlimit="10"
+             pointer-events="all"
+             id="path3169"
+             style="fill:#008080" />
+        </g>
+      </g>
+    </g>
   </g>
   <g
      id="layer7">
-    <g
-       id="g1681"
-       transform="matrix(0.63561247,0,0,0.63561247,74.563653,34.87352)"
-       style="display:inline">
-      <g
-         id="g1679"
-         transform="translate(-6.23763,-336.52)">
-        <path
-           id="path1641"
-           d="m 249.33,395.61 h 13.034 l 201.36,135.26 -412.2,-0.15887 z"
-           style="fill:#505654" />
-        <path
-           id="path1643"
-           d="m 240.19,526.52 4.024,-37.98 h 12.126 l -0.10237,37.98 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1645"
-           d="m 246.98,466.73 h 9.2925 v -19.205 h -7.021 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1647"
-           d="m 250.69,438.64 h 5.782 v -9.912 h -4.7495 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1649"
-           d="m 252.55,423.01 3.9526,0.11826 -0.0291,-5.5464 -3.3331,0.0591 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1651"
-           d="m 253.38,414.63 h 3.134 l 0.0591,-3.1931 h -2.72 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1653"
-           d="m 254.11,409.52 2.4072,0.0254 v -2.0696 h -2.1879 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1655"
-           d="m 254.47,406.33 h 2.0354 l -0.0254,-1.4248 h -1.8573 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1657"
-           d="m 254.78,403.94 h 1.7046 l 0.0254,-0.99225 h -1.6283 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1659"
-           d="m 254.96,402.25 h 1.5474 v -0.83711 h -1.4586 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1661"
-           d="m 255.1,400.94 h 1.3952 l -0.0127,-0.65953 h -1.2937 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1663"
-           d="m 255.25,399.93 h 1.2683 l -0.0127,-0.55807 h -1.1922 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1665"
-           d="m 255.36,399.1 h 1.1288 l 0.0127,-0.46929 h -1.1035 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1667"
-           d="m 255.46,398.37 h 1.0147 v -0.35514 h -1.002 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1669"
-           d="m 255.51,397.8 h 0.98918 l -0.009,-0.31811 h -0.93689 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1671"
-           d="m 255.57,397.33 h 0.90639 v -0.20916 h -0.87153 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1673"
-           d="m 255.63,396.99 h 0.82359 v -0.15252 h -0.79308 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1675"
-           d="m 255.67,396.72 h 0.78001 l 0.004,-0.10894 h -0.77566 z"
-           style="fill:#e1e3e4" />
-        <path
-           id="path1677"
-           d="m 255.69,396.52 h 0.75387 l 0.004,-0.10458 h -0.74515 z"
-           style="fill:#e1e3e4" />
-      </g>
-    </g>
     <g
        id="g2805"
        transform="matrix(0.63561247,0,0,0.63561247,584.56365,34.873521)"
@@ -636,185 +530,206 @@
          transform="matrix(0.26458333,0,0,0.26458333,109.02247,-185.22819)">
         <g
            id="g2849">
-        <g
-   transform="matrix(0.745668,0,0,0.845083,40.3358,105.252)"
-   id="g2809">
+          <g
+             transform="matrix(0.745668,0,0,0.845083,40.3358,105.252)"
+             id="g2809">
             <rect
-   x="158.595"
-   y="997.47601"
-   width="47.305"
-   height="419.84698"
-   style="fill:#826547"
-   id="rect2807" />
-
-        </g>
-
-        <g
-   transform="matrix(0.745668,0,0,0.845083,716.296,105.252)"
-   id="g2813">
+               x="158.595"
+               y="997.47601"
+               width="47.305"
+               height="419.84698"
+               style="fill:#826547"
+               id="rect2807" />
+          </g>
+          <g
+             transform="matrix(0.745668,0,0,0.845083,716.296,105.252)"
+             id="g2813">
             <rect
-   x="158.595"
-   y="997.47601"
-   width="47.305"
-   height="419.84698"
-   style="fill:#826547"
-   id="rect2811" />
-
+               x="158.595"
+               y="997.47601"
+               width="47.305"
+               height="419.84698"
+               style="fill:#826547"
+               id="rect2811" />
+          </g>
+          <g
+             id="g2847">
+            <g
+               id="g2821">
+              <g
+                 transform="translate(-15.9345,0.592737)"
+                 id="g2817">
+                <rect
+                   x="136.02699"
+                   y="964.04901"
+                   width="784.00201"
+                   height="180.987"
+                   style="fill:#fad243"
+                   id="rect2815" />
+              </g>
+              <path
+                 d="M 120.092,1098.6 254.05,964.642 h 50.11 L 123.173,1145.63 h -3.081 z m 104.34,47.03 h -50.11 L 355.309,964.642 h 50.11 z m 101,0 h -50.11 L 456.309,964.642 h 50.11 z m 102,0 h -50.11 L 558.309,964.642 h 50.11 z m 103,0 h -50.11 L 661.309,964.642 h 50.11 z m 104,0 h -50.11 L 765.309,964.642 h 50.11 z M 904.094,978.966 737.432,1145.63 h -50.11 L 868.309,964.642 h 35.785 z m 0,103.004 -63.662,63.66 h -50.11 L 904.094,1031.86 Z M 120.092,1056.5 v -50.11 l 41.752,-41.748 h 50.11 z"
+                 id="path2819" />
+            </g>
+            <g
+               transform="translate(-0.0386146,-3.73309)"
+               id="g2825">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse2823" />
+            </g>
+            <g
+               transform="translate(-0.0386146,66.004)"
+               id="g2829">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse2827" />
+            </g>
+            <g
+               transform="translate(-0.0386146,140.249)"
+               id="g2833">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse2831" />
+            </g>
+            <g
+               transform="translate(675.921,133.717)"
+               id="g2837">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse2835" />
+            </g>
+            <g
+               transform="translate(675.921,66.004)"
+               id="g2841">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse2839" />
+            </g>
+            <g
+               transform="translate(675.921,-3.73309)"
+               id="g2845">
+              <ellipse
+                 cx="176.271"
+                 cy="989.13098"
+                 rx="6.6170001"
+                 ry="6.5320001"
+                 style="fill:#bbc4c9"
+                 id="ellipse2843" />
+            </g>
+          </g>
         </g>
-
-        <g
-   id="g2847">
-            <g
-   id="g2821">
-                <g
-   transform="translate(-15.9345,0.592737)"
-   id="g2817">
-                    <rect
-   x="136.02699"
-   y="964.04901"
-   width="784.00201"
-   height="180.987"
-   style="fill:#fad243"
-   id="rect2815" />
-
-                </g>
-
-                <path
-   d="M 120.092,1098.6 254.05,964.642 h 50.11 L 123.173,1145.63 h -3.081 z m 104.34,47.03 h -50.11 L 355.309,964.642 h 50.11 z m 101,0 h -50.11 L 456.309,964.642 h 50.11 z m 102,0 h -50.11 L 558.309,964.642 h 50.11 z m 103,0 h -50.11 L 661.309,964.642 h 50.11 z m 104,0 h -50.11 L 765.309,964.642 h 50.11 z M 904.094,978.966 737.432,1145.63 h -50.11 L 868.309,964.642 h 35.785 z m 0,103.004 -63.662,63.66 h -50.11 L 904.094,1031.86 Z M 120.092,1056.5 v -50.11 l 41.752,-41.748 h 50.11 z"
-   id="path2819" />
-
-            </g>
-
-            <g
-   transform="translate(-0.0386146,-3.73309)"
-   id="g2825">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2823" />
-
-            </g>
-
-            <g
-   transform="translate(-0.0386146,66.004)"
-   id="g2829">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2827" />
-
-            </g>
-
-            <g
-   transform="translate(-0.0386146,140.249)"
-   id="g2833">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2831" />
-
-            </g>
-
-            <g
-   transform="translate(675.921,133.717)"
-   id="g2837">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2835" />
-
-            </g>
-
-            <g
-   transform="translate(675.921,66.004)"
-   id="g2841">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2839" />
-
-            </g>
-
-            <g
-   transform="translate(675.921,-3.73309)"
-   id="g2845">
-                <ellipse
-   cx="176.271"
-   cy="989.13098"
-   rx="6.6170001"
-   ry="6.5320001"
-   style="fill:#bbc4c9"
-   id="ellipse2843" />
-
-            </g>
-
-        </g>
-
+      </g>
     </g>
+    <g
+       id="g3217"
+       transform="matrix(0.63561247,0,0,0.63561247,75.563649,35.873521)"
+       style="display:inline">
+      <g
+         id="g3215"
+         transform="translate(-6.23763,-336.52)">
+        <path
+           id="path3177"
+           d="m 249.33,395.61 h 13.034 l 201.36,135.26 -412.2,-0.15887 z"
+           style="fill:#505654" />
+        <path
+           id="path3179"
+           d="m 240.19,526.52 4.024,-37.98 h 12.126 l -0.10237,37.98 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3181"
+           d="m 246.98,466.73 h 9.2925 v -19.205 h -7.021 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3183"
+           d="m 250.69,438.64 h 5.782 v -9.912 h -4.7495 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3185"
+           d="m 252.55,423.01 3.9526,0.11826 -0.0291,-5.5464 -3.3331,0.0591 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3187"
+           d="m 253.38,414.63 h 3.134 l 0.0591,-3.1931 h -2.72 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3189"
+           d="m 254.11,409.52 2.4072,0.0254 v -2.0696 h -2.1879 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3191"
+           d="m 254.47,406.33 h 2.0354 l -0.0254,-1.4248 h -1.8573 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3193"
+           d="m 254.78,403.94 h 1.7046 l 0.0254,-0.99225 h -1.6283 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3195"
+           d="m 254.96,402.25 h 1.5474 v -0.83711 h -1.4586 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3197"
+           d="m 255.1,400.94 h 1.3952 l -0.0127,-0.65953 h -1.2937 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3199"
+           d="m 255.25,399.93 h 1.2683 l -0.0127,-0.55807 h -1.1922 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3201"
+           d="m 255.36,399.1 h 1.1288 l 0.0127,-0.46929 h -1.1035 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3203"
+           d="m 255.46,398.37 h 1.0147 v -0.35514 h -1.002 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3205"
+           d="m 255.51,397.8 h 0.98918 l -0.009,-0.31811 h -0.93689 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3207"
+           d="m 255.57,397.33 h 0.90639 v -0.20916 h -0.87153 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3209"
+           d="m 255.63,396.99 h 0.82359 v -0.15252 h -0.79308 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3211"
+           d="m 255.67,396.72 h 0.78001 l 0.004,-0.10894 h -0.77566 z"
+           style="fill:#e1e3e4" />
+        <path
+           id="path3213"
+           d="m 255.69,396.52 h 0.75387 l 0.004,-0.10458 h -0.74515 z"
+           style="fill:#e1e3e4" />
       </g>
     </g>
   </g>
   <g
      id="layer5"
      style="display:inline">
-    <g
-       id="g1537"
-       transform="matrix(0.97456165,0,0,0.97456165,-9.9289984,9.104795)">
-      <path
-         d="m 104.5119,151.63857 c -14.5,5.83 -30.82,0.62 -40.09,-12.8 -9.27,-13.42 -9.27,-31.84 0,-45.259998 9.27,-13.41 25.59,-18.62 40.09,-12.79 -0.11,-23.63 13.32,-44.85 33.72,-53.26 20.39,-8.41 43.46,-2.25 57.89,15.47 9.27,-25.11 31.74,-41.58 56.71,-41.58 24.98,0 47.44,16.47 56.71,41.58 14.83,-14.47 35.96,-18.55 54.5,-10.52 18.53,8.02 31.23,26.76 32.75,48.31 14.51,-5.83 30.83,-0.62 40.1,12.79 9.26,13.419998 9.26,31.839998 0,45.259998 -9.27,13.42 -25.59,18.63 -40.1,12.8 -1.58,22.77 -15.63,42.3 -35.65,49.52 -20.01,7.22 -42.07,0.73 -55.96,-16.46 -11.04,19.89 -30.91,32.06 -52.35,32.06 -21.43,0 -41.3,-12.17 -52.34,-32.06 -10.54,22.95 -40.57,34.16 -67.08,25.03 -26.5,-9.13 -39.44,-35.14 -28.9,-58.09 z"
-         fill="none"
-         stroke="#000000"
-         stroke-linejoin="round"
-         stroke-miterlimit="10"
-         pointer-events="all"
-         id="path1493"
-         style="display:inline" />
-      <ellipse
-         cx="117.60191"
-         cy="231.92857"
-         rx="26.174095"
-         ry="12.752443"
-         fill="transparent"
-         stroke="#000000"
-         pointer-events="all"
-         id="ellipse1497"
-         style="display:inline;fill:none" />
-      <ellipse
-         cx="87.071899"
-         cy="262.62857"
-         rx="16.576927"
-         ry="8.5016289"
-         fill="transparent"
-         stroke="#000000"
-         pointer-events="all"
-         id="ellipse1499"
-         style="display:inline;fill:none" />
-      <ellipse
-         cx="62.2019"
-         cy="285.29855"
-         rx="10.469638"
-         ry="6.1400652"
-         fill="transparent"
-         stroke="#000000"
-         pointer-events="all"
-         id="ellipse1501"
-         style="display:inline;fill:none" />
-    </g>
     <g
        id="g2863"
        transform="matrix(0.97456165,0,0,0.97456165,500.071,9.1047955)">
@@ -856,6 +771,49 @@
          stroke="#000000"
          pointer-events="all"
          id="ellipse2861"
+         style="display:inline;fill:none" />
+    </g>
+    <g
+       id="g3275"
+       transform="matrix(0.97456165,0,0,0.97456165,-8.9290005,10.104795)">
+      <path
+         d="m 104.5119,151.63857 c -14.5,5.83 -30.82,0.62 -40.09,-12.8 -9.27,-13.42 -9.27,-31.84 0,-45.259998 9.27,-13.41 25.59,-18.62 40.09,-12.79 -0.11,-23.63 13.32,-44.85 33.72,-53.26 20.39,-8.41 43.46,-2.25 57.89,15.47 9.27,-25.11 31.74,-41.58 56.71,-41.58 24.98,0 47.44,16.47 56.71,41.58 14.83,-14.47 35.96,-18.55 54.5,-10.52 18.53,8.02 31.23,26.76 32.75,48.31 14.51,-5.83 30.83,-0.62 40.1,12.79 9.26,13.419998 9.26,31.839998 0,45.259998 -9.27,13.42 -25.59,18.63 -40.1,12.8 -1.58,22.77 -15.63,42.3 -35.65,49.52 -20.01,7.22 -42.07,0.73 -55.96,-16.46 -11.04,19.89 -30.91,32.06 -52.35,32.06 -21.43,0 -41.3,-12.17 -52.34,-32.06 -10.54,22.95 -40.57,34.16 -67.08,25.03 -26.5,-9.13 -39.44,-35.14 -28.9,-58.09 z"
+         fill="none"
+         stroke="#000000"
+         stroke-linejoin="round"
+         stroke-miterlimit="10"
+         pointer-events="all"
+         id="path3267"
+         style="display:inline" />
+      <ellipse
+         cx="117.60191"
+         cy="231.92857"
+         rx="26.174095"
+         ry="12.752443"
+         fill="transparent"
+         stroke="#000000"
+         pointer-events="all"
+         id="ellipse3269"
+         style="display:inline;fill:none" />
+      <ellipse
+         cx="87.071899"
+         cy="262.62857"
+         rx="16.576927"
+         ry="8.5016289"
+         fill="transparent"
+         stroke="#000000"
+         pointer-events="all"
+         id="ellipse3271"
+         style="display:inline;fill:none" />
+      <ellipse
+         cx="62.2019"
+         cy="285.29855"
+         rx="10.469638"
+         ry="6.1400652"
+         fill="transparent"
+         stroke="#000000"
+         pointer-events="all"
+         id="ellipse3273"
          style="display:inline;fill:none" />
     </g>
   </g>
