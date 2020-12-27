@@ -83,8 +83,8 @@ It is contrary to the purpose of morality to have the moral sentiment that murde
 Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle observations of the external world that contradict the mental model. These contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
 
 ![
-_**Figure 6:** A diagram illustrating a reaction of a mental model to the observation of an act of which it disapproves that is opposite to the purpose of normative mental models._
-](/images/image.svg)
+_**Figure 6:** A diagram illustrating what an analogue of belief revision would be like for normative mental models. The left diagram illustrates an individual who disapproves of murder. The middle diagram illustrates the same individual witnessing a murder. The right diagram illustrates the individual changing from disapproval to approval of murder, as symbolized by inclusion of a the check mark._
+](/images/nonsensical-moral-revision.svg)
 
 ![
 _**Figure 7:** A diagram illustrating a reaction of a moral mental model to the observation of an act of which it disapproves._
