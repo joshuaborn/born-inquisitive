@@ -55,7 +55,7 @@ The totality of the external world cannot, in practice, be observed by any given
 When a mind encounters evidence that is consistent with a descriptive mental model, then it is prudent for the mental model to persist. _When a mind encounters evidence that contradicts a descriptive mental model, then it is prudent for the mental model to be amended,_ in order to better agree with the external world, such as in Figure 3. Thus, empirical evidence prompts the revision of false beliefs to better approximate true beliefs.
 
 ![
-_**Figure 3:** A diagram illustrating belief revision, in which a mental model is changed to be in agreement with the external world after empirical evidence is observed. The left diagram illustrates an individual who believes a certain road is open. The middle diagram illustrates the same individual who has now encountered the road and observed that the road is closed. The right diagram illustrates the individual now believes the road is closed._
+_**Figure 3:** A diagram illustrating belief revision, in which a mental model is changed to be in agreement with the external world after empirical evidence is observed. The left panel illustrates an individual who believes a certain road is open. The middle panel illustrates the same individual who has now encountered the road and observed that the road is closed. The right panel illustrates the individual now believes the road is closed._
 ](/images/belief-revision.svg)
 
 
@@ -78,17 +78,17 @@ _**Figure 5:** A diagram illustrating a normative mental model, which, unlike Fi
 
 While both true-or-false beliefs and moral sentiments constitute kinds of mental models, an important difference occurs in how these mental models react to contradiction with observations of the external world. Earlier it was seen that when a descriptive mental model and the external world are in disagreement, it is prudent to amend the mental model to fit the external world. However, with moral sentiments, _when a normative mental model and the external world are in disagreement, the mind tries to amend the external world, not the mental model._
 
-It is contrary to the purpose of morality to have the moral sentiment that murder is wrong, observe an incident of murder, and then conclude, "I guess I was mistaken. Murder is righteous," as in Figure 6. Rather, someone who has the moral sentiment that murder is wrong and who observes an incident of murder is expected to censure the act (Figure 7), try to prevent the murder, call the authorities, report the act, or, with a longer view, investigate the root causes of murder in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world.
+It is contrary to the purpose of morality to have the moral sentiment that murder is wrong, observe an incident of murder, and then conclude, "I guess I was mistaken. Murder is righteous," as in Figure 6. Rather, someone who has the moral sentiment that murder is wrong and who observes an incident of murder is expected to censure the act as in Figure 7. One might try to prevent the murder, call the authorities, report the act, or, with a longer view, investigate the root causes of murder in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world.
 
 Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle observations of the external world that contradict the mental model. These contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
 
 ![
-_**Figure 6:** A diagram illustrating what an analogue of belief revision would be like for normative mental models. The left diagram illustrates an individual who disapproves of murder. The middle diagram illustrates the same individual witnessing a murder. The right diagram illustrates the individual changing from disapproval to approval of murder, as symbolized by inclusion of a the check mark._
+_**Figure 6:** A diagram illustrating a nonsensical analogue of belief revision for a normative mental model. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual changing moral sentiment from disapproval to approval of murder, as symbolized by inclusion of a check mark._
 ](/images/nonsensical-moral-revision.svg)
 
 ![
-_**Figure 7:** A diagram illustrating a reaction of a moral mental model to the observation of an act of which it disapproves._
-](/images/image.svg)
+_**Figure 7:** A diagram illustrating a reaction of a normative mental model to the observation of an act of which it disapproves. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual attempting to stop the murder, while the moral sentiment is retained._
+](/images/world-revision.svg)
 
 
 ### No Moral Truth
