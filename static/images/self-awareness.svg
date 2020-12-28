@@ -165,7 +165,7 @@
     <g
        id="g1220"
        transform="matrix(0.04108962,0,0,0.04108962,252.1987,62.628647)"
-       style="display:inline">
+       style="display:inline;opacity:0.65">
       <path
          transform="matrix(5.1965,0,0,5.3726,-738.86,-644.43)"
          d="m 324.45,213.01 a 86.051,83.23 0 1 1 -172.1,0 86.051,83.23 0 1 1 172.1,0 z"
