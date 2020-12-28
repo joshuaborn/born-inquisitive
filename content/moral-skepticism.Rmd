@@ -121,19 +121,19 @@ Thus, true-or-false beliefs and moral sentiments do not come partitioned in a ne
 
 Doing such a mental partitioning can be facilitated by the realization that moral sentiments can readily be translated into descriptive beliefs _about the normative mental models themselves._ Such a belief can be termed an "attitudinal proposition" because it is a belief about a mind's attitude toward something.
 
-For instance, if an individual named Zhaohui says, "murder is wrong," then the corresponding attitudinal proposition is "Zhaohui disapproves of murder" or "Zhaohui is morally opposed to murder" or "Zhaohui feels that murder is wrong."
+For instance, if an individual named Zhaohui says, "stealing is wrong," then the corresponding attitudinal proposition is "Zhaohui disapproves of stealing" or "Zhaohui is morally opposed to stealing" or "Zhaohui feels that stealing is wrong."
 
-While it makes no sense to attempt to evaluate the truth or falsity of the moral sentiment "murder is wrong" itself, descriptive mental models _can_ be correct or incorrect _about_ Zhaohui's normative mental model. From the perspective of the more than seven billion human minds on the Earth, Zhaohui's mind is part of their external world.
+While it makes no sense to attempt to evaluate the truth or falsity of the moral sentiment "stealing is wrong" itself, descriptive mental models _can_ be correct or incorrect _about_ Zhaohui's normative mental model. From the perspective of the more than seven billion human minds on the Earth, Zhaohui's mind is part of their external world.
 
-![
-_**Figure 8:** A diagram illustrating true beliefs about attitudinal propositions._<br/>
-](/images/image.svg)
-
-Such attitudinal propositions make a different kind of claim than the objective statement that "murder is wrong." They make claims about subjective mental states, claims that _are_ true or false. Thus, while there are no moral truths and no moral knowledge, there can be truths and knowledge about moral sentiments.
+Such attitudinal propositions make a different kind of claim than the objective statement that "murder is wrong." They make claims about subjective mental states, claims that _are_ true or false, as illustrated by Figure 8 and Figure 9. Thus, while there are no moral truths and no moral knowledge, there can be truths and knowledge about moral sentiments.
 
 ![
-_**Figure 9:** A diagram illustrating false beliefs about attitudinal propositions._<br/>
-](/images/image.svg)
+_**Figure 8:** Two diagrams illustrating conditions for attitudinal propositions to be true. The left diagram illustrates an individual (represented by the teal icon) who disapproves of murder, and another individual (represented by the orange icon) who has the descriptive belief that this individual indeed disapproves of murder. The right diagram illustrates an individual who approves of murder in some way, and another individual who has the descriptive belief that this individual approves of murder in some way._
+](/images/true-attitudinal-propositions.svg)
+
+![
+_**Figure 9:** A diagram illustrating false beliefs about attitudinal propositions. The left diagram illustrates an individual (represented by the teal icon) who disapproves of murder, but another individual (represented by the orange icon) has the descriptive belief that this individual approves of murder in some way. The right diagram illustrates an individual who approves of murder in some way, but another individual has the descriptive belief that this individual disapproves of murder._<br/>
+](/images/false-attitudinal-propositions.svg)
 
 Mixed statements with both descriptive information and normative connotations can be interpreted as a conjunction between two propositions: one about a state of affairs and another about a mind's attitude toward the state of affairs. For instance, if someone named Chidi says, "the Liberation Front terrorists were defeated in the battle today," this can be interpreted as two propositions: "the Liberation Front faction lost the battle today," and "Chidi disapproves of the Liberation Front." Similarly, if someone named Astrid says, "during the battle today, the Liberation Front was set back in their struggle against oppression," this can be interpreted as "the Liberation Front faction lost the battle today," and "Astrid approves of the Liberation Front."
 
@@ -197,7 +197,7 @@ While all truth about morality describes normative mental models, moral fictions
 
 #### Delusions of Moral Knowledge
 
-By using the fallacy of externalization, moral fictions create the illusion of being statements of a descriptive mental model. Descriptive mental models, as has been seen, can be evaluated as true or false and can constitute knowledge. However, it is a mistake to attempt to apply truth or falsity to moral sentiments, and there is no moral knowledge. Thus, moral fictions are a way for a mind to delude itself into believing it has moral knowledge.
+By using the fallacy of externalization, moral fictions create the illusion of being statements made by a descriptive mental model. Descriptive mental models, as has been seen, can be evaluated as true or false and can constitute knowledge. However, it is a mistake to attempt to apply truth or falsity to moral sentiments, and there is no moral knowledge. Thus, moral fictions are a way for a mind to delude itself into believing it has moral knowledge.
 
 
 ## Conflict between Moral Skepticism and Moral Realism
@@ -244,7 +244,7 @@ A critical thinker is compelled to believe what is true and disbelieve what is f
 
 ![
 _**Figure 10:** A diagram illustrating moral self-awareness._<br/>
-](/images/image.svg)
+](/images/self-awareness.svg)
 
 
 ## Further Reading

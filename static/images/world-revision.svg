@@ -175,7 +175,8 @@
     </g>
     <g
        id="g16"
-       transform="matrix(0.16435848,0,0,0.16435848,153.17109,87.06957)">
+       transform="matrix(0.16435848,0,0,0.16435848,153.17109,87.06957)"
+       style="opacity:0.65">
       <path
          transform="matrix(5.1965,0,0,5.3726,-738.86,-644.43)"
          d="m 324.45,213.01 a 86.051,83.23 0 1 1 -172.1,0 86.051,83.23 0 1 1 172.1,0 z"
@@ -386,7 +387,8 @@
     </g>
     <g
        id="g1155"
-       transform="matrix(0.16435848,0,0,0.16435848,1253.1711,87.069572)">
+       transform="matrix(0.16435848,0,0,0.16435848,1253.1711,87.069572)"
+       style="opacity:0.65">
       <path
          transform="matrix(5.1965,0,0,5.3726,-738.86,-644.43)"
          d="m 324.45,213.01 a 86.051,83.23 0 1 1 -172.1,0 86.051,83.23 0 1 1 172.1,0 z"
@@ -408,7 +410,7 @@
     <g
        id="g1165"
        transform="matrix(0.97456165,0,0,0.97456165,1091.071,60.104798)"
-       style="display:inline">
+       style="display:inline;stroke-width:1.00044979;stroke-miterlimit:4;stroke-dasharray:none">
       <path
          d="m 104.5119,151.63857 c -14.5,5.83 -30.82,0.62 -40.09,-12.8 -9.27,-13.42 -9.27,-31.84 0,-45.259998 9.27,-13.41 25.59,-18.62 40.09,-12.79 -0.11,-23.63 13.32,-44.85 33.72,-53.26 20.39,-8.41 43.46,-2.25 57.89,15.47 9.27,-25.11 31.74,-41.58 56.71,-41.58 24.98,0 47.44,16.47 56.71,41.58 14.83,-14.47 35.96,-18.55 54.5,-10.52 18.53,8.02 31.23,26.76 32.75,48.31 14.51,-5.83 30.83,-0.62 40.1,12.79 9.26,13.419998 9.26,31.839998 0,45.259998 -9.27,13.42 -25.59,18.63 -40.1,12.8 -1.58,22.77 -15.63,42.3 -35.65,49.52 -20.01,7.22 -42.07,0.73 -55.96,-16.46 -11.04,19.89 -30.91,32.06 -52.35,32.06 -21.43,0 -41.3,-12.17 -52.34,-32.06 -10.54,22.95 -40.57,34.16 -67.08,25.03 -26.5,-9.13 -39.44,-35.14 -28.9,-58.09 z"
          fill="none"
@@ -417,7 +419,7 @@
          stroke-miterlimit="10"
          pointer-events="all"
          id="path1157"
-         style="display:inline" />
+         style="display:inline;stroke-width:1.00044979;stroke-miterlimit:4;stroke-dasharray:none" />
       <ellipse
          cx="117.60191"
          cy="231.92857"
@@ -427,7 +429,7 @@
          stroke="#000000"
          pointer-events="all"
          id="ellipse1159"
-         style="display:inline;fill:none" />
+         style="display:inline;fill:none;stroke-width:1.00044979;stroke-miterlimit:4;stroke-dasharray:none" />
       <ellipse
          cx="87.071899"
          cy="262.62857"
@@ -437,7 +439,7 @@
          stroke="#000000"
          pointer-events="all"
          id="ellipse1161"
-         style="display:inline;fill:none" />
+         style="display:inline;fill:none;stroke-width:1.00044979;stroke-miterlimit:4;stroke-dasharray:none" />
       <ellipse
          cx="62.2019"
          cy="285.29855"
@@ -447,7 +449,7 @@
          stroke="#000000"
          pointer-events="all"
          id="ellipse1163"
-         style="display:inline;fill:none" />
+         style="display:inline;fill:none;stroke-width:1.00044979;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
     <text
        xml:space="preserve"
@@ -464,11 +466,11 @@
      style="display:inline">
     <path
        style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#666666;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4.9;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend);paint-order:normal"
-       d="m 450,40.588563 c 48.72789,-35.7316642 98.60658,-39.139057 150,0"
+       d="m 450,40.588563 c 54.76257,-42.3979559 103.61805,-32.2090383 150,0"
        id="path5156" />
     <path
        style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#666666;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4.9;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker5921);paint-order:normal"
-       d="m 1000,40.588563 c 51.3934,-39.139057 101.2721,-35.7316642 150,0"
+       d="m 1000,40.588563 c 46.9052,-33.0437953 96.0992,-41.649454 150,0"
        id="path5917" />
   </g>
 </svg>
