@@ -1,6 +1,6 @@
 ---
 title: "The Fallacy of Listing Examples"
-draft: false
+draft: true
 date: 2020-12-07
 tags: ["fallacies"]
 bibliography: "../bibliographies/fallacy-of-listing-examples.bib"
