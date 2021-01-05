@@ -30,25 +30,25 @@ A mind might have a belief, which is a representation of how the mind perceives 
 
 [^correspondence]: This is a correspondence definition of truth, which is a kind of truth also called _"a posteriori,"_ "synthetic," "contingent", or "matters of fact." There are also coherence definitions of truth, which in philosophical jargon are called _"a priori,"_ "analytic," "necessary," or "relations of ideas." This latter kind of truth comprises things that are true by definition, such as "1 + 1 = 2" or "bachelors are unmarried men." These kinds of true beliefs are _tautologies_, i.e., they refer to the same thing twice. These kind of tautologies are only more interesting than more obvious tautologies like "2 = 2" or "bachelors are bachelors" inasmuch as they refer to the same thing with different symbols. This article regards tautologies as not useful for understanding morality because they merely beg the question. For instance, if one were to be questioned as why one felt that murder is wrong, and one replied "because I have defined 'wrong' that way," this would not be informative.
 
-Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain container is approximately 20 kilograms in weight, in order to examine that belief, other beliefs that comprise expectations about how heavier objects behave relative to lighter objects must also be held in order to examine whether the belief about the container is true or false.
+Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain backpack is approximately 10 kilograms in weight, other beliefs must also be held in order to examine whether this belief about the backpack is true or false. These other beliefs include, for instance, the belief that heavier objects will be lower at equilibrium when placed on a balance opposite lighter objects.
 
 Because of this, instead of truth or falsity being discussed as properties of individual beliefs, this inquiry examines truth and falsity as properties of a _mental model_. A mental model includes a particular belief and all the other related beliefs necessary in order to test this belief. This kind of mental model is _descriptive,_ in that it attempts to model how things actually are.
 
 ![
-_**Figure 1:** Two diagrams illustrating conditions for truth, in which mental models correspond to the external world. The left diagram illustrates an individual who believes that a certain road is open when it is indeed open, and the right diagram illustrates an individual who believes that the road is closed when it is indeed closed._
-](/images/two-true-beliefs.svg)
+_**Figure 1:** Two diagrams illustrating conditions for truth, in which mental models correspond to the external world. The left diagram illustrates an individual who believes that a certain backpack weighs 10 kilograms when it indeed does weigh 10 kilograms, and the right diagram illustrates an individual who believes that the backpack is weighs greater than 10 kilograms when it does indeed weigh greater than 10 kilograms._
+](/images/two-true-beliefs-2.svg)
 
 ![
-_**Figure 2:** Two diagrams illustrating conditions for falsity, in which mental models fail to correspond to the external world. The left diagram illustrates an individual who believes that a certain road is open when it is actually closed, and the right diagram illustrates an individual who believes that the road is closed when it is actually open._
-](/images/two-false-beliefs.svg)
+_**Figure 2:** Two diagrams illustrating conditions for falsity, in which mental models fail to correspond to the external world. The left diagram illustrates an individual who believes that a certain backpack weighs greater than 10 kilograms when it actually weighs 10 kilograms, and the right diagram illustrates an individual who believes that the backpack weighs 10 kilograms when it actually weighs greater than 10 kilograms._
+](/images/two-false-beliefs-2.svg)
 
 ### Belief Revision
 
-A common definition of knowledge is justified, true belief. Thus, if a mental model is true, and if the mind that has the mental model is justified in having the mental model, then the mind _knows_ something about the external world.
+A common definition of knowledge is justified, true belief. Thus, if a mental model is true, and if the mind that has the mental model has a justification for it in the form of evidence, then the mind _knows_ something about the external world.
 
 No mind ever has complete and perfect knowledge of the external world. Therefore, it is prudent for a sound mind to allow for revision of its mental models. Descriptive mental models try to explain and predict phenomena in the external world. However, the explanations and predictions of _false_ mental models are flawed, and a sound mind will always try to amend false mental models in order to make them true.
 
-For instance, mental models illustrated in Figure 2 are flawed. In the first case, time might be wasted when the individual attempts to travel down a closed road, necessitating an impromptu detour. In the second case, the individual might use an unnecessarily circuitous route. On the other hand, the individual in either of the cases illustrated in Figure 1 can plan an optimal route without unnecessary detours.
+For instance, mental models illustrated in Figure 2 are flawed. In the first case, an individual might abstain from attempting to carry a backpack that was within the individual's ability to carry. In the second case, an individual might attempt to carry a backpack that is greater than the individual's capacity. On the other hand, the individual in either of the cases illustrated in Figure 1 can make correctly informed decisions about the backpack.
 
 The totality of the external world cannot, in practice, be observed by any given mind. Some specific circumstances of the external world can, however, be partially observed. These observations constitute _empirical evidence._
 
