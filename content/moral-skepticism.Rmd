@@ -55,8 +55,8 @@ The totality of the external world cannot, in practice, be observed by any given
 When a mind encounters evidence that is consistent with a descriptive mental model, then it is prudent for the mental model to persist. _When a mind encounters evidence that contradicts a descriptive mental model, then it is prudent for the mental model to be amended,_ in order to better agree with the external world, such as in Figure 3. Thus, empirical evidence prompts the revision of false beliefs to better approximate true beliefs.
 
 ![
-_**Figure 3:** A diagram illustrating belief revision, in which a mental model is changed to agree with the external world after empirical evidence is observed. The left panel illustrates an individual who believes a certain road is open. The middle panel illustrates the same individual who has now encountered the road and observed that the road is closed. The right panel illustrates the individual now believes the road is closed._
-](/images/belief-revision.svg)
+_**Figure 3:** A diagram illustrating belief revision, in which a mental model is changed to agree with the external world after empirical evidence is observed. The left panel illustrates an individual who believes a backpack weighs 10 kilograms. The middle panel illustrates the same individual has now seen the backpack tip a scale when opposite a 10 kilogram weight. The right panel illustrates the individual now believes the backpack weighs greater than 10 kilograms._
+](/images/belief-revision-2.svg)
 
 
 ### Moral Sentiments
