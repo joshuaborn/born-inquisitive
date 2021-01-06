@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>Much of moral philosophy construes morality as a search for truths and moral knowledge, and much of everyday moralizing consists of hand-wringing over "justice," "human rights," etc. This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to the implication that truth and falsity apply to the former, but not the latter. This in turn implies practices for dealing with moral sentiments, including the rejection of moral constructs as fictitious.</p>
+  <p>Much of moral philosophy construes morality as a search for truths and moral knowledge, and much of everyday moralizing consists of handwringing over "justice," "human rights," etc. This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to the implication that truth and falsity apply to the former, but not the latter. This in turn implies practices for dealing with moral sentiments, including the rejection of moral constructs as fictitious.</p>
   <!--more-->
   ## Table of Contents
 ---
@@ -28,14 +28,14 @@ The words "true" and "false" are symbols, and symbols can be used in a variety o
 
 A mind might have a belief, which is a representation of how the mind perceives the external world. When a belief accurately models the external world, it is a _true_ belief. When a belief and the external world are not in agreement, this is a _false_ belief.[^correspondence]
 
-[^correspondence]: This is a correspondence definition of truth, which is a kind of truth also called _"a posteriori,"_ "synthetic," "contingent", or "matters of fact." There are also coherence definitions of truth, which in philosophical jargon are called _"a priori,"_ "analytic," "necessary," or "relations of ideas." This latter kind of truth comprises things that are true by definition, such as "1 + 1 = 2" or "bachelors are unmarried men." These kinds of true beliefs are _tautologies_, i.e., they refer to the same thing twice. These kind of tautologies are only more interesting than more obvious tautologies like "2 = 2" or "bachelors are bachelors" inasmuch as they refer to the same thing with different symbols. This article regards tautologies as not useful for understanding morality because they merely beg the question. For instance, if one were to be questioned as why one felt that murder is wrong, and one replied "because I have defined 'wrong' that way," this would not be informative.
+[^correspondence]: This is a correspondence definition of truth, which is a kind of truth also called _"a posteriori,"_ "synthetic," "contingent", or "matters of fact." There are also coherence definitions of truth, which in philosophical jargon are called _"a priori,"_ "analytic," "necessary," or "relations of ideas." This latter kind of truth comprises things that are true by definition, such as "1 + 1 = 2" or "bachelors are unmarried men." These kinds of true beliefs are _tautologies_, i.e., they refer to the same thing twice. This kind of tautology is only more interesting than more obvious tautologies like "2 = 2" or "bachelors are bachelors" inasmuch as they refer to the same thing with different symbols. This article regards tautologies as not useful for understanding morality because they merely beg the question. For instance, if one were to be questioned as why one felt that murder is wrong, and one replied "because I have defined 'wrong' that way," this would not be informative.
 
-Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain backpack is approximately 10 kilograms in weight, other beliefs must also be held in order to examine whether this belief about the backpack is true or false. These other beliefs include, for instance, the belief that heavier objects will be lower at equilibrium when placed on a balance opposite lighter objects.
+Beliefs are, in practice, rarely true or false in isolation. In order to examine truth or falsity, many interrelated beliefs are examined at once. For instance, if someone believes that a certain backpack weighs approximately 10 kilograms, other beliefs must also be held in order to examine whether this belief about the backpack is true or false. These other beliefs include, for instance, the belief that heavier objects tip a balance lower when placed opposite lighter objects.
 
 Because of this, instead of truth or falsity being discussed as properties of individual beliefs, this inquiry examines truth and falsity as properties of a _mental model_. A mental model includes a particular belief and all the other related beliefs necessary in order to test this belief. This kind of mental model is _descriptive,_ in that it attempts to model how things actually are.
 
 ![
-_**Figure 1:** Two diagrams illustrating conditions for truth, in which mental models correspond to the external world. The left diagram illustrates an individual who believes that a certain backpack weighs 10 kilograms when it indeed does weigh 10 kilograms, and the right diagram illustrates an individual who believes that the backpack is weighs greater than 10 kilograms when it does indeed weigh greater than 10 kilograms._
+_**Figure 1:** Two diagrams illustrating conditions for truth, in which mental models correspond to the external world. The left diagram illustrates an individual who believes that a certain backpack weighs 10 kilograms when it indeed does weigh 10 kilograms, and the right diagram illustrates an individual who believes that the backpack weighs greater than 10 kilograms when it does indeed weigh greater than 10 kilograms._
 ](/images/two-true-beliefs-2.svg)
 
 ![
@@ -52,10 +52,10 @@ For instance, mental models illustrated in Figure 2 are flawed. In the first cas
 
 The totality of the external world cannot, in practice, be observed by any given mind. Some specific circumstances of the external world can, however, be partially observed. These observations constitute _empirical evidence._
 
-When a mind encounters evidence that is consistent with a descriptive mental model, then it is prudent for the mental model to persist. _When a mind encounters evidence that contradicts a descriptive mental model, then it is prudent for the mental model to be amended,_ in order to better agree with the external world, such as in Figure 3. Thus, empirical evidence prompts the revision of false beliefs to better approximate true beliefs.
+When a mind encounters empirical evidence that is consistent with a descriptive mental model, then it is prudent for the mental model to persist. _When a mind encounters evidence that contradicts a descriptive mental model, then it is prudent for the mental model to be amended_ in order to better agree with the external world, such as in Figure 3. Thus, empirical evidence prompts the revision of false beliefs to better approximate true beliefs.
 
 ![
-_**Figure 3:** A diagram illustrating belief revision, in which a mental model is changed to agree with the external world after empirical evidence is observed. The left panel illustrates an individual who believes a backpack weighs 10 kilograms. The middle panel illustrates the same individual has now seen the backpack tip a scale when opposite a 10 kilogram weight. The right panel illustrates the individual now believes the backpack weighs greater than 10 kilograms._
+_**Figure 3:** A diagram illustrating belief revision, in which a mental model is changed to agree with the external world after empirical evidence is observed. The left panel illustrates an individual who believes a backpack weighs 10 kilograms. The middle panel illustrates the same individual has now seen the backpack tip a scale when opposite a 10-kilogram weight. The right panel illustrates the individual now believes the backpack weighs greater than 10 kilograms._
 ](/images/belief-revision-2.svg)
 
 
@@ -76,18 +76,18 @@ _**Figure 5:** A diagram illustrating a normative mental model, which, unlike Fi
 
 ### World Revision
 
-While both true-or-false beliefs and moral sentiments constitute kinds of mental models, an important difference occurs in how these mental models react to contradiction with observations of the external world. Earlier it was seen that when a descriptive mental model and the external world disagree, it is prudent to amend the mental model to fit the external world. However, with moral sentiments, _when a normative mental model and the external world disagree, the mind tries to amend the external world, not the mental model._
+While both true-or-false beliefs and moral sentiments constitute kinds of mental models, an important difference occurs in how these kinds of mental model react to contradiction with observations of the external world. Earlier it was seen that when a descriptive mental model and the external world disagree, it is prudent to amend the mental model to fit the external world. However, with moral sentiments, _when a normative mental model and the external world disagree, the mind tries to amend the external world, not the mental model._
 
-It is contrary to the purpose of morality to have the moral sentiment that murder is wrong, observe an incident of murder, and then conclude, "I guess I was mistaken. Murder is righteous," as in Figure 6. Rather, someone who has the moral sentiment that murder is wrong and who observes an incident of murder is expected to censure the act as in Figure 7. One might try to prevent the murder, call the authorities, report the act, or, with a longer view, investigate the root causes of murder in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world.
+It is contrary to the purpose of morality to have the moral sentiment that murder is wrong, observe an incident of murder, and then conclude, "I guess I was mistaken. Murder is righteous," as in Figure 6. Rather, someone who has the moral sentiment that murder is wrong and who observes an incident of murder is expected to try to prevent the murder, as in Figure 7. One might also censure the act, call the authorities, report the act, or, with a longer view, investigate the root causes of murder in society and attempt to remedy them. In other words, the purpose of a normative mental model is to amend the external world.
 
-Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle observations of the external world that contradict the mental model. These contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
+Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle contradictory empirical evidence. Such contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
 
 ![
-_**Figure 6:** A diagram illustrating a nonsensical analogue of belief revision for a normative mental model. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual changing moral sentiment from disapproval to approval of murder, as symbolized by inclusion of a check mark._
+_**Figure 6:** A diagram illustrating how normative mental model is_ not _expected to react to contradiction with the external world. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual changing moral sentiment from disapproval to approval of murder, as symbolized by inclusion of a check mark._
 ](/images/nonsensical-moral-revision.svg)
 
 ![
-_**Figure 7:** A diagram illustrating a reaction of a normative mental model to the observation of an act of which it disapproves. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual attempting to stop the murder, while the moral sentiment is retained._
+_**Figure 7:** A diagram illustrating how a normative mental model_ is _expected to react to contradiction with the external world. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual attempting to stop the murder, while the moral sentiment is retained._
 ](/images/world-revision.svg)
 
 
@@ -99,7 +99,7 @@ There are no conditions under which a moral sentiment is false, because any disa
 
 ### No Moral Knowledge
 
-A direct consequence of this and the earlier definition of knowledge is that there is no such thing as moral knowledge. Moral knowledge is impossible, not due to any limitation of the human condition, but because the very concept of moral knowledge is nonsensical.
+A direct consequence of this and the earlier definition of knowledge as justified, true belief is that there is no such thing as moral knowledge. Moral knowledge is impossible, not due to any limitation of the human condition, but because it is nonsensical to attempt to apply truth and falsity to moral sentiments.
 
 In philosophical jargon, a position that denies the possibility of moral knowledge is termed "moral skepticism."
 
@@ -179,7 +179,7 @@ Under such a more specific error theory, statements such as "murder is wrong" ar
 
 A third interpretation of statements about moral constructs is that they are not to be taken literally, but are _useful fictions,_ like a fable, intended to remind individuals to act in accord with some moral system.
 
-However, while it may be the case that moral constructs _should_ be interpreted as useful fictions, many individuals have, in point of fact, not interpreted them as such, but instead have taken them literally. Pages and pages of philosophical treatises have been devoted to speculating about "the Good," "virtue," etc. Even today, in contemporary news outlet there is much hand-wringing about the nature of "justice" or "human rights."
+However, while it may be the case that moral constructs _should_ be interpreted as useful fictions, many individuals have, in fact, not interpreted them as such, but instead have taken them literally. Pages and pages of philosophical treatises have been devoted to speculating about "the Good," "virtue," etc. Even today, in contemporary news outlet there is much handwringing about the nature of "justice" or "human rights."
 
 An issue with the useful fictions interpretation is that, while it may make a mind internally consistent, this is largely hidden from the external world. An individual who ironically speaks in terms of "justice" or "human rights" with the understanding that these are useful fictions is not readily distinguishable from someone who literally speaks in terms of "justice" or "human rights" as if they described actual things. This leaves those with useful fiction interpretations either to call out repeatedly that moral constructs are fictional when using them or to maintain secret worldviews indistinguishable from diametrically opposed worldviews.
 
@@ -202,9 +202,9 @@ By using the fallacy of externalization, moral fictions create the illusion of b
 
 ## Conflict between Moral Skepticism and Moral Realism
 
-Worldviews that believe moral sentiments can constitute knowledge of the non-mental world are called "moral realism" in the philosophical jargon. Unfortunately, moral realism has been a common if not the most common metaethical[^metaethics] position in the history of philosophy taught in academic settings, and so one is liable to encounter many moral fictions when perusing published thinking about ethics.
+Worldviews that believe moral sentiments can constitute knowledge of the non-mental world are called "moral realism" in the philosophical jargon. Unfortunately, moral realism has been a common if not the most common meta-ethical[^meta-ethics] position in the history of philosophy taught in academic settings, and so one is liable to encounter many moral fictions when perusing published thinking about ethics.
 
-[^metaethics]: The terms "metaethics" or "metamorality" are philosophical jargon for that branch of moral philosophy that deals with what morality is, as opposed to those branches of moral philosophy that tackle specific ethical problems or that invent moral systems.
+[^meta-ethics]: The terms "meta-ethics" or "meta-morality" are philosophical jargon for that branch of moral philosophy that deals with what morality is, as opposed to those branches of moral philosophy that tackle specific ethical problems or that invent moral systems.
 
 While academic philosophy is notoriously irrelevant to the daily lives of the masses, this is not just a recondite disagreement. In contemporary life, one need not look very far to find those advancing their own pet ideas of what "justice" is. Morally contentious issues such as abortion are often framed in terms of moral fictions such as "personhood" or "human rights."
 
@@ -212,12 +212,12 @@ Worldviews of moral realism and worldviews of moral skepticism are prone to conf
 
 However, a morally skeptical worldview would view the moral fictions of a morally realist worldview as a self-delusion, not an asset. It would view the claims that a moral system is superior to others as merely begging the question. It would view argumentation supporting a moral system as backwards rationalization of a preconceived conclusion. It would view claims that moral sentiments are supported with logic as impossible, since logic is a calculus of truth conditions, and it is mistaken to apply truth or falsity to moral sentiments. It would view the attempts to disparage moral sentiments as "emotional" as entirely misguided since emotions are a large part of how morality actually works in a human mind, rather than how philosophers speculate it should work in their pointless treatises.
 
-This metaethical conflict has large implications in how human beings actually go about their morality and how their worldviews relate to and understand one another. Unfortunately, there are many individuals who have never gone to the trouble of figuring out their own metaethical position. Some of these individuals launch right into moralizing assuming a kind of naive moral realism. It then falls upon those of morally skeptical worldviews to articulate their own metaethical positions before a naive moral realist can even understand where they are coming from. Such is a motive for this article.
+This meta-ethical conflict has large implications in how human beings go about their morality and how their worldviews relate to and understand one another. Unfortunately, there are many individuals who have never gone to the trouble of figuring out their own meta-ethical position. Some of these individuals launch right into moralizing assuming a kind of naive moral realism. It then falls upon those of morally skeptical worldviews to articulate their own meta-ethical positions before a naive moral realist can even understand where they are coming from. Such is a motive for this article.
 
 
 ## Practices of Moral Skepticism
 
-The metaethical position articulated herein is not just of speculative interest, but has implications for how to go about the doing of morality, implications that lead to certain practices.
+The meta-ethical position articulated herein is not just of speculative interest, but has implications for how to go about the doing of morality, implications that lead to certain practices.
 
 The first practice is, when expressing one's own morality, to do so by referring to one's attitudes directly, such as with statements of the form "I ethically approve of &hellip;" or "I disapprove of &hellip; morally." Since the only true things that can be said about morality are descriptions of a normative mental model, this is the most direct and truest way to express moral sentiments. Furthermore, everyone is the world's foremost expert on the contents of one's own mind, so this is an approach that leads to authoritative information on a subject.
 
@@ -234,13 +234,13 @@ The strains of moral realism popular in the history of philosophy would portray 
 
 The worldview articulated here identifies moral sentiments as normative mental models. Thus, it identifies morality as a _psychological construct._ Since moral sentiments of any one person are influenced by those around them, morality is a socio-psychological construct.
 
-At the same time that the metaethical position articulated here implies that traditional moral philosophy is not a worthwhile pursuit, it points to moral psychology as a way to truly understand morality. This may seem to have little relevance for anyone outside of academic pursuits. Most individuals lack the time and resources to do psychology (though many at least have the time and resources to study the work of others). 
+At the same time that the meta-ethical position articulated here implies that traditional moral philosophy is not a worthwhile pursuit, it points to moral psychology as a way to truly understand morality. This may seem to have little relevance for anyone outside of academic pursuits. Most individuals lack the time and resources to do psychology (though many at least have the time and resources to study the work of others). 
 
 ### Self-Awareness Instead of Self-Delusion
 
 There is also an important implication relevant for all individuals, regardless of vocation. It is that moral enlightenment does not come from discovering supposed moral truths, nor does it come from the vain invention of fictions intended to rationalize one's moral sentiments, but comes from introspection. The best one can do is to _know thyself,_ as the ancient maxim goes.
 
-A critical thinker is compelled to believe what is true and disbelieve what is false. What remains after this is just how one feels. The only enlightenment that can be attained about this remainder is to be _aware_ of how one feels and to abstain from trying to rationalize one's feelings post hoc. Then, one can investigate one's self with the same tools of inquiry &ndash; such as empirical evidence, investigation into causation, etc. &ndash; that one might use to investigate any other fact about the world.
+A critical thinker is compelled to believe what is true and disbelieve what is false. What remains after this is just how one feels. The only enlightenment that can be attained about this remainder is to be _aware_ of how one feels and to abstain from trying to rationalize one's feelings post hoc. Then, one can investigate oneself with the same tools of inquiry &ndash; such as empirical evidence, investigation into causation, etc. &ndash; that one might use to investigate any other fact about the world.
 
 ![
 _**Figure 10:** A diagram illustrating moral self-awareness._
