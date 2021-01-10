@@ -4,7 +4,7 @@ draft: false
 date: 2020-12-28
 tags: ["worldview", "morality"]
 bibliography: "../bibliographies/moral-skepticism.bib"
-csl: "../bibliographies/apa.csl"
+csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
 output:

@@ -4,7 +4,7 @@ draft: true
 date: 2021-01-10
 tags: ["fallacies"]
 bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
-csl: "../bibliographies/apa.csl"
+csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
 output:

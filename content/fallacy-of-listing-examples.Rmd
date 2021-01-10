@@ -4,7 +4,7 @@ draft: false
 date: 2020-12-07
 tags: ["fallacies"]
 bibliography: "../bibliographies/fallacy-of-listing-examples.bib"
-csl: "../bibliographies/apa.csl"
+csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
 output:
