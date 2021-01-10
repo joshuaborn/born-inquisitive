@@ -18,7 +18,21 @@ include-before: |
   ## Table of Contents
 ---
 
-Anecdotes are stories that consist either of one's own personal experiences or of the retelling of the personal experiences of someone else.
+If enough time is spent around those that construe themselves as doing scientific inquiry, one is liable to encounter the maxim "anecdotes are not evidence." Anecdotes are stories that consist either of one's own personal experiences or of the retelling of the personal experiences of others. The maxim "anecdotes are not evidence" is a healthy reminder that the use of anecdotes as a kind of evidence is flawed.
+
+## Issues with Literal Interpretation
+
+However, the maxim "anecdotes are not evidence," like all slogans, is a short, catchy phrase and is devoid of any substantially informative content. While such a catch phrase can be used as a mnemonic device to recall deeper understanding, it can also be used without any cognizance of the issues to which it alludes. When used in this latter way, the maxim can be interpreted in ways that lead to implications that are false.
+
+One such false implication that stems from an extremely literal interpretation of the maxim "anecdotes are not evidence" is that _nothing at all_ can be learned from anecdotes.
+
+Such a literal interpretation can be used to undermine the maxim itself. For instance, one could note a case in which a serial sex offender was caught due to the testimony of victims, which is necessarily anecdotal, and conclude that those who subscribe to "anecdotes are not evidence" would throw out this testimony, setting the sex offender free. This is such a morally repugnant proposition for so many that it could be used as a way to discredit scientific inquiry.
+
+This literal interpretation can also be used as a foolish obstacle to understanding. For instance, if one hears stories from friends that a certain road is congested with traffic during rush hour, one might dismiss these stories, citing "anecdotes are not evidence." One would have no one to blame but oneself when one finds oneself stuck in traffic on the very same road, waiting for the rush hour congestion to clear.
+
+Surely, because of these implications, this literal interpretation does not capture what the maxim "anecdotes are not evidence" is meant to convey. This is a flaw not just with this particular maxim, but with slogans in general.
+
+The purpose of this article is to articulate the issues in using anecdotes as evidence in a more substantial way than can be done with a pithy maxim. This is balanced with a section describing valid uses of anecdotes with the hope that overly literal, misguided interpretations of the maxim "anecdotes are not evidence" are avoided.
 
 ## Misuses of Anecdotes
 
