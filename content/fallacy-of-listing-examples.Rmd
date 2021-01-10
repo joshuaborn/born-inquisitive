@@ -260,7 +260,7 @@ While it is fallacious to attempt to infer a conclusion about a larger populatio
 
 There is nothing fallacious about the use of examples for purely illustrative purposes, as long as there is no claim about the prevalence of the phenomenon being illustrated or about the supposed association of other phenomena with it. Indeed, this article uses an example, albeit a fictional one in the form of the Acme Electric Grill thought experiment, in order make discussion of the fallacy of listing examples more concrete, but makes no claim about how frequently this fallacy is occurs.
 
-Furthermore, it is not fallacious for a list of examples to precipitate further investigation. For instance, a first sanity check in investigating whether Acme Electric Grills cause fires could be to find out whether any fires have occurred in homes with an Acme Electric Grill. Thus, lists of examples have a similar status to anecdotes in that, while no conclusion can be drawn from them directly, they can inspire more rigorous collection of empirical evidence.
+Furthermore, it is not fallacious for a list of examples to precipitate further investigation. For instance, a first sanity check in investigating whether Acme Electric Grills cause fires could be to find out whether any fires have occurred in homes with an Acme Electric Grill. Thus, lists of examples have a similar status to [anecdotes](/anecdotes-are-not-evidence.html) in that, while no conclusion can be drawn from them directly, they can inspire more rigorous collection of empirical evidence.
 
 
 ## Conclusion
