@@ -18,9 +18,9 @@ include-before: |
   ## Table of Contents
 ---
 
-If enough time is spent around those that construe themselves as doing scientific inquiry, one is liable to encounter the maxim "anecdotes are not evidence." Anecdotes are stories that consist either of one's own personal experiences or of the retelling of the personal experiences of others. The maxim "anecdotes are not evidence" is a healthy reminder that the use of anecdotes as a kind of evidence is flawed.
+## Introduction
 
-## Issues with Literal Interpretation
+If enough time is spent around those that construe themselves as doing scientific inquiry, one is liable to encounter the maxim "anecdotes are not evidence." Anecdotes are stories that consist either of one's own personal experiences or of the retelling of the personal experiences of others. The maxim "anecdotes are not evidence" is a healthy reminder that the use of anecdotes as a kind of evidence is flawed.
 
 However, the maxim "anecdotes are not evidence," like all slogans, is a short, catchy phrase and is devoid of any substantially informative content. While such a catch phrase can be used as a mnemonic device to recall deeper understanding, it can also be used without any cognizance of the issues to which it alludes. When used in this latter way, the maxim can be interpreted in ways that lead to implications that are false.
 
@@ -52,7 +52,7 @@ The purpose of this article is to articulate the issues in using anecdotes as ev
 
 Contrary to popular belief, human memory does not work like a video camera, accurately recording the events we see and hear so that we can review and inspect them later, as 63% of respondents in a demographically representative sample of 1,500 people in the United States believed in a recent telephone poll. [@simons_what_2011] Instead, human memory is flawed. People often fail to remember true things about past experiences or believe they remember false things about past experiences. Furthermore, the social experience of recalling memories and sharing them with others can influence how individuals remember past events.
 
-#### Flaws of Memory
+#### Flaws of Memory Recall
 
 The psychological literature around the topic of memory is quite large, and a full review of what has been learned about the fallibility of memory recall is beyond the scope of this article. Instead, this article summarizes a few seminal experiments in the field in order to establish the core point that memory, according to the empirical evidence, is quite fallible.
 
