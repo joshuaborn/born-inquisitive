@@ -34,13 +34,23 @@ Surely, because of these implications, this overly literal interpretation does n
 
 The purpose of this article is to articulate the issues in using anecdotes as evidence in a more substantial way than can be done with a pithy maxim. It begins by discussing the sort of inference for which anecdotes are entirely useless, and this is balanced with later discussion of valid uses of anecdotes.
 
+
 ## Misuses of Anecdotes
 
-### Inference about Larger Population
+Anecdotal evidence is useless for two kinds of inference: inference about a larger population and inference about cause and effect. 
+
+### Inference about a Larger Population
+ 
+While the prevalence or magnitude of a variable among some number of individuals that can be directly observed might sometimes be of interest, interesting questions oftentimes pertain to a larger population than those that are directly observed. For instance, an epidemiologist is usually professionally interested in how many people contracted the seasonal flu in a given geographic area, not how many of the epidemiologist's friends contracted the seasonal flu. This is a question about a larger population, i.e., all the people in the given geographic area, that is based on a smaller, representative sample, e.g., surveys, hospital records, etc. Anecdotes shed no light on these kinds of questions.
 
 ### Inference about Cause and Effect
 
+Practical questions often pertain to whether or not something causes an effect. For instance, in clinical trials, a potential therapy is given to volunteers in order to determine whether or not the therapy causes an improvement in a disease or an increase in survival time. It is not enough to know how many people receiving the treatment improve or to what extent they improve. Indeed, there are many diseases from which people will often recover of their own accord. Rather, the question that is at issue in a clinical trial is whether or not the potential therapy _caused_ any measured improvement. Again, anecdotes are no help in answering this kind of question.
+
+
 ## Flaws of Anecdotes as Evidence
+
+Flaws in using anecdotes as a kind of evidence can broadly be grouped into two categories: statistical and psychological. The statistical flaws are what specifically preclude anecdotes from being useful for inference about a larger population and for inference about cause and effect, but do not prevent anecdotes from being useful in other ways. The psychological flaws affect anecdotal evidence no matter what the use, and so these flaws must be acknowledged and accepted during the valid uses of anecdotes articulated later.
 
 ### Statistical Flaws
 
