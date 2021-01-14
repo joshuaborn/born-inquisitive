@@ -76,9 +76,28 @@ In this case, the anecdotal evidence of one's friends and family does not consis
 
 #### Unrepresentative Samples
 
+Perhaps there is an individual so popular that polling the individual's friends and family results in a large enough number of observations to make an inference about a larger population or about cause and effect. Even if this were the case, another issue remains. The sample created from such polling is not _representative_ of a larger population. Instead, the sample is heavily biased towards the idiosyncracies of the individual in question.
+
+Returning to the example of flu vaccine efficacy in the United States during the 2019-2020 season, suppose that a particularly extroverted individual keeps in regular contact with not just 10, but 200 friends and family. However, suppose the extroverted individual caught the flu during the 2019-2020 season. Now the sample might be large enough for crude estimation of vaccine efficacy, but this sample will be biased because the extroverted individual was in contact with the 200 other people in the sample and so exposed them to the flu virus. Therefore, the prevalence of flu illness in this sample is expected to be higher than in the general population, which includes individuals who had no direct exposure to the flu virus. Because of this, any estimations regarding the effects _caused_ by the vaccine will be thrown off.
+
+This phenomenon is likely to occur whenever sampling is based on personal associations. An example comes from attempts to infer the prevalence of political affiliations based on a particular individual's social network. The United States effectively has a two party system with most of its voters registered as either Republican or Democrat. Because human beings tend to conform to those around them and to seek out those with similar views, if one starts with a registered Republican, one will likely find a higher proportion of registered Republicans among that individual's friends and family. Likewise, if one starts with a registered Democrat, one will likely find a higher proportion of registered Democrats amongst that individual's friends and family. Neither of these samples will be representative of the _larger population_ of the United States.
+
+This sort of bias does not just stem from personal associations; it could also be based on geography. Continuing the voter registration example, polling done in a coastal, urban center of the United States will likely find a different distribution of political affiliations than polling done in a rural, inland area.
+
+This issue is even worse for anecdotes that come by way of communication sources such as the news media. Much of what qualifies a story as news is that it is rare, unusual, or shocking enough to be of interest. Thus, news stories collectively form an intentionally unrepresentative sample. This phenomenon was illustrated dramatically by the media frenzy around shark attacks in 2001. 
+
+While shark attacks on humans can result in a personal tragedy of injury or death for those involved that should neither be minimized nor made light of, the media representation of shark attacks in 2001 was misleading and irresponsible. A particularly graphic shark attack case was covered on major news media outlets in August of 2001. This was soon followed by story after story of sharks attacking humans. _Time_ magazine would run a cover story labeling the summer of 2001 the "Summer of the Shark."
+
+![
+_The July 30, 2001 cover of_ Time _magazine, which labeled the summer of 2001 the "Summer of the Shark."_
+](/images/summer-of-the-shark.jpg)
+
+This created an impression that shark attacks were increasing at an alarming rate during 2001 and that shark attacks were a particularly prevalent risk. However, it was soon discovered that 2001 had only an average number of shark attacks, that the number of shark attacks and number of fatalities from shark attacks was actually less in 2001 than in 2000, and that shark attacks are infrequent compared with other risks humans expose themselves to on a daily basis. [@noauthor_summer_2002]  [@dempsey_summer_2016]
+
+
 ### Psychological Flaws
 
-Contrary to popular belief, human memory does not work like a video camera, accurately recording the events we see and hear so that we can review and inspect them later, as 63% of respondents in a demographically representative sample of 1,500 people in the United States believed in a recent telephone poll. [@simons_what_2011] Instead, human memory is flawed. People often fail to remember true things about past experiences or believe they remember false things about past experiences. Furthermore, the social experience of recalling memories and sharing them with others can influence how individuals remember past events.
+Contrary to popular belief, human memory does not "work like a video camera, accurately recording the events we see and hear so that we can review and inspect them later," as 63% of respondents in a demographically representative sample of 1,500 people in the United States believed in a recent telephone poll. [@simons_what_2011] Instead, human memory is flawed. People often fail to remember true things about past experiences or believe they remember false things about past experiences. Furthermore, the social experience of recalling memories and sharing them with others can influence how individuals remember past events.
 
 #### Flaws of Memory Recall
 
