@@ -56,23 +56,23 @@ Flaws in using anecdotes as a kind of evidence can broadly be grouped into two c
 
 #### Insufficient Sample Size
 
-Returning to the example of the seasonal flu, suppose one is interested in how effective this year's flu vaccine was in preventing individuals from contracting the flu in the United States during the 2019-2020 flu season. Perhaps there are 9 friends and family that one keeps in touch with regularly. Of these 9, 6 were vaccinated against the flu, and 1 caught the flu this year. The 1 who caught the flu was not vaccinated. What estimate should one make of how effective this year's vaccine was?
+Returning to the example of the seasonal flu, suppose one is interested in how effective vaccination was in preventing individuals from contracting the flu in the United States during the 2019-2020 flu season. Suppose there are 10 friends and family that one keeps in touch with regularly. Of these 10, 6 were vaccinated against the flu, and 1 caught the flu this year. The 1 who caught the flu was not vaccinated. What estimate should one make of how effective this year's vaccine was?
 
-One might be tempted to say that, given these observations, this year's flu vaccine was absolutely effective. None of one's friends and family that were vaccinated caught the flu this year. However, this is mistaken. Flu vaccines are effective at decreasing the risk that a vaccinated individual has in catching the flu, but they do not decrease the risk to zero. 
+A rough estimate for the probability of catching the flu when not vaccinated could be 1 / 4 = 25%. But what about the probability that someone who was vaccinated caught the flu? None of one's friends and family that were vaccinated caught the flu this year, so continuing this method of rough estimation leads to 0 / 6 = 0%. Thus, one might be tempted to say that, given these observations, this year's flu vaccine was absolutely effective. However, this is mistaken. Flu vaccines are effective at decreasing the risk that a vaccinated individual has in catching the flu, but they do not decrease the risk to zero. 
 
-The issue this example highlights is that anecdotal evidence rarely consists of enough observations to make an inference to a larger population or to make an inference about cause and effect. Given a sample size of only 9, it is more likely than not that there would _not be a single individual_ in the sample who both was vaccinated and who caught the flu.[^envelope] However, in a larger sample of, for instance, 1,000 individuals, there would be many individuals who were vaccinated and who caught the flu.[^envelope-estimate]
+The issue this example highlights is that anecdotal evidence rarely consists of enough observations to make an inference to a larger population or to make an inference about cause and effect. Given a sample size of only 10, it is more likely than not that there would _not be a single individual_ in the sample who both was vaccinated and who caught the flu.[^envelope] However, in a larger sample of, for instance, 1,000 individuals, there would be many individuals who were vaccinated and who caught the flu.[^envelope-estimate]
 
 [^envelope]: This is based on some back-of-the-envelope math. The U. S. Census Bureau estimated population of the United States to be approximately 328,000,000 people. The proportion of people in the United States who received the flu vaccine during the 2019-2020 season is estimated to be 63.8% for all age groups. Therefore, there were approximately 209,300,000 vaccinated individuals and 118,700,000 unvaccinated individuals.
 
-     The Centers for Disease Control and Prevention estimates there were 39,000,000 - 56,000,000 flu illnesses in the United States during the 2019-2020 flu season, which can be taken as a point estimate of 47,500,000. A rough estimate of the relative risk for flu vaccination of 50% is reasonable.
+     The Centers for Disease Control and Prevention estimates there were 38,000,000 flu illnesses in the United States during the 2019-2020 flu season. A rough estimate of the relative risk for flu vaccination of 50% is reasonable.
 
-     This results in estimated probabilities of 21.3% of catching the flu among the unvaccinated and 10.6% of catching the flu among the vaccinated.
+     This results in estimated probabilities of 17.0% of catching the flu among the unvaccinated and 8.5% of catching the flu among the vaccinated.
 
-     The probability a randomly selected individual both was vaccinated and caught the flu is therefore 63.8% &times; 10.6% &approx; 6.76%, and the probability a random sample of 9 individuals does not contain someone who both was vaccinated and caught the flu is (1 &minus; 6.76%)<sup>9</sup> &approx; 53.3%. 
+     The probability a randomly selected individual both was vaccinated and caught the flu is therefore 63.8% &times; 8.5% &approx; 5.42%, and the probability a random sample of 10 individuals does not contain someone who both was vaccinated and caught the flu is (1 &minus; 5.42%)<sup>10</sup> &approx; 57.3%. 
 
-[^envelope-estimate]: Using the back-of-the-envelope calculations above, there would be around 68 such individuals in a random sample of 1,000.
+[^envelope-estimate]: Using the back-of-the-envelope calculations above, there would be around 54 such individuals in a random sample of 1,000.
 
-These anecdotes do not consist of a large enough number of observations to calculate even a crude estimate of vaccine efficacy in this case. This is often the case that anecdotal evidence constitutes a sample of insufficient size.
+In this case, the anecdotal evidence of one's friends and family does not consist of a large enough number of observations to calculate even a crude estimate of vaccine efficacy. This is a plausible example of the phenomenon that anecdotal observations often do not comprise a sufficient sample size for inference, one which does not require knowledge of statistical methods. For the more mathematically minded, this phenomenon can be explored further by way of power computations at various sample sizes, which can be found in relevant statistics texts.
 
 #### Unrepresentative Samples
 
