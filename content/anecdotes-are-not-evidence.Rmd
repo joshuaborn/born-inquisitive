@@ -64,7 +64,7 @@ Thus, one might be tempted to say that, given these observations, this year's fl
 
 The issue this example highlights is that anecdotal evidence rarely consists of enough observations to make an inference to a larger population or to make an inference about cause and effect. Given a sample size of only 10, it is more likely than not that there would _not be a single individual_ in the sample who both was vaccinated and who caught the flu.[^envelope] However, in a larger sample of, for instance, 1,000 individuals, there would be many individuals who were vaccinated and who caught the flu.[^envelope-estimate]
 
-[^envelope]: This is based on some back-of-the-envelope math. The U. S. Census Bureau estimate the population of the United States to be approximately 328,000,000 people. [@noauthor_us_nodate] The proportion of people in the United States who received the flu vaccine during the 2019-2020 season is estimated to be 63.8% for all age groups. [@noauthor_flu_2020] Therefore, there were approximately 209,300,000 vaccinated individuals and 118,700,000 unvaccinated individuals in the United States during the 2019-2020 flu season.
+[^envelope]: This is based on some back-of-the-envelope math. The U. S. Census Bureau estimate the population of the United States to be approximately 328,000,000 people. [@noauthor_quickfacts_nodate] The proportion of people in the United States who received the flu vaccine during the 2019-2020 season is estimated to be 63.8% for all age groups. [@noauthor_flu_2020] Therefore, there were approximately 209,300,000 vaccinated individuals and 118,700,000 unvaccinated individuals in the United States during the 2019-2020 flu season.
 
      The Centers for Disease Control and Prevention estimates there were 38,000,000 flu illnesses in the United States during the 2019-2020 flu season. [@noauthor_estimated_2020]
      
@@ -94,7 +94,7 @@ This phenomenon is likely to occur whenever sampling is based on personal associ
 
 ##### The Fallacy of Celebrated Cases
 
-This issue is even worse for anecdotes that come not from personal associations, but by way of the news media. Much of what qualifies a story as news is that it is rare, unusual, or shocking enough to be of interest. Thus, news stories collectively form an _intentionally_ unrepresentative sample of what is happening in a larger population. This phenomenon was illustrated dramatically by the media frenzy around shark attacks in 2001. 
+This issue is even worse for anecdotes that come not from personal associations, but by way of the news media. Much of what qualifies a story as news is that it is rare, unusual, or shocking enough to be of interest. Thus, news stories collectively form an _intentionally_ unrepresentative sample of what is happening in a larger population. This phenomenon was illustrated dramatically by the media frenzy around shark attacks in 2001.
 
 While shark attacks on humans can result in a personal tragedy of injury or death for those involved that should neither be minimized nor made light of, the media representation of shark attacks in 2001 was misleading and irresponsible. A particularly graphic shark attack case was covered on major news media outlets in August of 2001. This was soon followed by story after story of sharks attacking humans. _Time_ magazine ran a cover story labeling the summer of 2001 the "Summer of the Shark."
 
