@@ -106,6 +106,8 @@ This created an impression that shark attacks were increasing at an alarming rat
 
 The so-called "Summer of the Shark" was not a sudden and pronounced increase in shark attacks, but a sudden and pronounced increase in the coverage of shark attacks. However, shark attacks are infrequent compared with other risks humans expose themselves to on a daily basis, so this spike in news coverage encouraged unsubstantiated fears. Nonetheless, the sensational coverage of shark attacks during 2001 did not end until the September 11, 2001 terrorist attacks took over the news cycle. Since then, the so-called "Summer of the Shark" has become an object lesson in bad journalism. [@dempsey_summer_2016]
 
+[...]
+
 #### Summary
 
 Using anecdotes as evidence is flawed in two ways pertaining to statistical inference: anecdotes form sample sizes that are often too small to make precise estimates and are prone to wild fluctuations, and anecdotes form unrepresentative samples that throw off any estimation based on them due to bias. For these reasons, anecdotes are not useful at all for conclusions about a larger population and for conclusions about cause and effect. 
@@ -120,7 +122,25 @@ Contrary to popular belief, human memory does not "work like a video camera, acc
 
 The psychological literature around the topic of memory is quite large, and a full review of what has been learned about the fallibility of memory recall is beyond the scope of this article. Instead, this article summarizes a few seminal experiments in the field in order to establish the core point that memory recall, according to the empirical evidence, is quite fallible.
 
-[...]
+The work of of psychologist Elizabeth Loftus is a particularly conspicuous part of the body of research on memory fallibility, in no small part because much of this work has specifically focused on issue with eyewitness testimony and because of her engagement with the legal system, testifying as an expert witness in numerous high profile cases.
+
+An early experiment of hers examined 45 students at the University of Washington who were shown the same video of a traffic accident. [@loftus_reconstruction_1974] The test subjects were then asked to estimate how fast the cars were going at the time of the accident, but the question was phrased using different words such as "smashed," "collided," "bumped," "hit," or "contacted." The mean estimated speed, averaged over different test subjects, for those asked using the word "smashed" was 40.8 miles per hour, whereas the mean estimated speed was only 31.8 miles per hour for those asked using the word "contacted."
+
+More remarkably, in a follow-up, similar experiment with 150 student participants, the word choice of "hit" versus "smashed" appeared to affect whether a detail was falsely remembered. The 150 test subjects were shown the same video of a multiple car traffic accident. After watching the video, 50 test subjects were given a questionnaire that included the question "About how fast were the cars going when they smashed into each other?" Another 50 test subjects were given a similar questionnaire that asked how fast the cars were going when they "hit" each other, and a control group of another 50 test subjects were not asked about the speed of the cars.
+
+All the test subjects were given a second questionnaire one week later in which they were asked whether they recalled seeing broken glass. There was no broken glass in the original video. Among those who were asked the "smashed" question, 16 of the 50 (32%) replied "yes" to seeing broken glass, whereas only 7 out of 50 (14%) of those asked the "hit" question and 6 out of 50 (12%) of the control group reported seeing broken glass. This effect of an increased probability of incorrectly remembering smashed glass was mediated in part by the greater speed estimates of the "smashed" group, but there was still an effect that averaged to 12 percentage points independent of speed estimate.
+
+<!--
+ Loftus and Palmer (1974)
+ Experiment I: Mean speed estimate of "smashed" versus others
+ Experiment II: "Did you see any broken glass?" when there was none
+ 
+ Loftus (1975)
+ Experiment 1: Stop sign exists; "Did you see a stop sign?"
+ Experiment 2: Number of students in Diary of a Student Revolution
+ Experiment 3: No barn; "How fast was the white sports car going when it passed the barn while traveling along the country road?"; "Did you see a barn?"
+ Experiment 4: False presupposition versus direct questions
+-->
 
 #### Flaws of Serial Reproduction
 
@@ -130,7 +150,7 @@ In this game, one child is told a story. This child is then tasked with repeatin
 
 Frederic Charles Bartlett (1886-1969), first professor of experimental psychology at the University of Cambridge, named this phenomenon "serial reproduction." This is in contrast to what he called "repeated reproduction" in which the same individual recalls a memory again and again. Several experiments throughout the twentieth century confirmed the moral of the telephone game, i.e., that serial reproduction is error prone and distorts information. More recently, a study quantified how much more error prone serial reproduction can be compared to repeated reproduction. [@roediger_bartlett_2014]
 
-In this experiment, 60 undergraduate student volunteers were presented with DRM word lists by way of computers, asked to do multiplication problems for 30 seconds, then prompted to recall the DRM word list.[^social] For the repeated reproduction portion of the experiment, a test subject was simply asked to recall the original DRM word list 4 times in this manner. For the serial reproduction portion of the experiment, the list recalled by one test subject was given to another test subject. These serially reproduced lists were passed along 4 different test subjects, with the first given the original DRM list and the next 3 given the previous test subject's recalled list.
+In this experiment, 60 undergraduate students at Washington University were presented with DRM word lists by way of computers, asked to do multiplication problems for 30 seconds, then prompted to recall the DRM word list.[^social] For the repeated reproduction portion of the experiment, a test subject was simply asked to recall the original DRM word list 4 times in this manner. For the serial reproduction portion of the experiment, the list recalled by one test subject was given to another test subject. These serially reproduced lists were passed along 4 different test subjects, with the first given the original DRM list and the next 3 given the previous test subject's recalled list.
 
 [^social]: Serial reproduction is just one aspect of the social phenomena of memory. By using a computer program, the experiment by @roediger_bartlett_2014 abstracted away many of the social influences on memory. These social influences have complex effects, with some of them aiding in memory recall and some of them causing more errors in memory. [@hirst_remembering_2012]
 
