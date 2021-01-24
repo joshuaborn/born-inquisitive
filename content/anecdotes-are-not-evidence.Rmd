@@ -194,7 +194,7 @@ This highlights a danger in the retelling of anecdotes. Specifically, any errors
 
 #### Implications
 
-The implications of these psychological flaws for anecdotal evidence are straightforward: human memory is _not_ like a video camera, accurately recording events. Because memory is demonstrably fallible, no one's anecdote told from memory of any given experience can be blindly trusted. Instead, all such anecdotes ought to be scrutinized. Furthermore, because of the compounding effects of serial reproduction, anecdotes told secondhand ought to be given even more scrutiny. 
+The implications of these psychological flaws for anecdotal evidence are straightforward: human memory is _not_ like a video camera, accurately recording events. Because memory is demonstrably fallible, no anecdote of any given experience told from memory can be blindly trusted. Instead, all such anecdotes ought to be scrutinized. Furthermore, because of the compounding effects of serial reproduction, anecdotes told secondhand ought to be given even more scrutiny. 
 
 However, the evidence does not imply that all anecdotes must be thrown out unilaterally, either. While 29 out of 150 test subjects reported seeing broken glass when there was none, 121 did not. [@loftus_reconstruction_1974] While 55% of critical unpresented words on DRM lists were falsely recalled, 45% were not. [@roediger_creating_1995] Thus, in order to separate truth from falsity in encounters with anecdotes, one can neither blindly accept an anecdote without scrutiny nor arbitrarily reject an anecdote without scrutiny.
 
@@ -207,7 +207,27 @@ Therefore, the evidence on psychological flaws is such that all anecdotes ought 
 
 ## Uses of Anecdotes
 
+Earlier it was seen that because anecdotes constitute samples of insufficient size or unrepresentative samples or both, anecdotes are not useful for drawing conclusions about larger populations or about cause and effect. However, this does not preclude other, valid uses of anecdotes.
+
 ### Investigation of Specific, Singular Incident
+
+Sometimes, one is interested in the details of a single incident. When investigating a specific incident, most or all of the evidence that is available tends to be anecdotal. Thus, while anecdotes are useless for broader questions about a larger population or for questions about cause and effect, they are often the main sort of evidence for questions about a specific, singular incident.
+
+For instance, if one were interested in how frequently theft occurs in the country in which one lives, it would be foolish to investigate this question by asking one's neighbors if any of their possessions had been stolen. Such anecdotal evidence would provide no insight to this question about a larger population. However, if one has discovered that one's bicycle has gone missing from the Springfield Apartments parking garage on the afternoon of Tuesday, January 19, 2021, then it would be prudent to ask Springfield Apartments residents if they saw any suspicious activity that afternoon. In this latter case, anecdotal evidence is very relevant for questions about a specific, singular incident.
+
+While anecdotal evidence is, out of necessity, relevant for investigation of a specific incident, anecdotes still come with all the psychological flaws articulated above. Therefore, it is important that the anecdotes be scrutinized. An example of a human activity that grapples with these issues is the court system.
+
+Many courts do not allow _hearsay_ to be admitted as evidence. For instance, the United States Courts (and the courts of many of the several states of the United States) use the Federal Rules of Evidence, which specifically identify hearsay as inadmissible in court. According to it, "hearsay" is defined as a statement made not while testifying at the current trial and offered into evidence to prove the truth of the matter asserted in the statement. [@noauthor_article_2021] 
+
+Hearsay is anecdotal. However, other forms of anecdotal evidence, such as witness testimony, are admissible according to the Federal Rules of Evidence. [@noauthor_article_2021-1] What sets hearsay apart is that hearsay constitutes anecdotes that would be entered into evidence _without any scrutiny._ Granted, how effective the century-old traditions of the courts actually are at scrutinizing witnesses' anecdotes is a question in and of itself.[^scrutiny] Regardless, the court system at least recognizes that anecdotes require some kind of scrutiny.
+
+[^scrutiny]: In the English speaking world, these include such things as having the witness swear an oath to testify truthfully, making the witness available for cross-examination, and requiring the physical presence of the witness so that the witness' demeanor can be judged.
+
+Hearsay is not just anecdotal, but usually comprises anecdotes told secondhand.[^secondhand] Thus, not only does hearsay constitute a kind of anecdote that avoids scrutiny, but it is a form of anecdote told via serial reproduction, which was seen above to be even more error prone than direct memory recall and so deserving of even more scrutiny. 
+
+[^secondhand]: If one were testifying about one's statement made outside of court, this would technically be hearsay. In this case, however, one could just make the statement again as part of one's testimony.
+
+Courts are by no means perfect arbiters of truth and falsity, but the procedures established in the courts at least illustrate the basic principles of handling anecdotal evidence. In questions about specific, singular incidents, anecdotal evidence is relevant, so witness testimony is allowed. However, anecdotal evidence &ndash; especially when delivered via serial reproduction &ndash; must be scrutinized, so anecdotes that avoid scrutiny such as hearsay are inadmissable. 
 
 ### Counterexample to Universal Assertion
 
