@@ -231,6 +231,12 @@ Courts are by no means perfect arbiters of truth and falsity, but the procedures
 
 ### Counterexample to Universal Assertion
 
+Another, more trivial example of a valid use of anecdotal evidence is in providing a counterexample to a universal assertion. Universal assertions are statements that claim _all_ of some population have some property or _none_ of some population have a property. This is a trivial usage of anecdotal evidence because universal assertions are easily disproven. All that is required is that a _single individual_ in the population contradict the universal assertion for the assertion to be false.
+
+For example, if it is claimed that all swans are white, witnessing a single non-white swan is sufficient to demonstrate that the universal assertion "all swans are white" is false. Stories of seeing a black swan thus form a counterexample to this universal assertion, even though they constitute anecdotal evidence.
+
+Like in investigation of a specific, singular incident, even though anecdotal evidence may be relevant in finding counterexamples to universal assertions, they are still subject to all the psychological flaws of memory, flaws which can be exacerbated by serial reproduction. Thus, the anecdotes ought to be scrutinized, and it is better to get anecdotes directly from the witnesses themselves rather than secondhand. Fortunately, when looking for counterexamples to universal assertions, it is typically easy to find corroborating physical evidence. For instance, as a counterexample to the assertion "all swans are white," a picture of a black swan goes a long way.
+
 ### Precipitation of Further Investigation
 
 While anecdotes themselves are not useful for drawing _conclusions_ regarding a larger population or regarding cause and effect, they can be useful in _prompting_ a search for better evidence.
