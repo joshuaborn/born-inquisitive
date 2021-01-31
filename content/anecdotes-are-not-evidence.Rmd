@@ -247,9 +247,14 @@ However, it would be equally foolish not to investigate the issue further before
 
 This illustrates a use of anecdotes as a precipitation of further investigation. While the traffic example did not have broader implications for other individuals, anecdotal evidence precipitating further investigation is an important phenomenon for those in positions of authority to set policy, such as executives in a company or administrators of a school.
 
-For instance, if stores began circulating around a company or school about various assaults or other criminal behavior occurring, it would be glib and foolish to dismiss these stories quoting "anecdotes are not evidence" and do nothing more. It would also be foolish to attempt to set policy based on the details of whatever anecdote happened to come down the chain of serial reproduction to one's attention. Rather, the prudent thing to do would be to investigate matters more rigorously, setting policy based on information about the whole population of individuals affected by the policy.
+For instance, if stores began circulating around a company or school about various assaults or other criminal behavior occurring, it would be glib and foolish to dismiss these stories quoting "anecdotes are not evidence" and do nothing more. However, it would also be foolish to attempt to set policy based on the details of whatever anecdote happened to come down the chain of serial reproduction to one's attention. Rather, the prudent thing to do would be to investigate matters more rigorously, setting policy based on information about the whole population of individuals affected by the policy.
 
 ### Illustrative Example
+
+Finally, it is not strictly fallacious to include an anecdotal story with the presentation of information gleaned from more rigorous evidence. For instance, after one has done an empirical study of bicycle thefts in a certain jurisdiction, one might include a story of a specific bicycle theft in one's report. This can have the effect of making more of an impression upon those who remember stories better than plots, tables, and talk about distributions.
+
+As long as the conclusions are drawn from the empirical evidence and not from the example anecdote, this practice is not in and of itself fallacious. However, there is a danger inherent in this practice. Any anecdotes will at best be only partially representative of trends in the larger population, and these illustrative examples can mislead the less quantitatively inclined if the stories are remembered _instead_ of the conclusions of the investigation. Therefore, they ought to be used with caution.
+
 
 ## Conclusion
 
