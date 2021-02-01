@@ -26,13 +26,23 @@ However, the maxim "anecdotes are not evidence," like all slogans, is a short, c
 
 One such false implication that stems from an extremely literal interpretation of the maxim "anecdotes are not evidence" is that _nothing at all_ can be learned from anecdotes.
 
-Such a literal interpretation can be used to undermine the maxim itself. For instance, one could note a case in which a serial sex offender was caught due to the testimony of victims, which is necessarily anecdotal, and conclude that those who subscribe to "anecdotes are not evidence" would throw out this testimony, setting the sex offender free. This is such a morally repugnant proposition for so many that it could be used as a way to discredit those who are fond of the maxim "anecdotes are not evidence."
+Such a literal interpretation can be used to undermine the maxim itself. For instance, one could note a case in which a serial sex offender was caught due to the testimony of victims, which is necessarily anecdotal, and conclude that those who subscribe to "anecdotes are not evidence" would throw out this testimony, setting the sex offender free. This is such a [morally](/moral-skepticism.html) repugnant proposition for so many that it could be used as a way to discredit those who are fond of the maxim "anecdotes are not evidence."
 
 This literal interpretation can also be used as a foolish obstacle to understanding. For instance, if one hears stories from friends that a certain road is congested with traffic during rush hour, one might dismiss these stories, citing "anecdotes are not evidence." One would have no one to blame but oneself when one finds oneself stuck in traffic on the very same road, waiting for the rush hour congestion to clear.
 
+![
+_Congested traffic during rush hour, which can sometimes be avoided by way of anecdotes._<br/>
+["Rush Hour"](https://www.flickr.com/photos/13907834@N00/4476789745)
+by
+[MSVG](https://www.flickr.com/photos/msvg/)
+is licensed under
+[CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+and is not modified.
+](/images/rush-hour.jpg)
+
 Surely, because of these implications, this overly literal interpretation does not capture what the maxim "anecdotes are not evidence" is meant to convey. This is a flaw not just with this particular maxim, but with slogans in general, which threaten to become [shibboleths](political-rhetoric-as-shibboleths.html) when used incognizantly in this way.
 
-The purpose of this article is to articulate the issues in using anecdotes as evidence in a more substantial way than can be done with a pithy maxim. It begins by discussing the sort of inference for which anecdotes are entirely useless, and this is balanced with later discussion of valid uses of anecdotes.
+The purpose of this article is to articulate the issues in using anecdotes as evidence in a more substantial way than can be done with a pithy maxim. It begins by discussing the sort of inference for which anecdotes are entirely useless; this is balanced with later discussion of valid uses of anecdotes.
 
 
 ## Misuses of Anecdotes
@@ -41,11 +51,21 @@ Anecdotal evidence is useless for two kinds of inference: inference about a larg
 
 ### Inference about a Larger Population
  
-While some number of individuals that can be directly observed might sometimes be of interest, interesting questions often pertain to a larger population than those that are directly observed. For instance, an epidemiologist is usually professionally interested in how many people contracted the seasonal flu in a given geographic area, not how many of the epidemiologist's friends contracted the seasonal flu. This is a question about a larger population, i.e., all the people in the given geographic area, that is based on a smaller, representative sample, e.g., surveys, hospital records, etc. Anecdotes shed no light on these kinds of questions.
+While some number of individuals that can be directly observed might sometimes be of interest, interesting questions often pertain to a larger population than those that are directly observed. For instance, an epidemiologist is usually professionally interested in how many people contracted the seasonal flu in a given geographic area, not how many of the epidemiologist's friends contracted the seasonal flu. This is a question about a larger population, i.e., all of the people in the given geographic area, that is based on a smaller, representative sample, e.g., surveys, hospital records, etc. Anecdotes shed no light on these kinds of questions.
 
 ### Inference about Cause and Effect
 
 Practical questions often pertain to whether or not something causes an effect and the size of such an effect. For instance, in clinical trials, a potential therapy is given to volunteers in order to determine whether or not the therapy causes an improvement in a disease or an increase in survival time. It is not enough to know how many people receiving the treatment improve or to what extent they improve. Indeed, there are many diseases from which people will often recover of their own accord. Rather, the question that is at issue in a clinical trial is whether or not the potential therapy _caused_ any measured improvement and what the _size_ of this _effect_ was. Again, anecdotes are no help in answering this kind of question.
+
+![
+_A person looking through a microscope while doing work as part of a clinical trial, for which anecdotal evidence is not useful._<br/>
+["GSK PULSE staff working at the GSK-sponsored Kombewa malaria clinical trial site in western Kenya"](https://www.flickr.com/photos/60432699@N08/6862528879)
+by
+[GlaxoSmithKline](https://www.flickr.com/photos/glaxosmithkline/)
+is licensed under
+[CC BY-NC 2.0](https://creativecommons.org/licenses/by-nc/2.0/)
+and is not modified.
+](/images/clinical-trial.jpg)
 
 
 ## Flaws of Anecdotes as Evidence
@@ -78,17 +98,17 @@ The issue this example highlights is that anecdotal evidence rarely consists of 
 
 In this case, the anecdotal evidence of one's friends and family does not consist of a large enough number of observations to calculate even a crude estimate of vaccine efficacy.[^power]
 
-Furthermore, note that any estimate of the probability of catching the flu based on these anecdotes would be prone to wild fluctuations. If another unvaccinated friend happened to catch the flu during the 2019-2020 season, the estimated probability of unvaccinated individuals catching the flu would jump from 25% to 2 / 4 = 50%. This small change in the sample would result in a large change in the estimate about the larger population, which is an indication that the inference is susceptible to being thrown off due to chance.
+Furthermore, note that any estimate of the probability of catching the flu based on these anecdotes would be prone to wild fluctuations. If another unvaccinated friend happened to catch the flu during the 2019-2020 season, the estimated probability of unvaccinated individuals catching the flu would jump from 25% to 2 / 4 = 50%. This small change in the sample would result in a large change in the estimate about the larger population, which is an indication that the inference is susceptible to being inaccurate due to chance.
 
 [^power]: This is a plausible example of the phenomenon that anecdotal observations often do not comprise a sufficient sample size for inference, one which does not require knowledge of statistical methods. For the more mathematically minded, this phenomenon can be explored further by way of power computations at various sample sizes, which can be found in relevant statistics texts.
 
 #### Unrepresentative Samples
 
-Perhaps there is an individual so popular that polling the individual's friends and family results in a large enough number of observations. Even if this were the case, another issue remains that prevents such an anecdotal sample from being useful to make an inference about a larger population or about cause and effect. The sample created from such polling is not _representative_ of a larger population. Instead, the sample is heavily biased towards the idiosyncracies of the individual in question.
+Perhaps there is an individual so popular that polling the individual's friends and family results in a large enough number of observations for inference about a larger population or about cause and effect. Even if this were the case, another issue remains that prevents such an anecdotal sample from being useful. The sample created from such polling is not _representative_ of a larger population. Instead, the sample is heavily biased towards the idiosyncracies of the individual in question.
 
 Returning to the example of flu vaccine efficacy in the United States during the 2019-2020 season, suppose that a particularly extroverted individual keeps in regular contact with not just 10, but 200 friends and family. However, suppose the extroverted individual caught the flu during the 2019-2020 season.
 
-In this case, the sample might be large enough for estimation of vaccine efficacy, but this sample will be biased because the extroverted individual was in contact with the 200 other people in the sample and so exposed them to the flu virus. Therefore, the prevalence of flu illness in this sample is expected to be higher than in the general population, which includes individuals who had no direct exposure to the flu virus. Because of this, any estimations regarding the _size_ of the protective effect _caused_ by the vaccine will be thrown off.
+In this case, the sample might be large enough for estimation of vaccine efficacy, but this sample will be biased because the extroverted individual was in contact with the 200 other people in the sample and so exposed them to the flu virus. Therefore, the prevalence of flu illness in this sample is expected to be higher than in the general population, which includes individuals who had no direct exposure to the flu virus. Because of this, any estimations regarding the _size_ of the protective effect _caused_ by the vaccine will be incorrect.
 
 This phenomenon is likely to occur whenever sampling is based on personal associations. Another example comes from attempts to infer the prevalence of political affiliations based on a particular individual's social network.
 
@@ -101,14 +121,14 @@ This issue is even worse for anecdotes that come not from personal associations,
 While shark attacks on humans can result in a personal tragedy of injury or death for those involved that should neither be minimized nor made light of, the media representation of shark attacks in 2001 was misleading and irresponsible. A particularly graphic shark attack case was covered on major news media outlets in August of 2001. This was soon followed by story after story of sharks attacking humans. _Time_ magazine ran a cover story labeling the summer of 2001 the "Summer of the Shark."
 
 ![
-_The July 30, 2001 cover of_ Time _magazine, which labeled the summer of 2001 the "Summer of the Shark."_
+_The July 30, 2001 cover of_ Time _magazine, which labeled the summer of 2001 the "Summer of the Shark," labeling an incident which has since become a case study in bad journalism._
 ](/images/summer-of-the-shark.jpg)
 
 This created an impression that shark attacks were increasing at an alarming rate during 2001 and that shark attacks were a particularly prevalent risk. However, it was soon discovered that 2001 had only an average number of shark attacks; indeed, the number of shark attacks and number of fatalities from shark attacks was actually less in 2001 than in 2000. [@noauthor_summer_2002]  
 
-The so-called "Summer of the Shark" was not a sudden and pronounced increase in shark attacks, but a sudden and pronounced increase in the coverage of shark attacks. However, shark attacks are infrequent compared with other risks humans expose themselves to on a daily basis, so this spike in news coverage encouraged unsubstantiated fears. Nonetheless, the sensational coverage of shark attacks during 2001 did not end until the September 11, 2001 terrorist attacks took over the news cycle. Since then, the so-called "Summer of the Shark" has become an object lesson in bad journalism. [@dempsey_summer_2016]
+The so-called "Summer of the Shark" was not a sudden and pronounced increase in shark attacks, but a sudden and pronounced increase in news coverage of shark attacks. However, shark attacks are infrequent compared with other risks humans expose themselves to on a daily basis, so this spike in news coverage encouraged unsubstantiated fears. Nonetheless, the sensational coverage of shark attacks during 2001 did not end until the September 11, 2001 terrorist attacks took over the news cycle. Since then, the so-called "Summer of the Shark" has become an object lesson in bad journalism. [@dempsey_summer_2016]
 
-This alludes to a broader fallacy than just bad journalism. Whenever one is attempting to understand a large population &ndash; for instance, in order to make judgements about a society or come up public policy ideas &ndash; basing such understanding exclusively on stories that get the most attention is foolish. Such stories form a highly anecdotal, unrepresentative sample that are not informative about the population at large. Indeed, many such stories receive attention precisely because they are so extreme. This can be called the "Fallacy of Celebrated Cases."
+This alludes to a broader fallacy than just bad journalism. Whenever one is attempting to understand a large population &ndash; for instance, in order to make judgements about a society or come up public policy ideas &ndash; basing such understanding exclusively on stories that get the most attention is foolish. Such stories form a highly anecdotal, unrepresentative sample that are not informative about the population at large. Indeed, many such stories receive attention precisely because they are so extreme. This can be labeled the "Fallacy of Celebrated Cases."
 
 #### Summary
 
@@ -120,15 +140,19 @@ In addition to these concerns, there are other flaws in anecdotal evidence perta
 
 Contrary to popular belief, human memory does not "work like a video camera, accurately recording the events we see and hear so that we can review and inspect them later," as 63% of respondents in a demographically representative sample of 1,500 people in the United States believed in a recent telephone poll. [@simons_what_2011] Instead, human memory is flawed. People often fail to remember true things about past experiences or believe they remember false things about past experiences. Furthermore, the social experience of retelling memories can influence how past events are remembered.
 
-#### Flaws of Memory Recall
+![
+_A video camera, which 63% of respondents in a recent poll incorrectly believed represents how memory works._
+](/images/video-camera.jpg)
+
+#### Flaws of Memory
 
 The psychological literature around the topic of memory is quite large, and a full review of what has been learned about the fallibility of memory recall is beyond the scope of this article. Instead, this article summarizes a few seminal experiments in the field in order to establish the core point that memory recall, according to the empirical evidence, is quite fallible.
 
 ##### Misinformation Effect
 
-The work of of psychologist Elizabeth F. Loftus is a particularly conspicuous part of the body of research on memory fallibility as it relates to anecdotal evidence, in part because much of this work has specifically focused on issues with eyewitness testimony and because of her engagement with the legal system, testifying as an expert witness in numerous high profile cases.
+The work of psychologist Elizabeth F. Loftus is a particularly conspicuous part of the body of research on memory fallibility as it relates to anecdotal evidence, in part because much of this work has specifically focused on issues with witness testimony and because of her engagement with the legal system, testifying as an expert witness in numerous high profile cases.
 
-An early experiment of hers examined 45 students at the University of Washington who were shown the same video of a traffic accident. [@loftus_reconstruction_1974] The test subjecte were then asked to estimate how fast the cars were going at the time of the accident, but the question was phrased using different words such as "smashed," "collided," "bumped," "hit," or "contacted." The mean estimated speed, averaged over different test subjects, for those asked with the word "smashed" was 40.8 miles per hour, whereas the mean estimated speed was only 31.8 miles per hour for those asked with the word "contacted."
+An early experiment of hers examined 45 students at the University of Washington who were shown the same video of a traffic accident. [@loftus_reconstruction_1974] The test subjects were then asked to estimate how fast the cars were going at the time of the accident, but the question was phrased using different words such as "smashed," "collided," "bumped," "hit," or "contacted." The mean estimated speed, averaged over different test subjects, for those asked with the word "smashed" was 40.8 miles per hour, whereas the mean estimated speed was only 31.8 miles per hour for those asked with the word "contacted."
 
 More remarkably, in a follow-up, similar experiment with 150 student participants, the word choice of "smashed" versus "hit" appeared to affect whether a detail was falsely remembered. The 150 test subjects were shown a video of a multiple car traffic accident. After watching the video, 50 test subjects were given a questionnaire that included the question "About how fast were the cars going when they smashed into each other?" Another 50 test subjects were given a similar questionnaire that asked how fast the cars were going when they "hit" each other, and a control group of another 50 test subjects were not asked about the speed of the cars.
 
@@ -136,9 +160,17 @@ All the test subjects were given a second questionnaire 1 week later in which th
 
 This effect of an increased probability of incorrectly remembering broken glass was mediated in part by the greater speed estimates of the "smashed" group, but there was still an effect that averaged to 12 percentage points independent of speed estimate.
 
+![
+_Broken glass, which was a falsely remembered detail measured in an experiment by Loftus and Palmer [-@loftus_reconstruction_1974]._
+](/images/broken-glass.jpg)
+
 This phenomenon in which subjects' subsequent recall could be modified was further investigated with several experiments that focused on the effect of leading questions. [@loftus_leading_1975] In one experiment, 150 students at the University of Washington were shown another video of an automobile accident. The test subjects were given a questionnaire immediately following watching the video, in which half were given the question "How fast was the white sports car going when it passed the barn while traveling down the country road?" while half were given a similar question that did not mention a barn. There was, in fact, no barn in the video.
 
 A week later, the test subjects were given another questionnaire that included the question "Did you see a barn?" Of the ones who had a variant of the earlier questionnaire that mentioned a barn, 13 out of 75 (17.3%) replied that they had seen a barn, whereas only 2 out of 75 (2.7%) whose earlier questionnaire did not mention a barn reported having seen a barn on the later questionnaire.
+
+![
+_A barn next to a road, which was a falsely remembered detail measured in an experiment by Loftus [-@loftus_leading_1975]._
+](/images/barn.jpg)
 
 It is one thing to recall false details such as broken glass or a barn that was not originally there, but this research would go on to show that false memories of an entire experience that did not happen could be inculcated in test subjects.
 
@@ -152,19 +184,19 @@ The mean clarity rating was higher for the true events (6.3) than for the false 
 
 Even after being told that 1 of the 4 events was fabricated, 5 out of the 24 (21%) identified a true event as the story they believed was invented instead of the actual false event.
 
-The results of this and other similar experiments were timely in the 1990s because of criminal prosecutions based on individuals allegedly recalling repressed memories of childhood abuse, memories that were only discovered after extensive therapy sessions. Such experments showed how such prosecutions could be based on false memories inculcated by therapists inadvertently using similar methods as in the experiments. [@loftus_reality_1993]
+The results of this and other similar experiments were timely in the 1990s because of criminal prosecutions based on individuals allegedly recalling repressed memories of childhood abuse, memories that were only discovered after extensive therapy sessions. Such experiments showed how such prosecutions could be based on false memories inculcated by therapists inadvertently using similar methods as in the experiments. [@loftus_reality_1993]
 
 ##### Word Lists
 
-While the research of Elizabeth Loftus and others had direct implications for the courtroom, this line of research focused on memories affected by misinformation encountered _after_ the original experience. [@loftus_planting_2005] Other lines of research explored false recall of memories not tainted in this way.
+While the research of Loftus and others had direct implications for the courtroom, this line of research focused on memories affected by misinformation encountered _after_ the original experience. [@loftus_planting_2005] Other lines of research explored false recall of memories not tainted in this way.
 
 One tool useful for this purpose are Deese-Roediger-McDermott (DRM) lists. These lists consist of some number of words that are all associated with a critical word that does not appear on the list. For instance, a DRM list might consist of the words "thread," "pin," "eye," "sewing," "sharp," "point," "pricked," "thimble," "haystack," "pain," "hurt," and "injection." The critical unpresented word for this list is "needle."
 
-In one experiment, DRM lists were prepared with 15 words each, and 14 lists were used in recall and recognition exercises with 30 undergraduate students at Rice University.[^extra-lists] [@roediger_creating_1995] For every list, each word was spoken out loud from a tape recording at a rate of about 1 word every 1.5 seconds. After each list was read aloud, for 2 minutes, half the test subjects did a free recall exercise writing down as many words as they could remember, and half the test subjects did math problems as a filler exercise. At the end of the exercises, each test subject had done the free recall exercise for 7 lists and had listened to, but not done a free recall exercise for 7 lists.
+In one experiment, DRM lists were prepared with 15 words each, and 14 lists were used in recall and recognition exercises with 30 undergraduate students at Rice University.[^extra-lists] [@roediger_creating_1995] For every list, each word was spoken out loud from a tape recording at a rate of about 1 word every 1.5 seconds. After each list was read aloud, half the test subjects did a free recall exercise writing down as many words as they could remember, and half the test subjects did math problems as a filler exercise. At the end of the exercises, each test subject had done the free recall exercise for 7 lists and had listened to but not done a free recall exercise for 7 lists.
 
 [^extra-lists]: Actually, 16 DRM lists were presented, but 2 were dropped from the study.
 
-Finally, the test subjects were given a recognition test that consisted of a written list of 96 words &ndash; 48 of which had been presented to them during the experiment &ndash; and asked to identify which words they had encountered and which they had not. The 48 unpresented words on the recognition test included the 14 critical unpresented words. For words that the test subjects identified as having been presented, they were additionally asked about their phenomenological experience: words were labeled "remembered" if the test subject could mentally relive the experience of encountering the word, and words were labeled "known" if not.
+Finally, the test subjects were given a recognition test that consisted of a written list of 96 words &ndash; 48 of which had been presented to them during the experiment &ndash; and asked to identify which words they had encountered and which they had not. The 48 unpresented words on the recognition test included the 14 critical unpresented words. For words that the test subjects identified as presented, they were additionally asked about their phenomenological experience: words were labeled "remembered" if the test subject could mentally relive the experience of encountering the word, and words were labeled "known" if not.
 
 During the free recall, test subjects recalled 62% of the words presented to them. They mistakenly recalled the critical unpresented words 55% of the time. This is even more remarkable because the rate at which presented words were recalled varied depending on their position on the lists, and presented words in positions 4 through 11 were recalled 47% of the time, a rate even lower than the critical unpresented words.
 
@@ -175,6 +207,11 @@ This experiment demonstrated that even without misinformation contaminating memo
 #### Flaws of Serial Reproduction
 
 Anecdotes are not just recalled from memory and told to one other person. Sometimes the person told an anecdote retells it to yet another person. Indeed, by the time one encounters it, an anecdote may have been retold any number of times. This is a situation not unlike a children's game called "telephone" in the United States and by many other names in other parts of the world.
+
+![
+_A group of children sitting on a row playing the "telephone" game._<br/>
+Pressmaster/[Shutterstock.com](https://www.shutterstock.com/image-photo/primary-school-kids-whispering-words-each-1075413188)
+](/images/telephone-game.jpg)
 
 In this game, one child is told a story. This child is then tasked with repeating it exclusively to a second child, often by whispering. The second child repeats it only to a third child, and so on, until a final child is told the story. At the end, the story that the final child tells is compared with the original story. The amusement of the game comes in discovering how the final version of the story has been mangled and altered from its original version.
 
@@ -188,7 +225,7 @@ The mean proportion of words correctly recalled from the original DRM word lists
 
 What is interesting about the worse performance of serial reproduction in this experiment is that at each step in the serial reproduction, test subjects tended to perform _better_ than in the previous step, inasmuch as they were recalling a greater proportion of the lists that they had been presented. This should not be surprising as each step in serial reproduction tended to start with a shorter list than the previous, and it is generally easier to remember less things.
 
-What caused the overall worse performance of serial reproduction over repeated reproduction in this experiment was that each step in serial reproduction carried over the mistakes from the previous steps. Once a word that really did appear on the original DRM world list was forgotten, it would not appear on the input list for subsequent serial steps and thus be lost for the rest of the process. Once a critical unpresented word was falsely recalled, it would be put on the input list for the subsequent serial step and so be indistinguishable from words that actually appeared on the original list.
+What caused the overall worse performance of serial reproduction compared with repeated reproduction in this experiment was that each step in serial reproduction carried over the mistakes from the previous steps. Once a word that really did appear on the original DRM world list was forgotten, it would not appear on the input list for subsequent serial steps and thus be lost for the rest of the process. Once a critical unpresented word was falsely recalled, it would be put on the input list for the subsequent serial step and so be indistinguishable from words that actually appeared on the original DRM list.
 
 This highlights a danger in the retelling of anecdotes. Specifically, any errors of recall are compounded as anecdotes are told and retold along a sequence of individuals. 
 
@@ -196,13 +233,13 @@ This highlights a danger in the retelling of anecdotes. Specifically, any errors
 
 The implications of these psychological flaws for anecdotal evidence are straightforward: human memory is _not_ like a video camera, accurately recording events. Because memory is demonstrably fallible, no anecdote of any given experience told from memory can be blindly trusted. Instead, all such anecdotes ought to be scrutinized. Furthermore, because of the compounding effects of serial reproduction, anecdotes told secondhand ought to be given even more scrutiny. 
 
-However, the evidence does not imply that all anecdotes must be thrown out unilaterally, either. While 29 out of 150 test subjects reported seeing broken glass when there was none, 121 did not. [@loftus_reconstruction_1974] While 55% of critical unpresented words on DRM lists were falsely recalled, 45% were not. [@roediger_creating_1995] Thus, in order to separate truth from falsity in encounters with anecdotes, one can neither blindly accept an anecdote without scrutiny nor arbitrarily reject an anecdote without scrutiny.
+However, the evidence does not imply that all anecdotes must be thrown out completely, either. While 29 out of 150 test subjects reported seeing broken glass when there was none, 121 did not. [@loftus_reconstruction_1974] While 55% of critical unpresented words on DRM lists were falsely recalled, 45% were not. [@roediger_creating_1995] Thus, in order to separate truth from falsity in encounters with anecdotes, one can neither accept an anecdote without scrutiny nor arbitrarily reject an anecdote without scrutiny.
 
 Furthermore, such scrutiny does not imply that the person telling the anecdote is "crazy," "hysterical," or mentally ill. The test subjects in most of these memory experiments were taken from populations of healthy adults who functioned at a high enough level at least to be attending an institution of higher education. Indeed, even if turns out a given person's anecdote is false, that does not imply the individual is "crazy." Rather, it only implies that the person has a normally functioning human brain that, like all other human brains, is imperfect in its memory function.
 
 Such scrutiny also does not necessarily imply suspicion of deception or malicious intent in the person telling the anecdote. The test subjects in these memory experiments had no incentive to lie. Intentional deception is just one possible reason for falsity in anecdotes. The manipulations done in these experiments to induce effects of increased false recall illustrate other reasons, such as the misinformation effect or the effect of leveraging preexisting mental associations.
 
-Therefore, the evidence on psychological flaws is such that all anecdotes ought to be scrutinized and that enlightened individuals would not take offense at such scrutiny. Indeed, if one were truly interested in the truth being known and were aware of the evidence on memory fallibility, one would welcome such scrutiny.
+Therefore, the evidence on psychological flaws is such that all anecdotes ought to be scrutinized and that enlightened individuals ought not to take offense at such scrutiny. Indeed, if one were truly interested in the truth being known and were aware of the evidence on memory fallibility, one would welcome such scrutiny.
 
 
 ## Uses of Anecdotes
@@ -211,9 +248,13 @@ Earlier it was seen that because anecdotes constitute samples of insufficient si
 
 ### Investigation of Specific, Singular Incident
 
-Sometimes, one is interested in the details of a single incident. When investigating a specific incident, most or all of the evidence that is available tends to be anecdotal. Thus, while anecdotes are useless for broader questions about a larger population or for questions about cause and effect, they are often the main sort of evidence for questions about a specific, singular incident.
+Sometimes, one is interested in the details of a single incident. When investigating a specific incident, most of the evidence that is available tends to be anecdotal. Thus, while anecdotes are useless for broader questions about a larger population or for questions about cause and effect, they are often the main sort of evidence for questions about a specific, singular incident.
 
 For instance, if one were interested in how frequently theft occurs in the country in which one lives, it would be foolish to investigate this question by asking one's neighbors if any of their possessions had been stolen. Such anecdotal evidence would provide no insight to this question about a larger population. However, if one has discovered that one's bicycle has gone missing from the Springfield Apartments parking garage on the afternoon of Tuesday, January 19, 2021, then it would be prudent to ask Springfield Apartments residents if they saw any suspicious activity that afternoon. In this latter case, anecdotal evidence is very relevant for questions about a specific, singular incident.
+
+![
+_The wheel that was left behind from a bicycle that has been stolen._
+](/images/bicycle-theft.jpg)
 
 While anecdotal evidence is, out of necessity, relevant for investigation of a specific incident, anecdotes still come with all the psychological flaws of memory and of serial reproduction examined above. Therefore, it is important that the anecdotes be scrutinized. An example of a human activity that grapples with these issues is the court system.
 
@@ -237,23 +278,27 @@ For example, if it is claimed that all swans are white, witnessing a single non-
 
 Like in investigation of a specific, singular incident, even though anecdotal evidence may be relevant in finding counterexamples to universal assertions, they are still subject to all the psychological flaws of memory, flaws which can be exacerbated by serial reproduction. Thus, the anecdotes ought to be scrutinized, and it is better to get anecdotes directly from the witnesses themselves rather than secondhand. Fortunately, when looking for counterexamples to universal assertions, it is typically easy to find corroborating physical evidence. For instance, as a counterexample to the assertion "all swans are white," a picture of a black swan goes a long way.
 
+![
+_A black swan, the existence of which contradicts the universal assertion "all swans are white."_
+](/images/black-swan.jpg)
+
 ### Precipitation of Further Investigation
 
 While anecdotes themselves are not useful for drawing _conclusions_ regarding a larger population or regarding cause and effect, they can be useful in _prompting_ a search for better evidence.
 
-Returning to an example from the introduction, if one hears stories from friends that a certain road is congested with traffic during rush hour, one can rightfully identify these stories as anecdotal evidence such that no conclusion can be inferred from them regarding the larger population of traffic conditions on the road over time. It would be foolish to draw a conclusion from these anecdotes and avoid using the road based on these stories alone. For instance, one might be commuting at a different time of day than one's friends or one's friends might be mistakenly remembering a different road. Drawing a conclusion from anecdotal evidence could lead one to avoid a road that might improve one's daily commute.
+Returning to an example from the introduction, if one hears stories from friends that a certain road is congested with traffic during rush hour, one can rightfully identify these stories as anecdotal evidence such that no conclusion can be inferred from them regarding the larger population of traffic conditions on the road over time. It would be foolish to avoid using the road based on these stories alone. For instance, one might be commuting at a different time of day than one's friends or one's friends might be mistakenly remembering a different road. Drawing a conclusion from anecdotal evidence could lead one to avoid a road that might improve one's daily commute.
 
 However, it would be equally foolish not to investigate the issue further before including the road as part of one's daily commute. This is especially true in modern times in which there are sources available of systematic, non-anecdotal data regarding traffic patterns available to the general public. If the anecdotal evidence happens to be consistent with a larger trend, then one could find oneself stuck in traffic that one could have avoided if one looked into the matter further.
 
 This illustrates a use of anecdotes as a precipitation of further investigation. While the traffic example did not have broader implications for other individuals, anecdotal evidence precipitating further investigation is an important phenomenon for those in positions of authority to set policy, such as executives in a company or administrators of a school.
 
-For instance, if stores began circulating around a company or school about various assaults or other criminal behavior occurring, it would be glib and foolish to dismiss these stories quoting "anecdotes are not evidence" and do nothing more. However, it would also be foolish to attempt to set policy based on the details of whatever anecdote happened to come down the chain of serial reproduction to one's attention. Rather, the prudent thing to do would be to investigate matters more rigorously, setting policy based on information about the whole population of individuals affected by the policy.
+For instance, if stores began circulating around a company or school about various assaults or other criminal behavior occurring, it would be glib and foolish to dismiss these stories while quoting "anecdotes are not evidence" and do nothing more. However, it would also be foolish to attempt to set policy based on the details of whatever anecdote happened to come down the chain of serial reproduction to one's attention. Rather, the prudent thing to do would be to investigate matters more rigorously, setting policy based on information about the whole population of individuals affected by the policy.
 
 ### Illustrative Example
 
-Finally, it is not strictly fallacious to include an anecdotal story with the presentation of information gleaned from more rigorous evidence. For instance, after one has done an empirical study of bicycle thefts in a certain jurisdiction, one might include a story of a specific bicycle theft in one's report. This can have the effect of making more of an impression upon those who remember stories better than plots, tables, and talk about distributions.
+Finally, it is not strictly fallacious to include an anecdotal story with the presentation of information gleaned from more rigorous evidence. For instance, after one has done an empirical study of bicycle thefts in a certain jurisdiction, one might include a story of a specific bicycle theft in one's report. This can have the effect of making more of an impression upon those who remember stories better than plots, tables, and distributions.
 
-As long as the conclusions are drawn from the empirical evidence and not from the example anecdote, this practice is not in and of itself fallacious. However, there is a danger inherent in this practice. Any anecdotes will at best be only partially representative of trends in the larger population, and these illustrative examples can mislead the less quantitatively inclined if the stories are remembered _instead_ of the conclusions of the investigation. Therefore, they ought to be used with caution.
+As long as the conclusions are drawn from the empirical evidence and not from the example anecdote, this practice is not in and of itself fallacious. However, there is a danger inherent in this practice. The example anecdote cannot describe what is happening in the entire population, and these illustrative examples can mislead the audience if the stories are remembered _instead_ of the conclusions of the investigation. Therefore, they ought to be used with caution.
 
 
 ## Conclusion
