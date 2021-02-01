@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>The opening paragraph goes here.</p>
+  <p>The maxim "anecdotes are not evidence" is insufficient to describe the evidentiary uses and misuses of anecdotes. This article elucidates the flaws of anecdotal evidence that preclude anecdotes from being informative regarding inferences about larger populations or about cause and effect. It goes on to explore valid uses of anecdotal evidence, such as in investigation of specific incidents, while advising &ndash; in light of the findings of psychology regarding the fallibility of memory &ndash; scrutiny of anecdotes even in cases in which they are useful.</p>
   <!--more-->
   ## Table of Contents
 ---
