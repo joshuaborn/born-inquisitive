@@ -1,7 +1,7 @@
 ---
 title: "Anecdotes Are Not Evidence"
 draft: true
-date: 2021-01-10
+date: 2021-01-31
 tags: ["fallacy"]
 bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
 csl: "../bibliographies/chicago-author-date.csl"
