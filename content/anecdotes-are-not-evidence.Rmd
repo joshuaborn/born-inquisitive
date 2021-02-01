@@ -104,7 +104,7 @@ Furthermore, note that any estimate of the probability of catching the flu based
 
 #### Unrepresentative Samples
 
-Perhaps there is an individual so popular that polling the individual's friends and family results in a large enough number of observations for inference about a larger population or about cause and effect. Even if this were the case, another issue remains that prevents such an anecdotal sample from being useful. The sample created from such polling is not _representative_ of a larger population. Instead, the sample is heavily biased towards the idiosyncracies of the individual in question.
+Perhaps there is an individual so popular that polling the individual's friends and family results in a large enough number of observations for inference about a larger population or about cause and effect. Even if this were the case, another issue remains that prevents such an anecdotal sample from being useful. The sample created from such polling is not _representative_ of a larger population. Instead, the sample is heavily biased towards the idiosyncrasies of the individual in question.
 
 Returning to the example of flu vaccine efficacy in the United States during the 2019-2020 season, suppose that a particularly extroverted individual keeps in regular contact with not just 10, but 200 friends and family. However, suppose the extroverted individual caught the flu during the 2019-2020 season.
 
@@ -150,7 +150,7 @@ The psychological literature around the topic of memory is quite large, and a fu
 
 ##### Misinformation Effect
 
-The work of psychologist Elizabeth F. Loftus is a particularly conspicuous part of the body of research on memory fallibility as it relates to anecdotal evidence, in part because much of this work has specifically focused on issues with witness testimony and because of her engagement with the legal system, testifying as an expert witness in numerous high profile cases.
+The work of psychologist Elizabeth F. Loftus is a particularly conspicuous part of the body of research on memory fallibility as it relates to anecdotal evidence, in part because much of this work has specifically focused on issues with witness testimony and because of her engagement with the legal system, testifying as an expert witness in numerous high-profile cases.
 
 An early experiment of hers examined 45 students at the University of Washington who were shown the same video of a traffic accident. [@loftus_reconstruction_1974] The test subjects were then asked to estimate how fast the cars were going at the time of the accident, but the question was phrased using different words such as "smashed," "collided," "bumped," "hit," or "contacted." The mean estimated speed, averaged over different test subjects, for those asked with the word "smashed" was 40.8 miles per hour, whereas the mean estimated speed was only 31.8 miles per hour for those asked with the word "contacted."
 
@@ -202,7 +202,7 @@ During the free recall, test subjects recalled 62% of the words presented to the
 
 During the recognition test, the critical unpresented words were falsely recognized 72% of the time for lists for which a free recall had not been done, and 81% of the time for lists for which a free recall had been done. About 53% of the critical unpresented words for non-recall lists were described as remembered rather than known, and 72% of the critical unpresented words for recall lists were identified as remembered.
 
-This experiment demonstrated that even without misinformation contaminating memory, human beings can be subject to systematic and measurable false recall. Furthermore, it suggested that all memory, even exercises as rote as remembering lists of words, is reconstructive, leveraging prexisting schemas of association already present in a mind before an experience is had. Finally, even in such a banal setting, a nontrivial proportion of false recall involved phenomenological _remembering_ rather than _knowing,_ in which test subjects relived an experience that never actually occurred.
+This experiment demonstrated that even without misinformation contaminating memory, human beings can be subject to systematic and measurable false recall. Furthermore, it suggested that all memory, even exercises as rote as remembering lists of words, is reconstructive, leveraging preexisting schemas of association already present in a mind before an experience is had. Finally, even in such a banal setting, a nontrivial proportion of false recall involved phenomenological _remembering_ rather than _knowing,_ in which test subjects relived an experience that never actually occurred.
 
 #### Flaws of Serial Reproduction
 
@@ -268,7 +268,7 @@ Hearsay is not just anecdotal, but usually comprises anecdotes told secondhand.[
 
 [^secondhand]: If one were testifying about one's statement made outside of court, this would technically be hearsay. In this case, however, one could just make the statement again as part of one's testimony.
 
-Courts are by no means perfect arbiters of truth and falsity, but the procedures established in the courts at least illustrate the basic principles of handling anecdotal evidence. In questions about specific, singular incidents, anecdotal evidence is relevant, so witness testimony is allowed. However, anecdotal evidence &ndash; especially when delivered via serial reproduction &ndash; must be scrutinized, so anecdotes that avoid scrutiny such as hearsay are inadmissable. 
+Courts are by no means perfect arbiters of truth and falsity, but the procedures established in the courts at least illustrate the basic principles of handling anecdotal evidence. In questions about specific, singular incidents, anecdotal evidence is relevant, so witness testimony is allowed. However, anecdotal evidence &ndash; especially when delivered via serial reproduction &ndash; must be scrutinized, so anecdotes that avoid scrutiny such as hearsay are inadmissible. 
 
 ### Counterexample to Universal Assertion
 
