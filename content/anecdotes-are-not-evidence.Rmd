@@ -1,6 +1,6 @@
 ---
 title: "Anecdotes Are Not Evidence"
-draft: true
+draft: false
 date: 2021-01-31
 tags: ["fallacy"]
 bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
