@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>The maxim "anecdotes are not evidence" is insufficient to describe the evidentiary uses and misuses of anecdotes. This article elucidates the flaws of anecdotal evidence that preclude anecdotes from being informative regarding inferences about larger populations or about cause and effect. It goes on to explore valid uses of anecdotal evidence, such as in investigation of specific incidents, while advising &ndash; in light of the findings of psychology regarding the fallibility of memory &ndash; scrutiny of anecdotes even in cases in which they are useful.</p>
+  <p>While alluding to valuable criticism, the maxim "anecdotes are not evidence" is insufficient to describe the evidentiary uses and misuses of anecdotes. This article elucidates the flaws of anecdotal evidence that preclude anecdotes from being informative regarding inferences about larger populations or about cause and effect. It goes on to explore valid uses of anecdotal evidence, such as in investigation of specific incidents, while advising &ndash; in light of the findings of psychology regarding the fallibility of memory &ndash; scrutiny of anecdotes even in cases in which they are useful.</p>
   <!--more-->
   ## Table of Contents
 ---
@@ -28,7 +28,7 @@ One such false implication that stems from an extremely literal interpretation o
 
 Such a literal interpretation can be used to undermine the maxim itself. For instance, one could note a case in which a serial sex offender was caught due to the testimony of victims, which is necessarily anecdotal, and conclude that those who subscribe to "anecdotes are not evidence" would throw out this testimony, setting the sex offender free. This is such a [morally](/moral-skepticism.html) repugnant proposition for so many that it could be used as a way to discredit those who are fond of the maxim "anecdotes are not evidence."
 
-This literal interpretation can also be used as a foolish obstacle to understanding. For instance, if one hears stories from friends that a certain road is congested with traffic during rush hour, one might dismiss these stories, citing "anecdotes are not evidence." One would have no one to blame but oneself when one finds oneself stuck in traffic on the very same road, waiting for the rush hour congestion to clear.
+This literal interpretation can also be used as an obstacle to understanding. For instance, if one hears stories from friends that a certain road is congested with traffic during rush hour, one might dismiss these stories, citing "anecdotes are not evidence." One would have no one to blame but oneself when one finds oneself stuck in traffic on the very same road, waiting for the rush hour congestion to clear.
 
 ![
 _Congested traffic during rush hour, which can sometimes be avoided by way of anecdotes._<br/>
@@ -40,7 +40,7 @@ is licensed under
 and is not modified.
 ](/images/rush-hour.jpg)
 
-Surely, because of these implications, this overly literal interpretation does not capture what the maxim "anecdotes are not evidence" is meant to convey. This is a flaw not just with this particular maxim, but with slogans in general, which threaten to become [shibboleths](political-rhetoric-as-shibboleths.html) when used incognizantly in this way.
+Surely, because of these implications, this overly literal interpretation does not capture whatever utility the maxim "anecdotes are not evidence" has. This is a flaw not just with this particular maxim, but with slogans in general, which threaten to become [shibboleths](political-rhetoric-as-shibboleths.html) when used incognizantly in this way.
 
 The purpose of this article is to articulate the issues in using anecdotes as evidence in a more substantial way than can be done with a pithy maxim. It begins by discussing the sort of inference for which anecdotes are entirely useless; this is balanced with later discussion of valid uses of anecdotes.
 
@@ -102,21 +102,36 @@ Furthermore, note that any estimate of the probability of catching the flu based
 
 [^power]: This is a plausible example of the phenomenon that anecdotal observations often do not comprise a sufficient sample size for inference, one which does not require knowledge of statistical methods. For the more mathematically minded, this phenomenon can be explored further by way of power computations at various sample sizes, which can be found in relevant statistics texts.
 
+The preceding example is generous inasmuch as at least several individuals were observed. Many times, anecdotes consist of a sample size of just 1.
+
+For instance, one might hear from a friend, "I started the Acme Juice Boost program, and ever since then I haven't caught a cold or flu or anything." What sort of estimate could be inferred from this? With a sample size of 1, there are two possibilities: that 0 out of 1 individual experiences the outcome or that 1 out of 1 individual experiences the outcome. Given what has been seen about preventative measures against communicable disease, estimating efficacy at 100% is quite reckless. In this example, one cannot infer from a sample size of 1 how effective the Acme Juice Boost is at preventing communicable disease or even if has any effect at all, since many people do not catch cold or flu for finite amounts of time.
+
+
+#### Lack of Comparisons
+
+An anecdote that comprises a sample size of 1 brings with it another issue, one that can occur even with larger sample sizes: often times anecdotes do not include any observations to compare against. For instance, suppose that one learns that several of one's friends use Acme Snake Oil pills whenever they catch the common cold. These friends relate how after taking Acme Snake Oil, one of them recovered from the cold after 3 days, another after 7 days, and a third after 2 days. An estimate of the average time to recover from a cold for someone taking Acme Snake Oil is therefore (3 + 7 + 2) / 3 = 4 days.
+
+The question remains: do Acme Snake Oil pills improve cold recovery times? In order to answer this question, one would need an estimate of how many days it takes for people _not_ taking Acme Snake Oil to recover from the common cold. Only after comparing these two average times can one evaluate the effect, if there is any, of taking Acme Snake Oil. Unfortunately, in this example, the anecdotes of one's friends do not come with any such information in order to make a comparison.
+
+This issue can be exploited by those trying to sell something. Marketing testimonials often come with success stories of people who have used a product and had a desired outcome. However, such testimonials can easily leave out anecdotes about both those who have had unfavorable outcomes when using the product and those who had the favorable outcome without using the product. Anecdotes used in this way are an instance of the [Fallacy of Listing Examples](/fallacy-of-listing-examples.html), which is discussed in its own article.
+
+
 #### Unrepresentative Samples
 
-Perhaps there is an individual so popular that polling the individual's friends and family results in a large enough number of observations for inference about a larger population or about cause and effect. Even if this were the case, another issue remains that prevents such an anecdotal sample from being useful. The sample created from such polling is not _representative_ of a larger population. Instead, the sample is heavily biased towards the idiosyncrasies of the individual in question.
+Perhaps there is an individual so popular that polling the individual's friends and family results in a large enough number of observations for inference about a larger population and includes observations to make comparisons. Even if this were the case, another issue remains that prevents such an anecdotal sample from being useful. The sample created from such polling is not _representative_ of a larger population. Instead, the sample is heavily biased towards the idiosyncrasies of the individual in question.
 
 Returning to the example of flu vaccine efficacy in the United States during the 2019-2020 season, suppose that a particularly extroverted individual keeps in regular contact with not just 10, but 200 friends and family. However, suppose the extroverted individual caught the flu during the 2019-2020 season.
 
 In this case, the sample might be large enough for estimation of vaccine efficacy, but this sample will be biased because the extroverted individual was in contact with the 200 other people in the sample and so exposed them to the flu virus. Therefore, the prevalence of flu illness in this sample is expected to be higher than in the general population, which includes individuals who had no direct exposure to the flu virus. Because of this, any estimations regarding the _size_ of the protective effect _caused_ by the vaccine will be incorrect.
 
-This phenomenon is likely to occur whenever sampling is based on personal associations. Another example comes from attempts to infer the prevalence of political affiliations based on a particular individual's social network.
+This phenomenon is likely to occur whenever sampling is based on personal associations from one individual. There is a similar but opposite issue when starting with an extroverted individual that did _not_ have the flu. The sample created from this individual's personal associations will likely under-represent, rather than over-represent, the incidence of flu when compared with the general population. This is a result of the fact that the starting individual is known not to have had the flu _and_ to have been in contact with all the other individuals in the sample, and so there is an indication that there is a lack of contagious individuals in the sample.[^independence]
 
-Most voters in the United States are registered as either Republican or Democrat. Because human beings tend to conform to those around them and to seek out those with similar views, if one starts with a registered Republican, one will likely find a higher proportion of registered Republicans among that individual's friends and family. Likewise, if one starts with a registered Democrat, one will likely find a higher proportion of registered Democrats among that individual's friends and family. Neither of these samples will be _representative_ of the _larger population_ of voters in the United States.
+[^independence]: Using statistical jargon, the fundamental issue here is that samples formed in this way to do not result in _independent_ observations.
 
-##### The Fallacy of Celebrated Cases
 
-This issue is even worse for anecdotes that come not from personal associations, but by way of the news media. Much of what qualifies a story as news is that it is rare, unusual, or shocking enough to be of interest. Thus, news stories collectively form an _intentionally_ unrepresentative sample of what is happening in a larger population. This phenomenon was illustrated dramatically by the media frenzy around shark attacks in 2001.
+##### Fallacy of Celebrated Cases
+
+The situation is even worse for anecdotes that come not from personal associations, but by way of the news media. Much of what qualifies a story as news is that it is rare, unusual, or shocking enough to be of interest. Thus, news stories collectively form an _intentionally_ unrepresentative sample of what is happening in a larger population. This phenomenon was illustrated dramatically by the media frenzy around shark attacks in 2001.
 
 While shark attacks on humans can result in a personal tragedy of injury or death for those involved that should neither be minimized nor made light of, the media representation of shark attacks in 2001 was misleading and irresponsible. A particularly graphic shark attack case was covered on major news media outlets in August of 2001. This was soon followed by story after story of sharks attacking humans. _Time_ magazine ran a cover story labeling the summer of 2001 the "Summer of the Shark."
 
@@ -130,9 +145,10 @@ The so-called "Summer of the Shark" was not a sudden and pronounced increase in 
 
 This alludes to a broader fallacy than just bad journalism. Whenever one is attempting to understand a large population &ndash; for instance, in order to make judgements about a society or come up public policy ideas &ndash; basing such understanding exclusively on stories that get the most attention is foolish. Such stories form a highly anecdotal, unrepresentative sample that are not informative about the population at large. Indeed, many such stories receive attention precisely because they are so extreme. This can be labeled the "Fallacy of Celebrated Cases."
 
+
 #### Summary
 
-Using anecdotes as evidence is flawed in two ways pertaining to statistical inference: anecdotes constitute sample sizes that are prone to wild fluctuations and are often too small to make precise estimates, and anecdotes form unrepresentative samples that throw off any estimation of effect size based on them. For these reasons, anecdotes are not at all useful either for conclusions about a larger population or for conclusions about cause and effect. 
+Using anecdotes as evidence is flawed in three ways pertaining to statistical inference: anecdotes constitute sample sizes that are prone to wild fluctuations and are often too small to make precise estimates; anecdotes often come without any observations for comparison; and anecdotes form unrepresentative samples that bias any estimation based on them. For these reasons, anecdotes are not at all useful either for conclusions about a larger population or for conclusions about cause and effect. 
 
 In addition to these concerns, there are other flaws in anecdotal evidence pertaining to how human minds work.
 
@@ -303,11 +319,11 @@ As long as the conclusions are drawn from the empirical evidence and not from th
 
 ## Conclusion
 
-Anecdotal evidence is flawed. Anecdotes constitute samples that are unrepresentative and are often of insufficient size. Because of this, anecdotes provide no insight about larger populations or about cause and effect.
+Anecdotal evidence is flawed. Anecdotes constitute samples that are unrepresentative, are often of insufficient size, and often lack needed comparisons. Because of this, anecdotes provide no insight about larger populations or about cause and effect.
 
-Still, anecdotes are not without their uses. In particular, anecdotal evidence is relevant when determining the details of specific incidents. Anecdotal evidence can also be used to contradict universal assertions. However, anecdotes are subject to issues that affect memory, and these issues with memory are compounded when anecdotes are retold serially, so even in cases in which it is useful, anecdotal evidence should be scrutinized and not trusted verbatim. 
+Still, anecdotes are not without their uses. In particular, anecdotal evidence is relevant when determining the details of specific incidents. Anecdotal evidence can also be used to contradict universal assertions. However, anecdotes are subject to issues that affect memory, and these issues with memory are compounded when anecdotes are retold serially, so even in cases in which they are useful, anecdotes should be scrutinized and not trusted verbatim. 
 
-Anecdotes can also be used in a non-evidentiary ways, such as to precipitate further investigation or to provide illustrative examples, so long as no conclusions are drawn from the anecdotes.
+Anecdotes can also be used in a non-evidentiary ways, such as to precipitate further investigation or to provide illustrative examples, so long as no conclusions are drawn from the anecdotes themselves.
 
 This article illustrates a fundamental issue with maxims. The maxim "anecdotes are not evidence" hints at some useful ideas, but when those ideas are elucidated, it can be seen that the state of affairs around anecdotes and their role in and around evidence is much more complicated than the four words of the maxim can explain. The maxim "anecdotes are not evidence" is an example of why critical thinking is best served by a thoughtful and thorough exploration of the issues surrounding a matter, rather than appeals to slogans.
 
