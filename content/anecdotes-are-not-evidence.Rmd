@@ -113,7 +113,7 @@ An anecdote that comprises a sample size of 1 brings with it another issue, one 
 
 The question remains: do Acme Snake Oil pills improve cold recovery times? In order to answer this question, one would need an estimate of how many days it takes for people _not_ taking Acme Snake Oil to recover from the common cold. Only after comparing these two average times can one evaluate the effect, if there is any, of taking Acme Snake Oil. Unfortunately, in this example, the anecdotes of one's friends do not come with any such information in order to make a comparison.
 
-This issue can be exploited by those trying to sell something. Marketing testimonials often come with success stories of people who have used a product and had a desired outcome. However, such testimonials can easily leave out anecdotes about both those who have had unfavorable outcomes when using the product and those who had the favorable outcome without using the product. Anecdotes used in this way are an instance of the [Fallacy of Listing Examples](/fallacy-of-listing-examples.html), which is discussed in its own article.
+This issue can be exploited by those trying to sell something. Marketing testimonials often come with success stories of people who have used a product and had a desired outcome. However, such testimonials can easily leave out anecdotes about both those who have had unfavorable outcomes when using the product and those who had the favorable outcome without using the product. Anecdotes used in this way are an instance of the [fallacy of listing examples](/fallacy-of-listing-examples.html), which is discussed in its own article.
 
 
 #### Unrepresentative Samples
@@ -143,7 +143,7 @@ This created an impression that shark attacks were increasing at an alarming rat
 
 The so-called "Summer of the Shark" was not a sudden and pronounced increase in shark attacks, but a sudden and pronounced increase in news coverage of shark attacks. However, shark attacks are infrequent compared with other risks humans expose themselves to on a daily basis, so this spike in news coverage encouraged unsubstantiated fears. Nonetheless, the sensational coverage of shark attacks during 2001 did not end until the September 11, 2001 terrorist attacks took over the news cycle. Since then, the so-called "Summer of the Shark" has become an object lesson in bad journalism. [@dempsey_summer_2016]
 
-This alludes to a broader fallacy than just bad journalism. Whenever one is attempting to understand a large population &ndash; for instance, in order to make judgements about a society or come up public policy ideas &ndash; basing such understanding exclusively on stories that get the most attention is foolish. Such stories form a highly anecdotal, unrepresentative sample that are not informative about the population at large. Indeed, many such stories receive attention precisely because they are so extreme. This can be labeled the "Fallacy of Celebrated Cases."
+This alludes to a broader fallacy than just bad journalism. Whenever one is attempting to understand a large population &ndash; for instance, in order to make judgements about a society or come up public policy ideas &ndash; basing such understanding exclusively on stories that get the most attention is foolish. Such stories form a highly anecdotal, unrepresentative sample that are not informative about the population at large. Indeed, many such stories receive attention precisely because they are so extreme. This can be labeled the "fallacy of celebrated cases."
 
 
 #### Summary
