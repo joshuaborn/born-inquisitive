@@ -113,7 +113,7 @@ An anecdote that comprises a sample size of 1 brings with it another issue, one 
 
 The question remains: do Acme Snake Oil pills improve cold recovery times? In order to answer this question, one would need an estimate of how many days it takes for people _not_ taking Acme Snake Oil to recover from the common cold. Only after comparing these two average times can one evaluate the effect, if there is any, of taking Acme Snake Oil. Unfortunately, in this example, the anecdotes of one's friends do not come with any such information in order to make a comparison.
 
-This issue can be exploited by those trying to sell something. Marketing testimonials often come with success stories of people who have used a product and had a desired outcome. However, such testimonials can easily leave out anecdotes about both those who have had unfavorable outcomes when using the product and those who had the favorable outcome without using the product. Anecdotes used in this way are an instance of the [fallacy of listing examples](/fallacy-of-listing-examples.html), which is discussed in its own article.
+This issue can be exploited by those trying to sell something. Marketing testimonials often come with success stories of people who have used a product and had a desired outcome. However, such testimonials can easily leave out anecdotes about both those who have had unfavorable outcomes when using the product and those who had the favorable outcome without using the product. Anecdotes used in this way are an instance of the [fallacy of listing examples](/selection-bias-and-the-fallacy-of-listing-examples.html), which is discussed in its own article.
 
 
 #### Unrepresentative Samples
