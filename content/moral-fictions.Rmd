@@ -1,9 +1,9 @@
 ---
-title: "Moral Skepticism"
+title: "Moral Fictions"
 draft: false
 date: 2020-12-28
 tags: ["worldview", "morality"]
-bibliography: "../bibliographies/moral-skepticism.bib"
+bibliography: "../bibliographies/moral-fictions.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
