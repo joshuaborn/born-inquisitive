@@ -1,0 +1,24 @@
+---
+title: "Number of Births"
+author: "Joshua Born"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(survey)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  cache = TRUE
+)
+```
+
+## During 2012-2016, Based on 2017-2019
+
+[Appendix 2 to the User Guide for the 2017-2019 NSFG](https://www.cdc.gov/nchs/nsfg/nsfg_2017_2019_puf.htm) contains a table replicated as Table 1.
+
+```{r, echo=FALSE, fig.cap='**Table 1:** A table taken from page 2 of the Appendix 2 to the User Guide for the 2017-2019 NSFG.'}
+knitr::include_graphics(file.path('img', '2017-2019_App2_table.png'))
+```
+
+Replication of these point estimates and these confidence intervals is done here to verify the analysis methods used throughout this repository.
