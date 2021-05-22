@@ -1,0 +1,51 @@
+library(readr)
+library(stringr)
+
+
+# This script loads the 2017-2019 NSFG data set into memory. See the README in
+# for expectations.
+
+
+get_list_of_col_names <- function(filename) {
+  raw_string <- read_file(filename)
+  digits_removed <- gsub('[[:space:]-]+[[:digit:]]+', '', raw_string)
+  split_vector <- str_split(digits_removed, '[[:space:]]+')[[1]]
+  if (split_vector[1] != '') split_vector else split_vector[-1]
+}
+
+get_list_of_col_widths <- function(filename) {
+  raw_string <- read_file(filename)
+  col_names_removed <- gsub('[[:alpha:]_]+[[:digit:]]*', '', raw_string)
+  split_vector <- str_split(col_names_removed, '[[:space:]]+')[[1]]
+  this_vector <- if (split_vector[1] != '') split_vector else split_vector[-1]
+  start_end_list <- str_split(this_vector, '-')
+  sapply(start_end_list, function(vec) {
+    if (length(vec) == 1) {
+      1
+    } else if (length(vec) == 2) {
+      as.integer(vec[2]) - as.integer(vec[1]) + 1
+    } else {
+      NA
+    }
+  })
+}
+
+load_nsfg_data_set <- function(filename, path = 'data') {
+  data_definition_path <- file.path(path,
+    paste(filename, 'vars', 'txt', sep = '.'))
+  read_fwf(
+    file.path(path, paste(filename, 'dat', sep = '.')),
+    fwf_widths(
+      widths = get_list_of_col_widths(data_definition_path),
+      col_names = get_list_of_col_names(data_definition_path)
+    ),
+    col_types = cols(.default = col_number())
+  )
+}
+
+
+fem_resp_data <- load_nsfg_data_set('2017_2019_FemRespData')
+
+fem_preg_data <- load_nsfg_data_set('2017_2019_FemPregData')
+
+male_data <- load_nsfg_data_set('2017_2019_MaleData')
