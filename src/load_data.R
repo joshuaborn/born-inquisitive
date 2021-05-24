@@ -1,5 +1,8 @@
+library(here)
 library(readr)
 library(stringr)
+
+here::i_am(file.path('src', 'load_data.R'))
 
 
 # This script loads the 2017-2019 NSFG data set into memory. See the README in
@@ -31,10 +34,10 @@ get_list_of_col_widths <- function(filename) {
 }
 
 load_nsfg_data_set <- function(filename, path = 'data') {
-  data_definition_path <- file.path(path,
+  data_definition_path <- here(path,
     paste(filename, 'vars', 'txt', sep = '.'))
   read_fwf(
-    file.path(path, paste(filename, 'dat', sep = '.')),
+    here(path, paste(filename, 'dat', sep = '.')),
     fwf_widths(
       widths = get_list_of_col_widths(data_definition_path),
       col_names = get_list_of_col_names(data_definition_path)

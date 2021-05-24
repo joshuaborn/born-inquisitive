@@ -5,7 +5,11 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(dplyr)
+library(here)
 library(survey)
+
+here::i_am(file.path('eda', 'number_of_births.Rmd'))
 
 knitr::opts_chunk$set(
   echo = TRUE,
@@ -15,10 +19,102 @@ knitr::opts_chunk$set(
 
 ## During 2012-2016, Based on 2017-2019
 
-[Appendix 2 to the User Guide for the 2017-2019 NSFG](https://www.cdc.gov/nchs/nsfg/nsfg_2017_2019_puf.htm) contains a table replicated as Table 1.
+[Appendix 2 to the User Guide for the 2017-2019 NSFG](https://www.cdc.gov/nchs/nsfg/nsfg_2017_2019_puf.htm) contains point estimates and confidence intervals of the number of live births during 2012-2016 in the United States, based on the 2017-2019 NSFG. These estimates are in turn compared with births registered through the National Vital Statistics System to verify their accuracy. See Table 1.
 
-```{r, echo=FALSE, fig.cap='**Table 1:** A table taken from page 2 of the Appendix 2 to the User Guide for the 2017-2019 NSFG.'}
+In order to validate the NSFG data are being used correctly with the `survey` library viz a viz weights, pseudo-strata, and pseudo-clusters, and in order to motivate familiarization with the NSFG data set, these point estimates and these confidence intervals are replicated here.
+
+```{r table1, echo=FALSE, fig.cap='**Table 1:** A table taken from page 2 of the Appendix 2 to the User Guide for the 2017-2019 NSFG.'}
 knitr::include_graphics(file.path('img', '2017-2019_App2_table.png'))
 ```
 
-Replication of these point estimates and these confidence intervals is done here to verify the analysis methods used throughout this repository.
+```{r load-data, message=FALSE, echo=FALSE}
+source(here('src', 'load_data.R'))
+```
+
+
+## Relevant Variables
+
+The estimates in Table 1 can be calculated from data in the female pregnancy file (`2017_2019_FemPregData.dat`). The filtering necessary for these estimates appear to be based on variables for pregnancy outcome (`OUTCOME`), year pregnancy ended (`DATEND`), whether respondent was born outside of the United States (`BRNOUT`), and the year the respondent came to the United States (`YRSTRUS`).
+
+The `OUTCOME` and `DATEND` are recoded variables, whereas `BRNOUT` is a raw variable.
+
+```{r check-outcome}
+count(
+  data.frame(Outcome = factor(
+    fem_preg_data$OUTCOME,
+    labels = c(
+      'LIVE BIRTH',
+      'INDUCED ABORTION',
+      'STILLBIRTH',
+      'MISCARRIAGE',
+      'ECTOPIC PREGNANCY',
+      'CURRENT PREGNANCY'
+    )
+  )),
+  Outcome
+)
+```
+
+The counts of each level of the `OUTCOME` variable match the counts reported in the codebook.
+
+```{r check-datend}
+count(
+  fem_preg_data,
+  INAPPLICABLE = is.na(DATEND)
+)
+```
+
+The are 193 observations for which `DATEND` is inapplicable and 10,022 otherwise, which matches what is reported in the codebook.
+
+```{r check-brnout}
+count(
+  data.frame(BRNOUT = factor(
+    fem_preg_data$BRNOUT,
+    labels = c('Yes', 'No', 'Refused', "Don't Know")
+  )),
+  BRNOUT
+)
+```
+
+The counts of each level of the `BRNOUT` variable matches what is in the codebook.
+
+The `YRSTRUS` variable does not appear to be documented in the 2017-2019 NSFG documentation. The last time it appears in the Female Pregnancy File Codebook is in the 2015-2017 NSFG documentation, which references Appendix 7 of the User Guide. However, only the `STRUS_M`, `STRUS_F`, and `CMSTRUS` variables are discussed in Appendix 7 in the 2015-2017 NSFG documentation. These variables contain the month and year that a respondent came to United States, if the respondent is born elsewhere, and are not released in the public use data files due to disclosure risk.
+
+The Appendix 7 in the 2013-2015 NSFG documentation does discuss the `YRSTRUS` variable, stating that it contains a calculated value indicating only the year the respondent came to stay in the United States. However, as seen below, there are only the values 1, 2, 3, or 4 contained in the `YRSTRUS` data for the 2017-2019 NSFG data set, in addition to values customarily used to encode for "refused" and "don't know" responses and to encode for non-applicability.
+
+```{r check-yrstrus}
+fem_preg_data %>%
+  group_by(YRSTRUS) %>%
+  count()
+```
+
+Fortunately, even though the 2017-2019 encoding of the `YRSTRUS` variable is not documented anywhere, the SAS program statement for the female pregnancy file contains a values definition for the variable.
+
+```{sas, eval=FALSE}
+  value YRSTRUS
+     1 = '1968-1989'  
+     2 = '1990-1999'  
+     3 = '2000-2009'  
+     4 = '2010-2019'  
+     98 = 'Refused'  
+     99 = 'Don''t know' ;
+```
+
+```{r check-yrstrus2}
+count(
+  data.frame(YRSTRUS = factor(
+    fem_preg_data$YRSTRUS,
+    labels = c(
+      '1968-1989',
+      '1990-1999',
+      '2000-2009',
+      '2010-2019',
+      'Refused',
+      "Don't know"
+    )
+  )),
+  YRSTRUS
+)
+```
+
+It appears as though the `YRSTRUS` in the 2017-2019 public use files has been modified even more than in previous iterations of the public use files. Because the estimates of Table 1 are of live births in the United States from 2012-2016, the only possible use of the `YRSTRUS` variable for calculating Table 1 estimates is to filter out observations with value `4` of the `YRSTRUS`, which consists of 355 observations. However, this also filters out some observations of births that did occur in the United States. Therefore, the estimates are calculated both with and without these observations, to verify if such filtering changes the estimates substantially.
