@@ -236,3 +236,10 @@ knitr::kable(
 ```
 
 The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1. The lower bound of the confidence interval with filtering on `YRSTRUS` in Table 3 is approximately the lower bound in Table 1, and the upper bound of the confidence interval without filtering on `YRSTRUS` in Table 2 is very close to the upper bound in Table 1.
+
+
+## Remaining to do
+
+* Rest of Table 1
+* Same thing, but with `srvyr`
+* Repeat with 2015-2017 data
