@@ -34,7 +34,7 @@ source(here('src', 'load_data.R'))
 ```
 
 
-### Relevant Variables
+### Variables for Filtering
 
 The estimates in Table 1 can be calculated from data in the female pregnancy file (`2017_2019_FemPregData.dat`). The filtering necessary for these estimates appear to be based on variables for pregnancy outcome (`OUTCOME`), year pregnancy ended (`DATEND`), whether respondent was born outside of the United States (`BRNOUT`), and the year the respondent came to the United States (`YRSTRUS`).
 
@@ -188,6 +188,15 @@ fem_preg_data$MarriedAtBirth <- factor(
   ifelse(fem_preg_data$FMAROUT5 == 'MARRIED', 'Married', 'Unmarried')
 )
 
+fem_preg_data$BirthOrder <- factor(
+  ifelse(fem_preg_data$BIRTHORD >= 3, 3, fem_preg_data$BIRTHORD),
+  labels = c(
+    '1st',
+    '2nd',
+    '3rd or higher'
+  )
+)
+
 fem_preg_svy <- svydesign(
   data = fem_preg_data,
   strat = ~SEST,
@@ -337,8 +346,32 @@ svyby(
 The estimates for number of births for the married and unmarried subpopulations bracket the estimates in Table 1 as described in other sections.
 
 
+#### By Birth Order
+
+```{r by-birth-order}
+svyby(
+  ~Births,
+  ~BirthOrder,
+  svytotal,
+  design = live_births_2012_2016_svy,
+  keep.names = FALSE
+)
+
+svyby(
+  ~Births,
+  ~BirthOrder,
+  svytotal,
+  design = live_births_us_2012_2016_svy,
+  keep.names = FALSE
+)
+
+```
+
+The estimates for number of births for subpopulations by birth order bracket the estimates in Table 1 as described in other sections.
+
+
 ## Remaining to do
 
-* Rest of Table 1
+* Rewrite to use `confint` function using `degf` to get degrees of freedom
 * Same thing, but with `srvyr`
 * Repeat with 2015-2017 data
