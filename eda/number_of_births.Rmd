@@ -234,28 +234,14 @@ num_births_us_stat
 As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occuring in the United States.
 
 ```{r, total-birth-CIs}
-CI <- function(statistic, alpha = 0.05, df = Inf) {
-  stat_name <- names(coef(statistic))
-  raw_stat <- unname(coef(statistic))
-  raw_se <- unname(SE(statistic))[1, 1]
-  summary.df <- cbind(
-    raw_stat,
-    raw_stat - qt(1-alpha/2, df = df) * raw_se,
-    raw_stat + qt(1-alpha/2, df = df) * raw_se
-  )
-  rownames(summary.df) <- stat_name
-  CI_string <- paste((1 - alpha) * 100, '% CI', sep = '')
-  colnames(summary.df) <- c(
-    'Estimate',
-    paste(CI_string, 'Low'),
-    paste(CI_string, 'High')
-  )
-  summary.df
-}
-
 knitr::kable(
   format(
-    round(CI(num_births_stat, df = degf(fem_preg_svy)) / 1000),
+    round(
+      cbind(
+        coef(num_births_stat),
+        confint(num_births_stat, df = degf(fem_preg_svy))
+      ) / 1000
+    ),
     big.mark = ','
   ),
   caption = '**Table 2:** Estimates of live births (in thousounds) during 2012-2016 without Filtering on `YRSTRUS`.'
@@ -263,7 +249,12 @@ knitr::kable(
 
 knitr::kable(
   format(
-    round(CI(num_births_us_stat, df = degf(fem_preg_svy)) / 1000),
+    round(
+      cbind(
+        coef(num_births_us_stat),
+        confint(num_births_us_stat, df = degf(fem_preg_svy))
+      ) / 1000
+    ),
     big.mark = ','
   ),
   caption = '**Table 3:** Estimates of live births (in thousands) during 2012-2016 with Filtering on `YRSTRUS != 4`.'
@@ -376,6 +367,5 @@ The estimates for number of births for subpopulations by birth order bracket the
 
 ## Remaining to do
 
-* Rewrite to use `confint` function using `degf` to get degrees of freedom
 * Same thing, but with `srvyr`
 * Repeat with 2015-2017 data
