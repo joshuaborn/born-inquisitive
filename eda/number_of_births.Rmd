@@ -173,6 +173,21 @@ fem_preg_data$HISPRACE2 <- factor(
   )
 )
 
+fem_preg_data$FMAROUT5 <- factor(
+  fem_preg_data$FMAROUT5,
+  labels = c(
+    'MARRIED',
+    'DIVORCED',
+    'WIDOWED',
+    'SEPARATED',
+    'NEVER MARRIED'
+  )
+)
+
+fem_preg_data$MarriedAtBirth <- factor(
+  ifelse(fem_preg_data$FMAROUT5 == 'MARRIED', 'Married', 'Unmarried')
+)
+
 fem_preg_svy <- svydesign(
   data = fem_preg_data,
   strat = ~SEST,
@@ -297,6 +312,29 @@ svyby(
 ```
 
 Estimated number of births in the subpopulation categorized "Hispanic or Latina" is an overestimate when compared with Table 1 without any filtering for births outside the United States, and an underestimate when filtering by respondents who came to the United States during 2010-2019. Unlike other subpopulations, both subpopulations under "Not Hispanic" have underestimates for number of births compared with Table 1, regardless of whether or not filtering based on time respondent came to United States is done.
+
+
+#### By Martial Status at Birth
+
+```{r by-martial-status-at-birth}
+svyby(
+  ~Births,
+  ~MarriedAtBirth,
+  svytotal,
+  design = live_births_2012_2016_svy,
+  keep.names = FALSE
+)
+
+svyby(
+  ~Births,
+  ~MarriedAtBirth,
+  svytotal,
+  design = live_births_us_2012_2016_svy,
+  keep.names = FALSE
+)
+```
+
+The estimates for number of births for the married and unmarried subpopulations bracket the estimates in Table 1 as described in other sections.
 
 
 ## Remaining to do
