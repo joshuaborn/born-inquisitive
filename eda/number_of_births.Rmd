@@ -234,14 +234,14 @@ num_births_us_stat
 As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occuring in the United States.
 
 ```{r, total-birth-CIs}
-CI <- function(statistic, alpha = 0.05) {
+CI <- function(statistic, alpha = 0.05, df = Inf) {
   stat_name <- names(coef(statistic))
   raw_stat <- unname(coef(statistic))
   raw_se <- unname(SE(statistic))[1, 1]
   summary.df <- cbind(
     raw_stat,
-    raw_stat - qnorm(1-alpha) * raw_se,
-    raw_stat + qnorm(1-alpha) * raw_se
+    raw_stat - qt(1-alpha/2, df = df) * raw_se,
+    raw_stat + qt(1-alpha/2, df = df) * raw_se
   )
   rownames(summary.df) <- stat_name
   CI_string <- paste((1 - alpha) * 100, '% CI', sep = '')
@@ -255,7 +255,7 @@ CI <- function(statistic, alpha = 0.05) {
 
 knitr::kable(
   format(
-    round(CI(num_births_stat) / 1000),
+    round(CI(num_births_stat, df = degf(fem_preg_svy)) / 1000),
     big.mark = ','
   ),
   caption = '**Table 2:** Estimates of live births (in thousounds) during 2012-2016 without Filtering on `YRSTRUS`.'
@@ -263,14 +263,14 @@ knitr::kable(
 
 knitr::kable(
   format(
-    round(CI(num_births_us_stat) / 1000),
+    round(CI(num_births_us_stat, df = degf(fem_preg_svy)) / 1000),
     big.mark = ','
   ),
   caption = '**Table 3:** Estimates of live births (in thousands) during 2012-2016 with Filtering on `YRSTRUS != 4`.'
 )
 ```
 
-The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1. The lower bound of the confidence interval with filtering on `YRSTRUS` in Table 3 is approximately the lower bound in Table 1, and the upper bound of the confidence interval without filtering on `YRSTRUS` in Table 2 is very close to the upper bound in Table 1.
+The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1. The lower bound of the confidence interval without filtering on `YRSTRUS` in Table 2 is very close to the lower bound in Table 1, and the upper bound of the confidence interval with filtering on `YRSTRUS` in Table 3 is very close to the upper bound in Table 1.
 
 
 #### By Year of Delivery
