@@ -163,6 +163,23 @@ fem_preg_data$Births <- ifelse(
   0
 )
 
+fem_preg_data$RACE <- factor(
+  fem_preg_data$RACE,
+  labels = c(
+    'BLACK',
+    'WHITE',
+    'OTHER'
+  )
+)
+
+fem_preg_data$HISPANIC <- factor(
+  fem_preg_data$HISPANIC,
+  labels = c(
+    'HISPANIC',
+    'NON-HISPANIC'
+  )
+)
+
 fem_preg_svy <- svydesign(
   data = fem_preg_data,
   strat = ~SEST,
@@ -173,6 +190,9 @@ fem_preg_svy <- svydesign(
 
 fem_preg_svy
 ```
+
+
+#### Total
 
 ```{r, total-births}
 live_births_2012_2016_svy <- subset(
@@ -236,6 +256,62 @@ knitr::kable(
 ```
 
 The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1. The lower bound of the confidence interval with filtering on `YRSTRUS` in Table 3 is approximately the lower bound in Table 1, and the upper bound of the confidence interval without filtering on `YRSTRUS` in Table 2 is very close to the upper bound in Table 1.
+
+
+#### By Year of Delivery
+
+```{r by-year-of-delivery}
+svyby(
+  ~Births,
+  ~DATEND,
+  svytotal,
+  design = live_births_2012_2016_svy
+)
+
+svyby(
+  ~Births,
+  ~DATEND,
+  svytotal,
+  design = live_births_us_2012_2016_svy
+)
+```
+
+The estimated number of births for each year without any attempt to eliminate births outside the United States are overestimates compared with Table 1, while filtering births to those respondents who came to the United States during 2010-2019 results in underestimates compared with Table 1, as expected.
+
+Because of the amount of boilerplate code required, confidence intervals for subpopulations are only calculated using `srvyr` below.
+
+
+#### By Hispanic Origin and Racial Classification
+
+```{r by-hispanic-origin-and-racial-classification}
+svyby(
+  ~Births,
+  ~HISPANIC,
+  svytotal,
+  design = live_births_2012_2016_svy
+)
+
+svyby(
+  ~Births,
+  ~HISPANIC,
+  svytotal,
+  design = live_births_us_2012_2016_svy
+)
+
+svyby(
+  ~Births,
+  ~RACE,
+  svytotal,
+  design = subset(live_births_2012_2016_svy, HISPANIC == 'NON-HISPANIC')
+)
+
+svyby(
+  ~Births,
+  ~RACE,
+  svytotal,
+  design = subset(live_births_us_2012_2016_svy, HISPANIC == 'NON-HISPANIC')
+)
+```
 
 
 ## Remaining to do
