@@ -233,8 +233,6 @@ num_births_us_stat
 
 As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occuring in the United States.
 
-While using base R functions the `survey` package functions is straightfoward, the syntax becomes unwieldy when trying to handle the output, for instance, to display confidence intervals.
-
 ```{r, total-birth-CIs}
 CI <- function(statistic, alpha = 0.05) {
   stat_name <- names(coef(statistic))
@@ -283,7 +281,8 @@ svyby(
   ~DATEND,
   svytotal,
   design = live_births_2012_2016_svy,
-  keep.names = FALSE
+  keep.names = FALSE,
+  vartype = 'ci'
 )
 
 svyby(
@@ -291,13 +290,12 @@ svyby(
   ~DATEND,
   svytotal,
   design = live_births_us_2012_2016_svy,
-  keep.names = FALSE
+  keep.names = FALSE,
+  vartype = 'ci'
 )
 ```
 
 The estimated number of births for each year without any attempt to eliminate births outside the United States are overestimates compared with Table 1, while filtering births to those respondents who came to the United States during 2010-2019 results in underestimates compared with Table 1, as expected.
-
-Because of the amount of boilerplate code required, confidence intervals for subpopulations are only calculated using `srvyr` below.
 
 
 #### By Hispanic Origin and Racial Classification
@@ -308,7 +306,8 @@ svyby(
   ~HISPRACE2,
   svytotal,
   design = live_births_2012_2016_svy,
-  keep.names = FALSE
+  keep.names = FALSE,
+  vartype = 'ci'
 )
 
 svyby(
@@ -316,7 +315,8 @@ svyby(
   ~HISPRACE2,
   svytotal,
   design = live_births_us_2012_2016_svy,
-  keep.names = FALSE
+  keep.names = FALSE,
+  vartype = 'ci'
 )
 ```
 
@@ -331,7 +331,8 @@ svyby(
   ~MarriedAtBirth,
   svytotal,
   design = live_births_2012_2016_svy,
-  keep.names = FALSE
+  keep.names = FALSE,
+  vartype = 'ci'
 )
 
 svyby(
@@ -339,7 +340,8 @@ svyby(
   ~MarriedAtBirth,
   svytotal,
   design = live_births_us_2012_2016_svy,
-  keep.names = FALSE
+  keep.names = FALSE,
+  vartype = 'ci'
 )
 ```
 
@@ -354,7 +356,8 @@ svyby(
   ~BirthOrder,
   svytotal,
   design = live_births_2012_2016_svy,
-  keep.names = FALSE
+  keep.names = FALSE,
+  vartype = 'ci'
 )
 
 svyby(
@@ -362,7 +365,8 @@ svyby(
   ~BirthOrder,
   svytotal,
   design = live_births_us_2012_2016_svy,
-  keep.names = FALSE
+  keep.names = FALSE,
+  vartype = 'ci'
 )
 
 ```
