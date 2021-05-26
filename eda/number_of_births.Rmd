@@ -15,7 +15,7 @@ here::i_am(file.path('eda', 'number_of_births.Rmd'))
 
 knitr::opts_chunk$set(
   echo = TRUE,
-  cache = TRUE
+  cache = FALSE
 )
 ```
 
@@ -29,7 +29,7 @@ In order to validate the NSFG data are being used correctly with the `survey` pa
 knitr::include_graphics(file.path('img', '2017-2019_App2_table.png'))
 ```
 
-```{r load-data, message=FALSE, echo=FALSE}
+```{r load-data, message=FALSE, echo=FALSE, cache=TRUE}
 source(here('src', 'load_data.R'))
 ```
 
@@ -163,20 +163,13 @@ fem_preg_data$Births <- ifelse(
   0
 )
 
-fem_preg_data$RACE <- factor(
-  fem_preg_data$RACE,
+fem_preg_data$HISPRACE2 <- factor(
+  fem_preg_data$HISPRACE2,
   labels = c(
-    'BLACK',
-    'WHITE',
-    'OTHER'
-  )
-)
-
-fem_preg_data$HISPANIC <- factor(
-  fem_preg_data$HISPANIC,
-  labels = c(
-    'HISPANIC',
-    'NON-HISPANIC'
+    'Hispanic',
+    'Non-Hispanic White, Single Race',
+    'Non-Hispanic Black, Single Race',
+    'Non-Hispanic Other or Multiple Race'
   )
 )
 
@@ -265,14 +258,16 @@ svyby(
   ~Births,
   ~DATEND,
   svytotal,
-  design = live_births_2012_2016_svy
+  design = live_births_2012_2016_svy,
+  keep.names = FALSE
 )
 
 svyby(
   ~Births,
   ~DATEND,
   svytotal,
-  design = live_births_us_2012_2016_svy
+  design = live_births_us_2012_2016_svy,
+  keep.names = FALSE
 )
 ```
 
@@ -286,32 +281,22 @@ Because of the amount of boilerplate code required, confidence intervals for sub
 ```{r by-hispanic-origin-and-racial-classification}
 svyby(
   ~Births,
-  ~HISPANIC,
+  ~HISPRACE2,
   svytotal,
-  design = live_births_2012_2016_svy
+  design = live_births_2012_2016_svy,
+  keep.names = FALSE
 )
 
 svyby(
   ~Births,
-  ~HISPANIC,
+  ~HISPRACE2,
   svytotal,
-  design = live_births_us_2012_2016_svy
-)
-
-svyby(
-  ~Births,
-  ~RACE,
-  svytotal,
-  design = subset(live_births_2012_2016_svy, HISPANIC == 'NON-HISPANIC')
-)
-
-svyby(
-  ~Births,
-  ~RACE,
-  svytotal,
-  design = subset(live_births_us_2012_2016_svy, HISPANIC == 'NON-HISPANIC')
+  design = live_births_us_2012_2016_svy,
+  keep.names = FALSE
 )
 ```
+
+Estimated number of births in the subpopulation categorized "Hispanic or Latina" is an overestimate when compared with Table 1 without any filtering for births outside the United States, and an underestimate when filtering by respondents who came to the United States during 2010-2019. Unlike other subpopulations, both subpopulations under "Not Hispanic" have underestimates for number of births compared with Table 1, regardless of whether or not filtering based on time respondent came to United States is done.
 
 
 ## Remaining to do
