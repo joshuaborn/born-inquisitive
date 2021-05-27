@@ -32,8 +32,9 @@ In order to validate the NSFG data are being used correctly with the `survey` pa
 knitr::include_graphics(file.path('img', '2017-2019_App2_table.png'))
 ```
 
-```{r load-data, message=FALSE, echo=FALSE, cache=TRUE}
+```{r load-data, message=FALSE, cache=TRUE}
 source(here('src', 'load_data.R'))
+fem_preg_data <- load_nsfg_data('2017_2019', 'FemPregData')
 ```
 
 

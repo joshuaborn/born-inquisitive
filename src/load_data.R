@@ -5,8 +5,8 @@ library(stringr)
 here::i_am(file.path('src', 'load_data.R'))
 
 
-# This script loads the 2017-2019 NSFG data set into memory. See the README in
-# for expectations.
+# This script loads the NSFG data into memory. See the README in for
+# expectations.
 
 
 get_list_of_col_names <- function(filename) {
@@ -46,9 +46,15 @@ load_nsfg_data_set <- function(filename, path = 'data') {
   )
 }
 
-
-fem_resp_data <- load_nsfg_data_set('2017_2019_FemRespData')
-
-fem_preg_data <- load_nsfg_data_set('2017_2019_FemPregData')
-
-male_data <- load_nsfg_data_set('2017_2019_MaleData')
+load_nsfg_data <- function(year_string, data_set = NULL) {
+  if (is.null(data_set)) {
+    sapply(
+      c('FemRespData', 'FemPregData', 'MaleData'),
+      function(data_string) {
+        load_nsfg_data_set(paste(year_string, data_string, sep = '_'))
+      }
+    )
+  } else {
+    load_nsfg_data_set(paste(year_string, data_set, sep = '_'))
+  }
+}
