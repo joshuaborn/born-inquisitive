@@ -11,6 +11,7 @@ output:
 ```{r setup, include=FALSE}
 library(dplyr)
 library(here)
+library(srvyr)
 library(survey)
 
 here::i_am(file.path('eda', 'number_of_births.Rmd'))
@@ -367,7 +368,93 @@ svyby(
 The estimates for number of births for subpopulations by birth order bracket the estimates in Table 1 as described in other sections.
 
 
+### Estimated Using `srvyr` Package
+
+The `srvyr` package wraps the `survey` package providing a tidyverse-like interface. In this section, the estimates calculated above are replicated using the `srvyr` package.
+
+```{r srvyr}
+generate_birth_estimates_table <- function(srvyr_tbl) {
+  format_births <- function(raw) {
+    format(
+      round(raw / 1000),
+      big.mark = ',',
+      width = 5
+    )
+  }
+
+  subpopulation_helper <- function(varname, label) {
+    srvyr_tbl %>%
+      group_by(!!sym(varname)) %>%
+      summarize(
+        Births = survey_total(Births, vartype = 'ci')
+      ) %>%
+      rename(Subpopulation = !!sym(varname)) %>%
+      mutate(across(starts_with('Births'), format_births)) %>%
+      transmute(
+        Subpopulation = Subpopulation,
+        `Point Estimate` = Births,
+        `95% Confidence Interval` = paste(Births_low, Births_upp, sep = ' - ')
+      ) %>%
+      mutate(Label = label, .before = 1)
+  }
+
+  total_row <- srvyr_tbl %>%
+    summarize(
+      Births = survey_total(Births, vartype = 'ci')
+    ) %>%
+    mutate(across(starts_with('Births'), format_births)) %>%
+    transmute(
+      `Point Estimate` = Births,
+      `95% Confidence Interval` = paste(Births_low, Births_upp, sep = ' - ')
+    ) %>%
+    mutate(
+      Label = 'Total',
+      Subpopulation = NA,
+      .before = 1
+    )
+
+  rbind(
+    total_row,
+    subpopulation_helper('DATEND', 'By year of delivery'),
+    subpopulation_helper('HISPRACE2', 'By origin and race'),
+    subpopulation_helper('MarriedAtBirth', 'By marital status at birth'),
+    subpopulation_helper('BirthOrder', 'By birth order') %>%
+      filter(!is.na(Subpopulation))
+  )
+}
+
+live_births_2012_2016_srvyr <- fem_preg_data %>%
+  as_survey(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2017_2019,
+    nest = TRUE
+  ) %>%
+  filter(
+    DATEND >= 2012 & DATEND <= 2016
+  )
+
+knitr::kable(
+  generate_birth_estimates_table(live_births_2012_2016_srvyr),
+  align = 'llrr',
+  caption = '**Table 4:** Number of births in 2012-2016 estimated from NSFG 2017-2019 data, including some births that occurred outside of United States.'
+)
+
+live_births_us_2012_2016_srvyr <- live_births_2012_2016_srvyr %>%
+  filter(
+    is.na(YRSTRUS) | YRSTRUS != '2010-2019'
+  )
+
+knitr::kable(
+  generate_birth_estimates_table(live_births_us_2012_2016_srvyr),
+  align = 'llrr',
+  caption = '**Table 5:** Number of births in 2012-2016 estimated from NSFG 2017-2019 data, not including births of respondents who came to United States during 2010-2019.'
+)
+```
+
+Using `tidyverse` processing facilitated by `srvyr`, it is relatively easy to collect the statistics into a single table.
+
+
 ## Remaining to do
 
-* Same thing, but with `srvyr`
 * Repeat with 2015-2017 data
