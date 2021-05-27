@@ -371,7 +371,7 @@ svyby(
 The estimates for number of births for subpopulations by birth order bracket the estimates in Table 1 as described in other sections.
 
 
-### Estimated Using `srvyr` Package
+### Estimates Using `srvyr` Package
 
 The `srvyr` package wraps the `survey` package providing a tidyverse-like interface. In this section, the estimates calculated above are replicated using the `srvyr` package.
 
