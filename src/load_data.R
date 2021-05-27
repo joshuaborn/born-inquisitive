@@ -13,14 +13,14 @@ get_list_of_col_names <- function(filename) {
   raw_string <- read_file(filename)
   digits_removed <- gsub('[[:space:]-]+[[:digit:]]+', '', raw_string)
   split_vector <- str_split(digits_removed, '[[:space:]]+')[[1]]
-  if (split_vector[1] != '') split_vector else split_vector[-1]
+  split_vector[!grepl('^$', split_vector)]
 }
 
 get_list_of_col_widths <- function(filename) {
   raw_string <- read_file(filename)
   col_names_removed <- gsub('[[:alpha:]_]+[[:digit:]]*', '', raw_string)
   split_vector <- str_split(col_names_removed, '[[:space:]]+')[[1]]
-  this_vector <- if (split_vector[1] != '') split_vector else split_vector[-1]
+  this_vector <- split_vector[!grepl('^$', split_vector)]
   start_end_list <- str_split(this_vector, '-')
   sapply(start_end_list, function(vec) {
     if (length(vec) == 1) {
