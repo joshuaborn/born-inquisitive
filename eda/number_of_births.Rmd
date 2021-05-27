@@ -11,7 +11,9 @@ output:
 ```{r setup, include=FALSE}
 library(dplyr)
 library(here)
+library(readr)
 library(srvyr)
+library(stringr)
 library(survey)
 
 here::i_am(file.path('eda', 'number_of_births.Rmd'))
@@ -22,7 +24,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## During 2012-2016, Based on 2017-2019
+## During 2012-2016, Based on 2017-2019 Data
 
 [Appendix 2 to the User Guide for the 2017-2019 NSFG](https://www.cdc.gov/nchs/nsfg/nsfg_2017_2019_puf.htm) contains point estimates and confidence intervals of the number of live births during 2012-2016 in the United States, based on the 2017-2019 NSFG. These estimates are in turn compared with births registered through the National Vital Statistics System to verify their accuracy. See Table 1.
 
@@ -374,7 +376,8 @@ The estimates for number of births for subpopulations by birth order bracket the
 The `srvyr` package wraps the `survey` package providing a tidyverse-like interface. In this section, the estimates calculated above are replicated using the `srvyr` package.
 
 ```{r srvyr}
-generate_birth_estimates_table <- function(srvyr_tbl) {
+generate_birth_estimates_table <- function(srvyr_tbl,
+                                           origin_var = 'HISPRACE2') {
   format_births <- function(raw) {
     format(
       round(raw / 1000),
@@ -417,7 +420,7 @@ generate_birth_estimates_table <- function(srvyr_tbl) {
   rbind(
     total_row,
     subpopulation_helper('DATEND', 'By year of delivery'),
-    subpopulation_helper('HISPRACE2', 'By origin and race'),
+    subpopulation_helper(origin_var, 'By origin and race'),
     subpopulation_helper('MarriedAtBirth', 'By marital status at birth'),
     subpopulation_helper('BirthOrder', 'By birth order') %>%
       filter(!is.na(Subpopulation))
@@ -438,7 +441,7 @@ live_births_2012_2016_srvyr <- fem_preg_data %>%
 knitr::kable(
   generate_birth_estimates_table(live_births_2012_2016_srvyr),
   align = 'llrr',
-  caption = '**Table 4:** Number of births in 2012-2016 estimated from NSFG 2017-2019 data, including some births that occurred outside of United States.'
+  caption = '**Table 4:** Number of births in thousands during 2012-2016 estimated from NSFG 2017-2019 data, including some births that occurred outside of United States.'
 )
 
 live_births_us_2012_2016_srvyr <- live_births_2012_2016_srvyr %>%
@@ -449,13 +452,81 @@ live_births_us_2012_2016_srvyr <- live_births_2012_2016_srvyr %>%
 knitr::kable(
   generate_birth_estimates_table(live_births_us_2012_2016_srvyr),
   align = 'llrr',
-  caption = '**Table 5:** Number of births in 2012-2016 estimated from NSFG 2017-2019 data, not including births of respondents who came to United States during 2010-2019.'
+  caption = '**Table 5:** Number of births in thousands during 2012-2016 estimated from NSFG 2017-2019 data, not including births of respondents who came to United States during 2010-2019.'
 )
 ```
 
 Using `tidyverse` processing facilitated by `srvyr`, it is relatively easy to collect the statistics into a single table.
 
 
+## During 2010-2014, Based on 2015-2017 Data
+
+The documentation for the 2015-2017 NSFG has a table similar to Table 1, except in its main User Guide instead of in an appendix. It is reproduced as Table 6.
+
+```{r table6, echo=FALSE, fig.cap='**Table 6:** A table taken from Part 2 of the User Guide for the 2015-2017 NSFG.'}
+knitr::include_graphics(file.path('img', '2015-2017_births_table.png'))
+```
+
+```{r repeated-2015-2017}
+preg_data_2015_2017 <- load_nsfg_data('2015_2017', 'FemPregData')
+
+preg_data_2015_2017$Births <- as.integer(preg_data_2015_2017$OUTCOME == 1)
+
+preg_data_2015_2017$BeforeInUs <- (
+  preg_data_2015_2017$DATEND < preg_data_2015_2017$YRSTRUS
+)
+
+preg_data_2015_2017$HISPRACE <- factor(
+  preg_data_2015_2017$HISPRACE,
+  labels = c(
+    'Hispanic',
+    'Non-Hispanic White',
+    'Non-Hispanic Black',
+    'Non-Hispanic Other'
+  )
+)
+
+preg_data_2015_2017$MarriedAtBirth <- factor(
+  ifelse(preg_data_2015_2017$FMAROUT5 == 1, 'Married', 'Unmarried')
+)
+
+preg_data_2015_2017$BirthOrder <- factor(
+  ifelse(preg_data_2015_2017$BIRTHORD >= 3, 3, preg_data_2015_2017$BIRTHORD),
+  labels = c(
+    '1st',
+    '2nd',
+    '3rd or higher'
+  )
+)
+
+preg_data_2015_2017 %>%
+  as_survey(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2015_2017,
+    nest = TRUE
+  ) %>%
+  filter(
+    DATEND >= 2010,
+    DATEND <= 2014,
+    is.na(BeforeInUs) | !BeforeInUs
+  ) %>%
+  generate_birth_estimates_table(origin_var = 'HISPRACE') %>%
+  knitr::kable(
+    align = 'llrr',
+    caption = '**Table 7:** Number of births in thousands during 2010-2018 estimated from NSFG 2015-2017 data, not including births in year earlier than year respondents came to United States.'
+  )
+```
+
+The number of live births estimates for 2010-2014 based on the 2015-2017 data are summarized in Table 7. The estimates in Table 7 are much closer to those reported in Table 6 than seen with the 2017-2019 data set. This likely due to the 2015-2017 data set using a `YRSTRUS` with much more granularity than the 2017-2019 data set.
+
+Indeed, the estimates for subpopulations with 2011, 2012, 2013 and 2014 year of delivery, with "Non-Hispanic White" and "Non-Hispanic Black" categorization, with marital status at birth of married, and with "2nd" or "3rd or higher" birth order in Table 7 are exactly the point estimates and confidence intervals reported in Table 6.
+
+The slight overestimate in the total number of live births for certain subpopulations in Table 7 is likely due to the availability only of year, but not month, of birth and year, but not month, a respondent came to the United States in public use data files. Table 6 was likely generated with more precise dates. Therefore, some births that occurred outside the United States are included in the calculation of the estimates in Table 7.
+
+
 ## Remaining to do
 
-* Repeat with 2015-2017 data
+* Add forgotten age at delivery variable
+* Repeat with 2013-2015 data
+* Repeat with 2011-2013 data
