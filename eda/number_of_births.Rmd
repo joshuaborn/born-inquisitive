@@ -30,8 +30,8 @@ knitr::opts_chunk$set(
 
 In order to validate the NSFG data are being used correctly with the `survey` package viz a viz weights, pseudo-strata, and pseudo-clusters, and in order to motivate familiarization with the NSFG data set, these point estimates and these confidence intervals are replicated here.
 
-```{r table1, echo=FALSE, fig.cap='**Table 1:** A table taken from page 2 of the Appendix 2 to the User Guide for the 2017-2019 NSFG.'}
-knitr::include_graphics(file.path('img', '2017-2019_App2_table.png'))
+```{r table1, echo=FALSE, fig.cap='**Table 1:** A table of estimates of births in the United States from page 2 of the Appendix 2 to the User Guide for the 2017-2019 NSFG.'}
+knitr::include_graphics(file.path('img', '2017_2019_births_table.png'))
 ```
 
 ```{r load-data, message=FALSE, cache=TRUE}
@@ -256,7 +256,7 @@ knitr::kable(
     ),
     big.mark = ','
   ),
-  caption = '**Table 2:** Estimates of live births (in thousounds) during 2012-2016 without Filtering on `YRSTRUS`.'
+  caption = '**Table 2:** Estimates of live births (in thousands) during 2012-2016 based on the NSFG without filtering on `YRSTRUS`.'
 )
 
 knitr::kable(
@@ -269,7 +269,7 @@ knitr::kable(
     ),
     big.mark = ','
   ),
-  caption = '**Table 3:** Estimates of live births (in thousands) during 2012-2016 with Filtering on `YRSTRUS != 4`.'
+  caption = '**Table 3:** Estimates of live births (in thousands) during 2012-2016 with filtering on `YRSTRUS != 4`.'
 )
 ```
 
@@ -496,8 +496,8 @@ Using `tidyverse` processing facilitated by `srvyr`, it is relatively easy to co
 
 The documentation for the 2015-2017 NSFG has a table similar to Table 1, except in its main User Guide instead of in an appendix. It is reproduced as Table 6.
 
-```{r table6, echo=FALSE, fig.cap='**Table 6:** A table taken from Part 2 of the User Guide for the 2015-2017 NSFG.'}
-knitr::include_graphics(file.path('img', '2015-2017_births_table.png'))
+```{r table6, echo=FALSE, fig.cap='**Table 6:** A table of estimates of births in the United States  taken from Part 2 of the User Guide for the 2015-2017 NSFG.'}
+knitr::include_graphics(file.path('img', '2015_2017_births_table.png'))
 ```
 
 ```{r repeated-2015-2017}
@@ -642,7 +642,7 @@ These estimates could be checked against birth registration counts from National
 
 The User Guide for the 2011-2013 NSFG does contain a table of estimates similar to Table 1 or Table 6, though it does not contain estimates for subpopulations by year of birth. It is reproduced as Table 9.
 
-```{r table9, echo=FALSE, fig.cap='**Table 9:** A table taken from Part 2 of the User Guide for the 2011-2013 NSFG.'}
+```{r table9, echo=FALSE, fig.cap='**Table 9:** A table of estimates of births in the United States taken from Part 2 of the User Guide for the 2011-2013 NSFG.'}
 knitr::include_graphics(file.path('img', '2011_2013_births_table.png'))
 ```
 
@@ -720,7 +720,7 @@ The estimates calculated from the 2011-2013 data set that are summarized in Tabl
 
 While the User Guide for the 2006-2010 NSFG data set does contain a table of birth estimates, like Table 9 the table in the User Guide does not have estimates for subpopulations based on year of birth. The paper by Martinez, et al (2012) contains a table of birth estimates with the year of birth subpopulation estimates. It is replicated as Table 11.
 
-```{r table11, echo=FALSE, fig.cap='**Table 11:** A table taken from Martinez, et al (2012) containing estimates of number of births in the United States.'}
+```{r table11, echo=FALSE, fig.cap='**Table 11:** A table taken from Martinez, et al (2012) containing estimates of number of births in the United States during 2002-2006 based on NSFG 2006-2010 data.'}
 knitr::include_graphics(file.path('img', '2006_2010_births_table.png'))
 ```
 
@@ -796,7 +796,7 @@ Similarly to the other data sets, the estimates summarized in Table 12 are very 
 
 ## During 1997-2001, Based on 2002 (Cycle 6) Data
 
-```{r table13, echo=FALSE, fig.cap='**Table 13:** A table taken from Chandra, et al (2005) containing estimates of number of births in the United States.'}
+```{r table13, echo=FALSE, fig.cap='**Table 13:** A table taken from Chandra, et al (2005) containing estimates of number of births in the United States during 1997-2001 based on NSFG 2002 (Cycle 6) data.'}
 knitr::include_graphics(file.path('img', '2002_births_table.png'))
 ```
 
