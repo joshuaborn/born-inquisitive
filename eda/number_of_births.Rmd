@@ -36,20 +36,20 @@ knitr::include_graphics(file.path('img', '2017_2019_births_table.png'))
 
 ```{r load-data, message=FALSE, cache=TRUE}
 source(here('src', 'load_data.R'))
-fem_preg_data <- load_nsfg_data('2017_2019', 'FemPregData')
+preg_2019_data <- load_nsfg_data(2019, 'Preg')
 ```
 
 
 ### Variables for Filtering
 
-The estimates in Table 1 can be calculated from data in the female pregnancy file (`2017_2019_FemPregData.dat`). The filtering necessary for these estimates appear to be based on variables for pregnancy outcome (`OUTCOME`), year pregnancy ended (`DATEND`), whether respondent was born outside of the United States (`BRNOUT`), and the year the respondent came to the United States (`YRSTRUS`).
+The estimates in Table 1 can be calculated from data in the female pregnancy file (`2017_2019_Preg.dat`). The filtering necessary for these estimates appear to be based on variables for pregnancy outcome (`OUTCOME`), year pregnancy ended (`DATEND`), whether respondent was born outside of the United States (`BRNOUT`), and the year the respondent came to the United States (`YRSTRUS`).
 
 The `OUTCOME` and `DATEND` are recoded variables, whereas `BRNOUT` is a raw variable.
 
 ```{r check-outcome}
 count(
   data.frame(Outcome = factor(
-    fem_preg_data$OUTCOME,
+    preg_2019_data$OUTCOME,
     labels = c(
       'LIVE BIRTH',
       'INDUCED ABORTION',
@@ -67,7 +67,7 @@ The counts of each level of the `OUTCOME` variable match the counts reported in 
 
 ```{r check-datend}
 count(
-  fem_preg_data,
+  preg_2019_data,
   INAPPLICABLE = is.na(DATEND)
 )
 ```
@@ -77,7 +77,7 @@ The are 193 observations for which `DATEND` is inapplicable and 10,022 otherwise
 ```{r check-brnout}
 count(
   data.frame(BRNOUT = factor(
-    fem_preg_data$BRNOUT,
+    preg_2019_data$BRNOUT,
     labels = c('Yes', 'No', 'Refused', "Don't Know")
   )),
   BRNOUT
@@ -91,7 +91,7 @@ The `YRSTRUS` variable does not appear to be documented in the 2017-2019 NSFG do
 The Appendix 7 in the 2013-2015 NSFG documentation does discuss the `YRSTRUS` variable, stating that it contains a calculated value indicating only the year the respondent came to stay in the United States. However, as seen below, there are only the values 1, 2, 3, or 4 contained in the `YRSTRUS` data for the 2017-2019 NSFG data set, in addition to values customarily used to encode for "refused" and "don't know" responses and to encode for non-applicability.
 
 ```{r check-yrstrus}
-fem_preg_data %>%
+preg_2019_data %>%
   group_by(YRSTRUS) %>%
   count()
 ```
@@ -111,7 +111,7 @@ Fortunately, even though the 2017-2019 encoding of the `YRSTRUS` variable is not
 ```{r check-yrstrus2}
 count(
   data.frame(YRSTRUS = factor(
-    fem_preg_data$YRSTRUS,
+    preg_2019_data$YRSTRUS,
     labels = c(
       '1968-1989',
       '1990-1999',
@@ -131,7 +131,7 @@ It appears as though the `YRSTRUS` in the 2017-2019 public use files has been mo
 ### Estimates Using Unwrapped `survey` Package
 
 ```{r check-strat-and-id}
-fem_preg_data %>%
+preg_2019_data %>%
   group_by(SEST, SECU) %>%
   count()
 ```
@@ -139,8 +139,8 @@ fem_preg_data %>%
 The pseudo-stratum and pseudo-PSU identifiers appear to be nested.
 
 ```{r specify-survey-design}
-fem_preg_data$OUTCOME <- factor(
-  fem_preg_data$OUTCOME,
+preg_2019_data$OUTCOME <- factor(
+  preg_2019_data$OUTCOME,
   labels = c(
     'LIVE BIRTH',
     'INDUCED ABORTION',
@@ -151,8 +151,8 @@ fem_preg_data$OUTCOME <- factor(
   )
 )
 
-fem_preg_data$YRSTRUS <- factor(
-  fem_preg_data$YRSTRUS,
+preg_2019_data$YRSTRUS <- factor(
+  preg_2019_data$YRSTRUS,
   labels = c(
     '1968-1989',
     '1990-1999',
@@ -163,14 +163,14 @@ fem_preg_data$YRSTRUS <- factor(
   )
 )
 
-fem_preg_data$Births <- ifelse(
-  fem_preg_data$OUTCOME == 'LIVE BIRTH',
+preg_2019_data$Births <- ifelse(
+  preg_2019_data$OUTCOME == 'LIVE BIRTH',
   1,
   0
 )
 
-fem_preg_data$HISPRACE2 <- factor(
-  fem_preg_data$HISPRACE2,
+preg_2019_data$HISPRACE2 <- factor(
+  preg_2019_data$HISPRACE2,
   labels = c(
     'Hispanic',
     'Non-Hispanic White, Single Race',
@@ -179,8 +179,8 @@ fem_preg_data$HISPRACE2 <- factor(
   )
 )
 
-fem_preg_data$FMAROUT5 <- factor(
-  fem_preg_data$FMAROUT5,
+preg_2019_data$FMAROUT5 <- factor(
+  preg_2019_data$FMAROUT5,
   labels = c(
     'MARRIED',
     'DIVORCED',
@@ -190,18 +190,18 @@ fem_preg_data$FMAROUT5 <- factor(
   )
 )
 
-fem_preg_data$MarriedAtBirth <- factor(
-  ifelse(fem_preg_data$FMAROUT5 == 'MARRIED', 'Married', 'Unmarried')
+preg_2019_data$MarriedAtBirth <- factor(
+  ifelse(preg_2019_data$FMAROUT5 == 'MARRIED', 'Married', 'Unmarried')
 )
 
-fem_preg_data$AgeAtDelivery <- cut(
-  fem_preg_data$AGEPREG,
+preg_2019_data$AgeAtDelivery <- cut(
+  preg_2019_data$AGEPREG,
   c(seq(15, 30, 5), 40, 50),
   right = FALSE
 )
 
-fem_preg_data$BirthOrder <- factor(
-  ifelse(fem_preg_data$BIRTHORD >= 3, 3, fem_preg_data$BIRTHORD),
+preg_2019_data$BirthOrder <- factor(
+  ifelse(preg_2019_data$BIRTHORD >= 3, 3, preg_2019_data$BIRTHORD),
   labels = c(
     '1st',
     '2nd',
@@ -209,38 +209,38 @@ fem_preg_data$BirthOrder <- factor(
   )
 )
 
-fem_preg_svy <- svydesign(
-  data = fem_preg_data,
+preg_2019_svy <- svydesign(
+  data = preg_2019_data,
   strat = ~SEST,
   id = ~SECU,
   weight = ~WGT2017_2019,
   nest = TRUE
 )
 
-fem_preg_svy
+preg_2019_svy
 ```
 
 
 #### Total
 
 ```{r, total-births}
-live_births_2012_2016_svy <- subset(
-  fem_preg_svy,
+births_2019_svy <- subset(
+  preg_2019_svy,
   DATEND >= 2012 & DATEND <= 2016
 )
 
-live_births_us_2012_2016_svy <- subset(
-  live_births_2012_2016_svy,
+births_us_2019_svy <- subset(
+  births_2019_svy,
   is.na(YRSTRUS) | YRSTRUS != '2010-2019'
 )
 
-num_births_stat <- svytotal(~Births, live_births_2012_2016_svy)
+births_2019_stat <- svytotal(~Births, births_2019_svy)
 
-num_births_us_stat <- svytotal(~Births, live_births_us_2012_2016_svy)
+births_us_2019_stat <- svytotal(~Births, births_us_2019_svy)
 
-num_births_stat
+births_2019_stat
 
-num_births_us_stat
+births_us_2019_stat
 ```
 
 As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occuring in the United States.
@@ -250,8 +250,8 @@ knitr::kable(
   format(
     round(
       cbind(
-        coef(num_births_stat),
-        confint(num_births_stat, df = degf(fem_preg_svy))
+        coef(births_2019_stat),
+        confint(births_2019_stat, df = degf(preg_2019_svy))
       ) / 1000
     ),
     big.mark = ','
@@ -263,8 +263,8 @@ knitr::kable(
   format(
     round(
       cbind(
-        coef(num_births_us_stat),
-        confint(num_births_us_stat, df = degf(fem_preg_svy))
+        coef(births_us_2019_stat),
+        confint(births_us_2019_stat, df = degf(preg_2019_svy))
       ) / 1000
     ),
     big.mark = ','
@@ -283,7 +283,7 @@ svyby(
   ~Births,
   ~DATEND,
   svytotal,
-  design = live_births_2012_2016_svy,
+  design = births_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -292,7 +292,7 @@ svyby(
   ~Births,
   ~DATEND,
   svytotal,
-  design = live_births_us_2012_2016_svy,
+  design = births_us_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -308,7 +308,7 @@ svyby(
   ~Births,
   ~HISPRACE2,
   svytotal,
-  design = live_births_2012_2016_svy,
+  design = births_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -317,7 +317,7 @@ svyby(
   ~Births,
   ~HISPRACE2,
   svytotal,
-  design = live_births_us_2012_2016_svy,
+  design = births_us_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -333,7 +333,7 @@ svyby(
   ~Births,
   ~MarriedAtBirth,
   svytotal,
-  design = live_births_2012_2016_svy,
+  design = births_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -342,7 +342,7 @@ svyby(
   ~Births,
   ~MarriedAtBirth,
   svytotal,
-  design = live_births_us_2012_2016_svy,
+  design = births_us_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -358,7 +358,7 @@ svyby(
   ~Births,
   ~AgeAtDelivery,
   svytotal,
-  design = live_births_2012_2016_svy,
+  design = births_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -367,7 +367,7 @@ svyby(
   ~Births,
   ~AgeAtDelivery,
   svytotal,
-  design = live_births_us_2012_2016_svy,
+  design = births_us_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -383,7 +383,7 @@ svyby(
   ~Births,
   ~BirthOrder,
   svytotal,
-  design = live_births_2012_2016_svy,
+  design = births_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -392,7 +392,7 @@ svyby(
   ~Births,
   ~BirthOrder,
   svytotal,
-  design = live_births_us_2012_2016_svy,
+  design = births_us_2019_svy,
   keep.names = FALSE,
   vartype = 'ci'
 )
@@ -460,7 +460,7 @@ generate_birth_estimates_table <- function(srvyr_tbl,
   )
 }
 
-live_births_2012_2016_srvyr <- fem_preg_data %>%
+births_2019_srvyr <- preg_2019_data %>%
   as_survey(
     strata = SEST,
     ids = SECU,
@@ -472,18 +472,18 @@ live_births_2012_2016_srvyr <- fem_preg_data %>%
   )
 
 knitr::kable(
-  generate_birth_estimates_table(live_births_2012_2016_srvyr),
+  generate_birth_estimates_table(births_2019_srvyr),
   align = 'llrr',
   caption = '**Table 4:** Number of births in thousands during 2012-2016 estimated from NSFG 2017-2019 data, including some births that occurred outside of United States.'
 )
 
-live_births_us_2012_2016_srvyr <- live_births_2012_2016_srvyr %>%
+births_us_2019_srvyr <- births_2019_srvyr %>%
   filter(
     is.na(YRSTRUS) | YRSTRUS != '2010-2019'
   )
 
 knitr::kable(
-  generate_birth_estimates_table(live_births_us_2012_2016_srvyr),
+  generate_birth_estimates_table(births_us_2019_srvyr),
   align = 'llrr',
   caption = '**Table 5:** Number of births in thousands during 2012-2016 estimated from NSFG 2017-2019 data, not including births of respondents who came to United States during 2010-2019.'
 )
@@ -501,16 +501,16 @@ knitr::include_graphics(file.path('img', '2015_2017_births_table.png'))
 ```
 
 ```{r repeated-2015-2017}
-preg_data_2015_2017 <- load_nsfg_data('2015_2017', 'FemPregData')
+preg_2017_data <- load_nsfg_data(2017, 'Preg')
 
-preg_data_2015_2017$Births <- as.integer(preg_data_2015_2017$OUTCOME == 1)
+preg_2017_data$Births <- as.integer(preg_2017_data$OUTCOME == 1)
 
-preg_data_2015_2017$BeforeInUs <- (
-  preg_data_2015_2017$DATEND < preg_data_2015_2017$YRSTRUS
+preg_2017_data$BeforeInUs <- (
+  preg_2017_data$DATEND < preg_2017_data$YRSTRUS
 )
 
-preg_data_2015_2017$HISPRACE <- factor(
-  preg_data_2015_2017$HISPRACE,
+preg_2017_data$HISPRACE <- factor(
+  preg_2017_data$HISPRACE,
   labels = c(
     'Hispanic',
     'Non-Hispanic White',
@@ -519,18 +519,18 @@ preg_data_2015_2017$HISPRACE <- factor(
   )
 )
 
-preg_data_2015_2017$MarriedAtBirth <- factor(
-  ifelse(preg_data_2015_2017$FMAROUT5 == 1, 'Married', 'Unmarried')
+preg_2017_data$MarriedAtBirth <- factor(
+  ifelse(preg_2017_data$FMAROUT5 == 1, 'Married', 'Unmarried')
 )
 
-preg_data_2015_2017$AgeAtDelivery <- cut(
-  preg_data_2015_2017$AGEPREG,
+preg_2017_data$AgeAtDelivery <- cut(
+  preg_2017_data$AGEPREG,
   c(seq(15, 30, 5), 40, 50),
   right = FALSE
 )
 
-preg_data_2015_2017$BirthOrder <- factor(
-  ifelse(preg_data_2015_2017$BIRTHORD >= 3, 3, preg_data_2015_2017$BIRTHORD),
+preg_2017_data$BirthOrder <- factor(
+  ifelse(preg_2017_data$BIRTHORD >= 3, 3, preg_2017_data$BIRTHORD),
   labels = c(
     '1st',
     '2nd',
@@ -538,7 +538,7 @@ preg_data_2015_2017$BirthOrder <- factor(
   )
 )
 
-preg_data_2015_2017 %>%
+preg_2017_data %>%
   as_survey(
     strata = SEST,
     ids = SECU,
@@ -569,18 +569,18 @@ The slight overestimate in the total number of live births for certain subpopula
 No set of estimates similar to Table 1 or Table 6 are released with the 2013-2015 NSFG, either in the User Guide or in a separate paper. For completeness and to verify correct loading of the data set, live birth estimates are still generated here.
 
 ```{r repeated-2013-2015}
-preg_data_2013_2015 <- load_nsfg_data('2013_2015', 'FemPregData')
+preg_2015_data <- load_nsfg_data(2015, 'Preg')
 
-preg_data_2013_2015$Births <- as.integer(preg_data_2013_2015$OUTCOME == 1)
+preg_2015_data$Births <- as.integer(preg_2015_data$OUTCOME == 1)
 
-preg_data_2013_2015$YearEnd <- floor(preg_data_2013_2015$DATEND / 12) + 1900
+preg_2015_data$YearEnd <- floor(preg_2015_data$DATEND / 12) + 1900
 
-preg_data_2013_2015$BeforeInUs <- (
-  preg_data_2013_2015$YearEnd < preg_data_2013_2015$YRSTRUS
+preg_2015_data$BeforeInUs <- (
+  preg_2015_data$YearEnd < preg_2015_data$YRSTRUS
 )
 
-preg_data_2013_2015$HISPRACE <- factor(
-  preg_data_2013_2015$HISPRACE,
+preg_2015_data$HISPRACE <- factor(
+  preg_2015_data$HISPRACE,
   labels = c(
     'Hispanic',
     'Non-Hispanic White',
@@ -589,12 +589,12 @@ preg_data_2013_2015$HISPRACE <- factor(
   )
 )
 
-preg_data_2013_2015$MarriedAtBirth <- factor(
-  ifelse(preg_data_2013_2015$FMAROUT5 == 1, 'Married', 'Unmarried')
+preg_2015_data$MarriedAtBirth <- factor(
+  ifelse(preg_2015_data$FMAROUT5 == 1, 'Married', 'Unmarried')
 )
 
-preg_data_2013_2015$AgeAtDelivery <- cut(
-  preg_data_2013_2015$AGEPREG,
+preg_2015_data$AgeAtDelivery <- cut(
+  preg_2015_data$AGEPREG,
   c(0, 2000, 2500, 3000, 4500),
   right = FALSE,
   labels = c(
@@ -605,8 +605,8 @@ preg_data_2013_2015$AgeAtDelivery <- cut(
   )
 )
 
-preg_data_2013_2015$BirthOrder <- factor(
-  ifelse(preg_data_2013_2015$BIRTHORD >= 3, 3, preg_data_2013_2015$BIRTHORD),
+preg_2015_data$BirthOrder <- factor(
+  ifelse(preg_2015_data$BIRTHORD >= 3, 3, preg_2015_data$BIRTHORD),
   labels = c(
     '1st',
     '2nd',
@@ -614,7 +614,7 @@ preg_data_2013_2015$BirthOrder <- factor(
   )
 )
 
-preg_data_2013_2015 %>%
+preg_2015_data %>%
   as_survey(
     strata = SEST,
     ids = SECU,
@@ -647,18 +647,18 @@ knitr::include_graphics(file.path('img', '2011_2013_births_table.png'))
 ```
 
 ```{r repeated-2011-2013}
-preg_data_2011_2013 <- load_nsfg_data('2011_2013', 'FemPregData')
+preg_2013_data <- load_nsfg_data(2013, 'Preg')
 
-preg_data_2011_2013$Births <- as.integer(preg_data_2011_2013$OUTCOME == 1)
+preg_2013_data$Births <- as.integer(preg_2013_data$OUTCOME == 1)
 
-preg_data_2011_2013$YearEnd <- floor(preg_data_2011_2013$DATEND / 12) + 1900
+preg_2013_data$YearEnd <- floor(preg_2013_data$DATEND / 12) + 1900
 
-preg_data_2011_2013$BeforeInUs <- (
-  preg_data_2011_2013$YearEnd < preg_data_2011_2013$YRSTRUS
+preg_2013_data$BeforeInUs <- (
+  preg_2013_data$YearEnd < preg_2013_data$YRSTRUS
 )
 
-preg_data_2011_2013$HISPRACE <- factor(
-  preg_data_2011_2013$HISPRACE,
+preg_2013_data$HISPRACE <- factor(
+  preg_2013_data$HISPRACE,
   labels = c(
     'Hispanic',
     'Non-Hispanic White',
@@ -667,12 +667,12 @@ preg_data_2011_2013$HISPRACE <- factor(
   )
 )
 
-preg_data_2011_2013$MarriedAtBirth <- factor(
-  ifelse(preg_data_2011_2013$FMAROUT5 == 1, 'Married', 'Unmarried')
+preg_2013_data$MarriedAtBirth <- factor(
+  ifelse(preg_2013_data$FMAROUT5 == 1, 'Married', 'Unmarried')
 )
 
-preg_data_2011_2013$AgeAtDelivery <- cut(
-  preg_data_2011_2013$AGEPREG,
+preg_2013_data$AgeAtDelivery <- cut(
+  preg_2013_data$AGEPREG,
   c(0, 2000, 2500, 3000, 4500),
   right = FALSE,
   labels = c(
@@ -683,8 +683,8 @@ preg_data_2011_2013$AgeAtDelivery <- cut(
   )
 )
 
-preg_data_2011_2013$BirthOrder <- factor(
-  ifelse(preg_data_2011_2013$BIRTHORD >= 3, 3, preg_data_2011_2013$BIRTHORD),
+preg_2013_data$BirthOrder <- factor(
+  ifelse(preg_2013_data$BIRTHORD >= 3, 3, preg_2013_data$BIRTHORD),
   labels = c(
     '1st',
     '2nd',
@@ -692,7 +692,7 @@ preg_data_2011_2013$BirthOrder <- factor(
   )
 )
 
-preg_data_2011_2013 %>%
+preg_2013_data %>%
   as_survey(
     strata = SEST,
     ids = SECU,
@@ -725,18 +725,18 @@ knitr::include_graphics(file.path('img', '2006_2010_births_table.png'))
 ```
 
 ```{r repeated-2006-2010}
-preg_data_2006_2010 <- load_nsfg_data('2006_2010', 'FemPreg')
+preg_2010_data <- load_nsfg_data(2010, 'Preg')
 
-preg_data_2006_2010$Births <- as.integer(preg_data_2006_2010$OUTCOME == 1)
+preg_2010_data$Births <- as.integer(preg_2010_data$OUTCOME == 1)
 
-preg_data_2006_2010$YearEnd <- floor(preg_data_2006_2010$DATEND / 12) + 1900
+preg_2010_data$YearEnd <- floor(preg_2010_data$DATEND / 12) + 1900
 
-preg_data_2006_2010$BeforeInUs <- (
-  preg_data_2006_2010$YearEnd < preg_data_2006_2010$YRSTRUS
+preg_2010_data$BeforeInUs <- (
+  preg_2010_data$YearEnd < preg_2010_data$YRSTRUS
 )
 
-preg_data_2006_2010$HISPRACE <- factor(
-  preg_data_2006_2010$HISPRACE,
+preg_2010_data$HISPRACE <- factor(
+  preg_2010_data$HISPRACE,
   labels = c(
     'Hispanic',
     'Non-Hispanic White',
@@ -745,12 +745,12 @@ preg_data_2006_2010$HISPRACE <- factor(
   )
 )
 
-preg_data_2006_2010$MarriedAtBirth <- factor(
-  ifelse(preg_data_2006_2010$FMAROUT5 == 1, 'Married', 'Unmarried')
+preg_2010_data$MarriedAtBirth <- factor(
+  ifelse(preg_2010_data$FMAROUT5 == 1, 'Married', 'Unmarried')
 )
 
-preg_data_2006_2010$AgeAtDelivery <- cut(
-  preg_data_2006_2010$AGEPREG,
+preg_2010_data$AgeAtDelivery <- cut(
+  preg_2010_data$AGEPREG,
   c(0, 2000, 2500, 3000, 4500),
   right = FALSE,
   labels = c(
@@ -761,8 +761,8 @@ preg_data_2006_2010$AgeAtDelivery <- cut(
   )
 )
 
-preg_data_2006_2010$BirthOrder <- factor(
-  ifelse(preg_data_2006_2010$BIRTHORD >= 3, 3, preg_data_2006_2010$BIRTHORD),
+preg_2010_data$BirthOrder <- factor(
+  ifelse(preg_2010_data$BIRTHORD >= 3, 3, preg_2010_data$BIRTHORD),
   labels = c(
     '1st',
     '2nd',
@@ -770,7 +770,7 @@ preg_data_2006_2010$BirthOrder <- factor(
   )
 )
 
-preg_data_2006_2010 %>%
+preg_2010_data %>%
   as_survey(
     strata = SEST,
     ids = SECU,
@@ -801,18 +801,18 @@ knitr::include_graphics(file.path('img', '2002_births_table.png'))
 ```
 
 ```{r repeated-2002}
-preg_data_2002 <- load_nsfg_data('2002', 'FemPreg')
+preg_2002_data <- load_nsfg_data(2002, 'Preg')
 
-preg_data_2002$Births <- as.integer(preg_data_2002$OUTCOME == 1)
+preg_2002_data$Births <- as.integer(preg_2002_data$OUTCOME == 1)
 
-preg_data_2002$YearEnd <- floor(preg_data_2002$DATEND / 12) + 1900
+preg_2002_data$YearEnd <- floor(preg_2002_data$DATEND / 12) + 1900
 
-preg_data_2002$BeforeInUs <- (
-  preg_data_2002$YearEnd < preg_data_2002$YRSTRUS
+preg_2002_data$BeforeInUs <- (
+  preg_2002_data$YearEnd < preg_2002_data$YRSTRUS
 )
 
-preg_data_2002$HISPRACE <- factor(
-  preg_data_2002$HISPRACE,
+preg_2002_data$HISPRACE <- factor(
+  preg_2002_data$HISPRACE,
   labels = c(
     'Hispanic',
     'Non-Hispanic White',
@@ -821,12 +821,12 @@ preg_data_2002$HISPRACE <- factor(
   )
 )
 
-preg_data_2002$MarriedAtBirth <- factor(
-  ifelse(preg_data_2002$FMAROUT5 == 1, 'Married', 'Unmarried')
+preg_2002_data$MarriedAtBirth <- factor(
+  ifelse(preg_2002_data$FMAROUT5 == 1, 'Married', 'Unmarried')
 )
 
-preg_data_2002$AgeAtDelivery <- cut(
-  preg_data_2002$AGEPREG,
+preg_2002_data$AgeAtDelivery <- cut(
+  preg_2002_data$AGEPREG,
   c(0, 2000, 2500, 3000, 4500),
   right = FALSE,
   labels = c(
@@ -837,8 +837,8 @@ preg_data_2002$AgeAtDelivery <- cut(
   )
 )
 
-preg_data_2002$BirthOrder <- factor(
-  ifelse(preg_data_2002$BIRTHORD >= 3, 3, preg_data_2002$BIRTHORD),
+preg_2002_data$BirthOrder <- factor(
+  ifelse(preg_2002_data$BIRTHORD >= 3, 3, preg_2002_data$BIRTHORD),
   labels = c(
     '1st',
     '2nd',
@@ -846,7 +846,7 @@ preg_data_2002$BirthOrder <- factor(
   )
 )
 
-preg_data_2002 %>%
+preg_2002_data %>%
   as_survey(
     strata = SEST,
     ids = SECU_P,
