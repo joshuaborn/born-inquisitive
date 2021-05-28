@@ -48,8 +48,12 @@ load_nsfg_data_set <- function(filename, path = 'data') {
 
 load_nsfg_data <- function(year_string, data_set = NULL) {
   if (is.null(data_set)) {
+    data_sets <- c('FemRespData', 'FemPregData', 'MaleData')
+    if (year_string == '2006_2010') {
+      data_sets <- sub('Data$', '', data_sets)
+    }
     sapply(
-      c('FemRespData', 'FemPregData', 'MaleData'),
+      data_sets,
       function(data_string) {
         load_nsfg_data_set(paste(year_string, data_string, sep = '_'))
       }

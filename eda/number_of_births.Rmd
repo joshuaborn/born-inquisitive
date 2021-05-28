@@ -20,7 +20,7 @@ here::i_am(file.path('eda', 'number_of_births.Rmd'))
 
 knitr::opts_chunk$set(
   echo = TRUE,
-  cache = FALSE
+  cache = TRUE
 )
 ```
 
@@ -716,8 +716,89 @@ preg_data_2011_2013 %>%
 The estimates calculated from the 2011-2013 data set that are summarized in Table 10 are very close to those reported in Table 9. The differences are likely due to the lack of precision in the public use data files regarding respondents' time of entry to the United States.
 
 
+## During 2002-2006, Based on 2006-2010 Data
+
+While the User Guide for the 2006-2010 NSFG data set does contain a table of birth estimates, like Table 9 the table in the User Guide does not have estimates for subpopulations based on year of birth. The paper by Martinez, et al (2012) contains a table of birth estimates with the year of birth subpopulation estimates. It is replicated as Table 11.
+
+```{r table11, echo=FALSE, fig.cap='**Table 11:** A table taken from Martinez, et al (2012) containing estimates of number of births in the United States.'}
+knitr::include_graphics(file.path('img', '2006_2010_births_table.png'))
+```
+
+```{r repeated-2006-2010}
+preg_data_2006_2010 <- load_nsfg_data('2006_2010', 'FemPreg')
+
+preg_data_2006_2010$Births <- as.integer(preg_data_2006_2010$OUTCOME == 1)
+
+preg_data_2006_2010$YearEnd <- floor(preg_data_2006_2010$DATEND / 12) + 1900
+
+preg_data_2006_2010$BeforeInUs <- (
+  preg_data_2006_2010$YearEnd < preg_data_2006_2010$YRSTRUS
+)
+
+preg_data_2006_2010$HISPRACE <- factor(
+  preg_data_2006_2010$HISPRACE,
+  labels = c(
+    'Hispanic',
+    'Non-Hispanic White',
+    'Non-Hispanic Black',
+    'Non-Hispanic Other'
+  )
+)
+preg_data_2006_2010$MarriedAtBirth <- factor(
+  ifelse(preg_data_2006_2010$FMAROUT5 == 1, 'Married', 'Unmarried')
+)
+
+preg_data_2006_2010$AgeAtDelivery <- cut(
+  preg_data_2006_2010$AGEPREG,
+  c(0, 2000, 2500, 3000, 4500),
+  right = FALSE,
+  labels = c(
+    'UNDER 20 YEARS',
+    '20-24 YEARS',
+    '25-29 YEARS',
+    '30-44 YEARS'
+  )
+)
+
+preg_data_2006_2010$BirthOrder <- factor(
+  ifelse(preg_data_2006_2010$BIRTHORD >= 3, 3, preg_data_2006_2010$BIRTHORD),
+  labels = c(
+    '1st',
+    '2nd',
+    '3rd or higher'
+  )
+)
+
+preg_data_2006_2010 %>%
+  as_survey(
+    strata = SEST,
+    ids = SECU,
+    weights = WGTQ1Q16,
+    nest = TRUE
+  ) %>%
+  filter(
+    YearEnd >= 2002,
+    YearEnd <= 2006,
+    is.na(BeforeInUs) | !BeforeInUs
+  ) %>%
+  generate_birth_estimates_table(
+    origin_var = 'HISPRACE', year_end_var = 'YearEnd'
+  ) %>%
+  knitr::kable(
+    align = 'llrr',
+    caption = '**Table 12:** Number of births in thousands during 2002-2006 estimated from NSFG 2006-2010 data, not including births in year earlier than year respondents came to United States.'
+  )
+```
+
+Similarly to the other data sets, the estimates summarized in Table 12 are very close to the published estimates in Table 11, and inclusion of some births that occurred outside the United States in calculating the estimates of Table 12 likely accounts for the differences.
+
+
+## Citations
+
+Martinez GM, Daniels K, Chandra A. Fertility of men and women aged 15–44 years in the United States: National Survey of Family Growth, 2006–2010. National health statistics reports; no. 51. Hyattsville, MD: National Center for Health Statistics. 2012.
+
+
 ## Remaining to do
 
-* Repeat with 2006-2010 data
 * Repeat with Cycle 6 (2002) data
 * Repeat with Cycle 5 (1995) data
