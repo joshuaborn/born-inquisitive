@@ -3,6 +3,8 @@
 .RData
 .Ruserdata
 **.swp
-data/
+data/*.dat
+data/*.sas
+data/*.csv
 eda/*_cache/
 eda/*.html

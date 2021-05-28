@@ -407,7 +407,8 @@ The `srvyr` package wraps the `survey` package providing a tidyverse-like interf
 
 ```{r srvyr}
 generate_birth_estimates_table <- function(srvyr_tbl,
-                                           origin_var = 'HISPRACE2') {
+                                           origin_var = 'HISPRACE2',
+                                           year_end_var = 'DATEND') {
   format_births <- function(raw) {
     format(
       round(raw / 1000),
@@ -449,7 +450,7 @@ generate_birth_estimates_table <- function(srvyr_tbl,
 
   rbind(
     total_row,
-    subpopulation_helper('DATEND', 'By year of delivery'),
+    subpopulation_helper(year_end_var, 'By year of delivery'),
     subpopulation_helper(origin_var, 'By origin and race'),
     subpopulation_helper('MarriedAtBirth', 'By marital status at birth'),
     subpopulation_helper('AgeAtDelivery', 'By age at delivery') %>%
@@ -552,7 +553,7 @@ preg_data_2015_2017 %>%
   generate_birth_estimates_table(origin_var = 'HISPRACE') %>%
   knitr::kable(
     align = 'llrr',
-    caption = '**Table 7:** Number of births in thousands during 2010-2018 estimated from NSFG 2015-2017 data, not including births in year earlier than year respondents came to United States.'
+    caption = '**Table 7:** Number of births in thousands during 2010-2014 estimated from NSFG 2015-2017 data, not including births in year earlier than year respondents came to United States.'
   )
 ```
 
@@ -563,7 +564,83 @@ Indeed, the estimates for subpopulations with 2011, 2012, 2013 and 2014 year of 
 The slight overestimate in the total number of live births for certain subpopulations in Table 7 is likely due to the availability only of year, but not month, of birth and year, but not month, a respondent came to the United States in public use data files. Table 6 was likely generated with more precise dates. Therefore, some births that occurred outside the United States are included in the calculation of the estimates in Table 7.
 
 
+## During 2008-2012, Based on 2013-2015 Data
+
+No set of estimates similar to Table 1 or Table 6 are released with the 2013-2015 NSFG, either in the User Guide or in a separate paper. For completeness and to verify correct loading of the data set, live birth estimates are still generated here.
+
+```{r repeated-2013-2015}
+preg_data_2013_2015 <- load_nsfg_data('2013_2015', 'FemPregData')
+
+preg_data_2013_2015$Births <- as.integer(preg_data_2013_2015$OUTCOME == 1)
+
+preg_data_2013_2015$YearEnd <- floor(preg_data_2013_2015$DATEND / 12) + 1900
+
+preg_data_2013_2015$BeforeInUs <- (
+  preg_data_2013_2015$YearEnd < preg_data_2013_2015$YRSTRUS
+)
+
+preg_data_2013_2015$HISPRACE <- factor(
+  preg_data_2013_2015$HISPRACE,
+  labels = c(
+    'Hispanic',
+    'Non-Hispanic White',
+    'Non-Hispanic Black',
+    'Non-Hispanic Other'
+  )
+)
+
+preg_data_2013_2015$MarriedAtBirth <- factor(
+  ifelse(preg_data_2013_2015$FMAROUT5 == 1, 'Married', 'Unmarried')
+)
+
+preg_data_2013_2015$AgeAtDelivery <- cut(
+  preg_data_2013_2015$AGEPREG,
+  c(0, 2000, 2500, 3000, 4500),
+  right = FALSE,
+  labels = c(
+    'UNDER 20 YEARS',
+    '20-24 YEARS',
+    '25-29 YEARS',
+    '30-44 YEARS'
+  )
+)
+
+preg_data_2013_2015$BirthOrder <- factor(
+  ifelse(preg_data_2013_2015$BIRTHORD >= 3, 3, preg_data_2013_2015$BIRTHORD),
+  labels = c(
+    '1st',
+    '2nd',
+    '3rd or higher'
+  )
+)
+
+preg_data_2013_2015 %>%
+  as_survey(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2013_2015,
+    nest = TRUE
+  ) %>%
+  filter(
+    YearEnd >= 2008,
+    YearEnd <= 2012,
+    is.na(BeforeInUs) | !BeforeInUs
+  ) %>%
+  generate_birth_estimates_table(
+    origin_var = 'HISPRACE', year_end_var = 'YearEnd'
+  ) %>%
+  knitr::kable(
+    align = 'llrr',
+    caption = '**Table 8:** Number of births in thousands during 2008-2012 estimated from NSFG 2013-2015 data, not including births in year earlier than year respondents came to United States.'
+  )
+```
+
+These estimates could be checked against birth registration counts from National Vital Statistics System.
+
+
 ## Remaining to do
 
-* Repeat with 2013-2015 data
 * Repeat with 2011-2013 data
+* Repeat with 2006-2010 data
+* Repeat with Cycle 6 (2002) data
+* Repeat with Cycle 5 (1995) data

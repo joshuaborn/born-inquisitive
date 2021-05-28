@@ -2,7 +2,7 @@
 
 This repository contains scripts and documents pertaining to analysis of the [National Survey of Family Growth (NSFG)](https://www.cdc.gov/nchs/nsfg/index.htm), mostly pertaining to contraception and related matters.
 
-Currently, these scripts have been tested with the 2017-2019 and the 2015-2017 data sets.
+Currently, these scripts have been tested with the 2017-2019, 2015-2017, and 2013-2015 data sets.
 
 
 ## Directory Structure
