@@ -638,9 +638,86 @@ preg_data_2013_2015 %>%
 These estimates could be checked against birth registration counts from National Vital Statistics System.
 
 
+## During 2006-2010, Based on 2011-2013 Data
+
+The User Guide for the 2011-2013 NSFG does contain a table of estimates similar to Table 1 or Table 6, though it does not contain estimates for subpopulations by year of birth. It is reproduced as Table 9.
+
+```{r table9, echo=FALSE, fig.cap='**Table 9:** A table taken from Part 2 of the User Guide for the 2011-2013 NSFG.'}
+knitr::include_graphics(file.path('img', '2011_2013_births_table.png'))
+```
+
+```{r repeated-2011-2013}
+preg_data_2011_2013 <- load_nsfg_data('2011_2013', 'FemPregData')
+
+preg_data_2011_2013$Births <- as.integer(preg_data_2011_2013$OUTCOME == 1)
+
+preg_data_2011_2013$YearEnd <- floor(preg_data_2011_2013$DATEND / 12) + 1900
+
+preg_data_2011_2013$BeforeInUs <- (
+  preg_data_2011_2013$YearEnd < preg_data_2011_2013$YRSTRUS
+)
+
+preg_data_2011_2013$HISPRACE <- factor(
+  preg_data_2011_2013$HISPRACE,
+  labels = c(
+    'Hispanic',
+    'Non-Hispanic White',
+    'Non-Hispanic Black',
+    'Non-Hispanic Other'
+  )
+)
+
+preg_data_2011_2013$MarriedAtBirth <- factor(
+  ifelse(preg_data_2011_2013$FMAROUT5 == 1, 'Married', 'Unmarried')
+)
+
+preg_data_2011_2013$AgeAtDelivery <- cut(
+  preg_data_2011_2013$AGEPREG,
+  c(0, 2000, 2500, 3000, 4500),
+  right = FALSE,
+  labels = c(
+    'UNDER 20 YEARS',
+    '20-24 YEARS',
+    '25-29 YEARS',
+    '30-44 YEARS'
+  )
+)
+
+preg_data_2011_2013$BirthOrder <- factor(
+  ifelse(preg_data_2011_2013$BIRTHORD >= 3, 3, preg_data_2011_2013$BIRTHORD),
+  labels = c(
+    '1st',
+    '2nd',
+    '3rd or higher'
+  )
+)
+
+preg_data_2011_2013 %>%
+  as_survey(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2011_2013,
+    nest = TRUE
+  ) %>%
+  filter(
+    YearEnd >= 2006,
+    YearEnd <= 2010,
+    is.na(BeforeInUs) | !BeforeInUs
+  ) %>%
+  generate_birth_estimates_table(
+    origin_var = 'HISPRACE', year_end_var = 'YearEnd'
+  ) %>%
+  knitr::kable(
+    align = 'llrr',
+    caption = '**Table 10:** Number of births in thousands during 2006-2010 estimated from NSFG 2011-2013 data, not including births in year earlier than year respondents came to United States.'
+  )
+```
+
+The estimates calculated from the 2011-2013 data set that are summarized in Table 10 are very close to those reported in Table 9. The differences are likely due to the lack of precision in the public use data files regarding respondents' time of entry to the United States.
+
+
 ## Remaining to do
 
-* Repeat with 2011-2013 data
 * Repeat with 2006-2010 data
 * Repeat with Cycle 6 (2002) data
 * Repeat with Cycle 5 (1995) data
