@@ -880,3 +880,7 @@ Martinez GM, Daniels K, Chandra A. Fertility of men and women aged 15–44 years
 ## Remaining to do
 
 * Repeat with Cycle 5 (1995) data
+* Repeat with Cycle 4 (1988) data
+* Repeat with Cycle 3 (1982) data
+* Repeat with Cycle 2 (1976) data
+* Repeat with Cycle 1 (1973) data
