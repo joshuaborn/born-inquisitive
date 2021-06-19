@@ -1,9 +1,9 @@
 ---
-title: "Moral Fictions"
+title: "Moral Delusions"
 draft: false
 date: 2020-12-28
 tags: ["worldview", "morality"]
-bibliography: "../bibliographies/moral-fictions.bib"
+bibliography: "../bibliographies/moral-delusions.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
