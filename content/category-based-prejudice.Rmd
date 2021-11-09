@@ -1,10 +1,10 @@
 ---
 title: "Category-Based Prejudice"
 draft: true
-date: 2021-01-31
+date: 2021-11-19
 tags: ["critical thinking"]
-#bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
-#csl: "../bibliographies/chicago-author-date.csl"
+bibliography: "../bibliographies/category-based-prejudice.bib"
+csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
 output:
@@ -19,6 +19,39 @@ include-before: |
 ---
 
 ## Introduction
+
+
+### Terminology
+
+This article discusses the fallacies associated with judging an individual based on how the individual is categorized as one of a large population of individuals. The word "prejudice" can be used to name this practice. However, "prejudice" in the English can be interpreted either too broadly or too narrowly.
+
+For instance, the first definition for "prejudice" in the _American Heritage Dictionary of the English Language_ consists of two parts: "the act or state of holding unreasonable preconceived judgments or convictions," and "an adverse judgment or opinion formed unfairly or without knowledge of the facts." [@pickett_american_2018] This first definition is more broad than how "prejudice" is used in this article; there are many different kinds of such prejudice, beyond the specific kind discussed in this article.
+
+The second definition for "prejudice" in the _American Heritage Dictionary of the English Language_ is "irrational suspicion or hatred of a particular social group, such as a race or the adherents of a religion." [@pickett_american_2018] This is similar to how the word "bigotry" is used in contemporary discourse.
+
+This second definition is more narrow than how "prejudice" is used in this article in at least two ways. First, this definition applies specifically to judgments about human beings, whereas the fallacies discussed here apply equally well when reasoning about rocks, single-celled organisms, music, countries, or anything else that can be categorized. Second, this definition construes "prejudice" as referring to judgments that are undesirable, whereas the way "prejudice" is used in this article can refer to judgments about desirable traits, as well.
+
+Because the English language lacks a word with the precise scope desired by this article, the phrase "category-based prejudice" is used.
+
+
+### Analytical vs. Moral Dimensions
+
+The criticisms this article puts forth of category-based prejudice are entirely with regard to the flaws such prejudice imparts on one's understanding of the world. Much can be written about the [moral](/moral-skepticism.html) aspects of category-based prejudice targeting human beings in particular, but writing about the evils of bigotry are are beyond the scope of this article and left to works of social science or history. Instead, this article focuses on criticisms of category-based prejudice as a form of reasoning, regardless of the consequences of such thinking.
+
+Thus, the criticisms articulated here are independent of the moral dimensions of category-based prejudice. This article puts forward the thesis that category-based prejudice is always a flawed way of thinking, even if there does not appear to be anything morally objectionable about it. Indeed, even if one judges a specific instance of category-based prejudice as morally justified, the fallacies discussed in this article remain.
+
+
+## Why the Practice is a Fallacy
+
+Category-based prejudice is flawed because of two phenomena that can be broadly stated as points 1 and 2 below.
+
+1. Properties of populations are not properties of individuals.
+2. Categorization is arbitrary.
+
+These phenomena are first illustrated visually and abstractly using a collection of shapes as an example. Then these phenomena are discussed in the context of more concrete examples involving gender bias in hiring.
+
+
+## Countermeasures to the Fallacy
 
 
 ## Citations
