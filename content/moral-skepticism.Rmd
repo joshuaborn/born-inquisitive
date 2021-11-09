@@ -1,9 +1,9 @@
 ---
-title: "Moral Delusions"
+title: "Moral Skepticism"
 draft: false
 date: 2020-12-28
 tags: ["philosophy"]
-bibliography: "../bibliographies/moral-delusions.bib"
+bibliography: "../bibliographies/moral-skepticism.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
