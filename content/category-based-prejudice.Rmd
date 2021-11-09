@@ -1,0 +1,30 @@
+---
+title: "Category-Based Prejudice"
+draft: true
+date: 2021-01-31
+tags: ["critical thinking"]
+#bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
+#csl: "../bibliographies/chicago-author-date.csl"
+link-citations: true
+implicit-figures: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+    toc: true
+    toc_depth: 5
+include-before: |
+  <p>Opening paragraph goes here</p>
+  <!--more-->
+  ## Table of Contents
+---
+
+## Introduction
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
