@@ -36,7 +36,7 @@ Because the English language lacks a word with the precise scope desired by this
 
 The criticisms this article puts forth of category-based prejudice are entirely with regard to the flaws such prejudice imparts on one's understanding of the world. Much can be written about the [moral](/moral-skepticism.html) aspects of category-based prejudice targeting human beings in particular, but writing about the evils of bigotry are are beyond the scope of this article and left to works of social science or history. Instead, this article focuses on criticisms of category-based prejudice as a form of reasoning, regardless of the consequences of such thinking.
 
-Thus, the criticisms articulated here are independent of the moral dimensions of category-based prejudice. This article puts forward the thesis that category-based prejudice is always a cognitively flawed way of thinking, even if there does not appear to be anything morally objectionable about it. Indeed, even if one judges an instance of category-based prejudice as morally justified, the fallacies in reasoning discussed in this article remain.
+Thus, the criticisms articulated here are independent of the moral dimensions of category-based prejudice. This article puts forward the thesis that category-based prejudice is always a cognitively flawed way of thinking, even if there does not appear to be anything morally objectionable about it. Indeed, even if one judges an instance of category-based prejudice as morally justified, the fallacies in reasoning discussed in this article persist.
 
 
 ## Abstract Example
@@ -77,19 +77,30 @@ Binning of a continuous explanatory variable into discrete categories. There nee
 
 ## Concrete Examples: Gender Prejudice in Hiring
 
-* Hiring men for math ability
-* Hiring women for empathy
-* Continuous variable to illustrate arbitrariness of levels choice? Income level?
+In order to illustrate the main flaws with category-based prejudice, this article turns from the abstract to more concrete examples. Suppose that a hiring manager at a company is considering what to look for in the next employee to be hired, and an employee suggests the next hire should be a woman because the team needs more empathy and women are more empathic. Alternatively, the manager talks to a different employee and is told to hire a man because the team needs more math ability and men are good at math.
 
+How could such propositions as "men are good at math" or "women are more empathic" be known? 
+Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems with calculus, or for proving mathematical theorems are quite different. It behooves the employee desiring more math skills to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
 
-## Issues with Generalization
+With regard to traits such as empathy, psychologists often spend large amounts of time and effort attempting to devise a test that is reliable, i.e., self-consistent and consistent across various contexts, and valid, i.e., actually measuring what it is supposed to measure. There are various schools of thought and approaches to development of such tests, but overall the goals of these approaches are similar: to devise a method for measuring a psychological property.
 
-* It costs more to take a representative sample from a population and measure each individual in that sample than it does to measure the individual of interest directly. This might not be an issue if a conclusion about the population has already been done.
+What both of these propositions presuppose, then, is that there is some _instrument of measurement_ by which the relevant math skills or empathy traits can be discerned. Otherwise, the propositions are uninformative, empty speech.
+
+Additionally, in order to generalize results to "men" or "women," a more precise _target population_ needs to be identified. This might be all the men or women in a certain place and time frame, or perhaps all job applicants to a company. Once the target population is identified, a _sampling frame_ must be devised that can be used to identify each individual in the target population and that allows the target population to be sampled. Once that is accomplished, a _representative sample_ can be selected from the target population, the instrument of measurement can be applied to each individual in the sample, and statistical analysis can done to infer estimates of the relevant values in the target population. Then, the hiring manager would know the relative math abilities or empathy levels of men and women in the population of interest.
+
+However, properties of populations are not properties of individuals, so the hiring manager still needs to apply this general knowledge to the specific job applicant that the hiring manager is evaluating. This raises the question: _why not just apply the instrument of measurement to the job applicant directly?_
+
+Therein lies the first flaw of category-based prejudice. Invoking knowledge about population attributes in judging individuals adds a layer of indirection to the evaluation of the individual. This indirection adds additional costs to a judgment: the cost of sampling, the cost of administering the instrument of measurement to every individual in a sample large enough for statistical inference, and the cost of doing the statistical analysis. Furthermore, this indirection actually leads to a weaker conclusion.
+
+The conclusion is weaker for at least two reasons: there is more error involved in the calculation of estimates of the measure of the population than in the measure of the individual, and the information from the prejudicial approach is probabilistic when applied to the individual.
+
+There is no instrument of measurement that is perfect, and there is intrinsic _measurement error_ that comes whenever using an instrument of measurement. This error is present whether measuring the job applicant directly or measuring the individuals in a sample to make an inference about the population.[^nonsampling] However, in inferring a generalized conclusion about the population, sampling error is introduced in addition to measurement error.[^census] This sampling error comes from the element of randomness introduced from selecting a representative sample from the population.
+
+[^nonsampling]: Statistical results are usually reported with some indication of the error that comes with them, such as confidence intervals, margins of error, or _p_-values. However, this typically reflects just sampling error and not forms of nonsampling error such as measurement error.
+
+[^census]: This is provided that the population is not small enough that taking a census of the entire population is practical.
+
 * However, it's rare for the sampled population in a study to include the population of interest, e.g., all job seekers in certain country.
-
-
-## Issues with Application to Individual
-
 * The conclusion that one can draw about the individual of interest is still weaker than just measuring the individual directly, since the conclusion is just probabilistic.
 * Furthermore, the probabilistic information is usually not valid for a particular individual of interest because the individual is not randomly selected from the population.
 * The information about the individual of interest can be ambiguous, e.g., stereotypes about math ability based on "Asian" versus "woman" categories.
