@@ -82,10 +82,9 @@ Category-based prejudice involves two steps. The first step is to arrive at more
 
 In the example scenarios, the hiring manager could simply give the two prospective employees the instrument of measurement, determine which is better than the other at empathy or at math, and hire that individual. This can be termed the "direct measurement" approach.
 
-The category-based prejudice approach is inferior to the direct measurement approach in at least four ways:
+The category-based prejudice approach is inferior to the direct measurement approach in at least three ways:
 
 * arriving at a more general proposition such as "women are more empathic" or "men are better at math" is more costly than directly measuring the individuals being considered,
-* a more general proposition such as "women are more empathic" or "men are better at math" includes more error than directly measuring the individuals being considered,
 * applying a more general proposition such as "women are more empathic" or "men are better at math" to the specific individuals is probabilistic at best and thus a weaker conclusion than directly measuring the individuals being considered, and
 * the choice of variable used to judge an individual using category-based prejudice is arbitrary, which can lead to ambiguous judgments.
 
@@ -122,14 +121,6 @@ Furthermore, care must be taken to discern whether the previously established re
 Of studies that do generalize to a larger population, the sampled population of the study might not be the population of interest for the judgment being made. For instance, the hiring manager in the example scenarios is concerned with empathy or math skills in the population of job applicants to a specific company. Results discovered about the math skills of fifth graders in Idaho or the empathy skills of therapists in Massachusetts are likely not relevant for judging job applicants to the company.[^unless] If the sampled population of a study does not overlap with the population of interest, attempting to apply the study's results to the population of interest is an extrapolation outside the scope of inference of the study, which is fallacious.
 
 [^unless]: The obvious exception would be a company in Massachusetts providing therapy services.
-
-
-### Greater Error in Generalization
-
-I thought about this section more, and I think I'm going to remove it. The issue is that while generalization has sampling error when the direction approach does not, generalization also in effect reduces measurement error. "In effect" is used here to mean that two different quantities are actually be approximated. In the direct approach, score of a specific individual is being measured, and so the measurement error is the full measurement error of $\delta$. But when doing the generalization, the mean score for a population of individuals is being approximated, so the measurement error is $\frac{\delta}{\sqrt{n}}$. But now there is some amount of sampling error from estimating a population value. Attempting to quantify the two different total errors is frivolous because it's not an apples to apples comparison.
-
-This section can just be removed then. It's not essential to the overarching argument.
-
 
 
 * The conclusion that one can draw about the individual of interest is still weaker than just measuring the individual directly, since the conclusion is just probabilistic.
