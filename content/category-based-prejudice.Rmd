@@ -2,7 +2,7 @@
 title: "Category-Based Prejudice"
 draft: true
 date: 2021-11-19
-tags: ["critical thinking"]
+tags: ["critical thinking", "statistics"]
 bibliography: "../bibliographies/category-based-prejudice.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
@@ -21,9 +21,9 @@ include-before: |
 
 ## Terminology
 
-This article discusses the fallacies associated with judging an individual based on how the individual is categorized as one of a large population of individuals. The word "prejudice" can be used to name this practice. However, "prejudice" in the English can be interpreted either too broadly or too narrowly.
+This article discusses the fallacies associated with judging an individual based on how the individual is categorized. The word "prejudice" can be used to name this practice. However, the word "prejudice" in the English language can be interpreted either too broadly or too narrowly.
 
-For instance, the first definition for "prejudice" in the _American Heritage Dictionary of the English Language_ consists of two parts: "the act or state of holding unreasonable preconceived judgments or convictions," and "an adverse judgment or opinion formed unfairly or without knowledge of the facts." [@pickett_american_2018] This first definition is more broad than how "prejudice" is used in this article; there are many different kinds of such prejudice, beyond the specific kind discussed in this article.
+For instance, the first definition for "prejudice" in the _American Heritage Dictionary of the English Language_ consists of: "the act or state of holding unreasonable preconceived judgments or convictions" or "an adverse judgment or opinion formed unfairly or without knowledge of the facts." [@pickett_american_2018] This first definition is more broad than how "prejudice" is used in this article; there are many different kinds of prejudice so broadly construed, beyond the specific kind discussed in this article.
 
 The second definition for "prejudice" in the _American Heritage Dictionary of the English Language_ is "irrational suspicion or hatred of a particular social group, such as a race or the adherents of a religion." [@pickett_american_2018] This is similar to how the word "bigotry" is used in contemporary discourse.
 
@@ -32,9 +32,9 @@ This second definition is more narrow than how "prejudice" is used in this artic
 Because the English language lacks a word with the precise scope desired by this article, the phrase "category-based prejudice" is used.
 
 
-## Analytical vs. Moral Dimensions
+## Analytical versus Moral Criticism 
 
-The criticisms this article puts forth of category-based prejudice are entirely with regard to the flaws such prejudice imparts on one's understanding of the world. Much can be written about the [moral](/moral-skepticism.html) aspects of category-based prejudice targeting human beings in particular, but writing about the evils of bigotry are are beyond the scope of this article and left to works of social science or history. Instead, this article focuses on criticisms of category-based prejudice as a form of reasoning, regardless of the consequences of such thinking.
+The criticisms this article puts forth of category-based prejudice are entirely with regard to the flaws such prejudice imparts on attempts to understand the world. Much can be written about the [moral](/moral-skepticism.html) aspects of category-based prejudice targeting human beings in particular, but writing about the evils of bigotry are are beyond the scope of this article and left to works of social science or history. Instead, this article focuses on criticisms of category-based prejudice as a form of reasoning, regardless of the consequences of such thinking.
 
 Thus, the criticisms articulated here are independent of the moral dimensions of category-based prejudice. This article puts forward the thesis that category-based prejudice is always a cognitively flawed way of thinking, even if there does not appear to be anything morally objectionable about it. Indeed, even if one judges an instance of category-based prejudice as morally justified, the fallacies in reasoning discussed in this article persist.
 
@@ -49,50 +49,77 @@ Thus, the criticisms articulated here are independent of the moral dimensions of
 * size?
 
 
-## Properties of Populations vs. Individuals
-
-
-### Population Mean
+### Properties of Populations Are Not Properties of Individuals
 
 Example: no individual in a population has the population mean for the response variable. Use a continuous response variable.
-
-
-### Population Proportions
 
 Example: no individual in the population has proportions of colors that all shapes in the population do. 
 
 
-## Arbitrariness of Categorization
-
-
-### Choice of Variables for Categorization
+### Categorization Is Arbitrary
 
 Average response variable for one explanatory variable for a given figure is small, but the average response variable for a different explanatory variable is large. Use a continuous response variable.
 
 
-### Choice of Levels of a Categorical Variable
+## Concrete Example: Gender Prejudice in Hiring
 
-Binning of a continuous explanatory variable into discrete categories. There needs to be at least one continuous explanatory variable for this.
+In order to illustrate the main flaws with category-based prejudice, this article turns from the abstract to more concrete examples. Suppose that a hiring manager at a company is considering what to look for in the next employee to be hired, and an employee suggests the next hire should be a woman because the team needs more empathy and women are more empathic. Alternatively, the manager talks to a different employee and is told to hire a man because the team needs more math ability and men are good at math. Further suppose that in either scenario, the hiring manager has narrowed the search for a new employee to two people, one a woman and one a man.
 
 
-## Concrete Examples: Gender Prejudice in Hiring
+### Direct Measurement
 
-In order to illustrate the main flaws with category-based prejudice, this article turns from the abstract to more concrete examples. Suppose that a hiring manager at a company is considering what to look for in the next employee to be hired, and an employee suggests the next hire should be a woman because the team needs more empathy and women are more empathic. Alternatively, the manager talks to a different employee and is told to hire a man because the team needs more math ability and men are good at math.
+How could such propositions such as whether someone is "good at math" or "more empathic" be evaluated?
 
-How could such propositions as "men are good at math" or "women are more empathic" be known? 
-Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems with calculus, or for proving mathematical theorems are quite different. It behooves the employee desiring more math skills to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
+Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems, or for proving mathematical theorems are quite different. Those desiring more math skills are best served to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
 
 With regard to traits such as empathy, psychologists often spend large amounts of time and effort attempting to devise a test that is reliable, i.e., self-consistent and consistent across various contexts, and valid, i.e., actually measuring what it is supposed to measure. There are various schools of thought and approaches to development of such tests, but overall the goals of these approaches are similar: to devise a method for measuring a psychological property.
 
-What both of these propositions presuppose, then, is that there is some _instrument of measurement_ by which the relevant math skills or empathy traits can be discerned. Otherwise, the propositions are uninformative, empty speech.
+What both of these propositions presuppose, then, is that there is some _instrument of measurement_ by which the relevant math skills or empathy traits can be discerned. Otherwise, the propositions are uninformative, pointless speech.
 
-Additionally, in order to generalize results to "men" or "women," a more precise _target population_ needs to be identified. This might be all the men or women in a certain place and time frame, or perhaps all job applicants to a company. Once the target population is identified, a _sampling frame_ must be devised that can be used to identify each individual in the target population and that allows the target population to be sampled. Once that is accomplished, a _representative sample_ can be selected from the target population, the instrument of measurement can be applied to each individual in the sample, and statistical analysis can done to infer estimates of the relevant values in the target population. Then, the hiring manager would know the relative math abilities or empathy levels of men and women in the population of interest.
+This raises the question: _why not apply the instrument of measurement to the job applicants directly?_ In either scenario, the hiring manager could simply give the two prospective employees the instrument of measurement, determine which is better than the other at empathy or at math, and hire that individual.
 
-However, properties of populations are not properties of individuals, so the hiring manager still needs to apply this general knowledge to the specific job applicant that the hiring manager is evaluating. This raises the question: _why not just apply the instrument of measurement to the job applicant directly?_
+Category-based prejudice involves two steps, both of which are flawed when compared with this more direct approach. The first step is to arrive at more general propositions such as "women are more empathic" or "men are better at math." The second step is to apply the more general proposition to the specific individuals being considered.
 
-Therein lies the first flaw of category-based prejudice. Invoking knowledge about population attributes in judging individuals adds a layer of indirection to the evaluation of the individual. This indirection adds additional costs to a judgment: the cost of sampling, the cost of administering the instrument of measurement to every individual in a sample large enough for statistical inference, and the cost of doing the statistical analysis. Furthermore, this indirection actually leads to a weaker conclusion.
+The category-based prejudice approach is inferior to the direct measurement approach in at least four ways:
 
-The conclusion is weaker for at least two reasons: there is more error involved in the calculation of estimates of the measure of the population than in the measure of the individual, and the information from the prejudicial approach is probabilistic when applied to the individual.
+* arriving at a more general proposition such as "women are more empathic" or "men are better at math" is more costly than directly measuring the individuals being considered,
+* a more general proposition such as "women are more empathic" or "men are better at math" includes more error than directly measuring the individuals being considered,
+* applying a more general proposition such as "women are more empathic" or "men are better at math" to the specific individuals is probabilistic at best and thus a weaker conclusion than directly measuring the individuals being considered, and
+* the choice of variable used to judge an individual using category-based prejudice is arbitrary, which can lead to ambiguous judgments.
+
+
+### Cost of Generalization
+
+In order to arrive at a more general conclusion about "men" or "women," several steps need to occur. First, a more precise _target population_ needs to be identified. This might be all the men or women in a certain place and time frame, or perhaps all job applicants to a company. Once the target population is identified, a _sampling frame_ must be devised that can be used to identify each individual in the target population and that allows the target population to be sampled. Once that is accomplished, a _representative sample_ can be selected from the target population. The instrument of measurement can then be applied to each individual in the representative sample, and statistical analysis can done to infer estimates of the relevant values in the target population. Then, the hiring manager would know the relative math abilities or empathy levels of men and women in the population of interest.
+
+Invoking knowledge about population attributes when judging individuals thus adds a layer of indirection to the evaluation of the individuals. This indirection adds additional costs to a judgment: the cost of sampling and the cost of administering the instrument of measurement to every individual in a sample large enough for statistical inference.
+
+The exact magnitude of these additional costs vary depending on the details of their circumstances.
+
+In large surveys intended to be nationally representative, the cost of sampling can be the largest cost in the enterprise. When targeting smaller populations, such as the customers of a company, there may be a preexisting records from which it is straightforward to derive a sampling frame, so the cost of sampling would be relatively small. 
+
+The cost of measuring every individual in a representative sample depends, of course, on the sample size. Sample size in turn depends on the variance in the population of the variable of interest, on the minimally detectable difference in the variable that is desired, and on the desired statistical power.[^power]
+
+[^power]: In statistics, "power" has a specific mathematical meaning. It refers to one minus the Type II error rate. The Type II error rate is the probability of failing to reject the null hypothesis when the null hypothesis is indeed false. In statistical inference, drawing a conclusion is framed in terms of rejecting the null hypothesis. Therefore, Type II error rate measures how probable it is for a test to fail to draw a conclusion when a conclusion should have been drawn. Type II error ate can be thought of as the "false negative" rate. The lower the Type II error rate of a statistical test, the more power it has, and the more capable it is at drawing a conclusion based on the same evidence.
+
+
+#### Stereotypes
+
+Of course, in practice category-based prejudice is often done based not on a valid generalization, but on little more than stereotypes stemming from [anecdotes](/anecdotes-are-not-evidence.html) or [selection bias](/selection-bias-and-the-fallacy-of-listing-examples.html). In these cases, there is not additional cost entailed in using the category-based prejudice approach over the direct measurement approach, but these cases are based entirely on fallacies and are thus worthless.
+
+
+#### Preexisting Studies
+
+In some cases, it may be the case that the cost of arriving at a more general general proposition such as "women are more empathic" or "men are better at math" is a sunk cost, when such general results have already been attained by previous work. These cases do not entail additional cost for the category-based prejudice approach over the direct measurement approach, but the other criticisms described in this article remain.
+
+Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Psychology experiments do not generalize to a larger population when they are based on opportunity samples, such as 20 or 40 undergraduate student volunteers at the researchers' university. Opinion polling done by magazines or web sites that rely on volunteers also do not generalize.
+
+Of studies that do generalize to a larger population, the sampled population of the study might not be the population of interest for the judgment being made. For instance, the hiring manager in the example scenarios is concerned with empathy or math skills in the population of job applicants to a specific company. Results discovered about the math skills of fifth graders in Idaho or the empathy skills of therapists in Massachusetts are likely not relevant for judging job applicants to the company.[^unless] If the sampled population of a study does not overlap with the population of interest, attempting to apply the study's results to the population of interest is an extrapolation outside the scope of inference of the studies, which is fallacious.
+
+[^unless]: The obvious exception would be a company in Massachusetts providing therapy services.
+
+
+### Greater Error in Generalization
 
 There is no instrument of measurement that is perfect, and there is intrinsic _measurement error_ that comes whenever using an instrument of measurement. This error is present whether measuring the job applicant directly or measuring the individuals in a sample to make an inference about the population.[^nonsampling] However, in inferring a generalized conclusion about the population, sampling error is introduced in addition to measurement error.[^census] This sampling error comes from the element of randomness introduced from selecting a representative sample from the population.
 
@@ -100,7 +127,6 @@ There is no instrument of measurement that is perfect, and there is intrinsic _m
 
 [^census]: This is provided that the population is not small enough that taking a census of the entire population is practical.
 
-* However, it's rare for the sampled population in a study to include the population of interest, e.g., all job seekers in certain country.
 * The conclusion that one can draw about the individual of interest is still weaker than just measuring the individual directly, since the conclusion is just probabilistic.
 * Furthermore, the probabilistic information is usually not valid for a particular individual of interest because the individual is not randomly selected from the population.
 * The information about the individual of interest can be ambiguous, e.g., stereotypes about math ability based on "Asian" versus "woman" categories.
