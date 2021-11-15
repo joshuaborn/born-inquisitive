@@ -27,7 +27,7 @@ For instance, the first definition for "prejudice" in the _American Heritage Dic
 
 The second definition for "prejudice" in the _American Heritage Dictionary of the English Language_ is "irrational suspicion or hatred of a particular social group, such as a race or the adherents of a religion." [@pickett_american_2018] This is similar to how the word "bigotry" is used in contemporary discourse.
 
-This second definition is more narrow than how "prejudice" is used in this article in at least two ways. First, this definition applies specifically to judgments about human beings, whereas the fallacies discussed here apply equally well when reasoning about rocks, single-celled organisms, music, countries, or anything else that can be categorized. Second, this definition construes "prejudice" as referring to judgments that are undesirable, whereas the way "prejudice" is used in this article can refer to judgments about desirable traits, as well.
+This second definition is more narrow than how "prejudice" is used in this article in at least two ways. First, this definition applies specifically to judgments about human beings, whereas the criticisms discussed here apply equally well when reasoning about rocks, single-celled organisms, music, countries, or anything else that can be categorized. Second, this definition construes "prejudice" as referring to judgments that are undesirable, whereas the way "prejudice" is used in this article can refer to judgments about desirable traits, as well.
 
 Because the English language lacks a word with the precise scope desired by this article, the phrase "category-based prejudice" is used.
 
@@ -70,15 +70,17 @@ In order to illustrate the main flaws with category-based prejudice, this articl
 
 How could such propositions such as whether someone is "good at math" or "more empathic" be evaluated?
 
-Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems, or for proving mathematical theorems are quite different. Those desiring more math skills are best served to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
+Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems, or for proving mathematical theorems are all quite different. Those who want more math proficiency are best served to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
 
-With regard to traits such as empathy, psychologists often spend large amounts of time and effort attempting to devise a test that is reliable, i.e., self-consistent and consistent across various contexts, and valid, i.e., actually measuring what it is supposed to measure. There are various schools of thought and approaches to development of such tests, but overall the goals of these approaches are similar: to devise a method for measuring a psychological property.
+With regard to traits such as empathy, psychologists often spend large amounts of time and effort attempting to devise a test that is reliable (i.e., self-consistent and consistent across various contexts) and valid (i.e., actually measuring what it is supposed to measure). There are various schools of thought and approaches to development of such tests, but overall the goals of these approaches are similar: to devise a method for measuring a psychological property.
 
 What both of these propositions presuppose, then, is that there is some _instrument of measurement_ by which the relevant math skills or empathy traits can be discerned. Otherwise, the propositions are uninformative, pointless speech.
 
-This raises the question: _why not apply the instrument of measurement to the job applicants directly?_ In either scenario, the hiring manager could simply give the two prospective employees the instrument of measurement, determine which is better than the other at empathy or at math, and hire that individual.
+This raises the question: _why not apply the instrument of measurement to the job applicants directly?_
 
-Category-based prejudice involves two steps, both of which are flawed when compared with this more direct approach. The first step is to arrive at more general propositions such as "women are more empathic" or "men are better at math." The second step is to apply the more general proposition to the specific individuals being considered.
+Category-based prejudice involves two steps. The first step is to arrive at more general propositions such as "women are more empathic" or "men are better at math." The second step is to apply the more general proposition to the specific individuals being considered, such as the man and the woman being considered for employment. Invoking knowledge about population attributes when judging individuals thus adds a layer of indirection to the evaluation of specific individuals. 
+
+In the example scenarios, the hiring manager could simply give the two prospective employees the instrument of measurement, determine which is better than the other at empathy or at math, and hire that individual. This can be termed the "direct measurement" approach.
 
 The category-based prejudice approach is inferior to the direct measurement approach in at least four ways:
 
@@ -88,42 +90,49 @@ The category-based prejudice approach is inferior to the direct measurement appr
 * the choice of variable used to judge an individual using category-based prejudice is arbitrary, which can lead to ambiguous judgments.
 
 
-### Cost of Generalization
+
+### Additional Cost of Generalization
 
 In order to arrive at a more general conclusion about "men" or "women," several steps need to occur. First, a more precise _target population_ needs to be identified. This might be all the men or women in a certain place and time frame, or perhaps all job applicants to a company. Once the target population is identified, a _sampling frame_ must be devised that can be used to identify each individual in the target population and that allows the target population to be sampled. Once that is accomplished, a _representative sample_ can be selected from the target population. The instrument of measurement can then be applied to each individual in the representative sample, and statistical analysis can done to infer estimates of the relevant values in the target population. Then, the hiring manager would know the relative math abilities or empathy levels of men and women in the population of interest.
 
-Invoking knowledge about population attributes when judging individuals thus adds a layer of indirection to the evaluation of the individuals. This indirection adds additional costs to a judgment: the cost of sampling and the cost of administering the instrument of measurement to every individual in a sample large enough for statistical inference.
-
-The exact magnitude of these additional costs vary depending on the details of their circumstances.
+This generalization adds additional costs to a judgment: the cost of sampling and the cost of administering the instrument of measurement to every individual in a sample large enough for statistical inference. The exact magnitude of these additional costs vary depending on the details of their circumstances.
 
 In large surveys intended to be nationally representative, the cost of sampling can be the largest cost in the enterprise. When targeting smaller populations, such as the customers of a company, there may be a preexisting records from which it is straightforward to derive a sampling frame, so the cost of sampling would be relatively small. 
 
 The cost of measuring every individual in a representative sample depends, of course, on the sample size. Sample size in turn depends on the variance in the population of the variable of interest, on the minimally detectable difference in the variable that is desired, and on the desired statistical power.[^power]
 
-[^power]: In statistics, "power" has a specific mathematical meaning. It refers to one minus the Type II error rate. The Type II error rate is the probability of failing to reject the null hypothesis when the null hypothesis is indeed false. In statistical inference, drawing a conclusion is framed in terms of rejecting the null hypothesis. Therefore, Type II error rate measures how probable it is for a test to fail to draw a conclusion when a conclusion should have been drawn. Type II error ate can be thought of as the "false negative" rate. The lower the Type II error rate of a statistical test, the more power it has, and the more capable it is at drawing a conclusion based on the same evidence.
+[^power]: In statistics, "power" has a specific mathematical meaning. It refers to one minus the Type II error rate. The Type II error rate is the probability of failing to reject the null hypothesis when the null hypothesis is indeed false. In statistical inference, drawing a conclusion is framed in terms of rejecting the null hypothesis. Therefore, Type II error rate measures how probable it is for a test to fail to draw a conclusion when a conclusion should have been drawn. Type II error rate can be thought of as the "false negative" rate. The lower the Type II error rate of a statistical test, the more power it has, and the more capable it is at drawing a conclusion.
+
+While the exact amount of these costs might vary, they are costs that are incurred whenever a general conclusion is sought, but not costs incurred in the direct measurement approach.
 
 
 #### Stereotypes
 
-Of course, in practice category-based prejudice is often done based not on a valid generalization, but on little more than stereotypes stemming from [anecdotes](/anecdotes-are-not-evidence.html) or [selection bias](/selection-bias-and-the-fallacy-of-listing-examples.html). In these cases, there is not additional cost entailed in using the category-based prejudice approach over the direct measurement approach, but these cases are based entirely on fallacies and are thus worthless.
+Of course, in practice category-based prejudice is often done based not on a valid generalization, but on little more than stereotypes stemming from [anecdotes](/anecdotes-are-not-evidence.html) or [selection bias](/selection-bias-and-the-fallacy-of-listing-examples.html). In these cases, there is not additional cost entailed in using the category-based prejudice approach over the direct measurement approach, but these cases are based entirely on fallacies and thus are worthless.
 
 
 #### Preexisting Studies
 
-In some cases, it may be the case that the cost of arriving at a more general general proposition such as "women are more empathic" or "men are better at math" is a sunk cost, when such general results have already been attained by previous work. These cases do not entail additional cost for the category-based prejudice approach over the direct measurement approach, but the other criticisms described in this article remain.
+It might sometimes be the case that the cost of arriving at a more general general proposition such as "women are more empathic" or "men are better at math" is a sunk cost, when such general results have already been established by previous work. These cases do not entail additional cost for the category-based prejudice approach over the direct measurement approach, but the other criticisms described in this article remain.
 
-Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Psychology experiments do not generalize to a larger population when they are based on opportunity samples, such as 20 or 40 undergraduate student volunteers at the researchers' university. Opinion polling done by magazines or web sites that rely on volunteers also do not generalize.
+Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Psychology experiments do not generalize to a larger population when they are based on opportunity samples, such as 20 or 40 undergraduate student volunteers at the researchers' university. Opinion polls done by magazines or web sites that rely on volunteers also do not generalize.[^volunteers]
 
-Of studies that do generalize to a larger population, the sampled population of the study might not be the population of interest for the judgment being made. For instance, the hiring manager in the example scenarios is concerned with empathy or math skills in the population of job applicants to a specific company. Results discovered about the math skills of fifth graders in Idaho or the empathy skills of therapists in Massachusetts are likely not relevant for judging job applicants to the company.[^unless] If the sampled population of a study does not overlap with the population of interest, attempting to apply the study's results to the population of interest is an extrapolation outside the scope of inference of the studies, which is fallacious.
+[^volunteers]: For more discussion of why polls of volunteered responses are unrepresentative, see Chapter 1 of Lohr [-@lohr_sampling_2021].
+
+Of studies that do generalize to a larger population, the sampled population of the study might not be the population of interest for the judgment being made. For instance, the hiring manager in the example scenarios is concerned with empathy or math skills in the population of job applicants to a specific company. Results discovered about the math skills of fifth graders in Idaho or the empathy skills of therapists in Massachusetts are likely not relevant for judging job applicants to the company.[^unless] If the sampled population of a study does not overlap with the population of interest, attempting to apply the study's results to the population of interest is an extrapolation outside the scope of inference of the study, which is fallacious.
 
 [^unless]: The obvious exception would be a company in Massachusetts providing therapy services.
 
 
 ### Greater Error in Generalization
 
-There is no instrument of measurement that is perfect, and there is intrinsic _measurement error_ that comes whenever using an instrument of measurement. This error is present whether measuring the job applicant directly or measuring the individuals in a sample to make an inference about the population.[^nonsampling] However, in inferring a generalized conclusion about the population, sampling error is introduced in addition to measurement error.[^census] This sampling error comes from the element of randomness introduced from selecting a representative sample from the population.
+There is no instrument of measurement that is perfect, and there is intrinsic _measurement error_ that comes whenever using an instrument of measurement. This error is present whether measuring the job applicants directly or measuring the individuals in a sample to make an inference about the population.
 
-[^nonsampling]: Statistical results are usually reported with some indication of the error that comes with them, such as confidence intervals, margins of error, or _p_-values. However, this typically reflects just sampling error and not forms of nonsampling error such as measurement error.
+However, when inferring more general propositions such as "women are more empathic" or "men are better at math," sampling error is introduced in addition to measurement error.[^census] This sampling error comes from the element of randomness introduced from selecting a representative sample from the population.
+
+Statistical results are usually reported with some indication of the error that comes with them, such as confidence intervals, margins of error, or _p_-values.[^non-sampling] 
+
+[^nonsampling]:However, this typically reflects just sampling error and not forms of nonsampling error such as measurement error.
 
 [^census]: This is provided that the population is not small enough that taking a census of the entire population is practical.
 
