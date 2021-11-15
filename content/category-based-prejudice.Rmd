@@ -126,15 +126,11 @@ Of studies that do generalize to a larger population, the sampled population of 
 
 ### Greater Error in Generalization
 
-There is no instrument of measurement that is perfect, and there is intrinsic _measurement error_ that comes whenever using an instrument of measurement. This error is present whether measuring the job applicants directly or measuring the individuals in a sample to make an inference about the population.
+I thought about this section more, and I think I'm going to remove it. The issue is that while generalization has sampling error when the direction approach does not, generalization also in effect reduces measurement error. "In effect" is used here to mean that two different quantities are actually be approximated. In the direct approach, score of a specific individual is being measured, and so the measurement error is the full measurement error of $\delta$. But when doing the generalization, the mean score for a population of individuals is being approximated, so the measurement error is $\frac{\delta}{\sqrt{n}}$. But now there is some amount of sampling error from estimating a population value. Attempting to quantify the two different total errors is frivolous because it's not an apples to apples comparison.
 
-However, when inferring more general propositions such as "women are more empathic" or "men are better at math," sampling error is introduced in addition to measurement error.[^census] This sampling error comes from the element of randomness introduced from selecting a representative sample from the population.
+This section can just be removed then. It's not essential to the overarching argument.
 
-Statistical results are usually reported with some indication of the error that comes with them, such as confidence intervals, margins of error, or _p_-values.[^non-sampling] 
 
-[^nonsampling]:However, this typically reflects just sampling error and not forms of nonsampling error such as measurement error.
-
-[^census]: This is provided that the population is not small enough that taking a census of the entire population is practical.
 
 * The conclusion that one can draw about the individual of interest is still weaker than just measuring the individual directly, since the conclusion is just probabilistic.
 * Furthermore, the probabilistic information is usually not valid for a particular individual of interest because the individual is not randomly selected from the population.
