@@ -135,7 +135,7 @@ Even if it is the case that the mean empathy score of women is higher than that 
 
 What is relevant for the hiring manager's decision is what has come to be called the "probability of superiority." The probability of superiority for the empathy question is the probability that a randomly selected woman from the population of job applicants would have a higher empathy score than a randomly selected man from the population of job applicants. This requires knowledge of the probability density of the two distributions, which the supposition at the beginning of this section assumes is available.[^density]
 
-[^density]: Means are indicators of the central tendency of a distribution, which is just one aspect of the distribution of a variable such as empathy score or math score. Point estimates such as the estimate of a population mean are insufficient to calculate probability of superiority. In order to calculate probability of superiority, one can assume or attempt to establish that the probability density of the variable of interest conforms to some established mathematically defined distributions for which there is a closed form solution for probability of superiority. Alternatively, one could estimate the density empirically, using techniques such as kernel density estimation.
+[^density]: Point estimates such as the estimate of a population mean are insufficient to calculate a probability of superiority. Means are indicators of the central tendency of a distribution, which is just one aspect of the distribution. In order to calculate probability of superiority, one can assume or attempt to establish that the probability density of the variable of interest conforms to some established mathematically defined distributions for which there is a closed form solution for probability of superiority. Alternatively, one could estimate the density empirically, using techniques such as kernel density estimation.
 
 Using this information, the hiring manager could calculate probabilities of superiority, arriving at conclusions such as "a randomly selected woman in the population of job applicants has 68\% chance of having a higher empathy score than a randomly selected man" or "a randomly selected man in the population of job applicants as a 72\% chance of having a higher math score than a randomly selected woman."
 
@@ -150,14 +150,27 @@ These weaker, probabilistic conclusion can easily be replaced by stronger, more 
 
 The idea of a randomly selected individual from a population is a useful construct when learning probability theory and statistics. However, in real life scenarios, one rarely ever encounters a randomly selected individual from a population. The final two prospective employees in these example scenarios illustrate this phenomenon.
 
-The prospective employees have applied to this specific job posting and they have gone through a vetting process that may have included interviews and other examinations. They are thus not randomly selected from the population of job applicants. Indeed, if the job posting specifically asked for applicants with empathy skills or with math skills, or if the interviewers were specifically looking for evidence of empathy skills or math skills, there is reason to believe the final two prospective employees might be unusually good in the trait of interest.
+The prospective employees have applied to this specific job posting, and they have gone through a vetting process that may have included interviews and other examinations. They are thus not randomly selected from the population of job applicants. Indeed, if the job posting specifically asked for applicants with empathy skills or with math skills, or if the interviewers were specifically looking for evidence of empathy skills or math skills, there is reason to believe the final two prospective employees might be unusual in either of these traits.
 
-Another way of conceiving of this phenomenon is that the true population of interest in these scenarios is not the population of all job applicants to the company, but the population of job applicants to this specific job posting who have made it through all the vetting to become one of the two final prospective employees. This is may be too small of a population to sample for any kind of inference about probability densities.
+Another way of conceiving of this phenomenon is that the true population of interest in these scenarios is not the population of all job applicants to the company, but the population of job applicants to this specific job posting who have made it through all the vetting to become one of the two final prospective employees. This is could easily be too small of a population to sample for any kind of inference about probability densities.
 
 
 ### Ambiguous Categorization
 
-[...]
+Even if prior work has established a more general proposition such as "women are more empathic" or "men are better at math" for the relevant population of interest, and even if the hiring manager has accepted the probabilistic nature of applying this information to the two specific individuals being considered for the job, the fact that categorization is arbitrary can lead to ambiguous and contradictory conclusions when using the category-based prejudice approach.
+
+An example comes from an experiment in social psychology regarding susceptibility to stereotyping. In order to frame their experiment, Shih, Pittinsky, and Ambady [-@shih_stereotype_1999] claimed that Asian women are the object of two contradictory stereotypes prevalent in the United States: that those categorized as "Asian" are good at math, and that those categorized as "women" are bad at math. 
+
+Suppose for the scenario in which math ability is desired that both these stereotypes are prevalent,[^stereotypes] and that the woman among the two final prospective employees that the hiring manager is considering is also categorized as "Asian" while the man that the hiring manager is considered is not categorized as "Asian." If the category-based prejudice approach were based on categorization by gender, it would lead to a greater probability of superiority in math skills for the man, but if it were based on categorization by Asian-ness, it would lead to a greater probability of superiority in math skills for the woman.
+
+[^stereotypes]: Curiously, the authors report that the stereotype that Asians are good at math was more prevalent in the United States than in Canada based on a poll they did of random samples of people in Vancouver, British Columbia and in Cambridge, Massachusetts, but did not report just how prevalent the stereotype was in either place. The authors cite a few other papers in their introduction when attempting to establish the premise that there are stereotypes that Asians are good at math and that women are bad at math, but these cited papers describe test scores, which is a different phenomenon from the prevalence of stereotypes.
+
+    A review of the literature finds numerous papers about the supposed effects of stereotypes on math performance, but few about the prevalence of such stereotypes. For the purposes of this article, the existence of these stereotypes only functions to motivate a thought experiment, and no claim is made as to how prevalent they are.
+
+Because categorization is arbitrary, the hiring manager can pick whatever variable to use for the category-based prejudice approach. In cases in which the choice of two different variables, such as gender or Asian-ness, lead to different conclusions, the category-based prejudice approach leads to ambiguous results. In this scenario, category-based prejudice, in addition to its other flaws, does not actually resolve the problem it set out to solve in the first place: picking being the two final prospective employees.
+
+
+## Conclusion
 
 
 ## Citations
