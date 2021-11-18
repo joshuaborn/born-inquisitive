@@ -1,7 +1,11 @@
-.Rproj.user
-.Rhistory
+.DS_Store
 .RData
+.Rhistory
+.Rproj.user
 .Ruserdata
+/blogdown
+/content/**.html
 /public
 /resources
-/content/**.html
+/static/*_files
+Thumbs.db

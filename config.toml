@@ -25,3 +25,8 @@ disableKinds = ["taxonomyTerm"]
 
 [outputs]
   home = ["HTML", "Atom"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
