@@ -21,6 +21,7 @@ include-before: |
 ```{r, echo=FALSE}
 library(data.table)
 library(ggplot2)
+library(ggforce)
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -53,26 +54,16 @@ Before the particular flaws of category-based prejudice are examined, two larger
 1. Properties of populations are not properties of individuals.
 2. Categorization is arbitrary.
 
-* _x_ position (continuous)
-* _y_ position (continuous)
-* circle vs square (discrete)
-* color (discrete)
-* size (continuous)
-
-```{r}
-y_limit <- 1000
-x_limit <- 1000
-square_max <- 10
-square_min <- 5
-colors <- c('green', 'orange', 'purple')
+```{r shapes-figure, fig.height=7, fig.width=7, cache=TRUE}
+y_limit <- 10
+x_limit <- 10
+square_max <- 1
+square_min <- 0.25
+colors <- 1:3
 shapes <- c('square', 'circle')
-n <- 50
+n <- 25
 
 set.seed(20211118)
-
-data.table(
-  x = runif(n, 0, x_limit)
-)
 
 generate_obj <- function() {
   square_dim <- runif(1, square_min, square_max)
@@ -87,6 +78,7 @@ generate_obj <- function() {
     y = y,
     x_high = x_high,
     y_high = y_high,
+    radius = square_dim / 2,
     color = color,
     shape = shape
   )
@@ -96,8 +88,19 @@ inside <- function(x, y, dt) {
   x > dt$x & y > dt$y & x < dt$x_high & y < dt$y_high
 }
 
+outside <- function(x, y, x_high, y_high, dt) {
+  (dt$x > x & dt$x < x_high & dt$y > y & dt$y < y_high) |
+  (dt$x_high > x & dt$x_high < x_high & dt$y_high > y & dt$y_high < y_high)
+}
+
 overlaps <- function(obj, dt) {
-  any(inside(obj$x, obj$y, dt) | inside(obj$x_high, obj$y_high, dt))
+  any(
+    inside(obj$x, obj$y, dt) |
+      inside(obj$x_high, obj$y_high, dt) |
+      inside(obj$x_high, obj$y, dt) |
+      inside(obj$x, obj$y_high, dt) |
+      outside(obj$x, obj$y, obj$x_high, obj$y_high, dt)
+  )
 }
 
 pick_obj <- function(dt) {
@@ -115,12 +118,45 @@ add_obj <- function(dt) {
 }
 
 dt <- rbindlist(list(generate_obj()))
+
 for (i in 2:n) {
   dt <- add_obj(dt)
 }
 
-ggplot(dt) +
-  geom_point(aes(x = x, y = y))
+ggplot() +
+  geom_rect(
+    mapping = aes(
+      xmin = x,
+      xmax = x_high,
+      ymin = y,
+      ymax = y_high,
+      fill = color
+    ),
+    data = dt[shape == 'square'],
+    show.legend = FALSE
+  ) +
+  geom_circle(
+    mapping = aes(
+      x0 = x + radius,
+      y0 = y + radius,
+      r = radius,
+      fill = color
+    ),
+    color = NA,
+    data = dt[shape == 'circle'],
+    show.legend = FALSE
+  ) +
+  scale_x_continuous(
+    expand = c(0, 0),
+    limit = c(0, x_limit),
+    breaks = seq(0, 10, 1)
+  ) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    limit = c(0, y_limit),
+    breaks = seq(0, 10, 1)
+  ) +
+  theme_classic()
 ```
 
 
