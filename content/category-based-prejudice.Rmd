@@ -18,6 +18,13 @@ include-before: |
   ## Table of Contents
 ---
 
+```{r, echo=FALSE}
+library(data.table)
+library(ggplot2)
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
 
 ## Terminology
 
@@ -41,12 +48,80 @@ Thus, the criticisms articulated here are independent of the moral dimensions of
 
 ## Abstract Example
 
-* _x_ position
-* _y_ position
-* shape
-* color (continuous or discrete?)
-* opacity?
-* size?
+Before the particular flaws of category-based prejudice are examined, two larger principles about categories are illustrated by way of a more abstract example. These larger principles are
+
+1. Properties of populations are not properties of individuals.
+2. Categorization is arbitrary.
+
+* _x_ position (continuous)
+* _y_ position (continuous)
+* circle vs square (discrete)
+* color (discrete)
+* size (continuous)
+
+```{r}
+y_limit <- 1000
+x_limit <- 1000
+square_max <- 10
+square_min <- 5
+colors <- c('green', 'orange', 'purple')
+shapes <- c('square', 'circle')
+n <- 50
+
+set.seed(20211118)
+
+data.table(
+  x = runif(n, 0, x_limit)
+)
+
+generate_obj <- function() {
+  square_dim <- runif(1, square_min, square_max)
+  x <- runif(1, 0, x_limit - square_dim)
+  y <- runif(1, 0, y_limit - square_dim)
+  x_high <- x + square_dim
+  y_high <- y + square_dim
+  color <- sample(colors, 1)
+  shape <- sample(shapes, 1)
+  list(
+    x = x,
+    y = y,
+    x_high = x_high,
+    y_high = y_high,
+    color = color,
+    shape = shape
+  )
+}
+
+inside <- function(x, y, dt) {
+  x > dt$x & y > dt$y & x < dt$x_high & y < dt$y_high
+}
+
+overlaps <- function(obj, dt) {
+  any(inside(obj$x, obj$y, dt) | inside(obj$x_high, obj$y_high, dt))
+}
+
+pick_obj <- function(dt) {
+  repeat {
+    obj <- generate_obj()
+    if (!overlaps(obj, dt)) {
+      break
+    }
+  }
+  obj
+}
+
+add_obj <- function(dt) {
+  rbindlist(list(dt, pick_obj(dt)))
+}
+
+dt <- rbindlist(list(generate_obj()))
+for (i in 2:n) {
+  dt <- add_obj(dt)
+}
+
+ggplot(dt) +
+  geom_point(aes(x = x, y = y))
+```
 
 
 ### Properties of Populations Are Not Properties of Individuals
