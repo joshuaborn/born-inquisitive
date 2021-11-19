@@ -23,7 +23,12 @@ library(data.table)
 library(ggplot2)
 library(ggforce)
 
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  fig.align = 'center',
+  dpi = 100,
+  fig.retina = 2
+)
 ```
 
 
@@ -54,7 +59,7 @@ Before the particular flaws of category-based prejudice are examined, two larger
 1. Properties of populations are not properties of individuals.
 2. Categorization is arbitrary.
 
-```{r shapes-figure, fig.height=7, fig.width=7, cache=TRUE}
+```{r, shapes-figure, cache=TRUE, fig.height=7, fig.width=7}
 y_limit <- 10
 x_limit <- 10
 square_max <- 1
