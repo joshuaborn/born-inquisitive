@@ -3,8 +3,8 @@ title: "Moral Skepticism"
 draft: false
 date: 2020-12-28
 tags: ["philosophy"]
-bibliography: "bibliography.bib"
-csl: "../../resources/chicago-author-date.csl"
+bibliography: "../bibliographies/moral-skepticism.bib"
+csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
 output:
