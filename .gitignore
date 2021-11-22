@@ -3,6 +3,7 @@
 .Rhistory
 .Rproj.user
 .Ruserdata
+.hugo_build.lock
 /blogdown
 /content/**.html
 /public
