@@ -36,7 +36,7 @@ knitr::opts_chunk$set(
 
 This article discusses the fallacies associated with judging an individual based on how the individual is categorized. The word "prejudice" can be used to name this practice. However, the word "prejudice" in the English language can be interpreted either too broadly or too narrowly.
 
-For instance, the first definition for "prejudice" in the _American Heritage Dictionary of the English Language_ consists of: "the act or state of holding unreasonable preconceived judgments or convictions." [@pickett_american_2018] This first definition is more broad than how "prejudice" is used in this article; there are many different kinds of prejudice so construed, beyond the specific kind discussed in this article.
+For instance, the first definition for "prejudice" in the _American Heritage Dictionary of the English Language_ consists of "the act or state of holding unreasonable preconceived judgments or convictions." [@pickett_american_2018] This first definition is more broad than how "prejudice" is used in this article; there are many different kinds of prejudice so construed, beyond the specific kind discussed in this article.
 
 The second definition for "prejudice" in the _American Heritage Dictionary of the English Language_ is "irrational suspicion or hatred of a particular social group, such as a race or the adherents of a religion." [@pickett_american_2018] This is similar to how the word "bigotry" is used in contemporary discourse.
 
@@ -54,21 +54,24 @@ Thus, the criticisms articulated here are independent of the moral dimensions of
 
 ## Abstract Example
 
-Before the particular flaws of category-based prejudice are examined, two larger principles about categories are illustrated by way of a more abstract example. There are two such larger principles:
+Before the particular flaws of category-based prejudice are examined, two general principles of categories.
 
-1. Properties of populations are not properties of individuals.
-2. Categorization is arbitrary.
-
-```{r shapes-figure, cache=TRUE, fig.height=7, fig.width=7, fig.cap="A population of circles and squares of various colors and sizes, laid out on a two-dimensional plane."}
+```{r shapes-figure, cache=TRUE, fig.height=7, fig.width=7, fig.cap="Circles and squares of various colors and sizes, laid out on a two-dimensional plane."}
 y_limit <- 10
 x_limit <- 10
 square_max <- 1
 square_min <- 0.25
-colors <- as.factor(1:3)
+colors <- c('purple', 'cyan', 'yellow')
+colors <- factor(colors, levels = colors)
 shapes <- c('square', 'circle')
 n <- 30
 
 set.seed(20211118)
+
+
+## Change this so that there is a trend where squares tend to be more toward the left and circles more toward the right, and where cyan tends to be more to the right and purple more to the left. Then a cyan square will be the example of ambiguous categorization by choice of variable.
+
+## Re-run this until there is a spurious trend on the y access for "large" shapes to be up high and "small" shapes to be down low, depending on the cut point.
 
 generate_obj <- function() {
   square_dim <- runif(1, square_min, square_max)
@@ -162,22 +165,54 @@ ggplot() +
     breaks = seq(0, 10, 1)
   ) +
   scale_fill_viridis_d() +
+  labs(
+    x = 'x',
+    y = 'y'
+  ) +
   theme_classic()
 ```
 
-The population of individuals used to illustrate these principles is portrayed in Figure \@ref(fig:shapes-figure). The population consists of `r n` shapes, which have been randomly placed in a two-dimensional plane. Each shape has a randomly selected size and color and was randomly selected to be either a circle or a square.
+The principles are illustrated by the population in Figure \@ref(fig:shapes-figure), which consists of `r n` individual shapes. Whether each shape is a circle or square was chosen at random, and each shape's color, size, and location in a two-dimensional plane were randomly selected.
 
 
-### Properties of Populations Are Not Properties of Individuals
+### Properties of a Population Are Not Properties of Individuals
 
-Example: no individual in a population has the population mean for the response variable. Use a continuous response variable.
+```{r table-for-averages}
+radii <- sort(dt[shape == 'circle', radius])
 
-Example: no individual in the population has proportions of colors that all shapes in the population do. 
+n_circles <- length(radii)
+
+mean_radius <- round(mean(radii), 2)
+
+knitr::kable(t(round(radii, 2)))
+```
+
+Table 1 lists the radius dimensions for all `r n_circles` circles in Figure \@ref(fig:shapes-figure), sorted from smallest to largest and rounded to the hundredths. The arithmetic mean of all these radii is `r mean_radius`. Thus, the average circle radius is `r mean_radius`. However, note that none of the actual circles in Figure \@ref(fig:shapes-figure) have a radius of `r mean_radius`.[^units-of-measurement]
+
+[^units-of-measurement]: Because the physical dimensions of Figure \@ref(fig:shapes-figure) may be different depending on the device resolution used by the reader, abstract units of measurement are used such that both the height and the width of the two-dimensional plane are 10.
+
+This illustrates the principle that _properties of a population are not properties of individuals._ Descriptive statistics like the arithmetic mean of some variable describe properties of a population. They do not describe any property of an individual, even if that individual is categorized as part of the population in question. While it might be common to use language such as "the average circle has radius `r mean_radius`," it is important to remember that the average circle does not exist. It is an unfortunate figure of speech.
+
+While this may seem obvious when applied to a very visual example such as shapes, it is important to remember whenever thinking about populations of anything. There is no entity named by "the average person." The average person does not exist.
+
+```{r, include=FALSE}
+table(dt[shape == 'circle', color]) / n_circles
+```
+
+This applies not just to averages, but to any property of a population. For instance, the proportion of circles in Figure \@ref(fig:shapes-figure) that are purple is 22.2%, while 66.7% are cyan, and 11.1% are yellow. There is not a single circle in Figure \@ref(fig:shapes-figure) that is 22.2% purple, 66.7% cyan, and 11.1% yellow. Thus, this principle applies not just to means, but also to proportions. Indeed, it applies to any property of a population.
 
 
 ### Categorization Is Arbitrary
 
-Average response variable for one explanatory variable for a given figure is small, but the average response variable for a different explanatory variable is large. Use a continuous response variable.
+The reason why properties of a population are not properties of individuals is that _categorization is arbitrary._ The act of categorization is the creation of a convention that abstracts away details and simplifies thinking about collections of individuals. There is nothing wrong with this practice. Attempting to think about numerous individuals simultaneously would be complicated without such simplification.
+
+However, it is important to remember that any convention done one way could be also be done a different way. Individuals are only included as members in a population because someone construes them to be, whether this is through the formal creation of rules for what individuals get included or through an ad hoc process in which someone manually categorizes individuals as they are encountered.
+
+Regardless of how it is done, the choice of _how_ to do the categorization in the first place is itself arbitrary. Any given individual categorized one way could have been categorized a different way under a different set of rules or with a different judge. Because the categorization itself is arbitrary, the act of categorization, while potentially useful for further analysis, is not itself informative.
+
+* by choice of variable (color vs shape)
+* by intrinsic ambiguity ("size" of circle vs. square is area? diameter of circle vs side of square?)
+* by choice of levels (binning large vs. small shapes)
 
 
 ## Concrete Example: Gender Prejudice in Hiring
@@ -244,7 +279,7 @@ In studies that do generalize to a larger population, the sampled population of 
 [^unless]: The obvious exception would be a company in Massachusetts providing therapy services.
 
 
-### Weaker Conclusion
+### Probabilistic Results
 
 Suppose that previous work has established the distribution of empathy scores and math scores in the population of job applicants to the hiring manager's company. If this work is based on sound statistical inference and the sampled population in this research is indeed the population of interest, then the cost of arriving at a more general proposition has already been paid.
 
