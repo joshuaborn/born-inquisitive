@@ -36,13 +36,13 @@ knitr::opts_chunk$set(
 
 This article discusses the fallacies associated with judging an individual based on how the individual is categorized. The word "prejudice" can be used to name this practice. However, the word "prejudice" in the English language can be interpreted either too broadly or too narrowly.
 
-For instance, the first definition for "prejudice" in the _American Heritage Dictionary of the English Language_ consists of: "the act or state of holding unreasonable preconceived judgments or convictions." [@pickett_american_2018] This first definition is more broad than how "prejudice" is used in this article; there are many different kinds of prejudice so broadly construed, beyond the specific kind discussed in this article.
+For instance, the first definition for "prejudice" in the _American Heritage Dictionary of the English Language_ consists of: "the act or state of holding unreasonable preconceived judgments or convictions." [@pickett_american_2018] This first definition is more broad than how "prejudice" is used in this article; there are many different kinds of prejudice so construed, beyond the specific kind discussed in this article.
 
 The second definition for "prejudice" in the _American Heritage Dictionary of the English Language_ is "irrational suspicion or hatred of a particular social group, such as a race or the adherents of a religion." [@pickett_american_2018] This is similar to how the word "bigotry" is used in contemporary discourse.
 
 This second definition is more narrow than how "prejudice" is used in this article in at least two ways. First, this definition applies specifically to judgments about human beings, whereas the criticisms discussed here apply equally well when reasoning about rocks, single-celled organisms, music, countries, or anything else that can be categorized. Second, this definition construes "prejudice" as referring to judgments that are undesirable, whereas the way "prejudice" is used in this article can refer to judgments about desirable traits, as well.
 
-Because the English language lacks a word with the precise scope desired by this article, the phrase "category-based prejudice" is used.
+Because the English language lacks a word with the precise scope used by this article, the phrase "category-based prejudice" is used.
 
 
 ## Analytical versus Moral Criticism 
@@ -54,12 +54,12 @@ Thus, the criticisms articulated here are independent of the moral dimensions of
 
 ## Abstract Example
 
-Before the particular flaws of category-based prejudice are examined, two larger principles about categories are illustrated by way of a more abstract example. These larger principles are
+Before the particular flaws of category-based prejudice are examined, two larger principles about categories are illustrated by way of a more abstract example. There are two such larger principles:
 
 1. Properties of populations are not properties of individuals.
 2. Categorization is arbitrary.
 
-```{r, shapes-figure, cache=TRUE, fig.height=7, fig.width=7}
+```{r, shapes-figure, cache=TRUE, fig.height=7, fig.width=7, fig.cap="A population of circles and squares of various colors and sizes, laid out on a two-dimensional plane."}
 y_limit <- 10
 x_limit <- 10
 square_max <- 1
@@ -164,6 +164,8 @@ ggplot() +
   scale_fill_viridis_d() +
   theme_classic()
 ```
+
+The population of individuals used to illustrate these principles is portrayed in Figure \@ref(fig:shapes-figure). The population consists of `r n` shapes, which have been randomly placed in a two-dimensional plane. Each shape has a randomly selected size and color and was randomly selected to be either a circle or a square.
 
 
 ### Properties of Populations Are Not Properties of Individuals
