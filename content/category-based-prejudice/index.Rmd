@@ -1,10 +1,10 @@
 ---
 title: "Category-Based Prejudice"
-draft: true
+draft: false
 date: 2021-11-19
 tags: ["critical thinking", "statistics"]
-bibliography: "../bibliographies/category-based-prejudice.bib"
-csl: "../bibliographies/chicago-author-date.csl"
+bibliography: "bibliography.bib"
+csl: "../../resources/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
 output:

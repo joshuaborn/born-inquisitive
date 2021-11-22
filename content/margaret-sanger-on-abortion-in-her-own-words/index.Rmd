@@ -2,8 +2,8 @@
 title: "Margaret Sanger on Abortion in Her Own Words"
 date: 2018-11-11
 tags: ["birth control", "history"]
-bibliography: "../bibliographies/margaret-sanger-on-abortion-in-her-own-words.json"
-csl: "../bibliographies/chicago-author-date.csl"
+bibliography: "bibliography.json"
+csl: "../../resources/chicago-author-date.csl"
 link-citations: true
 implicit-figures: true
 output:

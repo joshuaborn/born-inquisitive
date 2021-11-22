@@ -2,8 +2,8 @@
 title: "Political Rhetoric as Shibboleths"
 date: 2020-07-04
 tags: ["opinion"]
-csl: "../bibliographies/chicago-author-date.csl"
-bibliography: "../bibliographies/political-rhetoric-as-shibboleths.bib"
+csl: "../../resources/chicago-author-date.csl"
+bibliography: "bibliography.bib"
 link-citations: true
 implicit-figures: true
 output:
