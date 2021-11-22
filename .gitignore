@@ -7,6 +7,7 @@
 /blogdown
 /content/**.html
 /public
-/resources
+/resources/_gen
 /static/*_files
+/static/rmarkdown-libs
 Thumbs.db
