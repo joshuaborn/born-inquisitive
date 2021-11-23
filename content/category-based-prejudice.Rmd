@@ -199,7 +199,7 @@ ggplot() +
   theme_classic()
 ```
 
-The principles are illustrated by the population in Figure \@ref(fig:shapes-figure), which consists of `r n` individual geometric figures. The shape, color, position, and size of each geometric figure have been randomly selected according to specific probability distributions.[^beta]
+The principles are illustrated by the population in Figure \@ref(fig:shapes-figure), which consists of `r n` individual geometric figures. The shape, color, position, and size of each geometric figure have been randomly selected according to specific probability distributions.[^beta] The [raw data set](/category-based-prejudice-figures.csv) is available for those who would like to follow along with their own calculations.
 
 [^beta]: In particular, beta distributions were used throughout. Beta distributions are useful for generating example data because they are bounded, continuous, and can be parameterized to be symmetric or skewed as desired.
 
@@ -421,6 +421,13 @@ Because categorization is arbitrary, the hiring manager can pick whatever variab
 ## Conclusion
 
 
+```{r, eval=FALSE}
+fwrite(
+  dt[, .(x_center, y_center, color, shape, base_or_diameter = diameter, area)],
+  'content/category-based-prejudice-figures.csv'
+)
+```
+
 ## Citations
 
 ::: {#refs}
@@ -428,3 +435,4 @@ Because categorization is arbitrary, the hiring manager can pick whatever variab
 
 
 ## Footnotes
+
