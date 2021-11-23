@@ -201,7 +201,7 @@ ggplot() +
 
 The principles are illustrated by the population in Figure \@ref(fig:shapes-figure), which consists of `r n` individual geometric figures. The shape, color, position, and size of each geometric figure have been randomly selected according to specific probability distributions.[^beta]
 
-[^beta]: In particular, beta distributions were used throughout. Beta distributions are useful for generating example data because they are bounded, continuous, and can be parameterized by symmetric or skewed as desired. 
+[^beta]: In particular, beta distributions were used throughout. Beta distributions are useful for generating example data because they are bounded, continuous, and can be parameterized to be symmetric or skewed as desired.
 
 
 ### Properties of a Population Are Not Properties of Individuals
@@ -235,7 +235,7 @@ percentage <- function(c) {
 }
 ```
 
-This principle applies not just to averages, but to any property of a population. For instance, of the geometric figures in Figure \@ref(fig:shapes-figure), `r percentage('cyan')` are cyan, `r percentage('purple')` are purple, and `r percentage('yellow')` are yellow, but there is not a single geometric figure that is `r percentage('cyan')` cyan, `r percentage('purple')` purple, and `r percentage('yellow')` yellow. Thus, this principle applies not just to averages, but also to proportions. Indeed, it applies to any property of a population.
+This principle applies not just to averages, but to any property of a population. For instance, of the geometric figures in Figure \@ref(fig:shapes-figure), `r percentage('cyan')` are cyan, `r percentage('purple')` are purple, and `r percentage('yellow')` are yellow, but there is not a single geometric figure that is `r percentage('cyan')` cyan, `r percentage('purple')` purple, and `r percentage('yellow')` yellow; all of the figures are exclusively one color. Thus, this principle applies not just to averages, but also to proportions. Indeed, it applies to any property of a population.
 
 
 ### Categorization Is Arbitrary
@@ -246,7 +246,23 @@ However, it is important to remember that any convention done one way could be a
 
 Regardless of how it is done, the choice of _how_ to do the categorization in the first place is itself arbitrary. Any given individual categorized one way could have been categorized a different way under a different set of rules or with a different judge. Because the categorization itself is arbitrary, the act of categorization, while potentially useful for further analysis, is not itself informative.
 
-* by choice of variable (purple circle or cyan square)
+
+#### Choice of Variable for Categorization
+
+```{r}
+mean_x <- round(dt[, mean(x_center)], 2)
+mean_x_shape <- dt[, .(mean_x_center = round(mean(x_center), 2)), by = 'shape']
+mean_x_color <- dt[, .(mean_x_center = round(mean(x_center), 2)), by = 'color']
+```
+
+For instance, suppose that a new cyan square will be added to Figure \@ref(fig:shapes-figure), using the same probability distributions used to generate the existing geometric figures. What expectations can be had about the position of this new cyan square?
+
+Looking at the shapes farthest to the right, there are no squares, and looking at the shapes farthest to the left, there are mostly squares. There thus appears to be a trend in which squares tend to be farther to the left in Figure \@ref(fig:shapes-figure). Indeed, while the average _x_ position for all figures is `r mean_x`, the average _x_ position for squares specifically is `r mean_x_shape[shape == 'square', mean_x_center]`. Category-based prejudice should therefore expect the new cyan square to be positioned more to the left of the two-dimensional plane in Figure \@ref(fig:shapes-figure).
+
+On the other hand, looking at the colors farthest to the right, there are mostly cyan figures, and looking at the shapes farthest to the left, there are no cyan figures. There thus also appears to be a trend in which cyan figures tend to be farther to the right in Figure \@ref(fig:shapes-figure). Indeed, the average _x_ position for cyan figures specifically is `r mean_x_color[color == 'cyan', mean_x_center]`. Category-based prejudice should therefore expect the new cyan square to be positioned more to the right of the two-dimensional plane in Figure \@ref(fig:shapes-figure).
+
+In this example, category-based prejudice leads to two contradictory expectations, depending on the choice of categorization. If the new cyan square is categorized according to shape, category-based prejudice expects it on the left, but if the new cyan square is categorized according to color, category-based prejudice expects it on the right. Because categorization is arbitrary in the choice of variable to use for categorization, category-based prejudice is arbitrary in ambiguous cases such as these. This phenomenon is be discussed further in the more concrete example below.
+
 * by intrinsic ambiguity ("size" of circle vs. square is area? diameter of circle vs side of square?)
 * by choice of levels (binning large vs. small shapes)
 
