@@ -263,8 +263,50 @@ On the other hand, looking at the colors farthest to the right, there are mostly
 
 In this example, category-based prejudice leads to two contradictory expectations, depending on the choice of categorization. If the new cyan square is categorized according to shape, category-based prejudice expects it on the left, but if the new cyan square is categorized according to color, category-based prejudice expects it on the right. Because categorization is arbitrary in the choice of variable to use for categorization, category-based prejudice is arbitrary in ambiguous cases such as these. This phenomenon is be discussed further in the more concrete example below.
 
-* by intrinsic ambiguity ("size" of circle vs. square is area? diameter of circle vs side of square?)
-* by choice of levels (binning large vs. small shapes)
+
+#### Choice of Levels of a Variable
+
+Even after the choice of variable to be used for categorization is settled, the choice of the number of possible category options, sometimes called the "levels" of a categorical variable, is arbitrary. For instance, if the geometric figures in Figure \@ref(fig:shapes-figure) are to be categorized by size, the number of levels to use for this categorization could be just two (e.g., "small" or "large"), three (e.g., "small," "medium," or "large), or any arbitrary number of levels.
+
+```{r, include=FALSE}
+dt[, area := fcase(
+  shape == 'circle', pi * radius^2,
+  shape == 'square', diameter^2,
+  shape == 'triangle', diameter^2 * sqrt(3) / 4
+)]
+
+find_cut_stats <- function(cut_point) {
+  dt[,
+    .(
+      area,
+      x_center,
+      y_center,
+      size = fifelse(area >= cut_point, 'large', 'small')
+    )
+  ][,
+    c(
+      lapply(
+        .SD,
+        function(x) {
+          round(mean(x), 2)
+        }
+      ),
+      .(cut = cut_point)
+    ),
+    by = size
+  ]
+}
+
+lapply(seq(0.05, 0.75, 0.05), find_cut_stats)
+```
+
+Furthermore, where the boundaries are set in between the levels of a categorical variable is arbitrary, and this phenomenon especially can be abused.
+
+For instance, if the geometric figures in Figure \@ref(fig:shapes-figure) are categorized into "small" and "large" levels based on whether the area of the figure is less than or greater than 0.45, this results in a mean _x_ position of `r find_cut_stats(0.45)[size == 'small', x_center]` for small figures and a mean _x_ position of `r find_cut_stats(0.45)[size == 'large', x_center]` for large figures.  This has the result of making it appear that the size of a figure does not make the figure any more likely to appear on the left or the right of the two-dimensional plane. When dividing a numerical variable into discrete categories, values such as 0.45 are often called the "cut point."
+
+However, if instead of 0.45, a cut point of 0.50 is used to categorize the figures into "small" and "large" levels, this leads to a mean _x_ position of `r find_cut_stats(0.5)[size == 'large', x_center]` for large figures and a mean _x_ position of `r find_cut_stats(0.5)[size == 'small', x_center]` for small figures. This has the result of making it appear that larger figures are more likely to appear on the left of the two-dimensional plane.
+
+Even though the same exact underlying population is used to calculate both sets of statistics, the choice of a different cut point lead to different results. Because the choice of cut point is arbitrary, this could be used deceptively. Those who set out to "tell a story with the data" would choose the cut point that best fits the story they wish to tell.
 
 
 ## Concrete Example: Gender Prejudice in Hiring
