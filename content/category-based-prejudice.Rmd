@@ -56,7 +56,7 @@ Thus, the criticisms articulated here are independent of the moral dimensions of
 
 Before the particular flaws of category-based prejudice are examined, two general principles of categories are discussed by way of an abstract example.
 
-```{r shapes-figure, cache=TRUE, fig.height=7, fig.width=7, fig.cap="Circles and squares of various colors and sizes, laid out on a two-dimensional plane."}
+```{r shapes-figure, cache=TRUE, fig.height=7, fig.width=7, fig.cap="Geometric figures of various colors, sizes, and shapes, laid out on a two-dimensional plane."}
 y_limit <- 10
 x_limit <- 10
 side_max <- 1
@@ -199,41 +199,50 @@ ggplot() +
   theme_classic()
 ```
 
-The principles are illustrated by the population in Figure \@ref(fig:shapes-figure), which consists of `r n` individual shapes. Whether each shape is a circle or square was chosen at random, and each shape's color, size, and location in a two-dimensional plane were randomly selected.
+The principles are illustrated by the population in Figure \@ref(fig:shapes-figure), which consists of `r n` individual geometric figures. The shape, color, position, and size of each geometric figure have been randomly selected according to specific probability distributions.[^beta]
+
+[^beta]: In particular, beta distributions were used throughout. Beta distributions are useful for generating example data because they are bounded, continuous, and can be parameterized by symmetric or skewed as desired. 
 
 
 ### Properties of a Population Are Not Properties of Individuals
 
 ```{r table-for-averages}
-radii <- sort(dt[shape == 'circle', radius])
+diameters <- sort(dt[shape == 'circle', diameter])
 
-n_circles <- length(radii)
+n_circles <- length(diameters)
 
-mean_radius <- round(mean(radii), 2)
+mean_diameter <- round(mean(diameters), 2)
 
-knitr::kable(t(round(radii, 2)))
+knitr::kable(t(round(diameters, 2)))
 ```
 
-Table 1 lists the radius dimensions for all `r n_circles` circles in Figure \@ref(fig:shapes-figure), sorted from smallest to largest and rounded to the hundredths. The arithmetic mean of all these radii is `r mean_radius`. Thus, the average circle radius is `r mean_radius`. However, note that none of the actual circles in Figure \@ref(fig:shapes-figure) have a radius of `r mean_radius`.[^units-of-measurement]
+Table 1 lists the diameter dimensions for all `r n_circles` circles in Figure \@ref(fig:shapes-figure), sorted from smallest to largest and rounded to the hundredths. The arithmetic mean of all these diameters is `r mean_diameter`. Thus, the average circle diameter is `r mean_diameter`. However, _none_ of the actual circles in Figure \@ref(fig:shapes-figure) have a diameter of `r mean_diameter`.[^units-of-measurement]
 
 [^units-of-measurement]: Because the physical dimensions of Figure \@ref(fig:shapes-figure) may be different depending on the device resolution used by the reader, abstract units of measurement are used such that both the height and the width of the two-dimensional plane are 10.
 
-This illustrates the principle that _properties of a population are not properties of individuals._ Descriptive statistics like the arithmetic mean of some variable describe properties of a population. They do not describe any property of an individual, even if that individual is categorized as part of the population in question. While it might be common to use language such as "the average circle has radius `r mean_radius`," it is important to remember that the average circle does not exist. It is an unfortunate figure of speech.
+This illustrates the principle that _properties of a population are not properties of individuals._ Descriptive statistics like the arithmetic mean of a variable describe properties of a population. They do not describe any property of an individual, even if that individual is categorized as part of the population in question. While it might be common to use language such as "the average circle has diameter `r mean_diameter`," the average circle does not actually exist. It is an unfortunate figure of speech.
 
-While this may seem obvious when applied to a very visual example such as shapes, it is important to remember whenever thinking about populations of anything. There is no entity named by "the average person." The average person does not exist.
+While this may seem obvious when applied to a very visual example such as geometric figures, it is important to remember this principle whenever thinking about populations of anything. There is no entity named by "the average person." The average person does not exist.
 
-```{r, include=FALSE}
-table(dt[shape == 'circle', color]) / n_circles
+```{r}
+proportions <- dt[, .(proportion = .N / dt[, .N]), by = 'color']
+
+percentage <- function(c) {
+  sprintf(
+    '%d%%',
+    proportions[color == c, proportion] * 100
+  )
+}
 ```
 
-This applies not just to averages, but to any property of a population. For instance, the proportion of circles in Figure \@ref(fig:shapes-figure) that are purple is 22.2%, while 66.7% are cyan, and 11.1% are yellow. There is not a single circle in Figure \@ref(fig:shapes-figure) that is 22.2% purple, 66.7% cyan, and 11.1% yellow. Thus, this principle applies not just to means, but also to proportions. Indeed, it applies to any property of a population.
+This principle applies not just to averages, but to any property of a population. For instance, of the geometric figures in Figure \@ref(fig:shapes-figure), `r percentage('cyan')` are cyan, `r percentage('purple')` are purple, and `r percentage('yellow')` are yellow, but there is not a single geometric figure that is `r percentage('cyan')` cyan, `r percentage('purple')` purple, and `r percentage('yellow')` yellow. Thus, this principle applies not just to averages, but also to proportions. Indeed, it applies to any property of a population.
 
 
 ### Categorization Is Arbitrary
 
-The reason why properties of a population are not properties of individuals is that _categorization is arbitrary._ The act of categorization is the creation of a convention that abstracts away details and simplifies thinking about collections of individuals. There is nothing wrong with this practice. Attempting to think about numerous individuals simultaneously would be complicated without such simplification.
+The reason why properties of a population are not properties of individuals is that _categorization is arbitrary._ The act of categorization is the creation of a convention that abstracts away details and simplifies thinking about numerous individuals simultaneously. There is nothing wrong with this practice. Attempting to think about large numbers of individuals simultaneously would be complicated without such simplification.
 
-However, it is important to remember that any convention done one way could be also be done a different way. Individuals are only included as members in a population because someone construes them to be, whether this is through the formal creation of rules for what individuals get included or through an ad hoc process in which someone manually categorizes individuals as they are encountered.
+However, it is important to remember that any convention done one way could be also be done a different way. Individuals are only included as members in a population because someone construes them to be, whether this is through the formal creation of rules for what individuals get included in which categories or through an ad hoc process in which someone manually categorizes individuals as they are encountered.
 
 Regardless of how it is done, the choice of _how_ to do the categorization in the first place is itself arbitrary. Any given individual categorized one way could have been categorized a different way under a different set of rules or with a different judge. Because the categorization itself is arbitrary, the act of categorization, while potentially useful for further analysis, is not itself informative.
 
