@@ -54,39 +54,53 @@ Thus, the criticisms articulated here are independent of the moral dimensions of
 
 ## Abstract Example
 
-Before the particular flaws of category-based prejudice are examined, two general principles of categories.
+Before the particular flaws of category-based prejudice are examined, two general principles of categories are discussed by way of an abstract example.
 
 ```{r shapes-figure, cache=TRUE, fig.height=7, fig.width=7, fig.cap="Circles and squares of various colors and sizes, laid out on a two-dimensional plane."}
 y_limit <- 10
 x_limit <- 10
-square_max <- 1
-square_min <- 0.25
+side_max <- 1
+side_min <- 0.25
 colors <- c('purple', 'cyan', 'yellow')
 colors <- factor(colors, levels = colors)
-shapes <- c('square', 'circle')
-n <- 30
+shapes <- c('square', 'circle', 'triangle')
+n <- 40
 
-set.seed(20211118)
-
-
-## Change this so that there is a trend where squares tend to be more toward the left and circles more toward the right, and where cyan tends to be more to the right and purple more to the left. Then a cyan square will be the example of ambiguous categorization by choice of variable.
-
-## Re-run this until there is a spurious trend on the y access for "large" shapes to be up high and "small" shapes to be down low, depending on the cut point.
+set.seed(20211120)
 
 generate_obj <- function() {
-  square_dim <- runif(1, square_min, square_max)
-  x <- runif(1, 0, x_limit - square_dim)
-  y <- runif(1, 0, y_limit - square_dim)
-  x_high <- x + square_dim
-  y_high <- y + square_dim
-  color <- sample(colors, 1)
   shape <- sample(shapes, 1)
+  color <- sample(colors, 1)
+  if (shape == 'circle') {
+    side <- side_min + rbeta(1, 2, 2) / 4 + sample(c(0, 0.5), 1)
+  } else {
+    side <- runif(1, side_min, side_max)
+  }
+  if (
+    (shape == 'square' & color != 'cyan') |
+      (color == 'purple' & shape != 'circle')
+    ) {
+    x <- rbeta(1, 2, 6) * (10 - side)
+  } else if (
+    (shape == 'circle' & color != 'purple') |
+      (color == 'cyan' & shape != 'square')
+    ) {
+    x <- rbeta(1, 6, 2) * (10 - side)
+  } else {
+    x <- rbeta(1, 2, 2) * (10 - side)
+  }
+  y <- runif(1, 0, y_limit - side)
+  x_high <- x + side
+  y_high <- y + side
   list(
     x = x,
     y = y,
+    x_center = x + side / 2,
+    y_center = y + side / 2,
     x_high = x_high,
     y_high = y_high,
-    radius = square_dim / 2,
+    radius = side / 2,
+    diameter = side,
     color = color,
     shape = shape
   )
@@ -154,6 +168,19 @@ ggplot() +
     data = dt[shape == 'circle'],
     show.legend = FALSE
   ) +
+  geom_regon(
+    mapping = aes(
+      x0 = x + radius,
+      y0 = y + radius,
+      r = radius,
+      fill = color,
+      sides = 3,
+      angle = 0
+    ),
+    color = NA,
+    data = dt[shape == 'triangle'],
+    show.legend = FALSE
+  ) +
   scale_x_continuous(
     expand = c(0, 0),
     limit = c(0, x_limit),
@@ -210,7 +237,7 @@ However, it is important to remember that any convention done one way could be a
 
 Regardless of how it is done, the choice of _how_ to do the categorization in the first place is itself arbitrary. Any given individual categorized one way could have been categorized a different way under a different set of rules or with a different judge. Because the categorization itself is arbitrary, the act of categorization, while potentially useful for further analysis, is not itself informative.
 
-* by choice of variable (color vs shape)
+* by choice of variable (purple circle or cyan square)
 * by intrinsic ambiguity ("size" of circle vs. square is area? diameter of circle vs side of square?)
 * by choice of levels (binning large vs. small shapes)
 
