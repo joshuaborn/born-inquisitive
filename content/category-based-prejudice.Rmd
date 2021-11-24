@@ -261,7 +261,7 @@ Looking at the shapes farthest to the right, there are no squares, and looking a
 
 On the other hand, looking at the colors farthest to the right, there are mostly cyan figures, and looking at the shapes farthest to the left, there are no cyan figures. There thus also appears to be a trend in which cyan figures tend to be farther to the right in Figure \@ref(fig:shapes-figure). Indeed, the average _x_ position for cyan figures specifically is `r mean_x_color[color == 'cyan', mean_x_center]`. Category-based prejudice should therefore expect the new cyan square to be positioned more to the right of the two-dimensional plane in Figure \@ref(fig:shapes-figure).
 
-In this example, category-based prejudice leads to two contradictory expectations, depending on the choice of categorization. If the new cyan square is categorized according to shape, category-based prejudice expects it on the left, but if the new cyan square is categorized according to color, category-based prejudice expects it on the right. Because categorization is arbitrary in the choice of variable to use for categorization, category-based prejudice is arbitrary in ambiguous cases such as these. This phenomenon is be discussed further in the more concrete example below.
+In this example, category-based prejudice leads to two contradictory expectations, depending on the choice of categorization. If the new cyan square is categorized according to shape, category-based prejudice expects it on the left, but if the new cyan square is categorized according to color, category-based prejudice expects it on the right. Because categorization is arbitrary in the choice of variable to use for categorization, category-based prejudice is arbitrary in ambiguous cases such as these. This phenomenon is discussed further later in this article in the context of a more concrete example.
 
 
 #### Choice of Levels of a Variable
@@ -300,9 +300,9 @@ find_cut_stats <- function(cut_point) {
 lapply(seq(0.05, 0.75, 0.05), find_cut_stats)
 ```
 
-Furthermore, where the boundaries are set in between the levels of a categorical variable is arbitrary, and this phenomenon especially can be abused.
+Furthermore, the choice of where to set the boundaries in between the levels of a categorical variable is arbitrary, and this choice especially can be abused.
 
-For instance, if the geometric figures in Figure \@ref(fig:shapes-figure) are categorized into "small" and "large" levels based on whether the area of the figure is less than or greater than 0.45, this results in a mean _x_ position of `r find_cut_stats(0.45)[size == 'small', x_center]` for small figures and a mean _x_ position of `r find_cut_stats(0.45)[size == 'large', x_center]` for large figures.  This has the result of making it appear that the size of a figure does not make the figure any more likely to appear on the left or the right of the two-dimensional plane. When dividing a numerical variable into discrete categories, values such as 0.45 are often called the "cut point."
+For instance, if the geometric figures in Figure \@ref(fig:shapes-figure) are categorized into "small" and "large" levels based on whether the area of the figure is less than or greater than 0.45, this results in a mean _x_ position of `r find_cut_stats(0.45)[size == 'small', x_center]` for small figures and a mean _x_ position of `r find_cut_stats(0.45)[size == 'large', x_center]` for large figures.  This has the result of making it appear that the size of a figure does not make the figure any more likely to appear on the left or the right of the two-dimensional plane. When dividing a numerical variable into discrete levels, values such as 0.45 are often called the "cut point."
 
 However, if instead of 0.45, a cut point of 0.50 is used to categorize the figures into "small" and "large" levels, this leads to a mean _x_ position of `r find_cut_stats(0.5)[size == 'large', x_center]` for large figures and a mean _x_ position of `r find_cut_stats(0.5)[size == 'small', x_center]` for small figures. This has the result of making it appear that larger figures are more likely to appear on the left of the two-dimensional plane.
 
@@ -346,7 +346,7 @@ In order to arrive at a more general conclusion about "men" or "women," several 
 
 This generalization adds additional costs to a judgment: the cost of sampling and the cost of administering the instrument of measurement to every individual in a sample large enough for statistical inference. The exact magnitude of these additional costs vary depending on the details of their circumstances.
 
-In large surveys intended to be nationally representative, the cost of sampling can be the largest cost in the enterprise. When targeting smaller populations, such as the customers of a company, there may be a preexisting records from which it is straightforward to derive a sampling frame, so the cost of sampling would be relatively small. 
+In large surveys intended to be nationally representative, the cost of sampling can be the largest cost in the enterprise. When targeting smaller populations, such as the customers of a company, there may be preexisting records from which it is straightforward to derive a sampling frame, so the cost of sampling would be relatively small.
 
 The cost of measuring every individual in a representative sample depends, of course, on the sample size. Sample size in turn depends on the variance in the population of the variable of interest, on the minimally detectable difference in the variable that is desired, and on the desired statistical power.[^power]
 
@@ -364,7 +364,7 @@ Of course, in practice category-based prejudice is often done based not on a val
 
 It might sometimes be the case that the cost of arriving at a more general proposition such as "women are more empathic" or "men are better at math" is a sunk cost, when such general results have already been established by previous work. These cases do not entail additional cost for the category-based prejudice approach over the direct measurement approach, but the other criticisms described in this article remain.
 
-Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Psychology experiments do not generalize to a larger population when they are based on opportunity samples, such as the samples of 20 or 40 undergraduate student volunteers at the researchers' university often discussed in the psychological literature. Opinion polls done by magazines or web sites that rely on volunteers also do not generalize.[^volunteers]
+Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Psychology experiments do not generalize to a larger population when they are based on opportunity samples, such as the samples of 20 or 40 undergraduate student volunteers at the researchers' university, so often discussed in the psychological literature. Opinion polls done by magazines or web sites that are based on a sample of volunteers also do not generalize.[^volunteers]
 
 [^volunteers]: For more discussion of why polls of volunteered responses are unrepresentative, see Chapter 1 of Lohr [-@lohr_sampling_2021].
 
@@ -385,7 +385,7 @@ What is relevant for the hiring manager's decision is what has come to be called
 
 [^density]: Point estimates such as the estimate of a population mean are insufficient to calculate a probability of superiority. Means are indicators of the central tendency of a distribution, which is just one aspect of the distribution. In order to calculate probability of superiority, one can assume or attempt to establish that the probability density of the variable of interest conforms to some established mathematically defined distributions for which there is a closed form solution for probability of superiority. Alternatively, one could estimate the density empirically, using techniques such as kernel density estimation.
 
-Using this information, the hiring manager could calculate probabilities of superiority, arriving at conclusions such as "a randomly selected woman in the population of job applicants has 68\% chance of having a higher empathy score than a randomly selected man" or "a randomly selected man in the population of job applicants as a 72\% chance of having a higher math score than a randomly selected woman."
+Using this information, the hiring manager could calculate probabilities of superiority, arriving at conclusions such as "a randomly selected woman in the population of job applicants has 68\% chance of having a higher empathy score than a randomly selected man" or "a randomly selected man in the population of job applicants has a 72\% chance of having a higher math score than a randomly selected woman."
 
 If the hiring manager were to use this information to decide between the last two prospective employees, the hiring manager would commit to being wrong 32\% of the time when hiring for empathy based on gender or wrong 28\% of the time when hiring for math ability based on gender.
 
@@ -398,9 +398,9 @@ These weaker, probabilistic conclusion can easily be replaced by stronger, more 
 
 The idea of a randomly selected individual from a population is a useful construct when learning probability theory and statistics. However, in real life scenarios, one rarely ever encounters a randomly selected individual from a population. The final two prospective employees in these example scenarios illustrate this phenomenon.
 
-The prospective employees have applied to this specific job posting, and they have gone through a vetting process that may have included interviews and other examinations. They are thus not randomly selected from the population of job applicants. Indeed, if the job posting specifically asked for applicants with empathy skills or with math skills, or if the interviewers were specifically looking for evidence of empathy skills or math skills, there is reason to believe the final two prospective employees might be unusual in either of these traits.
+The prospective employees have applied to this specific job posting, and they have gone through a vetting process that may have included interviews and other examinations. They are thus not randomly selected from the population of job applicants. Indeed, if the job posting specifically asked for applicants with empathy skills or with math skills, or if the interviewers were specifically looking for evidence of empathy skills or math skills, there is reason to believe the final two prospective employees might be unusual in these traits.
 
-Another way of conceiving of this phenomenon is that the true population of interest in these scenarios is not the population of all job applicants to the company, but the population of job applicants to this specific job posting who have made it through all the vetting to become one of the two final prospective employees. This is could easily be too small of a population to sample for any kind of inference about probability densities.
+Another way of conceiving of this phenomenon is that the true population of interest in these scenarios is not the population of all job applicants to the company, but the population of job applicants to this specific job posting who have made it through all the vetting to become one of the two final prospective employees. This is could easily be too small of a population for any kind of inference about probability densities.
 
 
 ### Ambiguous Categorization
