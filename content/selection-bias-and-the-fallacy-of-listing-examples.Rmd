@@ -2,7 +2,7 @@
 title: "Selection Bias and the Fallacy of Listing Examples"
 draft: false
 date: 2020-12-07
-tags: ["critical thinking"]
+tags: ["reasoning about evidence"]
 bibliography: "../bibliographies/fallacy-of-listing-examples.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true

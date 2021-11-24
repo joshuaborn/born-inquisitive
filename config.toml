@@ -12,7 +12,7 @@ disableKinds = ["taxonomyTerm"]
   tags = "tags"
 
 [params]
-  subtitle = "Independent, critical thinking"
+  subtitle = "Independent, evidence-based inquiry"
 
 [mediaTypes]
 [mediaTypes."application/atom+xml"]

@@ -2,7 +2,7 @@
 title: "Category-Based Prejudice"
 draft: true
 date: 2021-11-19
-tags: ["critical thinking"]
+tags: ["reasoning about evidence"]
 bibliography: "../bibliographies/category-based-prejudice.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
