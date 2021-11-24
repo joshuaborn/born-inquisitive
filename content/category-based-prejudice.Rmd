@@ -31,7 +31,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-* Add discussion of non-binary levels in this article
 * Write concluding paragraphs
 * Write opening paragraph
 * Style table
@@ -421,6 +420,15 @@ Suppose for the scenario in which math ability is desired that both these stereo
     A review of the literature finds numerous papers about the supposed effects of stereotypes on math performance, but few about the prevalence of such stereotypes. For the purposes of this article, the existence of these stereotypes only functions to motivate a thought experiment, and no claim is made as to how prevalent they are.
 
 Because categorization is arbitrary, the hiring manager can pick whatever variable to use for the category-based prejudice approach. In cases in which the choice of two different variables, such as gender or Asian-ness, lead to different conclusions, the category-based prejudice approach leads to ambiguous results. In this scenario, category-based prejudice, in addition to its other flaws, does not actually resolve the problem it set out to solve in the first place: picking being the two final prospective employees.
+
+
+### Ambiguous Category Levels
+
+As was seen in the abstract example, categorization is arbitrary not just in the choice of variable to use for categorization, but also in the choice of the levels of the variable.
+
+This arbitrariness could be at play with regard to the rules for categorization as "Asian" in the scenario of hiring for math skills. For instance, the woman in the final two prospective employees could have a father with an Asian origin and a mother with origin outside of Asia. Indeed, because someone has 2<sup>_n_</sup> ancestors when considering _n_ generations, it is conceivable that the woman could have an arbitrary percentage of ancestors of Asian origin and of non-Asian origin. This leads to the arbitrary choice of a cut point as discussed in earlier section using an abstract example, but in this case, with regard to how much Asian ancestry a particular person is required to have before the prejudice of "Asians are good at math" is to be applied.
+
+Furthermore, there are individuals who defy the levels of a categorical variable that are chosen to be used for category-based prejudice. For instance, suppose in the hiring scenarios instead of deciding between a man and a woman, the hiring manager is considering someone who developed biologically intersexed and has not adopted any gender categorization. In such cases, it is not obvious how to apply the more general propositions such as "women are more empathic" or "men are better at math" for category-based prejudice, and the hiring manager would be left once more with an arbitrary choice of how to categorize the individual in order to use category-based prejudice.
 
 
 ## Conclusion
