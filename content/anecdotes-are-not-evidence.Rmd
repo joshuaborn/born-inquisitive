@@ -2,7 +2,7 @@
 title: "Anecdotes Are Not Evidence"
 draft: false
 date: 2021-01-31
-tags: ["critical thinking", "statistics", "psychology"]
+tags: ["critical thinking", "psychology"]
 bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true

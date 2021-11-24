@@ -2,7 +2,7 @@
 title: "Category-Based Prejudice"
 draft: true
 date: 2021-11-19
-tags: ["critical thinking", "statistics"]
+tags: ["critical thinking"]
 bibliography: "../bibliographies/category-based-prejudice.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
@@ -31,6 +31,12 @@ knitr::opts_chunk$set(
 )
 ```
 
+* Move data download link to footnote
+* Add discussion of non-binary levels in this article
+* Write concluding paragraphs
+* Write opening paragraph
+* Style table
+* Insert photographs throughout
 
 ## Terminology
 
@@ -435,4 +441,3 @@ fwrite(
 
 
 ## Footnotes
-
