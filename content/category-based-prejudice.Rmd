@@ -31,7 +31,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-* Move data download link to footnote
 * Add discussion of non-binary levels in this article
 * Write concluding paragraphs
 * Write opening paragraph
@@ -205,9 +204,9 @@ ggplot() +
   theme_classic()
 ```
 
-The principles are illustrated by the population in Figure \@ref(fig:shapes-figure), which consists of `r n` individual geometric figures. The shape, color, position, and size of each geometric figure have been randomly selected according to specific probability distributions.[^beta] The [raw data set](/category-based-prejudice-figures.csv) is available for those who would like to follow along with their own calculations.
+The principles are illustrated by the population in Figure \@ref(fig:shapes-figure), which consists of `r n` individual geometric figures. The shape, color, position, and size of each geometric figure have been randomly selected according to specific probability distributions.[^beta]
 
-[^beta]: In particular, beta distributions were used throughout. Beta distributions are useful for generating example data because they are bounded, continuous, and can be parameterized to be symmetric or skewed as desired.
+[^beta]: In particular, beta distributions were used throughout. Beta distributions are useful for generating example data because they are bounded, continuous, and can be parameterized to be symmetric or skewed as desired. The [data set](/category-based-prejudice-figures.csv) thus generated and used to create Figure \@ref(fig:shapes-figure) is available for download.
 
 
 ### Properties of a Population Are Not Properties of Individuals
