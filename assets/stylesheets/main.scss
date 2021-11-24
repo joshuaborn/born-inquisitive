@@ -243,33 +243,62 @@ main {
     }
 
     h2, h3, h4, h5, h6 {
-      margin-top: 1.25rem;
+      margin: 1.25rem 0 1rem;
     }
 
     table {
-      caption-side: bottom;
-      margin: 0 auto;
+      @include non-body-font();
+      caption-side: top;
+      font-size: 0.8rem;
+      margin: 0.5rem auto 1.25rem;
+
+      thead {
+        border-bottom: 1px solid #333;
+        border-top: 1px solid #333;
+
+        th {
+          padding: 0 0.25rem;
+        }
+      }
+
+      tbody {
+        border-bottom: 1px solid #333;
+
+        td {
+          padding: 0 0.25rem;
+        }
+
+        tr.even {
+          background-color: #eaeaea;
+        }
+      }
+    }
+
+    table.contingency {
+      thead, tbody {
+        border: none;
+      }
 
       td.count {
         border: 1px solid #333;
-        min-width: 3rem;
-        padding: 0.5rem;
+        min-width: 2rem;
+        padding: 0.25rem;
         text-align: center;
       }
 
       tr .question-row {
-        padding: 0.25rem;
+        padding: 0.125rem;
       }
 
       .column-label {
         border: none;
         text-align: center;
-        padding: 0.25rem;
+        padding: 0.125rem;
       }
 
       .row-question {
         vertical-align: middle;
-        padding: 0.5rem;
+        padding: 0.25rem;
       }
 
       .row-label {
@@ -280,9 +309,11 @@ main {
       }
     }
 
-    table + .caption {
+    caption, .caption {
+      font-family: 'Sorts Mill Goudy', serif;
       font-size: 0.8rem;
-      margin: 0.25rem auto;
+      font-style: italic;
+      margin: 0 auto;
       padding: 0 4rem;
       text-align: center;
     }

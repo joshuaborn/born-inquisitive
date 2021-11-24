@@ -35,11 +35,11 @@ Beliefs are, in practice, rarely true or false in isolation. In order to examine
 Because of this, instead of truth or falsity being discussed as properties of individual beliefs, this inquiry examines truth and falsity as properties of a _mental model_. A mental model includes a particular belief and all the other related beliefs necessary in order to test this belief. This kind of mental model is _descriptive,_ in that it attempts to model how things actually are.
 
 ![
-_**Figure 1:** Two diagrams illustrating conditions for truth, in which mental models correspond to the external world. The left diagram illustrates an individual who believes that a certain backpack weighs 10 kilograms when it indeed does weigh 10 kilograms, and the right diagram illustrates an individual who believes that the backpack weighs greater than 10 kilograms when it does indeed weigh greater than 10 kilograms._
+_Figure 1: Two diagrams illustrating conditions for truth, in which mental models correspond to the external world. The left diagram illustrates an individual who believes that a certain backpack weighs 10 kilograms when it indeed does weigh 10 kilograms, and the right diagram illustrates an individual who believes that the backpack weighs greater than 10 kilograms when it does indeed weigh greater than 10 kilograms._
 ](/images/two-true-beliefs-2.svg)
 
 ![
-_**Figure 2:** Two diagrams illustrating conditions for falsity, in which mental models fail to correspond to the external world. The left diagram illustrates an individual who believes that a certain backpack weighs greater than 10 kilograms when it actually weighs 10 kilograms, and the right diagram illustrates an individual who believes that the backpack weighs 10 kilograms when it actually weighs greater than 10 kilograms._
+_Figure 2: Two diagrams illustrating conditions for falsity, in which mental models fail to correspond to the external world. The left diagram illustrates an individual who believes that a certain backpack weighs greater than 10 kilograms when it actually weighs 10 kilograms, and the right diagram illustrates an individual who believes that the backpack weighs 10 kilograms when it actually weighs greater than 10 kilograms._
 ](/images/two-false-beliefs-2.svg)
 
 ### Belief Revision
@@ -55,7 +55,7 @@ The totality of the external world cannot, in practice, be observed by any given
 When a mind encounters empirical evidence that is consistent with a descriptive mental model, then it is prudent for the mental model to persist. _When a mind encounters evidence that contradicts a descriptive mental model, then it is prudent for the mental model to be amended_ in order to better agree with the external world, such as in Figure 3. Thus, empirical evidence prompts the revision of false beliefs to better approximate true beliefs.
 
 ![
-_**Figure 3:** A diagram illustrating belief revision, in which a mental model is changed to agree with the external world after empirical evidence is observed. The left panel illustrates an individual who believes a backpack weighs 10 kilograms. The middle panel illustrates the same individual has now seen the backpack tip a scale when opposite a 10-kilogram weight. The right panel illustrates the individual now believes the backpack weighs greater than 10 kilograms._
+_Figure 3: A diagram illustrating belief revision, in which a mental model is changed to agree with the external world after empirical evidence is observed. The left panel illustrates an individual who believes a backpack weighs 10 kilograms. The middle panel illustrates the same individual has now seen the backpack tip a scale when opposite a 10-kilogram weight. The right panel illustrates the individual now believes the backpack weighs greater than 10 kilograms._
 ](/images/belief-revision-2.svg)
 
 
@@ -64,13 +64,13 @@ _**Figure 3:** A diagram illustrating belief revision, in which a mental model i
 Morality can also be construed as a kind of mental model. However, moral sentiments do something other than simply try to represent the external world. Mere modeling of _how things are_ does not constitute morality. For instance, merely believing that there is murder in the world as a matter of fact as in Figure 4 does not constitute a moral sentiment.
 
 ![
-_**Figure 4:** A diagram illustrating a descriptive rather than normative mental model, in which an individual witnesses a murder in progress and believes there is a murder taking place._
+_Figure 4: A diagram illustrating a descriptive rather than normative mental model, in which an individual witnesses a murder in progress and believes there is a murder taking place._
 ](/images/not-moral-sentiment.svg)
 
 Morality models _how things should be._ Moral sentiments occur when there is a _judgment_ or _prescription_ about the external world. For instance, a moral mental model does not merely believe that there is murder in the world as in Figure 4, but _judges_ murder to be wrong as in Figure 5. Moral mental models are _normative,_ rather than descriptive. They do not have implications that explain or predict phenomena, but instead judge the worth of things (e.g., "murder is bad" or "charity is good"), prescribe certain behavior (e.g., "be kind to one another"), or proscribe behavior (e.g., "do not steal").
 
 ![
-_**Figure 5:** A diagram illustrating a normative mental model, which, unlike Figure 4, contains a red circle-backslash symbol to represent the additional element of moral disapproval._
+_Figure 5: A diagram illustrating a normative mental model, which, unlike Figure 4, contains a red circle-backslash symbol to represent the additional element of moral disapproval._
 ](/images/moral-sentiment.svg)
 
 
@@ -83,11 +83,11 @@ It is contrary to the purpose of morality to have the moral sentiment that murde
 Thus, descriptive mental models and normative mental models are diametrically opposed in how they handle contradictory empirical evidence. Such contradictions lead to a change of the mental model in the descriptive case, but lead to attempts to change the external world in the normative case.
 
 ![
-_**Figure 6:** A diagram illustrating how a normative mental model is_ not _expected to react to contradiction with the external world. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual changing moral sentiment from disapproval to approval of murder, as symbolized by inclusion of a check mark._
+_Figure 6: A diagram illustrating how a normative mental model is_ not _expected to react to contradiction with the external world. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual changing moral sentiment from disapproval to approval of murder, as symbolized by inclusion of a check mark._
 ](/images/nonsensical-moral-revision.svg)
 
 ![
-_**Figure 7:** A diagram illustrating how a normative mental model_ is _expected to react to contradiction with the external world. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual attempting to stop the murder, while the moral sentiment is retained._
+_Figure 7: A diagram illustrating how a normative mental model_ is _expected to react to contradiction with the external world. The left panel illustrates an individual who disapproves of murder. The middle panel illustrates the same individual witnessing a murder. The right panel illustrates the individual attempting to stop the murder, while the moral sentiment is retained._
 ](/images/world-revision.svg)
 
 
@@ -128,11 +128,11 @@ While it makes no sense to attempt to evaluate the truth or falsity of the moral
 Such attitudinal propositions make a different kind of claim than the objective statement that "murder is wrong." They make claims about subjective mental states, claims that _are_ true or false, as illustrated by Figure 8 and Figure 9. Thus, while there are no moral truths and no moral knowledge, there can be truths and knowledge about moral sentiments.
 
 ![
-_**Figure 8:** Two diagrams illustrating true beliefs about attitudinal propositions. The left diagram illustrates an individual (teal icon) who disapproves of raising and slaughtering animals for food, and another individual (orange icon) who has the descriptive belief that this individual indeed disapproves of raising and slaughtering animals for food. The right diagram illustrates an individual (teal icon) who approves of raising and slaughtering animals for food, and another individual (orange icon) who has the descriptive belief that this individual indeed approves of raising and slaughtering animals for food._
+_Figure 8: Two diagrams illustrating true beliefs about attitudinal propositions. The left diagram illustrates an individual (teal icon) who disapproves of raising and slaughtering animals for food, and another individual (orange icon) who has the descriptive belief that this individual indeed disapproves of raising and slaughtering animals for food. The right diagram illustrates an individual (teal icon) who approves of raising and slaughtering animals for food, and another individual (orange icon) who has the descriptive belief that this individual indeed approves of raising and slaughtering animals for food._
 ](/images/true-attitudinal-propositions.svg)
 
 ![
-_**Figure 9:** Two diagrams illustrating false beliefs about attitudinal propositions. The left diagram illustrates an individual (teal icon) who disapproves of raising and slaughtering animals for food, but another individual (orange icon) has the descriptive belief that this individual approves of raising and slaughtering animals for food. The right diagram illustrates an individual (teal icon) who approves of raising and slaughtering animals for food, but another individual (orange icon) has the descriptive belief that this individual disapproves of raising and slaughtering animals for food._
+_Figure 9: Two diagrams illustrating false beliefs about attitudinal propositions. The left diagram illustrates an individual (teal icon) who disapproves of raising and slaughtering animals for food, but another individual (orange icon) has the descriptive belief that this individual approves of raising and slaughtering animals for food. The right diagram illustrates an individual (teal icon) who approves of raising and slaughtering animals for food, but another individual (orange icon) has the descriptive belief that this individual disapproves of raising and slaughtering animals for food._
 ](/images/false-attitudinal-propositions.svg)
 
 Mixed statements with both descriptive information and normative connotations can be interpreted as a conjunction between two propositions: one about a state of affairs and another about a mind's attitude toward the state of affairs. For instance, if someone named Chidi says, "the Liberation Front terrorists were defeated in the battle today," this can be interpreted as two propositions: "the Liberation Front faction lost the battle today" and "Chidi disapproves of the Liberation Front." Similarly, if someone named Astrid says, "during the battle today, the Liberation Front was set back in their struggle against oppression," this can be interpreted as "the Liberation Front faction lost the battle today" and "Astrid approves of the Liberation Front."
@@ -243,7 +243,7 @@ There is also an important implication relevant for all individuals, regardless 
 A critical thinker is compelled to believe what is true and disbelieve what is false. What remains after this is just how one feels. The only enlightenment that can be attained about this remainder is to be _aware_ of how one feels and to abstain from trying to rationalize one's feelings post hoc. Then, one can investigate oneself with the same tools of inquiry &ndash; such as empirical evidence, investigation into causation, etc. &ndash; that one might use to investigate any other fact about the world.
 
 ![
-_**Figure 10:** A diagram illustrating moral self-awareness._
+_Figure 10: A diagram illustrating moral self-awareness._
 ](/images/self-awareness.svg)
 
 

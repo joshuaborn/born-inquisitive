@@ -33,7 +33,6 @@ knitr::opts_chunk$set(
 
 * Write concluding paragraphs
 * Write opening paragraph
-* Style table
 * Insert photographs throughout
 
 ## Terminology
@@ -210,14 +209,21 @@ The principles are illustrated by the population in Figure \@ref(fig:shapes-figu
 
 ### Properties of a Population Are Not Properties of Individuals
 
+<p class="caption">Table 1: Location, size, and color information for the circles portrayed in Figure \@ref(fig:shapes-figure).</p>
+
 ```{r table-for-averages}
-diameters <- sort(dt[shape == 'circle', diameter])
+diameters <- dt[shape == 'circle', .(
+  Diameter = round(diameter, 2),
+  `_x_` = round(x_center, 2),
+  `_y_` = round(y_center, 2),
+  Color = color
+)][order(Diameter)]
 
-n_circles <- length(diameters)
+n_circles <- nrow(diameters)
 
-mean_diameter <- round(mean(diameters), 2)
+mean_diameter <- round(dt[shape == 'circle', mean(diameter)], 2)
 
-knitr::kable(t(round(diameters, 2)))
+knitr::kable(diameters)
 ```
 
 Table 1 lists the diameter dimensions for all `r n_circles` circles in Figure \@ref(fig:shapes-figure), sorted from smallest to largest and rounded to the hundredths. The arithmetic mean of all these diameters is `r mean_diameter`. Thus, the average circle diameter is `r mean_diameter`. However, _none_ of the actual circles in Figure \@ref(fig:shapes-figure) have a diameter of `r mean_diameter`.[^units-of-measurement]

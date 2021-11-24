@@ -45,7 +45,9 @@ If that were the case, at the very least, it would be expected that the proporti
 
 There are four unknowns that need to be found in order to calculate the two proportions. This can be illustrated by the creation of a contingency table, such as Table 1. The body of the table contains counts of homes. The rows separate these counts into homes that have had a fire and homes that have not. The columns separate the counts into homes that have Acme Electric Grills and homes that do not.
 
-<table>
+<p class="caption">Table 1: A 2 by 2 contingency table with all of the information from the list of examples.</p>
+
+<table class="contingency">
   <thead>
     <tr class="question-row">
       <th class="blank"></th>
@@ -73,7 +75,6 @@ There are four unknowns that need to be found in order to calculate the two prop
     </tr>
   </tbody>
 </table>
-<p class="caption"><strong>Table 1:</strong> A 2 by 2 contingency table with all of the information from the list of examples.</p>
 
 Table 1 is filled in with _all_ the information gleaned from the list of examples generated in the preceding thought experiment. The upper left cell contains "&ge; 100" because it is known from the list of examples that there are at least 100 homes with an Acme Electric Grill that had fires, and _that is it._
 
@@ -81,7 +82,9 @@ The emptiness of the contingency table illustrates the emptiness of the informat
 
 Suppose that the lack of information in the other 3 cells of Table 1 were addressed in the exact same manner, i.e., by finding a list of examples for each case, resulting in Table 2.
 
-<table>
+<p class="caption">Table 2: A 2 by 2 contingency table with all cells filled in by the technique of listing examples.</p>
+
+<table class="contingency">
   <thead>
     <tr class="question-row">
       <th class="blank"></th>
@@ -109,8 +112,6 @@ Suppose that the lack of information in the other 3 cells of Table 1 were addres
     </tr>
   </tbody>
 </table>
-
-<p class="caption"><strong>Table 2:</strong> A 2 by 2 contingency table with all cells filled in by the technique of listing examples.</p>
 
 Table 2 is still not informative. All that is known is that there are _at least_ 100 instances of each case. Again, there is no way to check if the proportion of fires is greater among homes with an Acme Electric Grill than among homes without one.
 
@@ -172,7 +173,9 @@ If one wants to draw an actually informative conclusion when presented with a li
 
 For instance, in the Acme Electric Grill thought experiment, suppose that the population of interest is defined as all of the homes in the United States. The list of examples that led to Table 1 can be discarded. Instead of specifically looking for instances of fires in homes with Acme Electric Grills, some scheme is devised whereby a simple random sample of 10,000 homes in the United States is identified. Of these, all 10,000 are investigated as to whether they had fires in 2018 and whether or not they have Acme Electric Grills. The counts from this are summarized in Table 3.
 
-<table>
+<p class="caption">Table 3: A 2 by 2 contingency table with counts of a sample random sample taken from homes in the United States.</p>
+
+<table class="contingency">
   <thead>
     <tr class="question-row">
       <th class="blank"></th>
@@ -201,8 +204,6 @@ For instance, in the Acme Electric Grill thought experiment, suppose that the po
   </tbody>
 </table>
 
-<p class="caption"><strong>Table 3:</strong> A 2 by 2 contingency table with counts of a sample random sample taken from homes in the United States.</p>
-
 Unlike with Table 1 and with Table 2, the proportions needed to test the hypothesis that Acme Electric Grills are a fire hazard can be calculated from Table 3. The proportion of homes _with_ an Acme Electric Grill that had a fire in 2018 is 366 / (366 + 2651) &asymp; 12.1%, and the proportion of homes _without_ an Acme Electric Grill that had a fire in the same time period is 867 / (867 + 6116) &asymp; 12.4%. 
 
 In this case, the homes _with_ an Acme Electric Grill were actually less prone to fires than the homes that did not. Given this, a conclusion can be reached: Acme Electric Grills do not cause fires.
@@ -211,7 +212,9 @@ In this case, the homes _with_ an Acme Electric Grill were actually less prone t
 
 It might be observed that counts in Table 3 are unrealistic, since as was seen earlier, the proportion of homes that actually had a fire in the United States in 2018 was quite small. A more realistic sample is represented by Table 4.
 
-<table>
+<p class="caption">Table 4: A 2 by 2 contingency table with counts of a more plausible simple random sample taken from homes in the United States.</p>
+
+<table class="contingency">
   <thead>
     <tr class="question-row">
       <th class="blank"></th>
@@ -239,8 +242,6 @@ It might be observed that counts in Table 3 are unrealistic, since as was seen e
     </tr>
   </tbody>
 </table>
-
-<p class="caption"><strong>Table 4:</strong> A 2 by 2 contingency table with counts of a more plausible simple random sample taken from homes in the United States.</p>
 
 In Table 4, the proportion of homes _with_ an Acme Electric Grill that had a fire in 2018 is 11 / (11 + 3006) &asymp; 0.365%, and the proportion of homes _without_ an Acme Electric Grill that had a fire in the same time period is 15 / (15 + 6968) &asymp; 0.215%.
 
