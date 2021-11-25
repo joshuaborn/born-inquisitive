@@ -31,8 +31,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-* Insert photographs throughout
-* Write opening paragraph
 
 ## Terminology
 
@@ -43,6 +41,8 @@ For instance, the first definition for "prejudice" in the _American Heritage Dic
 The second definition for "prejudice" in the _American Heritage Dictionary of the English Language_ is "irrational suspicion or hatred of a particular social group, such as a race or the adherents of a religion." [@pickett_american_2018] This is similar to how the word "bigotry" is used in contemporary discourse.
 
 This second definition is more narrow than how "prejudice" is used in this article in at least two ways. First, this definition applies specifically to judgments about human beings, whereas the criticisms discussed here apply equally well when reasoning about rocks, single-celled organisms, music, countries, or anything else that can be categorized. Second, this definition construes "prejudice" as referring to judgments that are undesirable, whereas the way "prejudice" is used in this article can refer to judgments about desirable traits, as well.
+
+**dictionary**
 
 Because the English language lacks a word with the precise scope used by this article, the phrase "category-based prejudice" is used.
 
@@ -233,6 +233,8 @@ This illustrates the principle that _properties of a population are not properti
 
 While this may seem obvious when applied to a very visual example such as geometric figures, it is important to remember this principle whenever thinking about populations of anything. There is no entity named by "the average person." The average person does not exist.
 
+**average person**
+
 ```{r}
 proportions <- dt[, .(proportion = .N / dt[, .N]), by = 'color']
 
@@ -249,7 +251,7 @@ This principle applies not just to averages, but to any property of a population
 
 ### Categorization Is Arbitrary
 
-The reason why properties of a population are not properties of individuals is that _categorization is arbitrary._ The act of categorization is the creation of a convention that abstracts away details and simplifies thinking about numerous individuals simultaneously. There is nothing wrong with this practice. Attempting to think about large numbers of individuals simultaneously would be complicated without such simplification.
+The reason why properties of a population are not properties of individuals is that _categorization is arbitrary._ The act of categorization is the creation of a convention that abstracts away details and simplifies thinking about numerous individuals simultaneously. There is nothing wrong with this practice. Attempting to think about large numbers of individuals simultaneously would be overly complicated without such simplification.
 
 However, it is important to remember that any convention done one way could be also be done a different way. Individuals are only included as members of a population because someone construes them to be, whether this is through the formal creation of rules for what individuals get included in which categories or through an ad hoc process in which someone manually categorizes individuals as they are encountered.
 
@@ -322,6 +324,8 @@ Even though the same exact underlying population is used to calculate both sets 
 
 In order to illustrate the main flaws with category-based prejudice, this article turns from the abstract to more concrete examples. Suppose that a hiring manager at a company is considering what to look for in the next employee to be hired and is told the next hire should be a woman because the team needs more empathy and women are more empathic. Alternatively, the manager is told to hire a man because the team needs more math ability and men are good at math.
 
+**interview**
+
 Further suppose in either scenario, the hiring manager has narrowed the search for a new employee to two people, one a woman and one a man. These two prospects seem equally qualified in other respects besides math ability or empathy, and all that remains is to choose between the two prospective employees.
 
 
@@ -331,7 +335,11 @@ How could propositions such as whether someone is "good at math" or "more empath
 
 Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems, or for proving mathematical theorems are all quite different. Those who want more math proficiency are best served to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
 
+**math test**
+
 With regard to traits such as empathy, psychologists often spend large amounts of time and effort attempting to devise a test that is reliable (i.e., self-consistent and consistent across various contexts) and valid (i.e., actually measuring what it is supposed to measure). There are various schools of thought and approaches to development of such tests, but overall the goals of these approaches are similar: to devise a method for measuring a psychological property.
+
+**psychology test** or **empathy**
 
 What both of these propositions presuppose, then, is that there is some _instrument of measurement_ by which the relevant math skills or empathy traits can be discerned. Otherwise, the propositions are uninformative, pointless speech.
 
@@ -351,13 +359,13 @@ The category-based prejudice approach is inferior to the direct measurement appr
 
 ### Additional Cost of Generalization
 
-In order to arrive at a more general conclusion about "men" or "women," several steps need to occur. First, a more precise _target population_ needs to be identified. This might be all the men or women in a certain place and time frame, or perhaps all job applicants to a company. Once the target population is identified, a _sampling frame_ must be devised that can be used to identify each individual in the target population and that allows the target population to be sampled. Once that is accomplished, a _representative sample_ can be selected from the target population. The instrument of measurement can then be applied to each individual in the representative sample, and statistical analysis can done to infer estimates of the relevant values in the target population. Then, the hiring manager would know the relative math abilities or empathy levels of men and women in the population of interest.
+In order to arrive at a more general conclusion about "men" or "women," several steps need to occur. First, a more precise _target population_ needs to be identified. This might be all the men or women in a certain place and time frame, or perhaps all job applicants to a company. Once the target population is identified, a _sampling frame_ must be devised that can be used to identify each individual in the target population and that allows the target population to be sampled. Once that is accomplished, a _representative sample_ can be selected from the target population.[^census]  The instrument of measurement can then be applied to each individual in the representative sample, and statistical analysis can done to infer estimates of the relevant values in the target population. Then, the hiring manager would know the relative math abilities or empathy levels of men and women in the population of interest.
+
+[^census]: Alternatively, if the population is small and easily accessible, it might be more prudent to take a census of the entire population rather than sample from it.
 
 This generalization adds additional costs to a judgment: the cost of sampling and the cost of administering the instrument of measurement to every individual in a sample large enough for statistical inference. The exact magnitude of these additional costs vary depending on the details of their circumstances.
 
-In large surveys intended to be nationally representative, the cost of sampling can be the largest cost in the enterprise. When targeting smaller populations, such as the customers of a company, there may be preexisting records from which it is straightforward to derive a sampling frame, so the cost of sampling would be relatively small.[^census]
-
-[^census]: If the population is small and easily accessible, it might be more prudent to take a census of the entire population rather than sample from it.
+In large surveys intended to be nationally representative, the cost of sampling can be the largest cost in the enterprise. When targeting smaller populations, such as the customers of a company, there may be preexisting records from which it is straightforward to derive a sampling frame, so the cost of sampling would be relatively small.
 
 The cost of measuring every individual in a representative sample depends, of course, on the sample size. Sample size in turn depends on the variance in the population of the variable of interest, on the minimally detectable difference in the variable that is desired, and on the desired statistical power.[^power]
 
@@ -377,6 +385,8 @@ It might sometimes be the case that the cost of arriving at a more general propo
 
 Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Psychology experiments do not generalize to a larger population when they are based on opportunity samples, such as the samples of 20 or 40 undergraduate student volunteers at the researchers' university, so often discussed in the psychological literature. Opinion polls done by magazines or web sites that are based on a sample of volunteers also do not generalize.[^volunteers]
 
+**psychology experiment** or **opinion poll**
+
 [^volunteers]: For more discussion of why polls of volunteered responses are unrepresentative, see Chapter 1 of Lohr [-@lohr_sampling_2021].
 
 In studies that do generalize to a larger population, the sampled population of the study might not be the population of interest for the judgment being made. For instance, the hiring manager in the example scenarios is concerned with empathy or math skills in the population of job applicants to a specific company. Results discovered about the math skills of fifth graders in Idaho or the empathy skills of therapists in Massachusetts are likely not relevant for judging job applicants to the company.[^unless] If the sampled population of a study does not contain the population of interest, attempting to apply the study's results to the population of interest is an extrapolation outside the scope of inference of the study, which is fallacious.
@@ -393,6 +403,8 @@ However, the conclusion that the hiring manager can reach when applying this inf
 Even if it is the case that the mean empathy score of women is higher than that of men among job applicants or the mean math score of men is higher than that of women among job applicants, this is not directly relevant to the hiring manager's decision. As seen previously, properties of populations are not properties of individuals. What the hiring manager wants to know is whether the specific woman being considered has a higher empathy score than the man being considered or whether the specific man being considered has a higher math score than the women being considered.
 
 What is relevant for the hiring manager's decision is what has come to be called the "probability of superiority." The probability of superiority for the empathy question is the probability that a randomly selected woman from the population of job applicants would have a higher empathy score than a randomly selected man from the population of job applicants. This requires knowledge of the probability density of the two distributions, which the supposition at the beginning of this section assumes is available.[^density]
+
+**probability of superiority** or **histogram**
 
 [^density]: Point estimates such as the estimate of a population mean are insufficient to calculate a probability of superiority. Means are indicators of the central tendency of a distribution, which is just one aspect of the distribution. In order to calculate probability of superiority, one can assume or attempt to establish that the probability density of the variable of interest conforms to some established mathematically defined distributions for which there is a closed form solution for probability of superiority. Alternatively, one could estimate the density empirically, using techniques such as kernel density estimation.
 
@@ -411,6 +423,8 @@ The idea of a randomly selected individual from a population is a useful constru
 
 The prospective employees have applied to this specific job posting, and they have gone through a vetting process that may have included interviews and other examinations. They are thus not randomly selected from the population of job applicants. Indeed, if the job posting specifically asked for applicants with empathy skills or with math skills, or if the interviewers were specifically looking for evidence of empathy skills or math skills, there is reason to believe the final two prospective employees might be unusual in these traits.
 
+**interview again**
+
 Another way of conceiving of this phenomenon is that the true population of interest in these scenarios is not the population of all job applicants to the company, but the population of job applicants to this specific job posting who have made it through all the vetting to become one of the two final prospective employees. This is likely too small of a population for any kind of inference about probability densities.
 
 
@@ -419,6 +433,8 @@ Another way of conceiving of this phenomenon is that the true population of inte
 Even if prior work has established a more general proposition such as "women are more empathic" or "men are better at math" for the relevant population of interest, and even if the hiring manager has accepted the probabilistic nature of applying this information to the two specific individuals being considered for the job, the fact that categorization is arbitrary can lead to ambiguous and contradictory conclusions when using the category-based prejudice approach.
 
 An example comes from an experiment in social psychology regarding susceptibility to stereotyping. In order to frame their experiment, Shih, Pittinsky, and Ambady [-@shih_stereotype_1999] claimed that Asian women are the object of two contradictory stereotypes prevalent in the United States: that those categorized as "Asian" are good at math, and that those categorized as "women" are bad at math. 
+
+**Asian woman in professional setting**
 
 Suppose for the scenario in which the hiring manager is looking for math ability that both these stereotypes are prevalent,[^stereotypes] and that the woman among the two final prospective employees that the hiring manager is considering is categorized as "Asian," while the man that the hiring manager is considered is not categorized as "Asian." If the category-based prejudice approach were based on categorization by gender, it would lead to a greater probability of superiority in math skills for the man, but if it were based on categorization by Asian-ness, it would lead to a greater probability of superiority in math skills for the woman.
 
@@ -435,7 +451,9 @@ As was seen in the abstract example, categorization is arbitrary not just in the
 
 This arbitrariness could be at play with regard to the rules for categorization as "Asian" in the scenario of hiring for math skills. For instance, the woman in the final two prospective employees could have a father with an Asian origin and a mother with origin outside of Asia. Indeed, because someone has 2<sup>_n_</sup> ancestors when considering _n_ generations, it is conceivable that the woman could have an arbitrary percentage of ancestors of Asian origin and of non-Asian origin. This leads to the arbitrary choice of a cut point as discussed earlier, but in this case, with regard to how much Asian ancestry a particular person is required to have before the prejudice of "Asians are good at math" is to be applied.
 
-Furthermore, there are individuals who defy the levels of a categorical variable that are chosen to be used for category-based prejudice. For instance, suppose in the hiring scenarios instead of deciding between a man and a woman, the hiring manager is considering someone who developed biologically intersexed and has not adopted any gender categorization. In such cases, it is not obvious how to apply the more general propositions such as "women are more empathic" or "men are better at math" for category-based prejudice, and the hiring manager would be left once more with an arbitrary choice of how to categorize the individual in order to use category-based prejudice.
+**family tree** or **genealogy tree**
+
+Furthermore, there are individuals who defy the levels of a categorical variable that are chosen to be used for category-based prejudice. For instance, suppose in the hiring scenarios instead of deciding between a man and a woman, the hiring manager is considering someone who has developed biologically intersexed and has not adopted any gender categorization. In such cases, it is not obvious how to apply the more general propositions such as "women are more empathic" or "men are better at math" for category-based prejudice, and the hiring manager would be left once more with an arbitrary choice of how to categorize the individual in order to use category-based prejudice.
 
 
 ## Conclusion
@@ -446,7 +464,7 @@ The particular kind of abuse of categorization that this article discusses occur
 
 While it is true that all instances of category-based prejudice are fallacies in the use of categorization, the converse is not the case: not all fallacies in the use of categorization are instances of category-based prejudice. This specific fallacy of categorization is merely the subject of this article. Other abuses of categorization, such as the arbitrary choice of cut point in order to effect the results of an analysis, are worthy topics in their own right and are discussed further elsewhere.
 
-The main argument of this article is that judging individuals based on a general proposition about a population in which they are categorized is inferior to an alternative approach in several ways. In order for a general proposition about a population to be established, there must be some instrument of measurement used. This instrument of measurement can therefore be used for the direct measurement of the individuals. Such a direct measurement approach is less costly, more accurate, and less prone to ambiguities stemming from the arbitrariness of categorization than the use of category-based prejudice.
+The main argument of this article is that judging individuals based on a general proposition about a population in which they are categorized is inferior to a better, alternative approach in several ways. In order for a general proposition about a population to be established, there must be some instrument of measurement used. This instrument of measurement can therefore be used for the direct measurement of the individuals. Such a direct measurement approach is less costly, more accurate, and less prone to ambiguities stemming from the arbitrariness of categorization than the use of category-based prejudice.
 
 
 ```{r, eval=FALSE}
