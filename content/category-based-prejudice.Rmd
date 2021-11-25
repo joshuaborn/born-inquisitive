@@ -50,14 +50,14 @@ Because the English language lacks a word with the precise scope used by this ar
 
 ## Analytical versus Moral Criticism 
 
-The criticisms this article puts forth of category-based prejudice are entirely with regard to the flaws such prejudice imparts on attempts to understand the world. Much can be written about the [moral](/moral-skepticism.html) aspects of category-based prejudice targeting human beings in particular, but writing about the evils of bigotry is not the purpose this article and is instead left to works of social science or history. Instead, this article focuses on criticisms of category-based prejudice as a form of reasoning, regardless of the consequences of such thinking.
+The criticisms this article puts forth of category-based prejudice are entirely with regard to the flaws such prejudice imparts on attempts to understand the world. Much can be written about the [moral](/moral-skepticism.html) aspects of category-based prejudice targeting human beings in particular, but writing about the evils of bigotry is not the purpose this article and is left to works of social science or history. Instead, this article focuses on criticisms of category-based prejudice as a form of reasoning, regardless of the consequences of such thinking.
 
 Thus, the criticisms articulated here are independent of the moral dimensions of category-based prejudice. This article puts forward the thesis that category-based prejudice is always a flawed way of thinking, even if there does not appear to be anything morally objectionable about it. Indeed, even if one judges an instance of category-based prejudice as morally justified, the fallacies in reasoning discussed in this article persist.
 
 
 ## Abstract Example
 
-Before the particular flaws of category-based prejudice are examined, two general principles of categories are discussed by way of an abstract example.
+Before the particular flaws of category-based prejudice are examined, two general principles of categorization are discussed by way of an abstract example.
 
 ```{r shapes-figure, cache=TRUE, fig.height=7, fig.width=7, fig.cap="Geometric figures of various colors, sizes, and shapes, laid out on a two-dimensional plane."}
 y_limit <- 10
@@ -252,7 +252,7 @@ This principle applies not just to averages, but to any property of a population
 
 The reason why properties of a population are not properties of individuals is that _categorization is arbitrary._ The act of categorization is the creation of a convention that abstracts away details and simplifies thinking about numerous individuals simultaneously. There is nothing wrong with this practice. Attempting to think about large numbers of individuals simultaneously would be complicated without such simplification.
 
-However, it is important to remember that any convention done one way could be also be done a different way. Individuals are only included as members in a population because someone construes them to be, whether this is through the formal creation of rules for what individuals get included in which categories or through an ad hoc process in which someone manually categorizes individuals as they are encountered.
+However, it is important to remember that any convention done one way could be also be done a different way. Individuals are only included as members of a population because someone construes them to be, whether this is through the formal creation of rules for what individuals get included in which categories or through an ad hoc process in which someone manually categorizes individuals as they are encountered.
 
 Regardless of how it is done, the choice of _how_ to do the categorization in the first place is itself arbitrary. Any given individual categorized one way could have been categorized a different way under a different set of rules or with a different judge. Because the categorization itself is arbitrary, the act of categorization, while potentially useful for further analysis, is not itself informative.
 
@@ -267,9 +267,9 @@ mean_x_color <- dt[, .(mean_x_center = round(mean(x_center), 2)), by = 'color']
 
 For instance, suppose that a new cyan square will be added to Figure \@ref(fig:shapes-figure), using the same probability distributions used to generate the existing geometric figures. What expectations can be had about the position of this new cyan square?
 
-Looking at the shapes farthest to the right, there are no squares, and looking at the shapes farthest to the left, there are mostly squares. There thus appears to be a trend in which squares tend to be farther to the left in Figure \@ref(fig:shapes-figure). Indeed, while the average _x_ position for all figures is `r mean_x`, the average _x_ position for squares specifically is `r mean_x_shape[shape == 'square', mean_x_center]`. Category-based prejudice should therefore expect the new cyan square to be positioned more to the left of the two-dimensional plane in Figure \@ref(fig:shapes-figure).
+Looking at the shapes farthest to the right, there are no squares, and looking at the shapes farthest to the left, there are mostly squares. There thus appears to be a trend in which squares tend to be farther to the left in Figure \@ref(fig:shapes-figure). Indeed, while the average _x_ position for all figures is `r mean_x`, the average _x_ position for squares specifically is `r mean_x_shape[shape == 'square', mean_x_center]`. Category-based prejudice should therefore expect a square to be positioned more to the left of the two-dimensional plane in Figure \@ref(fig:shapes-figure).
 
-On the other hand, looking at the colors farthest to the right, there are mostly cyan figures, and looking at the shapes farthest to the left, there are no cyan figures. There thus also appears to be a trend in which cyan figures tend to be farther to the right in Figure \@ref(fig:shapes-figure). Indeed, the average _x_ position for cyan figures specifically is `r mean_x_color[color == 'cyan', mean_x_center]`. Category-based prejudice should therefore expect the new cyan square to be positioned more to the right of the two-dimensional plane in Figure \@ref(fig:shapes-figure).
+On the other hand, looking at the colors farthest to the right, there are mostly cyan figures, and looking at the shapes farthest to the left, there are no cyan figures. There thus also appears to be a trend in which cyan figures tend to be farther to the right in Figure \@ref(fig:shapes-figure). Indeed, the average _x_ position for cyan figures specifically is `r mean_x_color[color == 'cyan', mean_x_center]`. Category-based prejudice should therefore expect a new cyan figure to be positioned more to the right of the two-dimensional plane in Figure \@ref(fig:shapes-figure).
 
 In this example, category-based prejudice leads to two contradictory expectations, depending on the choice of categorization. If the new cyan square is categorized according to shape, category-based prejudice expects it on the left, but if the new cyan square is categorized according to color, category-based prejudice expects it on the right. Because categorization is arbitrary in the choice of variable to use for categorization, category-based prejudice is arbitrary in ambiguous cases such as these. This phenomenon is discussed further later in this article in the context of a more concrete example.
 
@@ -328,7 +328,7 @@ Further suppose in either scenario, the hiring manager has narrowed the search f
 
 ### Direct Measurement
 
-How could such propositions such as whether someone is "good at math" or "more empathic" be evaluated?
+How could propositions such as whether someone is "good at math" or "more empathic" be evaluated?
 
 Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems, or for proving mathematical theorems are all quite different. Those who want more math proficiency are best served to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
 
@@ -356,7 +356,9 @@ In order to arrive at a more general conclusion about "men" or "women," several 
 
 This generalization adds additional costs to a judgment: the cost of sampling and the cost of administering the instrument of measurement to every individual in a sample large enough for statistical inference. The exact magnitude of these additional costs vary depending on the details of their circumstances.
 
-In large surveys intended to be nationally representative, the cost of sampling can be the largest cost in the enterprise. When targeting smaller populations, such as the customers of a company, there may be preexisting records from which it is straightforward to derive a sampling frame, so the cost of sampling would be relatively small.
+In large surveys intended to be nationally representative, the cost of sampling can be the largest cost in the enterprise. When targeting smaller populations, such as the customers of a company, there may be preexisting records from which it is straightforward to derive a sampling frame, so the cost of sampling would be relatively small.[^census]
+
+[^census]: If the population is small and easily accessible, it might be more prudent to take a census of the entire population rather than sample from it.
 
 The cost of measuring every individual in a representative sample depends, of course, on the sample size. Sample size in turn depends on the variance in the population of the variable of interest, on the minimally detectable difference in the variable that is desired, and on the desired statistical power.[^power]
 
@@ -367,7 +369,7 @@ While the exact amount of these costs might vary, they are costs that are incurr
 
 #### Stereotypes
 
-Of course, in practice category-based prejudice is often done based not on a valid generalization, but on little more than stereotypes stemming from [anecdotes](/anecdotes-are-not-evidence.html) or [selection bias](/selection-bias-and-the-fallacy-of-listing-examples.html). In these cases, there is not additional cost entailed in establishing a more general proposition, because a more general proposition has not actually been established. Thus, using the category-based prejudice approach is not more costly compared to the direct measurement approach when appealing to stereotypes, but these cases are based entirely on fallacies and thus are worthless.
+Of course, in practice category-based prejudice is often done based not on a valid generalization, but on little more than stereotypes stemming from [anecdotes](/anecdotes-are-not-evidence.html) or [selection bias](/selection-bias-and-the-fallacy-of-listing-examples.html). In these cases, there is not additional cost entailed in establishing a more general proposition, because a more general proposition has not actually been established. Thus, when appealing to stereotypes, using the category-based prejudice approach is not more costly compared to the direct measurement approach, but these cases are based entirely on fallacies and thus are worthless.
 
 
 #### Preexisting Studies
@@ -401,7 +403,7 @@ If the hiring manager were to use this information to decide between the last tw
 
 The given values for the probabilities are just examples, but this nonetheless illustrates why the category-based prejudice approach leads to a weaker conclusion than the direct measurement approach. The conclusion of the category-based prejudice approach is at best probabilistic and so will lead to decisions based on false beliefs for some percentage of the time in the long run.
 
-These weaker, probabilistic conclusion can easily be replaced by stronger, more relevant information by simply applying the instrument of measurement directly to the final two prospective employees that the hiring manager is considering.
+These weaker, probabilistic conclusions can easily be replaced by stronger, more relevant information by simply applying the instrument of measurement directly to the final two prospective employees that the hiring manager is considering.
 
 
 #### Individuals Not Randomly Selected
@@ -410,7 +412,7 @@ The idea of a randomly selected individual from a population is a useful constru
 
 The prospective employees have applied to this specific job posting, and they have gone through a vetting process that may have included interviews and other examinations. They are thus not randomly selected from the population of job applicants. Indeed, if the job posting specifically asked for applicants with empathy skills or with math skills, or if the interviewers were specifically looking for evidence of empathy skills or math skills, there is reason to believe the final two prospective employees might be unusual in these traits.
 
-Another way of conceiving of this phenomenon is that the true population of interest in these scenarios is not the population of all job applicants to the company, but the population of job applicants to this specific job posting who have made it through all the vetting to become one of the two final prospective employees. This is could easily be too small of a population for any kind of inference about probability densities.
+Another way of conceiving of this phenomenon is that the true population of interest in these scenarios is not the population of all job applicants to the company, but the population of job applicants to this specific job posting who have made it through all the vetting to become one of the two final prospective employees. This is likely too small of a population for any kind of inference about probability densities.
 
 
 ### Ambiguous Categorization
@@ -419,7 +421,7 @@ Even if prior work has established a more general proposition such as "women are
 
 An example comes from an experiment in social psychology regarding susceptibility to stereotyping. In order to frame their experiment, Shih, Pittinsky, and Ambady [-@shih_stereotype_1999] claimed that Asian women are the object of two contradictory stereotypes prevalent in the United States: that those categorized as "Asian" are good at math, and that those categorized as "women" are bad at math. 
 
-Suppose for the scenario in which math ability is desired that both these stereotypes are prevalent,[^stereotypes] and that the woman among the two final prospective employees that the hiring manager is considering is also categorized as "Asian" while the man that the hiring manager is considered is not categorized as "Asian." If the category-based prejudice approach were based on categorization by gender, it would lead to a greater probability of superiority in math skills for the man, but if it were based on categorization by Asian-ness, it would lead to a greater probability of superiority in math skills for the woman.
+Suppose for the scenario in which the hiring manager is looking for math ability that both these stereotypes are prevalent,[^stereotypes] and that the woman among the two final prospective employees that the hiring manager is considering is categorized as "Asian," while the man that the hiring manager is considered is not categorized as "Asian." If the category-based prejudice approach were based on categorization by gender, it would lead to a greater probability of superiority in math skills for the man, but if it were based on categorization by Asian-ness, it would lead to a greater probability of superiority in math skills for the woman.
 
 [^stereotypes]: Curiously, the authors report that the stereotype that Asians are good at math was more prevalent in the United States than in Canada based on a poll they did of random samples of people in Vancouver, British Columbia and in Cambridge, Massachusetts, but did not report just how prevalent the stereotype was in either place. The authors cite a few other papers in their introduction when attempting to establish the premise that there are stereotypes that Asians are good at math and that women are bad at math, but these cited papers describe test scores, which is a different phenomenon from the prevalence of stereotypes.
 
@@ -432,7 +434,7 @@ Because categorization is arbitrary, the hiring manager can pick whatever variab
 
 As was seen in the abstract example, categorization is arbitrary not just in the choice of variable to use for categorization, but also in the choice of the levels of the variable.
 
-This arbitrariness could be at play with regard to the rules for categorization as "Asian" in the scenario of hiring for math skills. For instance, the woman in the final two prospective employees could have a father with an Asian origin and a mother with origin outside of Asia. Indeed, because someone has 2<sup>_n_</sup> ancestors when considering _n_ generations, it is conceivable that the woman could have an arbitrary percentage of ancestors of Asian origin and of non-Asian origin. This leads to the arbitrary choice of a cut point as discussed in earlier section using an abstract example, but in this case, with regard to how much Asian ancestry a particular person is required to have before the prejudice of "Asians are good at math" is to be applied.
+This arbitrariness could be at play with regard to the rules for categorization as "Asian" in the scenario of hiring for math skills. For instance, the woman in the final two prospective employees could have a father with an Asian origin and a mother with origin outside of Asia. Indeed, because someone has 2<sup>_n_</sup> ancestors when considering _n_ generations, it is conceivable that the woman could have an arbitrary percentage of ancestors of Asian origin and of non-Asian origin. This leads to the arbitrary choice of a cut point as discussed earlier, but in this case, with regard to how much Asian ancestry a particular person is required to have before the prejudice of "Asians are good at math" is to be applied.
 
 Furthermore, there are individuals who defy the levels of a categorical variable that are chosen to be used for category-based prejudice. For instance, suppose in the hiring scenarios instead of deciding between a man and a woman, the hiring manager is considering someone who developed biologically intersexed and has not adopted any gender categorization. In such cases, it is not obvious how to apply the more general propositions such as "women are more empathic" or "men are better at math" for category-based prejudice, and the hiring manager would be left once more with an arbitrary choice of how to categorize the individual in order to use category-based prejudice.
 
