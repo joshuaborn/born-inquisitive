@@ -31,9 +31,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-* Write concluding paragraphs
-* Write opening paragraph
 * Insert photographs throughout
+* Write opening paragraph
 
 ## Terminology
 
@@ -440,6 +439,14 @@ Furthermore, there are individuals who defy the levels of a categorical variable
 
 
 ## Conclusion
+
+This article extensively discusses flaws in using categorization, which might leave the reader with the impression that categorization is a bad thing. This is not the case. Categorization is a useful tool for understanding trends occurring in large populations. Like any useful tool, though, categorization can be abused. Because of this, it is important to discriminate between sound use of categorization and flawed abuse of categorization.
+
+The particular kind of abuse of categorization that this article discusses occurs when instead of the analysis of trends in large populations, categorization is used in the judgment of individuals. Whenever categorization is used to judge individuals, the arguments outlined in this article apply, and it can be concluded that such use of categorization is fallacious.
+
+While it is true that all instances of category-based prejudice are fallacies in the use of categorization, the converse is not the case: not all fallacies in the use of categorization are instances of category-based prejudice. This specific fallacy of categorization is merely the subject of this article. Other abuses of categorization, such as the arbitrary choice of cut point in order to effect the results of an analysis, are worthy topics in their own right and are discussed further elsewhere.
+
+The main argument of this article is that judging individuals based on a general proposition about a population in which they are categorized is inferior to an alternative approach in several ways. In order for a general proposition about a population to be established, there must be some instrument of measurement used. This instrument of measurement can therefore be used for the direct measurement of the individuals. Such a direct measurement approach is less costly, more accurate, and less prone to ambiguities stemming from the arbitrariness of categorization than the use of category-based prejudice.
 
 
 ```{r, eval=FALSE}
