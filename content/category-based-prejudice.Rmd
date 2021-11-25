@@ -209,7 +209,7 @@ The principles are illustrated by the population in Figure \@ref(fig:shapes-figu
 
 ### Properties of a Population Are Not Properties of Individuals
 
-<p class="caption">Table 1: Location, size, and color information for the circles portrayed in Figure \@ref(fig:shapes-figure).</p>
+<p class="caption">Table 1: Diameter, location, and color information for the circles portrayed in Figure \@ref(fig:shapes-figure).</p>
 
 ```{r table-for-averages}
 diameters <- dt[shape == 'circle', .(
