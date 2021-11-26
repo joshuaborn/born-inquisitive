@@ -369,7 +369,7 @@ How could propositions such as whether someone is "good at math" or "more empath
 Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems, or for proving mathematical theorems are all quite different. Those who want more math proficiency are best served to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
 
 ![
-A page from a math test being completed by pencil.<br/>
+A page from a math test.<br/>
 [Image](https://pixabay.com/photos/math-study-pencil-sharp-practice-3999637/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3999637)
 by
 [준원 서](https://pixabay.com/users/joshua_seajw92-6153261/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3999637)
@@ -524,7 +524,7 @@ The particular kind of abuse of categorization that this article discusses occur
 
 While it is true that all instances of category-based prejudice are fallacies in the use of categorization, the converse is not the case: not all fallacies in the use of categorization are instances of category-based prejudice. This specific fallacy of categorization is merely the subject of this article. Other abuses of categorization, such as the arbitrary choice of cut point in order to effect the results of an analysis, are worthy topics in their own right and are discussed further elsewhere.
 
-The main argument of this article is that judging individuals based on a general proposition about a population in which they are categorized is inferior to a better, alternative approach in several ways. In order for a general proposition about a population to be established, there must be some instrument of measurement used. This instrument of measurement can therefore be used for the direct measurement of the individuals. Such a direct measurement approach is less costly, more accurate, and less prone to ambiguities stemming from the arbitrariness of categorization than the use of category-based prejudice.
+The main argument of this article is that judging individuals based on a general proposition about a population in which they are categorized is inferior to a better, alternative approach. In order for a general proposition about a population to be established, there must be some instrument of measurement used. This instrument of measurement can therefore be used for the direct measurement of the individuals. Such a direct measurement approach is less costly, more accurate, and less prone to ambiguities stemming from the arbitrariness of categorization than the use of category-based prejudice.
 
 
 ```{r, eval=FALSE}
