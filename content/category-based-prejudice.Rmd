@@ -77,11 +77,15 @@ n <- 40
 
 set.seed(20211120)
 
+generate_circle_diameter <- function() {
+  side_min + rbeta(1, 2, 2) / 4 + sample(c(0, 0.5), 1)
+}
+
 generate_obj <- function() {
   shape <- sample(shapes, 1)
   color <- sample(colors, 1)
   if (shape == 'circle') {
-    side <- side_min + rbeta(1, 2, 2) / 4 + sample(c(0, 0.5), 1)
+    side <- generate_circle_diameter()
   } else {
     side <- runif(1, side_min, side_max)
   }
@@ -450,7 +454,41 @@ Even if it is the case that the mean empathy score of women is higher than that 
 
 What is relevant for the hiring manager's decision is what has come to be called the "probability of superiority." The probability of superiority for the empathy question is the probability that a randomly selected woman from the population of job applicants would have a higher empathy score than a randomly selected man from the population of job applicants. This requires knowledge of the probability density of the two distributions, which the supposition at the beginning of this section assumes is available.[^density]
 
-_**create an example histogram here**_
+```{r example-of-probability-density-histogram, cache=TRUE, warning=FALSE, fig.cap="A histogram with an estimate of a probability density superimposed upon it. Probability densities are often represented by such plots. The _x_ axis represents possible values of a random variable, and the _y_ axis represents the probability of getting the values on the _x_ axis. This random variable appears to range from 0 to about 8, to be skewed right, and to have a mode around 1.5."}
+generate_sample <- function(n) {
+  side <- runif(n, side_min, side_max)
+  x <- rbeta(n, 2, 6) * (10 - side)
+}
+
+ggplot(
+  data.table(
+    value = generate_sample(10000)
+  ),
+  aes(x = value)
+) +
+geom_histogram(
+  aes(y = ..density..),
+  breaks = seq(0, 10, 0.25),
+  color = 'black',
+  fill = 'white'
+) +
+geom_density(
+  alpha = 0.15,
+  fill = 'blue'
+) +
+scale_y_continuous(
+  expand = expansion(mult = c(0, 0.025))
+) +
+scale_x_continuous(
+  expand = c(0, 0),
+  limits = c(0, 9),
+  breaks = seq(0, 10, 0.5)
+) +
+labs(
+  x = 'Value',
+  y = 'Probability Density'
+)
+```
 
 [^density]: Point estimates such as the estimate of a population mean are insufficient to calculate a probability of superiority. Means are indicators of the central tendency of a distribution, which is just one aspect of the distribution. In order to calculate probability of superiority, one can assume or attempt to establish that the probability density of the variable of interest conforms to some established mathematically defined distributions for which there is a closed form solution for probability of superiority. Alternatively, one could estimate the density empirically, using techniques such as kernel density estimation.
 
