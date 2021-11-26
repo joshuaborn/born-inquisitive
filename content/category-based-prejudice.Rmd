@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>Opening paragraph goes here</p>
+  <p>While prejudice can be criticized on moral grounds, this article criticizes prejudice as a form of reasoning. It begins by illustrating general principles of categorization by way of a visual and abstract example using geometric figures. These principles are that properties of a population are not properties of individuals and that categorization is arbitrary. The article goes on to criticize prejudice in the context of more concrete examples involving gender prejudice in hiring. Such criticism includes that prejudice is more costly, less accurate, and more ambiguous than direct measurement.</p>
   <!--more-->
   ## Table of Contents
 ---
