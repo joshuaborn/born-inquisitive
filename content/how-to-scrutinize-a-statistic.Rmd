@@ -1,0 +1,79 @@
+---
+draft: true
+title: "How to Scrutinize a Statistic"
+date: 2021-12-01
+tags: ["reasoning about evidence"]
+bibliography: "../bibliographies/how-to-scrutinize-a-statistic.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+link-citations: true
+implicit-figures: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+    toc: true
+    toc_depth: 5
+include-before: |
+  <p>Opening paragraph goes here.</p>
+  <!--more-->
+  ## Table of Contents
+---
+
+```{r setup, echo=FALSE, message=FALSE}
+```
+
+
+## Introduction
+
+There is a saying that cautions to be on guard against those who use statistics like a drunkard uses a lamppost &ndash; for support rather than for illumination.[^saying]
+
+[^saying]: This saying was popularized in 1937, when it was commonly attributed to Scottish folklorist Andrew Lang. Andrew Lang died in 1912 and may or may not have said it, as it does appear in any of his extant writings. Regardless of the origin of this specific version of the saying, it was likely inspired by similar figures of speech which came before it. See [this article](https://quoteinvestigator.com/2014/01/15/stats-drunk/) at the Quote Investigator blog for more information about the origin of the saying.
+
+![
+A man leaning on a lamppost.<br/>
+["Lamppost Man"](https://www.flickr.com/photos/78019868@N05/741397893)
+by
+[David Hodgson](https://www.flickr.com/photos/publicplaces/)
+is licensed under
+[CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+and is not modified.
+](/images/lamppost-man.jpg)
+
+The point of this saying is to warn about those who start with a preconceived idea of a conclusion that they want to reach and then search for statistics that appear to validate that preconceived conclusion.
+
+This is a notorious practice well known to statisticians, so much so that _How to Lie with Statistics_ [-@huff_how_1993] is still in print more than fifty years after it was originally published in 1954.
+
+The practice is effective for at least three reasons.
+
+First, statistics have some persuasive ability. They bring with them an atmosphere of scholarship, science, and quantitative certainty. Even when no relevant empirical observations have been made, citing statistics make it appear that a position is supported by empirical evidence.
+
+Second, given enough time and effort, statistics can be manufactured that appear to support any arbitrary position. This can be out of intentional deception by bad actors. It can also be done accidentally by those who do not know how to do empirical inquiry well, by those afflicted by the psychology of motivated reasoning, or by researchers who out of desperation to further their academic careers in a "publish or perish" world, publish whatever they can.
+
+Third, interpreting and scrutinizing statistics requires knowledge and skills that many laypeople do not possess. Indeed, those who have had education in statistics are sometimes prone to mistakes in using and interpreting statistical methods. Thus, misuses of statistics can go unnoticed, by the general public or by academic peer review. Indeed, as shall be seen, some misuses of statistics can actually become entrenched in academic practice.
+
+This situation might seem so discouraging that one might be inclined to throw out the use of statistics altogether. However, this would be a rash mistake. Those who care about any social issues, medical issues, environmental issues, etc, are necessarily concerned about understanding phenomena that occur in large populations of individuals. Therefore, if one cares about such issues, one is necessarily engaged in a statistical inquiry, whether one realizes this or not.
+
+The solution for those who care about such issues, therefore, is to be competent at scrutinizing statistics. The alternative is to be preyed upon by charlatans or, perhaps worse, to become a charlatan oneself.
+
+Another way to conceive of this is that _statistics should be questioned,_ always, by every person who encounters them and must make a decision on whether or not to believe what is being reported.
+
+
+### Purpose of This Article
+
+The intent of this article is to assist the reader in the enterprise of questioning the statistics you encounter. It does not assume the reader has had any formal instruction in statistics, though such instruction would be valuable in understanding the concepts used throughout.
+
+This article is not a replacement for courses in statistics. However, the converse is also true. Statistics courses are rarely taught from the standpoint of what questions are relevant to ask when encountering a statistic. Rather, introductory statistics courses usually focus on giving students a bag of statistical tools to use in their research activities.[^courses]
+
+[^courses]: Statistics courses beyond the introductory level usually have another kind of content. Typically, introductory courses are labeled "applied statistics" and are concerned with how to use various statistical methods. Upper-level courses are usually termed "mathematical statistics" and are concerned with the mathematical foundations of results used in statistics and how the statistical techniques are thus derived.
+
+There is merit to knowledge of this bag of tools even if you do not do empirical research in your own life. For instance, when the toxicity of something is reported, it will often be reported by the the median lethal dose (LD<sub>50</sub>) statistic. The LD<sub>50</sub> in turn is usually derived by way of logistic regression, which is one of the tools in the bag of tools typically covered in a two semester introductory statistics sequence at the university level. Therefore, if you want to understand where this statistic comes from, you need to understand logistic regression.
+
+This article, however, instead of discussing any one specific statistical technique, discusses questions that should be asked of all statistics regardless of how they are derived. Thus, the content of this article is both different from and complementary to the content of statistics courses.
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
