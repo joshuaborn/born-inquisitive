@@ -70,6 +70,56 @@ There is merit to knowledge of this bag of tools even if you do not do empirical
 This article, however, instead of discussing any one specific statistical technique, discusses questions that should be asked of all statistics regardless of how they are derived. Thus, the content of this article is both different from and complementary to the content of statistics courses.
 
 
+## Provenance
+
+The first question to ask of any statistic is in regard to its _provenance._ The word "provenance" is borrowed from historians of art who use it to refer to the practice of tracing the chronology of place and custody of a work of art back to its origin, though the word is now used by a variety of fields.
+
+In the context of scrutinizing a statistic, determining its provenance consists of asking questions such as _"Where does this statistic come from?" "Who made the observations from which this statistic was derived?"_ and _"How were those observations made?"_
+
+The reason this is the first question to ask of any statistic is that its answer is a prerequisite for subsequent questions to ask when scrutinizing a statistic. If you do not know where a statistic came from or how it was derived, you cannot scrutinize further.
+
+One good thing about establishing the provenance of a statistic versus other kinds of provenance is that many if not most statistics of any quality are reported in a scholarly paper of some kind. Thus, the work of establishing provenance of a statistic usually ends with a very definitive result: a document that has a Digital Object Identifier (DOI), that you can easily record in reference management software such as Zotero or Mendeley, and that you can output into a variety of standardized formats.
+
+This first question is phrased as "establishing provenance" and not simply "looking it up" because there are many situations where the mere act of determining where a statistic comes from is itself a fair amount of work.
+
+
+### No Source Is Referenced
+
+The most obvious situation that makes establishing provenance challenging is when a statistic is stated, but no source is referenced.
+
+![
+A sign that reads "citation needed" at a rally in Washington, DC.<br/>
+["Citation needed"](https://www.flickr.com/photos/87913776@N00/5129607997)
+by
+[futureatlas.com](https://www.flickr.com/photos/87913776@N00/)
+is licensed under
+[CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+and is not modified.
+](/images/citation-needed.jpg)
+
+This can occur in a variety of settings, such as when reading an article or when engaging in face-to-face conversation. If the medium allows for two-way communication, it might be prudent to ask the person stating the statistic where that person encountered the statistic.
+
+If no source is provided, that immediately casts doubt on the standards of the person stating the statistic. Such a person has not done the due diligence of scrutinizing a statistic, but is still passing it along, which is a practice that can spread misinformation.
+
+However, while the lack of a source casts doubt on the veracity of the person asserting a statistic, it does not provide insight on the veracity of the statistic itself. In these cases, the best you can do is withhold any judgment, either assenting or denying, and try to find the origin of the statistic yourself.
+
+Today, with the plethora of Internet search tools available, the task of finding an origin is not impossible. It is simply a value judgment you must make as to whether you want to spend your time in this manner. It is certainly within the realm of reason to stay in a state of suspended judgment about the alleged statistic and refrain from interacting with the person asserting it any further.
+
+
+### Chain of References
+
+
+### Primary versus Secondary Sources
+
+Encyclopedias such as Wikipedia might be helpful tools for establishing provenance, but with one major caveat. Establishing the provenance of a statistic as discussed here is tracing the statistic back to its _origin,_ which is a _primary source._  Wikipedia has a different mission than establishing provenance, and prefers _secondary sources._
+
+> Wikipedia articles should be based on reliable, published secondary sources and, to a lesser extent, on tertiary sources and primary sources. . . . A secondary source provides an author's own thinking based on primary sources, generally at least one step removed from an event. It contains an author's _analysis, evaluation, interpretation, or synthesis_ of the facts, evidence, concepts, and ideas taken from primary sources. [@noauthor_wikipediano_2021]
+
+In this article's context, a secondary source does the work of scrutinizing a statistic, which is what the reader of this article is supposed to be doing. A secondary source might be useful for comparison, but is not a replacement for finding the primary source.
+
+That being understood, Wikipedia does contain a lot of references to primary sources, as well, even though its "no original research" policy discourages their use except under limited circumstances. Furthermore, a good secondary source will reference the primary source, and so might be a useful step along the chain of custody in order to establish provenance.
+
+
 ## Citations
 
 ::: {#refs}
