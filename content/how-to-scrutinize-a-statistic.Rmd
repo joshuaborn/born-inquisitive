@@ -29,7 +29,7 @@ There is a cautionary saying that warns to be wary of those who use statistics l
 [^saying]: This saying was popularized in 1937, when it was commonly attributed to Scottish folklorist Andrew Lang. Andrew Lang died in 1912 and may or may not have said it, as it does not appear in any of his extant writings. Regardless of the origin of this specific version of the saying, it was likely inspired by similar figures of speech which came before it. See [this article](https://quoteinvestigator.com/2014/01/15/stats-drunk/) at the Quote Investigator blog for more information about the origin of the saying.
 
 ![
-A man leaning on a lamppost.<br/>
+A man literally using a lamppost for support, which is a metaphor used in a popular saying describing the misuse of statistics.<br/>
 ["Lamppost Man"](https://www.flickr.com/photos/78019868@N05/741397893)
 by
 [David Hodgson](https://www.flickr.com/photos/publicplaces/)
@@ -47,6 +47,15 @@ The practice is effective for at least three reasons.
 First, statistics have some persuasive ability. They bring with them an atmosphere of scholarship, science, and quantitative certainty. Even when no relevant empirical observations have been made, citing statistics make it appear that a position is supported by empirical evidence.
 
 Second, given enough time and effort, statistics can be manufactured that appear to support any arbitrary position. This can be out of intentional deception by bad actors. It can also be done accidentally by those who do not know how to do empirical inquiry well, by those afflicted by the psychology of motivated reasoning, or by researchers who out of desperation to further their academic careers in a "publish or perish" world, publish whatever they can.
+
+![
+A stressed young woman hunched over a laptop computer. Aspiring academicians are judged by the number of publications they have and the prestige of the journals in which the publications appear, while often competing for very few openings, a phenomenon called "publish or perish" colloquially.<br/>
+[Image](https://pixabay.com/photos/laptop-woman-education-study-young-3087585/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3087585)
+by
+[Jan Vašek](https://pixabay.com/users/jeshoots-com-264599/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3087585)
+from
+[Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3087585).
+](/images/stressed-student.jpg)
 
 Third, interpreting and scrutinizing statistics requires knowledge and skills that many laypeople do not possess. Indeed, those who have had education in statistics are sometimes prone to mistakes in using and interpreting statistical methods. Thus, misuses of statistics can go unnoticed, by the general public or by academic peer review. Indeed, as shall be seen, some misuses of statistics can actually become entrenched in academic practice.
 
@@ -74,6 +83,16 @@ This article, however, instead of discussing any one specific statistical techni
 
 The first question to ask of any statistic is in regard to its _provenance._ The word "provenance" is borrowed from historians of art who use it to refer to the practice of tracing the chronology of place and custody of a work of art back to its origin, though the word is now used by a variety of fields.
 
+![
+Three paintings on display in the National Gallery of Art in the United States. The practice of investigating the provenance of works of art that are displayed in galleries has led to the word "provenance" being used in other contexts.<br/>
+["Art Gallery"](https://www.flickr.com/photos/55267995@N04/14288414720)
+by
+[cjt71081](https://www.flickr.com/photos/55267995@N04/)
+is licensed under
+[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
+and is not modified.
+](/images/national-gallery-of-art.jpg)
+
 In the context of scrutinizing a statistic, determining its provenance consists of asking questions such as _"Where does this statistic come from?" "Who made the observations from which this statistic was derived?"_ and _"How were those observations made?"_
 
 The reason this is the first question to ask of any statistic is that its answer is a prerequisite for subsequent questions to ask when scrutinizing a statistic. If you do not know where a statistic came from or how it was derived, you cannot scrutinize further.
@@ -88,7 +107,7 @@ This first question is phrased as "establishing provenance" and not simply "look
 The most obvious situation that makes establishing provenance challenging is when a statistic is stated, but no source is referenced.
 
 ![
-A sign that reads "citation needed" at a rally in Washington, DC.<br/>
+A sign that reads "citation needed" at a rally in Washington, DC, alluding to the tag used in Wikipedia for assertions made without any source given.<br/>
 ["Citation needed"](https://www.flickr.com/photos/87913776@N00/5129607997)
 by
 [futureatlas.com](https://www.flickr.com/photos/87913776@N00/)
@@ -106,12 +125,29 @@ However, while the lack of a source casts doubt on the veracity of the person as
 Today, with the plethora of Internet search tools available, the task of finding an origin is not impossible. It is simply a value judgment you must make as to whether you want to spend your time in this manner. It is certainly within the realm of reason to stay in a state of suspended judgment about the alleged statistic and refrain from interacting with the person asserting it any further.
 
 
+### Misrepresented Source
+
+When a source is provided, the obvious first step in establishing provenance is to check this source. However, sometimes this immediately becomes a dead end because the cited source does not actually assert the statistic in question.  This phenomenon can have a variety of causes.
+
+For one, the person falsely citing a source to be the origin of a statistic might simply be making a mistake in good faith. Perhaps the person [remembered something incorrectly](/anecdotes-are-not-evidence.html#flaws-of-memory) or confused this source with another.
+
+Alternatively, some people engage in this practice intentionally as an act of deception. The mere presence of a falsely cited source can lend a statistic an air of credibility it would not have otherwise because many people do not check sources.
+
+Finally, there are whole branches of thought that do not believe they need empirical evidence. Thus, a cited source might be asserting something along the lines of what a statistic is alluding to, but if the work in question is one of philosophy or based on ideology instead of empirical evidence, then it cannot actually be the source of _any_ statistic. However, a gullible audience might treat it as a source.
+
+In the first case of a simple mistake, you are left in the same state as you would have been if no source was provided.
+
+After the second case of intentional deception or the third case of an ideological origin, you have strong evidence that the statistic in question was just made-up and can be dismissed. There is a subtlety here to be concerned with, nonetheless. Even if a particular made-up statistic is false, that tells you nothing about what a true statistic would be. For instance, if someone makes up a statistic that 80\% of the _cagot_ ethnic group live in poverty, and you find out this is false, you still do not know what the actual poverty rate among the the _cagot_ is.
+
+Unfortunately, when either unsourced statistics or statistics with a misrepresented source are encountered, they leave you not having learned any new information. The exercise of encountering them is not entirely a waste of your time, however, if you take the view that they are opportunities to develop your skills at scrutinizing statistics.
+
+
 ### Chain of References
 
 
 ### Primary versus Secondary Sources
 
-Encyclopedias such as Wikipedia might be helpful tools for establishing provenance, but with one major caveat. Establishing the provenance of a statistic as discussed here is tracing the statistic back to its _origin,_ which is a _primary source._  Wikipedia has a different mission than establishing provenance, and prefers _secondary sources._
+Encyclopedias such as Wikipedia might be helpful when establishing provenance, but with one major caveat. Establishing the provenance of a statistic as discussed here is tracing the statistic back to its _origin,_ which is a _primary source._  Wikipedia has a different mission than establishing provenance, and prefers _secondary sources._
 
 > Wikipedia articles should be based on reliable, published secondary sources and, to a lesser extent, on tertiary sources and primary sources. . . . A secondary source provides an author's own thinking based on primary sources, generally at least one step removed from an event. It contains an author's _analysis, evaluation, interpretation, or synthesis_ of the facts, evidence, concepts, and ideas taken from primary sources. [@noauthor_wikipediano_2021]
 
