@@ -26,7 +26,7 @@ include-before: |
 
 There is a cautionary saying that warns to be wary of those who use statistics like a drunkard uses a lamppost &ndash; for support rather than for illumination.[^saying]
 
-[^saying]: This saying was popularized in 1937, when it was commonly attributed to Scottish folklorist Andrew Lang. Andrew Lang died in 1912 and may or may not have said it, as it does appear in any of his extant writings. Regardless of the origin of this specific version of the saying, it was likely inspired by similar figures of speech which came before it. See [this article](https://quoteinvestigator.com/2014/01/15/stats-drunk/) at the Quote Investigator blog for more information about the origin of the saying.
+[^saying]: This saying was popularized in 1937, when it was commonly attributed to Scottish folklorist Andrew Lang. Andrew Lang died in 1912 and may or may not have said it, as it does not appear in any of his extant writings. Regardless of the origin of this specific version of the saying, it was likely inspired by similar figures of speech which came before it. See [this article](https://quoteinvestigator.com/2014/01/15/stats-drunk/) at the Quote Investigator blog for more information about the origin of the saying.
 
 ![
 A man leaning on a lamppost.<br/>
