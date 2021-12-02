@@ -26,7 +26,7 @@ include-before: |
 
 There is a cautionary saying that warns to be wary of those who use statistics like a drunkard uses a lamppost &ndash; for support rather than for illumination.[^saying]
 
-[^saying]: This saying was popularized in 1937, when it was commonly attributed to Scottish folklorist Andrew Lang. Andrew Lang died in 1912 and may or may not have said it, as it does not appear in any of his extant writings. Regardless of the origin of this specific version of the saying, it was likely inspired by similar figures of speech which came before it. See [this article](https://quoteinvestigator.com/2014/01/15/stats-drunk/) at the Quote Investigator blog for more information about the origin of the saying.
+[^saying]: This saying was popularized in 1937, when it was commonly attributed to Scottish folklorist Andrew Lang. Andrew Lang died in 1912 and may or may not have originated it, as it does not appear in any of his extant writings. Regardless of the origin of this specific version of the saying, it was likely inspired by similar figures of speech which came before it. See [this article](https://quoteinvestigator.com/2014/01/15/stats-drunk/) at the Quote Investigator blog for more information about the origin of the saying.
 
 ![
 A man literally using a lamppost for support, which is a metaphor used in a popular saying describing the misuse of statistics.<br/>
@@ -40,7 +40,7 @@ and is not modified.
 
 The point of this saying is to warn about those who start with a preconceived idea of a conclusion that they want to reach and then search for statistics that appear to validate that preconceived conclusion.
 
-This is a notorious practice well known to statisticians, so much so that _How to Lie with Statistics_ [-@huff_how_1993] is still in print more than fifty years after it was originally published in 1954.
+This is a practice well known to statisticians, so much so that _How to Lie with Statistics_ [-@huff_how_1993] is still in print more than fifty years after it was originally published in 1954.
 
 The practice is effective for at least three reasons.
 
@@ -59,9 +59,9 @@ from
 
 Third, interpreting and scrutinizing statistics requires knowledge and skills that many laypeople do not possess. Indeed, those who have had education in statistics are sometimes prone to mistakes in using and interpreting statistical methods. Thus, misuses of statistics can go unnoticed, by the general public or by academic peer review. Indeed, as shall be seen, some misuses of statistics can actually become entrenched in academic practice.
 
-This situation might seem so discouraging that one might be inclined to throw out the use of statistics altogether. However, this would be a rash mistake. Those who care about any social issues, medical issues, environmental issues, etc, are necessarily concerned about understanding phenomena that occur in large populations of individuals. Therefore, if one cares about such issues, one is necessarily engaged in a statistical inquiry, whether one realizes this or not.
+This situation might seem so discouraging that you might be inclined to throw out the use of statistics altogether. However, this would be a rash mistake. Those who care about any social issues, medical issues, environmental issues, etc, are necessarily concerned about understanding phenomena that occur in large populations of individuals. Therefore, if you care about such issues, you are necessarily engaged in a statistical inquiry, whether you realizes this or not.
 
-The solution for those who care about such issues, therefore, is to be competent at scrutinizing statistics. The alternative is to be preyed upon by charlatans or, perhaps worse, to become a charlatan oneself.
+The solution for those who care about such issues, therefore, is to be competent at scrutinizing statistics. The alternative is to be preyed upon by charlatans or, perhaps worse, to become a charlatan yourself.
 
 Another way to conceive of this is that _statistics should be questioned,_ always, by every person who encounters them and who must make a decision on whether or not to believe what is being reported.
 
@@ -78,10 +78,12 @@ There is merit to knowledge of this bag of tools even if you do not do empirical
 
 This article, however, instead of discussing any one specific statistical technique, discusses questions that should be asked of all statistics regardless of how they are derived. Thus, the content of this article is both different from and complementary to the content of statistics courses.
 
+Examples of real world statistics scrutinized in the manner described in this article are not included in the body of this article. Instead, this article is intended to quickly summarize questions used in the other articles of this blog, articles that review the evidence pertaining to a specific factual question. Those articles refer back to the questions introduced here and constitute the real world examples for this article.
+
 
 ## Provenance
 
-The first question to ask of any statistic is in regard to its _provenance._ The word "provenance" is borrowed from historians of art who use it to refer to the practice of tracing the chronology of place and custody of a work of art back to its origin, though the word is now used by a variety of fields.
+The first question to ask of any statistic is in regard to its _provenance._ The word "provenance" is borrowed from historians of art who use it to refer to the chronology of place and custody of a work of art traced back to its origin, though the word is now used by a variety of fields.
 
 ![
 Three paintings on display in the National Gallery of Art in the United States. The practice of investigating the provenance of works of art that are displayed in galleries has led to the word "provenance" being used in other contexts.<br/>
@@ -102,7 +104,7 @@ One good thing about establishing the provenance of a statistic versus other kin
 This first question is phrased as "establishing provenance" and not simply "looking it up" because there are many situations where the mere act of determining where a statistic comes from is itself a fair amount of work.
 
 
-### No Source Is Referenced
+### No Source Referenced
 
 The most obvious situation that makes establishing provenance challenging is when a statistic is stated, but no source is referenced.
 
@@ -122,7 +124,7 @@ If no source is provided, that immediately casts doubt on the standards of the p
 
 However, while the lack of a source casts doubt on the veracity of the person asserting a statistic, it does not provide insight on the veracity of the statistic itself. In these cases, the best you can do is withhold any judgment, either assenting or denying, and try to find the origin of the statistic yourself.
 
-Today, with the plethora of Internet search tools available, the task of finding an origin is not impossible. It is simply a value judgment you must make as to whether you want to spend your time in this manner. It is certainly within the realm of reason to stay in a state of suspended judgment about the alleged statistic and refrain from interacting with the person asserting it any further.
+Today, with the plethora of Internet search tools available, the task of finding an origin is not impossible. It is simply a value judgment you must make as to whether you want to spend your time in this manner. It is certainly within the realm of reason to remain in a state of suspended judgment if your time is better spent on other matters.
 
 
 ### Misrepresented Source
@@ -133,27 +135,43 @@ For one, the person falsely citing a source to be the origin of a statistic migh
 
 Alternatively, some people engage in this practice intentionally as an act of deception. The mere presence of a falsely cited source can lend a statistic an air of credibility it would not have otherwise because many people do not check sources.
 
-Finally, there are whole branches of thought that do not believe they need empirical evidence. Thus, a cited source might be asserting something along the lines of what a statistic is alluding to, but if the work in question is one of philosophy or based on ideology instead of empirical evidence, then it cannot actually be the source of _any_ statistic. However, a gullible audience might treat it as a source.
+Finally, there are whole branches of thought that do not believe they need empirical evidence. Thus, a cited source might be asserting something similar to a statistic, but if the work in question is one of philosophy or based on ideology instead of empirical evidence, then this pseudo-statistic is just made up. However, a gullible audience might treat it as a source.
 
 In the first case of a simple mistake, you are left in the same state as you would have been if no source was provided.
 
-After the second case of intentional deception or the third case of an ideological origin, you have strong evidence that the statistic in question was just made-up and can be dismissed. There is a subtlety here to be concerned with, nonetheless. Even if a particular made-up statistic is false, that tells you nothing about what a true statistic would be. For instance, if someone makes up a statistic that 80\% of the _cagot_ ethnic group live in poverty, and you find out this is false, you still do not know what the actual poverty rate among the the _cagot_ is.
+After the second case of intentional deception or the third case of an ideological origin, you have strong evidence that the statistic in question was just made-up and can be dismissed. There is a subtlety here to be concerned with, nonetheless. Even if a particular made-up statistic is false, that tells you nothing about what a true statistic would be. For instance, if someone makes up a statistic that 80\% of the _cagot_ ethnic group live in poverty, and you find out this is just made-up, you still do not know what the actual poverty rate among the the _cagot_ is.
 
 Unfortunately, when either unsourced statistics or statistics with a misrepresented source are encountered, they leave you not having learned any new information. The exercise of encountering them is not entirely a waste of your time, however, if you take the view that they are opportunities to develop your skills at scrutinizing statistics.
 
 
 ### Chain of References
 
+Sometimes you find that the source cited for a statistic, when checked, itself cites another source for the statistic in question. That source might then cite some other source, and that source might yet again cite another source.
+
+Especially whenever Internet journalism churns out numerous shallow articles, this chain of references can get quite long, and this phenomenon can make the work of establishing provenance needlessly time consuming and tedious. However, all that is important in this process is identifying the origin of the statistic. The chain of references themselves neither add nor detract from the credibility of the statistic. Indeed, these chains of references could be avoided if anyone contributing to the chain did their due diligence by establishing provenance and including a reference to the original source.
+
+This highlights yet another fallacy that is sometimes used by those who use statistics for support rather than illumination. You should not be impressed when a single statistic has numerous citations included with it. If anything, seeing multiple sources cited for the same statistic should raise your suspicion.
+
+For one, citing multiple alleged sources is easily accomplished by citing every step in a chain of references to a single origin as if they were a separate source. If they all ultimately lead to the same origin, then there is no point in this multiplicity of citations, and using multiple citations like this is deceptive.
+
+Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is a indication that the sources are being misrepresented. It is highly unlikely that several studies would arrive at the exact same statistic, since statistical inference involves some amount of sampling error. In these cases, either the error is not being reported, results are being treated as if they were equivalent when they are not,[^effect] or tactics of misrepresentation, such as those described in the previous section, are being used.
+
+[^effect]: Reporting results as if they were equivalent when they are not can be done using generic comparisons, which are discussed in the section on effect size in this article and are a deep enough topic that they are the subject of their own article.
+
 
 ### Primary versus Secondary Sources
 
-Encyclopedias such as Wikipedia might be helpful when establishing provenance, but with one major caveat. Establishing the provenance of a statistic as discussed here is tracing the statistic back to its _origin,_ which is a _primary source._  Wikipedia has a different mission than establishing provenance, and prefers _secondary sources._
+Encyclopedias such as Wikipedia can be helpful when establishing provenance, but with one major caveat. Establishing the provenance of a statistic as discussed here is tracing the statistic back to its _origin,_ which is a _primary source._  Wikipedia has a different mission than establishing provenance, and prefers _secondary sources,_ as can be read its documentation:
 
 > Wikipedia articles should be based on reliable, published secondary sources and, to a lesser extent, on tertiary sources and primary sources. . . . A secondary source provides an author's own thinking based on primary sources, generally at least one step removed from an event. It contains an author's _analysis, evaluation, interpretation, or synthesis_ of the facts, evidence, concepts, and ideas taken from primary sources. [@noauthor_wikipediano_2021]
 
-In this article's context, a secondary source does the work of scrutinizing a statistic, which is what the reader of this article is supposed to be doing. A secondary source might be useful for comparison, but is not a replacement for finding the primary source.
+In this article's context, a secondary source does the work of scrutinizing a statistic, which is what you the reader are supposed to be doing. A secondary source might be useful for comparison, but is not a replacement for finding the primary source.
 
-That being understood, Wikipedia does contain a lot of references to primary sources, as well, even though its "no original research" policy discourages their use except under limited circumstances. Furthermore, a good secondary source will reference the primary source, and so might be a useful step along the chain of custody in order to establish provenance.
+That being understood, Wikipedia does contain a lot of references to primary sources, as well, even though its "no original research" policy discourages their use except under limited circumstances. Furthermore, a good secondary source will reference the primary source, and so might be a useful step along a chain of references in order to establish provenance.
+
+
+
+[^generic]: Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is, such as when it is asserted that some group has "more" or "less" of something than another group. This is flawed and deceptive for numerous reasons and is the topic of its own article. 
 
 
 ## Citations
