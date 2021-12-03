@@ -78,7 +78,7 @@ There is merit to knowledge of this bag of tools even if you do not do empirical
 
 This article, however, instead of discussing any one specific statistical technique, discusses questions that should be asked of all statistics regardless of how they are derived. Thus, the content of this article is both different from and complementary to the content of statistics courses.
 
-Examples of real world statistics scrutinized in the manner described in this article are not included in the body of this article. Instead, this article is intended to quickly summarize questions used in the other articles of this blog, articles that review the evidence pertaining to a specific factual question. Those articles refer back to the questions introduced here and constitute the real world examples for this article.
+Examples of real world statistics scrutinized in the manner described in this article are not included in the body of this article. Instead, this article is intended to quickly summarize the method used for other articles of this blog that review the evidence pertaining to a specific factual question. Those articles refer back to the questions introduced here and constitute the real world examples for this article.
 
 
 ## Provenance
@@ -99,7 +99,7 @@ In the context of scrutinizing a statistic, determining its provenance consists 
 
 The reason this is the first question to ask of any statistic is that its answer is a prerequisite for subsequent questions to ask when scrutinizing a statistic. If you do not know where a statistic came from or how it was derived, you cannot scrutinize further.
 
-One good thing about establishing the provenance of a statistic versus other kinds of provenance is that many if not most statistics of any quality are reported in a scholarly paper of some kind. Thus, the work of establishing provenance of a statistic usually ends with a very definitive result: a document that has a Digital Object Identifier (DOI), that you can easily record in reference management software such as Zotero or Mendeley, and that you can output into a variety of standardized formats.
+One good thing about establishing the provenance of a statistic versus other kinds of provenance is that many if not most statistics of any quality are reported in a scholarly paper of some kind. Thus, the work of establishing provenance of a statistic usually ends with a very definitive result: a document that has a Digital Object Identifier (DOI) and that can be succinctly referenced in any one of a number of standardized citation formats.
 
 This first question is phrased as "establishing provenance" and not simply "looking it up" because there are many situations where the mere act of determining where a statistic comes from is itself a fair amount of work.
 
@@ -135,11 +135,13 @@ For one, the person falsely citing a source to be the origin of a statistic migh
 
 Alternatively, some people engage in this practice intentionally as an act of deception. The mere presence of a falsely cited source can lend a statistic an air of credibility it would not have otherwise because many people do not check sources.
 
-Finally, there are whole branches of thought that do not believe they need empirical evidence. Thus, a cited source might be asserting something similar to a statistic, but if the work in question is one of philosophy or based on ideology instead of empirical evidence, then this pseudo-statistic is just made up. However, a gullible audience might treat it as a source.
+Finally, there are whole branches of thought that do not believe they need empirical evidence. Thus, a cited source might be asserting something similar to a statistic, but if the source in question is one of philosophy or based on ideology instead of empirical evidence, then this pseudo-statistic is just made up. However, a gullible audience might treat it as a source.
 
 In the first case of a simple mistake, you are left in the same state as you would have been if no source was provided.
 
-After the second case of intentional deception or the third case of an ideological origin, you have strong evidence that the statistic in question was just made-up and can be dismissed. There is a subtlety here to be concerned with, nonetheless. Even if a particular made-up statistic is false, that tells you nothing about what a true statistic would be. For instance, if someone makes up a statistic that 80\% of the _cagot_ ethnic group live in poverty, and you find out this is just made-up, you still do not know what the actual poverty rate among the the _cagot_ is.
+In the second case of intentional deception or the third case of an ideological origin, you have strong evidence that the statistic in question was just made-up and can be dismissed. There is a subtlety here to be concerned with, nonetheless. Even if a particular made-up statistic is false, that tells you nothing about what a true statistic would be. For instance, if someone makes up a statistic that 80\% of the _cagot_ ethnic group live in poverty, and you find out this is just made-up, you still do not know what the actual poverty rate among the the _cagot_ is.[^cagot]
+
+[^cagot]: The _cagot_ were a real ethnic group who lived in a region part of modern day Spain and France. People categorized as _"cagot"_ were the object of much prejudice, and their origins have remained a mystery to scholarship over the centuries.
 
 Unfortunately, when either unsourced statistics or statistics with a misrepresented source are encountered, they leave you not having learned any new information. The exercise of encountering them is not entirely a waste of your time, however, if you take the view that they are opportunities to develop your skills at scrutinizing statistics.
 
@@ -152,11 +154,11 @@ Especially whenever Internet journalism churns out numerous shallow articles, th
 
 This highlights yet another fallacy that is sometimes used by those who use statistics for support rather than illumination. You should not be impressed when a single statistic has numerous citations included with it. If anything, seeing multiple sources cited for the same statistic should raise your suspicion.
 
-For one, citing multiple alleged sources is easily accomplished by citing every step in a chain of references to a single origin as if they were a separate source. If they all ultimately lead to the same origin, then there is no point in this multiplicity of citations, and using multiple citations like this is deceptive.
+For one, citing multiple supposed sources is easily accomplished by citing every step in a chain of references to a single origin as if they were a separate source. If they all ultimately lead to the same origin, then there is no point in this multiplicity of citations, and using multiple citations like this is deceptive.
 
 Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is a indication that the sources are being misrepresented. It is highly unlikely that several studies would arrive at the exact same statistic, since statistical inference involves some amount of sampling error. In these cases, either the error is not being reported, results are being treated as if they were equivalent when they are not,[^effect] or tactics of misrepresentation, such as those described in the previous section, are being used.
 
-[^effect]: Reporting results as if they were equivalent when they are not can be done using generic comparisons, which are discussed in the section on effect size in this article and are a deep enough topic that they are the subject of their own article.
+[^effect]: Reporting results as if they were equivalent when they are not can be done using generic comparisons, which are discussed briefly in the section on effect size in this article and are a deep enough topic that they are the subject of their own article.
 
 
 ### Primary versus Secondary Sources
