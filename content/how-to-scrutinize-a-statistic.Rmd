@@ -172,6 +172,53 @@ In this article's context, a secondary source does the work of scrutinizing a st
 That being understood, Wikipedia does contain a lot of references to primary sources, as well, even though its "no original research" policy discourages their use except under limited circumstances. Furthermore, a good secondary source will reference the primary source, and so might be a useful step along a chain of references in order to establish provenance.
 
 
+## Sampling
+
+Once the origin of a statistic is found, the next questions to ask of the statistic are of the sort _"How was sampling done?"_ _"What population was sampled?"_ and _"Do the results generalize?"_
+
+A traditional formulation of statistical inference involves taking a representative sample from a population and using measurements of the sample to infer estimates about the population. This necessarily introduces some sampling error into the estimates, but such sampling error can be quantified.
+
+For large populations, it is usually practically infeasible to examine every single individual in the population of interest, which is the practice of taking a census. In these cases, using sampling and statistical inference is the only alternative to a census.
+
+Even in cases in which taking a census is practically possible, it might not be the best way to proceed. While taking a census does eliminate sampling error, it does not eliminate other forms error such as measurement error. Thus, the resources that might be spent on taking a census might be better spent on other things, because sampling error can be quantified and kept within necessary tolerances.
+
+
+### Generalizable Results
+
+In order for this kind of statistical inference to work, a _representative_ sample must be taken. A sample is representative if every individual in the population had a chance to be included in the sample and the probability of such inclusion is known. In short, a sample is representative if selection for the sample is randomized.
+
+All the individuals that _could_ have been included in the sample constitute the actual _sampled population_. If the statistical analysis done with a representative sample is valid, then the results generalize to this sampled population. _The results do not generalize to other populations._
+
+This is an all too common mistake in interpreting statistics. A study based on a representative sample of women electrical engineers in the Pacific Northwest of the United States and a study of women financial analysts in Queensland, Australia are not results about "women." The results of each study are about two _different_ populations, and there should be no surprise if the two studies arrive at different results.
+
+When you are scrutinizing statistics and encounter a study based on a representative sample, your main task with regard to sampling is to identify what population the results generalize to. The population to which the results generalize is exactly the sampled population &ndash; no more, no less.
+
+For a statistic derived from a telephone survey of area codes in Saint Petersburg, Florida, the results generalize to all those who have access to telephones with phone numbers with a Saint Petersburg area code. The results do not generalize to people living in Papua New Guinea.[^papua] The results do not generalize to people who live in Saint Petersburg, but do not have access to a telephone. The results do generalize to those who live in Saint Petersburg, but only have access to telephones with phone numbers that do not have Saint Petersburg area codes, etc.
+
+[^papua]: Unless there are individuals living in Papua New Guinea committed to paying for international roaming fees for their Saint Petersburg area code phone numbers. If this were the case, the results would generalize only to these individuals in Papua New Guinea and only if it was still possible to call them at the time the survey was being done.
+
+A subtlety arises when researchers intend, either explicitly or implicitly, to sample one population, but wind up sampling a different population. In these cases, the _target population_ for the study and the sampled population are not exactly the same, though they likely overlap.
+
+This is a phenomenon that often comes up when election predictions fail spectacularly. The target population for surveys intended to predict the outcome of an election are all the people who will vote in the election. However, this is a difficult population to identify and sample from.
+
+When scrutinizing statistics, you are concerned with identifying the actual sampled population. The statistic can only be generalized to this sampled population. You should not be distracted by the target population that should have been sampled or even the population the researchers try to portray their results as generalizing to. The way to determine this sampled population is by paying close attention to how the sampling was done. The sampled population consists of those individuals that were eligible to be selected for the sample.
+
+
+### Unrepresentative Samples
+
+Sometimes, upon discovering the origin of a statistic, you will find that the sample used to calculate the statistic is not representative of any larger population. In this case, the population to which the statistic can be generalized is just the sample itself. In other words, the results do not generalize. This occurs when the sampling is not randomized.
+
+One kind of unrepresentative samples are self-selected samples, such as those composed of volunteers. In these cases, the individuals in the sample were not selected by the researchers with some known probability from a larger population. Instead, the individuals in the sample selected themselves to be included in the sample.
+
+This is surprisingly common. For instance, many psychology experiments are conducted with some number of volunteers taken from the undergraduate student body of the researcher's university. In these cases, results do not generalize even to the student body of the university, let alone to populations outside of the university.
+
+For example, suppose that a study wanted to determine the average income of students at some university, but used a self-selected sample like those used in many psychology experiments. The students who volunteer for this self-selected sample differ from the general student body in a couple ways. The volunteers have enough time to devote some to participating in a psychology study, but students who work a part-time job and thus have more income also have less time, so might be less likely to volunteer. Furthermore, some of the volunteers might be attracted by the small payment given to those who participate in a psychology study, but students who work a part-time job might be less enticed by this payment since they already have income.
+
+Therefore, there are reasons to believe that the self-selected sample differs from the target population in ways related to the variable of interest. Those who have time to devote to participation in a psychology study for a small payment might have less average income than the student body as a whole, and in this way the self-selected sample is not representative of the student body. A potential _confounding variable_, i.e., whether or not a student works a part-time job, has been identified.
+
+This is avoided in representative samples by using randomized sampling. For instance, suppose 35\% of students at the university work part-time. In a simple random sample in which all of the students at the university have an equal probability of being selected for the sample,[^simple] the proportion of students in the sample who work a part time job will also be near 35\%. This will be the case not just for this one potentially confounding variable, but for all confounding variables. In this way randomization ensures that a randomized sample will be representative.
+
+[^simple]: Not all randomized sampling consists of simple random samples. Surveys usually use more complex sampling schemes, for various reasons. The sampling is still randomized, but the probabilities any given individual is in the sample are not necessarily all equal. As long as this is accounted for in the analysis of the raw data, this is fine.
 
 [^generic]: Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is, such as when it is asserted that some group has "more" or "less" of something than another group. This is flawed and deceptive for numerous reasons and is the topic of its own article. 
 
