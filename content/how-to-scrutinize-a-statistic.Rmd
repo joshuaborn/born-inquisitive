@@ -185,6 +185,16 @@ A traditional formulation of statistical inference involves taking a representat
 
 For large populations, it is usually practically infeasible to examine every single individual in the population of interest, which is the practice of taking a census. In these cases, using sampling and statistical inference is the only alternative to a census.
 
+![
+A worker drilling a hole to use for sampling the ice in Lake Michigan. Attempting to take a census of all the ice in Lake Michigan would be practically impossible.<br/>
+["Green Bay Ice sampling"](https://www.flickr.com/photos/43788330@N05/8741610624)
+by
+[NOAA Great Lakes Environmental Research Laboratory](https://www.flickr.com/photos/noaa_glerl/)
+is licensed under
+[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
+and is not modified.
+](/images/ice-sampling.jpg)
+
 Even in cases in which taking a census is practically possible, it might not be the best way to proceed. While taking a census does eliminate sampling error, it does not eliminate other forms of error. Thus, the resources that might be spent on taking a census might be better spent on other things, because sampling error can be quantified and kept within necessary tolerances.
 
 
