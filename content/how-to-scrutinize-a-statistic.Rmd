@@ -135,7 +135,7 @@ For one, the person falsely citing a source to be the origin of a statistic migh
 
 Alternatively, some people engage in this practice intentionally as an act of deception. The mere presence of a falsely cited source can lend a statistic an air of credibility it would not have otherwise because many people do not check sources.
 
-Finally, there are whole branches of thought that do not believe they need empirical evidence. Thus, a cited source might be asserting something similar to a statistic, but if the source in question is one of philosophy or based on ideology instead of empirical evidence, then this pseudo-statistic is just made up. However, a gullible audience might treat it as a source.
+Finally, there are whole branches of thought that do not believe they need empirical evidence. Thus, a cited source might be asserting something similar to a statistic, but if the source in question is based on ideology instead of empirical evidence, then this pseudo-statistic is just made-up. However, a gullible audience might treat it as a source.
 
 In the first case of a simple mistake, you are left in the same state as you would have been if no source was provided.
 
@@ -156,7 +156,7 @@ This highlights yet another fallacy that is sometimes used by those who use stat
 
 For one, citing multiple supposed sources is easily accomplished by citing every step in a chain of references to a single origin as if they were a separate source. If they all ultimately lead to the same origin, then there is no point in this multiplicity of citations, and using multiple citations like this is deceptive.
 
-Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is a indication that the sources are being misrepresented. It is highly unlikely that several studies would arrive at the exact same statistic, since statistical inference involves some amount of sampling error. In these cases, either the error is not being reported, results are being treated as if they were equivalent when they are not,[^effect] or tactics of misrepresentation, such as those described in the previous section, are being used.
+Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is a indication that the sources are being misrepresented. It is highly unlikely that several studies would arrive at the exact same statistic, since statistical inference involves some amount of sampling error. In these cases, either the error is not being reported, results are being treated as if they were equivalent when they are not,[^effect] or tactics of misrepresentation are being used.
 
 [^effect]: Reporting results as if they were equivalent when they are not can be done using generic comparisons, which are discussed briefly in the section on effect size in this article and are a deep enough topic that they are the subject of their own article.
 
@@ -180,7 +180,7 @@ A traditional formulation of statistical inference involves taking a representat
 
 For large populations, it is usually practically infeasible to examine every single individual in the population of interest, which is the practice of taking a census. In these cases, using sampling and statistical inference is the only alternative to a census.
 
-Even in cases in which taking a census is practically possible, it might not be the best way to proceed. While taking a census does eliminate sampling error, it does not eliminate other forms error such as measurement error. Thus, the resources that might be spent on taking a census might be better spent on other things, because sampling error can be quantified and kept within necessary tolerances.
+Even in cases in which taking a census is practically possible, it might not be the best way to proceed. While taking a census does eliminate sampling error, it does not eliminate other forms of error. Thus, the resources that might be spent on taking a census might be better spent on other things, because sampling error can be quantified and kept within necessary tolerances.
 
 
 ### Generalizable Results
@@ -199,7 +199,7 @@ For a statistic derived from a telephone survey of area codes in Saint Petersbur
 
 A subtlety arises when researchers intend, either explicitly or implicitly, to sample one population, but wind up sampling a different population. In these cases, the _target population_ for the study and the sampled population are not exactly the same, though they likely overlap.
 
-This is a phenomenon that often comes up when election predictions fail spectacularly. The target population for surveys intended to predict the outcome of an election are all the people who will vote in the election. However, this is a difficult population to identify and sample from.
+This is a phenomenon that often comes up when election predictions fail spectacularly. The target population for a survey that is intended to predict the outcome of an election is all the people who will vote in the election. However, this is a difficult population to identify and to sample.
 
 When scrutinizing statistics, you are concerned with identifying the actual sampled population. The statistic can only be generalized to this sampled population. You should not be distracted by the target population that should have been sampled or even the population the researchers try to portray their results as generalizing to. The way to determine this sampled population is by paying close attention to how the sampling was done. The sampled population consists of those individuals that were eligible to be selected for the sample.
 
@@ -212,13 +212,16 @@ One kind of unrepresentative samples are self-selected samples, such as those co
 
 This is surprisingly common. For instance, many psychology experiments are conducted with some number of volunteers taken from the undergraduate student body of the researcher's university. In these cases, results do not generalize even to the student body of the university, let alone to populations outside of the university.
 
-For example, suppose that a study wanted to determine the average income of students at some university, but used a self-selected sample like those used in many psychology experiments. The students who volunteer for this self-selected sample differ from the general student body in a couple ways. The volunteers have enough time to devote some to participating in a psychology study, but students who work a part-time job and thus have more income also have less time, so might be less likely to volunteer. Furthermore, some of the volunteers might be attracted by the small payment given to those who participate in a psychology study, but students who work a part-time job might be less enticed by this payment since they already have income.
+For example, suppose that a study wanted to determine the average income of students at some university, but used a self-selected sample like those used in many psychology experiments. The students who volunteer for this self-selected sample differ from the general student body in a couple ways. The volunteers have enough time to devote some of their time to participating in a psychology study, but students who work a part-time job and thus have more income also have less time, so might be less likely to volunteer. Furthermore, some of the volunteers might be attracted by the small payment given to those who participate in a psychology study, but students who work a part-time job might be less enticed by this payment since they already have income.
 
 Therefore, there are reasons to believe that the self-selected sample differs from the target population in ways related to the variable of interest. Those who have time to devote to participation in a psychology study for a small payment might have less average income than the student body as a whole, and in this way the self-selected sample is not representative of the student body. A potential _confounding variable_, i.e., whether or not a student works a part-time job, has been identified.
 
-This is avoided in representative samples by using randomized sampling. For instance, suppose 35\% of students at the university work part-time. In a simple random sample in which all of the students at the university have an equal probability of being selected for the sample,[^simple] the proportion of students in the sample who work a part time job will also be near 35\%. This will be the case not just for this one potentially confounding variable, but for all confounding variables. In this way randomization ensures that a randomized sample will be representative.
+This is avoided in representative samples by using randomized sampling. For instance, suppose 35\% of students at the university work part-time. In a simple random sample in which all of the students at the university have an equal probability of being selected for the sample,[^simple] the proportion of students in the sample who work a part time job will also be near 35\%. This will be the case not just for this one potentially confounding variable, but for all confounding variables. In this way randomization ensures that a randomized sample will be representative of the population.
 
-[^simple]: Not all randomized sampling consists of simple random samples. Surveys usually use more complex sampling schemes, for various reasons. The sampling is still randomized, but the probabilities any given individual is in the sample are not necessarily all equal. As long as this is accounted for in the analysis of the raw data, this is fine.
+[^simple]: Not all randomized sampling consists of simple random samples. Surveys usually use more complex sampling schemes, for various reasons. The sampling is still randomized, but the probabilities of inclusion in the sample are not necessarily all equal. This can be accounted for in the analysis and is a standard practice.
+
+
+
 
 [^generic]: Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is, such as when it is asserted that some group has "more" or "less" of something than another group. This is flawed and deceptive for numerous reasons and is the topic of its own article. 
 
