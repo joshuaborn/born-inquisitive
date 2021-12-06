@@ -223,15 +223,6 @@ When scrutinizing statistics, you are concerned with identifying the actual samp
 
 Sometimes, upon discovering the origin of a statistic, you will find that the sample used to calculate the statistic is not representative of any larger population. In this case, the population to which the statistic can be generalized is just the sample itself. In other words, the results do not generalize. This occurs when the sampling is not randomized.
 
-![
-An illustration of several frowning cartoon people and one smiling cartoon person, with a magnifying glass over the one smiling cartoon person. The magnifying glass's view would constitute an unrepresentative sample of the population of cartoon people.<br/>
-[Image](https://pixabay.com/illustrations/smilies-emoticons-especially-1607163/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1607163)
-by
-[Gerd Altmann](https://pixabay.com/users/geralt-9301/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1607163)
-from
-[Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1607163).
-](/images/smiles.jpg)
-
 One kind of unrepresentative samples are self-selected samples, such as those composed of volunteers. In these cases, the individuals in the sample were not selected by the researchers with some known probability from a larger population. Instead, the individuals in the sample selected themselves to be included in the sample.
 
 This is surprisingly common. For instance, many psychology experiments are conducted with some number of volunteers taken from the undergraduate student body of the researcher's university. In these cases, results do not generalize even to the student body of the university, let alone to populations outside of the university.
