@@ -179,9 +179,9 @@ Once the origin of a statistic is found, the next two genres of questions to ask
 
 ### Sampling
 
-If the conclusion of a study is intended to generalize, you should ask questions such as _"What was the population sampled?"_ and _"How was the sampling done?"_
+Sometimes a statistic is intended to summarize information about what is the state of affairs in a large population. For instance, a country might be interested in the poverty rate of its citizens, which can constitute a population of millions of individual people. If the conclusion of a study is intended to generalize, you should ask questions such as _"What was the population sampled?"_ and _"How was the sampling done?"_
 
-A traditional formulation of statistical inference involves taking a representative sample from a population and using measurements of the sample to infer estimates about the population. This necessarily introduces some sampling error into the estimates, but such sampling error can be quantified.
+One approach to infer information about a large population is to take a representative sample from a population and use measurements of the sample to infer estimates about the population. This necessarily introduces some sampling error into the estimates, but such sampling error can be quantified.
 
 For large populations, it is usually practically infeasible to examine every single individual in the population of interest, which is the practice of taking a census. In these cases, using sampling and statistical inference is the only alternative to a census.
 
@@ -204,13 +204,13 @@ In order to generalize a statistic to a larger population, a _representative_ sa
 
 All the individuals that _could_ have been included in the sample constitute the actual _sampled population_. If the statistical analysis done with a representative sample is valid, then the results generalize to this sampled population. _The results do not generalize to other populations._
 
-This is an all too common mistake in interpreting statistics. A study based on a representative sample of women electrical engineers in the Pacific Northwest of the United States and a study of women financial analysts in Queensland, Australia are not results about "women." The results of each study are about two _different_ populations, and there should be no surprise if the two studies arrive at different results.
+This is an all too common mistake in interpreting statistics. A study based on a representative sample of women electrical engineers in the Pacific Northwest of the United States and a study based on a representative sample of women financial analysts in Queensland, Australia are not results about "women." The results of each study are about two _different_ populations, and there should be no surprise if the two studies arrive at different results.
 
 When you are scrutinizing statistics and encounter a study based on a representative sample, your main task with regard to sampling is to identify what population the results generalize to. The population to which the results generalize is exactly the sampled population &ndash; no more, no less.
 
 For a statistic derived from a telephone survey of area codes in Saint Petersburg, Florida, the results generalize to all those who have access to telephones with phone numbers with a Saint Petersburg area code. The results do not generalize to people living in Papua New Guinea.[^papua] The results do not generalize to people who live in Saint Petersburg, but do not have access to a telephone. The results do generalize to those who live in Saint Petersburg, but only have access to telephones with phone numbers that do not have Saint Petersburg area codes, etc.
 
-[^papua]: Unless there are individuals living in Papua New Guinea committed to paying for international roaming fees for their Saint Petersburg area code phone numbers. If this were the case, the results would generalize only to these individuals in Papua New Guinea and only if it was still possible to call them at the time the survey was being done.
+[^papua]: The results could hypothetically generalize to individuals living in Papua New Guinea with mobile phones that have Saint Petersburg area code phone numbers. If this were the case, the results would generalize only to these individuals in Papua New Guinea and only if it was still possible to call them at the time the survey was being done.
 
 A subtlety arises when researchers intend, either explicitly or implicitly, to sample one population, but wind up sampling a different population. In these cases, the _target population_ for the study and the sampled population are not exactly the same, though they likely overlap.
 
