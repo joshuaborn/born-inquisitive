@@ -179,7 +179,7 @@ Once the origin of a statistic is found, the next two genres of questions to ask
 
 ### Sampling
 
-Sometimes a statistic is intended to summarize information about what is the state of affairs in a large population. For instance, a country might be interested in the poverty rate of its citizens, which can constitute a population of millions of individual people. If the conclusion of a study is intended to generalize, you should ask questions such as _"What was the population sampled?"_ and _"How was the sampling done?"_
+Sometimes a statistic is intended to summarize information the state of affairs in a large population. For instance, a country might be interested in the poverty rate of its citizens, which can constitute a population of millions of individual people. If the statistic is intended to generalize, you should ask questions such as _"What was the population sampled?"_ and _"How was the sampling done?"_
 
 One approach to infer information about a large population is to take a representative sample from a population and use measurements of the sample to infer estimates about the population. This necessarily introduces some sampling error into the estimates, but such sampling error can be quantified.
 
@@ -236,6 +236,41 @@ This is avoided in representative samples by using randomized sampling. For inst
 [^simple]: Not all randomized sampling consists of simple random samples. Surveys usually use more complex sampling schemes, for various reasons. The sampling is still randomized, but the probabilities of inclusion in the sample are not necessarily all equal. This can be accounted for in the analysis and is a standard practice.
 
 
+### Randomized, Controlled Experiments
+
+Sometimes statistics are not intended to capture the state of affairs in a larger population, but are intended to summarize the effect of a specific intervention. For instance, in a clinical trial, volunteers are given an experimental therapy such as a new drug in order to determine whether the therapy works and whether it is safe. The intent of a clinical trial is not to describe properties of a population, such as the prevalence of a disease among citizens of a country. Instead, a clinical trial is concerned with describing the effects of the therapy.
+
+If a statistic is intended to describe the effect caused by a specific intervention, you should ask questions such as _"Was the intervention compared with a control?"_ and _"Were individuals randomized between the intervention and the control?"_
+
+Studies such as described in the previous section on sampling in which no intervention is made are typically called "observational studies," whereas studies in which an intervention is made by the researchers are typically called "experiments."
+
+A _control_ in the context of an experiment is important for comparison to determine the effect of the intervention. For example, a group of patients suffering from a disease could simply be given a potential new therapy, and then variables pertaining the effects of the disease and overall health could be measured. However, at the end of the experiment, it would not be clear what the effects of the therapy were. Indeed, for many diseases, some proportion of the population suffering from the illness will get better of their own accord over time.
+
+Experiments, therefore, are expected to include a _control group_ that includes individuals given something else other than the intervention of interest. For a disease without a treatment currently, the control group in a clinical trial might be given a placebo, such as an empty capsule, that is known to have no effect on the disease. In other trials for diseases that have existing therapies, the control group will often be given the current best therapy. The intent in these cases is to determine whether or not the new therapy performs better than current best practices.
+
+If you encounter a statistic from an experiment without a control that is claimed to shed light on the effect of some intervention, you should reject it immediately as misleading. Even if 68\% of individuals given snake oil recover from some disease in 10 days, it does not indicate that the snake oil is an effective intervention. For all that is known, 68\% or more of the general population recovers from the disease in 10 days, anyway. Experiments without controls might be useful as exclusively exploratory exercises, but no conclusions about cause and effect can be drawn from them.
+
+Randomization is important for experiments as it is for observational studies. Again, this is due to the potential effects of confounding variables. In an observational study, a confounding variable can alter the properties of a sample, making it unrepresentative, if the distribution of the confounding variables in the sample differs from its distribution in the population. In experiments, a confounding variable can alter the measured effects of an intervention if the distribution of the confounding variable differs between the intervention and control groups.
+
+For example, suppose there was a new flu therapy that underwent a clinical trial, and the result of the clinical trial found that all indicators of health &ndash; e.g., hospitalization rate, mortality rate, recovery time &ndash; were measurably better in the group of volunteers given the new flu therapy than in the control group. That might seem promising. However, what if it were further learned that the average age in the group given the therapy was 32 and the average age in the control group was 67? In this case, if those who are older are more vulnerable to the effects of the flu, age is a confounding variable. This could easily happen if the experimental assignment was not randomized.
+
+Randomization not only reduces the chances of one confounding variable like age being imbalanced between the intervention and the control groups, but randomization, if done well, balances _all_ potentially confounding variables between the intervention and control groups. Thus, randomized assignment is the most potent way to make conclusions about the cause of a measured effect.
+
+
+#### Causal Inference
+
+
+### Summary
+
+Randomization in sampling and randomization in experimental assignment might seem very similar. They are both practices that use randomization to address issues that stem from confounding variables. However, they are necessary for two different kinds of conclusion. Randomization in sampling allows a conclusion to be generalized to a population, and randomization in experimental assignment allows conclusions about the cause of a measured effect.
+
+Furthermore, the consequences of these two kinds of randomization are independent of each other. Thus, a study might have randomized sampling, randomized assignment, both, or neither. The ramifications for a study are sometimes summarized in a table such as Table 1.
+
+Not only are the consequences of the two kinds of randomization different, but the study of randomized sampling and of randomized experimental assignment are different subjects &ndash; written about in different textbooks and taught in different classes.[^randomization]
+
+[^randomization]: A point of confusion can arise because, while randomized sampling and randomized experimental assignment are studied in different contexts, randomized experiments are often analyzed using the same mathematical tools as observational studies. Classical statistical inference was developed using the mathematical model of a population and a sample from the population. Rather than reinvent all of the statistical tools developed over the years, analysis of experiments sometimes simply _invokes_ a population model and reuses the same tools. It does not have to be done this way. See [@rosenberger_randomization_2015] for summaries of inference based on randomization rather than a population model.
+
+The important takeaway for your work of scrutinizing statistics that you encounter, is that there are two ways in which randomization can be involved in a statistic, and you
 
 
 [^generic]: Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is, such as when it is asserted that some group has "more" or "less" of something than another group. This is flawed and deceptive for numerous reasons and is the topic of its own article. 
