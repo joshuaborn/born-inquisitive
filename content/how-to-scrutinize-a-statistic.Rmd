@@ -216,6 +216,12 @@ A subtlety arises when researchers intend, either explicitly or implicitly, to s
 
 This is a phenomenon that often comes up when election predictions fail spectacularly. The target population for a survey that is intended to predict the outcome of an election is all the people who will vote in the election. However, this is a difficult population to identify and to sample.
 
+**_election prediction failure_** [@noauthor_general_2016]
+
+https://commons.wikimedia.org/wiki/File:Lower_Weston,_Bath,_church_as_polling_station,_2015.JPG
+
+
+
 When scrutinizing statistics, you are concerned with identifying the actual population that was sampled. The statistic can only be generalized to this sampled population. You should not be distracted by the target population that should have been sampled or even the population the researchers try to portray their results as generalizing to. The way to determine this sampled population is by paying close attention to how the sampling was done. The sampled population consists of those individuals that were eligible to be selected for the sample.
 
 
@@ -253,6 +259,10 @@ Experiments, therefore, are expected to include a _control group_ that includes 
 
 If you encounter a statistic from an experiment without a control that is claimed to shed light on the effect of some intervention, you should reject it immediately as misleading. Even if 68\% of individuals given snake oil recover from some disease in 10 days, it does not indicate that the snake oil is an effective intervention. For all that is known, 68\% or more of the general population recovers from the disease in 10 days, anyway. Experiments without controls might be useful as exclusively exploratory exercises, but no conclusions about cause and effect can be drawn from them.
 
+**_snake oil_**
+
+https://commons.wikimedia.org/wiki/File:Clark_Stanley's_Snake_Oil_Liniment.png
+
 
 #### Randomized Assignment
 
@@ -269,7 +279,15 @@ Misinterpreting association between two variables as a causal relationship is a 
 
 Those who go a hospital are more likely to suffer illness and death than those who do not. Therefore, there is an association between going to a hospital and illness and death. However, one should not conclude that going to a hospital _causes_ illness and death. The obvious confounding variable here is the existence of a prior illness. Generally, healthy people do not go to a hospital, whereas people who are ill often do. Confusing association with causation in this way can lead people to avoid medical care and suffer adverse health and premature death unnecessarily.
 
-Furthermore, a lot of variables undergo trends over time and so can be falsely associated if the trends occur over the same time period. This is a phenomenon that Tyler Vigen has humorously captured in the [spurious correlations](https://tylervigen.com/spurious-correlations) section of his blog to illustrate associations between obviously unrelated variables, such as divorce rate in Maine and per capita consumption of margarine.
+Furthermore, a lot of variables undergo trends over time and so can be falsely associated if the trends occur over the same time period. This is a phenomenon that Tyler Vigen has used to humorous effect in his illustrations of associations between obviously unrelated variables, such as divorce rate in Maine and per capita consumption of margarine.
+
+![
+[Plot](https://tylervigen.com/spurious-correlations)
+by
+[Tyler Vigen](https://tylervigen.com/)
+is licensed under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+](/images/margarine-and-divorce.svg)
 
 Invalidly drawing causal conclusions from associations is such a common fallacy that old-fashioned statistics classes sometimes assert that no causal conclusion can be drawn from observational studies and that conclusions about cause and effect can only be made from randomized, controlled trials. For a variety of reasons, this is now largely seen as overly restrictive, and the field of causal inference from observational studies is an emerging field in statistical methodology research.
 
