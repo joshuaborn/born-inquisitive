@@ -256,8 +256,15 @@ For example, suppose there was a new flu therapy that underwent a clinical trial
 
 Randomization not only reduces the chances of one confounding variable like age being imbalanced between the intervention and the control groups, but randomization, if done well, balances _all_ confounding variables between the intervention and control groups. Thus, randomized assignment ensures that the effects measured in an experiment are indeed attributable to the intervention as their cause. 
 
-* Interpreting causality
-* Ongoing research in causal inference
+Misinterpreting association between two variables as a causal relationship is a classic fallacy in interpreting statistical results that readily leads to numerous spurious and dangerous examples. The mantra "correlation is not causation" has been drummed into students of statistics courses for decades.
+
+Those who go a hospital are more likely to suffer illness and death than those who do not. Therefore, there is an association between going to a hospital and illness and death. However, one should not conclude that going to a hospital _causes_ illness and death. The obvious confounding variable here is the existence of a prior illness. Generally, healthy people do not go to a hospital, whereas people who are ill often do. Confusing association with causation in this way can actually lead people to suffer adverse health and premature death unnecessarily.
+
+Furthermore, a lot of variables undergo trends over time and so can be falsely associated if the trends occur over the same time period. This is a phenomenon that Tyler Vigen has humorously captured in the [spurious correlations](https://tylervigen.com/spurious-correlations) section of his blog to illustrate humorous associations between obviously unrelated variables, such as divorce rate in Maine and per capita consumption of margarine.
+
+Invalidly drawing causal conclusions from associations is such a common fallacy of social research that old-fashioned statistics classes sometimes assert that no causal can be drawn from observational studies and that conclusions about cause and effect can only be made from randomized, controlled trials. For a variety of reasons, this is now largely seen as overly restrictive, and the field of causal inference from observational studies is an emerging field in statistical methodology research.
+
+There is no single recipe for causal inference from observational studies, but what all the methods currently being developed have in common is that they require a lot of work: formalization of concepts and symbology, explicit stating of assumptions, verification that the assumptions are plausible, etc. Because of the newness of these techniques and the amount of effort they require, and because the abundance of fallacious reasoning that association implies causation, you are perhaps more likely to encounter the fallacy rather than valid causal inference from observational studies. Therefore, it is prudent to treat any conclusion about cause and effect that is derived from a source other than a randomized, controlled experiment with suspicion.
 
 
 ### Summary
