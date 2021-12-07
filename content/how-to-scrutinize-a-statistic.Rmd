@@ -104,7 +104,7 @@ One good thing about establishing the provenance of a statistic versus other kin
 This first question is phrased as "establishing provenance" and not simply "looking it up" because there are many situations where the mere act of determining where a statistic comes from is itself a fair amount of work.
 
 
-### No Source Referenced
+### Lack of a Source
 
 The most obvious situation that makes establishing provenance challenging is when a statistic is stated, but no source is referenced.
 
