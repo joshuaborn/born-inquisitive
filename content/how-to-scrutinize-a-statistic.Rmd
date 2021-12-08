@@ -216,11 +216,19 @@ A subtlety arises when researchers intend, either explicitly or implicitly, to s
 
 This is a phenomenon that often comes up when election predictions fail spectacularly. The target population for a survey that is intended to predict the outcome of an election is all the people who will vote in the election. However, this is a difficult population to identify and to sample.
 
-**_election prediction failure_** [@noauthor_general_2016]
+For instance, nearly all of the surveys leading up to the the 2015 British General Election concluded that the election was going to be a dead heat between the two most popular political parties in the United Kingdom, the Conservative and the Labour parties. However, the election turned out be a clear victory for the Conservative Party. The predictions were so far off that an academic investigation into the widespread mistakes was commissioned. The investigation found that the samples taken were unrepresentative of the actual electorate,[^quota] over-representing Labour voters and under-representing Conservative ones. [@noauthor_general_2016]
 
-https://commons.wikimedia.org/wiki/File:Lower_Weston,_Bath,_church_as_polling_station,_2015.JPG
+[^quota]: Most of these unrepresentative surveys did not using probability sampling, which is the form of sampling described in this article in which every individual in the population has a defined probability of selection for the sample. Instead the surveys, as many market research and political research surveys do, used quota sampling. Quota sampling is a form of sampling that tries to intentionally match certain demographic variables in the sample to the known distributions of the demographic variables in the population. Quota sampling is a lot cheaper because samples can be constructed opportunistically based on individuals who are readily available for survey. However, as the 2015 British General Election illustrates, quota sampling is not very reliable.
 
-
+![
+A map depicting the results of the 2015 General Election in the United Kingdom. Blue represents a victory fot the Conservative Party, and red, a victory for the Labour Party.<br/>
+["2015UKElectionMap.svg"](https://commons.wikimedia.org/wiki/File:2015UKElectionMap.svg)
+by
+Brythones, recolored by Crytographic,
+is licensed under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en)
+and is not modified.
+](/images/uk-election-map-2015.png)
 
 When scrutinizing statistics, you are concerned with identifying the actual population that was sampled. The statistic can only be generalized to this sampled population. You should not be distracted by the target population that should have been sampled or even the population the researchers try to portray their results as generalizing to. The way to determine this sampled population is by paying close attention to how the sampling was done. The sampled population consists of those individuals that were eligible to be selected for the sample.
 
