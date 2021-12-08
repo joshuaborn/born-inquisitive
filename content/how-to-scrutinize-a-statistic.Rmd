@@ -78,8 +78,6 @@ There is merit to knowledge of this bag of tools even if you do not do empirical
 
 This article, however, instead of discussing any one specific statistical technique, discusses questions that should be asked of all statistics regardless of how they are derived. Thus, the content of this article is both different from and complementary to the content of statistics courses.
 
-Examples of real world statistics scrutinized in the manner described in this article are not included in the body of this article. Instead, this article is intended to quickly summarize the method used for other articles of this blog that review the evidence pertaining to a specific factual question. Those articles refer back to the questions introduced here and constitute the real world examples for this article.
-
 
 ## Provenance
 
@@ -265,7 +263,7 @@ A _control_ in the context of an experiment is important to determine the effect
 
 Experiments, therefore, are expected to include a _control group_ that includes individuals given something else other than the intervention of interest. For a disease without a treatment currently, the control group in a clinical trial might be given a placebo, such as an empty capsule, that is known to have no effect on the disease. In other trials for diseases that have existing therapies, the control group will often be given the current best therapy. The intent in these cases is to determine whether or not the new therapy performs better than current best practices.
 
-If you encounter a statistic from an experiment without a control that is claimed to shed light on the effect of some intervention, you should reject it immediately as misleading. Even if 68\% of individuals given snake oil recover from some disease in 10 days, it does not indicate that the snake oil is an effective intervention. For all that is known, 68\% or more of the general population recovers from the disease in 10 days, anyway. Experiments without controls might be useful as exclusively exploratory exercises, but no conclusions about cause and effect can be drawn from them.
+If you encounter a statistic from an experiment without a control that is claimed to shed light on the effect caused by an intervention, you should reject it immediately as misleading. Even if 68\% of individuals given snake oil recover from some disease in 10 days, it does not indicate that the snake oil is an effective intervention. For all that is known, 68\% or more of the general population recovers from the disease in 10 days, anyway. Experiments without controls might be useful as exclusively exploratory exercises, but no conclusions about cause and effect can be drawn from them.
 
 ![
 The cover for Clark Stanley's Snake Oil Liniment, circa 1905. Snake oils were once sold a panaceas despite not having any therapeutic effects, leading to "snake oil" becoming a figure of speech for fradulent products.<br/>
@@ -342,6 +340,27 @@ There is no single recipe for causal inference from observational studies, but w
 </table>
 
 The important takeaway for the work of scrutinizing statistics that you encounter is that there are two separate questions to address about any given statistic. One question is whether or not a statistic generalizes to a larger population, which can be answered in the affirmative if it is based on a representative &ndash; and hence randomized &ndash; sample. Another question is whether or not a statistic is indicative of the effect of an identifiable cause, which can be answered in the affirmative if the statistic is derived from a randomized, controlled experiment.
+
+
+## Practical Significance
+
+Talk about both observational studies and RCEs throughout this section.
+
+* Lack of comparison: pick a state near the middle in Bureau of Economic Analysis's personal income by state
+* Effect size: frame this using numerical vs. categorical variables?
+    * Practical significance relative to standard deviation, but depends on subject, not statistics
+    * Means and medians
+    * Proportions
+    * Correlations and model associations
+    * Totals
+* Missing denominator: maybe see what other folks have written
+* Confounding: Washington Post fact checker and the Obama gender pay gap statistic gaffe
+
+
+## Common Flaws of Research
+
+* Statistical theater: _p_-values without inference
+* Lack of adjustment for multiple comparisons
 
 
 [^generic]: Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is, such as when it is asserted that some group has "more" or "less" of something than another group. This is flawed and deceptive for numerous reasons and is the topic of its own article. 
