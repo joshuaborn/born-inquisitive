@@ -304,8 +304,9 @@ main {
       .row-label {
         border: none;
         margin-right: 2px;
-        text-align: right;
         padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+        text-align: right;
+        vertical-align: middle;
       }
     }
 

@@ -306,11 +306,40 @@ There is no single recipe for causal inference from observational studies, but w
 
 ### Summary
 
-Randomization in sampling and randomization in experimental assignment might seem very similar. They are both practices that use randomization to address issues that stem from confounding variables. However, they are necessary for two different kinds of conclusion. Randomization in sampling allows a conclusion to be generalized to a population, and randomization in experimental assignment allows conclusions about the cause of a measured effect.
-
-Furthermore, the consequences of these two kinds of randomization are independent of each other.[^randomization] Thus, a study might have randomized sampling, randomized assignment, both, or neither. The ramifications for a study are sometimes summarized in a table such as Table 1.
+ Randomization in sampling and randomization in experimental assignment might seem very similar. They are both practices that use randomization to address issues that stem from confounding variables. However, they are necessary for two different kinds of inference, and the consequences of these two kinds of randomization are independent of each other.[^randomization] Thus, a study might have randomized sampling, randomized assignment, both, or neither. The ramifications for a study are sometimes summarized in a table such as Table 1.
 
 [^randomization]: A point of confusion can arise because randomized experiments are often analyzed using the same mathematical tools as observational studies. Classical statistical inference was developed using the mathematical model of a population and a sample from the population. Rather than reinvent all of the statistical tools developed over the years, analysis of randomized, controlled experiments sometimes simply _invokes_ a population model and reuses the same tools. While this practice is common, inference for randomized, controlled experiments does not necessarily have to be done this way. Rosenberger and Lachin [-@rosenberger_randomization_2015] summarize inference based on the randomization used for assignment in an experiment, instead of invoking a population model.
+
+<p class="caption">Table 1: A summary of scope of inference for statistical conclusions based on what randomization was used.</p>
+
+<table class="contingency">
+  <thead>
+    <tr class="question-row">
+      <th class="blank"></th>
+      <th class="blank"></th>
+      <th class="column-question" colspan=2>Was this a randomized, controlled experiment?</th>
+    </tr>
+    <tr>
+      <th class="blank"></th>
+      <th class="blank"></th>
+      <th class="column-label">No</th>
+      <th class="column-label">Yes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="row-question" rowspan=2>Was the sampling randomized?</th>
+      <td class="row-label">Yes</td>
+      <td class="count">Conclusions generalize to population, but no conclusions about cause should be made.</td>
+      <td class="count">Conclusions generalize to population, and conclusions about cause can be made.</td>
+    </tr>
+    <tr>
+      <td class="row-label">No</td>
+      <td class="count">Conclusions do not generalize to population, and no conclusions about cause should be made.</td>
+      <td class="count">Conclusions do not generalize to population, but conclusions about cause can be made.</td>
+    </tr>
+  </tbody>
+</table>
 
 The important takeaway for the work of scrutinizing statistics that you encounter is that there are two separate questions to address about any given statistic. One question is whether or not a statistic generalizes to a larger population, which can be answered in the affirmative if it is based on a representative &ndash; and hence randomized &ndash; sample. Another question is whether or not a statistic is indicative of the effect of an identifiable cause, which can be answered in the affirmative if the statistic is derived from a randomized, controlled experiment.
 
