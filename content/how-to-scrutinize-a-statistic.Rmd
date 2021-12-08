@@ -267,9 +267,11 @@ Experiments, therefore, are expected to include a _control group_ that includes 
 
 If you encounter a statistic from an experiment without a control that is claimed to shed light on the effect of some intervention, you should reject it immediately as misleading. Even if 68\% of individuals given snake oil recover from some disease in 10 days, it does not indicate that the snake oil is an effective intervention. For all that is known, 68\% or more of the general population recovers from the disease in 10 days, anyway. Experiments without controls might be useful as exclusively exploratory exercises, but no conclusions about cause and effect can be drawn from them.
 
-**_snake oil_**
-
-https://commons.wikimedia.org/wiki/File:Clark_Stanley's_Snake_Oil_Liniment.png
+![
+The cover for Clark Stanley's Snake Oil Liniment, circa 1905. Snake oils were once sold a panaceas despite not having any therapeutic effects, leading to "snake oil" becoming a figure of speech for fradulent products.<br/>
+Image was acquired via
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Clark_Stanley's_Snake_Oil_Liniment.png) and is in the public domain.
+](/images/snake-oil.png)
 
 
 #### Randomized Assignment
