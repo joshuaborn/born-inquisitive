@@ -346,15 +346,20 @@ The important takeaway for the work of scrutinizing statistics that you encounte
 
 Talk about both observational studies and RCEs throughout this section.
 
-* Lack of comparison: pick a state near the middle in Bureau of Economic Analysis's personal income by state
-* Effect size: frame this using numerical vs. categorical variables?
-    * Practical significance relative to standard deviation, but depends on subject, not statistics
-    * Means and medians
+* Practical significance more of a concept for the subject-matter, not statistical theory: blood pressure drug
+* Practical significance often a comparison: pick a state near the middle in Bureau of Economic Analysis's personal income by state
+* Response and explanatory variables
+* "Effect size" but maybe use better verbiage
+    * Categorical vs. numerical variables
     * Proportions
+    * Means and medians
     * Correlations and model associations
     * Totals
-* Missing denominator: maybe see what other folks have written
+* Missing denominator: "Auckland is still larger than Wellington"
 * Confounding: Washington Post fact checker and the Obama gender pay gap statistic gaffe
+
+
+## Statistical Significance
 
 
 ## Common Flaws of Research
