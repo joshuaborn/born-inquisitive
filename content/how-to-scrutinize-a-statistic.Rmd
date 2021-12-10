@@ -356,25 +356,31 @@ However, if you discover the drug decreases daily mean blood glucose by 5 millig
 
 Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
 
-The example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the statistic of the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a study. A single statistic in isolation without any contextual knowledge has no pracitical significance.
+The example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a study. A single statistic in isolation without any contextual knowledge has no practical significance.
 
-For example,
+For example, suppose you learn that the per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was \$3,532. [@zemanek_personal_2021, Table 4] Unless you have detailed economic knowledge of the United States, this statistic probably has very little practical significance to you. Is \$3,532 a lot? Is \$3,532 a little?[^relative] Is this a decrease from last year? Is it an increase from last year? This statistic, without any context, is impossible to interpret.
+
+[^relative]: As it turns out, Michigan was right in the middle of per capita expenditure on food and beverages for off-premises consumption compared with other states. [@zemanek_personal_2021, Table 4]
+
+With other knowledge for comparison, the practical significance of the statistic is revealed. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and getting takeout more during the COVID-19 pandemic.
+
 
 _**Talk about both observational studies and RCEs throughout this section.**_
 
-* Practical significance often a comparison: pick a state near the middle in Bureau of Economic Analysis's personal income by state
-* Response and explanatory variables
-* "Effect size" but maybe use better verbiage
+* Kinds of variables
+    * Response and explanatory variables
     * Categorical vs. numerical variables
+* Effect size: read two papers on this
     * Proportions
     * Means and medians
-    * Correlations and model associations
+    * Correlations
+    * Models
     * Totals
 * Missing denominator: "Auckland is still larger than Wellington"
 * Confounding: Washington Post fact checker and the Obama gender pay gap statistic gaffe
 
 
-## Statistical Significance
+## Error and Statistical Significance
 
 
 ## Common Flaws of Research
