@@ -348,6 +348,9 @@ The important takeaway for the work of scrutinizing statistics that you encounte
 
 Once the origin of a statistic has been identified and the statistic's scope of inference determined, the next genre of questions you should ask about a statistic are _"What is the practical significance of this statistic?"_ and _"How much of an effect size is described by this statistic?"_
 
+
+### Subject-Matter Knowledge
+
 Whether a statistic is practically significant is less a matter of statistical theory and much more a result of knowledge of the subject-matter of the context for the statistic.
 
 For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would have levels of daily blood glucose higher than what is typical. Medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. This new drug you are developing could therefore be of some use.
@@ -356,7 +359,7 @@ However, if you discover the drug decreases daily mean blood glucose by 5 millig
 
 Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
 
-The example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a study. A single statistic in isolation without any contextual knowledge has no practical significance.
+The previous example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a study. A single statistic in isolation without any contextual knowledge has no practical significance.
 
 For example, suppose you learn that the per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was \$3,532. [@zemanek_personal_2021, Table 4] Unless you have detailed economic knowledge of the United States, this statistic probably has very little practical significance to you. Is \$3,532 a lot? Is \$3,532 a little?[^relative] Is this a decrease from last year? Is it an increase from last year? This statistic, without any context, is impossible to interpret.
 
@@ -365,11 +368,31 @@ For example, suppose you learn that the per capita expenditure on food and bever
 With other knowledge for comparison, the practical significance of the statistic is revealed. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and getting takeout more during the COVID-19 pandemic.
 
 
+### Types of Variables
+
+Establishing context for evaluation of practical significance often involves comparisons using two or more variables. In statistical analysis, a variable of interest is often called a "response variable." A response variable is analyzed in comparison to one or more other variables often called "explanatory variables."[^independent] In this arrangement, some amount of variation in a response variable is suspected to be on account of variation in explanatory variables.
+
+For instance, you might investigate the number of wren chicks hatched in your neighborhood during breeding season every year. This is your investigation's response variable. Another variable you could measure is how many wren nests there are in your neighborhood immediately before breeding season. This would be your explanatory variable. The more wren nests in your neighborhood just before breeding season, the more chicks you would expect to see hatched that year. Thus, the explanatory variable (number of nests) explains variation in the response variable (number of chicks hatched). However, the explanatory variable explains just _some_ of the variation in the response variable, for a variety of reasons. For instance, some eggs might be eaten by predators before the chicks hatch.
+
+[^independent]: Response variables are sometimes called "research variables" or "dependent variables," and explanatory variables are sometimes called "independent variables." However, this article recommends avoiding the use of the labels "dependent variable" and "independent variable" because "independence" means something else very important in statistical theory. Indeed, many statistical models and tests are built upon an assumption of independence. While the violation of other assumptions, such as the assumption of normality, can still result in passable estimates, failure to handle the autocorrelation structure in the observations when the assumption of independence is violated will usually make estimates of standard errors drastically mistaken and thus invalidate the results.
+
+The difference in the response variable accounted for by one or more explanatory variables has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, it is important to remember that in purely observational studies, only an association, not causation, can be inferred.
+
+How effect size is quantified depends on the kinds of variables involved. Broadly, there are two sorts of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of distinct levels, whereas numerical variables are the sort in which observations consist of assignment to a value on the number line.
+
+[^variables]: Within these two broad categories, there are more subcategories, but it is not necessary to enumerate more subcategories for this article. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
+
+For instance, in the diabetes drug example, a clinical trial for the new drug would have the response variable of mean daily blood glucose level. This is a numerical variable because numbers in the hundreds of mg/dl are used. The explanatory variable in this case would be whether or not a patient is given the new drug. This is a categorical variable with just two levels: _given the drug_ or _not given the drug._
+
+Similarly, when analyzing per capita expenditure on food and beverages for off-premises consumption in the United States, the response variable is numerical because a dollar amount is observed for the expenditure on food and beverages. One explanatory variable for comparison would be which state of the United States the expenditures occur in. This would be a categorical variable with 50 levels: Alabama, Alaska, Arizona, etc.
+
+Numerical response variables and categorical explanatory variables are a common arrangement for statistical analysis because this arrangement is how you would compare some quantity across different subpopulations in observational studies and how you would compare some quantity between intervention and control groups in randomized, controlled experiments.
+
+The wren chicks example...
+
+
 _**Talk about both observational studies and RCEs throughout this section.**_
 
-* Kinds of variables
-    * Response and explanatory variables
-    * Categorical vs. numerical variables
 * Effect size: read two papers on this
     * Proportions
     * Means and medians
