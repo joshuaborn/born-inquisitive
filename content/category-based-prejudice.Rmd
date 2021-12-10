@@ -439,10 +439,10 @@ Of course, in practice category-based prejudice is often done based not on a val
 
 It might sometimes be the case that the cost of arriving at a more general proposition such as "women are more empathic" or "men are better at math" is a sunk cost, when such general results have already been established by previous work. These cases do not entail additional cost for the category-based prejudice approach over the direct measurement approach, but the other criticisms described in this article remain.
 
-Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Psychology experiments do not generalize to a larger population when they are based on opportunity samples, such as the samples of 20 or 40 undergraduate student volunteers at the researchers' university, so often discussed in the psychological literature. Opinion polls done by magazines or web sites that are based on a sample of volunteers also do not generalize.[^volunteers]
+Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Behavioral and social science experiments [do not generalize](/how-to-scrutinize-a-statistic.html#unrepresentative-samples) to a larger population when they are based on self-selected samples, such as the samples of 20 or 40 undergraduate student volunteers at the researchers' university, so often discussed in the academic literature. Opinion polls done by magazines or web sites that are based on a sample of volunteers also do not generalize.
 
 ![
-A group of university students. University students are often used to compose opportunity samples for psychology experiments, samples which do not generalize.<br/>
+A group of university students. University students are often used to compose self-selected samples for social or behavioral science experiments, samples which do not generalize.<br/>
 ["Students in the Quadrangle, the University of Sydney"](https://www.flickr.com/photos/8264482@N08/6953908263)
 by
 [Sydney Uni](https://www.flickr.com/photos/sydneyuni/)
@@ -450,8 +450,6 @@ is licensed under
 [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/)
 and is not modified.
 ](/images/university-students.jpg)
-
-[^volunteers]: For more discussion of why polls of volunteered responses are unrepresentative, see Chapter 1 of Lohr [-@lohr_sampling_2021].
 
 In studies that do generalize to a larger population, the sampled population of the study might not be the population of interest for the judgment being made. For instance, the hiring manager in the example scenarios is concerned with empathy or math skills in the population of job applicants to a specific company. Results discovered about the math skills of fifth graders in Idaho or the empathy skills of therapists in Massachusetts are likely not relevant for judging job applicants to the company.[^unless] If the sampled population of a study does not contain the population of interest, attempting to apply the study's results to the population of interest is an extrapolation outside the scope of inference of the study, which is fallacious.
 
