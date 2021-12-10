@@ -346,9 +346,22 @@ The important takeaway for the work of scrutinizing statistics that you encounte
 
 ## Practical Significance
 
-Talk about both observational studies and RCEs throughout this section.
+Once the origin of a statistic has been identified and the statistic's scope of inference determined, the next genre of questions you should ask about a statistic are _"What is the practical significance of this statistic?"_ and _"How much of an effect size is described by this statistic?"_
 
-* Practical significance more of a concept for the subject-matter, not statistical theory: blood pressure drug
+Whether a statistic is practically significant is less a matter of statistical theory and much more a result of knowledge of the subject-matter of the context for the statistic.
+
+For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would have levels of daily blood glucose higher than what is typical. Medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. This new drug you are developing could therefore be of some use.
+
+However, if you discover the drug decreases daily mean blood glucose by 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because the long-term health benefits were observed to occur when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl. [@diabetes_effect_1993]
+
+Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
+
+The example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the statistic of the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a study. A single statistic in isolation without any contextual knowledge has no pracitical significance.
+
+For example,
+
+_**Talk about both observational studies and RCEs throughout this section.**_
+
 * Practical significance often a comparison: pick a state near the middle in Bureau of Economic Analysis's personal income by state
 * Response and explanatory variables
 * "Effect size" but maybe use better verbiage
