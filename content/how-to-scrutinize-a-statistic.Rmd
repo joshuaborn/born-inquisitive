@@ -59,7 +59,7 @@ from
 
 Third, interpreting and scrutinizing statistics requires knowledge and skills that many laypeople do not possess. Indeed, those who have had education in statistics are sometimes prone to mistakes in using and interpreting statistical methods. Thus, misuses of statistics can go unnoticed, by the general public or by academic peer review. Indeed, as shall be seen, some misuses of statistics can actually become entrenched in academic practice.
 
-This situation might seem so discouraging that you might be inclined to throw out the use of statistics altogether. However, this would be a rash mistake. Those who care about any social issues, medical issues, environmental issues, etc, are necessarily concerned about understanding phenomena that occur in large populations of individuals. Therefore, if you care about such issues, you are necessarily engaged in a statistical inquiry, whether you realizes this or not.
+This situation might seem so discouraging that you might be inclined to throw out the use of statistics altogether. However, this would be a rash mistake. Those who care about any social issues, medical issues, environmental issues, etc, are necessarily concerned about understanding phenomena that occur in large populations of individuals. Therefore, if you care about such issues, you are necessarily engaged in a statistical inquiry, whether you realize this or not.
 
 The solution for those who care about such issues, therefore, is to be competent at scrutinizing statistics. The alternative is to be preyed upon by charlatans or, perhaps worse, to become a charlatan yourself.
 
@@ -97,7 +97,7 @@ In the context of scrutinizing a statistic, determining its provenance consists 
 
 The reason this is the first question to ask of any statistic is that its answer is a prerequisite for subsequent questions to ask when scrutinizing a statistic. If you do not know where a statistic came from or how it was derived, you cannot scrutinize further.
 
-One good thing about establishing the provenance of a statistic versus other kinds of provenance is that many if not most statistics of any quality are reported in a scholarly paper of some kind. Thus, the work of establishing provenance of a statistic usually ends with a very definitive result: a document that has a Digital Object Identifier (DOI) and that can be succinctly referenced in any one of a number of standardized citation formats.
+One good thing about establishing the provenance of a statistic versus other kinds of provenance is that many if not most statistics of any quality are reported in a scholarly paper of some kind. Thus, the work of establishing provenance of a statistic usually ends with a very definitive result: a document that has a Digital Object Identifier [@international_doi_foundation_digital_2021] and that can be succinctly referenced in any one of a number of standardized citation formats.
 
 This first question is phrased as "establishing provenance" and not simply "looking it up" because there are many situations where the mere act of determining where a statistic comes from is itself a fair amount of work.
 
@@ -154,7 +154,7 @@ This highlights yet another fallacy that is sometimes used by those who use stat
 
 For one, citing multiple supposed sources is easily accomplished by citing every step in a chain of references to a single origin as if they were a separate source. If they all ultimately lead to the same origin, then there is no point in this multiplicity of citations, and using multiple citations like this is deceptive.
 
-Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is a indication that the sources are being misrepresented. It is highly unlikely that several studies would arrive at the exact same statistic, since statistical inference involves some amount of sampling error. In these cases, either the error is not being reported, results are being treated as if they were equivalent when they are not,[^effect] or tactics of misrepresentation are being used.
+Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is a indication that the sources are being misrepresented. It is unlikely that several studies would arrive at the exact same statistic, since statistical inference involves some amount of sampling or assignment error. In these cases, either the error is not being reported, results are being treated as if they were equivalent when they are not,[^effect] or tactics of misrepresentation are being used.
 
 [^effect]: Reporting results as if they were equivalent when they are not can be done using generic comparisons, which are discussed briefly in the section on effect size in this article and are a deep enough topic that they are the subject of their own article.
 
@@ -179,7 +179,7 @@ Once the origin of a statistic is found, the next two genres of questions to ask
 
 Sometimes a statistic is intended to summarize information about the state of affairs in a large population. For instance, a country might be interested in the poverty rate of its citizens, which can constitute a population of millions of individual people. If the statistic is intended to generalize, you should ask questions such as _"What population was sampled?"_ and _"How was the sampling done?"_
 
-One approach to infer information about a large population is to take a representative sample from a population and use measurements of the sample to infer estimates about the population. This necessarily introduces some sampling error into the estimates, but such sampling error can be quantified.
+The main approach used to infer information about a large population is to take a representative sample from the population and use measurements of the sample to infer estimates about the population. This necessarily introduces some sampling error into the estimates, but such sampling error can be quantified.
 
 For large populations, it is usually practically infeasible to examine every single individual in the population of interest, which is the practice of taking a census. In these cases, using sampling and statistical inference is the only alternative to a census.
 
@@ -210,13 +210,13 @@ For a statistic derived from a telephone survey of area codes in Saint Petersbur
 
 [^papua]: The results could hypothetically generalize to individuals living in Papua New Guinea with mobile phones that have Saint Petersburg area code phone numbers. If this were the case, the results would generalize only to these individuals in Papua New Guinea and only if it was still possible to call them at the time the survey was being done.
 
-A subtlety arises when researchers intend, either explicitly or implicitly, to sample one population, but wind up sampling a different population. In these cases, the _target population_ for the study and the sampled population are not exactly the same, though they likely overlap.
+A subtlety arises when researchers intend, either explicitly or implicitly, to sample one population, but wind up sampling a different population. In these cases, the _target population_ for the study and the sampled population are not exactly the same, though they might overlap.
 
 This is a phenomenon that often comes up when election predictions fail spectacularly. The target population for a survey that is intended to predict the outcome of an election is all the people who will vote in the election. However, this is a difficult population to identify and to sample.
 
 For instance, nearly all of the surveys leading up to the the 2015 British General Election concluded that the election was going to be a dead heat between the two most popular political parties in the United Kingdom, the Conservative and the Labour parties. However, the election turned out be a clear victory for the Conservative Party. The predictions were so far off that an academic investigation into the widespread mistakes was commissioned. The investigation found that the samples taken were unrepresentative of the actual electorate,[^quota] over-representing Labour voters and under-representing Conservative ones. [@noauthor_general_2016]
 
-[^quota]: Most of these unrepresentative surveys did not using probability sampling, which is the form of sampling described in this article in which every individual in the population has a defined probability of selection for the sample. Instead the surveys, as many market research and political research surveys do, used quota sampling. Quota sampling is a form of sampling that tries to intentionally match certain demographic variables in the sample to the known distributions of the demographic variables in the population. Quota sampling is a lot cheaper because samples can be constructed opportunistically based on individuals who are readily available for survey. However, as the 2015 British General Election illustrates, quota sampling is not very reliable.
+[^quota]: Most of these unrepresentative surveys did not using probability sampling, which is the form of sampling described in this article in which every possible sample taken from the population has a defined probability of selection. Instead the surveys, as many market research and political research surveys do, used quota sampling. Quota sampling is a form of sampling that tries to intentionally match certain demographic variables in the sample to the known distributions of the demographic variables in the population. Quota sampling is a lot cheaper because samples can be constructed opportunistically based on individuals who are readily available. However, as the 2015 British General Election illustrates, quota sampling is not very reliable.
 
 ![
 A map depicting the results of the 2015 General Election in the United Kingdom. Blue represents a victory fot the Conservative Party, and red, a victory for the Labour Party.<br/>
@@ -280,12 +280,12 @@ Randomization is important for experiments as it is for observational studies. A
 
 For example, suppose you learn of a new flu therapy that underwent a clinical trial, and the result of the clinical trial found that all indicators of health &ndash; e.g., hospitalization rate, mortality rate, recovery time &ndash; were measurably better in the group given the new flu therapy than in the control group. That might seem promising. However, what if you further learn that the average age in the group given the therapy was 32 and the average age in the control group was 67? In this case, if those who are older are more vulnerable to the effects of the flu, age is a confounding variable. This could easily happen if the experimental assignment was not randomized.
 
-Randomization not only reduces the chances of one confounding variable like age being imbalanced between the intervention and the control groups, but randomization, if done well, balances _all_ confounding variables between the intervention and control groups. Thus, randomized assignment ensures that the effects measured in an experiment are indeed attributable to the intervention as their cause. 
+Randomization not only reduces the chances of one confounding variable like age being imbalanced between the intervention and the control groups, but randomization, if done well, balances _all_ confounding variables between the intervention and control groups. Thus, randomized assignment ensures that the effects measured in an experiment are indeed caused by the intervention. 
 
 
 #### Association vs. Causation
 
-Misinterpreting association between two variables as a causal relationship is a classic fallacy in interpreting statistical results that readily leads to numerous examples. The mantra "correlation is not causation" has been drummed into students of statistics courses for decades.
+Misinterpreting association between two variables as a causal relationship is a classic fallacy in interpreting statistical results. The mantra "correlation is not causation" has been drummed into students of statistics courses for decades.
 
 Those who go a hospital are more likely to suffer illness and death than those who do not. Therefore, there is an association between going to a hospital and illness and death. However, one should not conclude that going to a hospital _causes_ illness and death. The obvious confounding variable here is the existence of a prior illness. Generally, healthy people do not go to a hospital, whereas people who are ill often do. Confusing association with causation in this way can lead people to avoid medical care and suffer adverse health and premature death unnecessarily.
 
@@ -301,7 +301,7 @@ is licensed under
 
 Invalidly drawing causal conclusions from associations is such a common fallacy that old-fashioned statistics classes sometimes assert that no causal conclusion can be drawn from observational studies and that conclusions about cause and effect can only be made from randomized, controlled trials. For a variety of reasons, this is now largely seen as overly restrictive, and the field of causal inference from observational studies is an emerging field in statistical methodology research.
 
-There is no single recipe for causal inference from observational studies, but what all the methods currently being developed have in common is that they require a lot of work: formalization of concepts and symbology, explicit stating of assumptions, verification that the assumptions are plausible, etc. Because of the newness of these techniques and the amount of effort they require, and because of the abundance of fallacious reasoning that infers causation from mere association, you might be more likely to encounter the fallacy rather than valid causal inference from observational studies. Therefore, it is prudent to treat any conclusion about cause and effect that is derived from a source other than a randomized, controlled experiment with suspicion.
+There is no single recipe for causal inference from observational studies, but what all the methods currently being developed have in common is that they require a lot of work: formalization of concepts, explicit stating of assumptions, verification that the assumptions are plausible, etc. Because of the newness of these techniques and the amount of effort they require, and because of the abundance of fallacious reasoning that infers causation from mere association, it is prudent to treat any conclusion about cause and effect that is derived from a source other than a randomized, controlled experiment with suspicion.
 
 
 ### Summary
@@ -351,11 +351,11 @@ Once the origin of a statistic has been identified and the statistic's scope of 
 
 ### Subject-Matter Knowledge
 
-Whether a statistic is practically significant is less a matter of statistical theory and much more a result of knowledge of the subject-matter of the context for the statistic.
+Whether a statistic is practically significant is less a matter of statistical theory and much more a function of knowledge of the subject-matter of the context for the statistic.
 
-For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would have levels of daily blood glucose higher than what is typical. Medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. This new drug you are developing could therefore be of some use.
+For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would have levels of daily blood glucose higher than what is typical. Medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. [@diabetes_effect_1993] This new drug you are developing could therefore be of some use.
 
-However, if you discover the drug decreases daily mean blood glucose by 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because the long-term health benefits were observed to occur when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl. [@diabetes_effect_1993]
+However, if you discover the drug decreases daily mean blood glucose by 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because the long-term health benefits were observed to occur when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl.
 
 Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
 
@@ -368,7 +368,7 @@ For example, suppose you learn that the per capita expenditure on food and bever
 With other knowledge for comparison, the practical significance of the statistic is revealed. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and getting takeout more during the COVID-19 pandemic.
 
 
-### Types of Variables
+### Effect Size
 
 Establishing context for evaluation of practical significance often involves comparisons using two or more variables. In statistical analysis, a variable of interest is often called a "response variable." A response variable is analyzed in comparison to one or more other variables often called "explanatory variables."[^independent] In this arrangement, some amount of variation in a response variable is suspected to be on account of variation in explanatory variables.
 
@@ -378,13 +378,16 @@ For instance, you might investigate the number of wren chicks hatched in your ne
 
 The difference in the response variable accounted for by one or more explanatory variables has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, it is important to remember that in purely observational studies, only an association, not causation, can be inferred.
 
-How effect size is quantified depends on the kinds of variables involved. Broadly, there are two sorts of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of distinct levels, whereas numerical variables are the sort in which observations consist of assignment to a value on the number line.
 
-[^variables]: Within these two broad categories, there are more subcategories, but it is not necessary to enumerate more subcategories for this article. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
+#### Types of Variables
+
+How effect size is quantified depends on the typesof variables involved. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
+
+[^variables]: Even within these two broad types of variables, there are more subtypes, but for the purposes of this article, only these two types are used. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
 
 For instance, in the diabetes drug example, a clinical trial for the new drug would have the response variable of mean daily blood glucose level. This is a numerical variable because numbers in the hundreds of mg/dl are used. The explanatory variable in this case would be whether or not a patient is given the new drug. This is a categorical variable with just two levels: _given the drug_ or _not given the drug._
 
-Similarly, when analyzing per capita expenditure on food and beverages for off-premises consumption in the United States, the response variable is numerical because a dollar amount is observed for the expenditure on food and beverages. One explanatory variable for comparison would be which state of the United States the expenditures occur in. This would be a categorical variable with 50 levels: Alabama, Alaska, Arizona, etc.
+Similarly, in the example of per capita expenditure on food and beverages for off-premises consumption in the United States, the response variable is numerical because a dollar amount is observed for the expenditure on food and beverages. There are many variables that could be used as explanatory variables. One is which state of the United States the expenditures occur in. This would be a categorical variable with 50 levels: Alabama, Alaska, Arizona, etc.
 
 Numerical response variables and categorical explanatory variables are a common arrangement for statistical analysis because this arrangement is how you would compare some quantity across different subpopulations in observational studies and how you would compare some quantity between intervention and control groups in randomized, controlled experiments.
 
