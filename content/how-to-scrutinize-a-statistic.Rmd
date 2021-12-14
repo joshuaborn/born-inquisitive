@@ -154,9 +154,7 @@ This highlights yet another fallacy that is sometimes used by those who use stat
 
 For one, citing multiple supposed sources is easily accomplished by citing every step in a chain of references to a single origin as if they were a separate source. If they all ultimately lead to the same origin, then there is no point in this multiplicity of citations, and using multiple citations like this is deceptive.
 
-Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is a indication that the sources are being misrepresented. It is unlikely that several studies would arrive at the exact same statistic, since statistical inference involves some amount of sampling or assignment error. In these cases, either the error is not being reported, results are being treated as if they were equivalent when they are not,[^effect] or tactics of misrepresentation are being used.
-
-[^effect]: Reporting results as if they were equivalent when they are not can be done using generic comparisons, which are discussed briefly in the section on effect size in this article and are a deep enough topic that they are the subject of their own article.
+Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is an indication that the sources are being misrepresented. It is unlikely that several studies would arrive at the exact same statistic, which is discussed further in the sections on scope of inference, effect size, and estimation error. Thus, when multiple original sources are cited for the same statistic, it is likely results are being treated as if they were equivalent when they are not.
 
 
 ### Primary versus Secondary Sources
@@ -283,7 +281,7 @@ For example, suppose you learn of a new flu therapy that underwent a clinical tr
 Randomization not only reduces the chances of one confounding variable like age being imbalanced between the intervention and the control groups, but randomization, if done well, balances _all_ confounding variables between the intervention and control groups. Thus, randomized assignment ensures that the effects measured in an experiment are indeed caused by the intervention. 
 
 
-#### Association vs. Causation
+#### Association versus Causation
 
 Misinterpreting association between two variables as a causal relationship is a classic fallacy in interpreting statistical results. The mantra "correlation is not causation" has been drummed into students of statistics courses for decades.
 
@@ -359,6 +357,9 @@ However, if you discover the drug decreases daily mean blood glucose by 5 millig
 
 Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
 
+
+### Comparison
+
 The previous example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a study. A single statistic in isolation without any contextual knowledge has no practical significance.
 
 For example, suppose you learn that the per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was \$3,532. [@zemanek_personal_2021, Table 4] Unless you have detailed economic knowledge of the United States, this statistic probably has very little practical significance to you. Is \$3,532 a lot? Is \$3,532 a little?[^relative] Is this a decrease from last year? Is it an increase from last year? This statistic, without any context, is impossible to interpret.
@@ -368,7 +369,34 @@ For example, suppose you learn that the per capita expenditure on food and bever
 With other knowledge for comparison, the practical significance of the statistic is revealed. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and getting takeout more during the COVID-19 pandemic.
 
 
+### Categorical versus Numerical Variables
+
+How quantities are summarized into a statistic depends on the types of variables involved. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
+
+* Arithmetic means or totals for numerical variables
+* Proportions or counts for categorical variables
+
+[^variables]: Even within these two broad types of variables, there are more subtypes, but for the purposes of this article, only these two types are used. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
+
+
+#### Missing Denominators
+
+* "Auckland is still larger than Wellington"
+
+
+### Generic Comparisons
+
+The lack of a summary of an effect size is a generic comparison....
+
+Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is, such as when it is asserted that some group has "more" or "less" of something than another group. This is flawed and deceptive for numerous reasons and is the topic of its own article. 
+
+
 ### Effect Size
+
+The difference in the response variable accounted for by one or more explanatory variables has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, it is important to remember that in purely observational studies, only an association, not causation, can be inferred.
+
+
+#### Response versus Explanatory Variables
 
 Establishing context for evaluation of practical significance often involves comparisons using two or more variables. In statistical analysis, a variable of interest is often called a "response variable." A response variable is analyzed in comparison to one or more other variables often called "explanatory variables."[^independent] In this arrangement, some amount of variation in a response variable is suspected to be on account of variation in explanatory variables.
 
@@ -376,46 +404,42 @@ For instance, you might investigate the number of wren chicks hatched in your ne
 
 [^independent]: Response variables are sometimes called "research variables" or "dependent variables," and explanatory variables are sometimes called "independent variables." However, this article recommends avoiding the use of the labels "dependent variable" and "independent variable" because "independence" means something else very important in statistical theory. Indeed, many statistical models and tests are built upon an assumption of independence. While the violation of other assumptions, such as the assumption of normality, can still result in passable estimates, failure to handle the autocorrelation structure in the observations when the assumption of independence is violated will usually make estimates of standard errors drastically mistaken and thus invalidate the results.
 
-The difference in the response variable accounted for by one or more explanatory variables has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, it is important to remember that in purely observational studies, only an association, not causation, can be inferred.
-
-
-#### Types of Variables
-
-How effect size is quantified depends on the typesof variables involved. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
-
-[^variables]: Even within these two broad types of variables, there are more subtypes, but for the purposes of this article, only these two types are used. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
-
 For instance, in the diabetes drug example, a clinical trial for the new drug would have the response variable of mean daily blood glucose level. This is a numerical variable because numbers in the hundreds of mg/dl are used. The explanatory variable in this case would be whether or not a patient is given the new drug. This is a categorical variable with just two levels: _given the drug_ or _not given the drug._
 
-Similarly, in the example of per capita expenditure on food and beverages for off-premises consumption in the United States, the response variable is numerical because a dollar amount is observed for the expenditure on food and beverages. There are many variables that could be used as explanatory variables. One is which state of the United States the expenditures occur in. This would be a categorical variable with 50 levels: Alabama, Alaska, Arizona, etc.
+Similarly, in the example of per capita expenditure on food and beverages for off-premises consumption in the United States, the response variable is numerical because a dollar amount is observed for the expenditure on food and beverages in Michigan. What made this statistic practically significance was introduction of a categorical explanatory variable with two levels: _during 2020_ or _during the previous year_. Introduction of the explanatory variable led to the statistic being recast in terms of percent increase or decrease.
+
+* The wren chicks example?
+
+
+#### Common Summary Statistics
 
 Numerical response variables and categorical explanatory variables are a common arrangement for statistical analysis because this arrangement is how you would compare some quantity across different subpopulations in observational studies and how you would compare some quantity between intervention and control groups in randomized, controlled experiments.
 
-The wren chicks example...
+* Numerical response and categorical explanatory
+    * Difference of means
+    * Standardized difference of means (Cohen's _d_)
+* Categorical response and categorical explanatory
+    * Difference in risk
+    * Relative risk and odds ratio
+* Numerical explanatory
+    * Correlation
+* Multiple explanatory variables
+    * Regression analysis and GLMs
+    
+
+### Confounding
+
+* Washington Post fact checker and the Obama gender pay gap statistic gaffe
 
 
-_**Talk about both observational studies and RCEs throughout this section.**_
-
-* Effect size: read two papers on this
-    * Proportions
-    * Means and medians
-    * Correlations
-    * Models
-    * Totals
-* Missing denominator: "Auckland is still larger than Wellington"
-* Confounding: Washington Post fact checker and the Obama gender pay gap statistic gaffe
-
-
-## Error and Statistical Significance
+## Estimation Error
 
 
 ## Common Flaws of Research
 
 * Statistical theater: _p_-values without inference
-* Lack of adjustment for multiple comparisons
-
-
-[^generic]: Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is, such as when it is asserted that some group has "more" or "less" of something than another group. This is flawed and deceptive for numerous reasons and is the topic of its own article. 
+* Stating _p_-value instead of effect size
+* Lack of adjustment for multiple comparisons and _p_-hacking
 
 
 ## Citations
