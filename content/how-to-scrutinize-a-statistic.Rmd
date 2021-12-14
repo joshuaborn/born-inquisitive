@@ -369,20 +369,6 @@ For example, suppose you learn that the per capita expenditure on food and bever
 With other knowledge for comparison, the practical significance of the statistic is revealed. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and getting takeout more during the COVID-19 pandemic.
 
 
-### Categorical versus Numerical Variables
-
-How quantities are summarized into a statistic depends on the types of variables involved. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
-
-* Arithmetic means or totals for numerical variables
-* Proportions or counts for categorical variables
-
-[^variables]: Even within these two broad types of variables, there are more subtypes, but for the purposes of this article, only these two types are used. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
-
-
-#### Missing Denominators
-
-* "Auckland is still larger than Wellington"
-
 
 ### Generic Comparisons
 
@@ -404,6 +390,20 @@ Establishing context for evaluation of practical significance often involves com
 
 For instance, in the diabetes drug example, a clinical trial for the new drug would have the response variable of mean daily blood glucose level. This is a numerical variable because numbers in the hundreds of mg/dl are used. The explanatory variable in this case would be whether or not a patient is given the new drug. This is a categorical variable with just two levels: _given the drug_ or _not given the drug._
 
+
+#### Categorical versus Numerical Variables
+
+How quantities are summarized into a statistic depends on the types of variables involved. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
+
+* Arithmetic means or totals for numerical variables
+* Proportions or counts for categorical variables
+
+[^variables]: Even within these two broad types of variables, there are more subtypes, but for the purposes of this article, only these two types are used. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
+
+
+#### Missing Denominators
+
+* "Auckland is still larger than Wellington"
 
 #### Common Summary Statistics
 
