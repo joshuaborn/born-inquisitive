@@ -170,7 +170,7 @@ That being understood, Wikipedia does contain a lot of references to primary sou
 
 ## Scope of Inference
 
-Once the origin of a statistic is found, the next two genres of questions to ask about the statistic are both related to what is termed "scope of inference" in statistics courses. Scope of inference is divided into two concerns: whether or not the results of a study generalize to a larger population, and whether or not conclusions can be drawn about cause and effect. The former is a concern about sampling, and the latter is a concern about experimental assignment. Both of these concerns stem from the possibility of confounding variables, and both concerns are addressed by a form of randomization.
+Once you have found the origin of a statistic, the next two genres of questions to ask about the statistic are both related to what is termed "scope of inference" in statistics courses. Scope of inference is divided into two concerns: whether or not the results of a study generalize to a larger population, and whether or not conclusions can be drawn about cause and effect. The former is a concern about sampling, and the latter is a concern about experimental assignment. Both of these concerns stem from the possibility of confounding variables, and both concerns are addressed by a form of randomization.
 
 
 ### Sampling
@@ -344,16 +344,16 @@ The important takeaway for the work of scrutinizing statistics that you encounte
 
 ## Practical Significance
 
-Once the origin of a statistic has been identified and the statistic's scope of inference determined, the next genre of questions you should ask about a statistic are _"What is the practical significance of this statistic?"_ and _"How much of an effect size is described by this statistic?"_
+Once you have identified the origin of a statistic and you have determined the statistic's scope of inference, the next genre of questions you should ask about a statistic are _"What is the practical significance of this statistic?"_ and _"How much of an effect size is described by this statistic?"_
 
 
 ### Subject-Matter Knowledge
 
 Whether a statistic is practically significant is less a matter of statistical theory and much more a function of knowledge of the subject-matter of the context for the statistic.
 
-For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would have levels of daily blood glucose higher than what is typical. Medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. [@diabetes_effect_1993] This new drug you are developing could therefore be of some use.
+For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would, without medical intervention, have levels of daily blood glucose higher than what is typical. However, medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. [@diabetes_effect_1993] This new drug you are developing could therefore be of some use.
 
-However, if you discover the drug decreases daily mean blood glucose by 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because the long-term health benefits were observed to occur when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl.
+However, if you discover the drug decreases daily mean blood glucose by only 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because the long-term health benefits were observed to occur when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl.
 
 Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
 
@@ -366,44 +366,67 @@ For example, suppose you learn that the per capita expenditure on food and bever
 
 [^relative]: As it turns out, Michigan was right in the middle of per capita expenditure on food and beverages for off-premises consumption compared with other states. [@zemanek_personal_2021, Table 4]
 
-With other knowledge for comparison, the practical significance of the statistic is revealed. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and getting takeout more during the COVID-19 pandemic.
-
+With other knowledge for comparison, you discover the practical significance of the statistic. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was a 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and getting takeout more during the COVID-19 pandemic.
 
 
 ### Generic Comparisons
 
-The lack of a summary of an effect size is a generic comparison....
+Because comparison is the basis for establishing practical significance, you will sometimes encounter the maddening practice of asserting that one population has "more" of some quantity than another or that a population has "less" of a quantity than another.
 
-Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is, such as when it is asserted that some group has "more" or "less" of something than another group. This is flawed and deceptive for numerous reasons and is the topic of its own article. 
+Such assertions are almost worse than no information at all because they allude to practical significance while withholding the very information you need to evaluate practical significance, namely, _how much more_ or _how much less._
+
+This is the practice of _generic comparisons._ Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is.
+
+Generic comparisons can be used deceptively. You could, for instance, assert that patients given the prospective insulin-alternative drug discussed in the earlier example have a _lower_ mean daily mean blood glucose than control group patients, and leave it at that. However, you know very well that the actual difference in mean blood glucose caused by the drug is not practically significant for IDDM patients. By withholding quantification from the comparison between patients given the drug and patients in the control group, you can pretend there is practical significance.
+
+Therefore, whenever you encounter an assertion that there is "more" or "less" of something or levels are "higher" or "lower," "bigger" or "smaller," "greater" or "lesser," etc, the very next question that you should demand is _"How much more?"_ or  _"How much less?"_ etc.
 
 
 ### Effect Size
 
-The difference in the response variable accounted for by one or more explanatory variables has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, it is important to remember that in purely observational studies, only an association, not causation, can be inferred.
+The answer to such questions has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is that of a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, remember that in purely observational studies, only an association, not causation, can be inferred.
+
+Furthermore, the various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. This will be explored at length in a subsequent article exploring the fallacy of generic comparisons.
+
+Even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid initial perception by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what are the different types of variables you encounter.
 
 
 #### Response versus Explanatory Variables
 
-Establishing context for evaluation of practical significance often involves comparisons using two or more variables. In statistical analysis, a variable of interest is often called a "response variable." A response variable is analyzed in comparison to one or more other variables often called "explanatory variables."[^independent] In this arrangement, some amount of variation in a response variable is suspected to be on account of variation in explanatory variables.
+In statistical analysis, a variable of interest is often called a "response variable." A response variable is analyzed in comparison to another variable often called an "explanatory variable."[^independent] Some amount of variation in a response variable is suspected to be on account of variation in the explanatory variable.
 
 [^independent]: Response variables are sometimes called "research variables" or "dependent variables," and explanatory variables are sometimes called "independent variables." However, this article recommends avoiding the use of the labels "dependent variable" and "independent variable" because "independence" means something else very important in statistical theory. Indeed, many statistical models and tests are built upon an assumption of independence. While the violation of other assumptions, such as the assumption of normality, can still result in passable estimates, failure to handle the autocorrelation structure in the observations when the assumption of independence is violated will usually make estimates of standard errors drastically mistaken and thus invalidate the results.
 
-For instance, in the diabetes drug example, a clinical trial for the new drug would have the response variable of mean daily blood glucose level. This is a numerical variable because numbers in the hundreds of mg/dl are used. The explanatory variable in this case would be whether or not a patient is given the new drug. This is a categorical variable with just two levels: _given the drug_ or _not given the drug._
+For instance, in the insulin-alternative drug example, a clinical trial for the new drug would have the response variable of a patient's mean daily blood glucose level. The explanatory variable in this case would be whether or not a patient is given the new drug.
 
 
 #### Categorical versus Numerical Variables
 
-How quantities are summarized into a statistic depends on the types of variables involved. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
-
-* Arithmetic means or totals for numerical variables
-* Proportions or counts for categorical variables
+Both response and explanatory variables can come in different types. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852. Whether a response variable is categorical or numerical is a separate question from whether an explanatory variable is categorical or numerical.
 
 [^variables]: Even within these two broad types of variables, there are more subtypes, but for the purposes of this article, only these two types are used. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
+
+In the insulin-alternative drug example, the response variable is a numerical variable because numbers in the hundreds of mg/dl are used. The explanatory variable is a categorical variable with just two levels: _given the drug_ or _not given the drug._
+
+Categorical variables are typically summarized using either counts or proportions. For instance, using raw counts, a warehouse might have 325 small sizes, 450 medium sizes, and 375 large sizes of clothing. Using proportions, about 28.3\% of the clothes at the warehouse are size small, 39.1\% are size medium, and 32.6\% are size large.
+
+Similarly, numerical variables are typically summarized using either totals or arithmetic means. For instance, the total value of inventory at a warehouse might be \$34,500. Using an arithmetic mean, the average value of an item at the warehouse is  \$30, if there are 1,150 items in the warehouse.
 
 
 #### Missing Denominators
 
-* "Auckland is still larger than Wellington"
+When the explanatory variable is categorical, you are essentially comparing the response variable between two or more populations, one population for each level of the explanatory variable. When comparing between two or more populations, proportions or means are usually preferable to counts or totals. This is because for many variables, counts or totals tend to increase along with the number of individuals in the populations. Thus, proportions or means result in better comparisons because they include the population size as their denominator.
+
+This is why in comparisons of societies, statistics per capita are preferable to raw counts or totals. The statistician Thomas Lumley has a series of articles in which he expounds on the fallacy of using raw counts or totals when comparing statistics about Auckland, New Zealand, where he lives, to Wellington, New Zealand, all humorously titled something to the effect of "Auckland is larger than Wellington."
+
+In one article he comments on a news story that reported Auckland had 1,553 convictions of teenagers convicted for drunk driving while Wellington only had 728.  [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries occurred in Auckland as in Wellington. [@lumley_newsflash_2012] However, these counts are misleading because the population of Auckland is about three times that of Wellington.
+
+What are more relevant for comparison between the two places are _rate_ of teenage drunk driving convictions and _rate_ of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions is much lower in Auckland than in Wellington, but the rate of burglary is still slightly higher in Auckland than in Wellington.
+
+[^rate]: Rate can be thought of as a proportion with the number of people experiencing an event in the numerator and the number of people in the population as the denominator.
+
+Of course, it may be the case that a count or total is more relevant for a specific problem than the corresponding proportion or mean. For instance, if you are in charge of allocating resources to the waste disposal facilities in your country, you care very much about what the total waste produced next year in each jurisdiction is projected to be and care only indirectly about what the mean waste produced per household is projected to be.
+
 
 #### Common Summary Statistics
 
@@ -435,6 +458,9 @@ Numerical response variables and categorical explanatory variables are a common 
 * Statistical theater: _p_-values without inference
 * Stating _p_-value instead of effect size
 * Lack of adjustment for multiple comparisons and _p_-hacking
+
+
+_**Go back and rewrite to use second-person more and passive voice less.**_
 
 
 ## Citations
