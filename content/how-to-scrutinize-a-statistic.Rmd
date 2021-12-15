@@ -360,9 +360,9 @@ Thus, the knowledge used to evaluate the practical significance of the statistic
 
 ### Comparison
 
-The previous example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a study. A single statistic in isolation without any contextual knowledge has no practical significance.
+The previous example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a previous study. A single statistic in isolation without any contextual knowledge has no practical significance.
 
-For example, suppose you learn that the per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was \$3,532. [@zemanek_personal_2021, Table 4] Unless you have detailed economic knowledge of the United States, this statistic probably has very little practical significance to you. Is \$3,532 a lot? Is \$3,532 a little?[^relative] Is this a decrease from last year? Is it an increase from last year? This statistic, without any context, is impossible to interpret.
+For example, suppose you learn that the per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was \$3,532. [@zemanek_personal_2021, Table 4] Unless you have detailed economic knowledge of the United States, this statistic probably has very little practical significance to you. Is \$3,532 a lot? Is \$3,532 a little?[^relative] This statistic, without any context, is impossible to interpret.
 
 [^relative]: As it turns out, Michigan was right in the middle of per capita expenditure on food and beverages for off-premises consumption compared with other states. [@zemanek_personal_2021, Table 4]
 
@@ -373,7 +373,7 @@ With other knowledge for comparison, you discover the practical significance of 
 
 Because comparison is the basis for establishing practical significance, you will sometimes encounter the maddening practice of asserting that one population has "more" of some quantity than another or that a population has "less" of a quantity than another.
 
-Such assertions are almost worse than no information at all because they allude to practical significance while withholding the very information you need to evaluate practical significance, namely, _how much more_ or _how much less._
+Such assertions are almost worse than no information at all because they create the impression of practical significance while withholding the very information you need to evaluate practical significance, namely, _how much more_ or _how much less._
 
 This is the practice of _generic comparisons._ Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is.
 
@@ -384,11 +384,11 @@ Therefore, whenever you encounter an assertion that there is "more" or "less" of
 
 ### Effect Size
 
-The answer to such questions has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is that of a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, remember that in purely observational studies, only an association, not causation, can be inferred.
+A quick answer to such questions has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is that of a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, remember that in purely observational studies, only an association, not causation, can be inferred.
 
-Furthermore, the various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. This will be explored at length in a subsequent article exploring the fallacy of generic comparisons.
+The various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. This will be explored at length in a subsequent article exploring the fallacy of generic comparisons.
 
-Even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid initial perception by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what are the different types of variables you encounter.
+However, even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid initial perception by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what are the different types of variables you encounter.
 
 
 #### Response versus Explanatory Variables
@@ -402,35 +402,49 @@ For instance, in the insulin-alternative drug example, a clinical trial for the 
 
 #### Categorical versus Numerical Variables
 
-Both response and explanatory variables can come in different types. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852. Whether a response variable is categorical or numerical is a separate question from whether an explanatory variable is categorical or numerical.
+Both response and explanatory variables can come in different types. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
 
 [^variables]: Even within these two broad types of variables, there are more subtypes, but for the purposes of this article, only these two types are used. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
 
-In the insulin-alternative drug example, the response variable is a numerical variable because numbers in the hundreds of mg/dl are used. The explanatory variable is a categorical variable with just two levels: _given the drug_ or _not given the drug._
+Whether a response variable is categorical or numerical is a separate question from whether an explanatory variable is categorical or numerical. In the insulin-alternative drug example, the response variable is a numerical variable because numbers in the hundreds of mg/dl are used. However, the explanatory variable is a categorical variable with just two levels: _given the drug_ or _not given the drug._
 
-Categorical variables are typically summarized using either counts or proportions. For instance, using raw counts, a warehouse might have 325 small sizes, 450 medium sizes, and 375 large sizes of clothing. Using proportions, about 28.3\% of the clothes at the warehouse are size small, 39.1\% are size medium, and 32.6\% are size large.
+Categorical variables are typically summarized using either counts or proportions. For instance, using raw counts, a warehouse might have 325 small sized garments, 450 medium sized garments, and 375 large sized garments. Using proportions, about 28.3\% of the clothes at the warehouse are size small, 39.1\% are size medium, and 32.6\% are size large.
 
-Similarly, numerical variables are typically summarized using either totals or arithmetic means. For instance, the total value of inventory at a warehouse might be \$34,500. Using an arithmetic mean, the average value of an item at the warehouse is  \$30, if there are 1,150 items in the warehouse.
+Similarly, numerical variables are typically summarized using either totals or arithmetic means. For instance, the total value of inventory at the warehouse might be \$34,500. Using an arithmetic mean, the average value of an item at the warehouse is  \$30, if there are 1,150 items in the warehouse.
 
 
 #### Missing Denominators
 
 When the explanatory variable is categorical, you are essentially comparing the response variable between two or more populations, one population for each level of the explanatory variable. When comparing between two or more populations, proportions or means are usually preferable to counts or totals. This is because for many variables, counts or totals tend to increase along with the number of individuals in the populations. Thus, proportions or means result in better comparisons because they include the population size as their denominator.
 
-This is why in comparisons of societies, statistics per capita are preferable to raw counts or totals. The statistician Thomas Lumley has a series of articles in which he expounds on the fallacy of using raw counts or totals when comparing statistics about Auckland, New Zealand, where he lives, to Wellington, New Zealand, all humorously titled something to the effect of "Auckland is larger than Wellington."
+This is why statistics per capita are preferable to raw counts or totals for social data. The statistician Thomas Lumley has a series of articles in which he expounds on the fallacy of using raw counts or totals when comparing statistics about Auckland, New Zealand, where he lives, to Wellington, New Zealand, all humorously titled something to the effect of "Auckland is larger than Wellington."
 
-In one article he comments on a news story that reported Auckland had 1,553 convictions of teenagers convicted for drunk driving while Wellington only had 728.  [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries occurred in Auckland as in Wellington. [@lumley_newsflash_2012] However, these counts are misleading because the population of Auckland is about three times that of Wellington.
+In one article he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728.  [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries occurred in Auckland as in Wellington. [@lumley_newsflash_2012] However, these counts are misleading because the population of Auckland is about three times that of Wellington.
 
 What are more relevant for comparison between the two places are _rate_ of teenage drunk driving convictions and _rate_ of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions is much lower in Auckland than in Wellington, but the rate of burglary is still slightly higher in Auckland than in Wellington.
 
 [^rate]: Rate can be thought of as a proportion with the number of people experiencing an event in the numerator and the number of people in the population as the denominator.
 
-Of course, it may be the case that a count or total is more relevant for a specific problem than the corresponding proportion or mean. For instance, if you are in charge of allocating resources to the waste disposal facilities in your country, you care very much about what the total waste produced next year in each jurisdiction is projected to be and care only indirectly about what the mean waste produced per household is projected to be.
+Of course, it may be the case that a count or total is more relevant for a specific problem than the corresponding proportion or mean. For instance, if you are in charge of allocating resources to the waste disposal facilities in your country, you care very much about what the total waste produced next year in each jurisdiction is projected to be and care only indirectly about what the mean waste produced per household in each jurisdiction is projected to be.
 
 
-#### Common Summary Statistics
+### Common Summary Statistics
 
-* Unstandardized versus standardized statistics
+Researchers have devised many statistics for summarizing an effect size.[^standardized] Most of these are standardized statistics. Standardized statistics convert raw, observed values in their original units of measurement to unitless ratios that oftentimes have reference values.
+
+[^standardized]: Papers by Nakagawa and Cuthill [-@nakagawa_effect_2007] and by Ferguson [-@ferguson_effect_2009] summarize these statistics.
+
+Standardized statistics for effect size have their uses, such as comparing effect sizes when statistics are on different scales or when dealing with inherently abstract and unitless quantities such as those used by psychologists in personality tests. However, whenever you can, you are better off consulting unstandardized statistics where possible.
+
+The reason for this preference is that, as has been seen, the practical significance of an effect size is ultimately derived from subject-matter knowledge. Expressing an effect size with unstandardized statistics keeps the observations in the original units of measurement and closer to real-world subject-matter domain knowledge.
+
+
+#### Categorical Explanatory Variables
+
+With a categorical explanatory variable, effect sizes are really summarizing the differences in the distribution of the response variable between two or more populations, one population per level of the explanatory variable.
+
+For a numerical response variable, the most common way to express such an effect size is with a difference in means.
+
 * Numerical response and categorical explanatory
     * Difference of means
     * Standardized difference of means (Cohen's _d_)
@@ -442,12 +456,13 @@ Of course, it may be the case that a count or total is more relevant for a speci
 * Multiple explanatory variables
     * Regression analysis and GLMs
     
-Numerical response variables and categorical explanatory variables are a common arrangement for statistical analysis because this arrangement is how you would compare some quantity across different subpopulations in observational studies and how you would compare some quantity between intervention and control groups in randomized, controlled experiments.
-
 
 ### Confounding
 
 * Washington Post fact checker and the Obama gender pay gap statistic gaffe
+
+
+### Lack of Effect Size
 
 
 ## Estimation Error
