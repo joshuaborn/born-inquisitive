@@ -460,6 +460,14 @@ Finally, note that both means and medians are measures of _just_ the central ten
 
 #### Categorical Response and Categorical Explanatory Variable
 
+When the response variable is categorical instead of numerical, but the explanatory variable is still categorical, you are still essentially comparing the response variable between two or more populations. However, the response variable is now expressed in terms of proportions instead of means. Therefore, in this case, everything said in the previous section should be repeated, but with proportions instead of means and differences of proportions instead of differences of means.
+
+However, the major change in the categorical response case is that differences of proportions are not as ubiquitous as statistics of effect size as differences of means are in the numerical response case. This section, therefore, describes some additional summary statistics.
+
+On the one hand, there is nothing wrong with using a difference in proportion to describe an effect size. For example, in September 2021, 66.67% of flights of JetBlue Flight Number 2495 from Newark to Miami were delayed more than half an hour, whereas 56.67% of flights of JetBlue Flight Number 2695, also from Newark to Miami, were delayed more than half an hour. [@noauthor_september_nodate] The effect size can be summarized as a difference of 66.67 &minus; 56.67 = 10 percentage points.
+
+However, for effect sizes such as this that compare two different rates, there are two other summary statistics that are quite common: _relative risk_ and _odds ratio._
+
 
 #### Numerical Explanatory Variable
 
@@ -486,6 +494,10 @@ Finally, note that both means and medians are measures of _just_ the central ten
 
 
 _**Go back and rewrite to use second-person more and passive voice less.**_
+
+_**Go back and replace any contrived examples with real world statistics.**_
+
+_**Add more images.**_
 
 
 ## Citations
