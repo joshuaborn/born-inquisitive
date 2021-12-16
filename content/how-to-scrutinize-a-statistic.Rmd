@@ -353,7 +353,7 @@ Whether a statistic is practically significant is less a matter of statistical t
 
 For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would, without medical intervention, have levels of daily blood glucose higher than what is typical. However, medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. [@diabetes_effect_1993] This new drug you are developing could therefore be of some use.
 
-However, if you discover the drug decreases daily mean blood glucose by only 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because the long-term health benefits were observed to occur when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl.
+However, if you discover the drug decreases daily mean blood glucose by only 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because prior research observed long-term health benefits occurred when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl.
 
 Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
 
@@ -366,7 +366,7 @@ For example, suppose you learn that the per capita expenditure on food and bever
 
 [^relative]: As it turns out, Michigan was right in the middle of per capita expenditure on food and beverages for off-premises consumption compared with other states. [@zemanek_personal_2021, Table 4]
 
-With other knowledge for comparison, you discover the practical significance of the statistic. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was a 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and getting takeout more during the COVID-19 pandemic.
+With other knowledge for comparison, you can discover the practical significance of the statistic. The \$3,532 per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was a 10.6% increase from the previous year, despite there being a decrease of 22.6% in the amount spent on food services and accommodations. [@zemanek_personal_2021, Table 2] This is consistent with the hypothesis that people in Michigan were dining in restaurants less and eating at home more during the COVID-19 pandemic.
 
 
 ### Generic Comparisons
@@ -379,28 +379,23 @@ This is the practice of _generic comparisons._ Generic comparisons assert that t
 
 Generic comparisons can be used deceptively. You could, for instance, assert that patients given the prospective insulin-alternative drug discussed in the earlier example have a _lower_ mean daily mean blood glucose than control group patients, and leave it at that. However, you know very well that the actual difference in mean blood glucose caused by the drug is not practically significant for IDDM patients. By withholding quantification from the comparison between patients given the drug and patients in the control group, you can pretend there is practical significance.
 
-Therefore, whenever you encounter an assertion that there is "more" or "less" of something or levels are "higher" or "lower," "bigger" or "smaller," "greater" or "lesser," etc, the very next question that you should demand is _"How much more?"_ or  _"How much less?"_ etc.
+Therefore, whenever you encounter an assertion that there is "more" or "less" of something in one population than in another &ndash; or that levels are "higher" or "lower," "bigger" or "smaller," "greater" or "lesser," etc &ndash; the very next question that you should demand is _"How much more?"_ or  _"How much less?"_
 
 
 ### Effect Size
 
-A quick answer to such questions has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is that of a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, remember that in purely observational studies, only an association, not causation, can be inferred.
+A quick answer to such questions as _"How much more?"_ has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is that of a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, remember that in purely observational studies, only an association, not causation, can be inferred.
 
-The various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. This will be explored at length in a subsequent article exploring the fallacy of generic comparisons.
-
-However, even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid initial perception by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what are the different types of variables you encounter.
+The various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. However, even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid first impression by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what are the different types of variables you encounter.
 
 
-#### Response versus Explanatory Variables
+#### Types of Variables
 
 In statistical analysis, a variable of interest is often called a "response variable." A response variable is analyzed in comparison to another variable often called an "explanatory variable."[^independent] Some amount of variation in a response variable is suspected to be on account of variation in the explanatory variable.
 
 [^independent]: Response variables are sometimes called "research variables" or "dependent variables," and explanatory variables are sometimes called "independent variables." However, this article recommends avoiding the use of the labels "dependent variable" and "independent variable" because "independence" means something else very important in statistical theory. Indeed, many statistical models and tests are built upon an assumption of independence. While the violation of other assumptions, such as the assumption of normality, can still result in passable estimates, failure to handle the autocorrelation structure in the observations when the assumption of independence is violated will usually make estimates of standard errors drastically mistaken and thus invalidate the results.
 
 For instance, in the insulin-alternative drug example, a clinical trial for the new drug would have the response variable of a patient's mean daily blood glucose level. The explanatory variable in this case would be whether or not a patient is given the new drug.
-
-
-#### Categorical versus Numerical Variables
 
 Both response and explanatory variables can come in different types. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
 
@@ -415,47 +410,62 @@ Similarly, numerical variables are typically summarized using either totals or a
 
 #### Missing Denominators
 
-When the explanatory variable is categorical, you are essentially comparing the response variable between two or more populations, one population for each level of the explanatory variable. When comparing between two or more populations, proportions or means are usually preferable to counts or totals. This is because for many variables, counts or totals tend to increase along with the number of individuals in the populations. Thus, proportions or means result in better comparisons because they include the population size as their denominator.
+When the explanatory variable is categorical, you are essentially comparing the response variable between two or more populations, one population for each level of the explanatory variable.
 
-This is why statistics per capita are preferable to raw counts or totals for social data. The statistician Thomas Lumley has a series of articles in which he expounds on the fallacy of using raw counts or totals when comparing statistics about Auckland, New Zealand, where he lives, to Wellington, New Zealand, all humorously titled something to the effect of "Auckland is larger than Wellington."
+When comparing between two or more populations, proportions or means are usually preferable to counts or totals.[^totals] This is because for many variables, counts or totals tend to increase along with the number of individuals in the populations. Thus, proportions or means result in better comparisons because they include the population size as their denominator.
 
-In one article he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728.  [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries occurred in Auckland as in Wellington. [@lumley_newsflash_2012] However, these counts are misleading because the population of Auckland is about three times that of Wellington.
+[^totals]: Of course, there do exist cases in which a count or total is more relevant for a specific problem than the corresponding proportion or mean. For instance, if you are in charge of allocating resources to the waste disposal facilities in your country, you care very much about what the total waste produced next year in each jurisdiction is projected to be and care only indirectly about what the mean waste produced per household in each jurisdiction is projected to be.
 
-What are more relevant for comparison between the two places are _rate_ of teenage drunk driving convictions and _rate_ of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions is much lower in Auckland than in Wellington, but the rate of burglary is still slightly higher in Auckland than in Wellington.
+This is why statistics per capita are preferable to raw counts or totals for social data. For example, the statistician Thomas Lumley has a series of articles in which he expounds on the fallacy of using raw counts or totals when comparing statistics about Auckland, New Zealand, where he lives, to Wellington, New Zealand, all humorously titled something to the effect of "Auckland is larger than Wellington."
+
+In one article he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728. [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries had occurred in Auckland as in Wellington. [@lumley_newsflash_2012] These counts are misleading because the population of Auckland is about three times that of Wellington.
+
+What are more relevant for comparison between the two places are rate of teenage drunk driving convictions and rate of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions is much lower in Auckland than in Wellington, but the rate of burglary is still slightly higher in Auckland than in Wellington.
 
 [^rate]: Rate can be thought of as a proportion with the number of people experiencing an event in the numerator and the number of people in the population as the denominator.
 
-Of course, it may be the case that a count or total is more relevant for a specific problem than the corresponding proportion or mean. For instance, if you are in charge of allocating resources to the waste disposal facilities in your country, you care very much about what the total waste produced next year in each jurisdiction is projected to be and care only indirectly about what the mean waste produced per household in each jurisdiction is projected to be.
+Whenever you are presented with a count or total that you need to compare with another quantity in order to determine effect size, you may be able to locate the missing denominator. For instance, within a few minutes, Thomas Lumley was able to find the census figures for the number of teenagers in Auckland and in Wellington from a government website. [@lumley_auckland_2012] Once the relevant population size is identified, conversion from count or total to mean or proportion is a simple operation of division.
+
+However, you might also encounter cases in which population size is not easily obtained information. In these cases, it is best to withhold judgment about practical significance.
 
 
-### Common Summary Statistics
+#### Numerical Response and Categorical Explanatory Variable
 
-Researchers have devised many statistics for summarizing an effect size.[^standardized] Most of these are standardized statistics. Standardized statistics convert raw, observed values in their original units of measurement to unitless ratios that oftentimes have reference values.
+As previously mentioned, when the explanatory variable is categorical, you are essentially comparing the response variable between two or more populations, one for each level of the explanatory variable.
 
-[^standardized]: Papers by Nakagawa and Cuthill [-@nakagawa_effect_2007] and by Ferguson [-@ferguson_effect_2009] summarize these statistics.
+With a numerical response variable, the most common way to report effect size is in terms of the means of the response variable for each such population. The effect size is summarized as the difference in these means. For example, the mean expenditure on food and beverages for off-premises consumption in Michigan in 2020 was \$3,532, whereas it was \$2,872 in Arkansas in 2020. The effect size of living in Michigan versus living in Arkansas can be summarized as the difference in means of \$3,532 &minus; \$2,872 = \$660.
 
-Standardized statistics for effect size have their uses, such as comparing effect sizes when statistics are on different scales or when dealing with inherently abstract and unitless quantities such as those used by psychologists in personality tests. However, whenever you can, you are better off consulting unstandardized statistics where possible.
+In these cases, you should search for both the mean response variable values reported individually and for the differences in means.
 
-The reason for this preference is that, as has been seen, the practical significance of an effect size is ultimately derived from subject-matter knowledge. Expressing an effect size with unstandardized statistics keeps the observations in the original units of measurement and closer to real-world subject-matter domain knowledge.
+It is good to know the mean values themselves and not just the difference in means because the mean values can shed light on the relative magnitude of the difference. If the difference in mean values of weight between males and females of some species of animal is 2 pounds, the practical significance of this difference is not the same when the mean male weight is 48 pounds and mean female weight 41 pounds versus when the mean male weight is 589 pounds and mean female weight 413 pounds.
+
+Furthermore, quality statistical analysis reports the difference in means separately from the individual mean values because estimation error should be calculated differently for the difference in the means than for the means themselves.
+
+If neither the individual means nor the differences in means are reported, then you must withhold judgment as to practical significance, and you should question the veracity of the source.
+
+Sometimes, other statistics are reported instead of the means of response variable. For various technical reasons, medians might be reported instead of means.[^median] However, your scrutinization of medians is similar to that of means. You should look for both the individual median values of each population and their differences, prefer to have both, but demand at least one of these.
+
+[^median]: Medians are more resistant to outliers, so they are often used for variables with heavily skewed distributions, such as personal monetary income. Furthermore, analyses that use logarithm transforms are more easily interpreted in terms of medians than means.
+
+Furthermore, sometimes _standardized statistics_ are reported instead. Mean or median values of the response variable and their differences are _unstandarized statistics:_ they are reported in the original units of measurement of the observations and relate back to the real world quantities on which they are based. A popular standardized statistic for this case results from dividing the difference in means of the response variable by the standard deviation of the response variable &ndash; commonly called "Cohen's _d"_ after the psychologist who popularized the practice.
+
+Standardized statistics for effect size have their uses.[^standardized] However, whenever you can, you are better off consulting unstandardized statistics since they are more readily related to the real world and thus to subject-matter knowledge, which is the ultimate origin of practical significance. Thus, you should welcome standardized statistics of effect size as additional pieces of information, but still look for the unstandardized statistics, such as mean or median values of the response variable and their differences, and be skeptical when the unstandardized statistics are not provided.
+
+[^standardized]: Papers by Nakagawa and Cuthill [-@nakagawa_effect_2007] and by Ferguson [-@ferguson_effect_2009] summarize these standardized statistics. Valid uses include comparing effect sizes when statistics are on different scales or when dealing with inherently abstract and unitless quantities such as those used by psychologists in personality tests.
+
+Finally, note that both means and medians are measures of _just_ the central tendency of the distribution of a variable. The central tendency of a variable is only one way in which the variable's distribution can differ. Therefore, the difference in means or medians is only an initial summary of effect size, not a complete comparison of how the response variable differs in different populations.[^cohen] Such complete comparison is beyond the scope of this article and is addressed elsewhere.
+
+[^cohen]: Some standardized statistics such as Cohen's _d_ incorporate information about the dispersion of the distribution of the variable, e.g., Cohen's _d_ involves division by the standard deviation, which is a measure of dispersion. However, Cohen's _d_ does not report on other properties such as skewness or kurtosis.
 
 
-#### Categorical Explanatory Variables
+#### Categorical Response and Categorical Explanatory Variable
 
-With a categorical explanatory variable, effect sizes are really summarizing the differences in the distribution of the response variable between two or more populations, one population per level of the explanatory variable.
 
-For a numerical response variable, the most common way to express such an effect size is with a difference in means.
+#### Numerical Explanatory Variable
 
-* Numerical response and categorical explanatory
-    * Difference of means
-    * Standardized difference of means (Cohen's _d_)
-* Categorical response and categorical explanatory
-    * Difference in risk
-    * Relative risk and odds ratio
-* Numerical explanatory
-    * Correlation
-* Multiple explanatory variables
-    * Regression analysis and GLMs
-    
+
+#### Multiple Explanatory Variables
+
 
 ### Confounding
 
