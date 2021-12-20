@@ -68,7 +68,7 @@ Another way to conceive of this is that _statistics should be questioned,_ alway
 
 ### Purpose of This Article
 
-The intent of this article is to assist the reader in the enterprise of questioning the statistics you encounter. It does not assume the reader has had any formal instruction in statistics, though such instruction would be valuable in understanding the concepts used throughout.
+The intent of this article is to assist the reader in the enterprise of questioning the statistics you encounter. It does not assume the reader has had any formal instruction in statistics, though such instruction would be valuable in understanding the concepts used throughout. The only prerequisite for this article is cursory mathematics knowledge at the secondary school level.
 
 This article is not a replacement for courses in statistics. However, the converse is also true. Statistics courses are rarely taught from the standpoint of what questions are relevant to ask when encountering a statistic. Rather, introductory statistics courses usually focus on giving students a bag of statistical tools to use in their research activities.[^courses]
 
@@ -418,7 +418,7 @@ When comparing between two or more populations, proportions or means are usually
 
 This is why statistics per capita are preferable to raw counts or totals for social data. For example, the statistician Thomas Lumley has a series of articles in which he expounds on the fallacy of using raw counts or totals when comparing statistics about Auckland, New Zealand, where he lives, to Wellington, New Zealand, all humorously titled something to the effect of "Auckland is larger than Wellington."
 
-In one article he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728. [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries had occurred in Auckland as in Wellington. [@lumley_newsflash_2012] These counts are misleading because the population of Auckland is about three times that of Wellington.
+In one article, he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728. [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries had occurred in Auckland as in Wellington. [@lumley_newsflash_2012] These counts are misleading because the population of Auckland is about three times that of Wellington.
 
 What are more relevant for comparison between the two places are rate of teenage drunk driving convictions and rate of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions is much lower in Auckland than in Wellington, but the rate of burglary is still slightly higher in Auckland than in Wellington.
 
@@ -463,13 +463,29 @@ Finally, note that both means and medians are measures of _just_ the central ten
 
 ##### Categorical Response Variable
 
-When the response variable is categorical instead of numerical, but the explanatory variable is still categorical, you are still essentially comparing the response variable between two or more populations. However, the response variable is now expressed in terms of proportions instead of means. Therefore, in this case, everything said in the previous section should be repeated, but with proportions instead of means and differences of proportions instead of differences of means.
+When the response variable is categorical instead of numerical, but the explanatory variable is still categorical, you are still essentially comparing the response variable between two or more populations. However, the response variable is now expressed in terms of proportions instead of means. Therefore, in this case, everything discussed in the previous section should be reiterated, but with proportions instead of means and differences of proportions instead of differences of means.
 
 However, the major change in the categorical response case is that differences of proportions are not as ubiquitous as statistics of effect size as differences of means are in the numerical response case. This section, therefore, describes some additional summary statistics.
 
 On the one hand, there is nothing wrong with using a difference in proportion to describe an effect size. For example, in September 2021, 66.67% of flights of JetBlue Flight Number 2495 from Newark to Miami were delayed more than half an hour, whereas 56.67% of flights of JetBlue Flight Number 2695, also from Newark to Miami, were delayed more than half an hour. [@noauthor_september_nodate] The effect size can be summarized as a difference of 66.67 &minus; 56.67 = 10 percentage points.
 
 However, for effect sizes such as this that compare two different rates, there are two other summary statistics that are quite common: _relative risk_ and _odds ratio._
+
+Relative risk[^risk] is defined as the ratio of two proportions. For example, when choosing between Flight 2495 and Flight 2695, you are likely curious how much less likely you are to experience a delay in September 2021 taking Flight 2695 instead of Flight 2495. This can be summarized with the relative risk of 56.67% / 66.67% = 85%.
+
+[^risk]: The use of the term "risk" in "relative risk" comes from the idea of risk of disease or other adverse outcome, because relative risk is frequently used in medical statistics.
+
+While relative risk is a useful summary statistic for effect size with a categorical response variable, when you encounter a relative risk, you should also look for the original, absolute risks, for reasons similar to why it is important, in the numerical response  variable case, to look for the individual means themselves in addition to the differences in means. Relative risk is just that, _relative,_ and can make risks that are small and risks that are large seem equivalent.
+
+For instance, if the proportion of delayed flights for Flight 2495 was only 11.11%, and for Flight 2695 only 9.44%, the relative risk of experiencing a delay on Flight 2695 instead of Flight 2495 would again be 85%. However, the absolute risk of experiencing a delay on either flight is much smaller in this case, so should probably weigh less in your decision making.
+
+The odds of an event is defined as the probability of an event occurring divided by the probability of the event not occurring. A proportion representing a risk can be expressed as an odds by dividing it by the quantity one minus itself. The odds of experiencing a delayed flight on Flight 2495 would be 66.67% / (1 &minus; 66.67%) = 2 to 1, and the odds of experience a delayed flight on Flight 2695 would be 56.67% / (1 &minus; 56.67%) = 1.31 to 1.
+
+An odds ratio is the odds of one event divided by the odds of another event. The odds ratio for for experiencing a delay on Flight 2695 compared with Flight 2495 in September 2021 is 1.31 / 2 = 0.655.
+
+This value of 0.655 might not seem very enlightening. Indeed, for moderate proportions such as 66.67% and 56.67%, an odds ratio is best interpreted only relatively to other odds ratios. The reason that odds ratios come up is that in retrospective or "case-control" studies,[^retrospective] relative risks cannot be directly calculated, but odds ratios can, and when the risks are very small (or very large), odds ratios _approximate_ relative risks. For instance, when Flight 2495 has 11.11% of its flights delayed and Flight 2695 has 9.44% of its flights delayed, the odds ratio is 0.834, which is close to the 0.85 relative risk.
+
+[^retrospective]: Retrospective or "case-control" studies select individuals for the study based on the response variable, and then look for how the explanatory variable differs between response variable levels. This is opposite of how a randomized, controlled experiment works. For instance, in a medical context, individuals in a randomized, controlled experiment are assigned to a level of the explanatory variable (e.g., therapy or control), and then are measured in terms of the response variable, such as disease outcome. In a case-control study, the disease outcome is used for selection to the study, and then explanatory variables such as risk factors are measured.
 
 
 #### Numerical Explanatory Variable
