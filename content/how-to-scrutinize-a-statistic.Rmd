@@ -429,9 +429,12 @@ Whenever you are presented with a count or total that you need to compare with a
 However, you might also encounter cases in which population size is not easily obtained information. In these cases, it is best to withhold judgment about practical significance.
 
 
-#### Numerical Response and Categorical Explanatory Variable
+#### Categorical Explanatory Variable
 
 As previously mentioned, when the explanatory variable is categorical, you are essentially comparing the response variable between two or more populations, one for each level of the explanatory variable.
+
+
+##### Numerical Response Variable
 
 With a numerical response variable, the most common way to report effect size is in terms of the means of the response variable for each such population. The effect size is summarized as the difference in these means. For example, the mean expenditure on food and beverages for off-premises consumption in Michigan in 2020 was \$3,532, whereas it was \$2,872 in Arkansas in 2020. The effect size of living in Michigan versus living in Arkansas can be summarized as the difference in means of \$3,532 &minus; \$2,872 = \$660.
 
@@ -458,7 +461,7 @@ Finally, note that both means and medians are measures of _just_ the central ten
 [^cohen]: Some standardized statistics such as Cohen's _d_ incorporate information about the dispersion of the distribution of the variable, e.g., Cohen's _d_ involves division by the standard deviation, which is a measure of dispersion. However, Cohen's _d_ does not report on other properties such as skewness or kurtosis.
 
 
-#### Categorical Response and Categorical Explanatory Variable
+##### Categorical Response Variable
 
 When the response variable is categorical instead of numerical, but the explanatory variable is still categorical, you are still essentially comparing the response variable between two or more populations. However, the response variable is now expressed in terms of proportions instead of means. Therefore, in this case, everything said in the previous section should be repeated, but with proportions instead of means and differences of proportions instead of differences of means.
 
@@ -472,24 +475,24 @@ However, for effect sizes such as this that compare two different rates, there a
 #### Numerical Explanatory Variable
 
 
-#### Multiple Explanatory Variables
+### Model-based Effect Size Estimation
 
 
-### Confounding
+#### Confounding
 
 * Washington Post fact checker and the Obama gender pay gap statistic gaffe
 
 
-### Lack of Effect Size
+#### Interactions
 
 
-## Estimation Error
+## Estimation Error and Confidence Intervals
 
 
 ## Common Flaws of Research
 
 * Statistical theater: _p_-values without inference
-* Stating _p_-value instead of effect size
+* Reporting _p_-value instead of effect size
 * Lack of adjustment for multiple comparisons and _p_-hacking
 
 
