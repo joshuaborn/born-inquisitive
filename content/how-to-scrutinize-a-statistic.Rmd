@@ -490,16 +490,24 @@ This value of 0.655 might not seem very enlightening. Indeed, for moderate propo
 
 #### Numerical Explanatory Variable
 
-
-### Model-based Effect Size Estimation
-
-
-#### Confounding
-
-* Washington Post fact checker and the Obama gender pay gap statistic gaffe
+* Unstandardized requires model-based analysis
+* Standardized uses correlation coefficients
+    * Pearson and Spearman examples for numerical response
+    * Point biserial example for categorical response
+    * Discuss assumptions
 
 
-#### Interactions
+#### Model-based Estimation
+
+* Single variable in original, unstandardized units
+* Multiple variables
+** Interactions
+** Adjustment for confounders
+
+
+### Confounding
+
+* Confounding: Washington Post fact checker and the Obama gender pay gap statistic gaffe
 
 
 ## Estimation Error and Confidence Intervals
