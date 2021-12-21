@@ -525,7 +525,10 @@ Whichever correlation coefficient you encounter, you should understand what the 
 
 #### Model-based Estimation
 
-* Single variable in original, unstandardized units
+* Single variable
+    * in original, unstandardized units, interpreting $\hat{\beta}$
+    * example data set with simple linear regression fit
+    * transformations
 * Multiple variables
     * Interactions
     * Adjustment for confounders
