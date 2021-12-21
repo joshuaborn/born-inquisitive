@@ -488,21 +488,47 @@ This value of 0.655 might not seem very enlightening. Indeed, for moderate propo
 [^retrospective]: Retrospective or "case-control" studies select individuals for the study based on the response variable, and then look for how the explanatory variable differs between response variable levels. This is opposite of how a randomized, controlled experiment works. For instance, in a medical context, individuals in a randomized, controlled experiment are assigned to a level of the explanatory variable (e.g., therapy or control), and then are measured in terms of the response variable, such as disease outcome. In a case-control study, the disease outcome is used for selection to the study, and then explanatory variables such as risk factors are measured.
 
 
-#### Numerical Explanatory Variable
+#### Correlation
 
-* Unstandardized requires model-based analysis
-* Standardized uses correlation coefficients
-    * Pearson and Spearman examples for numerical response
-    * Point biserial example for categorical response
-    * Discuss assumptions
+When the explanatory variable is numerical instead of categorical, effect size can again be presented in either unstandardized form or standardized form. Again, unstandardized statistics of effect size are preferable because they can more easily be related to subject-matter knowledge. However, with numerical explanatory variables, the most direct way to summarize an effect size using an unstandardized statistic involves model-based analysis, which is a more involved topic described in the next section.
+
+This section describes standardized statistics of effect size for numerical explanatory variables. These are typically a correlation coefficient. There are too many kinds of correlation coefficients to summarize them exhaustively here, but there is one family of correlation coefficient that are used very commonly and summarized in this section.
+
+This family includes the Pearson product-moment correlation coefficient, the Spearman rank correlation coefficient, and related statistics such as the point-biserial correlation coefficient. These correlation coefficients are so common that if a value of _r_ or _&rho;_ is presented as a correlation statistic without any other qualification, it is likely that one of these correlation coefficients has been used.[^greek]
+
+[^greek]: The character _"&rho;"_ is the Greek letter rho. Sometimes a convention is used where _r_ refers to the Pearson product-moment correlation coefficient and _&rho;_ is used for the Spearman rank correlation coefficient. However, you should not rely on this convention, because there exists another convention in which Roman letters, such as _r,_ are used for statistics pertaining to a sample and Greek letters, such as _&rho;,_ are used for parameters pertaining to a population.
+
+These correlation coefficients range from a value of -1 to a value of 1. A value of 1 represents an exact correlation, a value of 0 represents no correlation, and a value of -1 represents an exact inverse correlation.
+
+```{r, eval=FALSE, include=FALSE}
+iris
+cor(iris$Sepal.Length, iris$Sepal.Width)
+cor(iris$Petal.Length, iris$Petal.Width)
+```
+
+The Pearson product-moment correlation coefficient measures the linear association of two numerical variables. For instance, a famous data set in statistics contains lengths and widths of petals taken from three species of iris flowers. Petals that are longer also tend to be wider, and vice versa, such that the Pearson correlation coefficient for petal length and petal width in this data set is _r_ = 0.96, which is close to 1 and thus a strong correlation.
+
+If every petal in the sample were the same exact shape, but only scaled up or scaled down without changing relative proportions of length and width, then the Pearson coefficient would be _r_ = 1.  Similarly, values of the Pearson correlation coefficient close to -1 indicate that the larger one variable gets, the more likely the other variable is to be smaller. A Pearson correlation coefficient close to 0 indicates that there is no linear association between two variables.
+
+One of the major shortcomings of the Pearson product-moment correlation coefficient is that it only reflects _linear_ correlation between two variables. A second major shortcoming is that the Pearson correlation coefficient is not robust against outliers, such that even if there is a strong correlation among the majority of the observations, if there are just a relatively few observations that are outside this trend, then the Pearson correlation coefficient will be disproportionately closer to 0.
+
+The Spearman rank correlation coefficient addresses these shortcomings by first converting values to their ranks and then performing a similar calculation to the Pearson correlation coefficient.[^ordinal] It is also interpreted on the same scale of -1 to 0 to 1. However, the Spearman rank correlation coefficient only captures monotonic relationships.
+
+In a monotonic association, one variable always increases or always decreases as the other variable increases over the entirety of the variables' ranges. If a correlation involves a variable increasing as the other variable increases over part of the other variable's range, but decreasing as the other variable increases over another part, the Spearman correlation coefficient will be closer to 0.
+
+[^ordinal]: Because the Spearman correlation coefficient uses ranks, it is also more appropriate for ordinal variables. Ordinal variables are those that have discrete levels, but also have some sense of order, such as _small, medium,_ and _large._
+
+In cases in which the response variable is categorical and the explanatory variable is numerical, there are versions of correlation coefficients similar to the Pearson product-moment correlation coefficient. For instance, the point-biserial correlation coefficient can be used when a response variable has two possible levels and the explanatory variable is numerical. It is also interpreted on the same -1 to 0 to 1 scale.
+
+Whichever correlation coefficient you encounter, you should understand what the correlation coefficient does and does not reflect and what the scale used for its values indicates.
 
 
 #### Model-based Estimation
 
 * Single variable in original, unstandardized units
 * Multiple variables
-** Interactions
-** Adjustment for confounders
+    * Interactions
+    * Adjustment for confounders
 
 
 ### Confounding
