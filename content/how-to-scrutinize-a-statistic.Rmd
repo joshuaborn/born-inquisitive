@@ -24,7 +24,7 @@ include-before: |
 
 ## Introduction
 
-There is a cautionary saying that warns to be wary of those who use statistics like a drunkard uses a lamppost &ndash; for support rather than for illumination.[^saying]
+There is a cautionary saying to the effect of, "be wary of those who use statistics like a drunkard uses a lamppost &ndash; for support rather than for illumination."[^saying]
 
 [^saying]: This saying was popularized in 1937, when it was commonly attributed to Scottish folklorist Andrew Lang. Andrew Lang died in 1912 and may or may not have originated it, as it does not appear in any of his extant writings. Regardless of the origin of this specific version of the saying, it was likely inspired by similar figures of speech which came before it. See [this article](https://quoteinvestigator.com/2014/01/15/stats-drunk/) at the Quote Investigator blog for more information about the origin of the saying.
 
@@ -57,13 +57,13 @@ from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3087585).
 ](/images/stressed-student.jpg)
 
-Third, interpreting and scrutinizing statistics requires knowledge and skills that many laypeople do not possess. Indeed, those who have had education in statistics are sometimes prone to mistakes in using and interpreting statistical methods. Thus, misuses of statistics can go unnoticed, by the general public or by academic peer review. Indeed, as shall be seen, some misuses of statistics can actually become entrenched in academic practice.
+Third, interpreting and scrutinizing statistics requires knowledge and skills that many laypeople do not possess. Indeed, those who have had education in statistics are sometimes prone to mistakes in using and interpreting statistical methods. Thus, misuses of statistics can go unnoticed, by the general public or by academic peer review. Indeed, as this article discusses, some misuses of statistics can actually become entrenched in academic practice.
 
 This situation might seem so discouraging that you might be inclined to throw out the use of statistics altogether. However, this would be a rash mistake. Those who care about any social issues, medical issues, environmental issues, etc, are necessarily concerned about understanding phenomena that occur in large populations of individuals. Therefore, if you care about such issues, you are necessarily engaged in a statistical inquiry, whether you realize this or not.
 
 The solution for those who care about such issues, therefore, is to be competent at scrutinizing statistics. The alternative is to be preyed upon by charlatans or, perhaps worse, to become a charlatan yourself.
 
-Another way to conceive of this is that _statistics should be questioned,_ always, by every person who encounters them and who must make a decision on whether or not to believe what is being reported.
+Another way to conceive of this is that _statistics should be questioned,_ by every person who encounters them and must make a decision on whether or not to believe what is being reported.
 
 
 ### Purpose of This Article
@@ -154,7 +154,7 @@ This highlights yet another fallacy that is sometimes used by those who use stat
 
 For one, citing multiple supposed sources is easily accomplished by citing every step in a chain of references to a single origin as if they were a separate source. If they all ultimately lead to the same origin, then there is no point in this multiplicity of citations, and using multiple citations like this is deceptive.
 
-Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is an indication that the sources are being misrepresented. It is unlikely that several studies would arrive at the exact same statistic, which is discussed further in the sections on scope of inference, effect size, and estimation error. Thus, when multiple original sources are cited for the same statistic, it is likely results are being treated as if they were equivalent when they are not.
+Secondly, for multiple citations that lead to different origins, representing them as if they have the same conclusion is an indication that the sources are being misrepresented. It is unlikely that several studies would arrive at the exact same statistic, due to things such as scope of inference, effect size, and estimation error. Thus, when multiple original sources are cited for the same statistic, it is likely results are being treated as if they were equivalent when they are not.
 
 
 ### Primary versus Secondary Sources
@@ -235,7 +235,7 @@ Sometimes, upon discovering the origin of a statistic, you will find that the sa
 
 One kind of unrepresentative samples are self-selected samples, such as those composed of volunteers. In these cases, the individuals in the sample were not selected by the researchers with some known probability from a larger population. Instead, the individuals in the sample selected themselves to be included in the sample.
 
-For instance, many behavioral and social science experiments are conducted with some number of volunteers taken from the undergraduate student body of the researcher's university. In these cases, results do not generalize even to the student body of the university, let alone to populations outside of the university.
+For instance, many behavioral and social science experiments are conducted with some number of volunteers taken from the student body of the researcher's university. In these cases, results do not generalize even to the student body of the university, let alone to populations outside of the university.
 
 To see why, suppose that a study wanted to determine the average income of students at some university, but used a self-selected sample like those used in many social and behavioral science experiments. The students who volunteer for this self-selected sample differ from the general student body in a couple ways. The volunteers have enough time to devote some of their time to participating in a study, but students who work a part-time job and thus have more income also have less time, so might be less likely to volunteer. Furthermore, some of the volunteers might be attracted by the small payment given to those who participate in such a study, but students who work a part-time job might be less enticed by this payment since they already have income.
 
@@ -259,7 +259,7 @@ If a statistic is intended to describe the effect caused by a specific intervent
 
 #### Controls
 
-A _control_ in the context of an experiment is important to determine the effect of the intervention. For example, suppose a group of volunteers suffering from a disease are given a potential new therapy, and afterward variables pertaining to the effects of the disease are measured. Even if some volunteers improved after the therapy, it would not be clear what the effects of the therapy were. Indeed, for many diseases, some proportion of the population suffering from the illness will get better of their own accord over time.
+A _control_ in the context of an experiment is important to determine the effect of the intervention. For example, suppose a group of volunteers suffering from a disease are given a potential new therapy, and afterward variables pertaining to the effects of the disease are measured. Even if some volunteers improved after the therapy, it would not be clear what the effects of the therapy were because, for many diseases, some proportion of the population suffering from the illness will get better of their own accord over time.
 
 Experiments, therefore, are expected to include a _control group_ that includes individuals given something else other than the intervention of interest. For a disease without a treatment currently, the control group in a clinical trial might be given a placebo, such as an empty capsule, that is known to have no effect on the disease. In other trials for diseases that have existing therapies, the control group will often be given the current best therapy. The intent in these cases is to determine whether or not the new therapy performs better than current best practices.
 
@@ -353,6 +353,8 @@ Whether a statistic is practically significant is less a matter of statistical t
 
 For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would, without medical intervention, have levels of daily blood glucose higher than what is typical. However, medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. [@diabetes_effect_1993] This new drug you are developing could therefore be of some use.
 
+_**Put image of diabetes patient here.**_
+
 However, if you discover the drug decreases daily mean blood glucose by only 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because prior research observed long-term health benefits occurred when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl.
 
 Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
@@ -377,7 +379,9 @@ Such assertions are almost worse than no information at all because they create 
 
 This is the practice of _generic comparisons._ Generic comparisons assert that there is a difference in some variable between two populations, but do not quantify how much of a difference there is.
 
-Generic comparisons can be used deceptively. You could, for instance, assert that patients given the prospective insulin-alternative drug discussed in the earlier example have a _lower_ mean daily mean blood glucose than control group patients, and leave it at that. However, you know very well that the actual difference in mean blood glucose caused by the drug is not practically significant for IDDM patients. By withholding quantification from the comparison between patients given the drug and patients in the control group, you can pretend there is practical significance.
+Generic comparisons are not informative because it is extremely rare for a variable to be identically distributed in two different populations. Therefore, one population almost always has "more" of something than another.
+
+Generic comparisons can be used deceptively. You could, for instance, assert that patients given the prospective insulin-alternative drug discussed in the earlier example have a "lower" mean daily mean blood glucose than control group patients, and leave it at that. However, you know very well that the actual difference in mean blood glucose caused by the drug is not practically significant for IDDM patients. By withholding quantification from the comparison between patients given the drug and patients in the control group, you can pretend there is practical significance.
 
 Therefore, whenever you encounter an assertion that there is "more" or "less" of something in one population than in another &ndash; or that levels are "higher" or "lower," "bigger" or "smaller," "greater" or "lesser," etc &ndash; the very next question that you should demand is _"How much more?"_ or  _"How much less?"_
 
@@ -386,7 +390,7 @@ Therefore, whenever you encounter an assertion that there is "more" or "less" of
 
 A quick answer to such questions as _"How much more?"_ has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is that of a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, remember that in purely observational studies, only an association, not causation, can be inferred.
 
-The various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. However, even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid first impression by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what are the different types of variables you encounter.
+The various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. However, even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid first impression by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what the different types of variables you are.
 
 
 #### Types of Variables
@@ -397,11 +401,13 @@ In statistical analysis, a variable of interest is often called a "response vari
 
 For instance, in the insulin-alternative drug example, a clinical trial for the new drug would have the response variable of a patient's mean daily blood glucose level. The explanatory variable in this case would be whether or not a patient is given the new drug.
 
-Both response and explanatory variables can come in different types. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels such as _small, medium,_ or _large,_ whereas numerical variables are the sort in which observations consist of assignment to a value on the number line, such as 1.7, 42.4, or 1,852.
+Both response and explanatory variables can come in different types. Broadly, there are two types of variables that you might encounter: categorical variables and numerical variables.[^variables] Categorical variables are the sort in which observations consist of assignment to one of a number of discrete levels, whereas numerical variables are the sort in which observations consist of assignment to a value on the number line.
 
 [^variables]: Even within these two broad types of variables, there are more subtypes, but for the purposes of this article, only these two types are used. Also, it should noted that in the math underlying statistical theory, categorical variables are often taken as just a more limited case of numerical variables, and the proofs and derivations for numerical variables reused for categorical variables. However, the way the two kinds of variables are thought about and handled in applied statistical analysis can be quite different.
 
 Whether a response variable is categorical or numerical is a separate question from whether an explanatory variable is categorical or numerical. In the insulin-alternative drug example, the response variable is a numerical variable because numbers in the hundreds of mg/dl are used. However, the explanatory variable is a categorical variable with just two levels: _given the drug_ or _not given the drug._
+
+**_Replace this contrived example of counts and proportions, totals and means with real life examples._**
 
 Categorical variables are typically summarized using either counts or proportions. For instance, using raw counts, a warehouse might have 325 small sized garments, 450 medium sized garments, and 375 large sized garments. Using proportions, about 28.3\% of the clothes at the warehouse are size small, 39.1\% are size medium, and 32.6\% are size large.
 
@@ -420,7 +426,9 @@ This is why statistics per capita are preferable to raw counts or totals for soc
 
 In one article, he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728. [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries had occurred in Auckland as in Wellington. [@lumley_newsflash_2012] These counts are misleading because the population of Auckland is about three times that of Wellington.
 
-What are more relevant for comparison between the two places are rate of teenage drunk driving convictions and rate of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions is much lower in Auckland than in Wellington, but the rate of burglary is still slightly higher in Auckland than in Wellington.
+_**Put images of Auckland and Wellington side-by-side here.**_
+
+What are more relevant for comparison between the two places are rate of teenage drunk driving convictions and rate of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions was much lower in Auckland than in Wellington, but the rate of burglary was still slightly higher in Auckland than in Wellington.
 
 [^rate]: Rate can be thought of as a proportion with the number of people experiencing an event in the numerator and the number of people in the population as the denominator.
 
@@ -440,6 +448,8 @@ With a numerical response variable, the most common way to report effect size is
 
 In these cases, you should search for both the mean response variable values reported individually and for the differences in means.
 
+_**Replace this example with a real-world data example.**_
+
 It is good to know the mean values themselves and not just the difference in means because the mean values can shed light on the relative magnitude of the difference. If the difference in mean values of weight between males and females of some species of animal is 2 pounds, the practical significance of this difference is not the same when the mean male weight is 48 pounds and mean female weight 41 pounds versus when the mean male weight is 589 pounds and mean female weight 413 pounds.
 
 Furthermore, quality statistical analysis reports the difference in means separately from the individual mean values because estimation error should be calculated differently for the difference in the means than for the means themselves.
@@ -456,7 +466,7 @@ Standardized statistics for effect size have their uses.[^standardized] However,
 
 [^standardized]: Papers by Nakagawa and Cuthill [-@nakagawa_effect_2007] and by Ferguson [-@ferguson_effect_2009] summarize these standardized statistics. Valid uses include comparing effect sizes when statistics are on different scales or when dealing with inherently abstract and unitless quantities such as those used by psychologists in personality tests.
 
-Finally, note that both means and medians are measures of _just_ the central tendency of the distribution of a variable. The central tendency of a variable is only one way in which the variable's distribution can differ. Therefore, the difference in means or medians is only an initial summary of effect size, not a complete comparison of how the response variable differs in different populations.[^cohen] Such complete comparison is beyond the scope of this article and is addressed elsewhere.
+Finally, note that both means and medians are measures of _just_ the central tendency of the distribution of a variable. The central tendency of a variable is only one way in which the variable's distribution can differ. Therefore, the difference in means or medians is only an initial summary of effect size, not a complete comparison of how the response variable differs in different populations.[^cohen]
 
 [^cohen]: Some standardized statistics such as Cohen's _d_ incorporate information about the dispersion of the distribution of the variable, e.g., Cohen's _d_ involves division by the standard deviation, which is a measure of dispersion. However, Cohen's _d_ does not report on other properties such as skewness or kurtosis.
 
@@ -468,6 +478,8 @@ When the response variable is categorical instead of numerical, but the explanat
 However, the major change in the categorical response case is that differences of proportions are not as ubiquitous as statistics of effect size as differences of means are in the numerical response case. This section, therefore, describes some additional summary statistics.
 
 On the one hand, there is nothing wrong with using a difference in proportion to describe an effect size. For example, in September 2021, 66.67% of flights of JetBlue Flight Number 2495 from Newark to Miami were delayed more than half an hour, whereas 56.67% of flights of JetBlue Flight Number 2695, also from Newark to Miami, were delayed more than half an hour. [@noauthor_september_nodate] The effect size can be summarized as a difference of 66.67 &minus; 56.67 = 10 percentage points.
+
+**_Put image of airliner here._**
 
 However, for effect sizes such as this that compare two different rates, there are two other summary statistics that are quite common: _relative risk_ and _odds ratio._
 
@@ -481,16 +493,16 @@ For instance, if the proportion of delayed flights for Flight 2495 was only 11.1
 
 The odds of an event is defined as the probability of an event occurring divided by the probability of the event not occurring. A proportion representing a risk can be expressed as an odds by dividing it by the quantity one minus itself. The odds of experiencing a delayed flight on Flight 2495 would be 66.67% / (1 &minus; 66.67%) = 2 to 1, and the odds of experience a delayed flight on Flight 2695 would be 56.67% / (1 &minus; 56.67%) = 1.31 to 1.
 
-An odds ratio is the odds of one event divided by the odds of another event. The odds ratio for for experiencing a delay on Flight 2695 compared with Flight 2495 in September 2021 is 1.31 / 2 = 0.655.
+An odds ratio is the odds of one event divided by the odds of another event. The odds ratio for experiencing a delay on Flight 2695 compared with Flight 2495 in September 2021 is 1.31 / 2 = 0.655.
 
-This value of 0.655 might not seem very enlightening. Indeed, for moderate proportions such as 66.67% and 56.67%, an odds ratio is best interpreted only relatively to other odds ratios. The reason that odds ratios come up is that in retrospective or "case-control" studies,[^retrospective] relative risks cannot be directly calculated, but odds ratios can, and when the risks are very small (or very large), odds ratios _approximate_ relative risks. For instance, when Flight 2495 has 11.11% of its flights delayed and Flight 2695 has 9.44% of its flights delayed, the odds ratio is 0.834, which is close to the 0.85 relative risk.
+This value of 0.655 might not seem very enlightening. Indeed, for moderate proportions such as 66.67% and 56.67%, an odds ratio is best interpreted only relatively to other odds ratios. The main reason you encounter odds ratios is that in retrospective or "case-control" studies,[^retrospective] relative risks cannot be directly calculated, but odds ratios can, and when the risks are very small (or very large), odds ratios _approximate_ relative risks. For instance, when Flight 2495 has 11.11% of its flights delayed and Flight 2695 has 9.44% of its flights delayed, the odds ratio is 0.834, which is close to the 0.85 relative risk.
 
 [^retrospective]: Retrospective or "case-control" studies select individuals for the study based on the response variable, and then look for how the explanatory variable differs between response variable levels. This is opposite of how a randomized, controlled experiment works. For instance, in a medical context, individuals in a randomized, controlled experiment are assigned to a level of the explanatory variable (e.g., therapy or control), and then are measured in terms of the response variable, such as disease outcome. In a case-control study, the disease outcome is used for selection to the study, and then explanatory variables such as risk factors are measured.
 
 
 #### Correlation
 
-When the explanatory variable is numerical instead of categorical, effect size can again be presented in either unstandardized form or standardized form. Again, unstandardized statistics of effect size are preferable because they can more easily be related to subject-matter knowledge. However, with numerical explanatory variables, the most direct way to summarize an effect size using an unstandardized statistic involves model-based analysis, which is a more involved topic described in the next section.
+When the explanatory variable is numerical instead of categorical, effect size can again be presented in either unstandardized form or standardized form. Unstandardized statistics of effect size are again preferable because they can more easily be related to subject-matter knowledge. However, with numerical explanatory variables, the most direct way to summarize an effect size using an unstandardized statistic involves model-based analysis, which is a more involved topic that is discussed in the next section.
 
 This section describes standardized statistics of effect size for numerical explanatory variables. These are typically a correlation coefficient. There are too many kinds of correlation coefficients to summarize them exhaustively here, but there is one family of correlation coefficient that are used very commonly and summarized in this section.
 
@@ -500,15 +512,20 @@ This family includes the Pearson product-moment correlation coefficient, the Spe
 
 These correlation coefficients range from a value of -1 to a value of 1. A value of 1 represents an exact correlation, a value of 0 represents no correlation, and a value of -1 represents an exact inverse correlation.
 
+
 ```{r, eval=FALSE, include=FALSE}
 iris
 cor(iris$Sepal.Length, iris$Sepal.Width)
 cor(iris$Petal.Length, iris$Petal.Width)
 ```
 
+_**Find alternative to iris data set.**_
+
 The Pearson product-moment correlation coefficient measures the linear association of two numerical variables. For instance, a famous data set in statistics contains lengths and widths of petals taken from three species of iris flowers. Petals that are longer also tend to be wider, and vice versa, such that the Pearson correlation coefficient for petal length and petal width in this data set is _r_ = 0.96, which is close to 1 and thus a strong correlation.
 
 If every petal in the sample were the same exact shape, but only scaled up or scaled down without changing relative proportions of length and width, then the Pearson coefficient would be _r_ = 1.  Similarly, values of the Pearson correlation coefficient close to -1 indicate that the larger one variable gets, the more likely the other variable is to be smaller. A Pearson correlation coefficient close to 0 indicates that there is no linear association between two variables.
+
+_**Insert scatterplots of correlation coefficents here.**_
 
 One of the major shortcomings of the Pearson product-moment correlation coefficient is that it only reflects _linear_ correlation between two variables. A second major shortcoming is that the Pearson correlation coefficient is not robust against outliers, such that even if there is a strong correlation among the majority of the observations, if there are just a relatively few observations that are outside this trend, then the Pearson correlation coefficient will be disproportionately closer to 0.
 
@@ -527,7 +544,7 @@ Whichever correlation coefficient you encounter, you should understand what the 
 
 Sometimes you will encounter estimates of effect size that come from the fitting of a statistical model to the observations. As mentioned in the previous section, this is the most direct way to present an unstandardized estimate of effect size when dealing with a numerical explanatory variable. Commonly, model-based statistics for estimation of effect size are derived from techniques such as analysis of variance (ANOVA), regression analysis, or generalized linear models.
 
-Unfortunately, interpreting these models is far too weighty a topic to quickly summarize here. Indeed, the majority of the content of applied statistics courses at the university level is learning how to deploy and interpret these models. Therefore, this section only discusses a very elementary example and mentions several ways in which interpretation can become more complicated.
+Unfortunately, interpreting these models is too involved a topic to quickly summarize here. Indeed, the majority of the content of applied statistics courses at the university level is learning how to deploy and interpret these models. Therefore, this section only discusses a very elementary example and mentions several ways in which interpretation can become more complicated.
 
 A very elementary example involves a numerical response variable analyzed in terms of a numerical explanatory variable. For this, a simple linear regression model can be used. This model consists of the relationship _&#375;_ = _&beta;<sub>1</sub>x_ + _&beta;<sub>0</sub>_, where _y_ is the response variable, _x_ is the explanatory variable, and _&beta;<sub>1</sub>_ and _&beta;<sub>0</sub>_ are parameters of the model. The mark above the _"y"_ in _"&#375;"_ indicates that the value calculated via this model is an estimate and is not expected to be exactly the observed value.
 
@@ -551,14 +568,6 @@ Hitherto, all of the discussion of the estimation of effect size has focused on 
 ### Confounding
 
 * Confounding: Washington Post fact checker and the Obama gender pay gap statistic gaffe
-
-_**Going forward, just mark places that need example data and move on to complete the draft.**_
-
-_**Go back and rewrite to use second-person more and passive voice less.**_
-
-_**Go back and replace any contrived examples with real world statistics.**_
-
-_**Add more images.**_
 
 
 ## Estimation Error and Confidence Intervals
