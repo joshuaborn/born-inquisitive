@@ -565,9 +565,27 @@ Thus, discussion of all of the different kinds of interpretation and verificatio
 Hitherto, all of the discussion of the estimation of effect size has focused on cases in which the analysis uses only one explanatory variable. The real power of model-based analysis is the ability to incorporate multiple explanatory variables into the analysis. This allows for the model to handle _interactions,_ in which the effect of one explanatory variable changes depending on another explanatory variable, and to adjust the estimated effect of an explanatory variable for other _confounding variables_. This latter issue is so important for scrutinizing practical significance that it is the focus of the following section.
 
 
-### Confounding
+#### Confounding Variables
 
-* Confounding: Washington Post fact checker and the Obama gender pay gap statistic gaffe
+You saw earlier that randomized, controlled experiments use randomization of assignment between intervention and control groups in order to equalize the effects of confounding variables. However, observational studies do not have this guarantee of handling the effects of confounding variables with the experimental design itself, and so must deal with confounding variables in their analysis.
+
+Indeed, in any observational study, the effect of any single explanatory variable on the response variable is likely to be heavily confounded. Therefore, when scrutinizing any statistic derived from an observational study purported to summarize an effect size, you should check if any potential confounding variables have been adjusted for. If not, the statistic may not summarize much of anything.
+
+For instance, Glenn Kessler of the "Fact Checker" column of the Washington Post once correctly criticized the practice of then President of the United States Barack Obama repeatedly stating that women in the United States make 77 cents for every dollar that men in the United States between 2013 and 2014. [@kessler_president_2014] The statistic was calculated by the U.S. Census Bureau and is technically correct. However, President Obama repeatedly cited this statistic while discussing issues in gender-based prejudice in wages.
+
+Gender-based prejudice in wages is a serious issue, but the 77-cents-for-every-dollar statistic was derived simply by taking the median annual income for women in the United States and dividing it by the median annual income for men in the United States. Thus, it compares those just beginning their careers with those who are multiple decades into a career, it compares those working in petroleum engineering careers with those working in early childhood education careers, etc.
+
+**_Insert image of President Obama during either the 2013 or 2014 State of the Union addresses._**
+
+Thus, even at just first blush, there are two potentially confounding variables: how far along people are in their careers and what type of job they work. In short, the use of this statistic as a summary of effect size of gender differences &ndash; let alone gender discrimination &ndash; in wages is so heavily confounded as to be entirely uninformative. Using this statistic as a metric by which to measure progress in eliminating gender discrimination in wages would be entirely misguided.
+
+While this sort of rough, back-of-the-envelope statistic might be used in the initial, exploratory work at the beginning of analysis, the fact it made it to some of the highest offices of government is disappointing. Perhaps more disappointing was the attitude of Betsey Stevenson, a member of the White House Council of Economic Advisers, who said, "There are a lot of things that go into that 77-cents figure, there are a lot of things that contribute and no one’s trying to say that it’s all about discrimination, but I don’t think there’s a better figure." [@kessler_president_2014]
+
+A better figure would be any of the statistics reported in quality social science research by scholars who study these issues, and any such analyses of quality would at least adjust for the most obvious confounding variables. Thus, by scrutinizing statistics for confounding variables, you can already surpass presidential levels of standards in statistical scrutiny.
+
+Generally, any sound observational study should have at least adjusted for the confounding variables that you can think of as you read about the subject of the study. If you identify a potentially confounding variable that was not adjusted for in the observational study, then you have identified a major flaw with any statistic derived from the study.
+
+However, it is impossible to ensure that an analysis has adjusted for every potentially confounding variable. There is always the possibility of a confounding variable no one has thought of. This is the major limitation of observational studies and the major appeal of randomized, controlled trials. Therefore, the prospect of confounding should always be kept in mind when scrutinizing observational studies.
 
 
 ## Estimation Error and Confidence Intervals
