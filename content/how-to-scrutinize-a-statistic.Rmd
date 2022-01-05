@@ -604,11 +604,57 @@ The way in which an effect size is summarized depends on the type of variables b
 
 ## Estimation Error and Confidence Intervals
 
+Usually, the statistics you encounter are actually _estimates_ of some quantity that is not known exactly. This occurs whenever analysis involves statistical _inference_.
+
+Recall the two major kinds of inference from the section on scope of inference. If a statistic comes from sampling of a larger population, the statistic derived from observations of the sample _estimates_ something about the population. If a statistic comes from a randomized, controlled experiment, the statistic derived from observations in the experiment _estimates_ the true effect of the intervention.
+
+In both kinds of inference, randomization is used. This randomization introduces error into the estimates. Depending on exactly which individuals are selected for the sample, the statistics calculated from observations of the sample will be slightly different. Depending on exactly which individuals are assigned to intervention or control groups, the statistics calculated from observations in an experiment will be slightly different.
+
+Thus, the randomization used to generalize results to a larger population introduces sampling error, and the randomization used to identify causal results in an experiment introduces error resulting from experimental assignment. Collectively, this article refers to both these kinds of error as "estimation error."
+
+Estimation error does not make a statistic invalid, because estimation error can be quantified and kept to within acceptable tolerances. However, this does mean whenever you are scrutinizing a statistic that involves inference, you should look for and demand quantification of the estimation error. The reason for this is that it is possible that estimation error is so great that the conclusion suggested by the statistic is actually untrue`.
+
+The customary way to describe a quantification of estimation error is with a confidence interval.[^credible] A confidence interval has a level between 0 and 1, such as 95\%, which has become common level for confidence intervals. A 95\% confidence interval makes the claim that if a randomized sampling or a randomized experimental assignment were repeated many times and a confidence interval calculated from each of these repetitions, that 95\% of these confidence intervals would contain the true value being estimated.
+
+[^credible]: Confidence intervals are based on frequentist statistics. In a Bayesian statistics setting, credible intervals are used. Credible intervals have an even simpler interpretation: a 95\% credible interval claims that the true value has a 95\% probability of falling within the interval. However, this simpler interpretation is a result of different definitions of "probability." In Bayesian statistics, probability is a measure of subjective weight given to a belief, like when someone says, "I am fifty-fifty on whether that is true or not." In frequentist statistics, probability is a measure of how often an event occurs in the long run, like when someone says, "The odds are 2 to 1 that Flight 2495 is delayed."
+
+    First courses in statistics are usually based on a frequentist interpretation. Bayesian interpretation of probability can open the door to methods that do not work with the frequentist interpretation, most notably conjugate updating and hierarchical models. While credible intervals are easier to interpret for the layperson, Bayesian methods should not be used just so that credible intervals instead of confidence intervals can be used. Instead, Bayesian methods should be used when the problem makes sense for a Bayesian interpretation, for example, when there is revision of a belief informed by prior results based on new evidence.
+
+**_Insert real world examples of statistically significant and statistically insignificant confidence interval here._**
+
+Thus, confidence intervals give an indication of the estimation error associated with a statistic in terms of the quantity being estimated.
+
+A fallacy in interpreting confidence intervals is that they describe the dispersion of a response variable in some way. The dispersion of a variable is how spread out the values the variable are over all the individuals being considered. Dispersion is usually described by the standard deviation or variance of a variable. Confidence intervals say _nothing_ about the standard deviation or variance of the response variable, unless they are specifically confidence intervals for the standard deviation or variance. Confidence intervals describe the estimation error that comes with the estimate only. For instance, in the above example, ...
+
+
+### Statistical Significance
+
+Confidence intervals are particularly useful when evaluating whether an effect size is _statistically significant._ This is a separate question from whether an effect size is practically significant. To see what statistical significance means in this context, consider a case in which a confidence interval for the difference in two mean values contains 0 or a case in which a confidence interval for a relative risk contains 1.
+
+If a confidence interval for a difference in means contains 0, then it is within the realm of probability that there is no actual difference in means, and any supposed difference is due to estimation error. Similarly, if a confidence interval for a relative risk contains 1, then it is within the realm of probability that the two risks are identical, and any alleged difference is due to estimation error. These are statistically _insignificant_ results.
+
+Statistically significant results are just the opposite. When a confidence interval for the difference in means does not contain 0 or a confidence interval for a relative risk does not contain 1, then it is improbable that the entirety of the effect size is due to estimation error. These are statistically _significant_ results.
+
+For instance, in the above examples...
+
+Note that statistical significant is a relatively weak claim. When dealing with effect sizes, it is merely the claim that the true effect size is not is not a null value, to use statistical jargon. Statistical significance attributes at least some of an effect size to something other than estimation error. Practical significance is discussed first and in more detail in this article deliberately, because _confusing statistical significance with practical significance is a fallacy._
+
+To avoid this fallacy, remember that _statistical significance does not imply practical significance._ However, the converse &ndash; practical significance implies statistical significance &ndash; is true. There cannot be practical significance when there is not statistical significance. This is because an effect size of nothing, no matter the subject-matter context, is always practically insignificant, and is a good possibility with statistically insignificant results.
+
+Fortunately, you can evaluate both statistical and practical significance simultaneously when confidence intervals are provided. A rule of thumb you can use is to accomplish this is to evaluate the practical significance of a statistic by using the least favorable extreme of the confidence interval to whatever working hypothesis you are considering.
+
+In cases in which an effect size is practically insignificant, the least favorable extreme of the confidence interval for the effect size will be outside of your threshold of practical significance. For instance, ...
+
+For statistically insignificant results, a confidence interval for an effect size leads to ambiguous interpretations. For instance, if the difference in means between two populations is statistically insignificant, then the confidence interval for this difference will have a negative value at one end at a positive value at the other. In the earlier example, ...
+
+
+### Summary
+
 
 ## Common Flaws of Research
 
-* Statistical theater: _p_-values without inference
 * Reporting _p_-value instead of effect size
+* Statistical theater: _p_-values without inference
 * Lack of adjustment for multiple comparisons and _p_-hacking
 
 
