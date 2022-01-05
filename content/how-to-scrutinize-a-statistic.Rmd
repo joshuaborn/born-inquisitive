@@ -2,7 +2,7 @@
 draft: true
 title: "How to Scrutinize a Statistic"
 date: 2021-12-01
-tags: ["reasoning about evidence"]
+tags: ["reasoning about evidence", "statistics", "second-person"]
 bibliography: "../bibliographies/how-to-scrutinize-a-statistic.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
@@ -304,7 +304,7 @@ There is no single recipe for causal inference from observational studies, but w
 
 ### Summary
 
-Randomization in sampling and randomization in experimental assignment might seem very similar. They are both practices that use randomization to address issues that stem from confounding variables. However, they are necessary for two different kinds of inference, and the consequences of these two kinds of randomization are independent of each other.[^randomization] Thus, a study might have randomized sampling, randomized assignment, both, or neither. The ramifications for a study are sometimes summarized in a table such as Table 1.
+Scrutinizing the scope of inference of a statistic involves two kinds of randomization. Randomization in sampling and randomization in experimental assignment might seem very similar. They are both practices that use randomization to address issues that stem from confounding variables. However, they are necessary for two different kinds of inference, and the consequences of these two kinds of randomization are independent of each other.[^randomization] Thus, a study might have randomized sampling, randomized assignment, both, or neither. The ramifications for a study are sometimes summarized in a table such as Table 1.
 
 [^randomization]: A point of confusion can arise because randomized experiments are often analyzed using the same mathematical tools as observational studies. Classical statistical inference was developed using the mathematical model of a population and a sample from the population. Rather than reinvent all of the statistical tools developed over the years, analysis of randomized, controlled experiments sometimes simply _invokes_ a population model and reuses the same tools. While this practice is common, inference for randomized, controlled experiments does not necessarily have to be done this way. Rosenberger and Lachin [-@rosenberger_randomization_2015] summarize inference based on the randomization used for assignment in an experiment, instead of invoking a population model.
 
@@ -500,7 +500,7 @@ This value of 0.655 might not seem very enlightening. Indeed, for moderate propo
 [^retrospective]: Retrospective or "case-control" studies select individuals for the study based on the response variable, and then look for how the explanatory variable differs between response variable levels. This is opposite of how a randomized, controlled experiment works. For instance, in a medical context, individuals in a randomized, controlled experiment are assigned to a level of the explanatory variable (e.g., therapy or control), and then are measured in terms of the response variable, such as disease outcome. In a case-control study, the disease outcome is used for selection to the study, and then explanatory variables such as risk factors are measured.
 
 
-#### Correlation
+#### Correlation Coefficients
 
 When the explanatory variable is numerical instead of categorical, effect size can again be presented in either unstandardized form or standardized form. Unstandardized statistics of effect size are again preferable because they can more easily be related to subject-matter knowledge. However, with numerical explanatory variables, the most direct way to summarize an effect size using an unstandardized statistic involves model-based analysis, which is a more involved topic that is discussed in the next section.
 
@@ -540,7 +540,7 @@ In cases in which the response variable is categorical and the explanatory varia
 Whichever correlation coefficient you encounter, you should understand what the correlation coefficient does and does not reflect and what the scale used for its values indicates.
 
 
-#### Model-based Estimation
+#### Model-based Analysis
 
 Sometimes you will encounter estimates of effect size that come from the fitting of a statistical model to the observations. As mentioned in the previous section, this is the most direct way to present an unstandardized estimate of effect size when dealing with a numerical explanatory variable. Commonly, model-based statistics for estimation of effect size are derived from techniques such as analysis of variance (ANOVA), regression analysis, or generalized linear models (GLMs).
 
@@ -588,6 +588,13 @@ A better figure would be any of the statistics reported in quality social scienc
 Generally, any sound observational study should have at least adjusted for the confounding variables that someone familiar with subject can think of. If you identify a potentially confounding variable for which an observational study has not adjusted, then you have identified a major flaw with any statistic derived from the study.
 
 However, it is impossible to ensure that an observational study has adjusted for every potentially confounding variable. There is always the possibility of a confounding variable no one has thought of. This is the major limitation of observational studies and the major appeal of randomized, controlled trials. Therefore, the prospect of confounding should always be kept in mind when scrutinizing statistics derived from observational studies.
+
+
+### Summary
+
+The practical significance of a statistic is derived from subject-matter knowledge and, more specifically, comparison of a statistic to some other contextual knowledge. Because practical significance is based on comparison, you should reject generic comparisons as not only uninformative, but worse than no information at all because of the potential for them to be used deceptively. In order to evaluate the practical significance of a statistic, you should demand a quantification of effect size.
+
+The way in which an effect size is summarized depends on the type of variables being analyzed. Generally, unstandardized statistics of effect size are preferable to standardized statistics because they relate back to the real world more readily. You should be cautious of common issues with summary statistics of effect size, such as missing denominators or confounding variables. Some summary statistics of effect size, such as two mean values and their difference, are straightforward to interpret, but others, such as correlation coefficients or statistics from model-based analyses, require more statistical acumen to interpret properly.
 
 
 ## Estimation Error and Confidence Intervals
