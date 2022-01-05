@@ -344,7 +344,7 @@ The important takeaway for the work of scrutinizing statistics that you encounte
 
 ## Practical Significance
 
-Once you have identified the origin of a statistic and you have determined the statistic's scope of inference, the next genre of questions you should ask about a statistic are _"What is the practical significance of this statistic?"_ and _"How much of an effect size is described by this statistic?"_
+Once you have identified the origin of a statistic and you have determined the statistic's scope of inference, the next genre of questions you should ask about a statistic includes questions such as _"What is the practical significance of this statistic?"_ and _"How much of an effect size is described by this statistic?"_
 
 
 ### Subject-Matter Knowledge
@@ -390,7 +390,7 @@ Therefore, whenever you encounter an assertion that there is "more" or "less" of
 
 A quick answer to such questions as _"How much more?"_ has come to be commonly called "effect size." This is an unfortunate phrase, because it evokes thinking about cause and effect. This is fine if the scope of inference for a statistic is that of a randomized, controlled trial or if the statistic results from causal inference techniques applied to observational studies. However, remember that in purely observational studies, only an association, not causation, can be inferred.
 
-The various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. However, even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid first impression by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what the different types of variables you are.
+The various ways in which two populations can have "more" or "less" of some variable is a nontrivial question. However, even without going very deep into comparing the distribution of a variable between two populations, you can achieve a solid first impression by considering an appropriate summary statistic of effect size. In order to understand what sort of summary statistic to look for, you must understand what the different types of variables you might encounter are.
 
 
 #### Types of Variables
@@ -475,7 +475,7 @@ Finally, note that both means and medians are measures of _just_ the central ten
 
 When the response variable is categorical instead of numerical, but the explanatory variable is still categorical, you are still essentially comparing the response variable between two or more populations. However, the response variable is now expressed in terms of proportions instead of means. Therefore, in this case, everything discussed in the previous section should be reiterated, but with proportions instead of means and differences of proportions instead of differences of means.
 
-However, the major change in the categorical response case is that differences of proportions are not as ubiquitous as statistics of effect size as differences of means are in the numerical response case. This section, therefore, describes some additional summary statistics.
+However, the major change in the case of a categorical response variable is that differences of proportions are not as ubiquitous as statistics of effect size as differences of means are in the numerical response case. This section, therefore, describes some additional summary statistics.
 
 On the one hand, there is nothing wrong with using a difference in proportion to describe an effect size. For example, in September 2021, 66.67% of flights of JetBlue Flight Number 2495 from Newark to Miami were delayed more than half an hour, whereas 56.67% of flights of JetBlue Flight Number 2695, also from Newark to Miami, were delayed more than half an hour. [@noauthor_september_nodate] The effect size can be summarized as a difference of 66.67 &minus; 56.67 = 10 percentage points.
 
@@ -483,7 +483,7 @@ On the one hand, there is nothing wrong with using a difference in proportion to
 
 However, for effect sizes such as this that compare two different rates, there are two other summary statistics that are quite common: _relative risk_ and _odds ratio._
 
-Relative risk[^risk] is defined as the ratio of two proportions. For example, when choosing between Flight 2495 and Flight 2695, you are likely curious how much less likely you are to experience a delay in September 2021 taking Flight 2695 instead of Flight 2495. This can be summarized with the relative risk of 56.67% / 66.67% = 85%.
+Relative risk[^risk] is defined as the ratio of two proportions. For example, when choosing between Flight 2495 and Flight 2695, you might be curious how much less likely you are to experience a delay in September 2021 taking Flight 2695 instead of Flight 2495. This can be summarized with the relative risk of 56.67% / 66.67% = 85%.
 
 [^risk]: The use of the term "risk" in "relative risk" comes from the idea of risk of disease or other adverse outcome, because relative risk is frequently used in medical statistics.
 
@@ -527,11 +527,11 @@ If every petal in the sample were the same exact shape, but only scaled up or sc
 
 _**Insert scatterplots of correlation coefficents here.**_
 
-One of the major shortcomings of the Pearson product-moment correlation coefficient is that it only reflects _linear_ correlation between two variables. A second major shortcoming is that the Pearson correlation coefficient is not robust against outliers, such that even if there is a strong correlation among the majority of the observations, if there are just a relatively few observations that are outside this trend, then the Pearson correlation coefficient will be disproportionately closer to 0.
+One of the major shortcomings of the Pearson product-moment correlation coefficient is that it only reflects _linear_ correlation between two variables. Another major shortcoming is that the Pearson correlation coefficient is not robust against outliers, such that even if there is a strong correlation among the majority of the observations, if there are just a relatively few observations that are outside this trend, then the Pearson correlation coefficient will be disproportionately closer to 0.
 
 The Spearman rank correlation coefficient addresses these shortcomings by first converting values to their ranks and then performing a similar calculation to the Pearson correlation coefficient.[^ordinal] It is also interpreted on the same scale of -1 to 0 to 1. However, the Spearman rank correlation coefficient only captures monotonic relationships.
 
-In a monotonic association, one variable always increases or always decreases as the other variable increases over the entirety of the variables' ranges. If a correlation involves a variable increasing as the other variable increases over part of the other variable's range, but decreasing as the other variable increases over another part, the Spearman correlation coefficient will be closer to 0.
+In a monotonic association, one variable always increases or always decreases as the other variable increases over the entirety of the variables' ranges. If a correlation involves a variable increasing as the other variable increases over part of the other variable's range, but decreasing as the other variable increases over another part, the Spearman correlation coefficient will be disproportionately closer to 0.
 
 [^ordinal]: Because the Spearman correlation coefficient uses ranks, it is also more appropriate for ordinal variables. Ordinal variables are those that have discrete levels, but also have some sense of order, such as _small, medium,_ and _large._
 
@@ -571,21 +571,23 @@ You saw earlier that randomized, controlled experiments use randomization of ass
 
 Indeed, in any observational study, the effect of any single explanatory variable on the response variable is likely to be heavily confounded. Therefore, when scrutinizing any statistic derived from an observational study purported to summarize an effect size, you should check if any potential confounding variables have been adjusted for. If not, the statistic may not summarize much of anything.
 
-For instance, Glenn Kessler of the "Fact Checker" column of the Washington Post once correctly criticized the practice of then President of the United States Barack Obama repeatedly stating that women in the United States make 77 cents for every dollar that men in the United States between 2013 and 2014. [@kessler_president_2014] The statistic was calculated by the U.S. Census Bureau and is technically correct. However, President Obama repeatedly cited this statistic while discussing issues in gender-based prejudice in wages.
+For instance, Glenn Kessler of the "Fact Checker" column of the _Washington Post_ once correctly criticized the practice of then President of the United States Barack Obama repeatedly stating between 2013 and 2014 that women in the United States make 77 cents for every dollar made by men. [@kessler_president_2014] The statistic was calculated by the U.S. Census Bureau and is technically correct. However, President Obama repeatedly cited this statistic while discussing issues in gender-based prejudice in wages.
 
-Gender-based prejudice in wages is a serious issue, but the 77-cents-for-every-dollar statistic was derived simply by taking the median annual income for women in the United States and dividing it by the median annual income for men in the United States. Thus, it compares those just beginning their careers with those who are multiple decades into a career, it compares those working in petroleum engineering careers with those working in early childhood education careers, etc.
+Gender-based prejudice in wages is a serious issue, but the 77-cents-for-every-dollar statistic was derived simply by taking the median annual income for women in the United States and dividing it by the median annual income for men in the United States. Thus, it compares those just beginning their careers with those who are multiple decades into a career, it compares those working in petroleum engineering with those working in early childhood education, etc.
 
 **_Insert image of President Obama during either the 2013 or 2014 State of the Union addresses._**
 
-Thus, even at just first blush, there are two potentially confounding variables: how far along people are in their careers and what type of job they work. In short, the use of this statistic as a summary of effect size of gender differences &ndash; let alone gender discrimination &ndash; in wages is so heavily confounded as to be entirely uninformative. Using this statistic as a metric by which to measure progress in eliminating gender discrimination in wages would be entirely misguided.
+Thus, even at just first blush, there are two potentially confounding variables: how far along people are in their careers and what type of job they work. In short, the use of this statistic as a summary of effect size of gender differences &ndash; let alone gender prejudice &ndash; in wages is so heavily confounded as to be entirely uninformative. Using this statistic as a metric by which to measure progress in eliminating gender prejudice in wages would be entirely misguided.
 
-While this sort of rough, back-of-the-envelope statistic might be used in the initial, exploratory work at the beginning of analysis, the fact it made it to some of the highest offices of government is disappointing. Perhaps more disappointing was the attitude of Betsey Stevenson, a member of the White House Council of Economic Advisers, who said, "There are a lot of things that go into that 77-cents figure, there are a lot of things that contribute and no one’s trying to say that it’s all about discrimination, but I don’t think there’s a better figure." [@kessler_president_2014]
+While this sort of rough, back-of-the-envelope statistic might be used in the exploratory work at the beginning of analysis, it should not be used to inform policy analysis. Perhaps more disappointing was the attitude of Betsey Stevenson, a member of the White House Council of Economic Advisers, who said, "There are a lot of things that go into that 77-cents figure, there are a lot of things that contribute and no one’s trying to say that it’s all about discrimination, but I don’t think there’s a better figure." [@kessler_president_2014]
 
-A better figure would be any of the statistics reported in quality social science research by scholars who study these issues, and any such analyses of quality would at least adjust for the most obvious confounding variables. Thus, by scrutinizing statistics for confounding variables, you can already surpass presidential levels of standards in statistical scrutiny.
+A better figure would be any of the statistics reported in quality social science research by scholars who study these issues, and any such analyses of quality would at least adjust for the most obvious confounding variables.[^adjusted] This is an instance where there appears to be a disconnect between social research and policy making. Thus, by scrutinizing statistics for confounding variables, you can already surpass presidential levels of standards in statistical scrutiny.
 
-Generally, any sound observational study should have at least adjusted for the confounding variables that you can think of as you read about the subject of the study. If you identify a potentially confounding variable that was not adjusted for in the observational study, then you have identified a major flaw with any statistic derived from the study.
+[^adjusted]: This article was originally intended to include a concrete example of an analysis of gender pay differences that adjusted for confounding variables. While Kessler [-@kessler_president_2014] contains numerous references to better analyses than the 77-cents-for-every-dollar statistic, all of these hypertext links now lead to nothing. (This is perhaps a testament to the transient nature of the World Wide Web.) Therefore, in the spirit of this article's section on provenance, no confounding-adjusted statistic is cited here in order to avoid citing a statistic whose original source has not been scrutinized.
 
-However, it is impossible to ensure that an analysis has adjusted for every potentially confounding variable. There is always the possibility of a confounding variable no one has thought of. This is the major limitation of observational studies and the major appeal of randomized, controlled trials. Therefore, the prospect of confounding should always be kept in mind when scrutinizing observational studies.
+Generally, any sound observational study should have at least adjusted for the confounding variables that someone familiar with subject can think of. If you identify a potentially confounding variable for which an observational study has not adjusted, then you have identified a major flaw with any statistic derived from the study.
+
+However, it is impossible to ensure that an observational study has adjusted for every potentially confounding variable. There is always the possibility of a confounding variable no one has thought of. This is the major limitation of observational studies and the major appeal of randomized, controlled trials. Therefore, the prospect of confounding should always be kept in mind when scrutinizing statistics derived from observational studies.
 
 
 ## Estimation Error and Confidence Intervals
