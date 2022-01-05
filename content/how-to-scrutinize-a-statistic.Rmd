@@ -81,7 +81,7 @@ This article, however, instead of discussing any one specific statistical techni
 
 ## Provenance
 
-The first question to ask of any statistic is in regard to its _provenance._ The word "provenance" is borrowed from historians of art who use it to refer to the chronology of place and custody of a work of art traced back to its origin, though the word is now used by a variety of fields.
+The first thing to scrutinize with regard to a statistic is its _provenance._ The word "provenance" is borrowed from historians of art who use it to refer to the chronology of place and custody of a work of art traced back to its origin, though the word is now used by a variety of fields.
 
 ![
 Three paintings on display in the National Gallery of Art in the United States. The practice of investigating the provenance of works of art has led to the word "provenance" being used in other contexts.<br/>
@@ -95,11 +95,11 @@ and is not modified.
 
 In the context of scrutinizing a statistic, determining its provenance consists of asking questions such as _"Where does this statistic come from?" "Who made the observations from which this statistic was derived?"_ and _"How were those observations made?"_
 
-The reason this is the first question to ask of any statistic is that its answer is a prerequisite for subsequent questions to ask when scrutinizing a statistic. If you do not know where a statistic came from or how it was derived, you cannot scrutinize further.
+The reason this is the first aspect to scrutinize of any statistic is that its answer is a prerequisite for subsequent scrutiny. If you do not know where a statistic came from or how it was derived, you cannot scrutinize it further.
 
 One good thing about establishing the provenance of a statistic versus other kinds of provenance is that many if not most statistics of any quality are reported in a scholarly paper of some kind. Thus, the work of establishing provenance of a statistic usually ends with a very definitive result: a document that has a Digital Object Identifier [@international_doi_foundation_digital_2021] and that can be succinctly referenced in any one of a number of standardized citation formats.
 
-This first question is phrased as "establishing provenance" and not simply "looking it up" because there are many situations where the mere act of determining where a statistic comes from is itself a fair amount of work.
+This task is phrased as "establishing provenance" and not simply "looking it up" because there are many situations where the mere act of determining where a statistic comes from is itself a fair amount of work.
 
 
 ### Lack of a Source
@@ -166,6 +166,11 @@ Encyclopedias such as Wikipedia can be helpful when establishing provenance, but
 In this article's context, a secondary source does the work of scrutinizing a statistic, which is what you the reader are supposed to be doing. A secondary source might be useful for comparison, but is not a replacement for finding the primary source.
 
 That being understood, Wikipedia does contain a lot of references to primary sources, as well, even though its "no original research" policy discourages their use except under limited circumstances. Furthermore, a good secondary source will reference the primary source, and so might be a useful step along a chain of references in order to establish provenance.
+
+
+### Summary
+
+Valid statistics come from empirical observations of the world. Your first task in scrutinizing a statistic is identifying where a statistic comes from, which is the primary source of the statistic. Unfortunately, identification of primary sources can be made more complicated by those who do not cite sources, by those who misrepresent sources they cite, and by those who cite as a source something other than the primary source for the statistic. Thus, establishing the provenance for statistic sometimes requires work on your part, but is a prerequisite for further scrutiny.
 
 
 ## Scope of Inference
