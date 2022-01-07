@@ -321,6 +321,19 @@ main {
       text-align: center;
     }
 
+    .three-columns {
+      display: flex;
+
+      table:first-child {
+        border-left: 1px solid #333;
+      }
+
+      table {
+        border-right: 1px solid #333;
+        flex: 33%;
+      }
+    }
+
     .citation {
       @include deemphasize();
     }

@@ -19,6 +19,13 @@ include-before: |
 ---
 
 ```{r setup, echo=FALSE, message=FALSE}
+library(data.table)
+library(ggplot2)
+library(knitr)
+
+opts_chunk$set(
+  echo = FALSE
+)
 ```
 
 
@@ -606,17 +613,76 @@ The way in which an effect size is summarized depends on the type of variables b
 
 Usually, the statistics you encounter are actually _estimates_ of some quantity that is not known exactly. This occurs whenever analysis involves statistical _inference_.
 
-Recall the two major kinds of inference from the section on scope of inference. If a statistic comes from sampling of a larger population, the statistic derived from observations of the sample _estimates_ something about the population. If a statistic comes from a randomized, controlled experiment, the statistic derived from observations in the experiment _estimates_ the true effect of the intervention.
+Recall the two major kinds of inference from the section on scope of inference. If a statistic comes from sampling of a larger population, the statistic derived from observations of the sample estimates something about the population. If a statistic comes from a randomized, controlled experiment, the statistic derived from observations in the experiment estimates the true effect of the intervention.
 
-In both kinds of inference, randomization is used. This randomization introduces error into the estimates. Depending on exactly which individuals are selected for the sample, the exact values of statistics calculated from observations of the sample will be slightly different. Depending on exactly which individuals are assigned to intervention or control groups, the exact values of statistics calculated from observations in an experiment will be slightly different.
+In both kinds of inference, randomization is used. This randomization introduces error into the estimates. When sampling a population, depending on exactly which individuals are selected for the sample, the exact values of statistics calculated from observations of the sample will be slightly different. For example, consider a small population of people of various heights.
 
-**_Possibly put some numbers to this to show how, for instance, a sample mean differs based on the exact sample taken._**
+<p class="caption">Table 1: The heights of a fictional population of 30 people.</p>
 
-Thus, the randomization used to generalize results to a larger population introduces sampling error, and the randomization used to identify causation in an experiment introduces error resulting from experimental assignment. Collectively, this article refers to both these kinds of error as "estimation error."
+<div class="three-columns">
+```{r}
+set.seed(202110108)
+
+height_data <- data.table(
+  Person = seq(1, 30),
+  `Height (in)` = round(rbeta(30, 1, 3) * 24 + 58, 1)
+)
+
+#ggplot(example_data) + geom_histogram(aes(x = `Height (in)`), binwidth = 1)
+
+mean_height <- mean(height_data$`Height (in)`)
+
+height_sample1 <- height_data[sample(.N, 5)]
+
+mean_height1 <- mean(height_sample1[, `Height (in)`])
+
+height_sample2 <- height_data[sample(.N, 5)]
+
+mean_height2 <- mean(height_sample2[, `Height (in)`])
+
+height_sample3 <- height_data[sample(.N, 5)]
+
+mean_height3 <- mean(height_sample3[, `Height (in)`])
+
+kable(height_data[1:10])
+
+kable(height_data[11:20])
+
+kable(height_data[21:30])
+```
+</div>
+
+The mean height in this population is `r mean_height` inches or about `r trunc(mean_height / 12)`' `r round(mean_height %% 12)`". For illustration purposes, let us take three different simple random samples of 5 people from this population and measure the heights of everyone in each sample. (In practice, because the heights are already known for the whole population, this would not be necessary.)
+
+<p class="caption">Table 2: The heights of those people in a first simple random sample of size 5.</p>
+
+```{r}
+kable(height_sample1)
+```
+
+The mean height in the sample described in Table 2 is `r mean_height1` inches.
+
+<p class="caption">Table 3: The heights of those people in a simple random sample of size 5.</p>
+
+```{r}
+kable(height_sample2)
+```
+
+The mean height in the sample described in Table 3 is `r mean_height2` inches.
+
+<p class="caption">Table 4: The heights of those people in a third simple random sample of size 5.</p>
+
+```{r}
+kable(height_sample3)
+```
+
+The mean height in the sample described in Table 4 is `r mean_height3` inches.
+
+All of the sample means (`r paste(sort(c(mean_height1, mean_height2, mean_height3)), sep = ', ')` inches) are near the true population mean of `r mean_height` inches, but there is some variation around the population mean. Sampling error is this variation in the values of the sample mean height. Thus, the randomization used to generalize results to a larger population introduces sampling error. Similarly, the randomization used to identify causation in an experiment introduces error resulting from experimental assignment. Collectively, this article refers to both these kinds of error as "estimation error."
 
 Estimation error does not make a statistic invalid, because estimation error can be quantified and kept to within acceptable tolerances. However, this does mean whenever you are scrutinizing a statistic that involves inference, you should look for and demand quantification of the estimation error, because it is possible that estimation error is so great that the conclusion suggested by the statistic is actually untrue.
 
-The customary way to describe a quantification of estimation error is with a confidence interval.[^credible] A confidence interval has a confidence level between 0 and 1, such as 95\%, which has become common level for confidence intervals. A 95\% confidence interval makes the claim that if a randomized sampling or a randomized experimental assignment were repeated many times and a confidence interval calculated from each of these repetitions, that 95\% of these confidence intervals would contain the true value being estimated.
+The customary way to describe quantification of estimation error is with a confidence interval.[^credible] A confidence interval has a confidence level between 0 and 1, such as 95\%, which has become common level for confidence intervals. A 95\% confidence interval makes the claim that if a randomized sampling or a randomized experimental assignment were repeated many times and a confidence interval calculated from each of these repetitions, that 95\% of these confidence intervals would contain the true value being estimated.
 
 [^credible]: Confidence intervals are based on frequentist statistics. In a Bayesian statistics setting, credible intervals are used. Credible intervals have an even simpler interpretation: a 95\% credible interval claims that the true value has a 95\% probability of falling within the interval. However, this simpler interpretation is a result of different definitions of "probability." In Bayesian statistics, probability is a measure of subjective weight given to a belief, like when someone says, "I am fifty-fifty on whether that is true or not." In frequentist statistics, probability is a measure of how often an event occurs in the long run, like when someone says, "The odds are 2 to 1 that Flight 2495 is delayed."
 
