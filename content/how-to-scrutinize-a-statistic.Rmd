@@ -728,6 +728,8 @@ In cases in which an effect is statistically insignificant, a confidence interva
 
 ### Summary
 
+Any statistic derived from statistical inference brings with it some estimation error. Statistical inference occurs in any analysis that involves sampling a population or randomizing assignment of individuals in an experiment. When scrutinizing statistics that come from inference, you should look for and demand some quantification of the estimation error. The most common way to quantify estimation error is with a confidence interval. Confidence intervals both allow you to judge statistical significance and give you a range of values to judge for practical significance.
+
 
 ## Common Flaws of Research
 
