@@ -737,7 +737,7 @@ Any statistic derived from statistical inference brings with it some estimation 
 
 ## Common Flaws of Research
 
-The preceding concludes all of this article's discussion about what kinds of questions to ask and what to look for when scrutinizing a statistic. This last section discusses some common flaws in empirical research or, more specifically, some common deceptive tactics used in the presentation of empirical research. You should be aware of these in order to spot them and avoid being tricked by them.
+The preceding concludes all of this article's discussion about what kinds of questions to ask when scrutinizing a statistic. This last section discusses some common flaws in empirical research or, more specifically, some common deceptive tactics used in the presentation of empirical research. You should be aware of these in order to spot them and avoid being tricked by them.
 
 Most of the flaws discussed in this section involve _p_-values. There is nothing intrinsically wrong with _p_-values. They are important in the development of the theory of statistical inference and thus important for all statisticians to learn. Furthermore, they are one useful factor in applied statistics where a binary "yes or no" decision must be made, though they should not be used exclusively to make such a decision without also paying attention to other things, such as effect size, dispersion of the variable of interest, and statistical power. It is unfortunate that _p_-values, for all their worth, have been so abused.
 
@@ -747,28 +747,30 @@ A _p_-value is the probability of getting the observed statistic (or a statistic
 
 Null hypothesis tests are usually done by defining a _size_ or _level_ of the test. Common hypothesis test sizes include 0.05, 0.10, and 0.01, though 0.05 seems to be used the most. The size of the test defines a rejection region for the test. Under this scheme, if the _p_-value is less than or equal to the size of the test, you reject the null hypothesis, and you reach a conclusion of statistical significance. If the _p_-value is greater than the size of the test, you fail to reject the null hypothesis, and nothing can be concluded.
 
-This approach has been used in a lot of academic journals, though there is a movement away from the rejection region. Nakagawa and Cuthill [-@nakagawa_effect_2007], though writing for the field of biology specifically, summarize well the reasons for this move in general.
+This approach has been used in a lot of academic journals, though there is a movement away from the rejection region approach. Nakagawa and Cuthill [-@nakagawa_effect_2007] summarize well the reasons for this move in general, though they write specifically for the field of biology.
 
 Perhaps because of the historic prevalence of null hypothesis testing in academic journals, the _p_-value comes up again and again when discussing common flaws of empirical research. The remainder of this section summarizes these flaws.
 
 
 ### Not Sharing Effect Size
 
-...
+One of the most deceptive flaws in empirical research is the practice of generic comparisons, i.e., to assert that there is an effect, but without sharing an effect size. As previously discussed, you should always demand a quantification of an effect size in order to evaluate the practical significance of an alleged effect.
 
-For instance,
+Sometimes effect sizes are quite blatantly unquantified. Other times the use of _p_-values in academic journals can be used to mask the lack of an effect size being shared. This is because _p_-values and related numbers are often listed with statistical results in academic journals, and the presence of these numbers might give the appearance of the quantification of effect size. However, a _p_-value _does not describe an effect size._
+
+For instance, below is an excerpt from a psychology paper published in an academic journal.
 
 > Using a questionnaire designed to examine prevailing ethnic and gender stereotypes, we confirmed that the stereotype that Asians are quantitatively gifted prevails more in America than in Canada, _t_(81) = 2.07, _p_ < .05, _r_ = .22. [@shih_stereotype_1999]
 
-You should know by now that the obvious question to ask of this is, _"How much more?"_ A few numbers are given, so you might think that the answer to this question is given. However, it is not. The value of _t_ is a test statistic that comes from null hypothesis testing and is actually thus redundant with the _p_-value. However, at least the actual value of _t_ is given in this case. The _p_ value is not explicitly given, though the paper asserts it is less than 0.05.
+You should know by now that the obvious question to ask of this is, _"How much more?"_ A few numbers were given, so you might think that the answer to this question was provided. However, it was not. The value of _t_ is a test statistic that comes from null hypothesis testing and is actually thus redundant with the _p_-value. However, at least the actual value of _t_ was given in this case. The _p_ value was not explicitly given, though the paper asserted it was less than 0.05.
 
-The _r_ value is likely a correlation coefficient, which _can_ be a measure of effect size, albeit a standardized one. However, the paper does not state what correlation coefficient is used, and regardless, it would be more direct to use an unstandardized statistic for effect size. If the correlation coefficient is on the -1 to 1 scale of a Pearson or Spearman correlation coefficient, then 0.22 reflects rather low correlation. If this is the only indication of practical significance given, then you are left to conclude there is not much practical significance to this difference at all.
+The _r_ value is likely a correlation coefficient, which _can_ be a measure of effect size, albeit a standardized one. However, the paper did not state what correlation coefficient was used, and regardless, it would be more direct to use an unstandardized statistic for effect size. If the correlation coefficient is on the -1 to 1 scale of a Pearson or Spearman correlation coefficient, then 0.22 reflects rather low correlation. Since this was the only indication of practical significance given, then you are left to conclude there is not much practical significance to this difference at all.
 
-In short, despite three numbers being listed, the effect size is not directly given and the only information we have about the effect size leads you to believe it is not practically significant. You are simply not told how much more prevalent the stereotype that Asians are quantitatively gifted prevails in America than in Canada.
+In short, despite three numbers being listed, the effect size was not directly given and the only information you have about the effect size leads you to believe it is not practically significant. You were simply not told how much more prevalent the stereotype that Asians are quantitatively gifted prevails in America than in Canada.
 
-This point is not a minor tangent discussed in the paper. The paper's thesis turns on this point, since it is a premise in the interpretation of the experimental results. You might, rightly, start to wonder if the effect size is not directly given because it is indeed not practically significant, and the authors do not want to undermine their own thesis.
+This point was not a minor tangent discussed in the paper. The paper's thesis turned on this point, since it was a premise in the interpretation of the experimental results. You might, rightly, start to wonder if the effect size was not directly given because it was indeed not practically significant, and the authors did not want to undermine their own thesis.
 
-The intent of this example is not to pick on any one specific academic paper. This example was chosen because it comes from a paper authored by researchers at Harvard University for the journal _Psychological Science_, which is published by the American Psychological Association, and has been cited thousands of times. It is not from the margins of academic research.
+The intent of this example is not to pick on any one specific academic paper. This example was chosen because it comes from a paper authored by researchers at Harvard University for the journal _Psychological Science,_ which is published by the American Psychological Association, and has been cited thousands of times. It is not from the margins of academic research.
 
 This is a reminder to you that, just because a statistic comes from a paper that has gone through peer review and been published in a prestigious journal does not mean that your work of scrutinizing the statistic has been done for you. This is especially true because the practice of reporting _p_-values instead of effect sizes has unfortunately gone unchecked in academic journals for so long.
 
