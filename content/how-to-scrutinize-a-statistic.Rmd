@@ -752,9 +752,9 @@ This approach has been used in a lot of academic journals, though there is a mov
 Perhaps because of the historic prevalence of null hypothesis testing in academic journals, the _p_-value comes up again and again when discussing common fallacies of empirical research. The remainder of this section summarizes these fallacies.
 
 
-### Not Sharing Effect Size
+### Not Reporting Effect Size
 
-One of the most deceptive fallacies in empirical research is the practice of generic comparisons, i.e., to assert that there is an effect, but without sharing an effect size. As previously discussed, you should always demand a quantification of an effect size in order to evaluate the practical significance of an alleged effect.
+One of the most deceptive fallacies in empirical research is the practice of generic comparisons, i.e., to assert that there is an effect, but without reporting an effect size. As previously discussed, you should always demand a quantification of an effect size in order to evaluate the practical significance of an alleged effect.
 
 Sometimes effect sizes are quite blatantly unquantified. Other times the use of _p_-values in academic journals can be used to mask the lack of an effect size being shared. This is because _p_-values and related numbers are often listed with statistical results in academic journals, and the presence of these numbers might give the appearance of the quantification of effect size. However, a _p_-value _does not describe an effect size._
 
