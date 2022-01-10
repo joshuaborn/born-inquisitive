@@ -652,7 +652,7 @@ kable(height_data[21:30])
 ```
 </div>
 
-The mean height in this population is `r mean_height` inches or about `r trunc(mean_height / 12)`' `r round(mean_height %% 12)`". For illustration purposes, let us take three different simple random samples of 5 people from this population and measure the heights of everyone in each sample. (In practice, because the heights are already known for the whole population, this would not be necessary.)
+The mean height in this population is `r mean_height` inches or about `r trunc(mean_height / 12)`' `r round(mean_height %% 12)`". For illustration purposes, take three different simple random samples of 5 people from this population and measure the heights of everyone in each sample.
 
 <p class="caption">Table 2: The heights of those people in a first simple random sample of size 5.</p>
 
@@ -680,11 +680,13 @@ The mean height in the sample described in Table 4 is `r mean_height3` inches.
 
 All of the sample means (`r paste(sort(c(mean_height1, mean_height2, mean_height3)), sep = ', ')` inches) are near the true population mean of `r mean_height` inches, but there is some variation around the population mean. This variation in the values of the sample mean height is the sampling error.
 
+In practice, you will only be taking one sample, and only one of the sample means will be observed. The sample mean is an estimate of the population mean; it will be near, but not exactly, the population mean. The sampling error is a way to quantify expectations of this difference between an estimate from the sample and the true value in the population that it estimates.
+
 Thus, the randomization used to generalize results to a larger population introduces sampling error. Similarly, the randomization used to identify causation in an experiment introduces error resulting from experimental assignment. Collectively, this article refers to both these kinds of error as "estimation error."
 
-Estimation error does not make a statistic invalid, because estimation error can be quantified and kept to within acceptable tolerances. However, this does mean whenever you are scrutinizing a statistic that involves inference, you should look for and demand quantification of the estimation error, because it is possible that estimation error is so great that the conclusion suggested by the statistic is actually untrue.
+Estimation error does not make a statistic invalid, because estimation error can be quantified and kept to within acceptable tolerances. However, this does mean whenever you are scrutinizing a statistic that involves inference, you should look for and demand quantification of the estimation error, because it is possible that estimation error is so great that an interpretation of the statistic is actually untrue.
 
-The customary way to describe quantification of estimation error is with a confidence interval.[^credible] A confidence interval has a confidence level between 0 and 1, such as 95\%, which has become common level for confidence intervals. A 95\% confidence interval makes the claim that if a randomized sampling or a randomized experimental assignment were repeated many times and a confidence interval calculated from each of these repetitions, that 95\% of these confidence intervals would contain the true value being estimated.
+The customary way to describe quantification of estimation error is with a confidence interval.[^credible] A confidence interval has a confidence level between 0 and 1, such as 95\%, which has become common level for confidence intervals, and gives a range of values. A 95\% confidence interval makes the claim that if a randomized sampling or a randomized experimental assignment were repeated many times and a confidence interval calculated from each of these repetitions, that 95\% of these confidence intervals would contain the true value being estimated.
 
 [^credible]: Confidence intervals are based on frequentist statistics. In a Bayesian statistics setting, credible intervals are used. Credible intervals have an even simpler interpretation: a 95\% credible interval claims that the true value has a 95\% probability of falling within the interval. However, this simpler interpretation is a result of different definitions of "probability." In Bayesian statistics, probability is a measure of subjective weight given to a belief, like when someone says, "I am fifty-fifty on whether that is true or not." In frequentist statistics, probability is a measure of how often an event occurs in the long run, like when someone says, "The odds are 2 to 1 that Flight 2495 is delayed."
 
@@ -713,24 +715,24 @@ For instance, in the above examples...
 
 **_Discuss which real world confidence intervals show a statistically insignificant and statistically significant effect size._**
 
-Note that statistical significance is a relatively weak claim. When dealing with effect sizes, it is merely the claim that the true effect size is not is not a null value, to use statistical jargon. Statistical significance thus attributes at least some of an effect size to something other than estimation error. Practical significance is discussed first and in more detail in this article deliberately, because _confusing statistical significance with practical significance is a fallacy._
+Note that statistical significance is a relatively weak claim. When dealing with effect sizes, it is merely the claim that the true effect size is not a null value, to use statistical jargon. Statistical significance thus attributes at least some of an effect size to something other than estimation error. Practical significance is discussed first and in more detail in this article deliberately, because _confusing statistical significance with practical significance is a fallacy._
 
 To avoid this fallacy, remember that _statistical significance does not imply practical significance._ However, the converse &ndash; practical significance implies statistical significance &ndash; is true. There cannot be practical significance when there is not statistical significance. This is because an effect size of nothing, no matter the subject-matter context, is always practically insignificant, and when an effect is statistically insignificant, an effect size of nothing is a good possibility.
 
-Fortunately, you can evaluate both statistical and practical significance simultaneously when confidence intervals are provided. A rule of thumb you can use is to accomplish this is to evaluate the practical significance of a statistic by using the least favorable extreme of the confidence interval to whatever working hypothesis you are considering.
+Fortunately, you can evaluate both statistical and practical significance simultaneously when confidence intervals are provided. A rule of thumb you can use to accomplish this is to evaluate the practical significance of a statistic by using the least favorable extreme of the confidence interval to whatever working hypothesis you are considering.
 
 In cases in which an effect size is practically insignificant, the least favorable extreme of the confidence interval for the effect size will be outside of your threshold of practical significance. For instance, ...
 
 **_Interpret a practically insignificant effect size here._**
 
-In cases in which an effect is statistically insignificant, a confidence interval for an effect size leads to ambiguous interpretations. For instance, if the difference in means between two populations is statistically insignificant, then the confidence interval for this difference will have a negative value at one end at a positive value at the other. In the earlier example, ...
+In cases in which an effect is statistically insignificant, a confidence interval for an effect size leads to ambiguous interpretations. For instance, if the difference in means between two populations is statistically insignificant, then the confidence interval for this difference will have a negative value at one end and a positive value at the other. In the earlier example, ...
 
 **_Interpret a statistically insignificant effect size here._**
 
 
 ### Summary
 
-Any statistic derived from statistical inference brings with it some estimation error. Statistical inference occurs in any analysis that involves sampling a population or randomizing assignment of individuals in an experiment. When scrutinizing statistics that come from inference, you should look for and demand some quantification of the estimation error. The most common way to quantify estimation error is with a confidence interval. Confidence intervals both allow you to judge statistical significance and give you a range of values to judge for practical significance.
+Any statistic derived from statistical inference brings with it some estimation error. Statistical inference occurs in any analysis that involves sampling a population or randomizing assignment of individuals in an experiment. When scrutinizing statistics that come from inference, you should look for and demand some quantification of the estimation error. The most common way to quantify estimation error is with a confidence interval. Confidence intervals allow you to judge both statistical significance and practical significance.
 
 
 ## Common Flaws of Research
