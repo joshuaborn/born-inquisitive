@@ -735,11 +735,11 @@ In cases in which an effect is statistically insignificant, a confidence interva
 Any statistic derived from statistical inference brings with it some estimation error. Statistical inference occurs in any analysis that involves sampling a population or randomizing assignment of individuals in an experiment. When scrutinizing statistics that come from inference, you should look for and demand some quantification of the estimation error. The most common way to quantify estimation error is with a confidence interval. Confidence intervals allow you to judge both statistical significance and practical significance.
 
 
-## Common Flaws of Research
+## Fallacies
 
-The preceding concludes all of this article's discussion about what kinds of questions to ask when scrutinizing a statistic. This last section discusses some common flaws in empirical research or, more specifically, some common deceptive tactics used in the presentation of empirical research. You should be aware of these in order to spot them and avoid being tricked by them.
+The preceding concludes all of this article's discussion about what kinds of questions to ask when scrutinizing a statistic. This last section discusses some fallacies in empirical research or, more specifically, some common deceptive tactics used in the presentation of empirical research. You should be aware of these in order to spot them and avoid being tricked by them.
 
-Most of the flaws discussed in this section involve _p_-values. There is nothing intrinsically wrong with _p_-values. They are important in the development of the theory of statistical inference and thus important for all statisticians to learn. Furthermore, they are one useful factor in applied statistics where a binary "yes or no" decision must be made, though they should not be used exclusively to make such a decision without also paying attention to other things, such as effect size, dispersion of the variable of interest, and statistical power. It is unfortunate that _p_-values, for all their worth, have been so abused.
+Most of the fallacies discussed in this section involve _p_-values. There is nothing intrinsically wrong with _p_-values. They are important in the development of the theory of statistical inference and thus important for all statisticians to learn. Furthermore, they are one useful factor in applied statistics where a binary "yes or no" decision must be made, though they should not be used exclusively to make such a decision without also paying attention to other things, such as effect size, dispersion of the variable of interest, and statistical power. It is unfortunate that _p_-values, for all their worth, have been so abused.
 
 Many statistical hypothesis tests are framed in terms of testing a _null hypothesis._ Null hypotheses are of the sort that a difference in means is 0 or that a relative risk is 1. In short, they are hypotheses that there is no effect. Rejection of a null hypothesis is synonymous to statistical significance. They are two ways to describe the same phenomenon.
 
@@ -749,12 +749,12 @@ Null hypothesis tests are usually done by defining a _size_ or _level_ of the te
 
 This approach has been used in a lot of academic journals, though there is a movement away from the rejection region approach. Nakagawa and Cuthill [-@nakagawa_effect_2007] summarize well the reasons for this move in general, though they write specifically for the field of biology.
 
-Perhaps because of the historic prevalence of null hypothesis testing in academic journals, the _p_-value comes up again and again when discussing common flaws of empirical research. The remainder of this section summarizes these flaws.
+Perhaps because of the historic prevalence of null hypothesis testing in academic journals, the _p_-value comes up again and again when discussing common fallacies of empirical research. The remainder of this section summarizes these fallacies.
 
 
 ### Not Sharing Effect Size
 
-One of the most deceptive flaws in empirical research is the practice of generic comparisons, i.e., to assert that there is an effect, but without sharing an effect size. As previously discussed, you should always demand a quantification of an effect size in order to evaluate the practical significance of an alleged effect.
+One of the most deceptive fallacies in empirical research is the practice of generic comparisons, i.e., to assert that there is an effect, but without sharing an effect size. As previously discussed, you should always demand a quantification of an effect size in order to evaluate the practical significance of an alleged effect.
 
 Sometimes effect sizes are quite blatantly unquantified. Other times the use of _p_-values in academic journals can be used to mask the lack of an effect size being shared. This is because _p_-values and related numbers are often listed with statistical results in academic journals, and the presence of these numbers might give the appearance of the quantification of effect size. However, a _p_-value _does not describe an effect size._
 
@@ -777,9 +777,9 @@ This is a reminder to you that, just because a statistic comes from a paper that
 
 ### Using Inferential Statistics Without Statistical Inference
 
-Confidence intervals and _p_-values are ultimately ways of describing estimation error. Estimation error, as was discussed in the previous section, comes from the randomization used in statistical inference. In short, confidence intervals and _p_-values are _inferential statistics._
+Confidence intervals and _p_-values are ultimately ways of describing estimation error. Estimation error, as was discussed, comes from the randomization used in statistical inference. In short, confidence intervals and _p_-values are _inferential statistics._
 
-It does not make any sense to use inferential statistics when there is no statistical inference. This is very obvious when asserted in so many words, but perhaps some further explanation might be in order.
+It does not make any sense to use inferential statistics when there is no statistical inference. This is very obvious when asserted in so many words, but perhaps some further explanation is in order.
 
 If a sample is representative of a larger population, then observations of the sample can estimate quantities of the population. The sampling error involved in this is what confidence intervals and _p_-values are trying to describe. However, if a sample is known _not_ to be representative of a larger population, it is deceptive to use these inferential statistics because observations of the sample do not estimate quantities in any larger population. Thus, if you do not have a representative sample, you do not have any population about which to infer, and you should not be using inferential statistics.
 
@@ -795,6 +795,9 @@ For example, below is an excerpt in an otherwise excellent paper on child mortal
 
 
 ### Not Adjusting for Multiple Comparisons
+
+
+## Conclusion
 
 
 ## Citations
