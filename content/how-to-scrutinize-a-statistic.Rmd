@@ -617,7 +617,7 @@ Recall the two major kinds of inference from the section on scope of inference. 
 
 In both kinds of inference, randomization is used. This randomization introduces error into the estimates. When sampling a population, depending on exactly which individuals are selected for the sample, the exact values of statistics calculated from observations of the sample will be slightly different. For example, consider a small population of people of various heights.
 
-<p class="caption">Table 1: The heights of a fictional population of 30 people.</p>
+<p class="caption">Table 2: The heights of a fictional population of 30 people.</p>
 
 <div class="three-columns">
 ```{r}
@@ -654,29 +654,29 @@ kable(height_data[21:30])
 
 The mean height in this population is `r mean_height` inches or about `r trunc(mean_height / 12)`' `r round(mean_height %% 12)`". For illustration purposes, take three different simple random samples of 5 people from this population and measure the heights of everyone in each sample.
 
-<p class="caption">Table 2: The heights of those people in a first simple random sample of size 5.</p>
+<p class="caption">Table 3: The heights of those people in a first simple random sample of size 5.</p>
 
 ```{r}
 kable(height_sample1)
 ```
 
-The mean height in the sample described in Table 2 is `r mean_height1` inches.
+The mean height in the sample described in Table 3 is `r mean_height1` inches.
 
-<p class="caption">Table 3: The heights of those people in a simple random sample of size 5.</p>
+<p class="caption">Table 4: The heights of those people in a simple random sample of size 5.</p>
 
 ```{r}
 kable(height_sample2)
 ```
 
-The mean height in the sample described in Table 3 is `r mean_height2` inches.
+The mean height in the sample described in Table 4 is `r mean_height2` inches.
 
-<p class="caption">Table 4: The heights of those people in a third simple random sample of size 5.</p>
+<p class="caption">Table 5: The heights of those people in a third simple random sample of size 5.</p>
 
 ```{r}
 kable(height_sample3)
 ```
 
-The mean height in the sample described in Table 4 is `r mean_height3` inches.
+The mean height in the sample described in Table 5 is `r mean_height3` inches.
 
 All of the sample means (`r paste(sort(c(mean_height1, mean_height2, mean_height3)), sep = ', ')` inches) are near the true population mean of `r mean_height` inches, but there is some variation around the population mean. This variation in the values of the sample mean height is the sampling error.
 
@@ -775,7 +775,23 @@ The intent of this example is not to pick on any one specific academic paper. Th
 This is a reminder to you that, just because a statistic comes from a paper that has gone through peer review and been published in a prestigious journal does not mean that your work of scrutinizing the statistic has been done for you. This is especially true because the practice of reporting _p_-values instead of effect sizes has unfortunately gone unchecked in academic journals for so long.
 
 
-### Using _p_-Values Without Statistical Inference
+### Using Inferential Statistics Without Statistical Inference
+
+Confidence intervals and _p_-values are ultimately ways of describing estimation error. Estimation error, as was discussed in the previous section, comes from the randomization used in statistical inference. In short, confidence intervals and _p_-values are _inferential statistics._
+
+It does not make any sense to use inferential statistics when there is no statistical inference. This is very obvious when asserted in so many words, but perhaps some further explanation might be in order.
+
+If a sample is representative of a larger population, then observations of the sample can estimate quantities of the population. The sampling error involved in this is what confidence intervals and _p_-values are trying to describe. However, if a sample is known _not_ to be representative of a larger population, it is deceptive to use these inferential statistics because observations of the sample do not estimate quantities in any larger population. Thus, if you do not have a representative sample, you do not have any population about which to infer, and you should not be using inferential statistics.
+
+If assignment in an experiment between intervention and control groups is randomized, you can attribute the observed effects in the experiment to the intervention. However, you are estimating these effects, because individuals in the experiment are not all identical, so there is some variation depending on exactly which individuals are assigned to intervention or control groups. Confidence intervals and _p_-values can be used to describe the error that comes from this randomized assignment. However, if no randomization is used in assignment, these inferential statistics describe nothing. Indeed, if no randomization is used in assignment, then you cannot be sure the observed effects are even caused by the intervention.
+
+However, some academic papers report inferential statistics for results that do not come from any inference. It might be due to some academic journals requiring of its contributors things such as _p_-values for _all_ statistics reported, regardless of whether this is appropriate. It might come from authors using inferential statistics deceptively to make their results seem more quantitatively sophisticated. It might come from ignorance of statistical inference or from a lack of facility with descriptive statistics. Regardless, you should be able to spot these cases and properly judge them as fallacies.
+
+Fortunately, the ability to spot these cases comes directly from what you learned in the sections on scope of inference and on estimation error. Thus, you should dismiss any inferential statistics, such as confidence intervals or _p_-values, when used for a study with a scope of inference in the lower left corner of Table 1.
+
+For example, below is an excerpt in an otherwise excellent paper on child mortality in preindustrialized societies.
+
+**_Insert example from Volk and Atkinson (2013) here._**
 
 
 ### Not Adjusting for Multiple Comparisons
