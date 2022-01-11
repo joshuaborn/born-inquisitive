@@ -818,6 +818,18 @@ Finally, while _p_-hacking specifically is a fallacy, using multiple comparisons
 
 ## Conclusion
 
+If you are concerned with a social issue, a medical issue, an environmental issue, or indeed any issue involving large populations of people or things or involving cause and effect, you are engaged in statistical reasoning, whether you realize this or not. Therefore, serious inquiry into such an issue necessarily involves encountering statistics. However, because statistics can be abused, the skill of scrutinizing statistics is an important one.
+
+You should scrutinize all statistics for provenance, scope of inference, and practical significance. Additionally, you should scrutinize statistics for estimation error if you determine them to be inferential when scrutinizing their scope of inference.
+
+Scrutinizing provenance involves tracing a statistic back to the original observations from which it is derived. Scope of inference comprises two parts: whether a statistic is derived from a representative sample of a population, and whether a statistic is derived from a randomized, controlled experiment, thus implying causal conclusions can be made. Practical significance is based on subject-matter knowledge and comparison with another quantity. It can be summarized by effect size, but exactly how effect size is summarized depends on the types of variables involved.
+
+For inferential statistics, estimation error stems from the randomization done in sampling or in experimental assignment. It is commonly quantified with confidence intervals, which give a range of probable values for the estimated quantity.
+
+Throughout your work of scrutinizing a statistic, you should be on the look out for common fallacies, such as unadjusted confounding variables, missing denominators, unreported effect sizes, inferential statistics without inference, or _p_-hacking.
+
+Scrutinizing statistics, though work, can also be a joy. When you are surrounded by those who want to influence rather than inform you, it is an opportunity for that rarest of exercises: critical thinking. It is a chance to strengthen a singular implement in your search for truth and knowledge: your own skeptical mind.
+
 
 ## Citations
 
