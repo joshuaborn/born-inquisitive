@@ -371,9 +371,6 @@ However, if you discover the drug decreases daily mean blood glucose by only 5 m
 
 Thus, the knowledge used to evaluate the practical significance of the statistic in this example comes from subject-matter knowledge pertaining to diabetes, not from any particular statistical tool.
 
-
-### Comparison
-
 The previous example also illustrates another phenomenon: the practical significance of a statistic comes from its comparison to something else. In the diabetes example, the average change in blood glucose levels caused by the drug is evaluated by comparing it to the therapeutic change in blood glucose levels observed in a previous study. A single statistic in isolation without any contextual knowledge has no practical significance.
 
 For example, suppose you learn that the per capita expenditure on food and beverages for off-premises consumption in Michigan during 2020 was \$3,532. [@zemanek_personal_2021, Table 4] Unless you have detailed economic knowledge of the United States, this statistic probably has very little practical significance to you. Is \$3,532 a lot? Is \$3,532 a little?[^relative] This statistic, without any context, is impossible to interpret.
