@@ -651,33 +651,27 @@ kable(height_data[21:30])
 
 The mean height in this population is `r mean_height` inches or about `r trunc(mean_height / 12)`' `r round(mean_height %% 12)`". For illustration purposes, take three different simple random samples of 5 people from this population and measure the heights of everyone in each sample.
 
-<p class="caption">Table 3: The heights of those people in a first simple random sample of size 5.</p>
+<p class="caption">Table 3: The heights of those people in a first random sample, which has a mean height of `r mean_height1` inches.</p>
 
 ```{r}
 kable(height_sample1)
 ```
 
-The mean height in the sample described in Table 3 is `r mean_height1` inches.
-
-<p class="caption">Table 4: The heights of those people in a simple random sample of size 5.</p>
+<p class="caption">Table 4: The heights of those people in a second random sample, which has a mean height of `r mean_height2` inches.</p>
 
 ```{r}
 kable(height_sample2)
 ```
 
-The mean height in the sample described in Table 4 is `r mean_height2` inches.
-
-<p class="caption">Table 5: The heights of those people in a third simple random sample of size 5.</p>
+<p class="caption">Table 5: The heights of those people in a third simple random sample of size 5, which has a mean height of `r mean_height3` inches.</p>
 
 ```{r}
 kable(height_sample3)
 ```
 
-The mean height in the sample described in Table 5 is `r mean_height3` inches.
-
 All of the sample means (`r paste(sort(c(mean_height1, mean_height2, mean_height3)), sep = ', ')` inches) are near the true population mean of `r mean_height` inches, but there is some variation around the population mean. This variation in the values of the sample mean height is the sampling error.
 
-In practice, you will only be taking one sample, and only one of the sample means will be observed. The sample mean is an estimate of the population mean; it will be near, but not exactly, the population mean. The sampling error is a way to quantify expectations of this difference between an estimate from the sample and the true value in the population that it estimates.
+In practice, you will only be taking one sample, and only one of the sample means will be observed. The sample mean is an estimate of the population mean; it will be near, but not exactly, the population mean. Therefore, it is useful to have a way to quantify expectations of the difference between an estimate from the sample and the true value in the population that it estimates.
 
 Thus, the randomization used to generalize results to a larger population introduces sampling error. Similarly, the randomization used to identify causation in an experiment introduces error resulting from experimental assignment. Collectively, this article refers to both these kinds of error as "estimation error."
 
