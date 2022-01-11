@@ -502,9 +502,16 @@ When the response variable is categorical instead of numerical, but the explanat
 
 However, the major change in the case of a categorical response variable is that differences of proportions are not as ubiquitous as statistics of effect size as differences of means are in the numerical response case. This section, therefore, describes some additional summary statistics.
 
-On the one hand, there is nothing wrong with using a difference in proportion to describe an effect size. For example, in September 2021, 66.67% of flights of JetBlue Flight Number 2495 from Newark to Miami were delayed more than half an hour, whereas 56.67% of flights of JetBlue Flight Number 2695, also from Newark to Miami, were delayed more than half an hour. [@noauthor_september_nodate] The effect size can be summarized as a difference of 66.67 &minus; 56.67 = 10 percentage points.
+On the one hand, there is nothing wrong with using a difference in proportion to describe an effect size. For example, in September 2021, 66.67% of flights of jetBlue Flight Number 2495 from Newark to Miami were delayed more than half an hour, whereas 56.67% of flights of jetBlue Flight Number 2695, also from Newark to Miami, were delayed more than half an hour. [@noauthor_september_nodate] The effect size can be summarized as a difference of 66.67 &minus; 56.67 = 10 percentage points.
 
-**_Put image of airliner here._**
+![
+["JetBlue Airways Airbus A320-232 N519JB (cn 1398) 'It had to be blue'"](https://www.flickr.com/photos/tomasdelcoro/5731320945/)
+by
+[Tomás Del Coro](https://www.flickr.com/photos/tomasdelcoro/)
+is licensed under
+[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
+and is not modified.
+](/images/jetblue.jpg)
 
 However, for effect sizes such as this that compare two different rates, there are two other summary statistics that are quite common: _relative risk_ and _odds ratio._
 
