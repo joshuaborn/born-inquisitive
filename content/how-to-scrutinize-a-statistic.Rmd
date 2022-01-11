@@ -607,7 +607,15 @@ For instance, Glenn Kessler of the "Fact Checker" column of the _Washington Post
 
 Gender-based prejudice in wages is a serious issue, but the 77-cents-for-every-dollar statistic was derived simply by taking the median annual income for women in the United States and dividing it by the median annual income for men in the United States. Thus, it compares those just beginning their careers with those who are multiple decades into a career, it compares those working in petroleum engineering with those working in early childhood education, etc.
 
-**_Insert image of President Obama during either the 2013 or 2014 State of the Union addresses._**
+![
+U.S. President Barack Obama delivering at State of the Union speech in 2015, after citing an inappropriate statistic in reference to gender-based prejudice in wages during the State of the Union speeches of the previous two years.<br/>
+["State Of The Union (201501200002HQ)"](https://www.flickr.com/photos/nasahqphoto/15711481744/in/album-72157650396153482/)
+by
+[NASA HQ PHOTO](https://www.flickr.com/photos/nasahqphoto/)
+is licensed under
+[CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
+and is not modified.
+](/images/state-of-the-union.jpg)
 
 Thus, even at just first blush, there are two potentially confounding variables: how far along people are in their careers and what type of job they work. In short, the use of this statistic as a summary of effect size of gender differences &ndash; let alone gender prejudice &ndash; in wages is so heavily confounded as to be entirely uninformative. Using this statistic as a metric by which to measure progress in eliminating gender prejudice in wages would be entirely misguided.
 
