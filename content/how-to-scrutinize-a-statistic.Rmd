@@ -794,7 +794,7 @@ This point was not a minor tangent discussed in the paper. The paper's thesis tu
 
 The intent of this example is not to pick on any one specific academic paper. This example was chosen because it comes from a paper authored by researchers at Harvard University for the journal _Psychological Science,_ which is published by the American Psychological Association, and has been cited thousands of times. It is not from the margins of academic research.
 
-This is a reminder to you that, just because a statistic comes from a paper that has gone through peer review and been published in a prestigious journal does not mean that your work of scrutinizing the statistic has been done for you. This is especially true because the practice of reporting _p_-values instead of effect sizes has unfortunately gone unchecked in academic journals for so long.
+This is a reminder to you that just because a statistic comes from a paper that has gone through peer review and been published in a prestigious journal does not mean that your work of scrutinizing the statistic has been done for you. This is especially true because the practice of reporting _p_-values instead of effect sizes has unfortunately gone unchecked in academic journals for so long.
 
 
 ### Using Inferential Statistics Without Statistical Inference
