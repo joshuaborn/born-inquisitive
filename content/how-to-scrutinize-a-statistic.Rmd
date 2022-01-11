@@ -72,9 +72,6 @@ The solution for those who care about such issues, therefore, is to be competent
 
 Another way to conceive of this is that _statistics should be questioned,_ by every person who encounters them and must make a decision on whether or not to believe what is being reported.
 
-
-### Purpose of This Article
-
 The intent of this article is to assist the reader in the enterprise of questioning the statistics you encounter. It does not assume the reader has had any formal instruction in statistics, though such instruction would be valuable in understanding the concepts used throughout. The only prerequisite for this article is cursory mathematics knowledge at the secondary school level.
 
 This article is not a replacement for courses in statistics. However, the converse is also true. Statistics courses are rarely taught from the standpoint of what questions are relevant to ask when encountering a statistic. Rather, introductory statistics courses usually focus on giving students a bag of statistical tools to use in their research activities.[^courses]
