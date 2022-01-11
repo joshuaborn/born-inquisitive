@@ -435,7 +435,23 @@ This is why statistics per capita are preferable to raw counts or totals for soc
 
 In one article, he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728. [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries had occurred in Auckland as in Wellington. [@lumley_newsflash_2012] These counts are misleading because the population of Auckland is about three times that of Wellington.
 
-_**Put images of Auckland and Wellington side-by-side here.**_
+![
+A photograph of Auckland, New Zealand.<br/>
+[Image](https://pixabay.com/photos/auckland-skytower-new-zealand-2160551/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2160551)
+by
+[Bernd Hildebrandt](https://pixabay.com/users/barni1-773830/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2160551)
+from
+[Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2160551)
+](/images/auckland.jpg)
+
+![
+A photograph of Wellington, New Zealand.<br/>
+[Image](https://pixabay.com/photos/new-zealand-wellington-capital-city-4875972/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4875972)
+by
+[Makalu](https://pixabay.com/users/makalu-680451/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4875972)
+from
+[Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4875972)
+](/images/wellington.jpg)
 
 What are more relevant for comparison between the two places are rate of teenage drunk driving convictions and rate of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions was much lower in Auckland than in Wellington, but the rate of burglary was still slightly higher in Auckland than in Wellington.
 
@@ -457,7 +473,7 @@ With a numerical response variable, the most common way to report effect size is
 
 In these cases, you should search for both the mean response variable values reported individually and for the differences in means.
 
-_**Replace this example with a real-world data example.**_
+_**Put real-world example with similar difference in means, but different absolute means.**_
 
 It is good to know the mean values themselves and not just the difference in means because the mean values can shed light on the relative magnitude of the difference. If the difference in mean values of weight between males and females of some species of animal is 2 pounds, the practical significance of this difference is not the same when the mean male weight is 48 pounds and mean female weight 41 pounds versus when the mean male weight is 589 pounds and mean female weight 413 pounds.
 
