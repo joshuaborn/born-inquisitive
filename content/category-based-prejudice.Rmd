@@ -1,7 +1,7 @@
 ---
 title: "Category-Based Prejudice"
 date: 2021-11-26
-tags: ["reasoning about evidence", "third-person"]
+tags: ["reasoning about evidence", "fallacies", "third-person"]
 bibliography: "../bibliographies/category-based-prejudice.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
