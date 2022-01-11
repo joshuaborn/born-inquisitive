@@ -853,7 +853,7 @@ For inferential statistics, estimation error stems from the randomization done i
 
 Throughout your work of scrutinizing a statistic, you should be on the look out for common fallacies, such as unadjusted confounding variables, missing denominators, unreported effect sizes, inferential statistics without inference, or _p_-hacking.
 
-Scrutinizing statistics, though work, can also be a joy. When you are surrounded by those who want to influence rather than inform you, it is an opportunity for that rarest of exercises: critical thinking. It is a chance to strengthen a singular implement in your search for truth and knowledge: your own skeptical mind.
+Scrutinizing statistics, though work, can also be a joy. When you are surrounded by those who want to influence rather than inform you, it is an opportunity to strengthen that most singular implement in the search for truth and knowledge: your own skeptical mind.
 
 
 ## Citations
