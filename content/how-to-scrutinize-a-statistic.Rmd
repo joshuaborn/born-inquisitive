@@ -362,7 +362,14 @@ Whether a statistic is practically significant is less a matter of statistical t
 
 For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would, without medical intervention, have levels of daily blood glucose higher than what is typical. However, medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. [@diabetes_effect_1993] This new drug you are developing could therefore be of some use.
 
-_**Put image of diabetes patient here.**_
+![
+A blood glucose test, such as those used by diabetes patients to manage their daily blood glocuse levels, being administered.<br/>
+[Image](https://pixabay.com/photos/diabetes-blood-finger-glucose-777002/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=777002)
+by
+[Tesa Robbins](https://pixabay.com/users/tesaphotography-947707/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=777002)
+from
+[Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=777002).
+](/images/diabetes.jpg)
 
 However, if you discover the drug decreases daily mean blood glucose by only 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because prior research observed long-term health benefits occurred when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl.
 
