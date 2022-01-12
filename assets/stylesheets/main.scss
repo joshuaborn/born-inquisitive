@@ -128,7 +128,7 @@ main {
 }
 
 @mixin smallest() {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
 }
 
 @mixin hanging-indent() {
@@ -412,6 +412,7 @@ main {
   }
 
   > aside {
+    @include non-body-font();
     background-color: #eaeaea;
 
     h2, h3, ul {
@@ -419,7 +420,6 @@ main {
     }
 
     h2 {
-      @include non-body-font();
       @include bold();
       text-transform: uppercase;
     }
@@ -430,12 +430,18 @@ main {
     }
 
     p {
-      @include smaller();
+      @include smallest();
+      margin: 0.5rem 0;
     }
 
     ul {
-      @include non-body-font();
       @include smaller();
+    }
+
+    img {
+      display: block;
+      margin: 0.5rem auto;
+      max-width: 80%;
     }
   }
 
