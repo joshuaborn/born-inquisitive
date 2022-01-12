@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>Those who care about any larger issues necessarily encounter statistics. This article is a primer for the practice of scrutinizing a statistic. It describes what sort of questions should be asked of a statistic, such as those pertaining to its provenance, its scope of inference, its practical significance, and when applicable, the estimation error associated with the statistic. Throughout the article, common fallacies in the presentation or interpretation of statistics are identified. No prerequistes of the reader are expected beyond mathematics at the secondary school level.</p>
+  <p>If you inquire about any larger issue you care about, you encounter statistics. This article is a primer for the practice of scrutinizing a statistic. It describes what sort of questions you should ask of a statistic, such as those pertaining to its provenance, its scope of inference, its practical significance, and when applicable, the estimation error associated with the statistic. Common fallacies in the presentation or interpretation of statistics are identified throughout the article, and no prerequisites are expected beyond mathematics at the secondary school level.</p>
   <!--more-->
   ## Table of Contents
 ---
