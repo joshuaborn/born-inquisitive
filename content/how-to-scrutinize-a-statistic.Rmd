@@ -815,7 +815,18 @@ Fortunately, the ability to spot these cases comes directly from what you learne
 
 For example, Volk and Atkinson [-@volk_infant_2013] use descriptive statistics to quantify estimates of infant and child mortality in preindustrial societies. This is an excellent example of how quantitative analysis without a representative sample should be done.
 
-It is impossible to acquire a representative sample of all hunter-gatherer and agriculturalist societies in human pre-history and history. Indeed, much of this information has been forever lost to time. However, neither is it the case that there are no relevant observations whatsoever. Volk and Atkinson reviewed what historical, ethnographic, and archaeological studies exist and found a relatively consistent trend, giving researchers an idea of the magnitude of infant and child death over the centuries.
+It is impossible to acquire a representative sample of all hunter-gatherer and agriculturalist societies in human pre-history and history. Indeed, much of this information has been forever lost to time. However, neither is it the case that there are no relevant observations whatsoever. The authors reviewed what historical, ethnographic, and archaeological studies exist and found a relatively consistent trend, giving researchers an idea of the magnitude of infant and child death over the centuries.
+
+![
+Children of the Inuit people, one of the hunter-gatherer societies reviewed by Volk and Atkinson [-@volk_infant_2013].
+<br/>
+["Three Inuit children on a toboggan"](https://www.flickr.com/photos/28853433@N02/49165287686)
+by
+[LibraryArchive](https://www.flickr.com/photos/lac-bac/)
+is licensed under
+[CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+and is not modified.
+](/images/inuit-children.jpg)
 
 The authors, in the otherwise excellent paper, did slip into the fallacy of using inferential statistics in a non-inferential context once.
 
@@ -823,9 +834,18 @@ The authors, in the otherwise excellent paper, did slip into the fallacy of usin
 
 Student's _t_-test is a null hypothesis test pertaining to differences in mean values. The null hypothesis of a Student's _t_-test is about _means in the population._ What is the population in this context? The target population would be every pre-industrial society that ever existed. The sampled population consists of whatever societies happened to have quality research published in academic journals about their infant or child mortality rates.
 
-The authors reviewed 20 studies of hunter-gather societies, 22 studies of agriculturalist societies, and 43 historical studies. Considering the countless pre-industrial societies that have existed, this is the epitome of an unrepresentative, entirely opportunistic sample. Thus, there is no random sampling, there is no sampling error to quantify, and these _p_-values are meaningless.
+![
+Children of the Masai people, one of the agriculturalist societies reviewed by Volk and Atkinson [-@volk_infant_2013].
+<br/>
+["Masai children"](https://www.flickr.com/photos/29830075@N06/5623707776)
+by
+[Chris](https://www.flickr.com/photos/cmozz/)
+is licensed under
+[CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
+and is not modified.
+](/images/masai-children.jpg)
 
-_**Put photograph of hunter-gatherer society here.**_
+The authors reviewed 20 studies of hunter-gather societies, 22 studies of agriculturalist societies, and 43 historical studies. Considering the countless pre-industrial societies that have existed, this is the epitome of an unrepresentative, entirely opportunistic sample. Thus, there is no random sampling, there is no sampling error to quantify, and these _p_-values are meaningless.
 
 The authors did an excellent job using purely descriptive statistics elsewhere in the paper other than in this one instance, and their review is highly informative. However, the gap highlighted by this misuse of inferential statistics between the actual sample and the target population is striking.
 
