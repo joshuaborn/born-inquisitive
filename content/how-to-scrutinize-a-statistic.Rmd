@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>If you inquire about any larger issue you care about, you encounter statistics. This article is a primer for the practice of scrutinizing a statistic. It describes what sort of questions you should ask of a statistic, such as those pertaining to its provenance, its scope of inference, its practical significance, and when applicable, the estimation error associated with the statistic. Common fallacies in the presentation or interpretation of statistics are identified throughout the article, and no prerequisites are expected beyond mathematics at the secondary school level.</p>
+  <p>If you inquire into any larger issue you care about, you encounter statistics. This article is a primer for the practice of scrutinizing a statistic. It describes what sort of questions you should ask of a statistic, such as those pertaining to its provenance, its scope of inference, its practical significance, and when applicable, the estimation error associated with the statistic. Common fallacies in the presentation or interpretation of statistics are identified throughout the article, and no prerequisites are expected beyond mathematics at the secondary school level.</p>
   <!--more-->
   ## Table of Contents
 ---
@@ -803,9 +803,9 @@ This is a reminder to you that just because a statistic comes from a paper that 
 
 ### Using Inferential Statistics Without Statistical Inference
 
-Confidence intervals and _p_-values are ultimately ways of describing estimation error. Estimation error, as was discussed, comes from the randomization used in statistical inference. In short, confidence intervals and _p_-values are _inferential statistics._ It does not make any sense to use inferential statistics when there is no statistical inference.
+Confidence intervals and _p_-values are ultimately ways of describing estimation error. Estimation error, as was discussed, comes from the randomization used in statistical inference. In short, confidence intervals and _p_-values are _inferential statistics._ Inferential statistics are sometimes contrasted with _descriptive statistics,_ denoting statistics that are not predicated on any statistical inference. It does not make any sense to use inferential statistics when there is no statistical inference.
 
-If a sample is representative of a larger population, then observations of the sample can estimate quantities of the population. The sampling error involved in this is what confidence intervals and _p_-values are trying to describe. However, if a sample is known _not_ to be representative of a larger population, it is deceptive to use these inferential statistics because observations of the sample do not estimate quantities in any larger population. Thus, if you do not have a representative sample, you do not have any population about which to infer, and you should not be using inferential statistics.
+If a sample is representative of a larger population, then observations of the sample can estimate quantities of the population. The sampling error involved in this is what confidence intervals and _p_-values are trying to describe. However, if a sample is known _not_ to be representative of a larger population, it is deceptive to use these inferential statistics because they do not describe sampling error or anything else for that matter. Thus, if you do not have a representative sample, you do not have any population about which to infer, and you should not be using inferential statistics.
 
 If assignment in an experiment between intervention and control groups is randomized, you can attribute the observed effects in the experiment to the intervention. However, you are estimating these effects, because individuals in the experiment are not all identical, so there is some variation depending on exactly which individuals are assigned to intervention or control groups. Confidence intervals and _p_-values can be used to describe the error that comes from this randomized assignment. However, if no randomization is used in assignment, these inferential statistics describe nothing. Indeed, if no randomization is used in assignment, then you cannot be sure the observed effects are even caused by the intervention.
 
@@ -813,9 +813,21 @@ However, some academic papers report inferential statistics for results that do 
 
 Fortunately, the ability to spot these cases comes directly from what you learned in the sections on scope of inference and on estimation error. Thus, you should dismiss any inferential statistics, such as confidence intervals or _p_-values, when used with a study whose scope of inference is in the lower left corner of Table 1.
 
-For example, below is an excerpt in an otherwise excellent paper on child mortality in preindustrialized societies.
+For example, Volk and Atkinson [-@volk_infant_2013] use descriptive statistics to quantify estimates of infant and child mortality in preindustrial societies. This is an excellent example of how quantitative analysis without a representative sample should be done.
 
-**_Insert example from Volk and Atkinson (2013) here._**
+It is impossible to acquire a representative sample of all hunter-gatherer and agriculturalist societies in human pre-history and history. Indeed, much of this information has been forever lost to time. However, neither is it the case that there are no relevant observations whatsoever. Volk and Atkinson reviewed what historical, ethnographic, and archaeological studies exist and found a relatively consistent trend, giving researchers an idea of the magnitude of infant and child death over the centuries.
+
+The authors, in the otherwise excellent paper, did slip into the fallacy of using inferential statistics in a non-inferential context once.
+
+> While [average rates of infant and child mortality in agriculturalist societies] are still much higher than modernized values, when compared using a Student's _t_-test they are significantly lower than either the historical or hunter-gatherer [mortality rates] (agricultural vs. historical [infant mortality rate] _t_ = &minus;2.22, _p_ = 0.36, [child mortality rate] _t_ = &minus;3.743, _p_ < 0.01; agricultural vs. hunter-gatherers [infant mortality rate] _t_ = &minus;3.928, _p_ < 0.01, [child mortality rate] _t_ = &minus;3.599, _p_ < 0.01). [@volk_infant_2013]
+
+Student's _t_-test is a null hypothesis test pertaining to differences in mean values. The null hypothesis of a Student's _t_-test is about _means in the population._ What is the population in this context? The target population would be every pre-industrial society that ever existed. The sampled population consists of whatever societies happened to have quality research published in academic journals about their infant or child mortality rates.
+
+The authors reviewed 20 studies of hunter-gather societies, 22 studies of agriculturalist societies, and 43 historical studies. Considering the countless pre-industrial societies that have existed, this is the epitome of an unrepresentative, entirely opportunistic sample. Thus, there is no random sampling, there is no sampling error to quantify, and these _p_-values are meaningless.
+
+_**Put photograph of hunter-gatherer society here.**_
+
+The authors did an excellent job using purely descriptive statistics elsewhere in the paper other than in this one instance, and their review is highly informative. However, the gap highlighted by this misuse of inferential statistics between the actual sample and the target population is striking.
 
 
 ### Not Adjusting for Multiple Comparisons
