@@ -548,7 +548,7 @@ These correlation coefficients range from a value of -1 to a value of 1. A value
 
 The Pearson product-moment correlation coefficient measures the linear association of two numerical variables. If for every increase in one variable, there is a proportional increase in the other variable, then the Pearson coefficient would be _r_ = 1.  Similarly, values of the Pearson correlation coefficient close to &minus;1 indicate that the larger one variable gets, the more likely the other variable is to be smaller. A Pearson correlation coefficient close to 0 indicates that there is no linear association between two variables. Figure \@ref(fig:correlation-scatterplots) illustrates when Pearson correlation coefficients are close to 1, 0, and -1.
 
-```{r correlation-scatterplots, fig.width=8, fig.height=3, dpi=100, fig.cap="Scatterplots showing cases when two variables are highly correlated (left panel), not correlated (middle panel), and highly inversely correlated (right panel). Pearson correlation coefficient values are listed in the panel labels."}
+```{r correlation-scatterplots, fig.width=8, fig.height=3, dpi=100, fig.retina=2, fig.cap="Scatterplots showing cases when two variables are highly correlated (left panel), not correlated (middle panel), and highly inversely correlated (right panel). Pearson correlation coefficient values are listed in the panel labels."}
 n <- 100
 
 set.seed(20220123)
