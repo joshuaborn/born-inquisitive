@@ -50,7 +50,7 @@ main {
 
   > aside {
     flex: 0 0 13rem;
-    margin: 1.5rem auto;
+    margin: 1.5rem auto 0;
     padding: 1rem;
 
     section {
@@ -93,7 +93,6 @@ main {
   main {
     flex-direction: row;
     margin: 0 auto;
-    max-width: 1024px;
     padding: 0 1rem 1rem;
 
     > * {
@@ -102,7 +101,7 @@ main {
 
     > aside {
       margin: 0;
-      max-width: 13rem;
+      max-width: 260px;
     }
   }
 }
@@ -139,7 +138,7 @@ main {
 
 html {
   font-family: 'Sorts Mill Goudy', serif;
-  font-size: 18px;
+  font-size: 125%;
   font-weight: 400;
 }
 
@@ -435,14 +434,22 @@ main {
       margin: 0.5rem 0;
     }
 
+    p:last-child {
+      margin-bottom: 0;
+    }
+
     ul {
       @include smaller();
     }
 
-    img {
-      display: block;
-      margin: 0.5rem auto;
-      max-width: 80%;
+    img.avatar {
+      float: left;
+      margin: 0 0.5rem 0 0;
+      max-width: 128px;
+    }
+
+    section#tags ul li {
+      margin-top: 0.25rem;
     }
   }
 
@@ -494,11 +501,6 @@ main {
         margin-top: 1.25rem;
       }
     }
-  }
-}
-
-@media (min-width: 1024px) {
-  main {
     > aside {
       ul, h3 {
         text-align: left;
@@ -506,6 +508,31 @@ main {
         li {
           @include hanging-indent();
         }
+      }
+
+      section#tags, section#archive {
+        width: 50%;
+        float: left;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    > aside {
+      section#tags, section#archive {
+        width: 100%;
+      }
+
+      img.avatar {
+        display: block;
+        float: none;
+        margin: 0.5rem auto;
+      }
+
+      section#tags ul li {
+        margin-top: 0;
       }
     }
   }
