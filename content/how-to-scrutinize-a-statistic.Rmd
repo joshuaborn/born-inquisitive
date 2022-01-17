@@ -868,7 +868,7 @@ Finally, while _p_-hacking specifically is a fallacy, using multiple comparisons
 
 ## Conclusion
 
-If you are concerned with a social issue, a medical issue, an environmental issue, or indeed any issue involving large populations of people or things or involving cause and effect, you are engaged in statistical reasoning, whether you realize this or not. Therefore, serious inquiry into such an issue necessarily involves encountering statistics. However, because statistics can be abused, the skill of scrutinizing statistics is an important one.
+If you are concerned with a social issue, a medical issue, an environmental issue, or indeed any issue involving large populations or involving cause and effect, you are engaged in statistical reasoning, whether you realize this or not. Therefore, serious inquiry into such an issue necessarily involves encountering statistics. However, because statistics can be abused, the skill of scrutinizing statistics is an important one.
 
 You should scrutinize all statistics for provenance, scope of inference, and practical significance. Additionally, you should scrutinize statistics for estimation error if you determine them to be inferential when scrutinizing their scope of inference.
 
