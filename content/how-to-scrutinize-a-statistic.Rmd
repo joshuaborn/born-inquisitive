@@ -540,20 +540,13 @@ This family includes the Pearson product-moment correlation coefficient, the Spe
 
 [^greek]: The character _"&rho;"_ is the Greek letter rho. Sometimes a convention is used where _r_ refers to the Pearson product-moment correlation coefficient and _&rho;_ is used for the Spearman rank correlation coefficient. However, you should not rely on this convention, because there exists another convention in which Roman letters, such as _r,_ are used for statistics pertaining to a sample and Greek letters, such as _&rho;,_ are used for parameters pertaining to a population.
 
-These correlation coefficients range from a value of -1 to a value of 1. A value of 1 represents an exact correlation, a value of 0 represents no correlation, and a value of -1 represents an exact inverse correlation.
+These correlation coefficients range from a value of -1 to a value of 1. A value of 1 represents an exact correlation, a value of 0 represents no correlation, and a value of -1 represents an exact inverse correlation.[^real-correlation]
 
+[^real-correlation]: A real-world example of individual mean values illustrating relative magnitude in the difference of means will be included here in the future.
 
-```{r, eval=FALSE, include=FALSE}
-iris
-cor(iris$Sepal.Length, iris$Sepal.Width)
-cor(iris$Petal.Length, iris$Petal.Width)
-```
+<!-- TO DO: Real-world example of correlation and inverse correlation -->
 
-_**Find alternative to iris data set.**_
-
-The Pearson product-moment correlation coefficient measures the linear association of two numerical variables. For instance, a famous data set in statistics contains lengths and widths of petals taken from three species of iris flowers. Petals that are longer also tend to be wider, and vice versa, such that the Pearson correlation coefficient for petal length and petal width in this data set is _r_ = 0.96, which is close to 1 and thus a strong correlation.
-
-If every petal in the sample were the same exact shape, but only scaled up or scaled down without changing relative proportions of length and width, then the Pearson coefficient would be _r_ = 1.  Similarly, values of the Pearson correlation coefficient close to -1 indicate that the larger one variable gets, the more likely the other variable is to be smaller. A Pearson correlation coefficient close to 0 indicates that there is no linear association between two variables.
+The Pearson product-moment correlation coefficient measures the linear association of two numerical variables. If for every increase in one variable, there is a proportional increase in the other variable, then the Pearson coefficient would be _r_ = 1.  Similarly, values of the Pearson correlation coefficient close to -1 indicate that the larger one variable gets, the more likely the other variable is to be smaller. A Pearson correlation coefficient close to 0 indicates that there is no linear association between two variables.
 
 _**Insert scatterplots of correlation coefficents here.**_
 
@@ -743,7 +736,7 @@ To avoid this fallacy, remember that _statistical significance does not imply pr
 
 Fortunately, you can evaluate both statistical and practical significance simultaneously when confidence intervals are provided. A rule of thumb you can use to accomplish this is to evaluate the practical significance of a statistic by using the least favorable extreme of the confidence interval to whatever working hypothesis you are considering.
 
-In cases in which an effect size is practically insignificant, the least favorable extreme of the confidence interval for the effect size will be outside of your threshold of practical significance.[^real-practically-insignificant]
+In cases in which an effect size is practically insignificant, the least favorable extreme of the confidence interval for the effect size will be outside of your threshold of practical significance.[^real-practically-insignificant-CI]
 
 [^real-practically-insignificant-CI]: A real-world example of a practically insignificant, but statistically significant confidence interval will be included here in the future.
 
