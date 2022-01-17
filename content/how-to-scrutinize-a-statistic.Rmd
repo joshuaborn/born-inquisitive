@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>If you inquire into any larger issue you care about, you encounter statistics. This article is a primer for the practice of scrutinizing a statistic. It describes what sort of questions you should ask of a statistic, such as those pertaining to its provenance, its scope of inference, its practical significance, and when applicable, the estimation error associated with the statistic. Common fallacies in the presentation or interpretation of statistics are identified throughout the article, and no prerequisites are expected beyond mathematics at the secondary school level.</p>
+  <p>If you inquire into any issue you care about, you encounter statistics. This article is a primer for the practice of scrutinizing these statistics. It describes what sort of questions you should ask of a statistic, such as those pertaining to its provenance, its scope of inference, its practical significance, and when applicable, the estimation error associated with the statistic. Common fallacies in the presentation or interpretation of statistics are identified throughout the article, and no prerequisites are expected beyond mathematics at the secondary school level.</p>
   <!--more-->
   ## Table of Contents
 ---
@@ -47,9 +47,7 @@ and is not modified.
 
 The point of this saying is to warn about those who start with a preconceived idea of a conclusion that they want to reach and then search for statistics that appear to validate that preconceived conclusion.
 
-This is a practice well known to statisticians, so much so that _How to Lie with Statistics_ [-@huff_how_1993] is still in print more than fifty years after it was originally published in 1954.
-
-The practice is effective for at least three reasons.
+This is a practice well known to statisticians, so much so that _How to Lie with Statistics_ [-@huff_how_1993] is still in print more than fifty years after it was originally published in 1954. It is a practice that is effective for at least three reasons.
 
 First, statistics have some persuasive ability. They bring with them an atmosphere of scholarship, science, and quantitative certainty. Even when no relevant empirical observations have been made, citing statistics make it appear that a position is supported by empirical evidence.
 
@@ -131,7 +129,7 @@ Today, with the plethora of Internet search tools available, the task of finding
 
 ### Misrepresented Source
 
-When a source is provided, the obvious first step in establishing provenance is to check this source. However, sometimes this immediately becomes a dead end because the cited source does not actually assert the statistic in question.  This phenomenon can have a variety of causes.
+When a source is provided, the obvious first step in establishing provenance is to check this source. However, sometimes this immediately becomes a dead end because the cited source does not actually assert the statistic in question. This phenomenon can have a variety of causes.
 
 For one, the person falsely citing a source to be the origin of a statistic might simply be making a mistake in good faith. Perhaps the person [remembered something incorrectly](/anecdotes-are-not-evidence.html#flaws-of-memory) or confused this source with another.
 
@@ -420,11 +418,10 @@ Both response and explanatory variables can come in different types. Broadly, th
 
 Whether a response variable is categorical or numerical is a separate question from whether an explanatory variable is categorical or numerical. In the insulin-alternative drug example, the response variable is a numerical variable because numbers in the hundreds of mg/dl are used. However, the explanatory variable is a categorical variable with just two levels: _given the drug_ or _not given the drug._
 
-**_Replace this contrived example of counts and proportions, totals and means with real life examples._**
+Categorical variables are typically summarized using either counts or proportions, <!-- TO DO: Real-world example of counts and proportions for a categorical variable --> and numerical variables are typically summarized using either totals or arithmetic means.[^real-counts] <!-- TO DO: Real-world example of totals and means for a numerical variable -->
 
-Categorical variables are typically summarized using either counts or proportions. For instance, using raw counts, a warehouse might have 325 small sized garments, 450 medium sized garments, and 375 large sized garments. Using proportions, about 28.3\% of the clothes at the warehouse are size small, 39.1\% are size medium, and 32.6\% are size large.
+[^real-counts]: Real-world example of counts, proportions, totals, and means will be included here in the future.
 
-Similarly, numerical variables are typically summarized using either totals or arithmetic means. For instance, the total value of inventory at the warehouse might be \$34,500. Using an arithmetic mean, the average value of an item at the warehouse is  \$30, if there are 1,150 items in the warehouse.
 
 
 #### Missing Denominators
@@ -437,8 +434,6 @@ When comparing between two or more populations, proportions or means are usually
 
 This is why statistics per capita are preferable to raw counts or totals for social data. For example, the statistician Thomas Lumley has a series of articles in which he expounds on the fallacy of using raw counts or totals when comparing statistics about Auckland, New Zealand, where he lives, to Wellington, New Zealand, all humorously titled something to the effect of "Auckland is larger than Wellington."
 
-In one article, he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728. [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries had occurred in Auckland as in Wellington. [@lumley_newsflash_2012] These counts are misleading because the population of Auckland is about three times that of Wellington.
-
 ![
 A photograph of Auckland, New Zealand.<br/>
 [Image](https://pixabay.com/photos/auckland-skytower-new-zealand-2160551/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2160551)
@@ -447,6 +442,8 @@ by
 from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2160551)
 ](/images/auckland.jpg)
+
+In one article, he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728. [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries had occurred in Auckland as in Wellington. [@lumley_newsflash_2012] These counts are misleading because the population of Auckland is about three times that of Wellington.
 
 ![
 A photograph of Wellington, New Zealand.<br/>
@@ -475,15 +472,13 @@ As previously mentioned, when the explanatory variable is categorical, you are e
 
 With a numerical response variable, the most common way to report effect size is in terms of the means of the response variable for each such population. The effect size is summarized as the difference in these means. For example, the mean expenditure on food and beverages for off-premises consumption in Michigan in 2020 was \$3,532, whereas it was \$2,872 in Arkansas in 2020. The effect size of living in Michigan versus living in Arkansas can be summarized as the difference in means of \$3,532 &minus; \$2,872 = \$660.
 
-In these cases, you should search for both the mean response variable values reported individually and for the differences in means.
+In these cases, you should search for both the mean response variable values reported individually and for the differences in means, because the mean values themselves can shed light on the relative magnitude of the difference.[^real-means] <!-- TO DO: Real-world example of similar differences in means, but different absolute means -->
 
-_**Put real-world example with similar difference in means, but different absolute means.**_
-
-It is good to know the mean values themselves and not just the difference in means because the mean values can shed light on the relative magnitude of the difference. If the difference in mean values of weight between males and females of some species of animal is 2 pounds, the practical significance of this difference is not the same when the mean male weight is 48 pounds and mean female weight 41 pounds versus when the mean male weight is 589 pounds and mean female weight 413 pounds.
+[^real-means]: A real-world example of individual mean values illustrating relative magnitude in the difference of means will be included here in the future.
 
 Furthermore, quality statistical analysis reports the difference in means separately from the individual mean values because estimation error should be calculated differently for the difference in the means than for the means themselves.
 
-If neither the individual means nor the differences in means are reported, then you must withhold judgment as to practical significance, and you should question the veracity of the source.
+If neither the individual means nor the differences in means are reported, then you should withhold judgment regarding practical significance, and you should question the veracity of the source.
 
 Sometimes, other statistics are reported instead of the means of response variable. For various technical reasons, medians might be reported instead of means.[^median] However, your scrutinization of medians is similar to that of means. You should look for both the individual median values of each population and their differences, prefer to have both, but demand at least one of these.
 
@@ -584,11 +579,13 @@ Unfortunately, interpreting these models is too involved a topic to quickly summ
 
 A very elementary example involves a numerical response variable analyzed in terms of a single numerical explanatory variable. For this, a simple linear regression model can be used. This model consists of the relationship _&#375;_ = _&beta;<sub>1</sub>x_ + _&beta;<sub>0</sub>_, where _y_ is the response variable, _x_ is the explanatory variable, and _&beta;<sub>1</sub>_ and _&beta;<sub>0</sub>_ are parameters of the model. The mark above the _"y"_ in _"&#375;"_ indicates that the value calculated via this model is an estimate and is not expected to be exactly the observed value.
 
-Fitting this model to a set of observations consists of estimating optimal values for the parameters _&beta;<sub>1</sub>_ and _&beta;<sub>0</sub>_. In this case, the estimate of _&beta;<sub>1</sub>_ is an estimate of the effect size. The units of measurement of _&beta;<sub>1</sub>_ are the ratio of the units of the response variable to units of the explanatory variable, and so this is an unstandardized estimate of the effect size. 
+Fitting this model to a set of observations consists of estimating optimal values for the parameters _&beta;<sub>1</sub>_ and _&beta;<sub>0</sub>_. In this case, the estimate of _&beta;<sub>1</sub>_ is an estimate of the effect size. The units of measurement of _&beta;<sub>1</sub>_ are the ratio of the units of the response variable to units of the explanatory variable, and so this is an unstandardized estimate of the effect size.[^real-regression]
 
-For example, _**example of simple linear regression goes here**_
+[^real-regression]: A real-world example of simple linear regression will be included here in the future.
 
-Interpretation of models is not always so straightforward as in this example, for a variety of reasons.
+<!-- TO DO: Real-world example of simple linear regression  -->
+
+Interpretation of models is not always straightforward, for a variety of reasons.
 
 Sometimes instead of fitting a model to the raw observations, _transformations_ are used to process the raw values into values more amenable to analysis, and the model is fit to the transformed data. This has the result of changing the interpretations of parameters such as _&beta;<sub>1</sub>_, depending on the particular transformations used.
 
@@ -718,15 +715,15 @@ The customary way to describe quantification of estimation error is with a confi
 
     First courses in statistics are usually based on a frequentist interpretation. Bayesian interpretation of probability can open the door to methods that do not work with the frequentist interpretation, most notably conjugate updating and hierarchical models. While credible intervals are easier to interpret for the layperson, Bayesian methods should not be used just so that credible intervals instead of confidence intervals can be used. Instead, Bayesian methods should be used when the problem makes sense for a Bayesian interpretation, for example, when there is a desire to revise a belief based on new evidence that has been informed by prior results.
 
-Thus, confidence intervals give an indication of the estimation error associated with a statistic in terms of the quantity being estimated. For example, ....
+Thus, confidence intervals give an indication of the estimation error associated with a statistic in terms of the quantity being estimated.[^real-CI]
 
-**_Insert real world examples of statistically significant and statistically insignificant confidence interval here._**
+[^real-CI]: A real-world example of a confidence interval will be included here in the future.
+
+<!-- TO DO: Real-world example of practically significant confidence interval -->
 
 A fallacy in interpreting confidence intervals is that they describe the dispersion of a variable in some way. The dispersion of a variable is how spread out the values of the variable are over all the individuals being considered and is usually described by the standard deviation or variance of a variable. Confidence intervals say _nothing_ about the standard deviation or variance of a variable, unless they are specifically confidence intervals for estimates of a standard deviation or variance. Confidence intervals _only_ describe the _estimation error_ associated with an estimate.
 
-For instance, in the above example, ...
-
-**_Insert plot of confidence interval for mean vs standard deviation here._**
+<!-- TO DO: Plot illustrating confidence interval for mean vs standard deviation ** -->
 
 
 ### Statistical Significance
@@ -735,11 +732,11 @@ Confidence intervals are particularly useful when evaluating whether an effect s
 
 If a confidence interval for a difference in means contains 0, then it is within the realm of probability that there is no actual difference in means, and any supposed difference is due to estimation error. Similarly, if a confidence interval for a relative risk contains 1, then it is within the realm of probability that the two risks are identical, and any alleged difference is due to estimation error. These are statistically _insignificant_ results.
 
-Statistically significant results are just the opposite. When a confidence interval for the difference in means does not contain 0 or a confidence interval for a relative risk does not contain 1, then it is improbable that the entirety of the effect size is due to estimation error. These are statistically _significant_ results.
+Statistically significant results are just the opposite. When a confidence interval for the difference in means does not contain 0 or a confidence interval for a relative risk does not contain 1, then it is improbable that the entirety of the effect size is due to estimation error. These are statistically _significant_ results.[^real-insignificant-CI]
 
-For instance, in the above examples...
+[^real-insignificant-CI]: A real-world example of a statistically insignificant confidence interval will be included here in the future.
 
-**_Discuss which real world confidence intervals show a statistically insignificant and statistically significant effect size._**
+<!-- TO DO: Real-world example of statistically insignificant confidence interval -->
 
 Note that statistical significance is a relatively weak claim. When dealing with effect sizes, it is merely the claim that the true effect size is not a null value, to use statistical jargon. Statistical significance thus attributes at least some of an effect size to something other than estimation error. Practical significance is discussed first and in more detail in this article deliberately, because _confusing statistical significance with practical significance is a fallacy._
 
@@ -747,13 +744,15 @@ To avoid this fallacy, remember that _statistical significance does not imply pr
 
 Fortunately, you can evaluate both statistical and practical significance simultaneously when confidence intervals are provided. A rule of thumb you can use to accomplish this is to evaluate the practical significance of a statistic by using the least favorable extreme of the confidence interval to whatever working hypothesis you are considering.
 
-In cases in which an effect size is practically insignificant, the least favorable extreme of the confidence interval for the effect size will be outside of your threshold of practical significance. For instance, ...
+In cases in which an effect size is practically insignificant, the least favorable extreme of the confidence interval for the effect size will be outside of your threshold of practical significance.[^real-practically-insignificant]
 
-**_Interpret a practically insignificant effect size here._**
+[^real-practically-insignificant-CI]: A real-world example of a practically insignificant, but statistically significant confidence interval will be included here in the future.
 
-In cases in which an effect is statistically insignificant, a confidence interval for an effect size leads to ambiguous interpretations. For instance, if the difference in means between two populations is statistically insignificant, then the confidence interval for this difference will have a negative value at one end and a positive value at the other. In the earlier example, ...
+<!-- TO DO: Real-world example of statistically significant, but practically insignificant confidence interval -->
 
-**_Interpret a statistically insignificant effect size here._**
+In cases in which an effect is statistically insignificant, a confidence interval for an effect size leads to ambiguous interpretations. For instance, if the difference in means between two populations is statistically insignificant, then the confidence interval for this difference will have a negative value at one end and a positive value at the other.
+
+<!-- TO DO: Interpret earlier statistically insignificant confidence interval here -->
 
 
 ### Summary
@@ -868,9 +867,7 @@ The simplest adjustment for multiple comparisons is called a "Bonferroni correct
 
 If you desire a family-wise _&alpha;_ level of 0.05, and there are 14 hypothesis tests performed, then instead of comparing each of the 14 _p_-values with 0.05, you would compare them with 0.05 / 14 = 0.0036 when using the Bonferroni correction. You would then only count those hypothesis tests with _p_-values less than 0.0036 as statistically significant. When doing this, the probability of incorrectly rejecting at least one null hypothesis among the 14 is again bounded at 0.05.
 
-For example,
-
-_**Insert real-world example of multiple comparisons in need of an adjustment here.**_
+<!-- TO DO: Real-world example of unadjusted multiple comparisons -->
 
 The Bonferroni correction tends to overcompensate for multiple comparisons and comes at the expense of more statistical power than is necessary. There are better adjustments for multiple comparisons. Which one is appropriate depends on the specific analysis. However, the Bonferroni correction can be useful for back-of-the-envelope style calculations when you are reading reports of empirical research rather than doing the analysis, such as when you are scrutinizing a statistic.
 
