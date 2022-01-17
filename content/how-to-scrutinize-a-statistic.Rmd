@@ -546,9 +546,68 @@ These correlation coefficients range from a value of -1 to a value of 1. A value
 
 <!-- TO DO: Real-world example of correlation and inverse correlation -->
 
-The Pearson product-moment correlation coefficient measures the linear association of two numerical variables. If for every increase in one variable, there is a proportional increase in the other variable, then the Pearson coefficient would be _r_ = 1.  Similarly, values of the Pearson correlation coefficient close to -1 indicate that the larger one variable gets, the more likely the other variable is to be smaller. A Pearson correlation coefficient close to 0 indicates that there is no linear association between two variables.
+The Pearson product-moment correlation coefficient measures the linear association of two numerical variables. If for every increase in one variable, there is a proportional increase in the other variable, then the Pearson coefficient would be _r_ = 1.  Similarly, values of the Pearson correlation coefficient close to &minus;1 indicate that the larger one variable gets, the more likely the other variable is to be smaller. A Pearson correlation coefficient close to 0 indicates that there is no linear association between two variables. Figure \@ref(fig:correlation-scatterplots) illustrates when Pearson correlation coefficients are close to 1, 0, and -1.
 
-_**Insert scatterplots of correlation coefficents here.**_
+```{r correlation-scatterplots, fig.width=8, fig.height=3, dpi=100, fig.cap="Scatterplots showing cases when two variables are highly correlated (left panel), not correlated (middle panel), and highly inversely correlated (right panel). Pearson correlation coefficient values are listed in the panel labels."}
+n <- 100
+
+set.seed(20220123)
+
+cor_dt <- rbind(
+  data.table(
+    relationship = 2,
+    x = 10 * rbeta(n, 1, 1),
+    y = 10 * rbeta(n, 1, 1)
+  ),
+  data.table(
+    relationship = 1,
+    x = 10 * rbeta(n, 1, 1)
+  )[, .(
+    relationship,
+    x,
+    y = x + rnorm(n)
+  )],
+  data.table(
+    relationship = 3,
+    x = 10 * rbeta(n, 1, 1)
+  )[, .(
+    relationship,
+    x,
+    y = 10 - x + rnorm(n)
+  )]
+)
+
+cor_dt[, y := fifelse(y < 0, 0 + rbeta(1, 1, 1), y)]
+
+r_dt <- cor_dt[, .(cor = round(cor(x, y), 2)), by = 'relationship'][order(relationship)]
+
+r_dt[, label := paste('r =', cor)]
+
+cor_dt[, relationship := factor(relationship, labels = r_dt$label)]
+
+ggplot(
+  data = cor_dt,
+  mapping = aes(
+    x = x,
+    y = y
+  )
+) +
+  geom_point() +
+  scale_x_continuous(
+    breaks = seq(0, 10, 2),
+    minor_breaks = seq(0, 11, 1)
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, 10, 2),
+    minor_breaks = seq(0, 11, 1)
+  ) +
+  facet_wrap(~relationship) +
+  theme_bw() +
+  theme(
+    axis.ticks = element_blank()
+  )
+```
+
 
 One of the major shortcomings of the Pearson product-moment correlation coefficient is that it only reflects _linear_ correlation between two variables. Another major shortcoming is that the Pearson correlation coefficient is not robust against outliers, such that even if there is a strong correlation among the majority of the observations, if there are just a relatively few observations that are outside this trend, then the Pearson correlation coefficient will be disproportionately closer to 0.
 
