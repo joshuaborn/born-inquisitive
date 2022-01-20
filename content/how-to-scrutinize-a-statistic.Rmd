@@ -536,7 +536,7 @@ This family includes the Pearson product-moment correlation coefficient, the Spe
 
 These correlation coefficients range from a value of -1 to a value of 1. A value of 1 represents an exact correlation, a value of 0 represents no correlation, and a value of -1 represents an exact inverse correlation.[^real-correlation]
 
-[^real-correlation]: A real-world example of individual mean values illustrating relative magnitude in the difference of means will be included here in the future.
+[^real-correlation]: A real-world example of correlation and inverse correlation will be included here in the future.
 
 <!-- TO DO: Real-world example of correlation and inverse correlation -->
 
