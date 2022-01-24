@@ -1,0 +1,38 @@
+---
+title: "Kwame Anthony Appiah's Criticism of \"Cultural Appropriation\" Criticism"
+date: 2022-01-23
+draft: true
+tags: ["book or article review", "opinion", "third-person"]
+bibliography: "../bibliographies/kwame-anthony-appiahs-criticism-of-cultural-appropriation-criticism.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+link-citations: true
+implicit-figures: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+    toc: true
+    toc_depth: 5
+include-before: |
+  <p>[The opening paragraph goes here.]</p>
+  <!--more-->
+  ## Table of Contents
+---
+
+```{r setup, echo=FALSE, message=FALSE}
+opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Introduction
+
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
