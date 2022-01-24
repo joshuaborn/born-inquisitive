@@ -1,5 +1,5 @@
 ---
-title: "Kwame Anthony Appiah's Criticism of \"Cultural Appropriation\" Criticism"
+title: "Kwame Anthony Appiah's Criticism of “Cultural Appropriation” Criticism"
 date: 2022-01-23
 draft: true
 tags: ["book or article review", "opinion", "third-person"]
@@ -19,7 +19,7 @@ include-before: |
 ---
 
 ```{r setup, echo=FALSE, message=FALSE}
-opts_chunk$set(
+knitr::opts_chunk$set(
   echo = FALSE
 )
 ```
@@ -27,7 +27,32 @@ opts_chunk$set(
 
 ## Introduction
 
+Kwame Anthony Appiah is a professor of philosophy at New York University and previously at Princeton University. Over the years, despite his political views leaning decidedly left of center as one might expect of someone in his station, he has criticized specific beliefs associated with what might be termed "identity politics" in the contemporary lexicon. [@appiah_uncompleted_1985] [@appiah_race_1996]
 
+More recently, he published _The Lies That Bind: Rethinking Identity._ [@appiah_lies_2018] The theme of the book is that "many of our thoughts about the identities that define us are misleading, and that we would have a better grasp on the real challenges that face us if we thought about them in new ways." The book is divided into chapters on various kinds of "identities that define us" such as creed, country, color, and class.
+
+There is a legend that Aristotle's followers were called the "Peripatetic school" after the word _περιπατητικός_ or "given to walking about" since Aristotle was fond of lecturing while going for a leisurely stroll. Such is the feeling one gets when reading Kwame Anthony Appiah's writing. It is neither acerbic nor terse. The reader feels led on a meandering journey by a man with much worldly knowledge who would would to share this wordliness, rather than forceful argumentation, with you.
+
+Thus, _The Lies That Bind_ is a pleasant read that largely preaches to the choir. Those who already have cosmopolitan sympathies will enjoy it. Those who root their sense of self in ethno-nationalism, religious sectarianism, or indeed, identity politics will largely be unmoved.
+
+Rather than be an extended review of the entire book, this article intends to highlight a specific argument made my Kwame Anthony Appiah that is tucked away at the end of the sixth chapter, the chapter on culture.
+
+Most of chapter six of _The Lies That Bind_ is a critique of the idea of "Western culture" or "Western civilization." Thus, much of the chapter is a history lesson, describing how the "Western culture" is a relatively modern (19th or 20th century) invention bolted onto history in a _post hoc_ fashion.
+
+Toward the end of chapter six, however, _The Lies That Bind_ goes in a related, but different, direction with a pointed critique of one aspect of contemporary dialogue: namely, allegations of "cultural appropriation." It is this critique that this article focuses upon.
+
+
+## Two Ideas of "Culture," and a Third
+
+
+
+## Outline
+
+* All culture "appropriated"
+* Sectarian views of "culture" stifle actual culture
+* Better criticisms
+* Culture is work, not birthright
+* Entitativity or "organicism"
 
 ## Citations
 
