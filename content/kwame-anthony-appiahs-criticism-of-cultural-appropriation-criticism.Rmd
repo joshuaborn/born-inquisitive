@@ -27,19 +27,21 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Kwame Anthony Appiah is a professor of philosophy at New York University and previously at Princeton University. Over the years, despite his political views leaning decidedly left of center as one might expect of someone in his station, he has criticized specific beliefs associated with what might be termed "identity politics" in the contemporary lexicon. [@appiah_uncompleted_1985] [@appiah_race_1996]
+Kwame Anthony Appiah is a professor of philosophy, now at New York University and previously at Princeton University, and columnist for _New York Times Magazine._ Over the years, despite his political views leaning decidedly left of center as one might expect of someone in his station, he has criticized[^examples] specific beliefs associated with what might be termed "identity politics" in the contemporary lexicon.
 
-More recently, he published _The Lies That Bind: Rethinking Identity._ [@appiah_lies_2018] The theme of the book is that "many of our thoughts about the identities that define us are misleading, and that we would have a better grasp on the real challenges that face us if we thought about them in new ways." The book is divided into chapters on various kinds of "identities that define us" such as creed, country, color, and class.
+[^examples]: For examples of such criticism, see "The Uncompleted Argument: Du Bois and the Illusion of Race" [-@appiah_uncompleted_1985] and "Race, Culture, Identity: Misunderstood Connections" [-@appiah_race_1996].
 
-There is a legend that Aristotle's followers were called the "Peripatetic school" after the word _περιπατητικός_ or "given to walking about" since Aristotle was fond of lecturing while going for a leisurely stroll. Such is the feeling one gets when reading Kwame Anthony Appiah's writing. It is neither acerbic nor terse. The reader feels led on a meandering journey by a man with much worldly knowledge who would like to share this wordliness, rather than forceful argumentation, with you.
+More recently, he published _The Lies That Bind: Rethinking Identity._ The theme of the book is that "many of our thoughts about the identities that define us are misleading, and that we would have a better grasp on the real challenges that face us if we thought about them in new ways." [@appiah_lies_2018, 190] The book is divided into chapters on various kinds of "identities that define us" such as creed, country, color, and class.
+
+There is a legend that Aristotle's followers were called the "Peripatetic school" after the word _περιπατητικός_ or "given to walking about" since Aristotle was fond of lecturing while going for a leisurely stroll. Such is the feeling one gets when reading Kwame Anthony Appiah's writing. It is neither acerbic nor terse. The reader feels led on a meandering journey by a man with much worldly knowledge who would prefer to share this wordliness, rather than forceful argumentation, with you.
 
 Thus, _The Lies That Bind_ is a pleasant read that largely preaches to the choir. One might imagine that those who already have cosmopolitan sympathies would enjoy it, while those who root their sense of self in ethno-nationalism, religious sectarianism, or indeed, identity politics would largely remain unmoved.
 
-Rather than be an extended review of the entire book, this article intends to highlight a specific argument made my Kwame Anthony Appiah that is tucked away at the end of the sixth chapter, the chapter on culture.
+Rather than be an extended review of the entire book, this article highlights a specific argument made my Kwame Anthony Appiah that is tucked away at the end of the sixth chapter, the chapter on culture.
 
 Most of chapter six of _The Lies That Bind_ is a critique of the idea of "Western culture" or "Western civilization." Thus, much of the chapter is a history lesson, describing how the "Western culture" is a relatively modern invention bolted onto history in a _post hoc_ fashion.
 
-Toward the end of chapter six, however, _The Lies That Bind_ goes in a related, but different, direction with a pointed critique of one aspect of contemporary dialogue: namely, allegations of "cultural appropriation." It is this critique that this article focuses upon.
+Toward the end of chapter six, however, _The Lies That Bind_ goes in a related, but different direction with a pointed critique of one aspect of contemporary dialogue: namely, allegations of "cultural appropriation." It is this critique that this article focuses upon.
 
 
 ## Two Ideas of "Culture," and a Third
@@ -57,7 +59,7 @@ Toward the end of the sixth chapter of _The Lies That Bind_, Kwame Anthony Appia
 
 ## All Culture Is Appropriated
 
-Kwame Anthony Appiah takes exception to this third idea of "culture." The issue he takes is that "[a]ll cultural practices and objects are mobile; they like to spread, and almost all are themselves creations of intermixture."
+Kwame Anthony Appiah takes exception to this third idea of "culture." The issue he takes is that "[a]ll cultural practices and objects are mobile; they like to spread, and almost all are themselves creations of intermixture." [@appiah_lies_2018, 208]
 
 Both the Tylorian and Arnoldian ideas of "culture" define it as something that involves one human being learning how to do something, either directly or indirectly, from another human being. The "cultural appropriation" idea necessarily declares some of this learning permissible and some of it sinful.
 
@@ -65,13 +67,13 @@ Kwame Anthony Appiah draws on an example from his father's homeland of Ghana.
 
 > Kente in Asante was first made with dyed silk thread, imported from the East. We took something made by others and made it ours. Or rather, they did that in the village of Bonwire. So did the Asante of Kumasi appropriate the cultural property of Bonwire, where it was first made? Putative owners may be previous appropriators. [@appiah_lies_2018, 208]
 
-So is the colorful Kente, now so associated with Ghanaian culture, actually a cultural appropriation that must be abandoned? Or is it only an appropriation if made in Kumasi instead of Bonwire? Do two appropriations make a non-appropriation?
+Must the colorful Kente, now so associated with Ghanaian culture, be declared a cultural appropriation and be abandoned? Or is it only an appropriation if made in Kumasi instead of Bonwire? Do two appropriations make a non-appropriation?
 
-This kind of analysis can continue _ad absurdum_ for cultural practices such as writing. Was the Cherokee polymath and statesman Sequoyah sinful when he noticed the utility of the alphabets that came from Europe and so invented a writing system for his own language? Were the Europeans outside of Imperial Rome sinful when they had similar encounters with the Roman alphabet? For fear of appropriating culture that is not "yours," should all writing be buried with the ancient Sumerians and therefore written language declared dead?
+This kind of analysis can continue _ad absurdum_ for cultural practices such as writing. Was the Cherokee polymath and statesman Sequoyah sinful when he noticed the utility of the alphabets that came from Europe and so invented a writing system for his own language? Were the Europeans outside of Imperial Rome sinful when they had similar encounters with the Roman alphabet? For fear of appropriating culture that is not "yours," should all writing be buried with the ancient Sumerians and therefore written language itself declared dead?
 
 Kwame Anthony Appiah answers these questions in the negative. "The real problem isn’t that it’s difficult to decide who owns culture; it’s that the very idea of ownership is the wrong model." [@appiah_lies_2018, 208]
 
-Since almost all culture has transmitted not just across generations, but also across place, it is arbitrary to invent a border across which cultural transmission is sinful. Of course, that has not preventing people from trying.
+Since almost all culture has transmitted not just across generations, but also across place, it is arbitrary to invent a border across which cultural transmission is sinful. Of course, that has not prevented people from trying.
 
 > For centuries, the people on the Venetian island of Murano made a living because glassmakers there perfected their useful art. Their beads, with multicolored filaments, some made of gold, were among the artistic wonders of the world. To keep their commercial advantage, the Venetian state forbade glassmakers from leaving with their secrets; the penalty for revealing them to outsiders was death. Good for Murano and its profits: bad for everyone else. (As it happens, lots of the skilled artisans escaped anyway and brought their knowledge to a wider European world.) Venetian beads were already being imported into the Gold Coast by the turn of the seventeenth century, arriving across the Sahara, where they had been an important part of the trade on which the empire of Mali had risen to commercial success centuries earlier. Crushed and sintered to make new beads, they developed into the distinctive _bodom_ you still see today in Ghana, beads my mother and my stepgrandmother collected and made into bracelets and necklaces. [@appiah_lies_2018, 208-209]
 
@@ -81,13 +83,13 @@ Unsurprisingly, Kwame Anthony Appiah answers this question in the negative, as w
 
 > What sorts of progress would have been advanced by insisting that the Venetians owned the idea of glass beads, and policing their claim? Unfortunately, the vigorous lobbying of huge corporations has made the idea of intellectual property go imperial; it seems to have conquered the world. To accept the notion of cultural appropriation is to buy into the regime they favor, where corporate entities acting as cultural guardians “own” a treasury of IP, extracting a toll when they allow others to make use of it. [@appiah_lies_2018, 209]
 
-Thus, the idea of "cultural appropriation" might protect profits, but does not protect culture, regardless of whether one thinks of "culture" in the lofty Arnoldian sense or the mundane Tylorian sense, because culture _is_ acquiring and then transmitting a practice done by someone else. Attempting to establish borders in this acquisition and transmission does not protect, but stifles the practice of culture.
+Thus, the idea of "cultural appropriation" might protect profits, but does not protect culture, regardless of whether one thinks of "culture" in the lofty Arnoldian sense or the mundane Tylorian sense, because culture _is_ acquiring and then transmitting a practice done by someone else. Attempting to establish borders in this acquisition and transmission does not protect, but rather stifles the practice of culture.
 
 
 ## Culture Is Work, Not Birthright
 
 
-## Exploitation or Mockery Are Better Criticisms
+## Better Criticisms
 
 
 ## Entitativity
