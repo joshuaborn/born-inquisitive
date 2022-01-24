@@ -33,7 +33,7 @@ More recently, he published _The Lies That Bind: Rethinking Identity._ [@appiah_
 
 There is a legend that Aristotle's followers were called the "Peripatetic school" after the word _περιπατητικός_ or "given to walking about" since Aristotle was fond of lecturing while going for a leisurely stroll. Such is the feeling one gets when reading Kwame Anthony Appiah's writing. It is neither acerbic nor terse. The reader feels led on a meandering journey by a man with much worldly knowledge who would would to share this wordliness, rather than forceful argumentation, with you.
 
-Thus, _The Lies That Bind_ is a pleasant read that largely preaches to the choir. Those who already have cosmopolitan sympathies will enjoy it. Those who root their sense of self in ethno-nationalism, religious sectarianism, or indeed, identity politics will largely be unmoved.
+Thus, _The Lies That Bind_ is a pleasant read that largely preaches to the choir. One might imagine that those who already have cosmopolitan sympathies would enjoy it, while those who root their sense of self in ethno-nationalism, religious sectarianism, or indeed, identity politics would largely remain unmoved.
 
 Rather than be an extended review of the entire book, this article intends to highlight a specific argument made my Kwame Anthony Appiah that is tucked away at the end of the sixth chapter, the chapter on culture.
 
@@ -44,15 +44,59 @@ Toward the end of chapter six, however, _The Lies That Bind_ goes in a related, 
 
 ## Two Ideas of "Culture," and a Third
 
+In order to frame his discussion of culture, Kwame Anthony Appiah identifies two different ideas of what the word "culture" refers to, named after two different people.
+
+The "Tylorian" culture, after Edward Burnett Tylor, is "that complex whole which includes knowledge, belief, arts, morals, law, customs and any other capabilities and habits acquired by man as a member of society." If this sounds like the kind of "culture" referred to in cultural anthropology, this is not by accident. Tylor was the first professor of anthropology at Oxford University.
+
+The "Arnoldian" culture, after Matthew Arnold, is "pursuit of our total perfection by means of getting to know, on all the matters which most concern us, the best which has been thought and said in the world." This is the elitist version of "culture" that people invoke when they judge each other on how "cultured" they are, when they praise someone for being a person "of culture," or when they denigrate someone who "has no culture."
+
+Everyone, by virtue of being a functioning human being, has culture in the Tylorian sense. The Arnoldian sense of culture, on the other hand, is typically reserved for those who pursue fine art, music, literature, etc.
+
+What both the Tylorian and Arnoldian ideas of culture have in common is that "culture" refers to practices that are learned, taught, and re-transmitted from one human being to the next, etc.
+
+Toward the end of the sixth chapter of _The Lies That Bind_, Kwame Anthony Appiah contrasts both these ideas of culture with a third idea of culture that lies in the premises of allegations of "cultural appropriation." This idea is that human beings either do or do not belong to discrete groups, and that only members of a group are allowed to do certain practices associated with the group.
 
 
-## Outline
+## All Culture Is Appropriated
 
-* All culture "appropriated"
-* Sectarian views of "culture" stifle actual culture
-* Better criticisms
-* Culture is work, not birthright
-* Entitativity or "organicism"
+Kwame Anthony Appiah takes exception to this third idea of "culture." The issue he takes is that "[a]ll cultural practices and objects are mobile; they like to spread, and almost all are themselves creations of intermixture."
+
+Both the Tylorian and Arnoldian ideas of "culture" define it as something that involves one human being learning how to do something, either directly or indirectly, from another human being. The "cultural appropriation" idea necessarily declares some of this learning permissible and some of it sinful.
+
+Kwame Anthony Appiah draws on an example from his father's homeland of Ghana.
+
+> Kente in Asante was first made with dyed silk thread, imported from the East. We took something made by others and made it ours. Or rather, they did that in the village of Bonwire. So did the Asante of Kumasi appropriate the cultural property of Bonwire, where it was first made? Putative owners may be previous appropriators. [@appiah_lies_2018, 208]
+
+So is the colorful Kente, now so associated with Ghanaian culture, actually a cultural appropriation that must be abandoned? Or is it only an appropriation if made in Kumasi instead of Bonwire? Do two appropriations make a non-appropriation?
+
+This kind of analysis can continue _ad absurdum_ for cultural practices such as writing. Was the Cherokee polymath and statesman Sequoyah sinful when he noticed the utility of the alphabets that came from Europe and so invented a writing system for his own language? Were the Europeans outside of Imperial Rome sinful when they had similar encounters with the Roman alphabet? Should all writing be buried with the ancient Sumerians, for fear of appropriating culture that is not "yours," and therefore written language declared dead?
+
+Kwame Anthony Appiah answers these questions in the negative. "The real problem isn’t that it’s difficult to decide who owns culture; it’s that the very idea of ownership is the wrong model." [@appiah_lies_2018, 208]
+
+Since almost all culture has transmitted not just across generations, but also across place, it is arbitrary to invent a border across which cultural transmission is sinful. Of course, that has not preventing people from trying.
+
+> For centuries, the people on the Venetian island of Murano made a living because glassmakers there perfected their useful art. Their beads, with multicolored filaments, some made of gold, were among the artistic wonders of the world. To keep their commercial advantage, the Venetian state forbade glassmakers from leaving with their secrets; the penalty for revealing them to outsiders was death. Good for Murano and its profits: bad for everyone else. (As it happens, lots of the skilled artisans escaped anyway and brought their knowledge to a wider European world.) Venetian beads were already being imported into the Gold Coast by the turn of the seventeenth century, arriving across the Sahara, where they had been an important part of the trade on which the empire of Mali had risen to commercial success centuries earlier. Crushed and sintered to make new beads, they developed into the distinctive _bodom_ you still see today in Ghana, beads my mother and my stepgrandmother collected and made into bracelets and necklaces. [@appiah_lies_2018, 208-209]
+
+In this case, the glass beads of Murano were appropriated not just according to moral ruminations of social commentators, but also according to legal codes. Upon the discovery of this appropriation, should _bodom_ be abandoned as cultural theft?
+
+Unsurprisingly, Kwame Anthony Appiah answers this question in the negative, as well.
+
+> What sorts of progress would have been advanced by insisting that the Venetians owned the idea of glass beads, and policing their claim? Unfortunately, the vigorous lobbying of huge corporations has made the idea of intellectual property go imperial; it seems to have conquered the world. To accept the notion of cultural appropriation is to buy into the regime they favor, where corporate entities acting as cultural guardians “own” a treasury of IP, extracting a toll when they allow others to make use of it. [@appiah_lies_2018, 209]
+
+Thus, ideas of "cultural appropriation" might protect profits, but does not protect culture, regardless of whether one thinks of "culture" in the lofty Arnoldian sense or the mundane Tylorian sense, because culture _is_ acquiring and then transmitting a practice done by someone else. Attempting to establish borders in this acquisition and transmission does not protect, but stifles the practice of culture.
+
+
+## Culture Is Work, Not Birthright
+
+
+## Exploitation or Mockery Are Better Criticisms
+
+
+## Entitativity
+
+
+> I begrudge nobody the things I also love, because, like Arnold, I can love what is best in anyone’s traditions while sharing it gladly with others. [@appiah_lies_2018, 207]
+
 
 ## Citations
 
