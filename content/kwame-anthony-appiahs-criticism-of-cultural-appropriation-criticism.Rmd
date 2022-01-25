@@ -2,7 +2,7 @@
 title: "Kwame Anthony Appiah's Criticism of “Cultural Appropriation” Criticism"
 date: 2022-01-23
 draft: true
-tags: ["book or article review", "opinion", "third-person"]
+tags: ["book or article review", "philosophy", "third-person"]
 bibliography: "../bibliographies/kwame-anthony-appiahs-criticism-of-cultural-appropriation-criticism.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Kwame Anthony Appiah is a professor of philosophy, now at New York University and previously at Princeton University, and columnist for _New York Times Magazine._ Over the years, despite his political views leaning decidedly left of center as one might expect of someone in his station, he has criticized[^examples] specific beliefs associated with what might be termed "identity politics" in the contemporary lexicon.
+Kwame Anthony Appiah is a professor of philosophy, now at New York University and previously at Princeton University, and columnist for _New York Times Magazine._ Over the years, despite his political views leaning decidedly left of center as one might expect of someone in his station, he has criticized specific beliefs associated with what might be termed "identity politics" in the contemporary lexicon.[^examples]
 
 [^examples]: For examples of such criticism, see "The Uncompleted Argument: Du Bois and the Illusion of Race" [-@appiah_uncompleted_1985] and "Race, Culture, Identity: Misunderstood Connections" [-@appiah_race_1996].
 
@@ -86,12 +86,33 @@ Thus, the idea of "cultural appropriation" might protect profits, but does not p
 
 ## Culture Is Work, Not Birthright
 
+That culture is _work_ is precisely the main argument of _The Lies That Bind_'s chapter on culture. While it is true that the accident of the time and place of where a person lives largely determines what culture a person has _access_ to, the actual doing of culture &ndash; the learning, practicing, and re-transmitting &ndash; is an activity that only those who have _labored_ can claim.
+
+This is equally true for "culture" in the Tyrolian sense &ndash; having a certain ethnic heritage is no guarantee that anyone is able to cook at all, let alone cook a dish of the cuisine associated with the ethnicity &ndash; as it is for "culture" in the Arnoldian sense; one does not wake up one day to perform a concerto except after many days preceding that morning that included practice.
+
+> Arnold and Tylor would have agreed, at least, on this: culture isn’t a box to be checked on the questionnaire of humanity; it’s a process you join, in living a life with others. [@appiah_lies_2018, 211-212]
+
+Thus, Western civilization &ndash; however mythic such as it might be &ndash; does not "belong" to someone merely because that person lives in Europe or one of Europe's former colonies. 
+
+> The values that European humanists like to espouse belong as much to an African or an Asian who takes them up with enthusiasm as to a European. By that very logic, they don’t belong to a European who hasn’t taken the trouble to understand and absorb them. The same is true, naturally, of what we term non-Western cultures. [@appiah_lies_2018, 211-212]
+
+Once one realizes that culture is a _practice,_ not a categorization, then the same applies to all culture.
+
+> [Y]ou really can walk and talk in a way that’s recognizably African-American and commune with Immanuel Kant and George Eliot, as well as with Bessie Smith and Martin Luther King Jr. No Muslim essence stops individual inhabitants of Dar al-Islam from taking up anything from the Western Civ. syllabus, including democracy. No Western essence is there to stop a New Yorker of any ancestry taking up Islam. Wherever you live in the world, Li Po can be one of your favorite poets, even if you’ve never been anywhere near China. [@appiah_lies_2018, 207]
+
 
 ## Better Criticisms
 
+Once it is realized that culture is something that is _done,_ not something that one automatically inherits, it follows that it can be done _badly._ 
 
-## Entitativity
+> Usually, where there’s a problem worth noticing ... cultural appropriation is simply the wrong diagnosis. When Paul Simon makes a mint from riffing on mbaqanga music from South Africa, you can wonder if the rich American gave the much poorer Africans who taught it to him their fair share of the proceeds. If he didn’t, the problem isn’t cultural theft but exploitation. If you’re a Sioux, you recognize your people are being ridiculed when some fraternity boys don a parody of the headdress of your ancestors and make whooping noises. But, again, the problem isn’t theft, it’s disrespect. [@appiah_lies_2018, 209-210]
 
+Thus, not only are accusations of "cultural appropriation" misguided, but they often get in the way of better, more pointed criticisms, such as the criticism that a practice is exploitative or farcical. The first case has more to do with the economics surrounding the cultural practice. In the second case, the issue is that the cultural practice itself is &ndash; perhaps intentionally &ndash; done unwell.
+
+Indeed, there may be many different kinds of other, better criticisms that can be made when accusations of "cultural appropriation" are lobbied. These criticisms are drowned out, not supported, by a flawed mental model of "culture" as boxes to put people in, rather than practices that are done.
+
+
+## Conclusion
 
 > I begrudge nobody the things I also love, because, like Arnold, I can love what is best in anyone’s traditions while sharing it gladly with others. [@appiah_lies_2018, 207]
 
@@ -102,4 +123,4 @@ Thus, the idea of "cultural appropriation" might protect profits, but does not p
 :::
 
 
-## Footnotes
+## Footnote
