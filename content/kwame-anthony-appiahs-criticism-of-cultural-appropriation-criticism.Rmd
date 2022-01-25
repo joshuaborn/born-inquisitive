@@ -1,7 +1,6 @@
 ---
 title: "Kwame Anthony Appiah's Criticism of “Cultural Appropriation” Criticism"
-date: 2022-01-25
-draft: true
+date: 2022-01-26
 tags: ["book or article review", "philosophy", "third-person"]
 bibliography: "../bibliographies/kwame-anthony-appiahs-criticism-of-cultural-appropriation-criticism.bib"
 csl: "../bibliographies/chicago-author-date.csl"
