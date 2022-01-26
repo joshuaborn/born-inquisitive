@@ -1,0 +1,185 @@
+---
+title: "Kwame Anthony Appiah's Criticism of “Cultural Appropriation” Criticism"
+date: 2022-01-26
+tags: ["book or article review", "philosophy", "third-person"]
+bibliography: "../bibliographies/kwame-anthony-appiahs-criticism-of-cultural-appropriation-criticism.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+link-citations: true
+implicit-figures: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+    toc: true
+    toc_depth: 5
+include-before: |
+  <p>In his book _The Lies That Bind: Rethinking Identity,_ philosopher Kwame Anthony Appiah argues that "cultural appropriation" is based on a mistaken mental model of what "culture" denotes. This article reviews his argument, which is based on the premise that culture is shared practices and which observes that most of these shared practices have already spread across the world, that culture is not a birthright, and that there are other, better criticisms than "cultural appropriation."</p>
+  <!--more-->
+  ## Table of Contents
+---
+
+```{r setup, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Introduction
+
+Kwame Anthony Appiah is a professor of philosophy, now at New York University and previously at Princeton University, and columnist for _New York Times Magazine._ Over the years, despite his political views leaning decidedly left of center as one might expect of someone in his station, he has criticized specific beliefs associated with what might be termed "identity politics" in the contemporary lexicon.[^examples]
+
+[^examples]: For examples of such criticism, see "The Uncompleted Argument: Du Bois and the Illusion of Race" [-@appiah_uncompleted_1985] and "Race, Culture, Identity: Misunderstood Connections" [-@appiah_race_1996].
+
+More recently, he published _The Lies That Bind: Rethinking Identity._ The theme of the book is that "many of our thoughts about the identities that define us are misleading, and that we would have a better grasp on the real challenges that face us if we thought about them in new ways." [@appiah_lies_2018, 190] The book is divided into chapters on various kinds of "identities that define us" such as creed, country, color, and class.
+
+There is a legend that Aristotle's followers were called the "Peripatetic school" after the word περιπατητικός or "given to walking about" since Aristotle was fond of lecturing while going for a leisurely stroll. Such is the feeling one gets when reading Kwame Anthony Appiah's writing. It is neither acerbic nor terse. The reader feels led on a meandering journey by a man with much worldly knowledge who would prefer to share this worldliness, rather than forceful argumentation, with you.
+
+Thus, _The Lies That Bind_ is a pleasant read that largely preaches to the choir. One might imagine that those who already have cosmopolitan sympathies would enjoy it, while those who root their sense of self in ethno-nationalism, religious sectarianism, or indeed, identity politics would largely remain unmoved.
+
+Rather than be an extended review of the entirety of _The Lies That Bind,_ this article highlights a specific argument made by Kwame Anthony Appiah that is tucked away at the end of the sixth chapter, the chapter on culture.
+
+Most of chapter six is a critique of the idea of "Western culture" or "Western civilization." Thus, much of the chapter is a history lesson, describing how the "Western culture" is a relatively modern invention bolted onto history in a _post hoc_ fashion.
+
+Toward the end of chapter six, however, _The Lies That Bind_ goes in a related, but different direction with a pointed critique of one aspect of contemporary dialogue: namely, allegations of "cultural appropriation." It is this critique that this article focuses upon.
+
+
+## Two Ideas of "Culture," and a Third
+
+To frame his discussion of culture, Kwame Anthony Appiah identifies two different ideas of what the word "culture" refers to, named after two different people.
+
+The "Tylorian" culture, after Edward Burnett Tylor, is "that complex whole which includes knowledge, belief, arts, morals, law, customs and any other capabilities and habits acquired by man as a member of society." If this sounds like the kind of "culture" referred to in cultural anthropology, this is not by accident. Tylor was the first professor of anthropology at Oxford University.
+
+The "Arnoldian" culture, after Matthew Arnold, is "pursuit of our total perfection by means of getting to know, on all the matters which most concern us, the best which has been thought and said in the world." This is the elitist version of "culture" that people invoke when they praise each other on how "cultured" they are or when they denigrate someone who "has no culture."
+
+Everyone, by virtue of being a functioning human being, has culture in the Tylorian sense. The Arnoldian sense of culture, on the other hand, is typically reserved for those who pursue fine art, music, literature, etc. 
+
+Toward the end of the sixth chapter of _The Lies That Bind,_ Kwame Anthony Appiah contrasts both ideas of culture with a third idea of culture that lies in the premises of allegations of "cultural appropriation." This idea is that human beings either do or do not belong to discrete groups, and that only members of a group are allowed to do certain practices associated with the group.
+
+
+## Culture Is Appropriation
+
+Kwame Anthony Appiah takes exception to this third idea of "culture." The issue he takes is that "[a]ll cultural practices and objects are mobile; they like to spread, and almost all are themselves creations of intermixture." [@appiah_lies_2018, 208]
+
+Both the Tylorian and Arnoldian ideas of "culture" define it as something that involves one human being learning how to do something, either directly or indirectly, from another human being. The "cultural appropriation" idea necessarily declares some of this learning permissible and some of it sinful.
+
+Kwame Anthony Appiah draws on an example from his father's homeland of Ghana.
+
+> Kente in Asante was first made with dyed silk thread, imported from the East. We took something made by others and made it ours. Or rather, they did that in the village of Bonwire. So did the Asante of Kumasi appropriate the cultural property of Bonwire, where it was first made? Putative owners may be previous appropriators. [@appiah_lies_2018, 208]
+
+![
+An exhibit featuring Kente textiles (ca. 1930-1940).<br/>
+["Queen Mother Cloth in the Mmaban Pattern (Kente Cloth) 1"](https://www.flickr.com/photos/43164076@N06/39278095645)
+by
+[David Hoffman](https://www.flickr.com/photos/universalpops/)
+is licensed under
+[CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/)
+and is not modified.
+](/images/kente.jpg)
+
+This kind of analysis can continue _ad absurdum_ for cultural practices such as writing. Was the Cherokee polymath and statesman Sequoyah sinful when he noticed the utility of the alphabets that came from Europe and so invented a writing system for his own language? Were the Europeans outside of Imperial Rome sinful when they had similar encounters with the Roman alphabet? For fear of appropriating culture that is not "yours," should all writing be buried with the ancient Sumerians and therefore written language itself declared dead?
+
+![
+An illustration of Sequoyah, inventor of the Cherokee syllabary.<br/>
+["Sequoyah, Cherokee inventor, by C.B. King, ca. 1836"](https://www.flickr.com/photos/76204898@N00/3320717124)
+by
+[trialsanderrors](https://www.flickr.com/photos/76204898@N00/3320717124)
+is licensed under
+[CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+and is not modified.
+](/images/sequoyah.jpg)
+
+Kwame Anthony Appiah answers these questions in the negative. "The real problem isn’t that it’s difficult to decide who owns culture; it’s that the very idea of ownership is the wrong model." [@appiah_lies_2018, 208]
+
+Since culture is, by its nature, something that is acquired and transmitted from person to person, it is arbitrary to try to delineate a border in this chain of re-transmission across which the sin of appropriation is committed.  Of course, that has not prevented people from trying.
+
+> For centuries, the people on the Venetian island of Murano made a living because glassmakers there perfected their useful art. Their beads, with multicolored filaments, some made of gold, were among the artistic wonders of the world. To keep their commercial advantage, the Venetian state forbade glassmakers from leaving with their secrets; the penalty for revealing them to outsiders was death. Good for Murano and its profits: bad for everyone else. (As it happens, lots of the skilled artisans escaped anyway and brought their knowledge to a wider European world.) Venetian beads were already being imported into the Gold Coast by the turn of the seventeenth century, arriving across the Sahara, where they had been an important part of the trade on which the empire of Mali had risen to commercial success centuries earlier. Crushed and sintered to make new beads, they developed into the distinctive _bodom_ you still see today in Ghana, beads my mother and my stepgrandmother collected and made into bracelets and necklaces. [@appiah_lies_2018, 208-209]
+
+In this case, the glass beads of Murano were appropriated not just according to moral ruminations of social commentators, but also according to legal codes. Upon the discovery of this appropriation, should _bodom_ be abandoned as cultural theft?
+
+![
+A man making glass in Murano, Italy, a region known for glassmaking since Renaissance times.<br/>
+["Murano Glass Factory"](https://www.flickr.com/photos/21228841@N02/9315689053)
+by
+[Lisa Elliott](https://www.flickr.com/photos/teachalisa/)
+is licensed under
+[CC BY-ND 2.0](https://creativecommons.org/licenses/by-nd/2.0/)
+and is not modified.
+](/images/murano-glass.jpg)
+
+Unsurprisingly, Kwame Anthony Appiah answers this question in the negative, as well.
+
+> What sorts of progress would have been advanced by insisting that the Venetians owned the idea of glass beads, and policing their claim? Unfortunately, the vigorous lobbying of huge corporations has made the idea of intellectual property go imperial; it seems to have conquered the world. To accept the notion of cultural appropriation is to buy into the regime they favor, where corporate entities acting as cultural guardians “own” a treasury of IP, extracting a toll when they allow others to make use of it. [@appiah_lies_2018, 209]
+
+Thus, the idea of "cultural appropriation" might protect profits, but does not protect culture, regardless of whether one thinks of "culture" in the lofty Arnoldian sense or the mundane Tylorian sense, because culture _is_ the work of acquiring a practice once done by someone else. Attempting to establish borders in this transmission and acquisition does not protect, but rather stifles culture.
+
+![
+A woman wearing glass necklaces in Odumase Krobo, a town in Ghana known for its glass beadmaking.<br/>
+["Woman at Odumase Krobo"](https://www.flickr.com/photos/79721788@N00/21993289238)
+by
+[David Stanley](https://www.flickr.com/photos/davidstanleytravel/)
+is licensed under
+[CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+and is not modified.
+](/images/odumase-krobo-woman.jpg)
+
+
+## Culture Is Work, Not Birthright
+
+That culture is _work_ is precisely the main argument of _The Lies That Bind_'s chapter on culture. While it is true that the accident of the time and place of where a person lives largely determines what culture a person has _access_ to, the actual doing of culture &ndash; the learning, practicing, and re-transmitting &ndash; is an activity that only those who have _labored_ can claim.
+
+This is equally true for "culture" in the Tyrolian sense &ndash; having a certain ethnic heritage is no guarantee that anyone is able to cook at all, let alone cook a dish of the cuisine associated with the ethnicity &ndash; as it is for "culture" in the Arnoldian sense; one does not wake up one day to perform a concerto except after many days preceding that morning that included practice.
+
+> Arnold and Tylor would have agreed, at least, on this: culture isn’t a box to be checked on the questionnaire of humanity; it’s a process you join, in living a life with others. [@appiah_lies_2018, 211-212]
+
+Thus, Western civilization &ndash; however mythic such as it might be &ndash; does not "belong" to someone merely because that person lives in Europe or one of Europe's former colonies. 
+
+> The values that European humanists like to espouse belong as much to an African or an Asian who takes them up with enthusiasm as to a European. By that very logic, they don’t belong to a European who hasn’t taken the trouble to understand and absorb them. The same is true, naturally, of what we term non-Western cultures. [@appiah_lies_2018, 211-212]
+
+Once one realizes that culture is a _practice,_ not a categorization, then the same applies to all culture.
+
+> [Y]ou really can walk and talk in a way that’s recognizably African-American and commune with Immanuel Kant and George Eliot, as well as with Bessie Smith and Martin Luther King Jr. No Muslim essence stops individual inhabitants of Dar al-Islam from taking up anything from the Western Civ. syllabus, including democracy. No Western essence is there to stop a New Yorker of any ancestry taking up Islam. Wherever you live in the world, Li Po can be one of your favorite poets, even if you’ve never been anywhere near China. [@appiah_lies_2018, 207]
+
+
+## Better Criticisms
+
+Once it is realized that culture is something that is _done,_ not something that one automatically inherits, it follows that it can be done _badly._ 
+
+> Usually, where there’s a problem worth noticing ... cultural appropriation is simply the wrong diagnosis. When Paul Simon makes a mint from riffing on mbaqanga music from South Africa, you can wonder if the rich American gave the much poorer Africans who taught it to him their fair share of the proceeds. If he didn’t, the problem isn’t cultural theft but exploitation. If you’re a Sioux, you recognize your people are being ridiculed when some fraternity boys don a parody of the headdress of your ancestors and make whooping noises. But, again, the problem isn’t theft, it’s disrespect. [@appiah_lies_2018, 209-210]
+
+Thus, not only are accusations of "cultural appropriation" misguided, but they often get in the way of better, more pointed criticisms, such as the criticism that a practice is exploitative or farcical. The first case has more to do with the economics surrounding the cultural practice. In the second case, the issue is that the cultural practice itself is &ndash; perhaps intentionally &ndash; done unwell.
+
+Indeed, there may be many kinds of other, better criticisms that can be made when accusations of "cultural appropriation" are lobbied. These criticisms are drowned out, not supported, by a flawed mental model of "culture" as boxes to put people in, rather than practices that are shared.
+
+
+## Conclusion
+
+> I begrudge nobody the things I also love, because, like Arnold, I can love what is best in anyone’s traditions while sharing it gladly with others. [@appiah_lies_2018, 207]
+
+![
+Kwame Anthony Appiah speaking at Central European University.<br/>
+["Central European University Reasons for Hope – Kwame Anthony Appiah – Beyond Identity"](https://www.flickr.com/photos/30781935@N05/32404950977)
+by
+[Central European University](https://www.flickr.com/photos/weareceu/)
+is licensed under
+[CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
+and is not modified.
+](/images/kwame-anthony-appiah.jpg)
+
+It should not be surprising Kwame Anthony Appiah is critical of the idea of "cultural appropriation." He has been a proponent of cosmopolitanism for some time, and cultural ownership is predicated on a sectarian understanding of culture that is inimical to cosmopolitanism.
+
+As readers meander through the highs and lows of _The Lies That Bind,_ whether they judge the section criticizing "cultural appropriation" as a high or a low is a kind of litmus test of the reader.
+
+"Cultural appropriation" is to some a stinging and valid criticism. To others, the very notion seems wrong, but it is difficult to pin down why. It is [not wrong in the way that false beliefs are false](/moral-skepticism.html). It is, after all, a kind of value judgment, and value judgments are, like their subset, in the eye of the beholder.
+
+Rather, it is likely that those who find "cultural appropriation" criticism persuasive and those who find it mistaken are reasoning from different premises. The two worldviews are built on different mental models, foundations that need to be explored in order for the difference of opinion to be understood.
+
+Kwame Anthony Appiah's criticism of "cultural appropriation" criticism makes explicit what is tacit by articulating the mental model underlying the cosmopolitan discontent with the "cultural appropriation" concept and, by way of contrast, also the sectarian mental model underlying accusations of "cultural appropriation." Anyone who truly seeks to understand disagreement over the idea of "cultural appropriation" would benefit from his elucidation.
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnote
