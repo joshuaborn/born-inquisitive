@@ -1,0 +1,96 @@
+---
+title: "The Fallacy of Generic Thinking: An Introduction"
+date: 2022-01-27
+draft: true
+tags: ["reasoning about evidence", "fallacies", "third-person"]
+#bibliography: "../bibliographies/fallacy-of-generic-thinking-an-introduction.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+link-citations: true
+implicit-figures: true
+output:
+  blogdown::html_page:
+    md_extensions: ["+footnotes"]
+    toc: true
+    toc_depth: 5
+include-before: |
+  <p>Introductory paragraph goes here.</p>
+  <!--more-->
+  ## Table of Contents
+---
+
+```{r setup, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Introduction
+
+"[How to Scrutinize a Statistic](/how-to-scrutinize-a-statistic.html)" discussed both the need to evaluate [practical significance](/how-to-scrutinize-a-statistic.html#practical-significance) and how this is typically done by quantifying an [effect size](/how-to-scrutinize-a-statistic.html#effect-size). The opposite of providing quantification of an effect size was described as a fallacy of "[generic comparisons](http://localhost:4321/how-to-scrutinize-a-statistic.html#generic-comparisons)."
+
+The phrase "generic comparison" is actually a neologism invented by this blog, but the word "generic" was used deliberately to allude to a genre of fallacy that has been studied academically and in which much of the dreadfully bad reasoning about the world dwells.
+
+
+## "Generic Thinking" Defined
+
+What unites the many [fallacies](/tags/fallacies.html) in reporting, interpreting, or analyzing empirical evidence that this blog discusses is these fallacies would appeal to a mind afflicted with what might be termed "generic thinking."
+
+Generic thinking encompasses all beliefs about an inherently quantitative subject, but that are held without any quantification. This most often occurs when someone is thinking about a large population of individuals, but not bothering to quantify these thoughts. Furthermore, it encompasses attitudes or policies that are held contingent on such beliefs. 
+
+Any social criticism is, by its very nature, about large populations of individual human beings. When this social criticism does not include quantification, it is generic thinking. Unfortunately, there exists some concern for social issues among the masses, and there exists some amount of poor quantitative reasoning among the masses; generic thinking can be found in intersection of these two phenomena.
+
+Generic thinking can be divided into two major kinds: generic generalizations and generic comparisons.
+
+
+## Generic Generalizations
+
+Generic generalization is a kind of generic thinking about which there is a body of scholarship, both in academic philosophy circles and, more recently, in psychology. A generic generalization is belief in which a property is predicated of a subject which denotes a about a large number of individuals, but the predication has no quantification.
+
+"All swans are white," "some swans are white," "no swans are white," "approximately 74.2% of swans are white" are all beliefs about a subject &ndash; denoted by "swans" &ndash; that includes a large number of individuals. However, all of these statements include some kind of quantification, namely "all," "some," "no," or "approximately 74.2%."
+
+However, the statement "swans are white," is once again about a large number of individuals, but does not include any quantification. It is a generic generalization.
+
+Generic generalizations have been studied by philosophers because they can seem like a logic puzzle. For instance, beliefs like "dogs have four legs," "ducks lay eggs," "mosquitoes carry the West Nile virus" seem like they have the spirit of truth to them. _**cite**_ However, they are all false for a portion of the population they discuss.
+
+There are some dogs happily scampering around on three legs &ndash; though this is a very small proportion of dogs. Only female ducks who have reached sexual maturity even have the ability to lay eggs, so "ducks lay eggs" is only true for less than half the population it describes. A mercifully very small proportion of mosquitoes actually carry the West Nile virus.
+
+![
+A three-legged dog, the existence of which is a false case of the generic generalization "dogs have four legs."<br/>
+["Three Legged Dog"](https://www.flickr.com/photos/23743320@N03/7230816680)
+by
+[Sangudo](https://www.flickr.com/photos/sangudo/)
+is licensed under
+[CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
+and is not modified.
+](/images/three-legged-dog.jpg)
+
+Much of the philosophizing around generic generalizations have been attempts to find what are termed "rescue semantics," some definition of truth conditions or some way of interpreting generic generalizations that would allow the ones that seem plausible to be true and the ones that are patently false to be false. _**cite**_
+
+
+### Resistant to Falsification
+
+This highlights precisely the main issue with generic generalizations: they are resistant to falsification.
+
+Quantified beliefs have conditions under which the holder of the belief can learn that the belief is false, if it is indeed false.
+
+
+### Interest from Psychology
+
+
+### Associated with Prejudice
+
+
+### Open to Quantitative Specification
+
+
+### Conclusion
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnote
