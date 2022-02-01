@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>In his book _The Lies That Bind: Rethinking Identity,_ philosopher Kwame Anthony Appiah argues that "cultural appropriation" is based on a mistaken mental model of what "culture" denotes. This article reviews his argument, which is based on the premise that culture is shared practices and which observes that most of these shared practices have already spread across the world, that culture is not a birthright, and that there are other, better criticisms than "cultural appropriation."</p>
+  <p>In his book _The Lies That Bind: Rethinking Identity,_ philosopher Kwame Anthony Appiah argues that "cultural appropriation" is based on a mistaken mental model of what "culture" denotes. This article reviews his argument, which has the premise that culture is shared practices and which observes that most of these shared practices have already spread across the world, that culture is not a birthright, and that there are other, better criticisms than "cultural appropriation."</p>
   <!--more-->
   ## Table of Contents
 ---
