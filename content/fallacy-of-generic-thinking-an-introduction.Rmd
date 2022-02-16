@@ -42,7 +42,7 @@ In both academic philosophy and academic psychology, there exists a body of scho
 
 Generic generalizations have been studied by philosophers because they can seem like a logic puzzle. For instance, statements like "dogs have four legs," "ducks lay eggs," "mosquitoes carry the West Nile virus" seem like they have the spirit of truth to them.[^examples]  However, they are all false for a portion of the population they discuss.
 
-[^examples]: "Dogs have four legs" and "ducks lay eggs" are inspired by examples used in "Generic Generalizations" in the _Stanford Encyclopedia of Philosophy_ [@leslie_generic_2016] and the West Nile virus example is used in "The Original Sin of Cognition" [@leslie_original_2017].
+[^examples]: "Dogs have four legs" and "ducks lay eggs" are examples used in "Generic Generalizations" in the _Stanford Encyclopedia of Philosophy_ [@leslie_generic_2016] and the West Nile virus example is used in "The Original Sin of Cognition" [@leslie_original_2017].
 
 While most dogs have four legs, there are some dogs happily scampering around on three legs. Only female ducks who have reached sexual maturity even have the ability to lay eggs, so "ducks lay eggs" is only true for less than half the population it describes. A mercifully very small proportion of mosquitoes actually carry the West Nile virus.
 
