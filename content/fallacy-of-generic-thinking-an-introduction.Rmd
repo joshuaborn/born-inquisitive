@@ -31,7 +31,7 @@ What unites the many types of [fallacies](/tags/fallacies.html) that this blog d
 
 The phrase "generic comparison" is actually a neologism invented by this blog, but the word "generic" was used deliberately to allude to what is termed "generic generalization," a phrase established in the academic literature.
 
-Generic thinking comprises both generic generalization and generic comparison and encompasses all beliefs about an inherently quantitative subject, but that are held without any quantification. This most often occurs when someone is thinking about large populations of individuals. For instance, social issues occur, by their very nature, in large populations of individual human beings. Thus, all unquantified social criticism is generic thinking.
+Generic thinking comprises both generic generalization and generic comparison and encompasses all beliefs about an inherently quantitative subject, but that are held without any quantification. This often occurs when someone is thinking about large populations of individuals. For instance, social issues occur, by their very nature, in large populations of individual human beings. Thus, all unquantified social criticism is generic thinking.
 
 
 ## Generic Generalization
@@ -59,7 +59,7 @@ and is not modified.
 
 ### Resistant to Falsification
 
-Much of the philosophizing around generic generalizations have been attempts to find some way of interpreting generic generalizations that would allow the ones that seem plausible to be true and the ones that are patently false to be false. [@leslie_generic_2016] This highlights precisely the main issue with generic generalizations: they seem to defy truth conditions.
+Much of the philosophizing around generic generalizations has been an attempt to find some way of interpreting generic generalizations that would allow the ones that seem plausible to be true and the ones that are patently false to be false. [@leslie_generic_2016] This highlights precisely the main issue with generic generalizations: they seem to defy truth conditions.
 
 In particular, generic generalizations are resistant to falsification.  Quantified beliefs have conditions under which the holder of the belief can learn that the belief is false, if it is indeed false. If someone who asserts "all swans are white" encounters a single black swan, then the individual knows the belief is false. Similarly, presenting just one white swan to someone who asserts "all swans are black" demonstrates to this person that the belief is false.
 
@@ -73,20 +73,20 @@ Such resistance to falsification is a nontrivial matter because many bigoted att
 
 To those concerned about bigotry, this resistance to falsification is a troubling property of generic generalizations because it means that once a negative stereotype has been formulated as a generic generalization in someone's mind, it is that much more difficult to convince the holder of the negative stereotype to change the belief.
 
-If someone were to assert "most Muslims are terrorists" or "80% of Blacks are rapists," these beliefs could be demonstrated false with the appropriate empirical observations and analyses. When someone asserts the generic generalizations "Muslims are terrorists" and "Blacks are rapists," it does not matter _how many_ Muslims are not terrorists or Blacks are not rapists, the generic generalization is resistant to falsification exactly because it is unquantified.
+If someone were to assert "most Muslims are terrorists" or "80% of Blacks are rapists," these beliefs could be demonstrated false with the appropriate empirical observations and analyses. When someone asserts the generic generalizations "Muslims are terrorists" or "Blacks are rapists," it does not matter _how many_ Muslims are not terrorists or Blacks are not rapists, the generic generalization is resistant to falsification exactly because it is unquantified.
 
 
 ### Uniformative
 
 In addition to being resistant to falsification, generic generalizations are not informative because, given a large enough population, an arbitrary number of [confirmatory examples](selection-bias-and-the-fallacy-of-listing-examples.html) can always be found.
 
-For instance, generic generalizations such as "humans are terrorists" or "humans are rapists" seem odd. However, they have a similar amount of actual information as the more particular generic generalizations "Muslims are terrorists" and "Blacks are rapists."
+For instance, generic generalizations such as "humans are terrorists" or "humans are rapists" seem odd. However, they have a similar amount of actual information as the more specific generic generalizations "Muslims are terrorists" and "Blacks are rapists."
 
 Such generic generalizations about "humans," "Muslims," or "Blacks" assert that, among some population of billions of individuals, there are some unspecified number of individuals who are terrorists or who are rapists. However, this is true of _any_ large enough population of human beings.
 
 The generic generalizations "humans are terrorists" or "humans are rapists" are conspicuous in just how vague and uninformative they are. However, this is precisely the same issue with all generic generalizations. The "humans" versions of these generic generalizations are merely more obvious in illustrating this defect.
 
-Given a large population of humans, there will be among them some unspecified number of terrorists, rapists, charitable givers, volunteers, slalom skiers, stamp collectors, or anything else for that matter. This is a reasonable expectation before any observations are made. Indeed, if a claim were made that a population of millions of human beings did not contain a single rapist, charitable giver, or stamp collector, such a claim would be treated incredulously. Generic generalizations are therefore simply not informative.
+Given a large population of humans, there will be among them some unspecified number of terrorists, rapists, charitable givers, volunteers, slalom skiers, stamp collectors, or anything else for that matter. This is a reasonable expectation _a priori_ before any observations are made. Indeed, if a claim were made that a population of millions of human beings did not contain a single rapist, charitable giver, or stamp collector, such a claim would be treated incredulously. Generic generalizations are therefore simply not informative.
 
 
 ### Psychological Research
@@ -106,7 +106,7 @@ This is a value judgment that implies that the philosophical program of attempti
 
 Such examples in this article have all been what are called "bald plurals," in which the subject of a sentence is a plural noun that is not proceeded by any modifier word. However, not all uses of bald plurals are truly generic generalizations.
 
-This is due to the messy nature of natural languages. In particular, human beings are prone to make their communication more concise by abridging content. Sometimes just a few sounds are left out as in the case of a contraction, but whole words, phrases, and clauses can be elided to be inferred from context.
+This is due to the messy nature of natural languages. In particular, human beings are prone to make their communication more concise by elision. Sometimes just a few sounds are left out as in the case of a contraction, but whole words, phrases, and clauses can be elided to be inferred from context.
 
 Commonly, a bald plural is used when "all" quantification is implied. For instance, in this very article, it is written that "generic generalizations are resistant to falsification." This is not, however, a generic generalization about generic generalizations. From context, it should be gleaned that "all" quantification is implied, as in "all generic generalizations are resistant to falsification."
 
@@ -114,7 +114,7 @@ If one went about one's day putting "all" in front of each and every universally
 
 Once one accepts that natural languages function with such elision, then whether or not any given bald plural is a generic generalization becomes a _question,_ not an automatic assumption.
 
-When someone says "ducks lay eggs," there is typically social context surrounding this from which a more complicated thought can be inferred, such as "the system of reproduction used by ducks is oviparous." Social context usually implies this more complicated idea when less words are used.
+When someone says "ducks lay eggs," there is typically social context surrounding this statement from which a more complicated thought can be inferred, such as "the system of reproduction used by ducks is oviparous."
 
 **_[Put picture of duck eggs here.]_**
 
