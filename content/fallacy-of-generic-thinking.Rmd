@@ -220,6 +220,7 @@ As more and more descriptive statistics are used, there are more and more opport
 
 _**After writing this draft, it has become apparent that there are two ways in which generic comparisons are generic: they can be generic in ambiguity about which group has "more" of something, e.g., mean vs. median example; they can also be generic in magnitude, once direction of "more" effect has been established. Generic generalizations don't have a direction, and so are generic only in magnitude. This should be made more clear in an introduction, and this section split into subsections discussing the two kinds of genericness.**_
 
+* "Generic comparisons" more of a statistician niche; Tukey quote
 * Fallacious use in empirical research (group A has "more" of X than group B, and this explains why group A has "more" of Y than group B)
 * Uninformative
 * Resistant to falsification
