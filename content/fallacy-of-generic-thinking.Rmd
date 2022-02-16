@@ -19,7 +19,10 @@ include-before: |
 ---
 
 ```{r setup, echo=FALSE, message=FALSE}
-knitr::opts_chunk$set(
+library(data.table)
+library(knitr)
+
+opts_chunk$set(
   echo = FALSE
 )
 ```
@@ -89,7 +92,7 @@ The generic generalizations "humans are terrorists" or "humans are rapists" are 
 Given a large population of humans, there will be among them some unspecified number of terrorists, rapists, charitable givers, volunteers, slalom skiers, stamp collectors, or anything else for that matter. This is a reasonable expectation _a priori_ before any observations are made. Indeed, if a claim were made that a population of millions of human beings did not contain a single rapist, charitable giver, or stamp collector, such a claim would be treated incredulously. Generic generalizations are therefore simply not informative.
 
 
-### Psychological Research
+### Empirical Study
 
 The fallacy of generic generalization is not just a philosophical concern, thanks in large part to the work of developmental psychologist Susan Gelman, who discovered that people become sensitive to generic generalizations at a young age. [@gelman_childrens_2002]
 
@@ -138,16 +141,103 @@ One might protest that perhaps all generic generalizations could be explained as
 
 If there is indeed elided quantification lurking beneath a supposed generic generalization, then making the quantification explicit demonstrates that the belief is not truly a generic generalization. If no quantification can be produced, then the belief is indeed a generic generalization, and the holder of the belief should reflect upon the flaws in this way of thinking.
 
-This is of course somewhat of an aspirational goal...
-
 
 ## Generic Comparisons
 
+In a generic comparison, it is asserted that one group has "more" or "less" of some attribute than another group, but no further quantification is specified.
 
-## Prospectus
+For any given variable, it is extremely unlikely that a variable would have the _exact same_ distribution in two different populations. Thus, between two groups, it should be expected that one of them is going to have "more" of something than the other. The obvious next question to ask of group differences is thus "how much more?" A first answer to this is a summary of [effect size](/how-to-scrutinize-a-statistic.html#effect-size). While an effect size is a helpful initial summary of a difference between groups, it is just that, an initial summary and not a complete description of the difference.
+
+What makes group comparisons more complicated than comparing individuals[^observational] is that comparison between groups is a comparison of distributions, rather than point values. For instance, when comparing the height of two people, who can be labeled "A" and "B," there will be a single point value for the height of person A, e.g., 68 inches, and a single point value for the height of person B, e.g., 75 inches. In this case, it is true that person A is shorter than person B and false that person A is taller than person B.
+
+[^observational]: In statistical jargon, here "group" is taken to mean a domain and "individual" is taken to mean an observational unit.
+
+On the other hand, if "A" and "B" represent groups of thousands of people, there is not a single point value that represents the thousands of heights of people in group A or a single point value that represents the thousands of heights of people in group B. In this case, two distributions must be compared.
+
+Unless the two distributions are completely disjoint, some people in group A will be taller than some people in group B, and some people in group B will be taller than some people in group A. It is not simply true or false that group A "is taller" than group B or group A "is shorter" than group B.
+
+One could calculate and compare the arithmetic means of the heights in the two groups, but arithmetic mean is _just_ a measure of the central tendency of a distribution. There are other measures of central tendency, such as the median or mode, which also have their merits. More importantly, there are other properties of a distribution that are just as relevant, such as the dispersion or spread, the skewness, and to a lesser extent, the kurtosis.
+
+Furthermore, these are just measures of a distribution in isolation, what is actually desired in this case are measures that describe the difference between distributions. There are several ways to approach this, such as probability of superiority or proportion of variance explained, but this is beyond the scope of this article. The relevant point for this discussion is that it is never as simple as group A has "more" of something and group B has "less" of it. Assertions such as these are outside the realm of truth or falsity.
+
+Is is, however, true or false whether a specific statistic is greater for one group than for another, such as whether the mean height of group A is greater than the mean height of group B, or whether the median height of group A is greater than the median height of group B. Assertions about differences in mean or median between two groups _are_ either true or false.
+
+However, even with just these two basic statistics, mean and median, it is possible for the mean of group A to be greater than the mean of group B, but the median of group A to be less than the median of group B. Simplifying the heights example to involve only 30 people instead of thousands of people in each group leads to Table 1.
+
+```{r, include=FALSE}
+n <- 30
+
+set.seed(20220216)
+
+group_A <- ifelse(
+  rbinom(n, size = 1, prob = 0.3) == 1,
+  rnorm(n, 67, 1),
+  rnorm(n, 56, 2)
+)
+
+group_B <- rnorm(n, 58, 2)
+
+dt <- rbind(
+  data.table(
+    Group = 'A',
+    `Height (in)` = sort(round(group_A, 1))
+  ),
+  data.table(
+    Group = 'B',
+    `Height (in)` = sort(round(group_B, 1))
+  )
+)
+
+dt[, Person := .I]
+
+setcolorder(dt, 'Person')
+```
+
+<p class="caption">Table 1: The randomly generated heights of two groups of 30 people each.</p>
+
+<div class="three-columns">
+```{r}
+kable(dt[1:15], align = 'ccc')
+kable(dt[16:30], align = 'ccc')
+kable(dt[31:45], align = 'ccc')
+kable(dt[46:60], align = 'ccc')
+```
+</div>
+
+```{r, include=FALSE}
+mean_A <- round(mean(group_A), 1)
+median_A <- round(median(group_A), 1)
+mean_B <- round(mean(group_B), 1)
+median_B <- round(median(group_B), 1)
+```
+
+A quick calculation shows that the mean height of people in group A is `r mean_A` inches, which is greater than the mean height of people in group B of `r mean_B` inches. However, the median height of people in group A is `r median_A` inches, which is actually less than the median height of people in group B of `r median_B` inches.[^outliers]
+
+[^outliers]: This is simply due to the fact that medians are more resistant to outliers than means, and 30% of group A consists of exceptionally tall people.
+
+As more and more descriptive statistics are used, there are more and more opportunities for such ambiguities to occur.
+
+
+_**After writing this draft, it has become apparent that there are two ways in which generic comparisons are generic: they can be generic in ambiguity about which group has "more" of something, e.g., mean vs. median example; they can also be generic in magnitude, once direction of "more" effect has been established. Generic generalizations don't have a direction, and so are generic only in magnitude. This should be made more clear in an introduction, and this section split into subsections discussing the two kinds of genericness.**_
+
+* Fallacious use in empirical research (group A has "more" of X than group B, and this explains why group A has "more" of Y than group B)
+* Uninformative
+* Resistant to falsification
 
 
 ## Conclusion
+
+* Follow-ups
+    * Review of psychological literature on generic generalizations
+    * " " " " " entitativity
+    * " " " " " essentialism
+    * How-to on comparing response variable between two or more groups
+* Particular emphasis should be placed on policing generic thinking with regard to social criticism
+    * because serious
+    * because inherently quantitative
+    * guards against prejudice
+
+Purging generic thinking from one's mind is of course something of an aspirational goal. It is unreasonable to expect anyone's thinking to be entirely free of generic generalizations, but it is also unreasonable to expect any society to be entirely devoid from crime, and this does not negate the fact that the desired amount of crime is no crime at all.
 
 
 ## Citations
