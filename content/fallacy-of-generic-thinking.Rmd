@@ -2,7 +2,7 @@
 title: "The Fallacy of Generic Thinking"
 date: 2022-02-16
 draft: true
-tags: ["reasoning about evidence", "fallacies", "third-person"]
+tags: ["reasoning about evidence", "fallacies", "statistics", "psychology", "philosophy", "third-person"]
 bibliography: "../bibliographies/fallacy-of-generic-thinking.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 link-citations: true
@@ -60,7 +60,7 @@ and is not modified.
 ](/images/three-legged-dog.jpg)
 
 
-### Resistant to Falsification
+### Resistance to Falsification
 
 Much of the philosophizing around generic generalizations has been an attempt to find some way of interpreting generic generalizations that would allow the ones that seem plausible to be true and the ones that are patently false to be false. [@leslie_generic_2016] This highlights precisely the main issue with generic generalizations: they seem to defy truth conditions.
 
@@ -79,7 +79,7 @@ To those concerned about bigotry, this resistance to falsification is a troublin
 If someone were to assert "most Muslims are terrorists" or "80% of Blacks are rapists," these beliefs could be demonstrated false with the appropriate empirical observations and analyses. When someone asserts the generic generalizations "Muslims are terrorists" or "Blacks are rapists," it does not matter _how many_ Muslims are not terrorists or Blacks are not rapists, the generic generalization is resistant to falsification exactly because it is unquantified.
 
 
-### Uniformative
+### Uninformativeness
 
 In addition to being resistant to falsification, generic generalizations are not informative because, given a large enough population, an arbitrary number of [confirmatory examples](selection-bias-and-the-fallacy-of-listing-examples.html) can always be found.
 
@@ -96,12 +96,12 @@ Given a large population of humans, there will be among them some unspecified nu
 
 The fallacy of generic generalization is not just a philosophical concern, thanks in large part to the work of developmental psychologist Susan Gelman, who discovered that people become sensitive to generic generalizations at a young age. [@gelman_childrens_2002]
 
-Psychological research in this area has gone on to demonstrate empirically that the fallacious use of generic generalizations does exist. For instance, Cimpian, Brandone, and Gelman [-@cimpian_generic_2010] found that test subjects accepted generic generalizations at low levels of prevalence, but interpreted them as if they implied high levels of prevalence. This occurred when generic generalizations were evaluated for truth or falsity closer to "some" quantification, but interpreted as if they were closer to "all" quantification.
+Psychological research in this area has gone on to demonstrate empirically that the fallacious use of generic generalizations does exist. For instance, Cimpian, Brandone, and Gelman [-@cimpian_generic_2010] found that test subjects accepted generic generalizations at low levels of prevalence, but interpreted them as if they implied high levels of prevalence. Thus, generic generalizations were evaluated for truth or falsity closer to "some" quantification, but interpreted as if they were closer to "all" quantification.
 
 **_[Discuss Cimpian et al here in more detail, at least to the level of Anecdotes Are Not Evidence.]_**
 
 
-### Meritless
+### Bald Plurals and Elision
 
 Because generic generalizations are resistant to falsification, uninformative, and have been found empirically to lead to flawed thinking, this article dismisses generic generalizations as mere fallacies with no merit. Therefore, this article recommends that everyone strive to remove generic generalizations from their thinking.
 
@@ -142,27 +142,32 @@ One might protest that perhaps all generic generalizations could be explained as
 If there is indeed elided quantification lurking beneath a supposed generic generalization, then making the quantification explicit demonstrates that the belief is not truly a generic generalization. If no quantification can be produced, then the belief is indeed a generic generalization, and the holder of the belief should reflect upon the flaws in this way of thinking.
 
 
-## Generic Comparisons
+## Generic Comparison
 
-In a generic comparison, it is asserted that one group has "more" or "less" of some attribute than another group, but no further quantification is specified.
+In a generic comparison, it is asserted that one group has "more" or "less" of some attribute than another group, but no further quantification is specified. Unlike a generic generalization, which is generic in precisely one way, there are two ways in which a generic comparison can be generic.
 
-For any given variable, it is extremely unlikely that a variable would have the _exact same_ distribution in two different populations. Thus, between two groups, it should be expected that one of them is going to have "more" of something than the other. The obvious next question to ask of group differences is thus "how much more?" A first answer to this is a summary of [effect size](/how-to-scrutinize-a-statistic.html#effect-size). While an effect size is a helpful initial summary of a difference between groups, it is just that, an initial summary and not a complete description of the difference.
+A generic generalization fails to describe the proportion of the population for which its predicate is true. When "swans are white" is asserted, it is not clear if this means that 2% or 50% or 99% of swans are white. Similarly, if it is settled that, by any reasonable measure, one group has "more" of something than the other, a generic comparison leaves unspecified how much "more" one group has of something than the other.
+
+Additionally, with generic comparisons, because the judgement of "more" or "less" is left vague, it can be ambiguous which direction the "more" should go and which direction the "less" should go. There are many ways to measure the distribution of a variable in a population, and different ways might lead to different directions of "more" and "less."
+
+This section first addresses the issue of ambiguous direction, which is peculiar to generic comparison, before discussing the issues stemming from unspecified magnitude, which are similar to the issues with generic generalization.
+
+
+### Ambiguous Direction
+
 
 What makes group comparisons more complicated than comparing individuals[^observational] is that comparison between groups is a comparison of distributions, rather than point values. For instance, when comparing the height of two people, who can be labeled "A" and "B," there will be a single point value for the height of person A, e.g., 68 inches, and a single point value for the height of person B, e.g., 75 inches. In this case, it is true that person A is shorter than person B and false that person A is taller than person B.
 
 [^observational]: In statistical jargon, here "group" is taken to mean a domain and "individual" is taken to mean an observational unit.
 
-On the other hand, if "A" and "B" represent groups of thousands of people, there is not a single point value that represents the thousands of heights of people in group A or a single point value that represents the thousands of heights of people in group B. In this case, two distributions must be compared.
+On the other hand, if "A" and "B" represent groups of thousands of people, there is not a single point value that captures all the variation in the thousands of heights of people in group A or a single point value that can represent the thousands of heights of people in group B. In this case, the two _distributions_ must be compared.
 
 Unless the two distributions are completely disjoint, some people in group A will be taller than some people in group B, and some people in group B will be taller than some people in group A. It is not simply true or false that group A "is taller" than group B or group A "is shorter" than group B.
 
-One could calculate and compare the arithmetic means of the heights in the two groups, but arithmetic mean is _just_ a measure of the central tendency of a distribution. There are other measures of central tendency, such as the median or mode, which also have their merits. More importantly, there are other properties of a distribution that are just as relevant, such as the dispersion or spread, the skewness, and to a lesser extent, the kurtosis.
+One could calculate and compare the arithmetic means of the heights in the two groups, but arithmetic mean is _just_ one measure of the central tendency of a distribution. There are other measures of central tendency, such as the median, which also have their merits. More importantly, there are other properties of a distribution that are just as relevant, such as the dispersion or spread, the skewness, and to a lesser extent, the kurtosis.
 
-Furthermore, these are just measures of a distribution in isolation, what is actually desired in this case are measures that describe the difference between distributions. There are several ways to approach this, such as probability of superiority or proportion of variance explained, but this is beyond the scope of this article. The relevant point for this discussion is that it is never as simple as group A has "more" of something and group B has "less" of it. Assertions such as these are outside the realm of truth or falsity.
+Even with just the two basic statistics of mean and median, it is possible for the mean of group A to be greater than the mean of group B, but the median of group A to be _less than_ the median of group B. Simplifying the heights example to involve only 30 people instead of thousands of people in each group leads to Table 1.
 
-Is is, however, true or false whether a specific statistic is greater for one group than for another, such as whether the mean height of group A is greater than the mean height of group B, or whether the median height of group A is greater than the median height of group B. Assertions about differences in mean or median between two groups _are_ either true or false.
-
-However, even with just these two basic statistics, mean and median, it is possible for the mean of group A to be greater than the mean of group B, but the median of group A to be less than the median of group B. Simplifying the heights example to involve only 30 people instead of thousands of people in each group leads to Table 1.
 
 ```{r, include=FALSE}
 n <- 30
@@ -215,16 +220,46 @@ A quick calculation shows that the mean height of people in group A is `r mean_A
 
 [^outliers]: This is simply due to the fact that medians are more resistant to outliers than means, and 30% of group A consists of exceptionally tall people.
 
-As more and more descriptive statistics are used, there are more and more opportunities for such ambiguities to occur.
+This ambiguity can occur even between two of the most basic statistics used to describe a distribution: mean and median. As more and more statistics are used, there are more and more opportunities for such ambiguities to occur. A similar phenomenon, but with means and totals, was described in this blog's discussion of [missing denominators](/how-to-scrutinize-a-statistic.html#missing-denominators).
+
+The important takeaway is that it always flawed to think about a group having "more" or "less" of something than another group. Assertions such as these are outside the realm of truth or falsity. Rather, it is correct to think about whether a _specific statistic_ for one population is greater or lesser than that statistic for another population. Assertions about differences in statistics between two groups _are_ true or false.
 
 
-_**After writing this draft, it has become apparent that there are two ways in which generic comparisons are generic: they can be generic in ambiguity about which group has "more" of something, e.g., mean vs. median example; they can also be generic in magnitude, once direction of "more" effect has been established. Generic generalizations don't have a direction, and so are generic only in magnitude. This should be made more clear in an introduction, and this section split into subsections discussing the two kinds of genericness.**_
+### Unquantified Magnitude
 
-* "Generic comparisons" more of a statistician niche; Tukey quote
-* Fallacious use in empirical research (group A has "more" of X than group B, and this explains why group A has "more" of Y than group B)
-* Uninformative
-* Resistant to falsification
+For any given variable, it is extremely unlikely that it would have the _exact same_ distribution in two different populations. Thus, between two groups, one group is going to have "more" of something than the other. More properly, when comparing two groups, any variable is going to have a greater mean, median, total, proportion, etc., for one group than for the other.
 
+Because _every_ variable is at least trivially different between two groups, simply asserting that a mean or other statistic is greater for one group than the other is largely uninformative. Given enough precision, no two means will be equal. This is a phenomenon described in a well-known quote by statistican John Tukey.
+
+_**[Put Tukey quote here after reading paper.]**_
+
+Thus, generic generalizations are resistant to falsification. If someone asserts that group A makes more money on average than group B, a study which finds that members of group A have a mean income of \$46,300 and members of group B have a mean income of \$46,300 does not conclusively demonstrate that this assertion is false. The person making the assertion could simply demand more precision with the expectation that the means, taken to the dollar, would be different, such as with mean incomes of \$46,832 and \$46,311.
+
+Even if the mean incomes of the two groups were found to be \$46,712 and \$46,712, the person making the assertion could speculate that there would be a difference if precision were increased to the cent. Indeed, since a mean is a ratio between a sum and a count, this could continue _ad nauseum_ to an arbitrary level of precision.[^significance]
+
+[^significance]: This is a simplification for illustrative purposes. This is not how statistical analysis works in practice. In reality, such an encounter would turn on how much power a study has and whether a difference is [statistically significant](/how-to-scrutinize-a-statistic.html#statistical-significance).
+
+While generic comparisons are in this way resistant to falsification, they are not quite as resistant to falsification as generic generalizations. With a generic generalization, as long as at its predicate is true of least one member of its subject population, it resists falsification. With a generic comparison, assertions have a direction, i.e., the "more" or "less" component. If this is asserted to be in the wrong direction, then the generic comparison can be readily falsified.[^power]
+
+[^power]: Real-world falsification is, of course, still contingent on a study having enough statistical power to detect the difference, but in principle, the falsification can be done.
+
+As long as the direction of the generic comparison is correct, however, the generic comparison is resistant to falsification. As was seen with generic generalizations, generic comparisons that are resistant to falsification are also highly uninformative. If for every variable, and for every pairing of any two groups, the mean of the variable is greater for one group than for the other, assertions that this is the case are not saying much at all. The same can be said for an arbitrary number of other comparisons.
+
+
+* _**Fallacious use in empirical research (group A has "more" of X than group B, and this explains why group A has "more" of Y than group B)**_
+* _**"Generic comparisons" more of a statistician niche**_
+* _**Add practical significance discussion to generic generalizations?**_
+
+
+### How to Avoid the Fallacy
+
+[...]
+
+A first answer to this is a summary of [effect size](/how-to-scrutinize-a-statistic.html#effect-size). While an effect size is a helpful initial summary of a difference between groups, it is just that, an initial summary and not a complete description of the difference.
+
+How to compare a variable between two groups _well_ is a deep enough topic to merit its own treatment in a future article of this blog; this article focuses on the fallacious comparison of a variable between two groups.
+
+[...]
 
 ## Conclusion
 
@@ -238,7 +273,7 @@ _**After writing this draft, it has become apparent that there are two ways in w
     * because inherently quantitative
     * guards against prejudice
 
-Purging generic thinking from one's mind is of course something of an aspirational goal. It is unreasonable to expect anyone's thinking to be entirely free of generic generalizations, but it is also unreasonable to expect any society to be entirely devoid from crime, and this does not negate the fact that the desired amount of crime is no crime at all.
+Purging generic thinking from one's mind is of course something of an aspirational goal. It is unreasonable to expect anyone's thinking to be entirely free of generic generalizations, but it is also unreasonable to expect any society to be entirely devoid of house fires, and this does not negate the fact that the desired number of house fires is not crime at all.
 
 
 ## Citations
