@@ -150,7 +150,7 @@ As discussed previously, the phrase "generic comparison" is not as established a
 
 Unlike a generic generalization, which is generic in precisely one way, there are two ways in which a generic comparison can be generic. A generic generalization fails to describe the proportion of the population for which its predicate is true. When "swans are white" is asserted, it is not clear if this means that 2% or 50% or 99% of swans are white. Similarly, if it is settled that, by any reasonable measure, one group has "more" of something than the other, a generic comparison leaves unspecified how much "more" one group has of something than the other.
 
-Additionally, there are many ways to measure the distribution of a variable in a population, and different ways might lead to different directions of "more" and "less." Thus, with generic comparisons, because the judgement of "more" or "less" is left vague, it can be ambiguous which direction the "more" should go and which direction the "less" should go. 
+Additionally, there are many ways to measure the distribution of a variable in a population, and different ways might lead to different directions of "more" and "less." Thus, specifically with generic comparisons, when it is not specified which measure is being used and when different measures lead to different directions, it is ambiguous which direction the "more" should go.
 
 This section first addresses the issue of ambiguous direction, which is peculiar to generic comparison, before discussing the issues stemming from unspecified magnitude, which are similar to the issues with generic generalization.
 
@@ -158,7 +158,7 @@ This section first addresses the issue of ambiguous direction, which is peculiar
 ### Ambiguous Direction
 
 
-What makes comparisons between groups more complicated than comparing individuals[^observational] is that comparison between groups is a comparison of distributions, rather than point values. For instance, when comparing the height of two people, who can be labeled "A" and "B," there will be a single point value for the height of person A, e.g., 68 inches, and a single point value for the height of person B, e.g., 75 inches. In this case, it is true that person A is shorter than person B and false that person A is taller than person B.
+What makes comparisons between groups more complicated than comparing individuals[^observational] is that comparison between groups is a comparison of distributions, rather than point values. For instance, when comparing the height of two people, who can be labeled "A" and "B," there will be a single point value for the height of person A, e.g., 68 inches, and a single point value for the height of person B, e.g., 75 inches. In this case, it is true that person A is shorter than person B, and false that person A is taller than person B.
 
 [^observational]: In statistical jargon, here "group" is taken to mean a domain and "individual" is taken to mean an observational unit.
 
@@ -231,29 +231,38 @@ The important takeaway is that it always flawed to think about a group having "m
 
 For any given variable, it is extremely unlikely that it would have the _exact same_ distribution in two different populations. Thus, when comparing two groups, any variable is going to have a greater mean (or other statistic) for one group than for the other.
 
-Because nearly _every_ variable is at least trivially different between two groups, simply asserting that a mean (or other statistic) is greater for one group than the other is largely uninformative. Given enough precision, no two means will be equal. This is a phenomenon described in a well-known quote by statistician John Tukey.
+Because nearly _every_ variable has at least a trivially different distribution between two groups, simply asserting that a mean (or other statistic) is greater for one group than the other is largely uninformative. Given enough precision, no two means will be equal. This is a phenomenon described in a well-known quote by statistician John Tukey.
 
 _**[Put Tukey quote here after reading paper.]**_
 
-Thus, generic generalizations are resistant to falsification. If someone asserts that group A makes more money on average than group B, a study which finds that members of group A have a mean income of \$46,300 and members of group B have a mean income of \$46,300 does not conclusively demonstrate that this assertion is false. The person making the assertion could simply demand more precision with the expectation that the means, calculated to the dollar, would be different, such as with mean incomes of \$46,382 and \$46,311.
+Thus, generic generalizations are resistant to falsification. If someone asserts that group A makes more money on average than group B, a study which finds that members of group A have a mean annual income of \$46,300 and members of group B have a mean annual income of \$46,300 does not conclusively demonstrate that this assertion is false. The person making the assertion could simply demand more precision with the expectation that the means, calculated to the dollar, would be different, such as with mean incomes of \$46,382 and \$46,311.
 
-Even if the mean incomes of the two groups were found to be \$46,382 and \$46,382, there might be a difference if precision were increased to the cent. Indeed, since a mean is a ratio between a sum and a count, this could continue _ad nauseum_ to an arbitrary level of precision.[^significance]
+Even if the mean annual incomes of the two groups were found to be \$46,382 and \$46,382, there might be a difference if precision were increased to the cent. Indeed, since a mean is a ratio between a sum and a count, this could continue _ad nauseum_ to an arbitrary level of precision.[^significance]
 
 [^significance]: This is a simplification for illustrative purposes. This is not how statistical analysis works in practice. In reality, such an encounter would turn on how much power a study has and whether a difference is [statistically significant](/how-to-scrutinize-a-statistic.html#statistical-significance).
 
-While generic comparisons are in this way resistant to falsification, they are not quite as resistant to falsification as generic generalizations. With a generic generalization, as long as at its predicate is true of least one member of its subject population, it resists falsification. With a generic comparison, assertions have a direction, i.e., the "more" or "less" component. If this is asserted to be in the wrong direction, then the generic comparison could be readily falsified.[^power]
+While generic comparisons are in this way resistant to falsification, they are not quite as resistant to falsification as generic generalizations. With a generic generalization, as long as at its predicate is true of least one member of its subject population, it resists falsification. With a generic comparison, assertions have a direction, i.e., the "more" or "less" component. If this were asserted to be in the wrong direction, then the generic comparison could be readily falsified.[^power]
 
 [^power]: Real-world falsification is, of course, still contingent on a study having enough statistical power to detect the difference, but in principle, the falsification can be done.
 
-As long as the direction of the generic comparison is correct, however, the generic comparison is resistant to falsification. Like generic generalizations, generic comparisons that are resistant to falsification are also highly uninformative. For instance, asserting that group A makes more money on average than group B is uninformative. It could be that the mean income in group A is \$32,950 versus a mean income in group B of \$28,552. It could, however, be that the mean income of group A is \$157,800 versus a mean income in group B of \$28,552.
+As long as the direction of the generic comparison is correct, however, the generic comparison is resistant to falsification. Like generic generalizations, generic comparisons that are resistant to falsification are also highly uninformative. For instance, asserting that group A makes more money on average than group B is uninformative. It could be that the mean annual income in group A is \$32,950 versus a mean income in group B of \$28,552. It could, however, be that the mean annual income of group A is \$157,800 versus a mean income in group B of \$28,552.
 
+Because these kind of generic comparisons are uninformative, they can be used to reach specious conclusions in flawed analysis, a practice all too commonly seen in social or behavioral research. The general scheme is to claim that the mean (or other statistic) of variable _X_ is greater for group A than for group B because the mean (or other statistic) of variable _Y_ is greater for group A than for group B. For instance, someone might claim that group A has a higher mean income than group B because the mean hours worked per week is higher for group A than for group B.
 
-* _**Fallacious use in empirical research (group A has "more" of X than group B, and this explains why group A has "more" of Y than group B)**_
+It _might_ very well be the case that the differences in the number of hours worked per week between the two groups explains a substantial portion of the difference in average income between the two groups, but the same could be said for _any other variable_ because, for any variable, it is extremely unlikely that the mean of the variable would be exactly equal between the two groups. Thus, by the exact same logic, _anything_ can explain the difference in mean income between group A or group B.
+
+Quantification of the difference in mean hours worked per week between the two groups and of the difference in mean annual income between the two groups might cast doubt on such an explanation. For instance, if it is discovered that the mean hours worked per week is 42.7 for group A and 41.3 for group B, but the mean annual income is \$74,920 for group A and \$39,500 for group B, such a small difference in mean hours worked per week seems unlikely to explain such a large difference in mean income.
+
+Therefore, quantification might be withheld by deceptive analyses intended to make an explanation seem more plausible than it actually is. Alternatively, it might be withheld by flawed, lazy analyses that do not know any better or do not invest enough time in the analysis.
+
+Even with quantification, simply comparing differences in mean (or other statistic) between groups is itself insufficient for judging how much of the differences in one variable is explained by differences in another variable.[^variation] However, quantification of means (or other statistics) is at least a step in the right direction and away from generic thinking.
+
+[^variation]: To determine how much of variation one variable is explained by another variable, both variables should be measured in the observational units and techniques as linear models or analysis of variance (ANOVA) should be used. "Observational unit" is jargon for the individuals that compose the groups, such as, for example, an individual person.
 
 
 ### How to Avoid the Fallacy
 
-The answer to the fallacy of generic comparisons is similar to the solution to the fallacy of generic generalizations: all that is needed is quantification. However, quantifying a generic comparison is much more nuanced than quantifying a generic generalization.
+The answer to the fallacy of generic comparisons is similar to the answer to the fallacy of generic generalizations: all that is needed is quantification. However, quantifying a generic comparison is much more nuanced than quantifying a generic generalization.
 
 When quantifying a generic generalization, typically all that is needed is a proportion, in particular, the proportion of the subject population for which the predicate of th generalization is true. For instance, specifying "72.4\%" in "approximately 72.4% of swans are white" is relatively straightforward.
 
