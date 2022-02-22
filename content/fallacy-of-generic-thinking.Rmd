@@ -34,20 +34,20 @@ What unites the many types of [fallacies](/tags/fallacies.html) that this blog d
 
 The phrase "generic comparison" is actually a neologism invented by this blog, but the word "generic" was used deliberately to allude to what is termed "generic generalization," a phrase established in the academic literature.
 
-Generic thinking comprises both generic generalization and generic comparison and encompasses all beliefs about an inherently quantitative subject, but that are held without any quantification. This often occurs when someone is thinking about large populations of individuals. For instance, social issues occur, by their very nature, in large populations of individual human beings. Thus, all unquantified social criticism is generic thinking.
+Generic thinking comprises both generic generalizations and generic comparisons and encompasses all beliefs about an inherently quantitative subject, but that are held without any quantification. This often occurs when someone is thinking about large populations of individuals. For instance, social issues occur, by their very nature, in large populations of individual human beings. Thus, all unquantified social criticism is generic thinking.
 
 
 ## Generic Generalization
 
-In both academic philosophy and academic psychology, there exists a body of scholarship pertaining to generic generalization. In a generic generalization, a property is predicated of a subject that denotes a population of individuals, but no quantification is given.
+In a generic generalization, a property is predicated of a subject that denotes a population of individuals, but no quantification is given.
 
 "All swans are white," "some swans are white," "no swans are white," "approximately 74.2% of swans are white" are all beliefs about a subject &ndash; denoted by "swans" &ndash; that includes a large number of individuals. All of these statements include some kind of quantification, namely "all," "some," "no," or "approximately 74.2%." However, the statement "swans are white" is a generic generalization because it is unquantified.
 
-Generic generalizations have been studied by philosophers because they can seem like a logic puzzle. For instance, statements like "dogs have four legs," "ducks lay eggs," "mosquitoes carry the West Nile virus" seem like they have the spirit of truth to them.[^examples]  However, they are all false for a portion of the population they discuss.
+A body of scholarship pertaining to generic generalizations exists in both academic philosophy and academic psychology. They have been studied by philosophers because they can seem like a logic puzzle. For instance, statements like "dogs have four legs," "ducks lay eggs," "mosquitoes carry the West Nile virus" seem like they have the spirit of truth to them.[^examples]  However, they are all false for a portion of the population they discuss.
 
 [^examples]: "Dogs have four legs" and "ducks lay eggs" are examples used in "Generic Generalizations" in the _Stanford Encyclopedia of Philosophy_ [@leslie_generic_2016] and the West Nile virus example is used in "The Original Sin of Cognition" [@leslie_original_2017].
 
-While most dogs have four legs, there are some dogs happily scampering around on three legs. Only female ducks who have reached sexual maturity even have the ability to lay eggs, so "ducks lay eggs" is only true for less than half the population it describes. A mercifully very small proportion of mosquitoes actually carry the West Nile virus.
+While it is true that _most_ "dogs have four legs," there are some dogs happily scampering around on three legs. Only female ducks who have reached sexual maturity even have the ability to lay eggs, so "ducks lay eggs" is only true for less than half the population it describes. Mercifully, a very small proportion of mosquitoes actually carry the West Nile virus.
 
 ![
 A three-legged dog, the existence of which is a false case of the generic generalization "dogs have four legs."<br/>
@@ -144,11 +144,13 @@ If there is indeed elided quantification lurking beneath a supposed generic gene
 
 ## Generic Comparison
 
-In a generic comparison, it is asserted that one group has "more" or "less" of some attribute than another group, but no further quantification is specified. Unlike a generic generalization, which is generic in precisely one way, there are two ways in which a generic comparison can be generic.
+In a generic comparison, it is asserted that one group has "more" or "less" of some attribute than another group, but no further quantification is specified.
 
-A generic generalization fails to describe the proportion of the population for which its predicate is true. When "swans are white" is asserted, it is not clear if this means that 2% or 50% or 99% of swans are white. Similarly, if it is settled that, by any reasonable measure, one group has "more" of something than the other, a generic comparison leaves unspecified how much "more" one group has of something than the other.
+As discussed previously, the phrase "generic comparison" is not as established as the phrase "generic generalization." Indeed, while generic generalizations are studied by philosophers and psychologists, the phrase "generic comparisons" encompasses criticisms that are sometimes discussed by empirical researchers and applied statisticians, but are not as widely discussed outside of this niche. However, these criticisms are just as relevant, if not more so, whenever thinking about issues involving large populations of individuals, such as social issues.
 
-Additionally, with generic comparisons, because the judgement of "more" or "less" is left vague, it can be ambiguous which direction the "more" should go and which direction the "less" should go. There are many ways to measure the distribution of a variable in a population, and different ways might lead to different directions of "more" and "less."
+Unlike a generic generalization, which is generic in precisely one way, there are two ways in which a generic comparison can be generic. A generic generalization fails to describe the proportion of the population for which its predicate is true. When "swans are white" is asserted, it is not clear if this means that 2% or 50% or 99% of swans are white. Similarly, if it is settled that, by any reasonable measure, one group has "more" of something than the other, a generic comparison leaves unspecified how much "more" one group has of something than the other.
+
+Additionally, there are many ways to measure the distribution of a variable in a population, and different ways might lead to different directions of "more" and "less." Thus, with generic comparisons, because the judgement of "more" or "less" is left vague, it can be ambiguous which direction the "more" should go and which direction the "less" should go. 
 
 This section first addresses the issue of ambiguous direction, which is peculiar to generic comparison, before discussing the issues stemming from unspecified magnitude, which are similar to the issues with generic generalization.
 
@@ -156,7 +158,7 @@ This section first addresses the issue of ambiguous direction, which is peculiar
 ### Ambiguous Direction
 
 
-What makes group comparisons more complicated than comparing individuals[^observational] is that comparison between groups is a comparison of distributions, rather than point values. For instance, when comparing the height of two people, who can be labeled "A" and "B," there will be a single point value for the height of person A, e.g., 68 inches, and a single point value for the height of person B, e.g., 75 inches. In this case, it is true that person A is shorter than person B and false that person A is taller than person B.
+What makes comparisons between groups more complicated than comparing individuals[^observational] is that comparison between groups is a comparison of distributions, rather than point values. For instance, when comparing the height of two people, who can be labeled "A" and "B," there will be a single point value for the height of person A, e.g., 68 inches, and a single point value for the height of person B, e.g., 75 inches. In this case, it is true that person A is shorter than person B and false that person A is taller than person B.
 
 [^observational]: In statistical jargon, here "group" is taken to mean a domain and "individual" is taken to mean an observational unit.
 
@@ -227,39 +229,37 @@ The important takeaway is that it always flawed to think about a group having "m
 
 ### Unquantified Magnitude
 
-For any given variable, it is extremely unlikely that it would have the _exact same_ distribution in two different populations. Thus, between two groups, one group is going to have "more" of something than the other. More properly, when comparing two groups, any variable is going to have a greater mean or other statistic for one group than for the other.
+For any given variable, it is extremely unlikely that it would have the _exact same_ distribution in two different populations. Thus, when comparing two groups, any variable is going to have a greater mean (or other statistic) for one group than for the other.
 
-Because _every_ variable is at least trivially different between two groups, simply asserting that a mean or other statistic is greater for one group than the other is largely uninformative. Given enough precision, no two means will be equal. This is a phenomenon described in a well-known quote by statistician John Tukey.
+Because nearly _every_ variable is at least trivially different between two groups, simply asserting that a mean (or other statistic) is greater for one group than the other is largely uninformative. Given enough precision, no two means will be equal. This is a phenomenon described in a well-known quote by statistician John Tukey.
 
 _**[Put Tukey quote here after reading paper.]**_
 
-Thus, generic generalizations are resistant to falsification. If someone asserts that group A makes more money on average than group B, a study which finds that members of group A have a mean income of \$46,300 and members of group B have a mean income of \$46,300 does not conclusively demonstrate that this assertion is false. The person making the assertion could simply demand more precision with the expectation that the means, taken to the dollar, would be different, such as with mean incomes of \$46,832 and \$46,311.
+Thus, generic generalizations are resistant to falsification. If someone asserts that group A makes more money on average than group B, a study which finds that members of group A have a mean income of \$46,300 and members of group B have a mean income of \$46,300 does not conclusively demonstrate that this assertion is false. The person making the assertion could simply demand more precision with the expectation that the means, calculated to the dollar, would be different, such as with mean incomes of \$46,382 and \$46,311.
 
-Even if the mean incomes of the two groups were found to be \$46,712 and \$46,712, the person making the assertion could speculate that there would be a difference if precision were increased to the cent. Indeed, since a mean is a ratio between a sum and a count, this could continue _ad nauseum_ to an arbitrary level of precision.[^significance]
+Even if the mean incomes of the two groups were found to be \$46,382 and \$46,382, there might be a difference if precision were increased to the cent. Indeed, since a mean is a ratio between a sum and a count, this could continue _ad nauseum_ to an arbitrary level of precision.[^significance]
 
 [^significance]: This is a simplification for illustrative purposes. This is not how statistical analysis works in practice. In reality, such an encounter would turn on how much power a study has and whether a difference is [statistically significant](/how-to-scrutinize-a-statistic.html#statistical-significance).
 
-While generic comparisons are in this way resistant to falsification, they are not quite as resistant to falsification as generic generalizations. With a generic generalization, as long as at its predicate is true of least one member of its subject population, it resists falsification. With a generic comparison, assertions have a direction, i.e., the "more" or "less" component. If this is asserted to be in the wrong direction, then the generic comparison can be readily falsified.[^power]
+While generic comparisons are in this way resistant to falsification, they are not quite as resistant to falsification as generic generalizations. With a generic generalization, as long as at its predicate is true of least one member of its subject population, it resists falsification. With a generic comparison, assertions have a direction, i.e., the "more" or "less" component. If this is asserted to be in the wrong direction, then the generic comparison could be readily falsified.[^power]
 
 [^power]: Real-world falsification is, of course, still contingent on a study having enough statistical power to detect the difference, but in principle, the falsification can be done.
 
-As long as the direction of the generic comparison is correct, however, the generic comparison is resistant to falsification. As was seen with generic generalizations, generic comparisons that are resistant to falsification are also highly uninformative. If for every variable, and for every pairing of any two groups, the mean of the variable is greater for one group than for the other, assertions that this is the case are not saying much at all. The same can be said for an arbitrary number of other comparisons.
+As long as the direction of the generic comparison is correct, however, the generic comparison is resistant to falsification. Like generic generalizations, generic comparisons that are resistant to falsification are also highly uninformative. For instance, asserting that group A makes more money on average than group B is uninformative. It could be that the mean income in group A is \$32,950 versus a mean income in group B of \$28,552. It could, however, be that the mean income of group A is \$157,800 versus a mean income in group B of \$28,552.
 
 
 * _**Fallacious use in empirical research (group A has "more" of X than group B, and this explains why group A has "more" of Y than group B)**_
-* _**"Generic comparisons" more of a statistician niche**_
-* _**Add practical significance discussion to generic generalizations?**_
 
 
 ### How to Avoid the Fallacy
 
-[...]
+The answer to the fallacy of generic comparisons is similar to the solution to the fallacy of generic generalizations: all that is needed is quantification. However, quantifying a generic comparison is much more nuanced than quantifying a generic generalization.
 
-A first answer to this is a summary of [effect size](/how-to-scrutinize-a-statistic.html#effect-size). While an effect size is a helpful initial summary of a difference between groups, it is just that, an initial summary and not a complete description of the difference.
+When quantifying a generic generalization, typically all that is needed is a proportion, in particular, the proportion of the subject population for which the predicate of th generalization is true. For instance, specifying "72.4\%" in "approximately 72.4% of swans are white" is relatively straightforward.
 
-How to compare a variable between two groups _well_ is a deep enough topic to merit its own treatment in a future article of this blog; this article focuses on the fallacious comparison of a variable between two groups.
+Quantifying a comparison is rarely as simple as providing a single statistic or estimate thereof. Various ways to provide an initial summary of a comparative difference between groups were given in the discussion of [effect size](/how-to-scrutinize-a-statistic.html#effect-size). While an effect size is a helpful initial summary of a difference between groups, it is just that, an initial summary and not a complete description of the difference.
 
-[...]
+How to compare a variable between two groups is a deep enough topic to merit its own treatment, but is beyond the scope of this article.
 
 
 ## Conclusion
