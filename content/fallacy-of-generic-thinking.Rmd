@@ -231,9 +231,7 @@ The important takeaway is that it always flawed to think about a group having "m
 
 For any given variable, it is extremely unlikely that it would have the _exact same_ distribution in two different populations. Thus, when comparing two groups, any variable is going to have a greater mean (or other statistic) for one group than for the other.
 
-Because nearly _every_ variable has at least a trivially different distribution between two groups, simply asserting that a mean (or other statistic) is greater for one group than the other is largely uninformative. Given enough precision, no two means will be equal. This is a phenomenon described in a well-known quote by statistician John Tukey.
-
-_**[Put Tukey quote here after reading paper.]**_
+Because nearly _every_ variable has at least a trivially different distribution between two groups, simply asserting that a mean (or other statistic) is greater for one group than the other is largely uninformative. Given enough precision, no two means will be equal.
 
 Thus, generic generalizations are resistant to falsification. If someone asserts that group A makes more money on average than group B, a study which finds that members of group A have a mean annual income of \$46,300 and members of group B have a mean annual income of \$46,300 does not conclusively demonstrate that this assertion is false. The person making the assertion could simply demand more precision with the expectation that the means, calculated to the dollar, would be different, such as with mean incomes of \$46,382 and \$46,311.
 
