@@ -1,0 +1,6 @@
+PROC EXPORT
+    DATA=NSFG.FemaleWgtData_2011_2019
+    OUTFILE="/home/u43676684/NSFG/Export/2011_2019_FemaleWgtData.csv"
+    DBMS=CSV
+    REPLACE;
+RUN;

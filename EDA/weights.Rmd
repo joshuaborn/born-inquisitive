@@ -1,0 +1,58 @@
+---
+title: "Investigations of Weights"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+
+i_am('EDA/weights.Rmd')
+
+opts_chunk$set(
+  echo = TRUE,
+  cache = TRUE
+)
+```
+
+## Null Weights
+
+```{r load-data, message=FALSE}
+femresp <- fread(
+  here('data/2017_2019_FemRespData.csv'),
+  key = 'CASEID'
+)
+
+female_weights <- fread(
+  here('data/2011_2019_FemaleWgtData.csv'),
+  key = 'CASEID'
+)
+
+femresp_aug <- female_weights[femresp]
+```
+
+```{r, check-counts}
+femresp_aug[is.na(WGT2017_2019), .N]
+
+femresp_aug[is.na(WGT2011_2019), .N]
+
+femresp_aug[is.na(WGT2011_2019), table(AGESCRN, useNA = 'ifany')]
+
+femresp_aug[is.na(WGT2011_2019), table(AGE_R, useNA = 'ifany')]
+
+femresp_aug[is.na(WGT2013_2019), .N]
+
+femresp_aug[is.na(WGT2013_2019), table(AGESCRN, useNA = 'ifany')]
+
+femresp_aug[is.na(WGT2013_2019), table(AGE_R, useNA = 'ifany')]
+
+femresp_aug[is.na(WGT2015_2019), .N]
+```
+
+Weights are `NA` for respondents aged 45-49 for any year ranges that include a year before 2015, since those aged 45-49 were only made eligible for the survey in 2015.

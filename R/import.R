@@ -56,3 +56,8 @@ male_formats <- fread(
   key = c('FMTNAME', 'START')
 )
 setnames(male_formats, c('column_name', 'factor_value', 'factor_label'))
+
+female_weights <- fread(
+  'data/2011_2019_FemaleWgtData.csv',
+  key = 'CASEID'
+)
