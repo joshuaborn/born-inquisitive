@@ -5,9 +5,5 @@
 .Rhistory
 .Rproj.user
 .Ruserdata
-data/*.csv
 data/*.dat
-data/*.sas
-deprecated/data/*.csv
 deprecated/data/*.dat
-deprecated/data/*.sas
