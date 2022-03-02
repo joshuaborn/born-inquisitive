@@ -16,13 +16,16 @@ library(srvyr)
 library(stringr)
 library(survey)
 
-here::i_am(file.path('eda', 'number_of_births.Rmd'))
+here::i_am(file.path('deprecated', 'eda', 'number_of_births.Rmd'))
 
 knitr::opts_chunk$set(
   echo = TRUE,
   cache = TRUE
 )
 ```
+
+**_This document is deprecated. Instead of using tidyverse libraries to load the NSFG data sets using fragments of the SAS program statements, going forward the NSFG data will be loaded into SAS via the SAS program statements, and exports of the data for use with R created from the SAS data sets. Additionally, tidyverse will no longer be used in favor of data.table._**
+
 
 ## During 2012-2016, Based on 2017-2019 Data
 
@@ -59,7 +62,7 @@ get_list_of_col_widths <- function(filename) {
   })
 }
 
-load_nsfg_data_set <- function(filename, path = 'data') {
+load_nsfg_data_set <- function(filename, path = 'deprecated/data') {
   data_definition_path <- here(path,
     paste(filename, 'vars', 'txt', sep = '.'))
   read_fwf(
