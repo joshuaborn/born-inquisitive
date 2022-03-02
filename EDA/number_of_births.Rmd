@@ -1,0 +1,312 @@
+---
+title: "Validating NSFG Data with Number of Live Births"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+library(survey)
+
+i_am('EDA/number_of_births.Rmd')
+
+opts_chunk$set(
+  echo = TRUE,
+  cache = TRUE
+)
+```
+
+## During 2012-2016, Based on 2017-2019 Data
+
+[Appendix 2 to the User Guide for the 2017-2019 NSFG](https://www.cdc.gov/nchs/nsfg/nsfg_2017_2019_puf.htm) contains point estimates and confidence intervals of the number of live births during 2012-2016 in the United States, based on the 2017-2019 NSFG. These estimates are in turn compared with births registered through the National Vital Statistics System to verify their accuracy. See Table 1.
+
+In order to validate the NSFG data are being used correctly with the `survey` package viz a viz weights, pseudo-strata, and pseudo-clusters, and in order to motivate familiarization with the NSFG data set, these point estimates and these confidence intervals are replicated here.
+
+```{r table1, echo=FALSE, fig.cap='**Table 1:** A table of estimates of births in the United States from page 2 of the Appendix 2 to the User Guide for the 2017-2019 NSFG.'}
+include_graphics(file.path('img', '2017_2019_births_table.png'))
+```
+
+```{r load-data, message=FALSE, cache=TRUE}
+fempreg <- fread(
+  here('data/2017_2019_FemPregData.csv'),
+  key = c('CASEID', 'PREGORDR')
+)
+
+fempreg_labels <- fread(
+  here('data/2017_2019_FemPregLabels.csv'),
+  select = c('name', 'label'),
+  key = 'name'
+)
+setnames(fempreg_labels, c('column_name', 'column_label'))
+
+fempreg_formats <- fread(
+  here('data/2017_2019_FemPregFormats.csv'),
+  select = c('FMTNAME', 'START', 'LABEL'),
+  key = c('FMTNAME', 'START')
+)
+setnames(fempreg_formats, c('column_name', 'factor_value', 'factor_label'))
+```
+
+
+### Variables for Filtering
+
+The estimates in Table 1 can be calculated from data in the female pregnancy file (`2017_2019_Preg.dat`). The filtering necessary for these estimates appear to be based on variables for pregnancy outcome (`OUTCOME`), year pregnancy ended (`DATEND`), whether respondent was born outside of the United States (`BRNOUT`), and the year the respondent came to the United States (`YRSTRUS`).
+
+```{r}
+fempreg[, `:=`(
+  OUTCOME = factor(
+    OUTCOME,
+    levels = fempreg_formats[column_name == 'OUTCOME', factor_value],
+    labels = fempreg_formats[column_name == 'OUTCOME', factor_label]
+  ),
+  BRNOUT = factor(
+    BRNOUT,
+    levels = c(1, 5, 8, 9),
+    labels = c('Yes', 'No', 'Refused', "Don't Know")
+  ),
+  YRSTRUS = factor(
+    YRSTRUS,
+    levels = fempreg_formats[column_name == 'YRSTRUS', factor_value],
+    labels = fempreg_formats[column_name == 'YRSTRUS', factor_label]
+  )
+)]
+```
+
+The `OUTCOME` and `DATEND` are recoded variables, whereas `BRNOUT` is a raw variable.
+
+```{r check-outcome}
+fempreg[, table(OUTCOME, useNA = 'always')]
+```
+
+The counts of each level of the `OUTCOME` variable match the counts reported in the codebook.
+
+```{r check-datend}
+fempreg[, .(inapplicable = is.na(DATEND))][, .N, by = inapplicable]
+
+fempreg[, table(DATEND, useNA = 'always')]
+```
+
+The are 193 observations for which `DATEND` is inapplicable and 10,022 otherwise, which matches what is reported in the codebook.
+
+```{r check-brnout}
+fempreg[, table(BRNOUT, useNA = 'always')]
+```
+
+The counts of each level of the `BRNOUT` variable matches what is in the codebook.
+
+The `YRSTRUS` variable does not appear to be documented in the 2017-2019 NSFG documentation. The last time it appears in the Female Pregnancy File Codebook is in the 2015-2017 NSFG documentation, which references Appendix 7 of the User Guide. However, only the `STRUS_M`, `STRUS_F`, and `CMSTRUS` variables are discussed in Appendix 7 in the 2015-2017 NSFG documentation. These variables contain the month and year that a respondent came to United States, if the respondent is born elsewhere, and are not released in the public use data files due to disclosure risk.
+
+The Appendix 7 in the 2013-2015 NSFG documentation does discuss the `YRSTRUS` variable, stating that it contains a calculated value indicating only the year the respondent came to stay in the United States. However, as seen below, there are only the values 1, 2, 3, or 4 contained in the `YRSTRUS` data for the 2017-2019 NSFG data set, in addition to values customarily used to encode for "refused" and "don't know" responses and to encode for non-applicability.
+
+Fortunately, even though the 2017-2019 encoding of the `YRSTRUS` variable is not documented anywhere, the SAS program statement for the female pregnancy file contains a values definition for the variable.
+
+```{r check-yrstrus}
+fempreg[, table(YRSTRUS, useNA = 'always')]
+```
+
+It appears as though the `YRSTRUS` in the 2017-2019 public use files has been modified even more than in previous iterations of the public use files. Because the estimates of Table 1 are of live births in the United States from 2012-2016, the only possible use of the `YRSTRUS` variable for calculating Table 1 estimates is to filter out observations with value `4` of the `YRSTRUS`, which consists of 355 observations. However, this also filters out some observations of births that did occur in the United States. Therefore, the estimates are calculated both with and without these observations, to verify if such filtering changes the estimates substantially.
+
+### Live Births
+
+```{r encode-factors}
+fempreg[, `:=`(
+  HISPRACE2 = factor(
+    HISPRACE2,
+    levels = fempreg_formats[column_name == 'HISPRACE2F', factor_value],
+    labels = fempreg_formats[column_name == 'HISPRACE2F', factor_label]
+  ),
+  Num_Births = fifelse(
+    OUTCOME == 'LIVE BIRTH',
+    1,
+    0
+  ),
+  Is_Married = factor(fifelse(
+    FMAROUT5 == 1,
+    'Married',
+    'Unmarried'
+  )),
+  Age_at_Delivery = cut(
+    AGEPREG,
+    c(seq(15, 30, 5), 40, 50),
+    right = FALSE
+  ),
+  Birth_Order = factor(
+    ifelse(BIRTHORD >= 3, 3, BIRTHORD),
+    labels = c(
+      '1st',
+      '2nd',
+      '3rd or higher'
+    )
+  )
+)]
+```
+
+```{r specify-survey-design}
+fempreg_svy <- svydesign(
+  strat = ~SEST,
+  id = ~SECU,
+  nest = TRUE,
+  weight = ~WGT2017_2019,
+  data = fempreg
+)
+```
+
+
+#### Totals
+
+```{r, total-births}
+preg_2012_2016 <- subset(
+  fempreg_svy,
+  DATEND >= 2012 & DATEND <= 2016
+)
+
+preg_2012_2016_us <- subset(
+  preg_2012_2016,
+  is.na(YRSTRUS) | YRSTRUS != '2010-2019'
+)
+
+total_births_2012_2016 <- svytotal(~Num_Births, preg_2012_2016)
+
+total_births_2012_2016
+
+confint(total_births_2012_2016, df = degf(preg_2012_2016))
+
+total_births_2012_2016_us <- svytotal(~Num_Births, preg_2012_2016_us)
+
+total_births_2012_2016_us
+
+confint(total_births_2012_2016_us, df = degf(preg_2012_2016_us))
+```
+
+As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occuring in the United States. The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1.
+
+
+#### By Year of Delivery
+
+```{r by-year-of-delivery}
+svyby(
+  ~Num_Births,
+  ~DATEND,
+  svytotal,
+  design = preg_2012_2016,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+
+svyby(
+  ~Num_Births,
+  ~DATEND,
+  svytotal,
+  design = preg_2012_2016_us,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+```
+
+The estimated number of births for each year without any attempt to eliminate births outside the United States are overestimates compared with Table 1, while filtering births to those respondents who came to the United States during 2010-2019 results in underestimates compared with Table 1, as expected.
+
+
+#### By Hispanic Origin and Racial Classification
+
+```{r by-hispanic-origin-and-racial-classification}
+svyby(
+  ~Num_Births,
+  ~HISPRACE2,
+  svytotal,
+  design = preg_2012_2016,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+
+svyby(
+  ~Num_Births,
+  ~HISPRACE2,
+  svytotal,
+  design = preg_2012_2016_us,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+```
+
+Estimated number of births in the subpopulation categorized "Hispanic or Latina" is an overestimate when compared with Table 1 without any filtering for births outside the United States, and an underestimate when filtering by respondents who came to the United States during 2010-2019. Unlike other subpopulations, both subpopulations under "Not Hispanic" have underestimates for number of births compared with Table 1, regardless of whether or not filtering based on time respondent came to United States is done.
+
+
+#### By Martial Status at Birth
+
+```{r by-martial-status-at-birth}
+svyby(
+  ~Num_Births,
+  ~Is_Married,
+  svytotal,
+  design = preg_2012_2016,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+
+svyby(
+  ~Num_Births,
+  ~Is_Married,
+  svytotal,
+  design = preg_2012_2016_us,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+```
+
+The estimates for number of births for the married and unmarried subpopulations bracket the estimates in Table 1 as described in other sections.
+
+
+#### By Age at Delivery
+
+```{r by-age-at-delivery}
+svyby(
+  ~Num_Births,
+  ~Age_at_Delivery,
+  svytotal,
+  design = preg_2012_2016,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+
+svyby(
+  ~Num_Births,
+  ~Age_at_Delivery,
+  svytotal,
+  design = preg_2012_2016_us,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+```
+
+The estimates for number of births for the subpopulations by age of mother at delivery bracket the estimates in Table 1 as described in other sections.
+
+
+#### By Birth Order
+
+```{r by-birth-order}
+svyby(
+  ~Num_Births,
+  ~Birth_Order,
+  svytotal,
+  design = preg_2012_2016,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+
+svyby(
+  ~Num_Births,
+  ~Birth_Order,
+  svytotal,
+  design = preg_2012_2016_us,
+  keep.names = FALSE,
+  vartype = 'ci'
+)
+```
+
+The estimates for number of births for subpopulations by birth order bracket the estimates in Table 1 as described in other sections.
