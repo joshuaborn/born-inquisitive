@@ -269,19 +269,22 @@ When quantifying a generic generalization, typically all that is needed is a pro
 Various ways to provide a summary differences between groups were given in the discussion of [effect size](/how-to-scrutinize-a-statistic.html#effect-size). While an effect size is a helpful initial summary of a difference between groups, it is just that, an initial summary and not a complete description of the difference. How to quantify differences between groups is a deep enough topic to merit its own treatment, but is beyond the scope of this article.
 
 
+## Further Investigation
+
+Generic thinking occupies a central position in this blog's discussion of flaws in reasoning about evidence, and there are many opportunities for further investigation. Many of the [fallacies](/tags/fallacies.html) discussed in their own articles either are specific kinds of generic thinking, or are supported by or derived from generic thinking. In order to present an alternative to generic comparisons, there is an opportunity for further investigation into the subtleties of comparing differences between groups.
+
+There is much in the field of psychology pertaining to generic thinking. A review of the psychological literature around the study of generic generalizations is an opportunity for further investigation. Generic thinking is believed to be related to the psychology of perceptions of social groups as entities themselves, so a review of the psychology of entitativity is another opportunity. This, in turn, may be related to the phenomenon of psychological essentialism, which presents yet another opportunity.
+
+
 ## Conclusion
 
-* Follow-ups
-    * Review of psychological literature on generic generalizations
-    * " " " " " entitativity
-    * " " " " " essentialism
-    * How-to on comparing response variable between two or more groups
+* Variation
 * Particular emphasis should be placed on policing generic thinking with regard to social criticism
     * because serious
     * because inherently quantitative
     * guards against prejudice
 
-Purging generic thinking from one's mind is of course something of an aspirational goal. It is unreasonable to expect anyone's thinking to be entirely free of generic generalizations, but it is also unreasonable to expect any society to be entirely devoid of house fires, and this does not negate the fact that the desired number of house fires is not crime at all.
+Purging generic thinking from one's mind is of course something of an aspirational goal. It is unreasonable to expect anyone's thinking to be entirely free of generic generalizations, but it is also unreasonable to expect any society to be entirely devoid of house fires, and this does not negate the fact that the desired number of house fires is none.
 
 
 ## Citations
