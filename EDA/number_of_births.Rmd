@@ -184,7 +184,7 @@ total_births_2012_2016_us
 confint(total_births_2012_2016_us, df = degf(preg_2012_2016_us))
 ```
 
-As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occuring in the United States. The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1.
+As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occurring in the United States. The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1.
 
 
 #### By Year of Delivery
@@ -310,3 +310,67 @@ svyby(
 ```
 
 The estimates for number of births for subpopulations by birth order bracket the estimates in Table 1 as described in other sections.
+
+
+### SAS
+
+The code for replicating this analysis in SAS is included in the below code block.
+
+```{sas, eval=FALSE}
+PROC FORMAT;
+    VALUE age_at_delivery
+        low -< 15 = '<15'
+        15 -< 20 = '15-20'
+        20 -< 25 = '20-25'
+        25 -< 30 = '25-30'
+        30 -< 40 = '30-40'
+        40 - high = '>40';
+    VALUE birthord_recode
+        1 = '1st'
+        2 = '2nd'
+        3 - high = '3rd of higher';
+RUN;
+
+DATA FemPreg;
+    SET NSFG.FemPregData_2017_2019;
+    LENGTH marital_status $ 9;
+    LABEL num_births='Number of live births';
+    FORMAT agepreg age_at_delivery. birthord birthord_recode.;
+    IF VVALUE(outcome) = 'LIVE BIRTH' THEN
+        num_births = 1;
+    ELSE
+        num_births = 0;
+    IF datend >= 2012 & datend <= 2016 THEN
+        time_period = '2012-2016';
+    ELSE
+        time_period = 'Other';
+    in_us = (VVALUE(yrstrus) ^= '2010-2019');
+    IF VVALUE(fmarout5) = 'MARRIED' THEN
+        marital_status = 'Married';
+    ELSE
+        marital_status = 'Unmarried';
+RUN;
+
+PROC SURVEYMEANS DATA=FemPreg SUM CLSUM PLOTS=NONE;
+    STRATA sest;
+    CLUSTER secu;
+    WEIGHT wgt2017_2019;
+    VAR num_births;
+    DOMAIN
+        time_period('2012-2016')
+        time_period('2012-2016')*in_us('1')
+        time_period('2012-2016')*datend
+        time_period('2012-2016')*in_us('1')*datend
+        time_period('2012-2016')*hisprace2
+        time_period('2012-2016')*in_us('1')*hisprace2
+        time_period('2012-2016')*marital_status
+        time_period('2012-2016')*in_us('1')*marital_status
+        time_period('2012-2016')*agepreg
+        time_period('2012-2016')*in_us('1')*agepreg
+        time_period('2012-2016')*birthord
+        time_period('2012-2016')*in_us('1')*birthord
+    ;
+RUN;
+```
+
+The point estimates and standard errors are identical to those produced in R. However, the 95\% confidence intervals are consistently slightly wider with SAS than with R. This may be due to degrees of freedom used. I'll look into this next.
