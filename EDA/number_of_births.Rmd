@@ -171,17 +171,23 @@ preg_2012_2016_us <- subset(
   is.na(YRSTRUS) | YRSTRUS != '2010-2019'
 )
 
-total_births_2012_2016 <- svytotal(~Num_Births, preg_2012_2016)
+svytotalci <- function(x, design) {
+  this_stat <- svytotal(x, design)
+  this_ci <- confint(this_stat, df = degf(design))
 
-total_births_2012_2016
+  cbind(
+    data.frame(
+      total = as.vector(this_stat),
+      se = as.vector(SE(this_stat)),
+      row.names = names(this_stat)
+    ),
+    this_ci
+  )
+}
 
-confint(total_births_2012_2016, df = degf(preg_2012_2016))
+svytotalci(~Num_Births, preg_2012_2016)
 
-total_births_2012_2016_us <- svytotal(~Num_Births, preg_2012_2016_us)
-
-total_births_2012_2016_us
-
-confint(total_births_2012_2016_us, df = degf(preg_2012_2016_us))
+svytotalci(~Num_Births, preg_2012_2016_us)
 ```
 
 As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occurring in the United States. The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1.
@@ -190,22 +196,29 @@ As expected, the estimate without attempting to filter births occurring outside 
 #### By Year of Delivery
 
 ```{r by-year-of-delivery}
-svyby(
+
+svybyci <- function(formula, by, design, FUN) {
+  this_stat <- svyby(formula, by, design, FUN, keep.names = FALSE)
+  this_ci <- confint(this_stat, df = degf(design))
+
+  cbind(
+    this_stat,
+    this_ci
+  )
+}
+
+svybyci(
   ~Num_Births,
   ~DATEND,
   svytotal,
-  design = preg_2012_2016,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016
 )
 
-svyby(
+svybyci(
   ~Num_Births,
   ~DATEND,
   svytotal,
-  design = preg_2012_2016_us,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016_us
 )
 ```
 
@@ -215,22 +228,18 @@ The estimated number of births for each year without any attempt to eliminate bi
 #### By Hispanic Origin and Racial Classification
 
 ```{r by-hispanic-origin-and-racial-classification}
-svyby(
+svybyci(
   ~Num_Births,
   ~HISPRACE2,
   svytotal,
-  design = preg_2012_2016,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016
 )
 
-svyby(
+svybyci(
   ~Num_Births,
   ~HISPRACE2,
   svytotal,
-  design = preg_2012_2016_us,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016_us
 )
 ```
 
@@ -240,22 +249,18 @@ Estimated number of births in the subpopulation categorized "Hispanic or Latina"
 #### By Martial Status at Birth
 
 ```{r by-martial-status-at-birth}
-svyby(
+svybyci(
   ~Num_Births,
   ~Is_Married,
   svytotal,
-  design = preg_2012_2016,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016
 )
 
-svyby(
+svybyci(
   ~Num_Births,
   ~Is_Married,
   svytotal,
-  design = preg_2012_2016_us,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016_us
 )
 ```
 
@@ -265,22 +270,18 @@ The estimates for number of births for the married and unmarried subpopulations 
 #### By Age at Delivery
 
 ```{r by-age-at-delivery}
-svyby(
+svybyci(
   ~Num_Births,
   ~Age_at_Delivery,
   svytotal,
-  design = preg_2012_2016,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016
 )
 
-svyby(
+svybyci(
   ~Num_Births,
   ~Age_at_Delivery,
   svytotal,
-  design = preg_2012_2016_us,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016_us
 )
 ```
 
@@ -290,22 +291,18 @@ The estimates for number of births for the subpopulations by age of mother at de
 #### By Birth Order
 
 ```{r by-birth-order}
-svyby(
+svybyci(
   ~Num_Births,
   ~Birth_Order,
   svytotal,
-  design = preg_2012_2016,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016
 )
 
-svyby(
+svybyci(
   ~Num_Births,
   ~Birth_Order,
   svytotal,
-  design = preg_2012_2016_us,
-  keep.names = FALSE,
-  vartype = 'ci'
+  design = preg_2012_2016_us
 )
 ```
 
@@ -373,4 +370,8 @@ PROC SURVEYMEANS DATA=FemPreg SUM CLSUM PLOTS=NONE;
 RUN;
 ```
 
-The point estimates and standard errors are identical to those produced in R. However, the 95\% confidence intervals are consistently slightly wider with SAS than with R. This may be due to degrees of freedom used. I'll look into this next.
+The point estimates and standard errors are identical to those produced in R. However, the 95\% confidence intervals were consistently slightly wider with SAS than with R.
+
+This was due to the `svyby` function in R not specifying the `df` option to `svytotal`, so the R confidence intervals were using the default degrees of freedom. This has been fixed by creating a helper function `svybyci` that wraps `svyby`. Additionally, a `svytotalci` was also created.
+
+Once the degrees of freedom were specified, the confidence intervals were identical between R and SAS.
