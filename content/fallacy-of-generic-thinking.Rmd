@@ -47,7 +47,7 @@ A body of scholarship pertaining to generic generalizations exists in both acade
 
 [^examples]: "Dogs have four legs" and "ducks lay eggs" are examples used in "Generic Generalizations" in the _Stanford Encyclopedia of Philosophy_ [@leslie_generic_2016] and the West Nile virus example is used in "The Original Sin of Cognition" [@leslie_original_2017].
 
-While it is true that _most_ "dogs have four legs," there are some dogs happily scampering around on three legs. Only female ducks who have reached sexual maturity even have the ability to lay eggs, so "ducks lay eggs" is only true for less than half the population it describes. Mercifully, a very small proportion of mosquitoes actually carry the West Nile virus.
+While it is true that _most_ dogs have four legs, there are some dogs happily scampering around on three legs. Only female ducks who have reached sexual maturity even have the ability to lay eggs, so "ducks lay eggs" is only true for less than half the population it describes. Mercifully, a very small proportion of mosquitoes actually carry the West Nile virus.
 
 ![
 A three-legged dog, the existence of which is a false case of the generic generalization "dogs have four legs."<br/>
@@ -64,17 +64,19 @@ and is not modified.
 
 Much of the philosophizing around generic generalizations has been an attempt to find some way of interpreting generic generalizations that would allow the ones that seem plausible to be true and the ones that are patently false to be false. [@leslie_generic_2016] This highlights precisely the main issue with generic generalizations: they seem to defy truth conditions.
 
-In particular, generic generalizations are resistant to falsification.  Quantified beliefs have conditions under which the holder of the belief can learn that the belief is false, if it is indeed false. If someone who asserts "all swans are white" encounters a single black swan, then the individual knows the belief is false. Similarly, presenting just one white swan to someone who asserts "all swans are black" demonstrates to this person that the belief is false.
+In particular, generic generalizations are resistant to falsification. Quantified beliefs have conditions under which the holder of the belief can learn that the belief is false, if it is indeed false.
 
-While it is easy to show the assertion "some swans are white" is true since observation of one white swan confirms the belief, falsification is more difficult. To demonstrate the belief is false without any uncertainty requires observations of all the swans in the world. However, this is just a practical matter. In principle, it is known how to demonstrate the belief is false, even if demonstrating it is false would require more work than most are willing to commit.
+If someone who asserts "all swans are white" encounters a single black swan, then the individual knows the belief is false. Similarly, presenting just one white swan to someone who asserts "all swans are black" demonstrates to this person that the belief is false.
 
-Statements such as "approximately 72.4\% of swans are white" can be demonstrated false, given a specified [hypothesis test level](/how-to-scrutinize-a-statistic.html#fallacies). This is slightly more complicated by the fact that for a continuous variable any such hypothesis can be arbitrarily rejected given a large enough sample size and enough statistical power, so exact statistical thresholds would have to be stipulated. Once these are all specified, however, such hypotheses can be evaluated as to their truth or falsity according to standard methods.
+To demonstrate that the assertion "some swans are white" is false without any uncertainty is more difficult, since it requires observations of all the swans in the world. However, this is just a practical matter. In principle, it is known how to demonstrate the belief is false, even if demonstrating it is false would require more work than most are willing to commit.
+
+Statements such as "approximately 72.4\% of swans are white" can be demonstrated false, given a specified [hypothesis test level](/how-to-scrutinize-a-statistic.html#fallacies). This is slightly more complicated by the fact that for a continuous variable any such hypothesis can be arbitrarily rejected given a large enough sample size and enough statistical power, so exact statistical thresholds would have to be stipulated. Once these are specified, however, such hypotheses can be evaluated as to their truth or falsity according to standard methods.
 
 Thus, quantified beliefs that are false can be demonstrated as false. The same is not the case for generic generalizations. If someone asserts "dogs lay eggs," how many viviparous dogs must be observed before this belief is demonstrated false? Similarly, how many two-legged ducks must be brought to someone who asserts "ducks have four legs" before the holder of the belief must relent? The stubborn can merely retort "not _all_ dogs lay eggs" or "I didn't mean _all_ ducks have two legs." Generic generalizations thus create a threshold that can always be conveniently moved to justify whatever arbitrary belief is desired.
 
 Such resistance to falsification is a nontrivial matter because bigoted attitudes are apt to be construed in terms of generic generalizations. For instance, Leslie [-@leslie_original_2017] uses "Muslims are terrorists" and "Blacks are rapists" as examples of stereotypes formulated as generic generalizations. While these are negative stereotypes, positive stereotypes such as "men are good at math" or "women are empathic" are also often construed as generic generalizations. Thus, generic generalizations are tools for all sorts of [category-based prejudice](/category-based-prejudice.html).
 
-To those concerned about bigotry, this resistance to falsification is a troubling property of generic generalizations because it means that once a negative stereotype has been formulated as a generic generalization in someone's mind, it is that much more difficult to convince the holder of the negative stereotype to change the belief.
+To those concerned about bigotry, this resistance to falsification is a troubling property of generic generalizations because it means that once a stereotype has been formulated as a generic generalization in someone's mind, it is that much more difficult to convince the holder of the stereotype to change the belief.
 
 If someone were to assert "most Muslims are terrorists" or "80% of Blacks are rapists," these beliefs could be demonstrated false with the appropriate empirical observations and analyses. When someone asserts the generic generalizations "Muslims are terrorists" or "Blacks are rapists," it does not matter _how many_ Muslims are not terrorists or Blacks are not rapists, the generic generalization is resistant to falsification exactly because it is unquantified.
 
@@ -94,13 +96,13 @@ Given a large population of humans, there will be among them some unspecified nu
 
 ### Empirical Study
 
-The fallacy of generic generalization is not just a philosophical concern, thanks in large part to the work of developmental psychologist Susan Gelman, who discovered that people become sensitive to generic generalizations at a young age. [@gelman_childrens_2002]
+The fallacy of generic generalizations is not just a philosophical concern, thanks in large part to the work of developmental psychologist Susan Gelman, who discovered that people become sensitive to generic generalizations at a young age. [@gelman_childrens_2002]
 
 Psychological research in this area has gone on to demonstrate the fallacy of generic generalizations empirically. Cimpian, Brandone, and Gelman [-@cimpian_generic_2010] conducted an experiment that found a discrepancy between the flexible truth conditions under which generic generalizations were accepted and the implied prevalence with which generic generalizations were interpreted.
 
 A pool of 71 undergraduate student volunteers at two public universities were randomly assigned to two groups, one of which was given generic generalizations, and the other, a control group, was given generalizations that were quantified with the word "most." Test subjects in groups were further randomly assigned into subgroups given either a truth conditions task or an implied prevalence task.
 
-Each of the test subjects were given 30 generalizations supposedly about animals on a remote island. The animals were actually fictional. Previous research had used generalizations about real animals, which might had allowed test subjects' prior knowledge to contaminate the results, hence Cimpian, Brandone, and Gelman used fictional animals.
+Each of the test subjects were given 30 generalizations supposedly about animals on a remote island. The animals were actually fictional. Previous research had used generalizations about real animals, which might have allowed test subjects' prior knowledge to contaminate the results, hence Cimpian, Brandone, and Gelman used fictional animals.
 
 Those in subgroups with the truth conditions task were given prevalence levels of either 10\%, 30\%, 50\%, 70\%, or 90\% for the property described in the generalizations, then asked if the generalization was true or false. For instance, test subjects were given statements such as "30\% of morseths have silver fur," then asked if a generalization, such as "morseths have silver fur" or "most morseths have silver fur," was true.
 
@@ -110,7 +112,9 @@ Among the generic generalizations group, the average prevalence level at which a
 
 In contrast, the control group given "most" generalizations did not have such a discrepancy. The average prevalence at which the truth conditions task subgroup accepted a "most" generalization was 76.9\%, and the average prevalence at which the implied prevalence task subgroup interpreted a "most" generalization was 78.0\%.
 
-Cimpian, Brandone, and Gelman also found that a property being dangerous (e.g., "this fur sheds particles that get lodged in your lungs and make it impossible to breath") or distinctive (e.g., "no other animals on this island have this kind of fur") exacerbated this effect, especially at lower levels of prevalence. The study went on to conduct additional experiments to investigate another control group given "some" generalizations, whether the effect would be seen with obviously temporary conditions (e.g., muddy feathers or broken legs), and whether dangerous or distinctive properties would exacerbate the effect independently of each other.
+Cimpian, Brandone, and Gelman also found that a property being dangerous (e.g., "this fur sheds particles that get lodged in your lungs and make it impossible to breath") or distinctive (e.g., "no other animals on this island have this kind of fur") exacerbated this effect, especially at lower levels of prevalence.
+
+The study went on to conduct additional experiments to investigate another control group given "some" generalizations, whether the effect would be seen with obviously temporary conditions (e.g., muddy feathers or broken legs), and whether dangerous or distinctive properties would exacerbate the effect independently of each other.
 
 This was a [randomized, controlled experiment](/how-to-scrutinize-a-statistic.html#randomized-controlled-experiments) using an opportunity sample, implying a scope of inference described in the lower right cell of [Table 1](/how-to-scrutinize-a-statistic.html#summary-1) in the article "How to Scrutinize a Statistic." Thus, it can be concluded that the discovered fallacy (i.e., the discrepancy between truth conditions and implied prevalence) is caused by the generalizations being generic. However, these results cannot be inferred as estimating quantities in any larger population. Thus, this experiment conclusively shows that it is indeed the genericness that causes the fallacy, but it does not shed any light into how common this fallacy is in society at large.
 
@@ -125,11 +129,11 @@ Thus, generic generalizations provide a false bridge across which faulty inducti
 
 ### Bare Plurals and Elision
 
-Because generic generalizations are resistant to falsification, uninformative, and have been found empirically to lead to flawed thinking, generic generalizations as mere fallacies with no merit. Therefore, this article recommends that everyone strive to remove generic generalizations from their thinking.
+Because generic generalizations are resistant to falsification, uninformative, and have been found empirically to lead to flawed thinking, this article interprets generic generalizations as mere fallacies with no merit. Therefore, this article recommends that everyone strive to remove generic generalizations from their thinking.
 
 This is a value judgment that implies that the philosophical program of attempting to salvage generic generalizations is not worthwhile. One might protest, what about the generic generalizations that feel like there is a ring of truth to them, such as "dogs have four legs," "ducks lay eggs," and "mosquitoes carry the West Nile virus?"
 
-Such examples in this article have all been what are called "bare plurals," in which the subject of a sentence is a plural noun that is not proceeded by any modifier word. However, not all uses of bare plurals are truly generic generalizations.
+Such examples are called "bare plurals," in which the subject of a sentence is a plural noun that is not proceeded by any modifier word. However, not all uses of bare plurals are truly generic generalizations.
 
 This is due to the messy nature of natural languages. In particular, human beings are prone to make their communication more concise by elision. Sometimes just a few sounds are left out as in the case of a contraction, but whole words, phrases, and clauses can be elided to be inferred from context.
 
@@ -154,7 +158,7 @@ For instance, a child might ask if a duck found in a pond will give birth to lit
 
 Furthermore, one could assert "a dog without genetic aneuploidy and absent any physical trauma, allowed to develop in a salubrious environment including nutritional needs, grows into an organism with four legs." That is a lot of words, which can be elided to the simple statement "dogs have four legs" given social context.
 
-Similarly, those who claim to have gotten West Nile virus from an ant bite might be curtly told, "no, mosquitoes carry the West Nile virus." It is likely in this case the proposition "mosquitoes are the only species that function as a vector for West Nile virus transmission in humans" has simply been shortened to "mosquitoes carry the West Nile virus."
+Similarly, those who claim to have gotten West Nile virus from an ant bite might be curtly told, "no, mosquitoes carry the West Nile virus." It is likely in this case the proposition "mosquitoes are the only kind of organism that function as a vector for West Nile virus transmission in humans" has simply been shortened to "mosquitoes carry the West Nile virus."
 
 
 ### How to Avoid the Fallacy
@@ -170,11 +174,9 @@ In a generic comparison, it is asserted that one group has "more" or "less" of s
 
 As discussed previously, the phrase "generic comparison" is not as established as the phrase "generic generalization." Indeed, while generic generalizations are studied by philosophers and psychologists, the phrase "generic comparisons" encompasses criticisms that are sometimes discussed by empirical researchers and applied statisticians, but are not as widely discussed outside of this niche. However, these criticisms are just as relevant, if not more so, whenever thinking about issues involving large populations of individuals, such as social issues.
 
-Unlike a generic generalization, which is generic in precisely one way, there are two ways in which a generic comparison can be generic.
+Unlike a generic generalization, which is generic in precisely one way, there are two ways in which a generic comparison can be generic. A generic generalization fails to describe the proportion of the population for which its predicate is true. When "swans are white" is asserted, it is not clear if this means that 2% or 50% or 99% of swans are white. Similarly, if it is settled that, by any reasonable measure, one group has "more" of something than the other, a generic comparison leaves unspecified how much "more" one group has than the other.
 
-A generic generalization fails to describe the proportion of the population for which its predicate is true. When "swans are white" is asserted, it is not clear if this means that 2% or 50% or 99% of swans are white. Similarly, if it is settled that, by any reasonable measure, one group has "more" of something than the other, a generic comparison leaves unspecified how much "more" one group has than the other.
-
-Additionally, there are many ways to measure the distribution of a variable in a population, and different ways might lead to different directions of "more" and "less." Thus, generic comparisons can sometimes be ambiguous about which direction the "more" should go.
+Additionally, there are many ways to summarize how a variable is distributed in a population, and different ways might lead to different directions of "more" and "less." Thus, generic comparisons can sometimes be ambiguous about which direction the "more" should go.
 
 This section first addresses the issue of ambiguous direction, which is peculiar to generic comparisons, before discussing the issues stemming from unspecified magnitude, which are similar to the issues with generic generalizations.
 
@@ -246,7 +248,7 @@ A quick calculation shows that the mean height of people in group A is `r mean_A
 
 [^outliers]: This is simply due to the fact that medians are more resistant to outliers than means, and 30% of group A consists of exceptionally tall people.
 
-This ambiguity can occur even between two of the most basic statistics used to describe a distribution: mean and median. As more and more statistics are used, there are more and more opportunities for such ambiguities to occur. A similar phenomenon, but with means and totals, was described in this blog's discussion of [missing denominators](/how-to-scrutinize-a-statistic.html#missing-denominators).
+This ambiguity can occur even between two of the most basic statistics used to describe a distribution: mean and median. Since there are many more statistics that can be calculated, there are many more opportunities for such ambiguities to occur. A similar phenomenon, but with means and totals, was described in this blog's discussion of [missing denominators](/how-to-scrutinize-a-statistic.html#missing-denominators).
 
 The important takeaway is that it always flawed to think about a group having "more" or "less" of something than another group. Assertions such as these are outside the realm of truth or falsity. Rather, it is correct to think about whether a _specific statistic_ &ndash; such as a mean, median, total, proportion, rate, ratio, etc. &ndash; for one population is greater or lesser than that statistic for another population. Assertions about differences in statistics between two groups _are_ true or false.
 
@@ -257,7 +259,7 @@ For any given variable, it is extremely unlikely that it would have the _exact s
 
 Because nearly _every_ variable has at least a trivially different distribution between two groups, simply asserting that a mean (or other statistic) is greater for one group than the other is largely uninformative. Given enough precision, no two means will be equal.
 
-Thus, generic generalizations are resistant to falsification. If someone asserts that group A makes more money on average than group B, a study which finds that members of group A have a mean annual income of \$46,300 and members of group B have a mean annual income of \$46,300 does not conclusively demonstrate that this assertion is false. The person making the assertion could simply demand more precision with the expectation that the means, calculated to the dollar, would be different, such as with mean incomes of \$46,382 and \$46,311.
+Thus, generic comparisons are resistant to falsification. If someone asserts that group A makes more money on average than group B, a study which finds that, to the nearest hundred dollars, members of group A have a mean annual income of \$46,300 and members of group B have a mean annual income of \$46,300 does not conclusively demonstrate that this assertion is false. The person making the assertion could simply demand more precision with the expectation that the means, calculated to the dollar, would be different, such as with mean incomes of \$46,382 and \$46,311.
 
 Even if the mean annual incomes of the two groups were found to be \$46,382 and \$46,382, there might be a difference if precision were increased to the cent. Indeed, since a mean is a ratio between a sum and a count, this could continue _ad nauseum_ to an arbitrary level of precision.[^significance]
 
@@ -279,7 +281,7 @@ Therefore, quantification might be withheld by deceptive analyses intended to ma
 
 Even with quantification, simply comparing differences in mean (or other statistic) between groups is itself insufficient for judging how much of the differences in one variable is explained by differences in another variable.[^variation] However, quantification of means (or other statistics) is at least a step in the right direction and away from generic thinking.
 
-[^variation]: To determine how much of variation one variable is explained by another variable, both variables should be measured in the same observational units, and techniques as linear models or analysis of variance (ANOVA) should be used. "Observational unit" is jargon for the individuals that compose the groups, such as, for example, an individual person.
+[^variation]: To determine how much of the variation in one variable is explained by another variable, both variables should be measured in the same observational units, and techniques such as linear models or analysis of variance (ANOVA) should be used.
 
 
 ### How to Avoid the Fallacy
@@ -310,11 +312,11 @@ Second, as touched on earlier, social criticism is inherently quantitative; what
 
 Third, generic thinking in social criticism serves little purpose but prejudice, and guarding against generic thinking is thus a way to guard against bigotry.
 
-Quantification is proposed here as a remedy both to generic generalizations and to generic comparisons. While quantification does away with literal generic thinking, it is only a concrete mechanism that presents itself whenever generic thinking is challenged.
+Quantification is proposed here as a remedy both to generic generalizations and to generic comparisons. While quantification does away with literal generic thinking, it is only a mechanism that presents itself whenever generic thinking is challenged.
 
 Underlying generic thinking is a blunt, inflexible worldview that puts vast numbers of individuals into categories and thinks it useful to hurl around broad, vague ideas about these categories and all the many individuals in them.
 
-Opposed to this are worldviews that realize any population of vast numbers of individuals exhibits _variation,_ and that to understand large populations _is_ to understand this variation. Quantification is merely the tool that such worldviews use to describe variation. Thus, much as quantification is the answer to the _letter_ of generic thinking, to counter the _spirit_ of generic thinking is to expect, seek, understand, and describe variation in the world.
+Opposed to this are worldviews that realize any population of vast numbers of individuals exhibits _variation,_ and that to understand large populations _is_ to understand this variation. Quantification is merely the tool that such worldviews use to describe variation. Thus, while quantification is the answer to the _letter_ of generic thinking, to counter the _spirit_ of generic thinking is to expect, seek, understand, and describe variation in the world.
 
 
 ## Citations
