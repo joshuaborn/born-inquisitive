@@ -1,7 +1,6 @@
 ---
 title: "The Fallacy of Generic Thinking"
 date: 2022-03-04
-draft: true
 tags: ["reasoning about evidence", "fallacies", "statistics", "psychology", "philosophy", "third-person"]
 bibliography: "../bibliographies/fallacy-of-generic-thinking.bib"
 csl: "../bibliographies/chicago-author-date.csl"
