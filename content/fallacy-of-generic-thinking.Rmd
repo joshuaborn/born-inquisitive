@@ -96,9 +96,31 @@ Given a large population of humans, there will be among them some unspecified nu
 
 The fallacy of generic generalization is not just a philosophical concern, thanks in large part to the work of developmental psychologist Susan Gelman, who discovered that people become sensitive to generic generalizations at a young age. [@gelman_childrens_2002]
 
-Psychological research in this area has gone on to demonstrate empirically that the fallacious use of generic generalizations does exist. For instance, Cimpian, Brandone, and Gelman [-@cimpian_generic_2010] found that test subjects accepted generic generalizations at low levels of prevalence, but interpreted them as if they implied high levels of prevalence. Thus, generic generalizations were evaluated for truth or falsity closer to "some" quantification, but interpreted as if they were closer to "all" quantification.
+Psychological research in this area has gone on to demonstrate the fallacy of generic generalizations empirically. Cimpian, Brandone, and Gelman [-@cimpian_generic_2010] conducted an experiment that found a discrepancy between the flexible truth conditions under which generic generalizations were accepted and the implied prevalence with which generic generalizations were interpreted.
 
-**_[Discuss Cimpian et al here in more detail, at least to the level of Anecdotes Are Not Evidence.]_**
+A pool of 71 undergraduate student volunteers at two public universities were randomly assigned to two groups, one of which was given generic generalizations, and the other, a control group, was given generalizations that were quantified with the word "most." Test subjects in groups were further randomly assigned into subgroups given either a truth conditions task or an implied prevalence task.
+
+Each of the test subjects were given 30 generalizations supposedly about animals on a remote island. The animals were actually fictional. Previous research had used generalizations about real animals, which might had allowed test subjects' prior knowledge to contaminate the results, hence Cimpian, Brandone, and Gelman used fictional animals.
+
+Those in subgroups with the truth conditions task were given prevalence levels of either 10\%, 30\%, 50\%, 70\%, or 90\% for the property described in the generalizations, then asked if the generalization was true or false. For instance, test subjects were given statements such as "30\% of morseths have silver fur," then asked if a generalization, such as "morseths have silver fur" or "most morseths have silver fur," was true.
+
+Those assigned to subgroups with the implied prevalence task were presented with a generalization, then asked to estimate the prevalence level of the property described in the generalization. For instance, test subjects were given a generalization, such as "morseths have silver fur" or "most morseths have silver fur," then asked "what percentage of morseths do you think have silver fur?"
+
+Among the generic generalizations group, the average prevalence level at which a generalization among the truth conditions task subgroup was accepted was 69.1\%, but the average prevalence at which a generalization was interpreted by the implied prevalence task subgroup was 95.8\%.
+
+In contrast, the control group given "most" generalizations did not have such a discrepancy. The average prevalence at which the truth conditions task subgroup accepted a "most" generalization was 76.9\%, and the average prevalence at which the implied prevalence task subgroup interpreted a "most" generalization was 78.0\%.
+
+Cimpian, Brandone, and Gelman also found that a property being dangerous (e.g., "this fur sheds particles that get lodged in your lungs and make it impossible to breath") or distinctive (e.g., "no other animals on this island have this kind of fur") exacerbated this effect, especially at lower levels of prevalence. The study went on to conduct additional experiments to investigate another control group given "some" generalizations, whether the effect would be seen with obviously temporary conditions (e.g., muddy feathers or broken legs), and whether dangerous or distinctive properties would exacerbate the effect independently of each other.
+
+This was a [randomized, controlled experiment](/how-to-scrutinize-a-statistic.html#randomized-controlled-experiments) using an opportunity sample, implying a scope of inference described in the lower right cell of [Table 1](/how-to-scrutinize-a-statistic.html#summary-1) in the article "How to Scrutinize a Statistic." Thus, it can be concluded that the discovered fallacy (i.e., the discrepancy between truth conditions and implied prevalence) is caused by the generalizations being generic. However, these results cannot be inferred as estimating quantities in any larger population. Thus, this experiment conclusively shows that it is indeed the genericness that causes the fallacy, but it does not shed any light into how common this fallacy is in society at large.
+
+Cimpian, Brandone, and Gelman discuss the implications of their findings.
+
+> The discrepancy between generics’ truth conditions and implied prevalence is not just an arcane bit of experimental data. . . . [G]enerics are a powerful means of manipulating public opinion. Since these generalizations are legitimized even by scant evidence, their truth is rarely questioned. Yet, after they become part of accepted discourse, they take on a life of their own, turning what may have originally been a nuanced, contextualized fact into a definitive pronouncement: A few cases of successful school voucher programs morph into "School vouchers work"; a few salient incidents at nuclear power plants become "Nuclear power plants are dangerous"; and so on.
+>
+> This asymmetry has immediate relevance to stereotyping as well. . . . Consider, for example, a sentence such as "Boys are good at math." Due to generics' flexible truth conditions, this statement may be accepted based on very little evidence . . . . Once believed to be true, though, this statement may imply that being good at math is a normative, near-universal fact about boys, which may in turn have a powerful effect on one’s perceptions and behavior. [@cimpian_generic_2010, 6.1.2]
+
+Thus, generic generalizations provide a false bridge across which faulty induction can travel. Indeed, the authors' examples highlight that this faulty induction provides a mechanism for even [anecdotes](/anecdotes-are-not-evidence.html) to be falsely generalized.
 
 
 ### Bare Plurals and Elision
