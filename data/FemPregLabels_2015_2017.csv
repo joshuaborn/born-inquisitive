@@ -1,0 +1,249 @@
+libname,memname,memtype,name,type,length,npos,varnum,label,format,informat,idxusage,sortedby,xtype,notnull,precision,scale,transcode
+NSFG,FEMPREGDATA_2015_2017,DATA,CASEID,num,6,100,1,Case identification number,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PREGORDR,num,3,106,2,Pregnancy order (number),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HOWPREG_N,num,3,109,3,BB-2 # of Weeks or Months Currently Pregnant,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HOWPREG_P,num,3,112,4,BB-2 Current pregnancy length reported in months or weeks,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,MOSCURRP,num,3,115,5,Number of Months Currently Pregnant,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,NOWPRGDK,num,3,118,6,BB-3 Which Trimester -- Current Pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PREGEND1,num,3,121,7,BC-1 How Pregnancy Ended - 1st mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PREGEND2,num,3,124,8,BC-1 How Pregnancy Ended - 2nd mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HOWENDDK,num,3,127,9,BC-1b Did pregnancy result in a baby/babies born alive or did it end in some other way?,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,NBRNALIV,num,3,130,10,BC-2 Number of babies born alive from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,MULTBRTH,num,3,133,11,BC-3 Was this a multiple birth,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BORNALIV,num,3,136,12,Number of babies born alive from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,DATPRGEN_Y,num,4,8,13,BC-4a Year when pregnancy ended (if nonlivebirth),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEATEND,num,3,139,14,BC-4b R's age at pregnancy's end date,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HPAGEEND,num,3,142,15,BC-4c Father's age (categorical) at pregnancy's end date,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,GESTASUN_M,num,3,145,16,BC-5 Gestational Length of Pregnancy in Months,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,GESTASUN_W,num,3,148,17,BC-5 Gestational Length of Pregnancy in Weeks,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WKSGEST,num,3,151,18,Gestational length of completed pregnancy (in weeks),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,MOSGEST,num,3,154,19,Gestational length of completed pregnancy (in months),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,DK1GEST,num,3,157,20,BC-6 DK followup for gestational length of a stillbirth,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,DK2GEST,num,3,160,21,BC-7 DK followup for gestational length of a livebirth,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,DK3GEST,num,3,163,22,BC-8 DK followup for gestational length of a miscarr/abor/ectop,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BABYSEX1,num,3,166,23,BD-2 Sex of 1st Liveborn Baby from This Pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHWGT_LB1,num,3,169,24,BD-3 Birthweight in Pounds - 1st baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHWGT_OZ1,num,3,172,25,BD-3 Birthweight in Ounces - 1st baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LOBTHWGT1,num,3,175,26,BD-4 Is Baby Low Birthweight- 1st baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BABYSEX2,num,3,178,27,BD-2 Sex of 2nd Liveborn Baby from This Pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHWGT_LB2,num,3,181,28,BD-3 Birthweight in Pounds - 2nd baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHWGT_OZ2,num,3,184,29,BD-3 Birthweight in Ounces - 2nd baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LOBTHWGT2,num,3,187,30,BD-4 Is Baby Low Birthweight- 2nd baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BABYSEX3,num,3,190,31,BD-2 Sex of 3rd Liveborn Baby from This Pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHWGT_LB3,num,3,193,32,BD-3 Birthweight in Pounds - 3rd baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHWGT_OZ3,num,3,196,33,BD-3 Birthweight in Ounces - 3rd baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LOBTHWGT3,num,3,199,34,BD-4 Is Baby Low Birthweight- 3rd baby from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BABYDOB_Y,num,4,12,35,BD-5 Year of delivery for this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,KIDAGE,num,3,202,36,Current age (in years) of child(ren) from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HPAGELB,num,3,205,37,BD-6 Father's age (categorical) at time of child(ren) s birth,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHPLC,num,3,208,38,BD-7 Place where R gave birth,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PAYBIRTH1,num,3,211,39,BD-8 Payment for delivery - 1st mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PAYBIRTH2,num,3,214,40,BD-8 Payment for delivery - 2nd mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PAYBIRTH3,num,3,217,41,BD-8 Payment for delivery - 3rd mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CSECPRIM,num,3,220,42,BD-9 Is this R's first c-section?,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CSECMED1,num,3,223,43,BD-10 Medical reasons reported for this C-section - 1st mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CSECMED2,num,3,226,44,BD-10 Medical reasons reported for this C-section - 2nd mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CSECMED3,num,3,229,45,BD-10 Medical reasons reported for this C-section - 3rd mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CSECMED4,num,3,232,46,BD-10 Medical reasons reported for this C-section - 4th mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CSECMED5,num,3,235,47,BD-10 Medical reasons reported for this C-section - 5th mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CSECMED6,num,3,238,48,BD-10 Medical reasons reported for this C-section - 6th mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CSECPLAN,num,3,241,49,BD-11 Was this c-section planned for by R?,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,KNEWPREG,num,3,244,50,BE-1 Weeks pregnant when R learned she was pregnant,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TRIMESTR,num,3,247,51,BE-2a DK followup for KNEWPREG when gestation >= 6 mos,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LTRIMEST,num,3,250,52,BE-2b DK followup for KNEWPREG when gestation < 6 mos,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PRIORSMK,num,3,253,53,BE-3 Amount R smoked in 6 mos before R knew she was pregnant,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,POSTSMKS,num,3,256,54,BE-4 R smoked at all after R knew she was pregnant,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,NPOSTSMK,num,3,259,55,BE-5 Amount R smoked during pregnancy after R knew she was preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,GETPRENA,num,3,262,56,BE-6 Any prenatal care for this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BGNPRENA,num,3,265,57,BE-7 Weeks pregnant at first prenatal care visit,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PNCTRIM,num,3,268,58,BE-8a DK followup for BGNPRENA when gestation >= 6 mos,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LPNCTRI,num,3,271,59,BE-8b DK followup for BGNPRENA when gestation < 6 mos,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LIVEHERE1,num,3,274,60,BG-1 Whether child lives with R - 1st from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,ALIVENOW1,num,3,277,61,BG-2 Whether child is still alive - 1st from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHENDIED_Y1,num,4,16,62,BG-3 Year when child died - 1st from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHENLEFT_Y1,num,4,20,63,BG-4 Year when child stopped living with R- 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LASTAGE1,num,4,24,64,Age (in mos) when child last lived w/R-1st from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHERENOW1,num,3,280,65,BG-5 Where child lives now - 1st from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LEGAGREE1,num,3,283,66,BG-6 Legal agreement for where child lives - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PARENEND1,num,3,286,67,BG-7 Is R still legal mother of child - 1st from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,ANYNURSE1,num,3,289,68,BH-1 Whether R breastfed this child at all - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FEDSOLID1,num,3,292,69,BH-2 Has R fed this child anything other than breastmilk - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD_N1,num,4,28,70,BH-3 Age (mos/wks/day) when 1st fed non-breastmilk - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD_P1,num,3,295,71,BH-3 Units (mos/wks/days) for FRSTEATD_N - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD1,num,3,298,72,Age (in mos) when 1st fed non-breastmilk - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,QUITNURS1,num,3,301,73,BH-4 Has R stopped breastfeeding child - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR_N1,num,4,32,74,BH-5 Age (mos/wks/day) when stopped breastfeeding - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR_P1,num,3,304,75,BH-5 Units (mos/wks/days) for AGEQTNUR_N - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR1,num,3,307,76,Age (in mos) when R stopped nursing child - 1st from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LIVEHERE2,num,3,310,77,BG-1 Whether child lives with R - 2nd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,ALIVENOW2,num,3,313,78,BG-2 Whether child is still alive - 2nd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHENDIED_Y2,num,4,36,79,BG-3 Year when child died - 2nd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHENLEFT_Y2,num,4,40,80,BG-4 Year when child stopped living with R - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LASTAGE2,num,4,44,81,Age (in mos) when child last lived w/R - 2nd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHERENOW2,num,3,316,82,BG-5 Where child lives now - 2nd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LEGAGREE2,num,3,319,83,BG-6 Legal agreement for where child lives - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PARENEND2,num,3,322,84,BG-7 Is R still legal mother of child - 2nd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,ANYNURSE2,num,3,325,85,BH-1 Whether R breastfed this child at all - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FEDSOLID2,num,3,328,86,BH-2 Has R fed this child anything other than breastmilk - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD_N2,num,3,331,87,BH-3 Age (mos/wks/day) when 1st fed non-breastmilk - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD_P2,num,3,334,88,BH-3 Units (mos/wks/days) for FRSTEATD_N - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD2,num,3,337,89,Age (in mos) when 1st fed non-breastmilk - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,QUITNURS2,num,3,340,90,BH-4 Has R stopped breastfeeding child - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR_N2,num,3,343,91,BH-5 Age (mos/wks/day) when stopped breastfeeding - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR_P2,num,3,346,92,BH-5 Units (mos/wks/days) for AGEQTNUR_N - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR2,num,3,349,93,Age (in mos) when R stopped nursing child - 2nd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LIVEHERE3,num,3,352,94,BG-1 Whether child lives with R - 3rd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,ALIVENOW3,num,3,355,95,BG-2 Whether child is still alive - 3rd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHENDIED_Y3,num,3,358,96,BG-3 Year when child died - 3rd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHENLEFT_Y3,num,3,361,97,BG-4 Year when child stopped living with R - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LASTAGE3,num,3,364,98,Age (in mos) when child last lived w/R - 3rd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHERENOW3,num,3,367,99,BG-5 Where child lives now - 3rd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LEGAGREE3,num,3,370,100,BG-6 Legal agreement for where child lives - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PARENEND3,num,3,373,101,BG-7 Is R still legal mother of child - 3rd from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,ANYNURSE3,num,3,376,102,BH-1 Whether R breastfed this child at all - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FEDSOLID3,num,3,379,103,BH-2 Has R fed this child anything other than breastmilk - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD_N3,num,3,382,104,BH-3 Age (mos/wks/day) when 1st fed non-breastmilk - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD_P3,num,3,385,105,BH-3 Units (mos/wks/days) for FRSTEATD_N - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FRSTEATD3,num,3,388,106,Age (in mos) when 1st fed non-breastmilk - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,QUITNURS3,num,3,391,107,BH-4 Has R stopped breastfeeding child - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR_N3,num,3,394,108,BH-5 Age (mos/wks/day) when stopped breastfeeding - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR_P3,num,3,397,109,BH-5 Units (mos/wks/days) for AGEQTNUR_N - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEQTNUR3,num,3,400,110,Age (in mos) when R stopped nursing child - 3rd from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PRGOUTCOME,num,3,403,111,Outcome of Pregnancy (based on priority ordering),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,OUTCOM_S,num,3,406,112,Outcome of pregnancy (based on corrected/chron sorted data),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,NBRNLV_S,num,3,409,113,# of babies born alive from this preg (based on CCSD),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,ANYUSINT,num,3,412,114,Any method use in pregnancy interval,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,EVUSEINT,num,3,415,115,EG-1 Use any method in pregnancy interval?,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,STOPDUSE,num,3,418,116,"EG-2 Before you became preg, stop using all methods?",,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYSTOPD,num,3,421,117,EG-3 Stop using methods before preg because wanted preg?,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHATMETH01,num,3,424,118,EG-4 Method(s) using when became preg - 1st mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHATMETH02,num,3,427,119,EG-4 Method(s) using when became preg - 2nd mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHATMETH03,num,3,430,120,EG-4 Method(s) using when became preg - 3rd mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHATMETH04,num,3,433,121,EG-4 Method(s) using when became preg - 4th mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RESNOUSE,num,3,436,122,EG-5 Reason not using/had stopped using method bec. wanted preg?,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WANTBOLD,num,3,439,123,"EG-6 Right bef preg, want to have baby at any time in future?",,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PROBBABE,num,3,442,124,EG-7 probably want baby at any time in future or not?,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CNFRMNO,num,3,445,125,EG-8 Verify didn't want baby at any time in future,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WANTBLD2,num,3,448,126,"EG-9 Right before preg, want to have baby at any time in future? (2nd asking)",,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TIMINGOK,num,3,451,127,"EG-10 Become preg too soon, right time, or later than you wanted?",,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TOOSOON_N,num,4,48,128,EG-11 How much sooner than wanted became preg (months or years),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TOOSOON_P,num,3,454,129,EG-11 Choose mons or yrs for how much sooner became preg than wanted,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WTHPART1,num,3,457,130,"EG-12a Right before preg, want to have baby with that partner?",,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WTHPART2,num,3,460,131,"EG-12b Right bef. preg, think might ever want to have baby w/that partner?",,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FEELINPG,num,3,463,132,EG-13 How happy to be preg. scale (0-10),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HPWNOLD,num,3,466,133,"EG-16 Right bef preg, did the father want R to have baby at any time in future?",,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TIMOKHP,num,3,469,134,"EG-17 R became preg sooner, right time, or later than father of preg wanted",,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,COHPBEG,num,3,472,135,EG-18a Was R living w/father of preg at beginning of preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,COHPEND,num,3,475,136,EG-18b Was R living w/father of preg when preg ended/baby was born,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TELLFATH,num,3,478,137,EG-19 Did R tell father of preg that she was pregnant,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHENTELL,num,3,481,138,EG-20 When did R tell father of preg about pregnancy: during or after?,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TRYSCALE,num,3,484,139,EG-21 How hard trying to get/avoid pregnancy (0-10 scale),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WANTSCAL,num,3,487,140,EG-22 How much wanted to get/avoid pregnancy (0-10 scale),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYPRG1,num,3,490,141,EG-23 (unintended preg): method fail or R wasn't using properly-1st mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYPRG2,num,3,493,142,EG-23 (unintended preg): method fail or R wasn't using properly-2nd mention,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYNOUSE1,num,3,496,143,EG-24 (unintended preg) Reason didn't use contraceptn - 1st,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYNOUSE2,num,3,499,144,EG-24 (unintended preg) Reason didn't use contraceptn - 2nd,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYNOUSE3,num,3,502,145,EG-24 (unintended preg) Reason didn't use contraceptn - 3rd,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYNOUSE4,num,3,505,146,EG-24 (unintended preg) Reason didn't use contraceptn - 4th,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYNOUSE5,num,3,508,147,EG-24 (unintended preg) Reason didn't use contraceptn - 5th,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYNOPG1,num,3,511,148,EG-24aa open-ended response: reason didn't think could get preg - 1st,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WHYNOPG2,num,3,514,149,EG-24aa open-ended response: reason didn't think could get preg - 2nd,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,MAINOUSE,num,3,517,150,EG-24a (unintended preg) Main reason didn't use contraception,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PRGLNGTH,num,3,520,151,Duration of completed pregnancy in weeks,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,OUTCOME,num,3,523,152,Pregnancy outcome,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHORD,num,3,526,153,Birth order,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,DATEND,num,4,52,154,Year pregnancy ended,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEPREG,num,3,529,155,Age at pregnancy outcome,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,DATECON,num,4,56,156,Year pregnancy began,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGECON,num,3,532,157,Age at time of conception,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FMAROUT5,num,3,535,158,Formal marital status at pregnancy outcome,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PMARPREG,num,3,538,159,Whether pregnancy ended before R's 1st marriage (premaritally),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RMAROUT6,num,3,541,160,Informal marital status at pregnancy outcome - 6 categories,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FMARCON5,num,3,544,161,Formal marital status at conception - 5 categories,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RMARCON6,num,3,547,162,Informal marital status at conception - 6 categories,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LEARNPRG,num,3,550,163,Number of weeks pregnant when R learned she was pregnant,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PNCAREWK,num,3,553,164,Number of weeks pregnant at first prenatal care,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PAYDELIV,num,3,556,165,Payment for delivery,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LBW1,num,3,559,166,Low birthweight - 1st baby from this preg,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LIVCHILD,num,3,562,167,Living arrangements for 1st liveborn child from this pregnancy,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BFEEDWKS,num,4,60,168,Duration of breastfeeding in weeks,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,OLDWANTR,num,3,565,169,Wantedness of pregnancy - respondent - Cycle 4 version,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,OLDWANTP,num,3,568,170,Wantedness of preg - R's partner (father of pregnancy) - Cycle 4 version,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WANTRESP,num,3,571,171,Wantedness of pregnancy -- Respondent (RECODE),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WANTPART,num,3,574,172,Wantedness of pregnancy -- R's partner (RECODE),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TOOSOON,num,4,64,173,Number of months too soon pregnancy occurred,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,NEWWANTR,num,3,577,174,Detailed wantedness of pregnancy - respondent,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGER,num,3,580,175,Age at interview,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGESCRN,num,3,583,176,R's age at screener,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FMARITAL,num,3,586,177,Formal marital status,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RMARITAL,num,3,589,178,Informal Marital Status,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,EDUCAT,num,3,592,179,Education (completed years of schooling),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HIEDUC,num,3,595,180,Highest completed year of school or degree,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RACE,num,3,598,181,Race,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HISPANIC,num,3,601,182,Hispanic origin,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HISPRACE,num,3,604,183,Race & Hispanic origin of respondent - 1977 OMB standards (respondent recode),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HISPRACE2,num,3,607,184,Race & Hispanic origin of respondent - 1997 OMB standards (respondent recode),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RCURPREG,num,3,610,185,Pregnant at time of interview,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PREGNUM,num,3,613,186,CAPI-based total number of pregnancies,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PARITY,num,3,616,187,Total number of live births,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CURR_INS,num,3,619,188,Current health insurance coverage,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PUBASSIS,num,3,622,189,Whether R received public assistance in prior calendar year,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,POVERTY,num,4,68,190,Poverty level income,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LABORFOR,num,3,625,191,Labor force status,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RELIGION,num,3,628,192,Current religious affiliation,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,METRO,num,3,631,193,Place of residence (Metropolitan / Nonmetropolitan),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BRNOUT,num,3,634,194,IB-8 R born outside of US,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,YRSTRUS,num,4,72,195,Year R came to the United States,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PRGLNGTH_I,num,3,637,196,PRGLNGTH Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,OUTCOME_I,num,3,640,197,OUTCOME Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BIRTHORD_I,num,3,643,198,BIRTHORD Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,DATEND_I,num,3,646,199,DATEND Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGEPREG_I,num,3,649,200,AGEPREG Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,DATECON_I,num,3,652,201,DATECON Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGECON_I,num,3,655,202,AGECON Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FMAROUT5_I,num,3,658,203,FMAROUT5 Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PMARPREG_I,num,3,661,204,PMARPREG Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RMAROUT6_I,num,3,664,205,RMAROUT6 Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FMARCON5_I,num,3,667,206,FMARCON5 Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RMARCON6_I,num,3,670,207,RMARCON6 Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LEARNPRG_I,num,3,673,208,LEARNPRG Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PNCAREWK_I,num,3,676,209,PNCAREWK Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PAYDELIV_I,num,3,679,210,PAYDELIV Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LBW1_I,num,3,682,211,LBW1 Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LIVCHILD_I,num,3,685,212,LIVCHILD Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,BFEEDWKS_I,num,3,688,213,BFEEDWKS Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,OLDWANTR_I,num,3,691,214,OLDWANTR Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,OLDWANTP_I,num,3,694,215,OLDWANTP Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WANTRESP_I,num,3,697,216,WANTRESP Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WANTPART_I,num,3,700,217,WANTPART Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,TOOSOON_I,num,3,703,218,TOOSOON Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,NEWWANTR_I,num,3,706,219,NEWWANTR Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,AGER_I,num,3,709,220,AGER Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,FMARITAL_I,num,3,712,221,FMARITAL Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RMARITAL_I,num,3,715,222,RMARITAL Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,EDUCAT_I,num,3,718,223,EDUCAT Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HIEDUC_I,num,3,721,224,HIEDUC Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RACE_I,num,3,724,225,RACE Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HISPANIC_I,num,3,727,226,HISPANIC Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HISPRACE_I,num,3,730,227,HISPRACE Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,HISPRACE2_I,num,3,733,228,HISPRACE2 Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RCURPREG_I,num,3,736,229,RCURPREG Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PREGNUM_I,num,3,739,230,PREGNUM Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PARITY_I,num,3,742,231,PARITY Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CURR_INS_I,num,3,745,232,CURR_INS Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PUBASSIS_I,num,3,748,233,PUBASSIS Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,POVERTY_I,num,3,751,234,POVERTY Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,LABORFOR_I,num,3,754,235,LABORFOR Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,RELIGION_I,num,3,757,236,RELIGION Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,METRO_I,num,3,760,237,METRO Imputation Flag,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,WGT2015_2017,num,8,0,238,Final weight for the 2015-2017 NSFG,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,SECU,num,3,763,239,Randomized version of the sampling error computational unit,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,SEST,num,4,76,240,Randomized version of the stratum,,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CMINTVW,num,4,80,241,Century month for date of interview  (Computed in Flow Check A-1),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CMLSTYR,num,4,84,242,Century month for month/year of interview minus one year (Computed in Flow Check A-1),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CMJAN3YR,num,4,88,243,Century month of January Three Years Prior to Year of interview (Computed in Flow Check A-1),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CMJAN4YR,num,4,92,244,Century month of January Four Years Prior to Year of Interview (Computed in Flow Check A-1),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,CMJAN5YR,num,4,96,245,Century month of January Five Years Prior to Year of Interview (Computed in Flow Check A-1),,,,0,num,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,QUARTER,char,2,766,246,Quarter when case was sampled,,,,0,char,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,PHASE,char,1,768,247,Regular- or double-sample portion of the quarter,,,,0,char,no,0,,yes
+NSFG,FEMPREGDATA_2015_2017,DATA,INTVWYEAR,char,4,769,248,Calendar year when interview occurred,,,,0,char,no,0,,yes

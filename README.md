@@ -15,7 +15,7 @@ The `SAS/` subdirectory contains scripts written in the SAS statistical programm
 
 ### R/
 
-The `R/` subdirectory contains scripts written in the R statistical programming language. The `import.R` script contains an example of how to load the NSFG data in an R environment.
+The `R/` subdirectory contains scripts written in the R statistical programming language. The `import.R` script contains an helper function for loading the NSFG data in an R environment.
 
 ### data/
 

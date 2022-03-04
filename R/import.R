@@ -1,64 +1,28 @@
 library(data.table)
 library(here)
 
-fempreg <- fread(
-  here('data/2017_2019_FemPregData.csv'),
-  key = c('CASEID', 'PREGORDR')
-)
+load_NSFG_data <- function(years, data_name) {
+  this_list <- list(
+    fread(
+      here(sprintf('data/%sData_%s.csv', data_name, years)),
+      key = ifelse(data_name == 'FemPreg', c('CASEID', 'PREGORDR'), 'CASEID')
+    ),
+    fread(
+      here(sprintf('data/%sLabels_%s.csv', data_name, years)),
+      select = c('name', 'label'),
+      key = 'name'
+    ),
+    fread(
+     here(sprintf('data/%sFormats_%s.csv', data_name, years)),
+     select = c('FMTNAME', 'START', 'LABEL'),
+     key = c('FMTNAME', 'START')
+   )
+  )
 
-fempreg_labels <- fread(
-  here('data/2017_2019_FemPregLabels.csv'),
-  select = c('name', 'label'),
-  key = 'name'
-)
-setnames(fempreg_labels, c('column_name', 'column_label'))
+  setnames(this_list[[2]], c('column_name', 'column_label'))
+  setnames(this_list[[3]], c('column_name', 'factor_value', 'factor_label'))
 
-fempreg_formats <- fread(
-  here('data/2017_2019_FemPregFormats.csv'),
-  select = c('FMTNAME', 'START', 'LABEL'),
-  key = c('FMTNAME', 'START')
-)
-setnames(fempreg_formats, c('column_name', 'factor_value', 'factor_label'))
+  names(this_list) <- c('Data', 'Labels', 'Formats')
 
-femresp <- fread(
-  here('data/2017_2019_FemRespData.csv'),
-  key = 'CASEID'
-)
-
-femresp_labels <- fread(
-  here('data/2017_2019_FemRespLabels.csv'),
-  select = c('name', 'label'),
-  key = 'name'
-)
-setnames(femresp_labels, c('column_name', 'column_label'))
-
-femresp_formats <- fread(
-  here('data/2017_2019_FemRespFormats.csv'),
-  select = c('FMTNAME', 'START', 'LABEL'),
-  key = c('FMTNAME', 'START')
-)
-setnames(femresp_formats, c('column_name', 'factor_value', 'factor_label'))
-
-male <- fread(
-  here('data/2017_2019_MaleData.csv'),
-  key = 'CASEID'
-)
-
-male_labels <- fread(
-  here('data/2017_2019_MaleLabels.csv'),
-  select = c('name', 'label'),
-  key = 'name'
-)
-setnames(male_labels, c('column_name', 'column_label'))
-
-male_formats <- fread(
-  here('data/2017_2019_MaleFormats.csv'),
-  select = c('FMTNAME', 'START', 'LABEL'),
-  key = c('FMTNAME', 'START')
-)
-setnames(male_formats, c('column_name', 'factor_value', 'factor_label'))
-
-female_weights <- fread(
-  here('data/2011_2019_FemaleWgtData.csv'),
-  key = 'CASEID'
-)
+  this_list
+}
