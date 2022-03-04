@@ -85,7 +85,7 @@ In addition to being resistant to falsification, generic generalizations are not
 
 For instance, generic generalizations such as "humans are terrorists" or "humans are rapists" seem odd. However, they have a similar amount of actual information as the more specific generic generalizations "Muslims are terrorists" and "Blacks are rapists."
 
-Such generic generalizations about "humans," "Muslims," or "Blacks" assert that, among some population of billions of individuals, there are some unspecified number of individuals who are terrorists or who are rapists. However, this is true of _any_ large enough population of human beings.
+Such generic generalizations about "humans," "Muslims," or "Blacks" assert that, among some population of billions of individuals, there is some unspecified number of individuals who are terrorists or who are rapists. However, this is true of _any_ large enough population of human beings.
 
 The generic generalizations "humans are terrorists" or "humans are rapists" are conspicuous in just how vague and uninformative they are. However, this is precisely the same issue with all generic generalizations. The "humans" versions of these generic generalizations are merely more obvious in illustrating this defect.
 
@@ -142,7 +142,7 @@ Once one accepts that natural languages function with such elision, then whether
 When someone says "ducks lay eggs," there is typically social context surrounding this statement from which a more complicated thought can be inferred, such as "the system of reproduction used by ducks is oviparous."
 
 ![
-A child with an adult encountering ducks swimmign around a pond.<br/>
+A child with an adult encountering ducks swimming around a pond.<br/>
 [Image](https://pixabay.com/photos/people-adult-autumn-back-boy-2942837/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2942837)
 by
 [freestocks-photos](https://pixabay.com/users/freestocks-photos-7014431/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2942837)
@@ -269,7 +269,7 @@ While generic comparisons are in this way resistant to falsification, they are n
 
 As long as the direction of the generic comparison is correct, however, the generic comparison is resistant to falsification. Like generic generalizations, generic comparisons that are resistant to falsification are also highly uninformative. For instance, asserting that group A makes more money on average than group B is uninformative. It could be that the mean annual income in group A is \$32,950 versus a mean income in group B of \$28,552. It could, however, be that the mean annual income of group A is \$157,800 versus a mean income in group B of \$28,552.
 
-Because these kind of generic comparisons are uninformative, they can be used to reach specious conclusions in flawed analysis, a practice all too commonly seen in social or behavioral research. The general scheme is to claim that the mean (or other statistic) of variable _X_ is greater for group A than for group B because the mean (or other statistic) of variable _Y_ is greater for group A than for group B. For instance, someone might claim that group A has a higher mean income than group B because the mean hours worked per week is higher for group A than for group B.
+Because these kinds of generic comparisons are uninformative, they can be used to reach specious conclusions in flawed analysis, a practice all too commonly seen in social or behavioral research. The general scheme is to claim that the mean (or other statistic) of variable _X_ is greater for group A than for group B because the mean (or other statistic) of variable _Y_ is greater for group A than for group B. For instance, someone might claim that group A has a higher mean income than group B because the mean hours worked per week is higher for group A than for group B.
 
 It _might_ very well be the case that the differences in the number of hours worked per week between the two groups explains a substantial portion of the difference in average income between the two groups, but the same could be said for _any other variable_ because, for any variable, it is extremely unlikely that the mean of the variable would be exactly equal between the two groups. Thus, by the exact same logic, _anything_ can explain the difference in mean income between group A or group B.
 
@@ -288,7 +288,7 @@ The answer to the fallacy of generic comparisons is similar to the answer to the
 
 When quantifying a generic generalization, typically all that is needed is a proportion, in particular, the proportion of the subject population for which the predicate of the generalization is true. For instance, specifying "72.4\%" in "approximately 72.4% of swans are white" is relatively straightforward.
 
-Various ways to provide a summary differences between groups were given in the discussion of [effect size](/how-to-scrutinize-a-statistic.html#effect-size). While an effect size is a helpful initial summary of a difference between groups, it is just that, an initial summary and not a complete description of the difference. How to quantify differences between groups is a deep enough topic to merit its own treatment, but is beyond the scope of this article.
+Various ways to provide summary differences between groups were given in the discussion of [effect size](/how-to-scrutinize-a-statistic.html#effect-size). While an effect size is a helpful initial summary of a difference between groups, it is just that, an initial summary and not a complete description of the difference. How to quantify differences between groups is a deep enough topic to merit its own treatment, but is beyond the scope of this article.
 
 
 ## Further Investigation
