@@ -44,24 +44,24 @@ ksvybyci <- function(formula, by, design, FUN) {
   kable(svybyci(formula, by, design, FUN))
 }
 
-factorize <- function(x, format_name, formats_table, nafill = -1) {
+factorize <- function(x, name, formats_table, nafill = -1) {
   if (nafill) {
     factor(
       nafill(x, fill = nafill),
       levels = c(
         nafill,
-        formats_table[format_name == format_name, factor_value]
+        formats_table[format_name == name, factor_value]
       ),
       labels = c(
         'Not Applicable',
-        formats_table[format_name == format_name, factor_label]
+        formats_table[format_name == name, factor_label]
       )
     )
   } else {
     factor(
       x,
-      levels = formats_table[format_name == format_name, factor_value],
-      labels = formats_table[format_name == format_name, factor_label]
+      levels = formats_table[format_name == name, factor_value],
+      labels = formats_table[format_name == name, factor_label]
     )
   }
 }
