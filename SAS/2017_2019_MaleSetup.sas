@@ -6393,7 +6393,7 @@ LABEL
 
 * SAS FORMAT STATEMENT;
 
-/*
+
 FORMAT
    RSCRNINF Y1N5C.          RSCRAGE AGESCRN.         RSCRHISP Y1N5RDF.     
    RSCRRACE RSCRRACE.       AGE_A AGEFMT.            AGE_R AGEFMT.         
@@ -7396,7 +7396,7 @@ FORMAT
    PUBASSIS_I IMPFLG.       SECU SECU.               CMINTVW CMFMT.        
    CMLSTYR CMFMT.           CMFIVYR CMFMT.                
    PHASE PHASE.      ;               
-*/
+
 
 * SAS LENGTH STATEMENT;
 
