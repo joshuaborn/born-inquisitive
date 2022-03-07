@@ -26,15 +26,12 @@ opts_chunk$set(
 ```
 
 
+## Female Persons Aged 15-49
+
 ```{r, load-data}
 fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
-
 fem_data <- fem_2017_2019$Data
 fem_formats <- fem_2017_2019$Formats
-
-male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
-
-male_data <- male_2017_2019$Data
 ```
 
 ```{r, setup-data}
@@ -45,18 +42,10 @@ fem_svy <- svydesign(
   nest = TRUE,
   weights = ~WGT2017_2019
 )
-
-male_svy <- svydesign(
-  ids = ~SECU,
-  strata = ~SEST,
-  data = male_data,
-  nest = TRUE,
-  weights = ~WGT2017_2019
-)
 ```
 
 ```{r}
-kable(fem_formats[column_name == 'CONSTATF'])
+kable(fem_formats[format_name == 'CONSTATF'])
 ```
 
 It seems like the NSFG recodes count a respondent as currently using contraception if has had sexual intercourse in the past 3 months with someone of the opposite sex and used a contraceptive during the last intercourse.
@@ -74,21 +63,48 @@ Togther the above variables form a set. Those who have `2` for `HADSEX` are `NA`
 There is another variable `SEXP30MO` which comes from the months of non-intercourse series that reports a higher count of those who have had sex in the past 3 months than `SEX3MO`.
 
 ```{r}
-kable(fem_formats[startsWith(column_name, 'MTHUSE3F')])
-
-fem_data[, MTHUSE3F := factorize(MTHUSE3, 'MTHUSE3F', fem_formats)]
 fem_data[, woman := 1]
 
 ksvytotalci(~woman, fem_svy)
+```
+
+According to the U.S. Census Bureau, Current Population Survey, Annual Social and Economic Supplement, 2019, Table 1. Population by Age and Sex: 2019. The female civilian noninstitutionalized population of the United States is ~74,445,000. The estimate generated from the NSFG is consistent with this.
+
+
+```{r}
+kable(fem_formats[startsWith(format_name, 'MTHUSE3F')])
+
+fem_data[, MTHUSE3F := factorize(MTHUSE3, 'MTHUSE3F', fem_formats)]
 
 ksvybyci(~woman, ~MTHUSE3F, fem_svy, svytotal)
 
 ksvyci(~MTHUSE3F, fem_svy, svymean)
 ```
 
-* Rename "column_name" in formats to "format_name"
+## Male Persons Aged 15-49
+
+```{r, load-male-data}
+male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
+
+male_data <- male_2017_2019$Data
+```
+
+```{r, setup-male-data}
+male_svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = male_data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+```
+
+According to the U.S. Census Bureau, ibid. The number of civilian noninstitutionalized male persons in the United States is ~74,238,000.
+
+
+## To Do
+
 * Try combining with 2015-2017 data for more precise estimates
-* Check estimate of number of women aged 15-49 against census counts
 * For those using contraception,
     * Which?
     * One or multiple?

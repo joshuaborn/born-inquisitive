@@ -16,6 +16,7 @@ library(survey)
 
 i_am('EDA/number_of_births.Rmd')
 
+source(here('R/import.R'))
 source(here('R/survey_helpers.R'))
 
 opts_chunk$set(
@@ -35,24 +36,10 @@ include_graphics(file.path('img', '2017_2019_births_table.png'))
 ```
 
 ```{r load-data, message=FALSE, cache=TRUE}
-fempreg <- fread(
-  here('data/2017_2019_FemPregData.csv'),
-  key = c('CASEID', 'PREGORDR')
-)
-
-fempreg_labels <- fread(
-  here('data/2017_2019_FemPregLabels.csv'),
-  select = c('name', 'label'),
-  key = 'name'
-)
-setnames(fempreg_labels, c('column_name', 'column_label'))
-
-fempreg_formats <- fread(
-  here('data/2017_2019_FemPregFormats.csv'),
-  select = c('FMTNAME', 'START', 'LABEL'),
-  key = c('FMTNAME', 'START')
-)
-setnames(fempreg_formats, c('column_name', 'factor_value', 'factor_label'))
+preg_2017_2019 <- load_NSFG_data('2017_2019', 'FemPreg')
+fempreg <- preg_2017_2019$Data
+fempreg_labels <- preg_2017_2019$Labels
+fempreg_formats <- preg_2017_2019$Formats
 ```
 
 
@@ -64,8 +51,8 @@ The estimates in Table 1 can be calculated from data in the female pregnancy fil
 fempreg[, `:=`(
   OUTCOME = factor(
     OUTCOME,
-    levels = fempreg_formats[column_name == 'OUTCOME', factor_value],
-    labels = fempreg_formats[column_name == 'OUTCOME', factor_label]
+    levels = fempreg_formats[format_name == 'OUTCOME', factor_value],
+    labels = fempreg_formats[format_name == 'OUTCOME', factor_label]
   ),
   BRNOUT = factor(
     BRNOUT,
@@ -74,8 +61,8 @@ fempreg[, `:=`(
   ),
   YRSTRUS = factor(
     YRSTRUS,
-    levels = fempreg_formats[column_name == 'YRSTRUS', factor_value],
-    labels = fempreg_formats[column_name == 'YRSTRUS', factor_label]
+    levels = fempreg_formats[format_name == 'YRSTRUS', factor_value],
+    labels = fempreg_formats[format_name == 'YRSTRUS', factor_label]
   )
 )]
 ```
@@ -120,8 +107,8 @@ It appears as though the `YRSTRUS` in the 2017-2019 public use files has been mo
 fempreg[, `:=`(
   HISPRACE2 = factor(
     HISPRACE2,
-    levels = fempreg_formats[column_name == 'HISPRACE2F', factor_value],
-    labels = fempreg_formats[column_name == 'HISPRACE2F', factor_label]
+    levels = fempreg_formats[format_name == 'HISPRACE2F', factor_value],
+    labels = fempreg_formats[format_name == 'HISPRACE2F', factor_label]
   ),
   Num_Births = fifelse(
     OUTCOME == 'LIVE BIRTH',

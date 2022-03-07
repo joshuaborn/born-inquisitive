@@ -50,18 +50,18 @@ factorize <- function(x, format_name, formats_table, nafill = -1) {
       nafill(x, fill = nafill),
       levels = c(
         nafill,
-        formats_table[column_name == format_name, factor_value]
+        formats_table[format_name == format_name, factor_value]
       ),
       labels = c(
         'Not Applicable',
-        formats_table[column_name == format_name, factor_label]
+        formats_table[format_name == format_name, factor_label]
       )
     )
   } else {
     factor(
       x,
-      levels = formats_table[column_name == format_name, factor_value],
-      labels = formats_table[column_name == format_name, factor_label]
+      levels = formats_table[format_name == format_name, factor_value],
+      labels = formats_table[format_name == format_name, factor_label]
     )
   }
 }

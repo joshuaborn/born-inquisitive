@@ -20,7 +20,7 @@ load_NSFG_data <- function(years, data_name) {
   )
 
   setnames(this_list[[2]], c('column_name', 'column_label'))
-  setnames(this_list[[3]], c('column_name', 'factor_value', 'factor_label'))
+  setnames(this_list[[3]], c('format_name', 'factor_value', 'factor_label'))
 
   names(this_list) <- c('Data', 'Labels', 'Formats')
 
