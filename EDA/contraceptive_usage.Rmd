@@ -1,0 +1,113 @@
+---
+title: "Contraceptive Usage"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+library(survey)
+
+i_am('EDA/contraceptive_usage.Rmd')
+
+source(here('R/survey_helpers.R'))
+source(here('R/import.R'))
+
+opts_chunk$set(
+  echo = TRUE,
+  cache = FALSE
+)
+```
+
+
+```{r, load-data}
+fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
+
+fem_data <- fem_2017_2019$Data
+fem_formats <- fem_2017_2019$Formats
+
+male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
+
+male_data <- male_2017_2019$Data
+```
+
+```{r, setup-data}
+fem_svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = fem_data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+
+male_svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = male_data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+```
+
+```{r}
+kable(fem_formats[column_name == 'CONSTATF'])
+```
+
+It seems like the NSFG recodes count a respondent as currently using contraception if has had sexual intercourse in the past 3 months with someone of the opposite sex and used a contraceptive during the last intercourse.
+
+```{r}
+tablena(fem_data$HADSEX)
+tablena(fem_data$SEX3MO)
+tablena(fem_data$SEXP3MO)
+tablena(fem_data$MTHUSE3)
+kable(fem_data[, sum(is.na(HADSEX), is.na(MTHUSE3))])
+```
+
+Togther the above variables form a set. Those who have `2` for `HADSEX` are `NA` for `SEX3MO`, and those who have either a `2` for `HADSEX` or `2` for `SEX3MO` are `NA` for `MTHUSE3`.
+
+There is another variable `SEXP30MO` which comes from the months of non-intercourse series that reports a higher count of those who have had sex in the past 3 months than `SEX3MO`.
+
+```{r}
+kable(fem_formats[startsWith(column_name, 'MTHUSE3F')])
+
+fem_data[, MTHUSE3F := factorize(MTHUSE3, 'MTHUSE3F', fem_formats)]
+fem_data[, woman := 1]
+
+ksvytotalci(~woman, fem_svy)
+
+ksvybyci(~woman, ~MTHUSE3F, fem_svy, svytotal)
+
+ksvyci(~MTHUSE3F, fem_svy, svymean)
+```
+
+* Rename "column_name" in formats to "format_name"
+* Try combining with 2015-2017 data for more precise estimates
+* Check estimate of number of women aged 15-49 against census counts
+* For those using contraception,
+    * Which?
+    * One or multiple?
+    * Partner also using contraception?
+    * Changed over lifetime?
+    * Want children in future, just not now?
+    * For other reasons than contraception?
+    * How consistent?
+* Count how many typically use contraception, e.g., in past 12 months, but missed last intercourse
+* For those not using contraception,
+    * Not sexually active?
+        * Ever or just now?
+    * Currently pregnant?
+    * Trying to get pregnant?
+    * (Naturally) infertile?
+    * Exclusively same-sex partner(s)?
+* For those fertile, heterosexually active, not using contraception, and not desiring pregnancy, why no contraception usage?
+    * Attitude?
+* Attitudes toward contraception more generally
+* Whether second phase samples differ from first-phase (to investigate nonresponse bias)
+* Subdomains
+    * Roman Catholics
