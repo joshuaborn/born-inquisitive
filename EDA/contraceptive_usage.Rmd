@@ -81,7 +81,7 @@ ksvybyci(~women, ~MTHUSE3F, fem_svy, svytotal)
 ksvyci(~MTHUSE3F, fem_svy, svymean)
 ```
 
-```{r}
+```{r, females-currently-totals}
 fem_data[, currently := factor(
   fifelse(
     !is.na(MTHUSE3) & MTHUSE3 == 1,

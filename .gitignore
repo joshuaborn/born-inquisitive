@@ -1,6 +1,6 @@
 **.swp
-**/eda/*.html
-**/eda/*_cache/
+**/EDA/*.html
+**/EDA/*_cache/
 .RData
 .Rhistory
 .Rproj.user
