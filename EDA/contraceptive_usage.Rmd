@@ -451,13 +451,13 @@ fem_data[, `:=`(
   curr_meth11 = as.integer(METH3M1_factor) == 11 | as.integer(METH3M2_factor) == 11 | as.integer(METH3M3_factor) == 11,
   curr_meth12 = as.integer(METH3M1_factor) == 12 | as.integer(METH3M2_factor) == 12 | as.integer(METH3M3_factor) == 12,
   curr_meth13 = as.integer(METH3M1_factor) == 13 | as.integer(METH3M2_factor) == 13 | as.integer(METH3M3_factor) == 13,
-  curr_meth14 = as.integer(METH3M1_factor) == 14 | as.integer(METH3M2_factor) == 14 | as.integer(METH3M3_factor) == 14,
+  #curr_meth14 = as.integer(METH3M1_factor) == 14 | as.integer(METH3M2_factor) == 14 | as.integer(METH3M3_factor) == 14,
   curr_meth15 = as.integer(METH3M1_factor) == 15 | as.integer(METH3M2_factor) == 15 | as.integer(METH3M3_factor) == 15,
-  curr_meth16 = as.integer(METH3M1_factor) == 16 | as.integer(METH3M2_factor) == 16 | as.integer(METH3M3_factor) == 16,
+  #curr_meth16 = as.integer(METH3M1_factor) == 16 | as.integer(METH3M2_factor) == 16 | as.integer(METH3M3_factor) == 16,
   curr_meth17 = as.integer(METH3M1_factor) == 17 | as.integer(METH3M2_factor) == 17 | as.integer(METH3M3_factor) == 17,
   curr_meth18 = as.integer(METH3M1_factor) == 18 | as.integer(METH3M2_factor) == 18 | as.integer(METH3M3_factor) == 18,
   curr_meth19 = as.integer(METH3M1_factor) == 19 | as.integer(METH3M2_factor) == 19 | as.integer(METH3M3_factor) == 19,
-  curr_meth22 = as.integer(METH3M1_factor) == 22 | as.integer(METH3M2_factor) == 22 | as.integer(METH3M3_factor) == 22,
+  #curr_meth22 = as.integer(METH3M1_factor) == 22 | as.integer(METH3M2_factor) == 22 | as.integer(METH3M3_factor) == 22,
   curr_meth23 = as.integer(METH3M1_factor) == 23 | as.integer(METH3M2_factor) == 23 | as.integer(METH3M3_factor) == 23,
   curr_meth24 = as.integer(METH3M1_factor) == 24 | as.integer(METH3M2_factor) == 24 | as.integer(METH3M3_factor) == 24
 )]
@@ -478,13 +478,13 @@ all(
   fem_data[, sum(curr_meth11)] == female_current_sumcounts[11, sumcount],
   fem_data[, sum(curr_meth12)] == female_current_sumcounts[12, sumcount],
   fem_data[, sum(curr_meth13)] == female_current_sumcounts[13, sumcount],
-  fem_data[, sum(curr_meth14)] == female_current_sumcounts[14, sumcount],
+  #fem_data[, sum(curr_meth14)] == female_current_sumcounts[14, sumcount],
   fem_data[, sum(curr_meth15)] == female_current_sumcounts[15, sumcount],
-  fem_data[, sum(curr_meth16)] == female_current_sumcounts[16, sumcount],
+  #fem_data[, sum(curr_meth16)] == female_current_sumcounts[16, sumcount],
   fem_data[, sum(curr_meth17)] == female_current_sumcounts[17, sumcount],
   fem_data[, sum(curr_meth18)] == female_current_sumcounts[18, sumcount],
   fem_data[, sum(curr_meth19)] == female_current_sumcounts[19, sumcount],
-  fem_data[, sum(curr_meth22)] == female_current_sumcounts[22, sumcount],
+  #fem_data[, sum(curr_meth22)] == female_current_sumcounts[22, sumcount],
   fem_data[, sum(curr_meth23)] == female_current_sumcounts[23, sumcount],
   fem_data[, sum(curr_meth24)] == female_current_sumcounts[24, sumcount]
 )
@@ -505,13 +505,13 @@ female_current_method_totals <- rbind(
   svyci(~curr_meth11, fem_svy, svytotal)[level == TRUE][, method := 11],
   svyci(~curr_meth12, fem_svy, svytotal)[level == TRUE][, method := 12],
   svyci(~curr_meth13, fem_svy, svytotal)[level == TRUE][, method := 13],
-  svyci(~curr_meth14, fem_svy, svytotal)[level == TRUE][, method := 14],
+  #svyci(~curr_meth14, fem_svy, svytotal)[level == TRUE][, method := 14],
   svyci(~curr_meth15, fem_svy, svytotal)[level == TRUE][, method := 15],
-  svyci(~curr_meth16, fem_svy, svytotal)[level == TRUE][, method := 16],
+  #svyci(~curr_meth16, fem_svy, svytotal)[level == TRUE][, method := 16],
   svyci(~curr_meth17, fem_svy, svytotal)[level == TRUE][, method := 17],
   svyci(~curr_meth18, fem_svy, svytotal)[level == TRUE][, method := 18],
   svyci(~curr_meth19, fem_svy, svytotal)[level == TRUE][, method := 19],
-  svyci(~curr_meth22, fem_svy, svytotal)[level == TRUE][, method := 22],
+  #svyci(~curr_meth22, fem_svy, svytotal)[level == TRUE][, method := 22],
   svyci(~curr_meth23, fem_svy, svytotal)[level == TRUE][, method := 23],
   svyci(~curr_meth24, fem_svy, svytotal)[level == TRUE][, method := 24]
 )
@@ -575,18 +575,18 @@ female_current_method_proportions <- rbind(
   svyci(~curr_meth11, female_current_contraceptors, svymean)[level == TRUE][, method := 11],
   svyci(~curr_meth12, female_current_contraceptors, svymean)[level == TRUE][, method := 12],
   svyci(~curr_meth13, female_current_contraceptors, svymean)[level == TRUE][, method := 13],
-  svyci(~curr_meth14, female_current_contraceptors, svymean)[level == TRUE][, method := 14],
+  #svyci(~curr_meth14, female_current_contraceptors, svymean)[level == TRUE][, method := 14],
   svyci(~curr_meth15, female_current_contraceptors, svymean)[level == TRUE][, method := 15],
-  svyci(~curr_meth16, female_current_contraceptors, svymean)[level == TRUE][, method := 16],
+  #svyci(~curr_meth16, female_current_contraceptors, svymean)[level == TRUE][, method := 16],
   svyci(~curr_meth17, female_current_contraceptors, svymean)[level == TRUE][, method := 17],
   svyci(~curr_meth18, female_current_contraceptors, svymean)[level == TRUE][, method := 18],
   svyci(~curr_meth19, female_current_contraceptors, svymean)[level == TRUE][, method := 19],
-  svyci(~curr_meth22, female_current_contraceptors, svymean)[level == TRUE][, method := 22],
+  #svyci(~curr_meth22, female_current_contraceptors, svymean)[level == TRUE][, method := 22],
   svyci(~curr_meth23, female_current_contraceptors, svymean)[level == TRUE][, method := 23],
   svyci(~curr_meth24, female_current_contraceptors, svymean)[level == TRUE][, method := 24]
 )
 
-female_current_method_proportions[, .(method, total, se, `2.5 %`, `97.5 %`)]
+female_current_method_proportions[, method_factor := factorize(method, 'METH3MF', fem_formats)]
 
 ggplot(
   data = female_current_method_proportions,
