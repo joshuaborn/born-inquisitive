@@ -226,9 +226,17 @@ Both of these can be settled with a single new variable.
 
 ```{r}
 fem_data[, current_contraceptive_count := fcase(
-  !is.na(METH3M3) & METH3M3 != 20 & METH3M3 != 21, 3,
-  !is.na(METH3M2) & METH3M2 != 20 & METH3M2 != 21, 2,
-  !is.na(METH3M1) & METH3M1 != 20 & METH3M1 != 21, 1,
+  !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 3,
+  !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
+  !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
+  !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 2,
+  !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
+  !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
+  !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 1,
+  !is.na(METH3M2) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
+  !is.na(METH3M2) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
+  !is.na(METH3M2) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 1,
+  !is.na(METH3M1) & !is.element(METH3M1, c(20, 21)), 1,
   default = 0
 )]
 
