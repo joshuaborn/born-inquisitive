@@ -81,7 +81,7 @@ ksvybyci(~women, ~MTHUSE3F, fem_svy, svytotal)
 ksvyci(~MTHUSE3F, fem_svy, svymean)
 ```
 
-```{r, females-currently-totals}
+```{r, females-currently-totals, fig.height=8, fig.width=6}
 fem_data[, currently := factor(
   fifelse(
     !is.na(MTHUSE3) & MTHUSE3 == 1,
@@ -104,7 +104,7 @@ ggplot(
     aes(
       y = women
     ),
-    size = 5
+    size = 4
   ) +
   geom_segment(
     aes(
@@ -112,6 +112,7 @@ ggplot(
       y = `2.5 %`,
       yend = `97.5 %`
     ),
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.125, 'inches')),
     size = 1
   ) +
   scale_y_continuous(
@@ -119,7 +120,9 @@ ggplot(
     minor_breaks = \(limits) seq(floor(limits[1]), limits[2], 1)
   ) +
   labs(
-    y = 'Number of females'
+    subtitle = 'among females aged 15-49 living in households in the United States',
+    title = 'Number of persons currently using contraception',
+    y = 'Number of female persons'
   ) +
   theme_bw() +
   theme(
@@ -127,29 +130,46 @@ ggplot(
   )
 ```
 
-```{r, females-currently-proportions, fig.width=8, fig.height=2}
+```{r, females-currently-proportions, fig.width=8, fig.height=2.5}
 ggplot(
-  data = svyci(~currently, fem_svy, svymean),
+  data = svyci(~currently, fem_svy, svymean)[1],
   aes(
-    x = total,
-    y = factor(''),
-    fill = factor(level, levels = rev(level))
+    y = level
   )
 ) +
-  geom_col() +
-  scale_y_discrete(
-    expand = c(0, 0)
+  geom_point(
+    aes(
+      x = total
+    ),
+    size = 2.5
+  ) +
+  geom_segment(
+    aes(
+      yend = level,
+      x = `2.5 %`,
+      xend = `97.5 %`
+    ),
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.0625, 'inches')),
+    size = 0.5
   ) +
   scale_x_continuous(
-    breaks = NULL,
+    breaks = seq(0, 1, 0.1),
+    expand = c(0, 0),
     labels = scales::label_percent(1),
-    expand = c(0, 0)
+    limits = c(0, 1)
+  ) +
+  scale_y_discrete(
+    labels = NULL
+  ) +
+  labs(
+    subtitle = 'among females aged 15-49 living in households in the United States',
+    title = 'Proportion of persons currently using contraception'
   ) +
   theme_bw() +
   theme(
-    legend.position = 'none',
+    axis.ticks.y = element_blank(),
     axis.title = element_blank(),
-    axis.ticks.y = element_blank()
+    legend.position = 'none'
   )
 ```
 
