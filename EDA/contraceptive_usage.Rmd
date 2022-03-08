@@ -434,6 +434,130 @@ ggplot(
   )
 ```
 
+There is enough simultaneous contraceptive usage that it is worth taking it into account when estimating method use.
+
+```{r}
+fem_data[, `:=`(
+  curr_meth1 = as.integer(METH3M1_factor) == 1 | as.integer(METH3M2_factor) == 1 | as.integer(METH3M3_factor) == 1,
+  curr_meth2 = as.integer(METH3M1_factor) == 2 | as.integer(METH3M2_factor) == 2 | as.integer(METH3M3_factor) == 2,
+  curr_meth3 = as.integer(METH3M1_factor) == 3 | as.integer(METH3M2_factor) == 3 | as.integer(METH3M3_factor) == 3,
+  curr_meth4 = as.integer(METH3M1_factor) == 4 | as.integer(METH3M2_factor) == 4 | as.integer(METH3M3_factor) == 4,
+  curr_meth5 = as.integer(METH3M1_factor) == 5 | as.integer(METH3M2_factor) == 5 | as.integer(METH3M3_factor) == 5,
+  curr_meth6 = as.integer(METH3M1_factor) == 6 | as.integer(METH3M2_factor) == 6 | as.integer(METH3M3_factor) == 6,
+  curr_meth7 = as.integer(METH3M1_factor) == 7 | as.integer(METH3M2_factor) == 7 | as.integer(METH3M3_factor) == 7,
+  curr_meth8 = as.integer(METH3M1_factor) == 8 | as.integer(METH3M2_factor) == 8 | as.integer(METH3M3_factor) == 8,
+  curr_meth9 = as.integer(METH3M1_factor) == 9 | as.integer(METH3M2_factor) == 9 | as.integer(METH3M3_factor) == 9,
+  curr_meth10 = as.integer(METH3M1_factor) == 10 | as.integer(METH3M2_factor) == 10 | as.integer(METH3M3_factor) == 10,
+  curr_meth11 = as.integer(METH3M1_factor) == 11 | as.integer(METH3M2_factor) == 11 | as.integer(METH3M3_factor) == 11,
+  curr_meth12 = as.integer(METH3M1_factor) == 12 | as.integer(METH3M2_factor) == 12 | as.integer(METH3M3_factor) == 12,
+  curr_meth13 = as.integer(METH3M1_factor) == 13 | as.integer(METH3M2_factor) == 13 | as.integer(METH3M3_factor) == 13,
+  curr_meth14 = as.integer(METH3M1_factor) == 14 | as.integer(METH3M2_factor) == 14 | as.integer(METH3M3_factor) == 14,
+  curr_meth15 = as.integer(METH3M1_factor) == 15 | as.integer(METH3M2_factor) == 15 | as.integer(METH3M3_factor) == 15,
+  curr_meth16 = as.integer(METH3M1_factor) == 16 | as.integer(METH3M2_factor) == 16 | as.integer(METH3M3_factor) == 16,
+  curr_meth17 = as.integer(METH3M1_factor) == 17 | as.integer(METH3M2_factor) == 17 | as.integer(METH3M3_factor) == 17,
+  curr_meth18 = as.integer(METH3M1_factor) == 18 | as.integer(METH3M2_factor) == 18 | as.integer(METH3M3_factor) == 18,
+  curr_meth19 = as.integer(METH3M1_factor) == 19 | as.integer(METH3M2_factor) == 19 | as.integer(METH3M3_factor) == 19,
+  curr_meth22 = as.integer(METH3M1_factor) == 22 | as.integer(METH3M2_factor) == 22 | as.integer(METH3M3_factor) == 22,
+  curr_meth23 = as.integer(METH3M1_factor) == 23 | as.integer(METH3M2_factor) == 23 | as.integer(METH3M3_factor) == 23,
+  curr_meth24 = as.integer(METH3M1_factor) == 24 | as.integer(METH3M2_factor) == 24 | as.integer(METH3M3_factor) == 24
+)]
+
+female_current_sumcounts <- current_female_counts[, .(sumcount = METH3M1 + METH3M2 + METH3M3), by = Method]
+
+all(
+  fem_data[, sum(curr_meth1)] == female_current_sumcounts[1, sumcount],
+  fem_data[, sum(curr_meth2)] == female_current_sumcounts[2, sumcount],
+  fem_data[, sum(curr_meth3)] == female_current_sumcounts[3, sumcount],
+  fem_data[, sum(curr_meth4)] == female_current_sumcounts[4, sumcount],
+  fem_data[, sum(curr_meth5)] == female_current_sumcounts[5, sumcount],
+  fem_data[, sum(curr_meth6)] == female_current_sumcounts[6, sumcount],
+  fem_data[, sum(curr_meth7)] == female_current_sumcounts[7, sumcount],
+  fem_data[, sum(curr_meth8)] == female_current_sumcounts[8, sumcount],
+  fem_data[, sum(curr_meth9)] == female_current_sumcounts[9, sumcount],
+  fem_data[, sum(curr_meth10)] == female_current_sumcounts[10, sumcount],
+  fem_data[, sum(curr_meth11)] == female_current_sumcounts[11, sumcount],
+  fem_data[, sum(curr_meth12)] == female_current_sumcounts[12, sumcount],
+  fem_data[, sum(curr_meth13)] == female_current_sumcounts[13, sumcount],
+  fem_data[, sum(curr_meth14)] == female_current_sumcounts[14, sumcount],
+  fem_data[, sum(curr_meth15)] == female_current_sumcounts[15, sumcount],
+  fem_data[, sum(curr_meth16)] == female_current_sumcounts[16, sumcount],
+  fem_data[, sum(curr_meth17)] == female_current_sumcounts[17, sumcount],
+  fem_data[, sum(curr_meth18)] == female_current_sumcounts[18, sumcount],
+  fem_data[, sum(curr_meth19)] == female_current_sumcounts[19, sumcount],
+  fem_data[, sum(curr_meth22)] == female_current_sumcounts[22, sumcount],
+  fem_data[, sum(curr_meth23)] == female_current_sumcounts[23, sumcount],
+  fem_data[, sum(curr_meth24)] == female_current_sumcounts[24, sumcount]
+)
+```
+
+```{r, female-current-method-totals, fig.width=12, fig.height=8}
+female_current_method_totals <- rbind(
+  svyci(~curr_meth1, fem_svy, svytotal)[level == TRUE][, method := 1],
+  svyci(~curr_meth2, fem_svy, svytotal)[level == TRUE][, method := 2],
+  svyci(~curr_meth3, fem_svy, svytotal)[level == TRUE][, method := 3],
+  svyci(~curr_meth4, fem_svy, svytotal)[level == TRUE][, method := 4],
+  svyci(~curr_meth5, fem_svy, svytotal)[level == TRUE][, method := 5],
+  svyci(~curr_meth6, fem_svy, svytotal)[level == TRUE][, method := 6],
+  svyci(~curr_meth7, fem_svy, svytotal)[level == TRUE][, method := 7],
+  svyci(~curr_meth8, fem_svy, svytotal)[level == TRUE][, method := 8],
+  svyci(~curr_meth9, fem_svy, svytotal)[level == TRUE][, method := 9],
+  svyci(~curr_meth10, fem_svy, svytotal)[level == TRUE][, method := 10],
+  svyci(~curr_meth11, fem_svy, svytotal)[level == TRUE][, method := 11],
+  svyci(~curr_meth12, fem_svy, svytotal)[level == TRUE][, method := 12],
+  svyci(~curr_meth13, fem_svy, svytotal)[level == TRUE][, method := 13],
+  svyci(~curr_meth14, fem_svy, svytotal)[level == TRUE][, method := 14],
+  svyci(~curr_meth15, fem_svy, svytotal)[level == TRUE][, method := 15],
+  svyci(~curr_meth16, fem_svy, svytotal)[level == TRUE][, method := 16],
+  svyci(~curr_meth17, fem_svy, svytotal)[level == TRUE][, method := 17],
+  svyci(~curr_meth18, fem_svy, svytotal)[level == TRUE][, method := 18],
+  svyci(~curr_meth19, fem_svy, svytotal)[level == TRUE][, method := 19],
+  svyci(~curr_meth22, fem_svy, svytotal)[level == TRUE][, method := 22],
+  svyci(~curr_meth23, fem_svy, svytotal)[level == TRUE][, method := 23],
+  svyci(~curr_meth24, fem_svy, svytotal)[level == TRUE][, method := 24]
+)
+
+female_current_method_totals[, 2:5] <- female_current_method_totals[, 2:5] / 10^6
+
+female_current_method_totals[, method_factor := factorize(method, 'METH3MF', fem_formats)]
+
+ggplot(
+  data = female_current_method_totals,
+  mapping = aes(
+    y = method_factor
+  )
+) +
+  geom_point(
+    aes(
+      x = total
+    ),
+    size = 2.5
+  ) +
+  geom_segment(
+    aes(
+      yend = method_factor,
+      x = `2.5 %`,
+      xend = `97.5 %`
+    ),
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.0625, 'inches')),
+    size = 0.5
+  ) +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1)
+  ) +
+  scale_y_discrete(
+    labels = scales::wrap_format(50)
+  ) +
+  labs(
+    subtitle = 'with those using multiple methods counted multiple times',
+    title = 'Total female persons by current contraceptive method',
+    x = 'Number of female persons'
+  ) +
+  theme_bw() +
+  theme(
+    axis.title.y = element_blank()
+  )
+```
+
 
 ## To Do
 
