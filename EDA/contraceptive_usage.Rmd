@@ -127,6 +127,32 @@ ggplot(
   )
 ```
 
+```{r, females-currently-proportions, fig.width=8, fig.height=2}
+ggplot(
+  data = svyci(~currently, fem_svy, svymean),
+  aes(
+    x = total,
+    y = factor(''),
+    fill = factor(level, levels = rev(level))
+  )
+) +
+  geom_col() +
+  scale_y_discrete(
+    expand = c(0, 0)
+  ) +
+  scale_x_continuous(
+    breaks = NULL,
+    labels = scales::label_percent(1),
+    expand = c(0, 0)
+  ) +
+  theme_bw() +
+  theme(
+    legend.position = 'none',
+    axis.title = element_blank(),
+    axis.ticks.y = element_blank()
+  )
+```
+
 ```{r}
 fem_data[, tablena(METH3M1)]
 fem_data[, tablena(METH3M2)]

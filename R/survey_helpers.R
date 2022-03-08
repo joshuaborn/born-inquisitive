@@ -9,10 +9,10 @@ svyci <- function(x, design, FUN) {
   prefix <- prefix[seq(2, length(prefix))]
 
   cbind(
-    data.frame(
+    data.table(
+      level = sub(prefix, '', names(this_stat)),
       total = as.vector(this_stat),
-      se = as.vector(SE(this_stat)),
-      row.names = sub(prefix, '', names(this_stat))
+      se = as.vector(SE(this_stat))
     ),
     this_ci
   )
