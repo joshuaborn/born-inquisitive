@@ -792,6 +792,17 @@ A few exceptions exist to the pairings with condom or withdrawal. One is the afo
 
 ## To Do
 
+* Rename "total" in output from `svyci` to "estimate"
+* Make output from `svybyci` more like `svyci`
+* Estimate exclusive vs paired current use of condoms and withdrawal
+* Break out paired usage of condoms and withdrawal
+* Investigate users for reasons other than contraception
+* Think about what do about the triple method users
+* Start investigating nonusers
+
+
+## Outline
+
 ### Frames for analysis
 
 #### By Table
@@ -812,6 +823,7 @@ A few exceptions exist to the pairings with condom or withdrawal. One is the afo
 * For reasons other than contraception?
 * For "recent," how consistent?
 * For "recent" and for multiple methods users, simultaneously or alternatively?
+* For "ever" and who have stopped using a method, why did they stop?
 
 ### Questions for Nonusers
 
