@@ -542,7 +542,9 @@ ggplot(
     size = 0.5
   ) +
   scale_x_continuous(
-    labels = scales::label_number(suffix = 'M', accuracy = 1)
+    breaks = \(limits) seq(0, limits[2], 2),
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    minor_breaks = \(limits) seq(0, limits[2], 1)
   ) +
   scale_y_discrete(
     labels = scales::wrap_format(50)
@@ -628,6 +630,63 @@ ggplot(
     legend.position = 'none'
   )
 ```
+
+There are clearly some contraceptive methods used more than others, but not any one method that the majority of females use.
+
+```{r}
+female_current_method_proportions[, sum(total)]
+```
+
+This does not sum to 1 because some females are using multiple methods.
+
+```{r, female-current-exclusive-method-totals, fig.width=12, fig.height=9}
+female_current_exclusive <- subset(fem_svy, current_contraceptive_count == 1)
+
+female_current_exclusive_method_totals <- svybyci(~women, ~METH3M1_factor, female_current_exclusive, svytotal)
+
+female_current_exclusive_method_totals[, 2:5] <- female_current_exclusive_method_totals[, 2:5] / 10^6
+
+ggplot(
+  data = female_current_exclusive_method_totals,
+  mapping = aes(
+    y = METH3M1_factor
+  )
+) +
+  geom_point(
+    aes(
+      x = women
+    ),
+    size = 2.5
+  ) +
+  geom_segment(
+    aes(
+      yend = METH3M1_factor,
+      x = `2.5 %`,
+      xend = `97.5 %`
+    ),
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.0625, 'inches')),
+    size = 0.5
+  ) +
+  scale_x_continuous(
+    breaks = \(limits) seq(0, limits[2], 2),
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    minor_breaks = \(limits) seq(0, limits[2], 1)
+  ) +
+  scale_y_discrete(
+    labels = scales::wrap_format(50)
+  ) +
+  labs(
+    subtitle = 'among females currently using exclusively one contraceptive method',
+    title = 'Total female persons by current contraceptive method',
+    x = 'Number of female persons'
+  ) +
+  theme_bw() +
+  theme(
+    axis.title.y = element_blank()
+  )
+```
+
+It seems like a lot of withdrawal users and condom users are using other contraceptive methods as well.
 
 
 ## To Do
