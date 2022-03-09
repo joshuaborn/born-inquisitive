@@ -144,7 +144,7 @@ ggplot(
 ) +
   geom_point(
     aes(
-      x = total
+      x = estimate
     ),
     size = 2.5
   ) +
@@ -311,7 +311,7 @@ ggplot(
 ) +
   geom_point(
     aes(
-      x = total
+      x = estimate
     ),
     size = 2.5
   ) +
@@ -412,7 +412,7 @@ ggplot(
 ) +
   geom_point(
     aes(
-      x = total
+      x = estimate
     ),
     size = 2.5
   ) +
@@ -536,7 +536,7 @@ ggplot(
 ) +
   geom_point(
     aes(
-      x = total
+      x = estimate
     ),
     size = 2.5
   ) +
@@ -606,7 +606,7 @@ ggplot(
 ) +
   geom_point(
     aes(
-      x = total
+      x = estimate
     ),
     size = 2.5
   ) +
@@ -642,7 +642,7 @@ ggplot(
 There are clearly some contraceptive methods used more than others, but not any one method that the majority of females use.
 
 ```{r}
-female_current_method_proportions[, sum(total)]
+female_current_method_proportions[, sum(estimate)]
 ```
 
 This does not sum to 1 because some females are using multiple methods.
@@ -792,12 +792,12 @@ A few exceptions exist to the pairings with condom or withdrawal. One is the afo
 
 ## To Do
 
-* Rename "total" in output from `svyci` to "estimate"
 * Make output from `svybyci` more like `svyci`
 * Estimate exclusive vs paired current use of condoms and withdrawal
 * Break out paired usage of condoms and withdrawal
 * Investigate users for reasons other than contraception
 * Think about what do about the triple method users
+* Fund out what "other" methods were specified
 * Start investigating nonusers
 
 

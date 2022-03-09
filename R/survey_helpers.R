@@ -11,7 +11,7 @@ svyci <- function(x, design, FUN) {
   cbind(
     data.table(
       level = sub(prefix, '', names(this_stat), fixed = TRUE),
-      total = as.vector(this_stat),
+      estimate = as.vector(this_stat),
       se = as.vector(SE(this_stat))
     ),
     this_ci
