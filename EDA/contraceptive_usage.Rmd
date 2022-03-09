@@ -100,18 +100,18 @@ female_currently_totals[, 2:5] <- female_currently_totals[, 2:5] / 10^6
 ggplot(
   data = female_currently_totals,
   mapping = aes(
-    x = currently
+    x = level
   )
 ) +
   geom_point(
     aes(
-      y = women
+      y = estimate
     ),
     size = 4
   ) +
   geom_segment(
     aes(
-      xend = currently,
+      xend = level,
       y = `2.5 %`,
       yend = `97.5 %`
     ),
@@ -263,18 +263,18 @@ female_currently_totals
 ggplot(
   data = female_currently_totals2,
   mapping = aes(
-    x = currently2
+    x = level
   )
 ) +
   geom_point(
     aes(
-      y = women
+      y = estimate
     ),
     size = 4
   ) +
   geom_segment(
     aes(
-      xend = currently2,
+      xend = level,
       y = `2.5 %`,
       yend = `97.5 %`
     ),
@@ -371,18 +371,18 @@ female_number_current_methods_totals[, 2:5] <- female_number_current_methods_tot
 ggplot(
   data = female_number_current_methods_totals,
   mapping = aes(
-    y = current_contraceptive_count_factor
+    y = level
   )
 ) +
   geom_point(
     aes(
-      x = women
+      x = estimate
     ),
     size = 2.5
   ) +
   geom_segment(
     aes(
-      yend = current_contraceptive_count_factor,
+      yend = level,
       x = `2.5 %`,
       xend = `97.5 %`
     ),
@@ -657,18 +657,18 @@ female_current_exclusive_method_totals[, 2:5] <- female_current_exclusive_method
 ggplot(
   data = female_current_exclusive_method_totals,
   mapping = aes(
-    y = METH3M1_factor
+    y = level
   )
 ) +
   geom_point(
     aes(
-      x = women
+      x = estimate
     ),
     size = 2.5
   ) +
   geom_segment(
     aes(
-      yend = METH3M1_factor,
+      yend = level,
       x = `2.5 %`,
       xend = `97.5 %`
     ),
@@ -746,18 +746,18 @@ female_current_pair_totals[, 2:5] <- female_current_pair_totals[, 2:5] / 10^6
 ggplot(
   data = female_current_pair_totals,
   mapping = aes(
-    y = meth3m_pair_factor
+    y = level
   )
 ) +
   geom_point(
     aes(
-      x = women
+      x = estimate
     ),
     size = 2.5
   ) +
   geom_segment(
     aes(
-      yend = meth3m_pair_factor,
+      yend = level,
       x = `2.5 %`,
       xend = `97.5 %`
     ),
@@ -792,7 +792,6 @@ A few exceptions exist to the pairings with condom or withdrawal. One is the afo
 
 ## To Do
 
-* Make output from `svybyci` more like `svyci`
 * Estimate exclusive vs paired current use of condoms and withdrawal
 * Break out paired usage of condoms and withdrawal
 * Investigate users for reasons other than contraception

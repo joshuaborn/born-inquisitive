@@ -33,6 +33,7 @@ ksvytotalci <- function(x, design) {
 svybyci <- function(formula, by, design, FUN) {
   this_stat <- svyby(formula, by, design, FUN, keep.names = FALSE)
   this_ci <- confint(this_stat, df = degf(design))
+  colnames(this_stat) <- c('level', 'estimate', 'se')
 
   cbind(
     this_stat,
