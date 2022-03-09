@@ -1001,13 +1001,158 @@ ggplot(
 
 Perhaps a better way to look at this is to look at, for each method, what number/proportion of users are also using another method.
 
+```{r}
+total_using_another_method <- function(meth) {
+  subdomain <- subset(fem_svy, fem_data[, get(sprintf('curr_meth%d', meth))])
+  svybyci(~women, ~I(current_contraceptive_count > 1), subdomain, svytotal)
+}
+
+totals_using_another_method <- rbindlist(lapply(
+  c(1:13, 15, 17:19, 23:24),
+  function(x) {
+    data.table(
+      meth_num = x,
+      total_using_another_method(x)
+    )
+  }
+))
+
+totals_using_another_method[, meth_factor := factorize(
+  meth_num,
+  'METH3MF',
+  fem_formats
+)]
+
+totals_using_another_method[, 3:6] <- totals_using_another_method[, 3:6] / 10^6
+
+kable(totals_using_another_method[(level), .(meth_factor, estimate, se, `2.5 %`, `97.5 %`)][order(-estimate)])
+```
+
+```{r, female-using-another-method-totals, fig.width=12, fig.height=8}
+ggplot(
+  data = totals_using_another_method[(level)],
+  mapping = aes(
+    y = reorder(meth_factor, estimate)
+  )
+) +
+  geom_point(
+    aes(
+      x = estimate
+    ),
+    size = 2.5
+  ) +
+  geom_segment(
+    aes(
+      yend = reorder(meth_factor, estimate),
+      x = `2.5 %`,
+      xend = `97.5 %`
+    ),
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.0625, 'inches')),
+    size = 0.5
+  ) +
+  scale_x_continuous(
+    #breaks = \(limits) seq(0, limits[2], 2),
+    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    #minor_breaks = \(limits) seq(0, limits[2], 1)
+  ) +
+  scale_y_discrete(
+    labels = scales::wrap_format(50)
+  ) +
+  labs(
+    subtitle = 'among females currently using contraception',
+    title = 'Total female persons using multiple methods, by method',
+    x = 'Number of female persons'
+  ) +
+  theme_bw() +
+  theme(
+    axis.title.y = element_blank()
+  )
+```
+
+```{r}
+proportion_using_another_method <- function(meth) {
+  subdomain <- subset(fem_svy, fem_data[, get(sprintf('curr_meth%d', meth))])
+  svyci(~I(current_contraceptive_count > 1), subdomain, svyciprop)
+}
+
+proportions_using_another_method <- rbindlist(lapply(
+  c(1:13, 15, 17:19, 23:24),
+  function(x) {
+    data.table(
+      meth_num = x,
+      proportion_using_another_method(x)
+    )
+  }
+))
+
+proportions_using_another_method[, meth_factor := factorize(
+  meth_num,
+  'METH3MF',
+  fem_formats
+)]
+
+kable(
+  proportions_using_another_method[
+    , .(meth_factor, estimate, se, `2.5%`, `97.5%`)
+  ][order(-estimate)]
+)
+```
+
+```{r, female-using-another-method-proportions, fig.width=12, fig.height=8}
+ggplot(
+  data = proportions_using_another_method[se > 0],
+  aes(
+    y = reorder(meth_factor, estimate)
+  )
+) +
+  geom_point(
+    aes(
+      x = estimate
+    ),
+    size = 2.5
+  ) +
+  geom_segment(
+    aes(
+      yend = reorder(meth_factor, estimate),
+      x = `2.5%`,
+      xend = `97.5%`
+    ),
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.0625, 'inches')),
+    size = 0.5
+  ) +
+  scale_x_continuous(
+    breaks = seq(0, 1, 0.1),
+    expand = c(0, 0),
+    labels = scales::label_percent(1),
+    limits = c(0, 1)
+  ) +
+  scale_y_discrete(
+    labels = scales::wrap_format(50)
+  ) +
+  labs(
+    subtitle = 'among females currently using contraception',
+    title = 'Proportion of female persons using multiple methods, by method'
+  ) +
+  theme_bw() +
+  theme(
+    axis.title = element_blank(),
+    legend.position = 'none'
+  )
+```
+
+The estimates for the proportion of multiple method use among "other" method users, temperature or cervical mucus test, and emergency contraception users are unreliable; their 95\% CIs do not exclude 0 persons total.
+
+Perhaps the most surprising result is that the majority of calendar rhythm, etc, method users also use another method. This is worth looking into more.
+
+Unsurprisingly, a substantial minority of withdrawal (~45\%) and condom users (~40\%) use another method, and these account for the largest numbers of female persons using multiple methods.
+
 
 ## To Do
 
-* Estimate multiple method usage by method
+* Investigate other methods used with calendar methods
 * Investigate users for reasons other than contraception
-* Think about what do about the triple method users
-* Fund out what "other" methods were specified
+* Find out what "other" methods were specified
+* Think about what to do about the triple method users
 * Start investigating nonusers
 
 
