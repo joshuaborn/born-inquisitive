@@ -22,7 +22,7 @@ source(here('R/import.R'))
 
 opts_chunk$set(
   echo = TRUE,
-  cache = FALSE
+  cache = TRUE
 )
 ```
 
