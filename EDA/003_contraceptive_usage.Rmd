@@ -15,7 +15,7 @@ library(here)
 library(knitr)
 library(survey)
 
-i_am('EDA/contraceptive_usage.Rmd')
+i_am('EDA/003_contraceptive_usage.Rmd')
 
 source(here('R/survey_helpers.R'))
 source(here('R/import.R'))
@@ -1349,7 +1349,6 @@ The `YUSEPILL` and `YUSEIUD` series of questions from Section EJ are only asked 
 ## To Do
 
 * Clean up EDA report
-    * Start numbering report files
     * Organize code chunks into data loading, data modification, helper functions, and main body (estimates and plotting) in order to turn on caching
     * Add section selecting variables needed for analysis
     * Combine all estimates for specific analysis, e.g., "current contraceptive usage among females" into a single data.table

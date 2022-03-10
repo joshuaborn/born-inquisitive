@@ -13,7 +13,7 @@ library(data.table)
 library(here)
 library(knitr)
 
-i_am('EDA/weights.Rmd')
+i_am('EDA/002_weights.Rmd')
 
 source(here('R/import.R'))
 

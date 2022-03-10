@@ -14,7 +14,7 @@ library(here)
 library(knitr)
 library(survey)
 
-i_am('EDA/number_of_births.Rmd')
+i_am('EDA/001_number_of_births.Rmd')
 
 source(here('R/import.R'))
 source(here('R/survey_helpers.R'))
