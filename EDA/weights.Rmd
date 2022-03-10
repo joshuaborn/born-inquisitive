@@ -15,6 +15,8 @@ library(knitr)
 
 i_am('EDA/weights.Rmd')
 
+source(here('R/import.R'))
+
 opts_chunk$set(
   echo = TRUE,
   cache = TRUE
@@ -24,10 +26,7 @@ opts_chunk$set(
 ## Null Weights
 
 ```{r load-data, message=FALSE}
-femresp <- fread(
-  here('data/2017_2019_FemRespData.csv'),
-  key = 'CASEID'
-)
+femresp  <- load_NSFG_data('2017_2019', 'FemResp')$Data
 
 female_weights <- fread(
   here('data/2011_2019_FemaleWgtData.csv'),
