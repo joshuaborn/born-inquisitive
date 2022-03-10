@@ -26,20 +26,10 @@ opts_chunk$set(
 )
 ```
 
-```{r, helper-functions}
-in_millions <- function(dt, do_round = TRUE, round_to = 1) {
-  if (do_round) {
-    cbind(
-      Filter(\(col) !is.numeric(col), dt),
-      round(Filter(is.numeric, dt) / 10^6, round_to)
-    )
-  } else {
-    cbind(
-      Filter(\(col) !is.numeric(col), dt),
-      Filter(is.numeric, dt) / 10^6
-    )
-  }
-}
+```{r, fem-load-raw-data}
+fem <- load_NSFG_data('2017_2019', 'FemResp')
+fem_data <- fem$Data
+fem_formats <- fem$Formats
 ```
 
 
@@ -47,12 +37,6 @@ in_millions <- function(dt, do_round = TRUE, round_to = 1) {
 
 
 ### Female Persons Aged 15-49
-
-```{r, fem-load-raw-data}
-fem <- load_NSFG_data('2017_2019', 'FemResp')
-fem_data <- fem$Data
-fem_formats <- fem$Formats
-```
 
 ```{r, fem-cur-process-data}
 fem_cur_data <- copy(fem_data[, .(

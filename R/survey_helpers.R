@@ -32,3 +32,14 @@ svybyci <- function(formula, by, design, FUN) {
 tablena <- function(x) {
   table(x, useNA = 'always')
 }
+
+in_millions <- function(dt, do_round = TRUE, round_to = 2) {
+  dt <- as.data.table(dt)
+  cols <- c('estimate', 'se', '2.5 %', '97.5 %')
+  sub_dt <- dt[, cols, with = FALSE] / 10^6
+  if (do_round) {
+    sub_dt <- round(sub_dt, round_to)
+  }
+  dt[, (cols) := sub_dt]
+  dt
+}
