@@ -26,27 +26,149 @@ opts_chunk$set(
 )
 ```
 
+```{r, helper-functions}
+in_millions <- function(svystat) {
+  this_svystat <- copy(as.data.table(svystat))
+  this_svystat[, 2:5] <- this_svystat[, 2:5] / 10^6
+  this_svystat
+}
+```
 
-## Female Persons Aged 15-49
 
-```{r, load-data}
+## Current Usage
+
+
+### Female Persons Aged 15-49
+
+```{r, fem-load-raw-data}
 fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
 fem_data <- fem_2017_2019$Data
 fem_formats <- fem_2017_2019$Formats
 ```
 
-```{r, setup-data}
+```{r, fem-cur-process-data}
+fem_cur_data <- copy(fem_data[, .(
+  METH3M1,
+  METH3M2,
+  METH3M3,
+  MTHUSE3,
+  SECU,
+  SEST,
+  WGT2017_2019,
+  YUSEIUD1,
+  YUSEPILL1
+)])
+
+fem_cur_data[, `:=`(
+  count = 1,
+  MTHUSE3_factor = factorize(MTHUSE3, 'MTHUSE3F', fem_formats),
+  currently = factor(fifelse(
+    !is.na(MTHUSE3) & MTHUSE3 == 1,
+    'Currently using contraception',
+    'Not currently using contraception'
+  )),
+  current_contraceptive_count = fcase(
+    !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 3,
+    !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
+    !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
+    !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 2,
+    !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
+    !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
+    !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 1,
+    !is.na(METH3M2) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
+    !is.na(METH3M2) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
+    !is.na(METH3M2) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 1,
+    !is.na(METH3M1) & !is.element(METH3M1, c(20, 21)), 1,
+    default = 0
+  ),
+  METH3M1_factor = factorize(METH3M1, 'METH3MF', fem_formats),
+  METH3M2_factor = factorize(METH3M2, 'METH3MF', fem_formats),
+  METH3M3_factor = factorize(METH3M3, 'METH3MF', fem_formats)
+)]
+
+fem_cur_data[, `:=`(
+  currently2 = factor(fifelse(
+    current_contraceptive_count > 0,
+    'Currently using contraception',
+    'Not currently using contraception'
+  )),
+  current_contraceptive_count_factor = factor(
+    current_contraceptive_count,
+    levels = seq(0, 3),
+    labels = c('Not using contraception', '1 method', '2 methods', '3 methods')
+  ),
+  curr_meth1 = as.integer(METH3M1_factor) == 1 | as.integer(METH3M2_factor) == 1 | as.integer(METH3M3_factor) == 1,
+  curr_meth2 = as.integer(METH3M1_factor) == 2 | as.integer(METH3M2_factor) == 2 | as.integer(METH3M3_factor) == 2,
+  curr_meth3 = as.integer(METH3M1_factor) == 3 | as.integer(METH3M2_factor) == 3 | as.integer(METH3M3_factor) == 3,
+  curr_meth4 = as.integer(METH3M1_factor) == 4 | as.integer(METH3M2_factor) == 4 | as.integer(METH3M3_factor) == 4,
+  curr_meth5 = as.integer(METH3M1_factor) == 5 | as.integer(METH3M2_factor) == 5 | as.integer(METH3M3_factor) == 5,
+  curr_meth6 = as.integer(METH3M1_factor) == 6 | as.integer(METH3M2_factor) == 6 | as.integer(METH3M3_factor) == 6,
+  curr_meth7 = as.integer(METH3M1_factor) == 7 | as.integer(METH3M2_factor) == 7 | as.integer(METH3M3_factor) == 7,
+  curr_meth8 = as.integer(METH3M1_factor) == 8 | as.integer(METH3M2_factor) == 8 | as.integer(METH3M3_factor) == 8,
+  curr_meth9 = as.integer(METH3M1_factor) == 9 | as.integer(METH3M2_factor) == 9 | as.integer(METH3M3_factor) == 9,
+  curr_meth10 = as.integer(METH3M1_factor) == 10 | as.integer(METH3M2_factor) == 10 | as.integer(METH3M3_factor) == 10,
+  curr_meth11 = as.integer(METH3M1_factor) == 11 | as.integer(METH3M2_factor) == 11 | as.integer(METH3M3_factor) == 11,
+  curr_meth12 = as.integer(METH3M1_factor) == 12 | as.integer(METH3M2_factor) == 12 | as.integer(METH3M3_factor) == 12,
+  curr_meth13 = as.integer(METH3M1_factor) == 13 | as.integer(METH3M2_factor) == 13 | as.integer(METH3M3_factor) == 13,
+  #curr_meth14 = as.integer(METH3M1_factor) == 14 | as.integer(METH3M2_factor) == 14 | as.integer(METH3M3_factor) == 14,
+  curr_meth15 = as.integer(METH3M1_factor) == 15 | as.integer(METH3M2_factor) == 15 | as.integer(METH3M3_factor) == 15,
+  #curr_meth16 = as.integer(METH3M1_factor) == 16 | as.integer(METH3M2_factor) == 16 | as.integer(METH3M3_factor) == 16,
+  curr_meth17 = as.integer(METH3M1_factor) == 17 | as.integer(METH3M2_factor) == 17 | as.integer(METH3M3_factor) == 17,
+  curr_meth18 = as.integer(METH3M1_factor) == 18 | as.integer(METH3M2_factor) == 18 | as.integer(METH3M3_factor) == 18,
+  curr_meth19 = as.integer(METH3M1_factor) == 19 | as.integer(METH3M2_factor) == 19 | as.integer(METH3M3_factor) == 19,
+  #curr_meth22 = as.integer(METH3M1_factor) == 22 | as.integer(METH3M2_factor) == 22 | as.integer(METH3M3_factor) == 22,
+  curr_meth23 = as.integer(METH3M1_factor) == 23 | as.integer(METH3M2_factor) == 23 | as.integer(METH3M3_factor) == 23,
+  curr_meth24 = as.integer(METH3M1_factor) == 24 | as.integer(METH3M2_factor) == 24 | as.integer(METH3M3_factor) == 24,
+  current_condom_exclusive = factor(fifelse(
+    current_contraceptive_count == 1,
+    'Condom Exclusively',
+    'Condom With Other Method'
+  )),
+  current_withdrawal_exclusive = factor(fifelse(
+    current_contraceptive_count == 1,
+    'Withdrawal Exclusively',
+    'Withdwawal With Other Method'
+  ))
+)]
+
+fem_cur_data[current_contraceptive_count == 2, `:=`(
+  meth3m1_sorted = pmin(METH3M1, METH3M2),
+  meth3m2_sorted = pmax(METH3M1, METH3M2)
+)]
+
+fem_cur_method_pairs <- unique(
+  fem_cur_data[
+    current_contraceptive_count == 2,
+    .(meth3m1_sorted, meth3m2_sorted)
+  ]
+)[order(meth3m1_sorted, meth3m2_sorted)]
+
+fem_cur_method_pairs[, `:=`(
+  meth3m_pair = meth3m1_sorted * 100 + meth3m2_sorted,
+  meth3m1_sorted_factor = factorize(meth3m1_sorted, 'METH3MF', fem_formats),
+  meth3m2_sorted_factor = factorize(meth3m2_sorted, 'METH3MF', fem_formats)
+)]
+
+fem_cur_method_pairs[, meth3m_pair_label :=
+  paste(meth3m1_sorted_factor, meth3m2_sorted_factor, sep = ' & ')
+]
+
+fem_cur_data[, meth3m_pair := meth3m1_sorted * 100 + meth3m2_sorted]
+
+fem_cur_data[, meth3m_pair_factor := factor(
+  meth3m_pair,
+  levels = fem_cur_method_pairs[, meth3m_pair],
+  labels = fem_cur_method_pairs[, meth3m_pair_label]
+)]
+
 fem_svy <- svydesign(
   ids = ~SECU,
   strata = ~SEST,
-  data = fem_data,
+  data = fem_cur_data,
   nest = TRUE,
   weights = ~WGT2017_2019
 )
 ```
-
-
-### Current Usage
 
 ```{r}
 kable(fem_formats[format_name == 'CONSTATF'])
@@ -67,9 +189,7 @@ Togther the above variables form a set. Those who have `2` for `HADSEX` are `NA`
 There is another variable `SEXP30MO` which comes from the months of non-intercourse series that reports a higher count of those who have had sex in the past 3 months than `SEX3MO`.
 
 ```{r}
-fem_data[, women := 1]
-
-kable(svyci(~women, fem_svy, svytotal))
+kable(svyci(~count, fem_svy, svytotal))
 ```
 
 According to the U.S. Census Bureau, Current Population Survey, Annual Social and Economic Supplement, 2019, Table 1. Population by Age and Sex: 2019. The female civilian noninstitutionalized population of the United States is ~74,445,000. The estimate generated from the NSFG is consistent with this.
@@ -77,23 +197,13 @@ According to the U.S. Census Bureau, Current Population Survey, Annual Social an
 ```{r}
 kable(fem_formats[startsWith(format_name, 'MTHUSE3F')])
 
-fem_data[, MTHUSE3_factor := factorize(MTHUSE3, 'MTHUSE3F', fem_formats)]
-
-kable(svybyci(~women, ~MTHUSE3_factor, fem_svy, svytotal))
+kable(svybyci(~count, ~MTHUSE3_factor, fem_svy, svytotal))
 
 kable(svyci(~MTHUSE3_factor, fem_svy, svymean))
 ```
 
 ```{r, females-currently-totals, fig.height=8, fig.width=6}
-fem_data[, currently := factor(
-  fifelse(
-    !is.na(MTHUSE3) & MTHUSE3 == 1,
-    'Currently using contraception',
-    'Not currently using contraception'
-  )
-)]
-
-female_currently_totals <- svybyci(~women, ~currently, fem_svy, svytotal)
+female_currently_totals <- svybyci(~count, ~currently, fem_svy, svytotal)
 
 female_currently_totals[, 2:5] <- female_currently_totals[, 2:5] / 10^6
 
@@ -200,25 +310,19 @@ kable(fem_formats[format_name == 'METH3MF'])
 ```
 
 ```{r}
-fem_data[, `:=`(
-  METH3M1_factor = factorize(METH3M1, 'METH3MF', fem_formats),
-  METH3M2_factor = factorize(METH3M2, 'METH3MF', fem_formats),
-  METH3M3_factor = factorize(METH3M3, 'METH3MF', fem_formats)
-)]
-
-current_female_counts <-  as.data.table(fem_data[, tablena(METH3M1_factor)])[
-  as.data.table(fem_data[, tablena(METH3M2_factor)]),
+fem_cur_counts <-  as.data.table(fem_cur_data[, tablena(METH3M1_factor)])[
+  as.data.table(fem_cur_data[, tablena(METH3M2_factor)]),
   on = 'x'
 ][
-  as.data.table(fem_data[, tablena(METH3M3_factor)]),
+  as.data.table(fem_cur_data[, tablena(METH3M3_factor)]),
   on = 'x'
 ]
 
-colnames(current_female_counts) <- c('Method', paste('METH3M', 1:3, sep = ''))
+colnames(fem_cur_counts) <- c('Method', paste('METH3M', 1:3, sep = ''))
 
-kable(current_female_counts)
+kable(fem_cur_counts)
 
-dim(current_female_counts)
+dim(fem_cur_counts)
 ```
 
 "Respondent sterile (aside from sterilizing operation above)" and "Respondent’s partner sterile (aside from vasectomy above)" should be removed from estimates of those using contraception, if this is the only contraceptive method reported.
@@ -228,34 +332,11 @@ Additionally, a count of currently used contraceptive methods is useful.
 Both of these can be settled with a single new variable.
 
 ```{r}
-fem_data[, current_contraceptive_count := fcase(
-  !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 3,
-  !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
-  !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
-  !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 2,
-  !is.na(METH3M3) & !is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
-  !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
-  !is.na(METH3M3) & is.element(METH3M3, c(20, 21)) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 1,
-  !is.na(METH3M2) & !is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 2,
-  !is.na(METH3M2) & !is.element(METH3M2, c(20, 21)) & is.element(METH3M1, c(20, 21)), 1,
-  !is.na(METH3M2) & is.element(METH3M2, c(20, 21)) & !is.element(METH3M1, c(20, 21)), 1,
-  !is.na(METH3M1) & !is.element(METH3M1, c(20, 21)), 1,
-  default = 0
-)]
-
-fem_data[, tablena(current_contraceptive_count)]
+fem_cur_data[, tablena(current_contraceptive_count)]
 ```
 
 ```{r, females-currently-totals-2, fig.height=8, fig.width=6}
-fem_data[, currently2 := factor(
-  fifelse(
-    current_contraceptive_count > 0,
-    'Currently using contraception',
-    'Not currently using contraception'
-  )
-)]
-
-female_currently_totals2 <- svybyci(~women, ~currently2, fem_svy, svytotal)
+female_currently_totals2 <- svybyci(~count, ~currently2, fem_svy, svytotal)
 
 female_currently_totals2[, 2:5] <- female_currently_totals2[, 2:5] / 10^6
 
@@ -351,15 +432,9 @@ ggplot(
 As expected, removing those who are infertile not due to a sterilizing operation changes the estimates of current contraceptive users, but only slightly.
 
 ```{r}
-fem_data[, current_contraceptive_count_factor := factor(
-  current_contraceptive_count,
-  levels = seq(0, 3),
-  labels = c('Not using contraception', '1 method', '2 methods', '3 methods')
-)]
-
 female_current_contraceptors <- subset(fem_svy, current_contraceptive_count > 0)
 
-female_number_current_methods_totals <- svybyci(~women, ~current_contraceptive_count_factor, female_current_contraceptors, svytotal)
+female_number_current_methods_totals <- svybyci(~count, ~current_contraceptive_count_factor, female_current_contraceptors, svytotal)
 
 female_number_current_methods_proportions <- svyci(~factor(current_contraceptive_count_factor), female_current_contraceptors, svymean)
 
@@ -451,56 +526,31 @@ There is enough simultaneous contraceptive usage that it is worth taking it into
 #### Multiple Simultaneous Methods
 
 ```{r}
-fem_data[, `:=`(
-  curr_meth1 = as.integer(METH3M1_factor) == 1 | as.integer(METH3M2_factor) == 1 | as.integer(METH3M3_factor) == 1,
-  curr_meth2 = as.integer(METH3M1_factor) == 2 | as.integer(METH3M2_factor) == 2 | as.integer(METH3M3_factor) == 2,
-  curr_meth3 = as.integer(METH3M1_factor) == 3 | as.integer(METH3M2_factor) == 3 | as.integer(METH3M3_factor) == 3,
-  curr_meth4 = as.integer(METH3M1_factor) == 4 | as.integer(METH3M2_factor) == 4 | as.integer(METH3M3_factor) == 4,
-  curr_meth5 = as.integer(METH3M1_factor) == 5 | as.integer(METH3M2_factor) == 5 | as.integer(METH3M3_factor) == 5,
-  curr_meth6 = as.integer(METH3M1_factor) == 6 | as.integer(METH3M2_factor) == 6 | as.integer(METH3M3_factor) == 6,
-  curr_meth7 = as.integer(METH3M1_factor) == 7 | as.integer(METH3M2_factor) == 7 | as.integer(METH3M3_factor) == 7,
-  curr_meth8 = as.integer(METH3M1_factor) == 8 | as.integer(METH3M2_factor) == 8 | as.integer(METH3M3_factor) == 8,
-  curr_meth9 = as.integer(METH3M1_factor) == 9 | as.integer(METH3M2_factor) == 9 | as.integer(METH3M3_factor) == 9,
-  curr_meth10 = as.integer(METH3M1_factor) == 10 | as.integer(METH3M2_factor) == 10 | as.integer(METH3M3_factor) == 10,
-  curr_meth11 = as.integer(METH3M1_factor) == 11 | as.integer(METH3M2_factor) == 11 | as.integer(METH3M3_factor) == 11,
-  curr_meth12 = as.integer(METH3M1_factor) == 12 | as.integer(METH3M2_factor) == 12 | as.integer(METH3M3_factor) == 12,
-  curr_meth13 = as.integer(METH3M1_factor) == 13 | as.integer(METH3M2_factor) == 13 | as.integer(METH3M3_factor) == 13,
-  #curr_meth14 = as.integer(METH3M1_factor) == 14 | as.integer(METH3M2_factor) == 14 | as.integer(METH3M3_factor) == 14,
-  curr_meth15 = as.integer(METH3M1_factor) == 15 | as.integer(METH3M2_factor) == 15 | as.integer(METH3M3_factor) == 15,
-  #curr_meth16 = as.integer(METH3M1_factor) == 16 | as.integer(METH3M2_factor) == 16 | as.integer(METH3M3_factor) == 16,
-  curr_meth17 = as.integer(METH3M1_factor) == 17 | as.integer(METH3M2_factor) == 17 | as.integer(METH3M3_factor) == 17,
-  curr_meth18 = as.integer(METH3M1_factor) == 18 | as.integer(METH3M2_factor) == 18 | as.integer(METH3M3_factor) == 18,
-  curr_meth19 = as.integer(METH3M1_factor) == 19 | as.integer(METH3M2_factor) == 19 | as.integer(METH3M3_factor) == 19,
-  #curr_meth22 = as.integer(METH3M1_factor) == 22 | as.integer(METH3M2_factor) == 22 | as.integer(METH3M3_factor) == 22,
-  curr_meth23 = as.integer(METH3M1_factor) == 23 | as.integer(METH3M2_factor) == 23 | as.integer(METH3M3_factor) == 23,
-  curr_meth24 = as.integer(METH3M1_factor) == 24 | as.integer(METH3M2_factor) == 24 | as.integer(METH3M3_factor) == 24
-)]
-
-female_current_sumcounts <- current_female_counts[, .(sumcount = METH3M1 + METH3M2 + METH3M3), by = Method]
+fem_cur_sumcounts <- fem_cur_counts[, .(sumcount = METH3M1 + METH3M2 + METH3M3), by = Method]
 
 all(
-  fem_data[, sum(curr_meth1)] == female_current_sumcounts[1, sumcount],
-  fem_data[, sum(curr_meth2)] == female_current_sumcounts[2, sumcount],
-  fem_data[, sum(curr_meth3)] == female_current_sumcounts[3, sumcount],
-  fem_data[, sum(curr_meth4)] == female_current_sumcounts[4, sumcount],
-  fem_data[, sum(curr_meth5)] == female_current_sumcounts[5, sumcount],
-  fem_data[, sum(curr_meth6)] == female_current_sumcounts[6, sumcount],
-  fem_data[, sum(curr_meth7)] == female_current_sumcounts[7, sumcount],
-  fem_data[, sum(curr_meth8)] == female_current_sumcounts[8, sumcount],
-  fem_data[, sum(curr_meth9)] == female_current_sumcounts[9, sumcount],
-  fem_data[, sum(curr_meth10)] == female_current_sumcounts[10, sumcount],
-  fem_data[, sum(curr_meth11)] == female_current_sumcounts[11, sumcount],
-  fem_data[, sum(curr_meth12)] == female_current_sumcounts[12, sumcount],
-  fem_data[, sum(curr_meth13)] == female_current_sumcounts[13, sumcount],
-  #fem_data[, sum(curr_meth14)] == female_current_sumcounts[14, sumcount],
-  fem_data[, sum(curr_meth15)] == female_current_sumcounts[15, sumcount],
-  #fem_data[, sum(curr_meth16)] == female_current_sumcounts[16, sumcount],
-  fem_data[, sum(curr_meth17)] == female_current_sumcounts[17, sumcount],
-  fem_data[, sum(curr_meth18)] == female_current_sumcounts[18, sumcount],
-  fem_data[, sum(curr_meth19)] == female_current_sumcounts[19, sumcount],
-  #fem_data[, sum(curr_meth22)] == female_current_sumcounts[22, sumcount],
-  fem_data[, sum(curr_meth23)] == female_current_sumcounts[23, sumcount],
-  fem_data[, sum(curr_meth24)] == female_current_sumcounts[24, sumcount]
+  fem_cur_data[, sum(curr_meth1)] == fem_cur_sumcounts[1, sumcount],
+  fem_cur_data[, sum(curr_meth2)] == fem_cur_sumcounts[2, sumcount],
+  fem_cur_data[, sum(curr_meth3)] == fem_cur_sumcounts[3, sumcount],
+  fem_cur_data[, sum(curr_meth4)] == fem_cur_sumcounts[4, sumcount],
+  fem_cur_data[, sum(curr_meth5)] == fem_cur_sumcounts[5, sumcount],
+  fem_cur_data[, sum(curr_meth6)] == fem_cur_sumcounts[6, sumcount],
+  fem_cur_data[, sum(curr_meth7)] == fem_cur_sumcounts[7, sumcount],
+  fem_cur_data[, sum(curr_meth8)] == fem_cur_sumcounts[8, sumcount],
+  fem_cur_data[, sum(curr_meth9)] == fem_cur_sumcounts[9, sumcount],
+  fem_cur_data[, sum(curr_meth10)] == fem_cur_sumcounts[10, sumcount],
+  fem_cur_data[, sum(curr_meth11)] == fem_cur_sumcounts[11, sumcount],
+  fem_cur_data[, sum(curr_meth12)] == fem_cur_sumcounts[12, sumcount],
+  fem_cur_data[, sum(curr_meth13)] == fem_cur_sumcounts[13, sumcount],
+  #fem_cur_data[, sum(curr_meth14)] == fem_cur_sumcounts[14, sumcount],
+  fem_cur_data[, sum(curr_meth15)] == fem_cur_sumcounts[15, sumcount],
+  #fem_cur_data[, sum(curr_meth16)] == fem_cur_sumcounts[16, sumcount],
+  fem_cur_data[, sum(curr_meth17)] == fem_cur_sumcounts[17, sumcount],
+  fem_cur_data[, sum(curr_meth18)] == fem_cur_sumcounts[18, sumcount],
+  fem_cur_data[, sum(curr_meth19)] == fem_cur_sumcounts[19, sumcount],
+  #fem_cur_data[, sum(curr_meth22)] == fem_cur_sumcounts[22, sumcount],
+  fem_cur_data[, sum(curr_meth23)] == fem_cur_sumcounts[23, sumcount],
+  fem_cur_data[, sum(curr_meth24)] == fem_cur_sumcounts[24, sumcount]
 )
 ```
 
@@ -656,7 +706,7 @@ This does not sum to 1 because some females are using multiple methods.
 ```{r, female-current-exclusive-method-totals, fig.width=12, fig.height=9}
 female_current_exclusive <- subset(fem_svy, current_contraceptive_count == 1)
 
-female_current_exclusive_method_totals <- svybyci(~women, ~METH3M1_factor, female_current_exclusive, svytotal)
+female_current_exclusive_method_totals <- svybyci(~count, ~METH3M1_factor, female_current_exclusive, svytotal)
 
 female_current_exclusive_method_totals[, 2:5] <- female_current_exclusive_method_totals[, 2:5] / 10^6
 
@@ -703,45 +753,15 @@ ggplot(
 It seems like a lot of withdrawal users and condom users are using other contraceptive methods as well.
 
 ```{r}
-fem_data[current_contraceptive_count == 2, `:=`(
-  meth3m1_sorted = pmin(METH3M1, METH3M2),
-  meth3m2_sorted = pmax(METH3M1, METH3M2)
-)]
+fem_cur_data[current_contraceptive_count == 2, table(meth3m1_sorted, meth3m2_sorted)]
 
-fem_data[current_contraceptive_count == 2, table(meth3m1_sorted, meth3m2_sorted)]
-
-unique_current_pairs <- unique(
-  fem_data[
-    current_contraceptive_count == 2,
-    .(meth3m1_sorted, meth3m2_sorted)
-  ]
-)[order(meth3m1_sorted, meth3m2_sorted)]
-
-unique_current_pairs[, `:=`(
-  meth3m_pair = meth3m1_sorted * 100 + meth3m2_sorted,
-  meth3m1_sorted_factor = factorize(meth3m1_sorted, 'METH3MF', fem_formats),
-  meth3m2_sorted_factor = factorize(meth3m2_sorted, 'METH3MF', fem_formats)
-)]
-
-unique_current_pairs[, meth3m_pair_label :=
-  paste(meth3m1_sorted_factor, meth3m2_sorted_factor, sep = ' & ')
-]
-
-fem_data[, meth3m_pair := meth3m1_sorted * 100 + meth3m2_sorted]
-
-fem_data[, meth3m_pair_factor := factor(
-  meth3m_pair,
-  levels = unique_current_pairs[, meth3m_pair],
-  labels = unique_current_pairs[, meth3m_pair_label]
-)]
-
-kable(fem_data[current_contraceptive_count == 2, tablena(meth3m_pair_factor)])
+kable(fem_cur_data[current_contraceptive_count == 2, tablena(meth3m_pair_factor)])
 ```
 
 ```{r}
 female_current_pair <- subset(fem_svy, current_contraceptive_count == 2)
 
-female_current_pair_totals <- svybyci(~women, ~meth3m_pair_factor, female_current_pair, svytotal)
+female_current_pair_totals <- svybyci(~count, ~meth3m_pair_factor, female_current_pair, svytotal)
 
 kable(female_current_pair_totals)
 ```
@@ -796,28 +816,14 @@ Many of the method pairings whose 95\% CIs do not include 0 consist of one of th
 A few exceptions exist to the pairings with condom or withdrawal. One is the aforementioned combination of male and female sterilization procedures. Others include vasectomy & IUD, pill & tubal ligation, and pill & vasectomy.
 
 ```{r}
-fem_data[, current_condom_exclusive := factor(
-  fifelse(
-    current_contraceptive_count == 1,
-    'Condom Exclusively',
-    'Condom With Other Method'
-  )
-)]
-
 female_current_condom_users <- subset(fem_svy, curr_meth2)
 
-female_current_condom_exclusive_totals <- svybyci(~women, ~current_condom_exclusive, female_current_condom_users, svytotal)
+female_current_condom_exclusive_totals <- svybyci(~count, ~current_condom_exclusive, female_current_condom_users, svytotal)
 
 kable(female_current_condom_exclusive_totals)
 ```
 
 ```{r, female-current-condom-exclusive-totals, fig.width=12, fig.height=4}
-in_millions <- function(svystat) {
-  this_svystat <- copy(as.data.table(svystat))
-  this_svystat[, 2:5] <- this_svystat[, 2:5] / 10^6
-  this_svystat
-}
-
 ggplot(
   data = in_millions(female_current_condom_exclusive_totals),
   mapping = aes(
@@ -904,17 +910,9 @@ ggplot(
 ```
 
 ```{r}
-fem_data[, current_withdrawal_exclusive := factor(
-  fifelse(
-    current_contraceptive_count == 1,
-    'Withdrawal Exclusively',
-    'Withdwawal With Other Method'
-  )
-)]
-
 female_current_withdrawal_users <- subset(fem_svy, curr_meth5)
 
-female_current_withdrawal_exclusive_totals <- svybyci(~women, ~current_withdrawal_exclusive, female_current_withdrawal_users, svytotal)
+female_current_withdrawal_exclusive_totals <- svybyci(~count, ~current_withdrawal_exclusive, female_current_withdrawal_users, svytotal)
 
 kable(female_current_withdrawal_exclusive_totals)
 ```
@@ -1010,7 +1008,7 @@ Perhaps a better way to look at this is to look at, for each method, what number
 ```{r}
 total_using_another_method <- function(meth) {
   subdomain <- subset(fem_svy, fem_data[, get(sprintf('curr_meth%d', meth))])
-  svybyci(~women, ~I(current_contraceptive_count > 1), subdomain, svytotal)
+  svybyci(~count, ~I(current_contraceptive_count > 1), subdomain, svytotal)
 }
 
 totals_using_another_method <- rbindlist(lapply(
@@ -1332,25 +1330,45 @@ Reasons for sterilizing operations are reported in the `FMEDREAS` series of vari
 Because this information pertains only to operations performed during the previous 5 years, it is incomplete when asking the question, "Among those who are currently using a sterilizing operation for contraception, how many also are motivated by health reasons?" It is therefore not pertinent for the current analysis, though it is useful for a separate analysis investigating why female persons in the United States have sterilizing operations.
 
 ```{r}
-fem_data[(curr_meth1), .N]
-fem_data[!is.na(YUSEPILL1), .N]
-fem_data[curr_meth1 & is.na(YUSEPILL1), .N]
-fem_data[!curr_meth1 & !is.na(YUSEPILL1), .N]
+fem_cur_data[(curr_meth1), .N]
+fem_cur_data[!is.na(YUSEPILL1), .N]
+fem_cur_data[curr_meth1 & is.na(YUSEPILL1), .N]
+fem_cur_data[!curr_meth1 & !is.na(YUSEPILL1), .N]
 
-fem_data[(curr_meth17), .N]
-fem_data[!is.na(YUSEIUD1), .N]
-fem_data[curr_meth17 & is.na(YUSEIUD1), .N]
-fem_data[!curr_meth17 & !is.na(YUSEIUD1), .N]
+fem_cur_data[(curr_meth17), .N]
+fem_cur_data[!is.na(YUSEIUD1), .N]
+fem_cur_data[curr_meth17 & is.na(YUSEIUD1), .N]
+fem_cur_data[!curr_meth17 & !is.na(YUSEIUD1), .N]
 ```
 
 The `YUSEPILL` and `YUSEIUD` series of questions from Section EJ are only asked of respondents who have have reported using the pill or IUD in the current month (via `CURRMETH` variables) or the previous month (via `LSTMONMETH` variables). Furthermore, the `METH3M` variables that are used in the present analysis are recodes that include imputation, while `YUSEPILL` and `YUSEIUD` are raw variables. Therefore, it is best to do a separate analysis on use of contraceptive methods for health reasons using these other variables.
 
 
+### Male Persons Aged 15-49
+
+```{r, male-load-raw-data}
+male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
+
+male_data <- male_2017_2019$Data
+```
+
+```{r, male-cur-process-data}
+male_svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = male_data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+```
+
+According to the U.S. Census Bureau, ibid. The number of civilian noninstitutionalized male persons in the United States is ~74,238,000.
+
+
 ## To Do
 
 * Clean up EDA report
-    * Organize code chunks into data loading, data modification, helper functions, and main body (estimates and plotting) in order to turn on caching
-    * Add section selecting variables needed for analysis
+    * Consolidate vim hack code using `lapply` and `rbindlist`
     * Combine all estimates for specific analysis, e.g., "current contraceptive usage among females" into a single data.table
         * Removes need to have naming scheme to manage numerous variables
         * Makes it easy down the road to compare 2015-2017 with 2017-2019 estimates in order to evaluate whether to combine data sets for analysis
@@ -1403,24 +1421,3 @@ The `YUSEPILL` and `YUSEIUD` series of questions from Section EJ are only asked 
 ### Other
 
 * Try combining with 2015-2017 data for more precise estimates?
-
-
-## Male Persons Aged 15-49
-
-```{r, load-male-data}
-male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
-
-male_data <- male_2017_2019$Data
-```
-
-```{r, setup-male-data}
-male_svy <- svydesign(
-  ids = ~SECU,
-  strata = ~SEST,
-  data = male_data,
-  nest = TRUE,
-  weights = ~WGT2017_2019
-)
-```
-
-According to the U.S. Census Bureau, ibid. The number of civilian noninstitutionalized male persons in the United States is ~74,238,000.
