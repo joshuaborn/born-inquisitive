@@ -69,7 +69,7 @@ There is another variable `SEXP30MO` which comes from the months of non-intercou
 ```{r}
 fem_data[, women := 1]
 
-ksvytotalci(~women, fem_svy)
+kable(svyci(~women, fem_svy, svytotal))
 ```
 
 According to the U.S. Census Bureau, Current Population Survey, Annual Social and Economic Supplement, 2019, Table 1. Population by Age and Sex: 2019. The female civilian noninstitutionalized population of the United States is ~74,445,000. The estimate generated from the NSFG is consistent with this.
@@ -79,9 +79,9 @@ kable(fem_formats[startsWith(format_name, 'MTHUSE3F')])
 
 fem_data[, MTHUSE3_factor := factorize(MTHUSE3, 'MTHUSE3F', fem_formats)]
 
-ksvybyci(~women, ~MTHUSE3_factor, fem_svy, svytotal)
+kable(svybyci(~women, ~MTHUSE3_factor, fem_svy, svytotal))
 
-ksvyci(~MTHUSE3_factor, fem_svy, svymean)
+kable(svyci(~MTHUSE3_factor, fem_svy, svymean))
 ```
 
 ```{r, females-currently-totals, fig.height=8, fig.width=6}
@@ -1349,7 +1349,6 @@ The `YUSEPILL` and `YUSEIUD` series of questions from Section EJ are only asked 
 ## To Do
 
 * Clean up EDA report
-    * Remove unneeded helper functions
     * Start numbering report files
     * Organize code chunks into data loading, data modification, helper functions, and main body (estimates and plotting) in order to turn on caching
     * Add section selecting variables needed for analysis

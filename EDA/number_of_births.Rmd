@@ -160,9 +160,9 @@ preg_2012_2016_us <- subset(
   is.na(YRSTRUS) | YRSTRUS != '2010-2019'
 )
 
-svytotalci(~Num_Births, preg_2012_2016)
+svyci(~Num_Births, preg_2012_2016, svytotal)
 
-svytotalci(~Num_Births, preg_2012_2016_us)
+svyci(~Num_Births, preg_2012_2016_us, svytotal)
 ```
 
 As expected, the estimate without attempting to filter births occurring outside the United States is too high, the estimate that filters out births for respondents who came to the United States in the 2010-2019 time period is too low, since such filtering also filters some births occurring in the United States. The confidence intervals seem reasonable compared to the confidence interval for total births in Table 1.

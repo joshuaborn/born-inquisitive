@@ -18,18 +18,6 @@ svyci <- function(x, design, FUN) {
   )
 }
 
-ksvyci <- function(x, design, FUN) {
-  kable(svyci(x, design, FUN))
-}
-
-svytotalci <- function(x, design) {
-  svyci(x, design, svytotal)
-}
-
-ksvytotalci <- function(x, design) {
-  kable(svytotalci(x, design))
-}
-
 svybyci <- function(formula, by, design, FUN) {
   this_stat <- svyby(formula, by, design, FUN, keep.names = FALSE)
   this_ci <- confint(this_stat, df = degf(design))
@@ -39,10 +27,6 @@ svybyci <- function(formula, by, design, FUN) {
     this_stat,
     this_ci
   )
-}
-
-ksvybyci <- function(formula, by, design, FUN) {
-  kable(svybyci(formula, by, design, FUN))
 }
 
 tablena <- function(x) {
