@@ -178,6 +178,9 @@ ggplot(
   )
 ```
 
+
+### Methods Used
+
 ```{r}
 fem_data[, tablena(METH3M1)]
 fem_data[, tablena(LSTMTHP1)]
@@ -443,6 +446,9 @@ ggplot(
 ```
 
 There is enough simultaneous contraceptive usage that it is worth taking it into account when estimating method use.
+
+
+#### Multiple Simultaneous Methods
 
 ```{r}
 fem_data[, `:=`(
@@ -1311,10 +1317,37 @@ ggplot(
   )
 ```
 
+
+### "Other" Methods
+
+I can't find specification of what the "Other Method" responses actually are, other than the `newmeth` variable in Section E. However, this is only partially informative: 8 respondents volunteered vaginal contraceptive film as the "other" method, while 4 respondents have "Other mehtod, not shown separately" as the value here.
+
+
+### Use for Reasons Other Than Contraception
+
+For certain methods, the NSFG asks respondents if they are using the methods for health reasons and what is the main reason they are using the methods. For sterilizing operations, this is captured in variables in Section DB. For the pill and IUD methods, this is captured in variables in Section EJ.
+
+Reasons for sterilizing operations are reported in the `FMEDREAS` series of variables. However, these are only asked if a sterilizing operation was reported during the previous 5 years. In addition to the several mentions for reasons, a followup questions ask for the "main" reason for the operation.
+
+Because this information pertains only to operations performed during the previous 5 years, it is incomplete when asking the question, "Among those who are currently using a sterilizing operation for contraception, how many also are motivated by health reasons?" It is therefore not pertinent for the current analysis, though it is useful for a separate analysis investigating why female persons in the United States have sterilizing operations.
+
+```{r}
+fem_data[(curr_meth1), .N]
+fem_data[!is.na(YUSEPILL1), .N]
+fem_data[curr_meth1 & is.na(YUSEPILL1), .N]
+fem_data[!curr_meth1 & !is.na(YUSEPILL1), .N]
+
+fem_data[(curr_meth17), .N]
+fem_data[!is.na(YUSEIUD1), .N]
+fem_data[curr_meth17 & is.na(YUSEIUD1), .N]
+fem_data[!curr_meth17 & !is.na(YUSEIUD1), .N]
+```
+
+The `YUSEPILL` and `YUSEIUD` series of questions from Section EJ are only asked of respondents who have have reported using the pill or IUD in the current month (via `CURRMETH` variables) or the previous month (via `LSTMONMETH` variables). Furthermore, the `METH3M` variables that are used in the present analysis are recodes that include imputation, while `YUSEPILL` and `YUSEIUD` are raw variables. Therefore, it is best to do a separate analysis on use of contraceptive methods for health reasons using these other variables.
+
+
 ## To Do
 
-* Investigate users for reasons other than contraception
-* Find out what "other" methods were specified
 * Start investigating nonusers
 
 
