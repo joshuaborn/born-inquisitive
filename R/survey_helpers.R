@@ -45,29 +45,6 @@ ksvybyci <- function(formula, by, design, FUN) {
   kable(svybyci(formula, by, design, FUN))
 }
 
-factorize <- function(x, name, formats_table, fill_na = TRUE) {
-  if (fill_na) {
-    nafill_value <- max(formats_table[format_name == name, factor_value]) + 1
-    factor(
-      nafill(x, fill = nafill_value),
-      levels = c(
-        formats_table[format_name == name, factor_value],
-        nafill_value
-      ),
-      labels = c(
-        formats_table[format_name == name, factor_label],
-        'Not Applicable (NA)'
-      )
-    )
-  } else {
-    factor(
-      x,
-      levels = formats_table[format_name == name, factor_value],
-      labels = formats_table[format_name == name, factor_label]
-    )
-  }
-}
-
 tablena <- function(x) {
   table(x, useNA = 'always')
 }
