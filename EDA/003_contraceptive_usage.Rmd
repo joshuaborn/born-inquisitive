@@ -27,10 +27,18 @@ opts_chunk$set(
 ```
 
 ```{r, helper-functions}
-in_millions <- function(svystat) {
-  this_svystat <- copy(as.data.table(svystat))
-  this_svystat[, 2:5] <- this_svystat[, 2:5] / 10^6
-  this_svystat
+in_millions <- function(dt, do_round = TRUE, round_to = 1) {
+  if (do_round) {
+    cbind(
+      Filter(\(col) !is.numeric(col), dt),
+      round(Filter(is.numeric, dt) / 10^6, round_to)
+    )
+  } else {
+    cbind(
+      Filter(\(col) !is.numeric(col), dt),
+      Filter(is.numeric, dt) / 10^6
+    )
+  }
 }
 ```
 
@@ -41,9 +49,9 @@ in_millions <- function(svystat) {
 ### Female Persons Aged 15-49
 
 ```{r, fem-load-raw-data}
-fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
-fem_data <- fem_2017_2019$Data
-fem_formats <- fem_2017_2019$Formats
+fem <- load_NSFG_data('2017_2019', 'FemResp')
+fem_data <- fem$Data
+fem_formats <- fem$Formats
 ```
 
 ```{r, fem-cur-process-data}
@@ -203,9 +211,7 @@ kable(svyci(~MTHUSE3_factor, fem_svy, svymean))
 ```
 
 ```{r, females-currently-totals, fig.height=8, fig.width=6}
-female_currently_totals <- svybyci(~count, ~currently, fem_svy, svytotal)
-
-female_currently_totals[, 2:5] <- female_currently_totals[, 2:5] / 10^6
+female_currently_totals <- in_millions(svybyci(~count, ~currently, fem_svy, svytotal))
 
 ggplot(
   data = female_currently_totals,
@@ -336,9 +342,7 @@ fem_cur_data[, tablena(current_contraceptive_count)]
 ```
 
 ```{r, females-currently-totals-2, fig.height=8, fig.width=6}
-female_currently_totals2 <- svybyci(~count, ~currently2, fem_svy, svytotal)
-
-female_currently_totals2[, 2:5] <- female_currently_totals2[, 2:5] / 10^6
+female_currently_totals2 <- in_millions(svybyci(~count, ~currently2, fem_svy, svytotal))
 
 female_currently_totals2
 
@@ -434,7 +438,7 @@ As expected, removing those who are infertile not due to a sterilizing operation
 ```{r}
 female_current_contraceptors <- subset(fem_svy, current_contraceptive_count > 0)
 
-female_number_current_methods_totals <- svybyci(~count, ~current_contraceptive_count_factor, female_current_contraceptors, svytotal)
+female_number_current_methods_totals <- in_millions(svybyci(~count, ~current_contraceptive_count_factor, female_current_contraceptors, svytotal))
 
 female_number_current_methods_proportions <- svyci(~factor(current_contraceptive_count_factor), female_current_contraceptors, svymean)
 
@@ -444,8 +448,6 @@ female_number_current_methods_proportions
 ```
 
 ```{r, female-number-current-methods-totals, fig.height=3.5, fig.width=12}
-female_number_current_methods_totals[, 2:5] <- female_number_current_methods_totals[, 2:5] / 10^6
-
 ggplot(
   data = female_number_current_methods_totals,
   mapping = aes(
@@ -555,7 +557,7 @@ all(
 ```
 
 ```{r, female-current-method-totals, fig.width=12, fig.height=9}
-female_current_method_totals <- rbind(
+female_current_method_totals <- in_millions(rbind(
   svyci(~curr_meth1, fem_svy, svytotal)[level == TRUE][, method := 1],
   svyci(~curr_meth2, fem_svy, svytotal)[level == TRUE][, method := 2],
   svyci(~curr_meth3, fem_svy, svytotal)[level == TRUE][, method := 3],
@@ -578,9 +580,7 @@ female_current_method_totals <- rbind(
   #svyci(~curr_meth22, fem_svy, svytotal)[level == TRUE][, method := 22],
   svyci(~curr_meth23, fem_svy, svytotal)[level == TRUE][, method := 23],
   svyci(~curr_meth24, fem_svy, svytotal)[level == TRUE][, method := 24]
-)
-
-female_current_method_totals[, 2:5] <- female_current_method_totals[, 2:5] / 10^6
+))
 
 female_current_method_totals[, method_factor := factorize(method, 'METH3MF', fem_formats)]
 
@@ -706,9 +706,7 @@ This does not sum to 1 because some females are using multiple methods.
 ```{r, female-current-exclusive-method-totals, fig.width=12, fig.height=9}
 female_current_exclusive <- subset(fem_svy, current_contraceptive_count == 1)
 
-female_current_exclusive_method_totals <- svybyci(~count, ~METH3M1_factor, female_current_exclusive, svytotal)
-
-female_current_exclusive_method_totals[, 2:5] <- female_current_exclusive_method_totals[, 2:5] / 10^6
+female_current_exclusive_method_totals <- in_millions(svybyci(~count, ~METH3M1_factor, female_current_exclusive, svytotal))
 
 ggplot(
   data = female_current_exclusive_method_totals,
@@ -761,14 +759,12 @@ kable(fem_cur_data[current_contraceptive_count == 2, tablena(meth3m_pair_factor)
 ```{r}
 female_current_pair <- subset(fem_svy, current_contraceptive_count == 2)
 
-female_current_pair_totals <- svybyci(~count, ~meth3m_pair_factor, female_current_pair, svytotal)
+female_current_pair_totals <- in_millions(svybyci(~count, ~meth3m_pair_factor, female_current_pair, svytotal))
 
 kable(female_current_pair_totals)
 ```
 
 ```{r, female-current-pair-totals, fig.width=12, fig.height=18}
-female_current_pair_totals[, 2:5] <- female_current_pair_totals[, 2:5] / 10^6
-
 ggplot(
   data = female_current_pair_totals,
   mapping = aes(
@@ -1011,7 +1007,7 @@ total_using_another_method <- function(meth) {
   svybyci(~count, ~I(current_contraceptive_count > 1), subdomain, svytotal)
 }
 
-totals_using_another_method <- rbindlist(lapply(
+totals_using_another_method <- in_millions(rbindlist(lapply(
   c(1:13, 15, 17:19, 23:24),
   function(x) {
     data.table(
@@ -1019,15 +1015,13 @@ totals_using_another_method <- rbindlist(lapply(
       total_using_another_method(x)
     )
   }
-))
+)))
 
 totals_using_another_method[, meth_factor := factorize(
   meth_num,
   'METH3MF',
   fem_formats
 )]
-
-totals_using_another_method[, 3:6] <- totals_using_another_method[, 3:6] / 10^6
 
 kable(totals_using_another_method[(level), .(meth_factor, estimate, se, `2.5 %`, `97.5 %`)][order(-estimate)])
 ```
@@ -1220,12 +1214,10 @@ female_exclusive_calendar_estimate <- cbind(
   ]
 )
 
-female_current_calendar_estimates <- rbind(
+female_current_calendar_estimates <- in_millions(rbind(
   female_current_calendar_estimates,
   female_exclusive_calendar_estimate
-)
-
-female_current_calendar_estimates[, 2:5] <- female_current_calendar_estimates[, 2:5] / 10^6
+))
 
 setcolorder(female_current_calendar_estimates, c('index', 'level'))
 
