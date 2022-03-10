@@ -46,7 +46,7 @@ fem_svy <- svydesign(
 ```
 
 
-### Currently Using
+### Current Usage
 
 ```{r}
 kable(fem_formats[format_name == 'CONSTATF'])
@@ -179,7 +179,7 @@ ggplot(
 ```
 
 
-### Methods Used
+#### Methods Used
 
 ```{r}
 fem_data[, tablena(METH3M1)]
@@ -1318,12 +1318,12 @@ ggplot(
 ```
 
 
-### "Other" Methods
+#### "Other" Methods
 
 I can't find specification of what the "Other Method" responses actually are, other than the `newmeth` variable in Section E. However, this is only partially informative: 8 respondents volunteered vaginal contraceptive film as the "other" method, while 4 respondents have "Other mehtod, not shown separately" as the value here.
 
 
-### Use for Reasons Other Than Contraception
+#### Use for Reasons Other Than Contraception
 
 For certain methods, the NSFG asks respondents if they are using the methods for health reasons and what is the main reason they are using the methods. For sterilizing operations, this is captured in variables in Section DB. For the pill and IUD methods, this is captured in variables in Section EJ.
 
@@ -1348,6 +1348,14 @@ The `YUSEPILL` and `YUSEIUD` series of questions from Section EJ are only asked 
 
 ## To Do
 
+* Clean up EDA report
+    * Remove unneeded helper functions
+    * Start numbering report files
+    * Organize code chunks into data loading, data modification, helper functions, and main body (estimates and plotting) in order to turn on caching
+    * Add section selecting variables needed for analysis
+    * Combine all estimates for specific analysis, e.g., "current contraceptive usage among females" into a single data.table
+        * Removes need to have naming scheme to manage numerous variables
+        * Makes it easy down the road to compare 2015-2017 with 2017-2019 estimates in order to evaluate whether to combine data sets for analysis
 * Start investigating nonusers
 
 
