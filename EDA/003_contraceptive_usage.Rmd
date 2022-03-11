@@ -102,13 +102,10 @@ fem_cur_data[, `:=`(
   curr_meth11 = as.integer(METH3M1_factor) == 11 | as.integer(METH3M2_factor) == 11 | as.integer(METH3M3_factor) == 11,
   curr_meth12 = as.integer(METH3M1_factor) == 12 | as.integer(METH3M2_factor) == 12 | as.integer(METH3M3_factor) == 12,
   curr_meth13 = as.integer(METH3M1_factor) == 13 | as.integer(METH3M2_factor) == 13 | as.integer(METH3M3_factor) == 13,
-  #curr_meth14 = as.integer(METH3M1_factor) == 14 | as.integer(METH3M2_factor) == 14 | as.integer(METH3M3_factor) == 14,
   curr_meth15 = as.integer(METH3M1_factor) == 15 | as.integer(METH3M2_factor) == 15 | as.integer(METH3M3_factor) == 15,
-  #curr_meth16 = as.integer(METH3M1_factor) == 16 | as.integer(METH3M2_factor) == 16 | as.integer(METH3M3_factor) == 16,
   curr_meth17 = as.integer(METH3M1_factor) == 17 | as.integer(METH3M2_factor) == 17 | as.integer(METH3M3_factor) == 17,
   curr_meth18 = as.integer(METH3M1_factor) == 18 | as.integer(METH3M2_factor) == 18 | as.integer(METH3M3_factor) == 18,
   curr_meth19 = as.integer(METH3M1_factor) == 19 | as.integer(METH3M2_factor) == 19 | as.integer(METH3M3_factor) == 19,
-  #curr_meth22 = as.integer(METH3M1_factor) == 22 | as.integer(METH3M2_factor) == 22 | as.integer(METH3M3_factor) == 22,
   curr_meth23 = as.integer(METH3M1_factor) == 23 | as.integer(METH3M2_factor) == 23 | as.integer(METH3M3_factor) == 23,
   curr_meth24 = as.integer(METH3M1_factor) == 24 | as.integer(METH3M2_factor) == 24 | as.integer(METH3M3_factor) == 24,
   current_condom_exclusive = factor(fifelse(
@@ -162,6 +159,325 @@ fem_svy <- svydesign(
 )
 ```
 
+```{r fem-cur-generate-estimates}
+fem_domain <- 'females aged 15-49 living in households in the United States'
+
+fem_cur_estimates <- rbindlist(list(
+  label_estimate(
+    svyci(~count, fem_svy, svytotal),
+    title = fem_domain,
+    type = 'total'
+  ),
+  label_estimate(
+    svybyci(~count, ~MTHUSE3_factor, fem_svy, svytotal),
+    title = 'by MTHUSE3',
+    domain = fem_domain,
+    type = 'total'
+  ),
+  label_estimate(
+    svyci(~MTHUSE3_factor, fem_svy, svymean),
+    title = 'by MTHUSE3',
+    domain = fem_domain,
+    type = 'proportion'
+  ),
+  label_estimate(
+    svybyci(~count, ~currently, fem_svy, svytotal),
+    title = 'by whether currently using contraception',
+    domain = fem_domain,
+    type = 'total'
+  ),
+  label_estimate(
+    svyci(~currently, fem_svy, svymean),
+    title = 'by whether currently using contraception',
+    domain = fem_domain,
+    type = 'proportion'
+  ),
+  label_estimate(
+    svybyci(~count, ~currently2, fem_svy, svytotal),
+    title = 'by whether currently using contraception, not counting sterility',
+    domain = fem_domain,
+    type = 'total'
+  ),
+  label_estimate(
+    svyci(~currently2, fem_svy, svymean),
+    title = 'by whether currently using contraception, not counting sterility',
+    domain = fem_domain,
+    type = 'proportion'
+  ),
+  label_estimate(
+    svybyci(
+      ~count,
+      ~current_contraceptive_count_factor,
+      subset(fem_svy, current_contraceptive_count > 0),
+      svytotal
+    ),
+    title = 'by number of contraceptive methods used',
+    domain = 'females currently using contraception',
+    type = 'total'
+  ),
+  label_estimate(
+    svyci(
+      ~factor(current_contraceptive_count_factor),
+      subset(fem_svy, current_contraceptive_count > 0),
+      svymean
+    ),
+    title = 'by number of contraceptive methods used',
+    domain = 'females currently using contraception',
+    type = 'proportion'
+  ),
+  label_estimate(
+    svybyci(
+      ~count,
+      ~METH3M1_factor,
+      subset(fem_svy, current_contraceptive_count == 1),
+      svytotal
+    ),
+    title = 'by exclusive contraceptive method',
+    domain = 'females currently using one contraceptive method',
+    type = 'total'
+  ),
+  label_estimate(
+    svybyci(
+      ~count,
+      ~meth3m_pair_factor,
+      subset(fem_svy, current_contraceptive_count == 2),
+      svytotal
+    ),
+    title = 'by contraceptive method pairing',
+    domain = 'females currently using two contraceptive methods',
+    type = 'total'
+  ),
+  label_estimate(
+    svybyci(
+      ~count,
+      ~current_condom_exclusive,
+      subset(fem_svy, curr_meth2),
+      svytotal
+    ),
+    title = 'by whether using condoms exclusively',
+    domain = 'females currently using condoms',
+    type = 'total'
+  ),
+  label_estimate(
+    svyci(
+      ~current_condom_exclusive,
+      subset(fem_svy, curr_meth2),
+      svymean
+    ),
+    title = 'by whether using condoms exclusively',
+    domain = 'females currently using condoms',
+    type = 'proportion'
+  ),
+  label_estimate(
+    svybyci(
+      ~count,
+      ~current_withdrawal_exclusive,
+      subset(fem_svy, curr_meth5),
+      svytotal
+    ),
+    title = 'by whether using withdrawal exclusively',
+    domain = 'females currently using withdrawal',
+    type = 'total'
+  ),
+  label_estimate(
+    svyci(
+      ~current_withdrawal_exclusive,
+      subset(fem_svy, curr_meth5),
+      svymean
+    ),
+    title = 'by whether using withdrawal exclusively',
+    domain = 'females currently using withdrawal',
+    type = 'proportion'
+  )
+))
+
+fem_cur_totals_by_method <- rbindlist(lapply(
+  c(1:13, 15, 17:19, 23:24),
+  function(x) {
+    svyci(
+      as.formula(sprintf('~curr_meth%d', x)),
+      fem_svy,
+      svytotal
+    )[
+      level == TRUE
+    ][
+      , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+    ]
+  }
+))
+
+fem_cur_totals_by_method[, level := factorize(level, 'METH3MF', fem_formats)]
+
+fem_cur_props_by_method <- rounded(rbindlist(lapply(
+  c(1:13, 15, 17:19, 23:24),
+  function(x) {
+    svyci(
+      as.formula(sprintf('~curr_meth%d', x)),
+      subset(fem_svy, current_contraceptive_count > 0),
+      svyciprop
+    )[
+      , .(level = x, estimate, se, `2.5 %` = `2.5%`, `97.5 %` = `97.5%`)
+    ]
+  }
+)))
+
+fem_cur_props_by_method[, level := factorize(level, 'METH3MF', fem_formats)]
+
+fem_cur_totals_using_another_method <- rbindlist(lapply(
+  c(1:13, 15, 17:19, 23:24),
+  function(i) {
+    dt <- svyci(
+      ~count,
+      subset(fem_svy, current_contraceptive_count > 1 & fem_cur_data[, get(sprintf('curr_meth%d', i))]),
+      svytotal
+    )
+    dt[, level := i]
+    dt
+  }
+))
+
+fem_cur_totals_using_another_method[, level := factorize(level, 'METH3MF', fem_formats)]
+
+fem_cur_props_using_another_method <- rbindlist(lapply(
+  c(1:13, 15, 17:19, 23:24),
+  function(i) {
+    svyci(
+      ~I(current_contraceptive_count > 1),
+      subset(fem_svy, fem_cur_data[, get(sprintf('curr_meth%d', i))]),
+      svyciprop
+    )[
+      , .(
+        level = i,
+        estimate,
+        se,
+        `2.5 %` = `2.5%`,
+        `97.5 %` = `97.5%`
+      )
+    ]
+  }
+))
+
+fem_cur_props_using_another_method[, level := factorize(level, 'METH3MF', fem_formats)]
+
+fem_cur_calendar_totals <- rbindlist(lapply(
+  c(1:7, 9:13, 15, 17:19, 23:24),
+  function(i) {
+    svyci(
+      as.formula(sprintf('~curr_meth%d', i)),
+      subset(fem_svy, curr_meth8),
+      svytotal
+    )[
+      level == TRUE
+    ][
+      , .(level = i, estimate, se, `2.5 %`, `97.5 %`)
+    ]
+  }
+))
+
+fem_cur_calendar_totals[
+  , level := factorize(level, 'METH3MF', fem_formats)
+]
+
+fem_cur_calendar_totals <- rbindlist(list(
+  fem_cur_calendar_totals,
+  svyci(
+    ~I(current_contraceptive_count == 1),
+    subset(fem_svy, curr_meth8),
+    svytotal
+  )[
+    level == TRUE
+  ][
+    , .(
+      level = 'Exclusively calendar rhythm, Standard Days, or Cycle Beads method',
+      estimate,
+      se,
+      `2.5 %`,
+      `97.5 %`
+    )
+  ]
+))
+
+fem_cur_calendar_props <- rbindlist(lapply(
+  c(1:7, 9:13, 15, 17:19, 23:24),
+  function(i) {
+    svyci(
+      as.formula(sprintf('~curr_meth%d', i)),
+      subset(fem_svy, curr_meth8),
+      svyciprop
+    )[
+      , .(
+        level = i,
+        estimate,
+        se,
+        `2.5 %` = `2.5%`,
+        `97.5 %` = `97.5%`
+      )
+    ]
+  }
+))
+
+fem_cur_calendar_props[
+  , level := factorize(level, 'METH3MF', fem_formats)
+]
+
+fem_cur_calendar_props <- rbindlist(list(
+  fem_cur_calendar_props,
+  svyci(
+    ~I(current_contraceptive_count == 1),
+    subset(fem_svy, curr_meth8),
+    svyciprop
+  )[
+    , .(
+      level = 'Exclusively calendar rhythm, Standard Days, or Cycle Beads method',
+      estimate = estimate,
+      se = se,
+      `2.5 %` = `2.5%`,
+      `97.5 %` = `97.5%`
+    )
+  ]
+))
+
+fem_cur_estimates <- rbindlist(list(
+  fem_cur_estimates,
+  label_estimate(
+    fem_cur_totals_by_method,
+    title = 'by contraceptive method',
+    domain = fem_domain,
+    type = 'total'
+  ),
+  label_estimate(
+    fem_cur_props_by_method,
+    title = 'by contraceptive method',
+    domain = 'females currently using contraception',
+    type = 'proportion'
+  ),
+  label_estimate(
+    fem_cur_totals_using_another_method,
+    title = 'by contraceptive method',
+    domain = 'females currently using multiple contraceptives',
+    type = 'total'
+  ),
+  label_estimate(
+    fem_cur_props_using_another_method,
+    title = 'by contraceptive method',
+    domain = 'females currently using multiple contraceptives',
+    type = 'proportion'
+  ),
+  label_estimate(
+    fem_cur_calendar_totals,
+    title = 'by other contraceptive method',
+    domain = 'females currently using calendar method',
+    type = 'total'
+  ),
+  label_estimate(
+    fem_cur_calendar_props,
+    title = 'by other contraceptive method',
+    domain = 'females currently using calendar method',
+    type = 'proportion'
+  )
+))
+```
+
 ```{r}
 kable(fem_formats[format_name == 'CONSTATF'])
 ```
@@ -181,24 +497,45 @@ Togther the above variables form a set. Those who have `2` for `HADSEX` are `NA`
 There is another variable `SEXP30MO` which comes from the months of non-intercourse series that reports a higher count of those who have had sex in the past 3 months than `SEX3MO`.
 
 ```{r}
-kable(svyci(~count, fem_svy, svytotal))
+kable(
+  fem_cur_estimates[
+    title == 'females aged 15-49 living in households in the United States',
+    .(title, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
 ```
 
 According to the U.S. Census Bureau, Current Population Survey, Annual Social and Economic Supplement, 2019, Table 1. Population by Age and Sex: 2019. The female civilian noninstitutionalized population of the United States is ~74,445,000. The estimate generated from the NSFG is consistent with this.
 
 ```{r}
 kable(fem_formats[startsWith(format_name, 'MTHUSE3F')])
-
-kable(svybyci(~count, ~MTHUSE3_factor, fem_svy, svytotal))
-
-kable(svyci(~MTHUSE3_factor, fem_svy, svymean))
 ```
 
-```{r, females-currently-totals, fig.height=8, fig.width=6}
-female_currently_totals <- in_millions(svybyci(~count, ~currently, fem_svy, svytotal))
+```{r}
+kable(
+  fem_cur_estimates[
+    title == 'by MTHUSE3',
+    .(level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
+```
 
+```{r}
+kable(
+  fem_cur_estimates[
+    title == 'by whether currently using contraception' &
+      type == 'total',
+    .(type, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
+```
+
+```{r, fem-cur-totals, fig.height=8, fig.width=6}
 ggplot(
-  data = female_currently_totals,
+  data = fem_cur_estimates[
+    title == 'by whether currently using contraception' &
+      type == 'total'
+  ],
   mapping = aes(
     x = level
   )
@@ -223,9 +560,9 @@ ggplot(
     minor_breaks = \(limits) seq(floor(limits[1]), limits[2], 1)
   ) +
   labs(
-    subtitle = 'among females aged 15-49 living in households in the United States',
+    subtitle = paste('among', fem_domain),
     title = 'Number of persons currently using contraception',
-    y = 'Number of female persons'
+    y = 'Number of persons'
   ) +
   theme_bw() +
   theme(
@@ -233,12 +570,24 @@ ggplot(
   )
 ```
 
-```{r, females-currently-proportions, fig.width=8, fig.height=2.5}
-female_currently_proportions <- svyci(~currently, fem_svy, svymean)
+```{r}
+kable(
+  fem_cur_estimates[
+    title == 'by whether currently using contraception' &
+      type == 'proportion',
+    .(type, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
+```
 
+```{r, fem-cur-props, fig.width=8, fig.height=2.5}
 ggplot(
-  data = female_currently_proportions[1],
-  aes(
+  data = fem_cur_estimates[
+    title == 'by whether currently using contraception' &
+      type == 'proportion' &
+      level == 'Currently using contraception'
+  ],
+  mapping = aes(
     y = level
   )
 ) +
@@ -267,8 +616,8 @@ ggplot(
     labels = NULL
   ) +
   labs(
-    subtitle = 'among females aged 15-49 living in households in the United States',
-    title = 'Proportion of persons currently using contraception'
+    subtitle = paste('among', fem_domain),
+    title = 'Proportion of persons currently using contraception',
   ) +
   theme_bw() +
   theme(
@@ -325,15 +674,24 @@ Both of these can be settled with a single new variable.
 fem_cur_data[, tablena(current_contraceptive_count)]
 ```
 
-```{r, females-currently-totals-2, fig.height=8, fig.width=6}
-female_currently_totals2 <- in_millions(svybyci(~count, ~currently2, fem_svy, svytotal))
+```{r}
+kable(
+  fem_cur_estimates[
+    title %in% c(
+      'by whether currently using contraception',
+      'by whether currently using contraception, not counting sterility'
+    ) & type == 'total',
+    .(title, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
+```
 
-female_currently_totals2
-
-female_currently_totals
-
+```{r, fem-cur-totals-2, fig.height=8, fig.width=6}
 ggplot(
-  data = female_currently_totals2,
+  data = fem_cur_estimates[
+    title == 'by whether currently using contraception, not counting sterility' &
+      type == 'total'
+  ],
   mapping = aes(
     x = level
   )
@@ -358,9 +716,9 @@ ggplot(
     minor_breaks = \(limits) seq(floor(limits[1]), limits[2], 1)
   ) +
   labs(
-    subtitle = 'among females aged 15-49 living in households in the United States',
-    title = 'Number of persons currently using contraception',
-    y = 'Number of female persons'
+    subtitle = paste('among', fem_domain),
+    title = 'Number of persons currently using contraception, not counting sterility',
+    y = 'Number of persons'
   ) +
   theme_bw() +
   theme(
@@ -368,15 +726,25 @@ ggplot(
   )
 ```
 
-```{r, females-currently-proportions-2, fig.width=8, fig.height=2.5}
-female_currently_proportions2 <- svyci(~currently2, fem_svy, svymean)
+```{r}
+kable(
+  fem_cur_estimates[
+    title %in% c(
+      'by whether currently using contraception',
+      'by whether currently using contraception, not counting sterility'
+    ) & type == 'proportion',
+    .(title, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
+```
 
-female_currently_proportions2
-
-female_currently_proportions
-
+```{r, fem-cur-props-2, fig.width=8, fig.height=2.5}
 ggplot(
-  data = female_currently_proportions2[1],
+  data = fem_cur_estimates[
+    title == 'by whether currently using contraception, not counting sterility' &
+      type == 'proportion' &
+      level == 'Currently using contraception'
+  ],
   aes(
     y = level
   )
@@ -406,8 +774,8 @@ ggplot(
     labels = NULL
   ) +
   labs(
-    subtitle = 'among females aged 15-49 living in households in the United States',
-    title = 'Proportion of persons currently using contraception'
+    subtitle = paste('among', fem_domain),
+    title = 'Proportion of persons currently using contraception, not counting sterility'
   ) +
   theme_bw() +
   theme(
@@ -420,20 +788,20 @@ ggplot(
 As expected, removing those who are infertile not due to a sterilizing operation changes the estimates of current contraceptive users, but only slightly.
 
 ```{r}
-female_current_contraceptors <- subset(fem_svy, current_contraceptive_count > 0)
-
-female_number_current_methods_totals <- in_millions(svybyci(~count, ~current_contraceptive_count_factor, female_current_contraceptors, svytotal))
-
-female_number_current_methods_proportions <- svyci(~factor(current_contraceptive_count_factor), female_current_contraceptors, svymean)
-
-female_number_current_methods_totals
-
-female_number_current_methods_proportions
+kable(
+  fem_cur_estimates[
+    title == 'by number of contraceptive methods used',
+    .(type, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
 ```
 
-```{r, female-number-current-methods-totals, fig.height=3.5, fig.width=12}
+```{r, fem-cur-number-methods-totals, fig.height=3.5, fig.width=12}
 ggplot(
-  data = female_number_current_methods_totals,
+  data = fem_cur_estimates[
+    title == 'by number of contraceptive methods used' &
+      type == 'total'
+  ],
   mapping = aes(
     y = level
   )
@@ -467,9 +835,12 @@ ggplot(
   )
 ```
 
-```{r, female-number-current-methods-proportions, fig.height=3.5, fig.width=12}
+```{r, fem-cur-number-methods-props, fig.height=3.5, fig.width=12}
 ggplot(
-  data = female_number_current_methods_proportions,
+  data = fem_cur_estimates[
+    title == 'by number of contraceptive methods used' &
+      type == 'proportion'
+  ],
   aes(
     y = level
   )
@@ -540,38 +911,15 @@ all(
 )
 ```
 
-```{r, female-current-method-totals, fig.width=12, fig.height=9}
-female_current_method_totals <- in_millions(rbind(
-  svyci(~curr_meth1, fem_svy, svytotal)[level == TRUE][, method := 1],
-  svyci(~curr_meth2, fem_svy, svytotal)[level == TRUE][, method := 2],
-  svyci(~curr_meth3, fem_svy, svytotal)[level == TRUE][, method := 3],
-  svyci(~curr_meth4, fem_svy, svytotal)[level == TRUE][, method := 4],
-  svyci(~curr_meth5, fem_svy, svytotal)[level == TRUE][, method := 5],
-  svyci(~curr_meth6, fem_svy, svytotal)[level == TRUE][, method := 6],
-  svyci(~curr_meth7, fem_svy, svytotal)[level == TRUE][, method := 7],
-  svyci(~curr_meth8, fem_svy, svytotal)[level == TRUE][, method := 8],
-  svyci(~curr_meth9, fem_svy, svytotal)[level == TRUE][, method := 9],
-  svyci(~curr_meth10, fem_svy, svytotal)[level == TRUE][, method := 10],
-  svyci(~curr_meth11, fem_svy, svytotal)[level == TRUE][, method := 11],
-  svyci(~curr_meth12, fem_svy, svytotal)[level == TRUE][, method := 12],
-  svyci(~curr_meth13, fem_svy, svytotal)[level == TRUE][, method := 13],
-  #svyci(~curr_meth14, fem_svy, svytotal)[level == TRUE][, method := 14],
-  svyci(~curr_meth15, fem_svy, svytotal)[level == TRUE][, method := 15],
-  #svyci(~curr_meth16, fem_svy, svytotal)[level == TRUE][, method := 16],
-  svyci(~curr_meth17, fem_svy, svytotal)[level == TRUE][, method := 17],
-  svyci(~curr_meth18, fem_svy, svytotal)[level == TRUE][, method := 18],
-  svyci(~curr_meth19, fem_svy, svytotal)[level == TRUE][, method := 19],
-  #svyci(~curr_meth22, fem_svy, svytotal)[level == TRUE][, method := 22],
-  svyci(~curr_meth23, fem_svy, svytotal)[level == TRUE][, method := 23],
-  svyci(~curr_meth24, fem_svy, svytotal)[level == TRUE][, method := 24]
-))
-
-female_current_method_totals[, method_factor := factorize(method, 'METH3MF', fem_formats)]
-
+```{r, fem-cur-method-totals, fig.width=12, fig.height=9}
 ggplot(
-  data = female_current_method_totals,
+  data = fem_cur_estimates[
+    domain == 'females aged 15-49 living in households in the United States' &
+    title == 'by contraceptive method' &
+      type == 'total'
+  ],
   mapping = aes(
-    y = method_factor
+    y = level
   )
 ) +
   geom_point(
@@ -582,7 +930,7 @@ ggplot(
   ) +
   geom_segment(
     aes(
-      yend = method_factor,
+      yend = level,
       x = `2.5 %`,
       xend = `97.5 %`
     ),
@@ -608,40 +956,15 @@ ggplot(
   )
 ```
 
-```{r, female-current-method-proportions, fig.height=9, fig.width=12}
-female_current_contraceptors <- subset(fem_svy, current_contraceptive_count > 0)
-
-female_current_method_proportions <- rbind(
-  svyci(~curr_meth1, female_current_contraceptors, svymean)[level == TRUE][, method := 1],
-  svyci(~curr_meth2, female_current_contraceptors, svymean)[level == TRUE][, method := 2],
-  svyci(~curr_meth3, female_current_contraceptors, svymean)[level == TRUE][, method := 3],
-  svyci(~curr_meth4, female_current_contraceptors, svymean)[level == TRUE][, method := 4],
-  svyci(~curr_meth5, female_current_contraceptors, svymean)[level == TRUE][, method := 5],
-  svyci(~curr_meth6, female_current_contraceptors, svymean)[level == TRUE][, method := 6],
-  svyci(~curr_meth7, female_current_contraceptors, svymean)[level == TRUE][, method := 7],
-  svyci(~curr_meth8, female_current_contraceptors, svymean)[level == TRUE][, method := 8],
-  svyci(~curr_meth9, female_current_contraceptors, svymean)[level == TRUE][, method := 9],
-  svyci(~curr_meth10, female_current_contraceptors, svymean)[level == TRUE][, method := 10],
-  svyci(~curr_meth11, female_current_contraceptors, svymean)[level == TRUE][, method := 11],
-  svyci(~curr_meth12, female_current_contraceptors, svymean)[level == TRUE][, method := 12],
-  svyci(~curr_meth13, female_current_contraceptors, svymean)[level == TRUE][, method := 13],
-  #svyci(~curr_meth14, female_current_contraceptors, svymean)[level == TRUE][, method := 14],
-  svyci(~curr_meth15, female_current_contraceptors, svymean)[level == TRUE][, method := 15],
-  #svyci(~curr_meth16, female_current_contraceptors, svymean)[level == TRUE][, method := 16],
-  svyci(~curr_meth17, female_current_contraceptors, svymean)[level == TRUE][, method := 17],
-  svyci(~curr_meth18, female_current_contraceptors, svymean)[level == TRUE][, method := 18],
-  svyci(~curr_meth19, female_current_contraceptors, svymean)[level == TRUE][, method := 19],
-  #svyci(~curr_meth22, female_current_contraceptors, svymean)[level == TRUE][, method := 22],
-  svyci(~curr_meth23, female_current_contraceptors, svymean)[level == TRUE][, method := 23],
-  svyci(~curr_meth24, female_current_contraceptors, svymean)[level == TRUE][, method := 24]
-)
-
-female_current_method_proportions[, method_factor := factorize(method, 'METH3MF', fem_formats)]
-
+```{r, fem-cur-method-props, fig.height=9, fig.width=12}
 ggplot(
-  data = female_current_method_proportions,
+  data = fem_cur_estimates[
+    title == 'by contraceptive method' &
+      domain == 'females currently using contraception' &
+      type == 'proportion'
+  ],
   aes(
-    y = method_factor
+    y = level
   )
 ) +
   geom_point(
@@ -652,7 +975,7 @@ ggplot(
   ) +
   geom_segment(
     aes(
-      yend = method_factor,
+      yend = level,
       x = `2.5 %`,
       xend = `97.5 %`
     ),
@@ -682,18 +1005,17 @@ ggplot(
 There are clearly some contraceptive methods used more than others, but not any one method that the majority of females use.
 
 ```{r}
-female_current_method_proportions[, sum(estimate)]
+fem_cur_props_by_method[, sum(estimate)]
 ```
 
 This does not sum to 1 because some females are using multiple methods.
 
-```{r, female-current-exclusive-method-totals, fig.width=12, fig.height=9}
-female_current_exclusive <- subset(fem_svy, current_contraceptive_count == 1)
-
-female_current_exclusive_method_totals <- in_millions(svybyci(~count, ~METH3M1_factor, female_current_exclusive, svytotal))
-
+```{r, fem-cur-exclusive-totals, fig.width=12, fig.height=9}
 ggplot(
-  data = female_current_exclusive_method_totals,
+  data = fem_cur_estimates[
+    title == 'by exclusive contraceptive method' &
+      type == 'total'
+  ],
   mapping = aes(
     y = level
   )
@@ -741,16 +1063,20 @@ kable(fem_cur_data[current_contraceptive_count == 2, tablena(meth3m_pair_factor)
 ```
 
 ```{r}
-female_current_pair <- subset(fem_svy, current_contraceptive_count == 2)
-
-female_current_pair_totals <- in_millions(svybyci(~count, ~meth3m_pair_factor, female_current_pair, svytotal))
-
-kable(female_current_pair_totals)
+kable(
+  fem_cur_estimates[
+    title == 'by contraceptive method pairing',
+    .(level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
 ```
 
 ```{r, female-current-pair-totals, fig.width=12, fig.height=18}
 ggplot(
-  data = female_current_pair_totals,
+  data = fem_cur_estimates[
+    title == 'by contraceptive method pairing' &
+      type == 'total'
+  ],
   mapping = aes(
     y = level
   )
@@ -796,16 +1122,21 @@ Many of the method pairings whose 95\% CIs do not include 0 consist of one of th
 A few exceptions exist to the pairings with condom or withdrawal. One is the aforementioned combination of male and female sterilization procedures. Others include vasectomy & IUD, pill & tubal ligation, and pill & vasectomy.
 
 ```{r}
-female_current_condom_users <- subset(fem_svy, curr_meth2)
-
-female_current_condom_exclusive_totals <- svybyci(~count, ~current_condom_exclusive, female_current_condom_users, svytotal)
-
-kable(female_current_condom_exclusive_totals)
+kable(
+  fem_cur_estimates[
+    title == 'by whether using condoms exclusively' &
+      type == 'total',
+    .(domain, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
 ```
 
-```{r, female-current-condom-exclusive-totals, fig.width=12, fig.height=4}
+```{r, fem-cur-condom-exclusive-totals, fig.width=12, fig.height=4}
 ggplot(
-  data = in_millions(female_current_condom_exclusive_totals),
+  data = fem_cur_estimates[
+    title == 'by whether using condoms exclusively' &
+      type == 'total'
+  ],
   mapping = aes(
     y = level
   )
@@ -845,14 +1176,21 @@ ggplot(
 ```
 
 ```{r}
-female_current_condom_exclusive_proportions <- svyci(~current_condom_exclusive, female_current_condom_users, svymean)
-
-kable(female_current_condom_exclusive_proportions)
+kable(
+  fem_cur_estimates[
+    title == 'by whether using condoms exclusively' &
+      type == 'proportion',
+    .(domain, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
 ```
 
-```{r, female-current-condom-exclusive-proportions, fig.height=3.5, fig.width=12}
+```{r, fem-cur-condom-exclusive-props, fig.height=3.5, fig.width=12}
 ggplot(
-  data = female_current_condom_exclusive_proportions,
+  data = fem_cur_estimates[
+    title == 'by whether using condoms exclusively' &
+      type == 'proportion'
+  ],
   aes(
     y = level
   )
@@ -890,16 +1228,21 @@ ggplot(
 ```
 
 ```{r}
-female_current_withdrawal_users <- subset(fem_svy, curr_meth5)
-
-female_current_withdrawal_exclusive_totals <- svybyci(~count, ~current_withdrawal_exclusive, female_current_withdrawal_users, svytotal)
-
-kable(female_current_withdrawal_exclusive_totals)
+kable(
+  fem_cur_estimates[
+    title == 'by whether using withdrawal exclusively' &
+      type == 'total',
+    .(domain, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
 ```
 
-```{r, female-current-withdrawal-exclusive-totals, fig.width=12, fig.height=4}
+```{r, fem-cur-withdrawal-exclusive-totals, fig.width=12, fig.height=4}
 ggplot(
-  data = in_millions(female_current_withdrawal_exclusive_totals),
+  data = fem_cur_estimates[
+    title == 'by whether using withdrawal exclusively' &
+      type == 'total'
+  ],
   mapping = aes(
     y = level
   )
@@ -939,14 +1282,21 @@ ggplot(
 ```
 
 ```{r}
-female_current_withdrawal_exclusive_proportions <- svyci(~current_withdrawal_exclusive, female_current_withdrawal_users, svymean)
-
-kable(female_current_withdrawal_exclusive_proportions)
+kable(
+  fem_cur_estimates[
+    title == 'by whether using withdrawal exclusively' &
+      type == 'proportion',
+    .(domain, level, estimate, se, `2.5 %`, `97.5 %`)
+  ]
+)
 ```
 
-```{r, female-current-withdrawal-exclusive-proportions, fig.height=3.5, fig.width=12}
+```{r, fem-cur-withdrawal-exclusive-props, fig.height=3.5, fig.width=12}
 ggplot(
-  data = female_current_withdrawal_exclusive_proportions,
+  data = fem_cur_estimates[
+    title == 'by whether using withdrawal exclusively' &
+      type == 'proportion'
+  ],
   aes(
     y = level
   )
@@ -986,35 +1336,27 @@ ggplot(
 Perhaps a better way to look at this is to look at, for each method, what number/proportion of users are also using another method.
 
 ```{r}
-total_using_another_method <- function(meth) {
-  subdomain <- subset(fem_svy, fem_data[, get(sprintf('curr_meth%d', meth))])
-  svybyci(~count, ~I(current_contraceptive_count > 1), subdomain, svytotal)
-}
-
-totals_using_another_method <- in_millions(rbindlist(lapply(
-  c(1:13, 15, 17:19, 23:24),
-  function(x) {
-    data.table(
-      meth_num = x,
-      total_using_another_method(x)
-    )
-  }
-)))
-
-totals_using_another_method[, meth_factor := factorize(
-  meth_num,
-  'METH3MF',
-  fem_formats
-)]
-
-kable(totals_using_another_method[(level), .(meth_factor, estimate, se, `2.5 %`, `97.5 %`)][order(-estimate)])
+kable(
+  fem_cur_estimates[
+    title == 'by contraceptive method' &
+      domain == 'females currently using multiple contraceptives' &
+      type == 'total',
+    .(level, estimate, se, `2.5 %`, `97.5 %`)
+  ][
+    order(-estimate)
+  ]
+)
 ```
 
-```{r, female-using-another-method-totals, fig.width=12, fig.height=8}
+```{r, fem-cur-multiple-totals, fig.width=12, fig.height=8}
 ggplot(
-  data = totals_using_another_method[(level)],
+  data = fem_cur_estimates[
+    title == 'by contraceptive method' &
+      domain == 'females currently using multiple contraceptives' &
+      type == 'total'
+  ],
   mapping = aes(
-    y = reorder(meth_factor, estimate)
+    y = reorder(level, estimate)
   )
 ) +
   geom_point(
@@ -1025,7 +1367,7 @@ ggplot(
   ) +
   geom_segment(
     aes(
-      yend = reorder(meth_factor, estimate),
+      yend = reorder(level, estimate),
       x = `2.5 %`,
       xend = `97.5 %`
     ),
@@ -1042,7 +1384,7 @@ ggplot(
   ) +
   labs(
     subtitle = 'among females currently using contraception',
-    title = 'Total female persons using multiple methods, by method',
+    title = 'Total persons using multiple methods, by method',
     x = 'Number of female persons'
   ) +
   theme_bw() +
@@ -1052,39 +1394,28 @@ ggplot(
 ```
 
 ```{r}
-proportion_using_another_method <- function(meth) {
-  subdomain <- subset(fem_svy, fem_data[, get(sprintf('curr_meth%d', meth))])
-  svyci(~I(current_contraceptive_count > 1), subdomain, svyciprop)
-}
-
-proportions_using_another_method <- rbindlist(lapply(
-  c(1:13, 15, 17:19, 23:24),
-  function(x) {
-    data.table(
-      meth_num = x,
-      proportion_using_another_method(x)
-    )
-  }
-))
-
-proportions_using_another_method[, meth_factor := factorize(
-  meth_num,
-  'METH3MF',
-  fem_formats
-)]
-
 kable(
-  proportions_using_another_method[
-    , .(meth_factor, estimate, se, `2.5%`, `97.5%`)
-  ][order(-estimate)]
+  fem_cur_estimates[
+    title == 'by contraceptive method' &
+      domain == 'females currently using multiple contraceptives' &
+      type == 'proportion',
+    .(level, estimate, se, `2.5 %`, `97.5 %`)
+  ][
+    order(-estimate)
+  ]
 )
 ```
 
-```{r, female-using-another-method-proportions, fig.width=12, fig.height=8}
+```{r, fem-cur-multiple-props, fig.width=12, fig.height=8}
 ggplot(
-  data = proportions_using_another_method[se > 0],
+  data = fem_cur_estimates[
+    title == 'by contraceptive method' &
+      domain == 'females currently using multiple contraceptives' &
+      type == 'proportion' &
+      se > 0
+  ],
   aes(
-    y = reorder(meth_factor, estimate)
+    y = reorder(level, estimate)
   )
 ) +
   geom_point(
@@ -1095,9 +1426,9 @@ ggplot(
   ) +
   geom_segment(
     aes(
-      yend = reorder(meth_factor, estimate),
-      x = `2.5%`,
-      xend = `97.5%`
+      yend = reorder(level, estimate),
+      x = `2.5 %`,
+      xend = `97.5 %`
     ),
     arrow = arrow(angle = 90, ends = 'both', length = unit(0.0625, 'inches')),
     size = 0.5
@@ -1129,88 +1460,26 @@ Perhaps the most surprising result is that the majority of calendar rhythm, etc,
 Unsurprisingly, a substantial minority of withdrawal (~45\%) and condom users (~40\%) use another method, and these account for the largest numbers of female persons using multiple methods.
 
 ```{r}
-female_calendar_users <- subset(fem_svy, curr_meth8)
-
-female_current_calendar_totals <- rbindlist(lapply(
-  c(1:7, 9:13, 15, 17:19, 23:24),
-  function(i) {
-    svyci(
-      as.formula(sprintf('~curr_meth%d', i)),
-      female_calendar_users,
-      svytotal
-    )[
-      level == TRUE
-    ][
-      , .(index = i, estimate, se, `2.5 %`, `97.5 %`)
-    ]
-  }
-))
-
-female_current_calendar_proportions <- rbindlist(lapply(
-  c(1:7, 9:13, 15, 17:19, 23:24),
-  function(i) {
-    svyci(
-      as.formula(sprintf('~curr_meth%d', i)),
-      female_calendar_users,
-      svyciprop
-    )[
-      , .(
-        index = i,
-        prop.estimate = estimate,
-        prop.se = se,
-        `prop.2.5%` = `2.5%`,
-        `prop.97.5%` = `97.5%`
-      )
-    ]
-  }
-))
-
-female_current_calendar_estimates <- female_current_calendar_totals[
-  female_current_calendar_proportions,
-  on = 'index'
-]
-
-female_current_calendar_estimates[
-  , level := factorize(index, 'METH3MF', fem_formats)
-]
-
-female_exclusive_calendar_estimate <- cbind(
-  svyci(
-    ~I(current_contraceptive_count == 1),
-    female_calendar_users,
-    svytotal
-  )[
-    level == TRUE
+kable(
+  fem_cur_estimates[
+    title == 'by other contraceptive method' &
+      domain == 'females currently using calendar method' &
+      type == 'total',
+    .(domain, level, estimate, se, `2.5 %`, `97.5 %`)
   ][
-    , .(index = 0, estimate, se, `2.5 %`, `97.5 %`, level = 'Exclusively calendar rhythm, Standard Days, or Cycle Beads method')
-  ],
-  svyci(
-    ~I(current_contraceptive_count == 1),
-    female_calendar_users,
-    svyciprop
-  )[
-    , .(
-      prop.estimate = estimate,
-      prop.se = se,
-      `prop.2.5%` = `2.5%`,
-      `prop.97.5%` = `97.5%`
-    )
+    order(-estimate)
   ]
 )
-
-female_current_calendar_estimates <- in_millions(rbind(
-  female_current_calendar_estimates,
-  female_exclusive_calendar_estimate
-))
-
-setcolorder(female_current_calendar_estimates, c('index', 'level'))
-
-kable(female_current_calendar_estimates[order(-estimate)])
 ```
 
-```{r, female-current-calendar-totals, fig.width=12, fig.height=5}
+```{r, fem-cur-calendar-totals, fig.width=12, fig.height=5}
 ggplot(
-  data = female_current_calendar_estimates[estimate > 0],
+  data = fem_cur_estimates[
+    title == 'by other contraceptive method' &
+      domain == 'females currently using calendar method' &
+      type == 'total' &
+      estimate > 0
+  ],
   mapping = aes(
     y = reorder(level, estimate)
   )
@@ -1249,24 +1518,42 @@ ggplot(
   )
 ```
 
-```{r, female-current-calendar-proportions, fig.width=12, fig.height=5}
+```{r}
+kable(
+  fem_cur_estimates[
+    title == 'by other contraceptive method' &
+      domain == 'females currently using calendar method' &
+      type == 'proportion',
+    .(domain, level, estimate, se, `2.5 %`, `97.5 %`)
+  ][
+    order(-estimate)
+  ]
+)
+```
+
+```{r, fem-cur-calendar-props, fig.width=12, fig.height=5}
 ggplot(
-  data = female_current_calendar_estimates[estimate > 0],
+  data = fem_cur_estimates[
+    title == 'by other contraceptive method' &
+      domain == 'females currently using calendar method' &
+      type == 'proportion' &
+      estimate > 0
+  ],
   aes(
-    y = reorder(level, prop.estimate)
+    y = reorder(level, estimate)
   )
 ) +
   geom_point(
     aes(
-      x = prop.estimate
+      x = estimate
     ),
     size = 2.5
   ) +
   geom_segment(
     aes(
-      yend = reorder(level, prop.estimate),
-      x = `prop.2.5%`,
-      xend = `prop.97.5%`
+      yend = reorder(level, estimate),
+      x = `2.5 %`,
+      xend = `97.5 %`
     ),
     arrow = arrow(angle = 90, ends = 'both', length = unit(0.0625, 'inches')),
     size = 0.5
@@ -1343,11 +1630,6 @@ According to the U.S. Census Bureau, ibid. The number of civilian noninstitution
 
 ## To Do
 
-* Clean up EDA report
-    * Consolidate vim hack code using `lapply` and `rbindlist`
-    * Combine all estimates for specific analysis, e.g., "current contraceptive usage among females" into a single data.table
-        * Removes need to have naming scheme to manage numerous variables
-        * Makes it easy down the road to compare 2015-2017 with 2017-2019 estimates in order to evaluate whether to combine data sets for analysis
 * Start investigating nonusers
 
 

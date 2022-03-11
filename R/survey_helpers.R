@@ -33,7 +33,7 @@ tablena <- function(x) {
   table(x, useNA = 'always')
 }
 
-in_millions <- function(dt, do_round = TRUE, round_to = 2) {
+in_millions <- function(dt, round_to = 3, do_round = TRUE) {
   dt <- as.data.table(dt)
   cols <- c('estimate', 'se', '2.5 %', '97.5 %')
   sub_dt <- dt[, cols, with = FALSE] / 10^6
@@ -42,4 +42,31 @@ in_millions <- function(dt, do_round = TRUE, round_to = 2) {
   }
   dt[, (cols) := sub_dt]
   dt
+}
+
+rounded <- function(dt, round_to = 3) {
+  cols <- c('estimate', 'se', '2.5 %', '97.5 %')
+  sub_dt <- round(dt[, cols, with = FALSE], round_to)
+  dt[, (cols) := sub_dt]
+  dt
+}
+
+label_estimate <- function(est, title, domain = '', type = '', round_to = 3) {
+  if (type == 'total') {
+    dt <- in_millions(est, round_to)
+  } else if (type == 'proportion') {
+    dt <- rounded(est, round_to)
+  } else {
+    dt <- as.data.table(est)
+  }
+  dt[, .(
+    domain = domain,
+    title = title,
+    type = type,
+    level,
+    estimate,
+    se,
+    `2.5 %`,
+    `97.5 %`
+  )]
 }
