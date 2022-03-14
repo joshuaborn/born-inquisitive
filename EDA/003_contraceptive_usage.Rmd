@@ -258,7 +258,7 @@ fem_cur_estimates <- rbindlist(list(
     type = 'total'
   ),
   label_estimate(
-    svybyci(~count, ~MTHUSE3_factor, fem_svy, svytotal),
+    svyci(~MTHUSE3_factor, fem_svy, svytotal),
     title = 'by MTHUSE3',
     domain = fem_domain,
     type = 'total'
@@ -270,7 +270,7 @@ fem_cur_estimates <- rbindlist(list(
     type = 'proportion'
   ),
   label_estimate(
-    svybyci(~count, ~currently, fem_svy, svytotal),
+    svyci(~currently, fem_svy, svytotal),
     title = 'by whether currently using contraception',
     domain = fem_domain,
     type = 'total'
@@ -282,7 +282,7 @@ fem_cur_estimates <- rbindlist(list(
     type = 'proportion'
   ),
   label_estimate(
-    svybyci(~count, ~currently2, fem_svy, svytotal),
+    svyci(~currently2, fem_svy, svytotal),
     title = 'by whether currently using contraception, not counting sterility',
     domain = fem_domain,
     type = 'total'
@@ -294,9 +294,8 @@ fem_cur_estimates <- rbindlist(list(
     type = 'proportion'
   ),
   label_estimate(
-    svybyci(
-      ~count,
-      ~current_contraceptive_count_factor,
+    svyci(
+      ~factor(current_contraceptive_count_factor),
       subset(fem_svy, current_contraceptive_count > 0),
       svytotal
     ),
@@ -315,8 +314,7 @@ fem_cur_estimates <- rbindlist(list(
     type = 'proportion'
   ),
   label_estimate(
-    svybyci(
-      ~count,
+    svyci(
       ~METH3M1_factor,
       subset(fem_svy, current_contraceptive_count == 1),
       svytotal
@@ -326,8 +324,7 @@ fem_cur_estimates <- rbindlist(list(
     type = 'total'
   ),
   label_estimate(
-    svybyci(
-      ~count,
+    svyci(
       ~meth3m_pair_factor,
       subset(fem_svy, current_contraceptive_count == 2),
       svytotal
@@ -337,8 +334,7 @@ fem_cur_estimates <- rbindlist(list(
     type = 'total'
   ),
   label_estimate(
-    svybyci(
-      ~count,
+    svyci(
       ~current_condom_exclusive,
       subset(fem_svy, curr_meth2),
       svytotal
@@ -358,8 +354,7 @@ fem_cur_estimates <- rbindlist(list(
     type = 'proportion'
   ),
   label_estimate(
-    svybyci(
-      ~count,
+    svyci(
       ~current_withdrawal_exclusive,
       subset(fem_svy, curr_meth5),
       svytotal
@@ -401,8 +396,8 @@ fem_cur_props_by_method <- rounded(rbindlist(lapply(
   c(1:13, 15, 17:19, 23:24),
   function(x) {
     svyci(
-      as.formula(sprintf('~curr_meth%d', x)),
-      subset(fem_svy, current_contraceptive_count > 0),
+      as.formula(sprintf('~curr_meth%d & I(current_contraceptive_count > 0)', x)),
+      fem_svy,
       svyciprop
     )[
       , .(level = x, estimate, se, `2.5 %` = `2.5%`, `97.5 %` = `97.5%`)
@@ -416,10 +411,10 @@ fem_cur_totals_using_another_method <- rbindlist(lapply(
   c(1:13, 15, 17:19, 23:24),
   function(i) {
     dt <- svyci(
-      ~count,
-      subset(fem_svy, current_contraceptive_count > 1 & fem_cur_data[, get(sprintf('curr_meth%d', i))]),
+      as.formula(sprintf('~curr_meth%d & I(current_contraceptive_count > 1)', i)),
+      fem_svy,
       svytotal
-    )
+    )[level == TRUE]
     dt[, level := i]
     dt
   }
