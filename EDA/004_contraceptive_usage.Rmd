@@ -294,9 +294,7 @@ collect_estimate(
 
 ### Currently Using Contraception
 
-#### Methods
-
-##### Number of Methods Used
+#### Number of Methods Used
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -323,7 +321,7 @@ collect_estimate(
 ```
 
 
-##### By Method Used, With Those Currently Using Multiple Methods Counted Multiple Times
+#### By Method Used, With Those Currently Using Multiple Methods Counted Multiple Times
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -387,7 +385,7 @@ collect_estimate(
 ```
 
 
-##### By Method Used, Among Those Currently Using One Method Exclusively
+#### By Method Used, Among Those Currently Using One Method Exclusively
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -424,7 +422,7 @@ collect_estimate(
 ```
 
 
-##### By Method Used, Among Those Currently Using Multiple Methods
+#### By Method Used, Among Those Currently Using Multiple Methods
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -496,7 +494,7 @@ collect_estimate(
 ```
 
 
-##### By Other Method Used, Among Those Currently Using Calendar Methods
+#### By Other Method Used, Among Those Currently Using Calendar Methods
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -585,7 +583,7 @@ collect_estimate(
 ```
 
 
-##### By Other Method Used, Among Those Currently Condoms
+#### By Other Method Used, Among Those Currently Condoms
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -674,7 +672,7 @@ collect_estimate(
 ```
 
 
-##### By Other Method Used, Among Those Currently Using Withdrawal
+#### By Other Method Used, Among Those Currently Using Withdrawal
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
