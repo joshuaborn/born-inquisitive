@@ -168,6 +168,29 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   WGT2017_2019
 )])
 
+# remove sterility not from contraceptive procedure from METH3M series
+fem_2017_2019_data[
+  METH3M1 %in% 20:21,
+  `:=`(
+    METH3M1 = METH3M2,
+    METH3M2 = METH3M3,
+    METH3M3 = NA
+  )
+]
+fem_2017_2019_data[
+  METH3M2 %in% 20:21,
+  `:=`(
+    METH3M2 = METH3M3,
+    METH3M3 = NA
+  )
+]
+fem_2017_2019_data[
+  METH3M3 %in% 20:21,
+  `:=`(
+    METH3M3 = NA
+  )
+]
+
 # make existing variables factors
 fem_2017_2019_data[, `:=`(
   FECUND = factorize(FECUND, 'FECUND', fem_2017_2019_formats),
@@ -311,7 +334,7 @@ collect_estimate(
         subset(fem_2017_2019_svy, meth3m_count > 0),
         svyciprop
       )[
-        , .(level = x, estimate, se, `2.5 %` = `2.5%`, `97.5 %` = `97.5%`)
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
       ]
     }
   ))[
@@ -333,7 +356,7 @@ collect_estimate(
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
-    ~METH3M1,
+    ~factor(METH3M1),
     subset(fem_2017_2019_svy, meth3m_count == 1),
     svytotal
   ),
@@ -350,7 +373,7 @@ collect_estimate(
 
 collect_estimate(
   svyci(
-    ~METH3M1,
+    ~factor(METH3M1),
     subset(fem_2017_2019_svy, meth3m_count == 1),
     svymean
   ),
