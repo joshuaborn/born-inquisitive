@@ -95,26 +95,19 @@ collect_estimate <- function(est, title, domain = '', type = '', round_to = 3) {
 }
 ```
 
-```{r fem-load-raw-data}
-fem <- load_NSFG_data('2017_2019', 'FemResp')
-fem_data <- fem$Data
-fem_formats <- fem$Formats
-```
-
 
 # Current Usage
 
 
 ## Female Persons Aged 15-49
 
+```{r fem-load-data}
+fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
+fem_2017_2019_formats <- fem_2017_2019$Formats
+```
 
-### Currently Using Contraception
-
-
-### Not Currently Using Contraception
-
-```{r fem-not-cur-process-data}
-fem_not_cur_data <- copy(fem_data[, .(
+```{r fem-process-data, dependson=c('helper-functions', 'fem-load-data')}
+fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
   FECUND,
   HADSEX,
@@ -128,34 +121,34 @@ fem_not_cur_data <- copy(fem_data[, .(
   WGT2017_2019
 )])
 
-fem_not_cur_data[, `:=`(
+fem_2017_2019_data[, `:=`(
   count = 1,
-  FECUND = factorize(FECUND, 'FECUND', fem_formats),
-  HADSEX = factorize(HADSEX, 'HADSEX', fem_formats),
-  MTHUSE3 = factorize(MTHUSE3, 'MTHUSE3F', fem_formats),
-  PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_formats),
-  RSURGSTR = factorize(RSURGSTR, 'Y1N5C', fem_formats),
-  RCURPREG = factorize(RCURPREG, 'RCURPREG', fem_formats),
-  SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_formats)
+  FECUND = factorize(FECUND, 'FECUND', fem_2017_2019_formats),
+  HADSEX = factorize(HADSEX, 'HADSEX', fem_2017_2019_formats),
+  MTHUSE3 = factorize(MTHUSE3, 'MTHUSE3F', fem_2017_2019_formats),
+  PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
+  RCURPREG = factorize(RCURPREG, 'RCURPREG', fem_2017_2019_formats),
+  RSURGSTR = factorize(RSURGSTR, 'Y1N5C', fem_2017_2019_formats),
+  SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats)
 )]
 
-fem_not_cur_svy <- svydesign(
+fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
   strata = ~SEST,
-  data = fem_not_cur_data,
+  data = fem_2017_2019_data,
   nest = TRUE,
   weights = ~WGT2017_2019
 )
 ```
 
 
-```{r}
+```{r, dependson=c('fem-process-data')}
 fem_domain <- 'females aged 15-49 living in households in the United States'
 
 collect_estimate(
   svyci(
     ~I(as.integer(MTHUSE3) != 1),
-    fem_not_cur_svy,
+    fem_2017_2019_svy,
     svytotal
   ),
   title = 'not currently using contraception',
@@ -164,28 +157,33 @@ collect_estimate(
 )
 ```
 
+### Currently Using Contraception
+
+
+### Not Currently Using Contraception
+
 
 #### Not Currently Sexually Active
 
-```{r}
-fem_not_cur_data[, tablena(MTHUSE3)]
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[, tablena(MTHUSE3)]
 
-fem_not_cur_data[, tablena(SEX3MO)]
+fem_2017_2019_data[, tablena(SEX3MO)]
 
-fem_not_cur_data[, tablena(HADSEX)]
+fem_2017_2019_data[, tablena(HADSEX)]
 
-fem_not_cur_data[MTHUSE3 == 'Not Applicable (NA)', .N] ==
-fem_not_cur_data[SEX3MO == 'NO', .N] +
-  fem_not_cur_data[HADSEX == 'NO, R NEVER HAD INTERCOURSE', .N]
+fem_2017_2019_data[MTHUSE3 == 'Not Applicable (NA)', .N] ==
+  fem_2017_2019_data[SEX3MO == 'NO', .N] +
+  fem_2017_2019_data[HADSEX == 'NO, R NEVER HAD INTERCOURSE', .N]
 ```
 
 The respondents with `NA` for MTHUSE3 are respondents with "NO" for `SEX3MO` plus the respondents with "NO, R NEVER HAD INTERCOURSE" for `HADSEX`. Both these variables must be checked to estimate females who are not currently sexually active with a male.
 
-```{r}
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
     ~I(SEX3MO == 'NO' | HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
-    subset(fem_not_cur_svy, as.integer(MTHUSE3) != 1),
+    subset(fem_2017_2019_svy, as.integer(MTHUSE3) != 1),
     svytotal
   ),
   title = 'did not have intercourse with male in previous 3 months',
@@ -196,7 +194,7 @@ collect_estimate(
 collect_estimate(
   svyci(
     ~I(SEX3MO == 'NO' | HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
-    subset(fem_not_cur_svy, as.integer(MTHUSE3) != 1),
+    subset(fem_2017_2019_svy, as.integer(MTHUSE3) != 1),
     svymean
   ),
   title = 'did not have intercourse with male in previous 3 months',
@@ -210,19 +208,19 @@ Females not currently sexually active with a male accounts for the majority not 
 
 #### Pregnant
 
-```{r}
-fem_not_cur_data[, tablena(RCURPREG)]
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[, tablena(RCURPREG)]
 ```
 
 The pregnancy recode variable is straightforward.
 
 Going forward, estimates of those not currently using contraception will be cumulatively exclusive of previous estimates. For instance, those who are both pregnant and not currently sexually active will be counted once as not currently sexually active. Only those preganant and currently sexually active will be included in the next estimate.
 
-```{r}
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
     ~I(RCURPREG == 'YES (CURRENTLY PREGNANT)' & SEX3MO == 'YES'),
-    subset(fem_not_cur_svy, as.integer(MTHUSE3) != 1),
+    subset(fem_2017_2019_svy, as.integer(MTHUSE3) != 1),
     svytotal
   ),
   title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
@@ -233,7 +231,7 @@ collect_estimate(
 collect_estimate(
   svyci(
     ~I(RCURPREG == 'YES (CURRENTLY PREGNANT)' & SEX3MO == 'YES'),
-    subset(fem_not_cur_svy, as.integer(MTHUSE3) != 1),
+    subset(fem_2017_2019_svy, as.integer(MTHUSE3) != 1),
     svymean
   ),
   title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
@@ -254,9 +252,9 @@ This might not line up nicely with the `MTHUSE3` and `SEX3MO` variables, since S
 
 #### Infertile Due to Reasons Others Than Contraception
 
-```{r}
+```{r, dependson=c('fem-process-data')}
 kable(
-  fem_not_cur_data[
+  fem_2017_2019_data[
     as.integer(MTHUSE3) %in% 2:3 & as.integer(FECUND) == 1,
     .(CASEID, MTHUSE3, FECUND, RSURGSTR, PSURGSTR)
   ]
@@ -277,17 +275,17 @@ Generally, I don't think I should rely on the `FECUND` or `INFERT` recodes. I st
 
 ### Male Persons Aged 15-49
 
-```{r, male-load-raw-data}
+```{r male-load-data}
 male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
-
-male_data <- male_2017_2019$Data
 ```
 
-```{r, male-cur-process-data}
+```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
+male_2017_2019_data <- copy(male_2017_2019$Data)
+
 male_svy <- svydesign(
   ids = ~SECU,
   strata = ~SEST,
-  data = male_data,
+  data = male_2017_2019_data,
   nest = TRUE,
   weights = ~WGT2017_2019
 )
