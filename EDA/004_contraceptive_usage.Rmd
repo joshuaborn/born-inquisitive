@@ -93,6 +93,10 @@ collect_estimate <- function(est, title, domain = '', type = '', round_to = 3) {
     ]
   )
 }
+
+has_level <- function(x, ids) {
+  is.element(as.integer(x), ids)
+}
 ```
 
 
@@ -111,6 +115,9 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
   FECUND,
   HADSEX,
+  METH3M1,
+  METH3M2,
+  METH3M3,
   MTHUSE3,
   PSURGSTR,
   RCURPREG,
@@ -121,10 +128,13 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   WGT2017_2019
 )])
 
+# make existing variables factors
 fem_2017_2019_data[, `:=`(
-  count = 1,
   FECUND = factorize(FECUND, 'FECUND', fem_2017_2019_formats),
   HADSEX = factorize(HADSEX, 'HADSEX', fem_2017_2019_formats),
+  METH3M1 = factorize(METH3M1, 'METH3MF', fem_2017_2019_formats),
+  METH3M2 = factorize(METH3M2, 'METH3MF', fem_2017_2019_formats),
+  METH3M3 = factorize(METH3M3, 'METH3MF', fem_2017_2019_formats),
   MTHUSE3 = factorize(MTHUSE3, 'MTHUSE3F', fem_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
   RCURPREG = factorize(RCURPREG, 'RCURPREG', fem_2017_2019_formats),
@@ -132,6 +142,34 @@ fem_2017_2019_data[, `:=`(
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats)
 )]
 
+# create boolean variables for whether each specific method is currently used
+for (x in c(1:13, 15, 17:19, 23:24)) {
+  set(
+    fem_2017_2019_data,
+    j = sprintf('using3m_meth%d', x),
+    value = has_level(fem_2017_2019_data$METH3M1, x) |
+      has_level(fem_2017_2019_data$METH3M2, x) |
+      has_level(fem_2017_2019_data$METH3M3, x)
+  )
+}
+
+# create variable counting number of current methods
+fem_2017_2019_data[
+  ,
+  meth3m_count := rowSums(.SD),
+  .SDcols = patterns('^using3m_meth')
+]
+
+# calculate new variables dependent on other new calculated variable
+fem_2017_2019_data[, `:=`(
+  using3m = factor(fifelse(
+    meth3m_count > 0,
+    'Currently using contraception',
+    'Not currently using contraception'
+  ))
+)]
+
+# create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
   strata = ~SEST,
@@ -147,12 +185,23 @@ fem_domain <- 'females aged 15-49 living in households in the United States'
 
 collect_estimate(
   svyci(
-    ~I(as.integer(MTHUSE3) != 1),
+    ~I(meth3m_count > 0),
     fem_2017_2019_svy,
     svytotal
   ),
-  title = 'not currently using contraception',
+  title = 'currently using contraception',
   type = 'total',
+  domain = fem_domain
+)
+
+collect_estimate(
+  svyci(
+    ~I(meth3m_count > 0),
+    fem_2017_2019_svy,
+    svymean
+  ),
+  title = 'currently using contraception',
+  type = 'proportion',
   domain = fem_domain
 )
 ```
@@ -166,13 +215,13 @@ collect_estimate(
 #### Not Currently Sexually Active
 
 ```{r, dependson=c('fem-process-data')}
-fem_2017_2019_data[, tablena(MTHUSE3)]
+kable(tablena(fem_2017_2019_data$MTHUSE3))
 
-fem_2017_2019_data[, tablena(SEX3MO)]
+kable(tablena(fem_2017_2019_data$SEX3MO))
 
-fem_2017_2019_data[, tablena(HADSEX)]
+kable(tablena(fem_2017_2019_data$HADSEX))
 
-fem_2017_2019_data[MTHUSE3 == 'Not Applicable (NA)', .N] ==
+fem_2017_2019_data[MTHUSE3 == 'Not Applicable', .N] ==
   fem_2017_2019_data[SEX3MO == 'NO', .N] +
   fem_2017_2019_data[HADSEX == 'NO, R NEVER HAD INTERCOURSE', .N]
 ```
@@ -183,7 +232,7 @@ The respondents with `NA` for MTHUSE3 are respondents with "NO" for `SEX3MO` plu
 collect_estimate(
   svyci(
     ~I(SEX3MO == 'NO' | HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
-    subset(fem_2017_2019_svy, as.integer(MTHUSE3) != 1),
+    subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
   ),
   title = 'did not have intercourse with male in previous 3 months',
@@ -194,7 +243,7 @@ collect_estimate(
 collect_estimate(
   svyci(
     ~I(SEX3MO == 'NO' | HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
-    subset(fem_2017_2019_svy, as.integer(MTHUSE3) != 1),
+    subset(fem_2017_2019_svy, meth3m_count == 0),
     svymean
   ),
   title = 'did not have intercourse with male in previous 3 months',
@@ -203,7 +252,7 @@ collect_estimate(
 )
 ```
 
-Females not currently sexually active with a male accounts for the majority not using contraception. This has can be further decomposed by never had sex with male versus just not currently.
+Females not currently sexually active with a male accounts for the majority not using contraception. This can be further decomposed by never had sex with male versus just not currently.
 
 
 #### Pregnant
@@ -220,7 +269,7 @@ Going forward, estimates of those not currently using contraception will be cumu
 collect_estimate(
   svyci(
     ~I(RCURPREG == 'YES (CURRENTLY PREGNANT)' & SEX3MO == 'YES'),
-    subset(fem_2017_2019_svy, as.integer(MTHUSE3) != 1),
+    subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
   ),
   title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
@@ -231,7 +280,7 @@ collect_estimate(
 collect_estimate(
   svyci(
     ~I(RCURPREG == 'YES (CURRENTLY PREGNANT)' & SEX3MO == 'YES'),
-    subset(fem_2017_2019_svy, as.integer(MTHUSE3) != 1),
+    subset(fem_2017_2019_svy, meth3m_count == 0),
     svymean
   ),
   title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
@@ -241,7 +290,7 @@ collect_estimate(
 ```
 
 
-#### Reason for Not Using Contaception
+#### Reason for Not Using Contraception
 
 Section EH are questions asked of respondent to determine reason for not using contraception. The universe is 
 
@@ -255,8 +304,8 @@ This might not line up nicely with the `MTHUSE3` and `SEX3MO` variables, since S
 ```{r, dependson=c('fem-process-data')}
 kable(
   fem_2017_2019_data[
-    as.integer(MTHUSE3) %in% 2:3 & as.integer(FECUND) == 1,
-    .(CASEID, MTHUSE3, FECUND, RSURGSTR, PSURGSTR)
+    meth3m_count == 0 & has_level(MTHUSE3, 2:3) & as.integer(FECUND) == 1,
+    .(CASEID, meth3m_count, MTHUSE3, FECUND, RSURGSTR, PSURGSTR)
   ]
 )
 ```
