@@ -585,6 +585,94 @@ collect_estimate(
 ```
 
 
+##### By Other Method Used, Among Those Currently Condoms
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(list(
+    rbindlist(lapply(
+      c(1, 3:19, 22:24),
+      function(x) {
+        svyci(
+          as.formula(sprintf('~using3m_meth%d', x)),
+          subset(fem_2017_2019_svy, using3m_meth2),
+          svytotal
+        )[
+          level == TRUE,
+          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        ]
+      }
+    ))[
+      estimate > 0
+    ][
+      , .(
+        level = factorize(level, 'METH3MF', fem_2017_2019_formats),
+        estimate, se, `2.5 %`, `97.5 %`
+      )
+    ],
+    as.data.table(
+      svyci(
+        ~I(meth3m_count == 1),
+        subset(fem_2017_2019_svy, using3m_meth2),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(
+          level = 'Exclusively condom',
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ]
+    )
+  ))[order(-estimate)],
+  title = 'by other contraceptive method',
+  type = 'total',
+  domain = 'females currently using condoms'
+) |> standard_millions_plot()
+
+collect_estimate(
+  rbindlist(list(
+    rbindlist(lapply(
+      c(1, 3:19, 22:24),
+      function(x) {
+        svyci(
+          as.formula(sprintf('~using3m_meth%d', x)),
+          subset(fem_2017_2019_svy, using3m_meth2),
+          svymean
+        )[
+          level == TRUE,
+          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        ]
+      }
+    ))[
+      estimate > 0
+    ][
+      , .(
+        level = factorize(level, 'METH3MF', fem_2017_2019_formats),
+        estimate, se, `2.5 %`, `97.5 %`
+      )
+    ],
+    as.data.table(
+      svyci(
+        ~I(meth3m_count == 1),
+        subset(fem_2017_2019_svy, using3m_meth2),
+        svymean
+      )[
+        level == TRUE
+      ][
+        , .(
+          level = 'Exclusively condoms',
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ]
+    )
+  ))[order(-estimate)],
+  title = 'by other contraceptive method',
+  type = 'proportion',
+  domain = 'females currently using condoms'
+) |> standard_proportions_plot()
+```
+
 
 ### Not Currently Using Contraception
 
