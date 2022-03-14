@@ -456,7 +456,7 @@ collect_estimate(
   plot = TRUE
 ) |> standard_millions_plot() +
   labs(
-    subtitle = 'among females currently contraception',
+    subtitle = 'among females currently using contraception',
     title = 'Total persons currently using multiple contraceptive methods, by method',
     x = 'Number of persons'
   )
@@ -490,7 +490,7 @@ collect_estimate(
   plot = TRUE
 ) |> standard_proportions_plot() +
   labs(
-    subtitle = 'among females currently contraception',
+    subtitle = 'among females currently using contraception',
     title = 'Proportion of persons currently using multiple contraceptive methods, by method'
   )
 ```
@@ -670,6 +670,95 @@ collect_estimate(
   title = 'by other contraceptive method',
   type = 'proportion',
   domain = 'females currently using condoms'
+) |> standard_proportions_plot()
+```
+
+
+##### By Other Method Used, Among Those Currently Using Withdrawal
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(list(
+    rbindlist(lapply(
+      c(1:4, 6:19, 22:24),
+      function(x) {
+        svyci(
+          as.formula(sprintf('~using3m_meth%d', x)),
+          subset(fem_2017_2019_svy, using3m_meth5),
+          svytotal
+        )[
+          level == TRUE,
+          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        ]
+      }
+    ))[
+      estimate > 0
+    ][
+      , .(
+        level = factorize(level, 'METH3MF', fem_2017_2019_formats),
+        estimate, se, `2.5 %`, `97.5 %`
+      )
+    ],
+    as.data.table(
+      svyci(
+        ~I(meth3m_count == 1),
+        subset(fem_2017_2019_svy, using3m_meth5),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(
+          level = 'Exclusively withdrawal',
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ]
+    )
+  ))[order(-estimate)],
+  title = 'by other contraceptive method',
+  type = 'total',
+  domain = 'females currently using withdrawal'
+) |> standard_millions_plot()
+
+collect_estimate(
+  rbindlist(list(
+    rbindlist(lapply(
+      c(1:4, 6:19, 22:24),
+      function(x) {
+        svyci(
+          as.formula(sprintf('~using3m_meth%d', x)),
+          subset(fem_2017_2019_svy, using3m_meth5),
+          svymean
+        )[
+          level == TRUE,
+          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        ]
+      }
+    ))[
+      estimate > 0
+    ][
+      , .(
+        level = factorize(level, 'METH3MF', fem_2017_2019_formats),
+        estimate, se, `2.5 %`, `97.5 %`
+      )
+    ],
+    as.data.table(
+      svyci(
+        ~I(meth3m_count == 1),
+        subset(fem_2017_2019_svy, using3m_meth5),
+        svymean
+      )[
+        level == TRUE
+      ][
+        , .(
+          level = 'Exclusively withdrawal',
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ]
+    )
+  ))[order(-estimate)],
+  title = 'by other contraceptive method',
+  type = 'proportion',
+  domain = 'females currently using withdrawal'
 ) |> standard_proportions_plot()
 ```
 
