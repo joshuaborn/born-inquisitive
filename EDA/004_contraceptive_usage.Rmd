@@ -164,21 +164,11 @@ collect_estimate <- function(est, title, domain = '', type = '', round_to = 3, p
     )]
   ))
 
-  this_estimate <- env$estimates[
+  env$estimates[
     title == this_title &
       domain == this_domain &
       type == this_type
   ]
-
-  if (plot) {
-    if (type == 'proportion') {
-      standard_proportions_plot(this_estimate)
-    } else {
-      standard_millions_plot(this_estimate)
-    }
-  } else {
-    kable(this_estimate)
-  }
 }
 ```
 
@@ -287,7 +277,7 @@ collect_estimate(
   title = 'currently using contraception',
   type = 'total',
   domain = 'females aged 15-49 living in households in the United States'
-)
+) |> kable()
 
 collect_estimate(
   svyci(
@@ -298,7 +288,7 @@ collect_estimate(
   title = 'currently using contraception',
   type = 'proportion',
   domain = 'females aged 15-49 living in households in the United States'
-)
+) |> kable()
 ```
 
 
@@ -318,7 +308,7 @@ collect_estimate(
   title = 'by number of contraceptive methods used',
   domain = 'females currently using contraception',
   type = 'total'
-)
+) |> kable()
 
 collect_estimate(
   svyci(
@@ -329,7 +319,7 @@ collect_estimate(
   title = 'by number of contraceptive methods used',
   domain = 'females currently using contraception',
   type = 'proportion'
-)
+) |> kable()
 ```
 
 
@@ -359,9 +349,8 @@ collect_estimate(
   ],
   title = 'by current contraceptive method',
   domain = 'females currently using contraception',
-  type = 'total',
-  plot = TRUE
-) +
+  type = 'total'
+) |> standard_millions_plot() +
   labs(
     subtitle = 'with those using multiple methods counted multiple times',
     title = 'Total persons by current contraceptive method',
@@ -389,9 +378,8 @@ collect_estimate(
   ],
   title = 'by current contraceptive method',
   domain = 'females currently using contraception',
-  type = 'proportion',
-  plot = TRUE
-) +
+  type = 'proportion'
+) |> standard_proportions_plot() +
   labs(
     subtitle = 'with those using multiple methods counted multiple times',
     title = 'Proportion of persons by current contraceptive method'
@@ -412,7 +400,7 @@ collect_estimate(
   domain = 'females currently using one method exclusively',
   type = 'total',
   plot = TRUE
-) +
+) |> standard_millions_plot() +
   labs(
     subtitle = 'among females currently using one method exclusively',
     title = 'Total persons by current contraceptive method',
@@ -427,9 +415,8 @@ collect_estimate(
   ),
   title = 'by current contraceptive method',
   domain = 'females currently using one method exclusively',
-  type = 'proportion',
-  plot = TRUE
-) +
+  type = 'proportion'
+) |> standard_proportions_plot() +
   labs(
     subtitle = 'among females currently using one method exclusively',
     title = 'Proportion of persons by current contraceptive method'
@@ -467,7 +454,7 @@ collect_estimate(
   domain = 'females currently using contraception',
   type = 'total',
   plot = TRUE
-) +
+) |> standard_millions_plot() +
   labs(
     subtitle = 'among females currently contraception',
     title = 'Total persons currently using multiple contraceptive methods, by method',
@@ -501,7 +488,7 @@ collect_estimate(
   domain = 'females currently using contraception',
   type = 'proportion',
   plot = TRUE
-) +
+) |> standard_proportions_plot() +
   labs(
     subtitle = 'among females currently contraception',
     title = 'Proportion of persons currently using multiple contraceptive methods, by method'
@@ -534,7 +521,8 @@ collect_estimate(
         estimate, se, `2.5 %`, `97.5 %`
       )
     ],
-    data.table(svyci(
+    as.data.table(
+      svyci(
         ~I(meth3m_count == 1),
         subset(fem_2017_2019_svy, using3m_meth8),
         svytotal
@@ -551,7 +539,7 @@ collect_estimate(
   title = 'by other contraceptive method',
   type = 'total',
   domain = 'females currently using calendar methods'
-)
+) |> kable()
 
 collect_estimate(
   rbindlist(list(
@@ -575,7 +563,8 @@ collect_estimate(
         estimate, se, `2.5 %`, `97.5 %`
       )
     ],
-    data.table(svyci(
+    as.data.table(
+      svyci(
         ~I(meth3m_count == 1),
         subset(fem_2017_2019_svy, using3m_meth8),
         svymean
@@ -592,7 +581,7 @@ collect_estimate(
   title = 'by other contraceptive method',
   type = 'proportion',
   domain = 'females currently using calendar methods'
-)
+) |> kable()
 ```
 
 
@@ -626,7 +615,7 @@ collect_estimate(
   title = 'did not have intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception' 
-)
+) |> kable()
 
 collect_estimate(
   svyci(
@@ -637,7 +626,7 @@ collect_estimate(
   title = 'did not have intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception' 
-)
+) |> kable()
 ```
 
 Females not currently sexually active with a male accounts for the majority not using contraception. This can be further decomposed by never had sex with male versus just not currently.
@@ -663,7 +652,7 @@ collect_estimate(
   title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception' 
-)
+) |> kable()
 
 collect_estimate(
   svyci(
@@ -674,7 +663,7 @@ collect_estimate(
   title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception' 
-)
+) |> kable()
 ```
 
 
@@ -690,12 +679,10 @@ This might not line up nicely with the `MTHUSE3` and `SEX3MO` variables, since S
 #### Infertile Due to Reasons Others Than Contraception
 
 ```{r, dependson=c('fem-process-data')}
-kable(
-  fem_2017_2019_data[
-    meth3m_count == 0 & has_level(MTHUSE3, 2:3) & as.integer(FECUND) == 1,
-    .(CASEID, meth3m_count, MTHUSE3, FECUND, RSURGSTR, PSURGSTR)
-  ]
-)
+fem_2017_2019_data[
+  meth3m_count == 0 & has_level(MTHUSE3, 2:3) & as.integer(FECUND) == 1,
+  .(CASEID, meth3m_count, MTHUSE3, FECUND, RSURGSTR, PSURGSTR)
+] |> kable()
 ```
 
 This appears inconsistent. It shouldn't be possible to have `FECUND` of "SURGICALLY STERILE, CONTRACEPTIVE" and to not have used a contraceptive at last intercourse, unless, perhaps, the surgery happened in between the last intercourse and the interview, which seems unlikely. `FECUND` takes into account partner's sterilization, but partner being sterilized contraceptively and respondent not only accounts for 2 rows in this inconsistency. There might be something going on with contraceptive surgical sterilization not counting as contraceptive in respondent's minds or something. Or perhaps this is the result of statistical perturbation done unwell.
