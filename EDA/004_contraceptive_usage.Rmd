@@ -21,8 +21,10 @@ source(here('R/survey_helpers.R'))
 source(here('R/import.R'))
 
 opts_chunk$set(
+  cache = TRUE,
   echo = TRUE,
-  cache = TRUE
+  fig.height = 8,
+  fig.width = 12
 )
 ```
 
@@ -49,11 +51,49 @@ rounded <- function(dt, round_to = 3) {
   dt
 }
 
+has_level <- function(x, ids) {
+  is.element(as.integer(x), ids)
+}
+
+standard_millions_plot <- function(data) {
+  ggplot(
+    data = data,
+    mapping = aes(
+      y = reorder(level, estimate)
+    )
+  ) +
+  geom_point(
+    aes(
+      x = estimate
+    ),
+    size = 2
+  ) +
+  geom_segment(
+    aes(
+      yend = reorder(level, estimate),
+      x = `2.5 %`,
+      xend = `97.5 %`
+    ),
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+    size = 0.5
+  ) +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+  ) +
+  scale_y_discrete(
+    labels = scales::wrap_format(50)
+  ) +
+  theme_bw() +
+  theme(
+    axis.title.y = element_blank()
+  )
+}
+
 env <- new.env()
 
 env$estimates <- data.table()
 
-collect_estimate <- function(est, title, domain = '', type = '', round_to = 3) {
+collect_estimate <- function(est, title, domain = '', type = '', round_to = 3, plot = FALSE) {
   this_title <- title
   this_domain <- domain
   this_type <- type
@@ -85,17 +125,17 @@ collect_estimate <- function(est, title, domain = '', type = '', round_to = 3) {
     )]
   ))
 
-  kable(
-    env$estimates[
-      title == this_title &
-        domain == this_domain &
-        type == this_type
-    ]
-  )
-}
+  this_estimate <- env$estimates[
+    title == this_title &
+      domain == this_domain &
+      type == this_type
+  ]
 
-has_level <- function(x, ids) {
-  is.element(as.integer(x), ids)
+  if (plot) {
+    standard_millions_plot(this_estimate)
+  } else {
+    kable(this_estimate)
+  }
 }
 ```
 
@@ -143,7 +183,7 @@ fem_2017_2019_data[, `:=`(
 )]
 
 # create boolean variables for whether each specific method is currently used
-for (x in c(1:13, 15, 17:19, 23:24)) {
+for (x in c(1:19, 22:24)) {
   set(
     fem_2017_2019_data,
     j = sprintf('using3m_meth%d', x),
@@ -160,15 +200,6 @@ fem_2017_2019_data[
   .SDcols = patterns('^using3m_meth')
 ]
 
-# calculate new variables dependent on other new calculated variable
-fem_2017_2019_data[, `:=`(
-  using3m = factor(fifelse(
-    meth3m_count > 0,
-    'Currently using contraception',
-    'Not currently using contraception'
-  ))
-)]
-
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -181,8 +212,6 @@ fem_2017_2019_svy <- svydesign(
 
 
 ```{r, dependson=c('fem-process-data')}
-fem_domain <- 'females aged 15-49 living in households in the United States'
-
 collect_estimate(
   svyci(
     ~I(meth3m_count > 0),
@@ -191,7 +220,7 @@ collect_estimate(
   ),
   title = 'currently using contraception',
   type = 'total',
-  domain = fem_domain
+  domain = 'females aged 15-49 living in households in the United States'
 )
 
 collect_estimate(
@@ -202,11 +231,134 @@ collect_estimate(
   ),
   title = 'currently using contraception',
   type = 'proportion',
-  domain = fem_domain
+  domain = 'females aged 15-49 living in households in the United States'
 )
 ```
 
+
 ### Currently Using Contraception
+
+#### Methods
+
+##### Number of Methods Used
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(meth3m_count),
+    subset(fem_2017_2019_svy, meth3m_count > 0),
+    svytotal
+  ),
+  title = 'by number of contraceptive methods used',
+  domain = 'females currently using contraception',
+  type = 'total'
+)
+
+collect_estimate(
+  svyci(
+    ~factor(meth3m_count),
+    subset(fem_2017_2019_svy, meth3m_count > 0),
+    svymean
+  ),
+  title = 'by number of contraceptive methods used',
+  domain = 'females currently using contraception',
+  type = 'proportion'
+)
+```
+
+
+##### By Method Used, With Those Currently Using Multiple Methods Counted Multiple Times
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:19, 22:24),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~using3m_meth%d', x)),
+        fem_2017_2019_svy,
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'METH3MF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  title = 'by current contraceptive method',
+  domain = 'females currently using contraception',
+  type = 'total',
+  plot = TRUE
+) +
+  labs(
+    subtitle = 'with those using multiple methods counted multiple times',
+    title = 'Total persons by current contraceptive method',
+    x = 'Number of persons'
+  )
+
+collect_estimate(
+  rbindlist(lapply(
+    c(1:19, 22:24),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~using3m_meth%d', x)),
+        subset(fem_2017_2019_svy, meth3m_count > 0),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %` = `2.5%`, `97.5 %` = `97.5%`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'METH3MF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  title = 'by current contraceptive method',
+  domain = 'females currently using contraception',
+  type = 'proportion'
+)
+```
+
+
+##### By Method Used, Among Those Currently Using One Method Exclusively
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~METH3M1,
+    subset(fem_2017_2019_svy, meth3m_count == 1),
+    svytotal
+  ),
+  title = 'by current contraceptive method',
+  domain = 'females currently using one method exclusively',
+  type = 'total',
+  plot = TRUE
+) +
+  labs(
+    subtitle = 'among females currently using one method exclusively',
+    title = 'Total persons by current contraceptive method',
+    x = 'Number of persons'
+  )
+
+collect_estimate(
+  svyci(
+    ~METH3M1,
+    subset(fem_2017_2019_svy, meth3m_count == 1),
+    svymean
+  ),
+  title = 'by current contraceptive method',
+  domain = 'females currently using one method exclusively',
+  type = 'proportion'
+)
+```
 
 
 ### Not Currently Using Contraception
@@ -322,7 +474,7 @@ Generally, I don't think I should rely on the `FECUND` or `INFERT` recodes. I st
 * Check everything against `CONSTAT` series recodes
 
 
-### Male Persons Aged 15-49
+## Male Persons Aged 15-49
 
 ```{r male-load-data}
 male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
@@ -343,22 +495,22 @@ male_svy <- svydesign(
 According to the U.S. Census Bureau, ibid. The number of civilian noninstitutionalized male persons in the United States is ~74,238,000.
 
 
-## Outline
+# Outline
 
-### Frames for analysis
+## Frames for analysis
 
-#### By Table
+### By Table
 
 * Female persons
 * Male persons
 
-#### By Columns
+### By Columns
 
 * "Current" -- at last intercourse with male in past 3 months
 * "Recent" -- over previous year
 * "Ever" -- over lifetime
 
-### Questions for Users
+## Questions for Users
 
 * Which contraceptives?
 * How many?
@@ -367,7 +519,7 @@ According to the U.S. Census Bureau, ibid. The number of civilian noninstitution
 * For "recent" and for multiple methods users, simultaneously or alternatively?
 * For "ever" and who have stopped using a method, why did they stop?
 
-### Questions for Nonusers
+## Questions for Nonusers
 
 * Not sexually active with male?
     * Ever or just now?
@@ -380,7 +532,7 @@ According to the U.S. Census Bureau, ibid. The number of civilian noninstitution
 * Trying to get pregnant?
 * For those fertile, heterosexually active, not using contraception, and not desiring pregnancy, why no contraception usage?
 
-### Covariates/Subdomains
+## Covariates/Subdomains
 
 * Want children in future, but not just not now
 * By sex education
@@ -389,6 +541,6 @@ According to the U.S. Census Bureau, ibid. The number of civilian noninstitution
     * Roman Catholics are a subdomain of interest.
 * Second phase vs. first-phase (to investigate nonresponse bias)
 
-### Other
+## Other
 
 * Try combining with 2015-2017 data for more precise estimates?
