@@ -278,7 +278,9 @@ collect_estimate(
   type = 'total',
   domain = 'females aged 15-49 living in households in the United States'
 ) |> kable()
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
     ~I(meth3m_count > 0),
@@ -307,7 +309,9 @@ collect_estimate(
   domain = 'females currently using contraception',
   type = 'total'
 ) |> kable()
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
     ~factor(meth3m_count),
@@ -354,7 +358,9 @@ collect_estimate(
     title = 'Total persons by current contraceptive method',
     x = 'Number of persons'
   )
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(lapply(
     c(1:19, 22:24),
@@ -404,7 +410,9 @@ collect_estimate(
     title = 'Total persons by current contraceptive method',
     x = 'Number of persons'
   )
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
     ~factor(METH3M1),
@@ -458,10 +466,12 @@ collect_estimate(
     title = 'Total persons currently using multiple contraceptive methods, by method',
     x = 'Number of persons'
   )
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(lapply(
-    c(1:19, 22:24),
+    c(1:9, 13, 17:19, 23:24),
     function(x) {
       svyci(
         ~I(meth3m_count > 1),
@@ -469,10 +479,9 @@ collect_estimate(
           fem_2017_2019_svy,
           fem_2017_2019_data[, get(sprintf('using3m_meth%d', x))]
         ),
-        svymean
+        svyciprop
       )[
-        level == TRUE,
-        .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
       ]
     }
   ))[
@@ -538,7 +547,9 @@ collect_estimate(
   type = 'total',
   domain = 'females currently using calendar methods'
 ) |> kable()
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(list(
     rbindlist(lapply(
@@ -547,14 +558,14 @@ collect_estimate(
         svyci(
           as.formula(sprintf('~using3m_meth%d', x)),
           subset(fem_2017_2019_svy, using3m_meth8),
-          svymean
+          svyciprop
         )[
-          level == TRUE,
+          ,
           .(level = x, estimate, se, `2.5 %`, `97.5 %`)
         ]
       }
     ))[
-      estimate > 0
+      `2.5 %` > 0.0001
     ][
       , .(
         level = factorize(level, 'METH3MF', fem_2017_2019_formats),
@@ -565,10 +576,8 @@ collect_estimate(
       svyci(
         ~I(meth3m_count == 1),
         subset(fem_2017_2019_svy, using3m_meth8),
-        svymean
+        svyciprop
       )[
-        level == TRUE
-      ][
         , .(
           level = 'Exclusively calendar rhythm, Standard Days, or Cycle Beads method',
           estimate, se, `2.5 %`, `97.5 %`
@@ -627,7 +636,9 @@ collect_estimate(
   type = 'total',
   domain = 'females currently using condoms'
 ) |> standard_millions_plot()
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(list(
     rbindlist(lapply(
@@ -636,14 +647,14 @@ collect_estimate(
         svyci(
           as.formula(sprintf('~using3m_meth%d', x)),
           subset(fem_2017_2019_svy, using3m_meth2),
-          svymean
+          svyciprop
         )[
-          level == TRUE,
+          ,
           .(level = x, estimate, se, `2.5 %`, `97.5 %`)
         ]
       }
     ))[
-      estimate > 0
+      `2.5 %` > 0.0001
     ][
       , .(
         level = factorize(level, 'METH3MF', fem_2017_2019_formats),
@@ -654,10 +665,8 @@ collect_estimate(
       svyci(
         ~I(meth3m_count == 1),
         subset(fem_2017_2019_svy, using3m_meth2),
-        svymean
+        svyciprop
       )[
-        level == TRUE
-      ][
         , .(
           level = 'Exclusively condoms',
           estimate, se, `2.5 %`, `97.5 %`
@@ -716,7 +725,9 @@ collect_estimate(
   type = 'total',
   domain = 'females currently using withdrawal'
 ) |> standard_millions_plot()
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(list(
     rbindlist(lapply(
@@ -725,14 +736,13 @@ collect_estimate(
         svyci(
           as.formula(sprintf('~using3m_meth%d', x)),
           subset(fem_2017_2019_svy, using3m_meth5),
-          svymean
+          svyciprop
         )[
-          level == TRUE,
-          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+          , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
         ]
       }
     ))[
-      estimate > 0
+      `2.5 %` > 0.0001
     ][
       , .(
         level = factorize(level, 'METH3MF', fem_2017_2019_formats),
@@ -743,10 +753,8 @@ collect_estimate(
       svyci(
         ~I(meth3m_count == 1),
         subset(fem_2017_2019_svy, using3m_meth5),
-        svymean
+        svyciprop
       )[
-        level == TRUE
-      ][
         , .(
           level = 'Exclusively withdrawal',
           estimate, se, `2.5 %`, `97.5 %`
@@ -805,7 +813,9 @@ collect_estimate(
   type = 'total',
   domain = 'females currently using withdrawal'
 ) |> standard_millions_plot()
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(list(
     rbindlist(lapply(
@@ -814,14 +824,13 @@ collect_estimate(
         svyci(
           as.formula(sprintf('~using3m_meth%d', x)),
           subset(fem_2017_2019_svy, using3m_meth1),
-          svymean
+          svyciprop
         )[
-          level == TRUE,
-          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+          , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
         ]
       }
     ))[
-      estimate > 0
+      `2.5 %` > 0.0001
     ][
       , .(
         level = factorize(level, 'METH3MF', fem_2017_2019_formats),
@@ -832,10 +841,8 @@ collect_estimate(
       svyci(
         ~I(meth3m_count == 1),
         subset(fem_2017_2019_svy, using3m_meth1),
-        svymean
+        svyciprop
       )[
-        level == TRUE
-      ][
         , .(
           level = 'Exclusively pill',
           estimate, se, `2.5 %`, `97.5 %`
@@ -880,7 +887,9 @@ collect_estimate(
   type = 'total',
   domain = 'females not currently using contraception' 
 ) |> kable()
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
     ~I(SEX3MO == 'NO' | HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
@@ -917,7 +926,9 @@ collect_estimate(
   type = 'total',
   domain = 'females not currently using contraception' 
 ) |> kable()
+```
 
+```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
     ~I(RCURPREG == 'YES (CURRENTLY PREGNANT)' & SEX3MO == 'YES'),
@@ -956,7 +967,6 @@ Generally, I don't think I should rely on the `FECUND` or `INFERT` recodes. I st
 
 ## To Do
 
-* Use svyciprop instead of svymean
 * Finish estimating current non-users
 * Calculate overall current contraceptive usage rate
 * Check everything against `CONSTAT` series recodes

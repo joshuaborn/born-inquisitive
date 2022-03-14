@@ -38,10 +38,10 @@ svybyci <- function(formula, by, design, FUN, ordered = TRUE) {
   this_ci <- confint(this_stat, df = degf(design))
   colnames(this_stat) <- c('level', 'estimate', 'se')
 
-  dt <- cbind(
+  dt <- as.data.table(cbind(
     this_stat,
     this_ci
-  )
+  ))
 
   setnames(dt, rename_CI_columns)
 
