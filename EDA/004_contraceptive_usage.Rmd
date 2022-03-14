@@ -635,7 +635,7 @@ Females not currently sexually active with a male accounts for the majority not 
 #### Pregnant
 
 ```{r, dependson=c('fem-process-data')}
-fem_2017_2019_data[, tablena(RCURPREG)]
+fem_2017_2019_data[, tablena(RCURPREG)] |> kable()
 ```
 
 The pregnancy recode variable is straightforward.
