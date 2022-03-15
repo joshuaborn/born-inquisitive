@@ -211,6 +211,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   MTHUSE3,
   OTHR,
   OVAREM,
+  P1YRELP,
   POSIBLMN,
   POSIBLPG,
   PSURGSTR,
@@ -274,6 +275,7 @@ fem_2017_2019_data[, `:=`(
   MTHUSE3 = factorize(MTHUSE3, 'MTHUSE3F', fem_2017_2019_formats),
   OTHR = factorize(OTHR, 'Y1N5C', fem_2017_2019_formats),
   OVAREM = factorize(OVAREM, 'Y1N5C', fem_2017_2019_formats),
+  P1YRELP = factorize(P1YRELP, 'P1YRELP', fem_2017_2019_formats),
   POSIBLPG = factorize(POSIBLPG, 'Y1N5RDF', fem_2017_2019_formats),
   POSIBLMN = factorize(POSIBLMN, 'Y1N5RDF', fem_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
@@ -1291,7 +1293,7 @@ There are some respondents in this category. The universe for the `POSIBLPGN` va
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
-  svyci(
+   svyci(
     ~I(
       SEX3MO == 'YES' & POSIBLPG == 'No'
     ),
@@ -1323,17 +1325,33 @@ collect_estimate(
 ##### Married or Cohabitating with Physically Infertile Partner
 
 ```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[, tablena(P1YRELP) ] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  SEX3MO == 'YES' & POSIBLPG == 'Yes' & POSIBLMN == 'No',
-  tablena(meth3m_count)
+  SEX3MO == 'YES' &
+    POSIBLPG == 'Yes' &
+    POSIBLMN == 'No' &
+    meth3m_count == 0
+  ,
+  tablena(
+    P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+      P1YRELP == 'Current cohabiting partner'
+  )
 ] |> kable()
 ```
+
+Care must be taken when it is reported that respondent's husband or cohabitating partner is physically infertile that last intercourse was with husband or cohabitating partner.
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
     ~I(
-      SEX3MO == 'YES' & POSIBLPG == 'Yes' & POSIBLMN == 'No'
+      SEX3MO == 'YES' & POSIBLPG == 'Yes' & POSIBLMN == 'No' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+          P1YRELP == 'Current cohabiting partner'
+      )
     ),
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
@@ -1348,7 +1366,10 @@ collect_estimate(
 collect_estimate(
   svyci(
     ~I(
-      SEX3MO == 'YES' & POSIBLPG == 'Yes' & POSIBLMN == 'No'
+      SEX3MO == 'YES' & POSIBLPG == 'Yes' & POSIBLMN == 'No' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+          P1YRELP == 'Current cohabiting partner'
+      )
     ),
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svyciprop
@@ -1359,7 +1380,7 @@ collect_estimate(
 ) |> kable()
 ```
 
-This case is very rare, and by the same reasoning as not counting vasectomies not reported as contraceptive use, females could be having intercourse with someone other than their identified partners. If either of these cases are to be counted separately, care should be taken to check whether respondent's last intercourse was with identified husband / cohabiting partner.
+This case is very rare.
 
 
 ## To Do
