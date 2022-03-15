@@ -191,6 +191,18 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   DATFEMOP_Y3,
   DATFEMOP_Y4,
   FECUND,
+  FMEDREAS1,
+  FMEDREAS2,
+  FMEDREAS3,
+  FMEDREAS4,
+  FMEDREAS7,
+  FMEDREAS8,
+  FMEDREAS9,
+  FMEDREAS10,
+  FMEDREAS11,
+  FMEDREAS19,
+  FMEDREAS20,
+  FMEDREAS21,
   HADSEX,
   METH3M1,
   METH3M2,
@@ -198,10 +210,15 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   MTHUSE3,
   PSURGSTR,
   RCURPREG,
+  RHADALL,
+  RHADALL2,
+  RHADALL3,
+  RHADALL4,
   RSURGSTR,
   SECU,
   SEST,
   SEX3MO,
+  STRLOPER,
   WGT2017_2019
 )])
 
@@ -231,6 +248,18 @@ fem_2017_2019_data[
 # make existing variables factors
 fem_2017_2019_data[, `:=`(
   FECUND = factorize(FECUND, 'FECUND', fem_2017_2019_formats),
+  FMEDREAS1 = factorize(FMEDREAS1, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS2 = factorize(FMEDREAS2, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS3 = factorize(FMEDREAS3, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS4 = factorize(FMEDREAS4, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS7 = factorize(FMEDREAS7, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS8 = factorize(FMEDREAS8, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS9 = factorize(FMEDREAS9, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS10 = factorize(FMEDREAS10, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS11 = factorize(FMEDREAS11, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS19 = factorize(FMEDREAS19, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS20 = factorize(FMEDREAS20, 'FMEDREASF', fem_2017_2019_formats),
+  FMEDREAS21 = factorize(FMEDREAS21, 'FMEDREASF', fem_2017_2019_formats),
   HADSEX = factorize(HADSEX, 'HADSEX', fem_2017_2019_formats),
   METH3M1 = factorize(METH3M1, 'METH3MF', fem_2017_2019_formats),
   METH3M2 = factorize(METH3M2, 'METH3MF', fem_2017_2019_formats),
@@ -238,8 +267,13 @@ fem_2017_2019_data[, `:=`(
   MTHUSE3 = factorize(MTHUSE3, 'MTHUSE3F', fem_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
   RCURPREG = factorize(RCURPREG, 'RCURPREG', fem_2017_2019_formats),
+  RHADALL = factorize(RHADALL, 'Y1N5C', fem_2017_2019_formats),
+  RHADALL2 = factorize(RHADALL2, 'Y1N5C', fem_2017_2019_formats),
+  RHADALL3 = factorize(RHADALL3, 'Y1N5C', fem_2017_2019_formats),
+  RHADALL4 = factorize(RHADALL4, 'Y1N5C', fem_2017_2019_formats),
   RSURGSTR = factorize(RSURGSTR, 'Y1N5C', fem_2017_2019_formats),
-  SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats)
+  SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
+  STRLOPER = factorize(STRLOPER, 'STRLOPER', fem_2017_2019_formats)
 )]
 
 # create boolean variables for whether each specific method is currently used
@@ -299,6 +333,11 @@ collect_estimate(
 
 
 ### Currently Using Contraception
+
+```{r, dependson=c('fem-process-data')}
+kable(fem_2017_2019_formats[format_name == 'METH3MF'])
+```
+
 
 #### Number of Methods Used
 
@@ -959,28 +998,154 @@ This might not line up nicely with the `MTHUSE3` and `SEX3MO` variables, since S
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  meth3m_count == 0 & has_level(MTHUSE3, 2:3) & as.integer(FECUND) == 1,
+  meth3m_count == 0 & SEX3MO == 'YES' & as.integer(FECUND) == 1,
   .(
     CASEID,
-    meth3m_count,
-    MTHUSE3,
-    FECUND,
-    RSURGSTR,
     DATFEMOP_Y,
     DATFEMOP_Y2,
     DATFEMOP_Y3,
-    PSURGSTR
+    FECUND,
+    MTHUSE3,
+    PSURGSTR,
+    RSURGSTR,
+    STRLOPER,
+    meth3m_count
   )
 ] |> kable()
 ```
 
-This appears inconsistent. It shouldn't be possible to have `FECUND` of "SURGICALLY STERILE, CONTRACEPTIVE" and to not have used a contraceptive at last intercourse, unless, perhaps, the surgery happened in between the last intercourse and the interview, which seems unlikely. `FECUND` takes into account partner's sterilization, but partner being sterilized contraceptively and respondent not only accounts for 2 rows in this inconsistency. There might be something going on with contraceptive surgical sterilization not counting as contraceptive in respondent's minds or something. Or perhaps this is the result of statistical perturbation done unwell.
 
-Generally, I don't think I should rely on the `FECUND` or `INFERT` recodes. I still want to count this kind of not using contraception while still engaged in sexual intercourse with a male, so I'll calculate infertility separately, perhaps using the recode logic as a guide.
+This appears inconsistent. It shouldn't be possible to have `FECUND` of "SURGICALLY STERILE, CONTRACEPTIVE" and to not have used a contraceptive at last intercourse, unless, perhaps, the surgery happened in between the last intercourse and the interview, which seems unlikely.
+
+The `DATFEMOP_Y` series was checked to see if these respondents' apparent contradiction is due to sterilizing operations occurring in the interval between last intercourse and the NSFG interview. Since many sterilizing operations occurred years earlier than the interview, this is not the case.
+
+It appears that the issue with these problem cases is due to how `FECUND` encodes contraceptive intent. Firstly, respondents are only asked about motives for sterilizing operations if the operation occurred in the five years preceding the interview. Any tubal ligations and vasectomies for which there is no motive information, either because the respondents did not answer the motive questions or because the operation occurred more than five years previous, are assumed to have contraceptive intent.
+
+Furthermore, among those sterilizing operations for which there is motive information, the "burden of proof" in the `FECUND` recode is on non-contraceptive intent. For instance, if the respondent indicates at the time of the operation, respondent had all the children respondent wanted (`RHADALL`), then `FECUND` is encoded as contraceptive intent.
+
+Basically, the NSFG recodes are premised on the proposition that tubal ligations and vasectomies are usually done for contraceptive reasons, and aggressively categorizes them as such. However, respondents sometimes do not report their sterilizing operations as a contraceptive method used at least intercourse.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[, tablena(FECUND)] |> kable()
+```
+
+Because of the aggressive recoding, there are relatively few respondents classified as "SURGICALLY STERILE, NONCONTRACEPTIVE."
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  meth3m_count == 0 & SEX3MO == 'YES' & as.integer(FECUND) == 1,
+  tablena(STRLOPER)
+] |> kable()
+```
+
+Tubal ligation is by far the most common reason for having a `FECUND` code of 1 among the problem cases.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  meth3m_count == 0 & SEX3MO == 'YES' & as.integer(FECUND) == 1 & STRLOPER == 'TUBAL LIGATION OR STERILIZATION',
+  .(
+    CASEID,
+    DATFEMOP_Y,
+    FMEDREAS1,
+    FMEDREAS2,
+    FMEDREAS3,
+    FMEDREAS4,
+    RHADALL,
+    STRLOPER,
+    meth3m_count
+  )
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  meth3m_count == 0 & SEX3MO == 'YES' & as.integer(FECUND) == 1 & STRLOPER == 'TUBAL LIGATION OR STERILIZATION',
+  tablena(FMEDREAS1)
+] |> kable()
+```
+
+Most of the tubal ligations occurred earlier than 5 years before the interview or did not have motive questions answered. Among known motives, only 1 cites medical problems.
+
+I think I'll join with the NSFG recoding team and just count any tubal ligation still in effect as a current contraceptive method, and set the `using3m_meth4` variable to `TRUE` for these respondents.
+
+However, this is unsound for female respondent's who are married or cohabitating and whose partners have vasectomies, because there is the possibility of sexual intercourse with someone not the reported partner.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  meth3m_count == 0 & SEX3MO == 'YES' & STRLOPER == 'HYSTERECTOMY',
+  .(
+    CASEID,
+    DATFEMOP_Y2,
+    FMEDREAS7,
+    FMEDREAS8,
+    FMEDREAS9,
+    FMEDREAS10,
+    FMEDREAS11,
+    RHADALL,
+    STRLOPER,
+    meth3m_count
+  )
+] |> kable()
+```
+
+The 3 hysterectomies among the problem cases were all for medical problems.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  STRLOPER == 'HYSTERECTOMY',
+  tablena(FMEDREAS7)
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  STRLOPER == 'HYSTERECTOMY',
+  tablena(FMEDREAS8)
+] |> kable()
+```
+
+Hysterectomies generally appear to be done mostly for medical reasons.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  meth3m_count == 0 & SEX3MO == 'YES' & STRLOPER == 'OTHER OPERATION OR TYPE UNKNOWN',
+  .(
+    CASEID,
+    DATFEMOP_Y4,
+    FMEDREAS19,
+    FMEDREAS20,
+    FMEDREAS21,
+    RHADALL,
+    STRLOPER,
+    meth3m_count
+  )
+] |> kable()
+```
+
+The 2 other operations among the problem cases are split was to whether they were done for medical reasons.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  STRLOPER == 'OTHER OPERATION OR TYPE UNKNOWN',
+  tablena(FMEDREAS19),
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  STRLOPER == 'OTHER OPERATION OR TYPE UNKNOWN',
+  tablena(FMEDREAS20),
+] |> kable()
+```
+
+More generally, for what motives are known, other operations appear to be mostly for medical reasons.
+
+I think the strategy going forward should be to recode any female respondents who have tubal ligations that have not been reversed as currently using tubal ligation as a method of contraception, but to leave all other sterilizing operations as is.
 
 
 ## To Do
 
+* Include all non-reversed tubal ligations as current contraception usage
 * Finish estimating current non-users
 * Calculate overall current contraceptive usage rate
 * Check everything against `CONSTAT` series recodes
