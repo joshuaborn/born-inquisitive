@@ -219,6 +219,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   SEST,
   SEX3MO,
   STRLOPER,
+  TUBS,
   WGT2017_2019
 )])
 
@@ -273,7 +274,8 @@ fem_2017_2019_data[, `:=`(
   RHADALL4 = factorize(RHADALL4, 'Y1N5C', fem_2017_2019_formats),
   RSURGSTR = factorize(RSURGSTR, 'Y1N5C', fem_2017_2019_formats),
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
-  STRLOPER = factorize(STRLOPER, 'STRLOPER', fem_2017_2019_formats)
+  STRLOPER = factorize(STRLOPER, 'STRLOPER', fem_2017_2019_formats),
+  TUBS = factorize(TUBS, 'Y1N5C', fem_2017_2019_formats)
 )]
 
 # create boolean variables for whether each specific method is currently used
@@ -286,6 +288,13 @@ for (x in c(1:19, 22:24)) {
       has_level(fem_2017_2019_data$METH3M3, x)
   )
 }
+
+# count any respondents with current tubal ligations as currently using the corresponding contraceptive method
+fem_2017_2019_data[, using3m_meth4 := fifelse(
+  TUBS == 'YES',
+  TRUE,
+  using3m_meth4
+)]
 
 # create variable counting number of current methods
 fem_2017_2019_data[
@@ -998,7 +1007,7 @@ This might not line up nicely with the `MTHUSE3` and `SEX3MO` variables, since S
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  meth3m_count == 0 & SEX3MO == 'YES' & as.integer(FECUND) == 1,
+  as.integer(MTHUSE3) %in% 2:3 & SEX3MO == 'YES' & as.integer(FECUND) == 1,
   .(
     CASEID,
     DATFEMOP_Y,
@@ -1033,7 +1042,7 @@ Because of the aggressive recoding, there are relatively few respondents classif
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  meth3m_count == 0 & SEX3MO == 'YES' & as.integer(FECUND) == 1,
+  as.integer(MTHUSE3) %in% 2:3 & SEX3MO == 'YES' & as.integer(FECUND) == 1,
   tablena(STRLOPER)
 ] |> kable()
 ```
@@ -1042,7 +1051,7 @@ Tubal ligation is by far the most common reason for having a `FECUND` code of 1 
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  meth3m_count == 0 & SEX3MO == 'YES' & as.integer(FECUND) == 1 & STRLOPER == 'TUBAL LIGATION OR STERILIZATION',
+  as.integer(MTHUSE3) %in% 2:3 & SEX3MO == 'YES' & as.integer(FECUND) == 1 & STRLOPER == 'TUBAL LIGATION OR STERILIZATION',
   .(
     CASEID,
     DATFEMOP_Y,
@@ -1059,7 +1068,7 @@ fem_2017_2019_data[
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  meth3m_count == 0 & SEX3MO == 'YES' & as.integer(FECUND) == 1 & STRLOPER == 'TUBAL LIGATION OR STERILIZATION',
+  as.integer(MTHUSE3) %in% 2:3 & SEX3MO == 'YES' & as.integer(FECUND) == 1 & STRLOPER == 'TUBAL LIGATION OR STERILIZATION',
   tablena(FMEDREAS1)
 ] |> kable()
 ```
@@ -1072,7 +1081,7 @@ However, this is unsound for female respondent's who are married or cohabitating
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  meth3m_count == 0 & SEX3MO == 'YES' & STRLOPER == 'HYSTERECTOMY',
+  as.integer(MTHUSE3) %in% 2:3 & SEX3MO == 'YES' & STRLOPER == 'HYSTERECTOMY',
   .(
     CASEID,
     DATFEMOP_Y2,
@@ -1108,7 +1117,7 @@ Hysterectomies generally appear to be done mostly for medical reasons.
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  meth3m_count == 0 & SEX3MO == 'YES' & STRLOPER == 'OTHER OPERATION OR TYPE UNKNOWN',
+  as.integer(MTHUSE3) %in% 2:3 & SEX3MO == 'YES' & STRLOPER == 'OTHER OPERATION OR TYPE UNKNOWN',
   .(
     CASEID,
     DATFEMOP_Y4,
@@ -1143,9 +1152,9 @@ More generally, for what motives are known, other operations appear to be mostly
 I think the strategy going forward should be to recode any female respondents who have tubal ligations that have not been reversed as currently using tubal ligation as a method of contraception, but to leave all other sterilizing operations as is.
 
 
+
 ## To Do
 
-* Include all non-reversed tubal ligations as current contraception usage
 * Finish estimating current non-users
 * Calculate overall current contraceptive usage rate
 * Check everything against `CONSTAT` series recodes
