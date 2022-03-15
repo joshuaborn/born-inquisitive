@@ -232,10 +232,8 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
 
 # remove sterility not from contraceptive procedure from METH3M series
 fem_2017_2019_data[
-  METH3M1 %in% 20:21,
+  METH3M3 %in% 20:21,
   `:=`(
-    METH3M1 = METH3M2,
-    METH3M2 = METH3M3,
     METH3M3 = NA
   )
 ]
@@ -247,8 +245,10 @@ fem_2017_2019_data[
   )
 ]
 fem_2017_2019_data[
-  METH3M3 %in% 20:21,
+  METH3M1 %in% 20:21,
   `:=`(
+    METH3M1 = METH3M2,
+    METH3M2 = METH3M3,
     METH3M3 = NA
   )
 ]
