@@ -186,6 +186,10 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 ```{r fem-process-data, dependson=c('helper-functions', 'fem-load-data')}
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
+  DATFEMOP_Y,
+  DATFEMOP_Y2,
+  DATFEMOP_Y3,
+  DATFEMOP_Y4,
   FECUND,
   HADSEX,
   METH3M1,
@@ -882,7 +886,7 @@ collect_estimate(
     ~I(SEX3MO == 'NO' | HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
-  ),
+  )[level == TRUE],
   title = 'did not have intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception' 
@@ -895,7 +899,7 @@ collect_estimate(
     ~I(SEX3MO == 'NO' | HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svymean
-  ),
+  )[level == TRUE],
   title = 'did not have intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception' 
@@ -921,7 +925,7 @@ collect_estimate(
     ~I(RCURPREG == 'YES (CURRENTLY PREGNANT)' & SEX3MO == 'YES'),
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
-  ),
+  )[level == TRUE],
   title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception' 
@@ -934,7 +938,7 @@ collect_estimate(
     ~I(RCURPREG == 'YES (CURRENTLY PREGNANT)' & SEX3MO == 'YES'),
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svymean
-  ),
+  )[level == TRUE],
   title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception' 
@@ -956,7 +960,17 @@ This might not line up nicely with the `MTHUSE3` and `SEX3MO` variables, since S
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
   meth3m_count == 0 & has_level(MTHUSE3, 2:3) & as.integer(FECUND) == 1,
-  .(CASEID, meth3m_count, MTHUSE3, FECUND, RSURGSTR, PSURGSTR)
+  .(
+    CASEID,
+    meth3m_count,
+    MTHUSE3,
+    FECUND,
+    RSURGSTR,
+    DATFEMOP_Y,
+    DATFEMOP_Y2,
+    DATFEMOP_Y3,
+    PSURGSTR
+  )
 ] |> kable()
 ```
 
