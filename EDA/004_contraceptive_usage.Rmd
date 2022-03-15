@@ -192,22 +192,25 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   DATFEMOP_Y4,
   FECUND,
   FMEDREAS1,
+  FMEDREAS10,
+  FMEDREAS11,
+  FMEDREAS19,
   FMEDREAS2,
+  FMEDREAS20,
+  FMEDREAS21,
   FMEDREAS3,
   FMEDREAS4,
   FMEDREAS7,
   FMEDREAS8,
   FMEDREAS9,
-  FMEDREAS10,
-  FMEDREAS11,
-  FMEDREAS19,
-  FMEDREAS20,
-  FMEDREAS21,
   HADSEX,
+  HYST,
   METH3M1,
   METH3M2,
   METH3M3,
   MTHUSE3,
+  OTHR,
+  OVAREM,
   PSURGSTR,
   RCURPREG,
   RHADALL,
@@ -262,10 +265,13 @@ fem_2017_2019_data[, `:=`(
   FMEDREAS20 = factorize(FMEDREAS20, 'FMEDREASF', fem_2017_2019_formats),
   FMEDREAS21 = factorize(FMEDREAS21, 'FMEDREASF', fem_2017_2019_formats),
   HADSEX = factorize(HADSEX, 'HADSEX', fem_2017_2019_formats),
+  HYST = factorize(HYST, 'Y1N5C', fem_2017_2019_formats) ,
   METH3M1 = factorize(METH3M1, 'METH3MF', fem_2017_2019_formats),
   METH3M2 = factorize(METH3M2, 'METH3MF', fem_2017_2019_formats),
   METH3M3 = factorize(METH3M3, 'METH3MF', fem_2017_2019_formats),
   MTHUSE3 = factorize(MTHUSE3, 'MTHUSE3F', fem_2017_2019_formats),
+  OTHR = factorize(OTHR, 'Y1N5C', fem_2017_2019_formats),
+  OVAREM = factorize(OVAREM, 'Y1N5C', fem_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
   RCURPREG = factorize(RCURPREG, 'RCURPREG', fem_2017_2019_formats),
   RHADALL = factorize(RHADALL, 'Y1N5C', fem_2017_2019_formats),
@@ -1150,6 +1156,122 @@ fem_2017_2019_data[
 More generally, for what motives are known, other operations appear to be mostly for medical reasons.
 
 I think the strategy going forward should be to recode any female respondents who have tubal ligations that have not been reversed as currently using tubal ligation as a method of contraception, but to leave all other sterilizing operations as is.
+
+
+##### Infertile Due to Noncontraceptive Surgery
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      (HYST == 'YES' | OVAREM == 'YES' | 'OTHR' == 'YES') &
+        RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+        SEX3MO == 'YES'
+    ),
+    subset(fem_2017_2019_svy, meth3m_count == 0),
+    svytotal
+  )[level == TRUE],
+  title = 'infertile due to noncontraceptive surgery, not currently pregnant, and had sexual intercourse with male in previous 3 months',
+  type = 'total',
+  domain = 'females not currently using contraception'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      (HYST == 'YES' | OVAREM == 'YES' | 'OTHR' == 'YES') &
+        RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+        SEX3MO == 'YES'
+    ),
+    subset(fem_2017_2019_svy, meth3m_count == 0),
+    svyciprop
+  ),
+  title = 'infertile due to noncontraceptive surgery, not currently pregnant, and had sexual intercourse with male in previous 3 months',
+  type = 'proportion',
+  domain = 'females not currently using contraception'
+) |> kable()
+```
+
+This is an awfully low estimate.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  (HYST == 'YES' | OVAREM == 'YES' | 'OTHR' == 'YES') &
+    SEX3MO == 'YES',
+  tablena(meth3m_count)
+]
+```
+
+It seems that most females who have had sterilizing procedures and are sexually active are still using contraception. That's surprising.
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(meth3m_count > 0),
+    subset(
+      fem_2017_2019_svy,
+      SEX3MO == 'YES' &
+        (HYST == 'YES' | OVAREM == 'YES' | 'OTHR' == 'YES')
+    ),
+    svytotal
+  ),
+  title = 'currently using contraception',
+  type = 'total',
+  domain = 'sexually active females who have had noncontraceptive sterilizing procedures'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(meth3m_count > 0),
+    subset(
+      fem_2017_2019_svy,
+      SEX3MO == 'YES' &
+        (HYST == 'YES' | OVAREM == 'YES' | 'OTHR' == 'YES')
+    ),
+    svyciprop
+  ),
+  title = 'currently using contraception',
+  type = 'proportion',
+  domain = 'sexually active females who have had noncontraceptive sterilizing procedures'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:19, 22:24),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~using3m_meth%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          SEX3MO == 'YES' & (HYST == 'YES' | OVAREM == 'YES' | 'OTHR' == 'YES')
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    estimate > 0.001
+  ][
+    order(-estimate),
+    .(
+      level = factorize(level, 'METH3MF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  title = 'by current contraceptive method',
+  domain = 'sexually active females who have had noncontraceptive sterilizing procedures',
+  type = 'proportion'
+) |> kable()
+```
+
+I see. It seems as though tubal ligation has become a standard practice whenever a hysterectomy, etc, is done. I'm guessing this is to try to avoid ectopic pregnancies.
 
 
 
