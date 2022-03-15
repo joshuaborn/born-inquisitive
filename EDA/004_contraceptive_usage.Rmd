@@ -226,6 +226,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   SEX3MO,
   STRLOPER,
   TUBS,
+  VASECT,
   WGT2017_2019
 )])
 
@@ -285,6 +286,7 @@ fem_2017_2019_data[, `:=`(
   RHADALL3 = factorize(RHADALL3, 'Y1N5C', fem_2017_2019_formats),
   RHADALL4 = factorize(RHADALL4, 'Y1N5C', fem_2017_2019_formats),
   RSURGSTR = factorize(RSURGSTR, 'Y1N5C', fem_2017_2019_formats),
+  VASECT = factorize(VASECT, 'Y1N5C', fem_2017_2019_formats),
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
   STRLOPER = factorize(STRLOPER, 'STRLOPER', fem_2017_2019_formats),
   TUBS = factorize(TUBS, 'Y1N5C', fem_2017_2019_formats)
@@ -301,9 +303,19 @@ for (x in c(1:19, 22:24)) {
   )
 }
 
-# count any respondents with current tubal ligations as currently using the corresponding contraceptive method
+# count any respondents who are sexually active and whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
+fem_2017_2019_data[, using3m_meth3 := fifelse(
+  SEX3MO == 'YES' & PSURGSTR == 'YES' & (
+    P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+    P1YRELP == 'Current cohabiting partner'
+  ),
+  TRUE,
+  using3m_meth3
+)]
+
+# count any respondents with current tubal ligations who are sexually active as currently using tubal ligation as a contraceptive method
 fem_2017_2019_data[, using3m_meth4 := fifelse(
-  TUBS == 'YES',
+  SEX3MO == 'YES' & TUBS == 'YES',
   TRUE,
   using3m_meth4
 )]
@@ -1089,7 +1101,7 @@ Most of the tubal ligations occurred earlier than 5 years before the interview o
 
 I think I'll join with the NSFG recoding team and just count any tubal ligation still in effect as a current contraceptive method, and set the `using3m_meth4` variable to `TRUE` for these respondents.
 
-However, this is unsound for female respondent's who are married or cohabitating and whose partners have vasectomies, because there is the possibility of sexual intercourse with someone not the reported partner.
+However, this is unsound for female respondent's who are married or cohabitating and whose partners have vasectomies, because there is the possibility of sexual intercourse with someone not the reported partner. For exploration of this, see "Married or Cohabitating with Surgically Sterile Partner."
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
@@ -1381,6 +1393,41 @@ collect_estimate(
 ```
 
 This case is very rare.
+
+
+##### Married or Cohabitating with Surgically Sterile Partner
+
+Reasons for male sterilizing operations are only asked if the operation occurred within 5 years of the interview and if the female respondent was in a relationship with the husband or cohabitating partner at the time of the operation.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[PSURGSTR == 'YES', tablena(VASECT)]
+fem_2017_2019_data[VASECT == 'YES', tablena(PSURGSTR)]
+```
+
+It appears that all sterilizing operations reported for husband or cohabitating partners are vasectomies. The only difference between `PSURGSTR` and `VASECT` is that `VASECT`'s universe is respondents currently married or cohabitating whereas `PSURGSTR`'s universe is all respondents.
+
+Given this, vasectomies among husbands and cohabitating partners will be handled similarly to tubal ligations. If a female respondent's last sexual intercourse was with H/CP and H/CP is reported to have a vasectomy, then force `using3m_meth3` to be `TRUE`.
+
+```{r}
+fem_2017_2019_data[
+  as.integer(MTHUSE3) %in% 2:3 &
+    (
+      P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+        P1YRELP == 'Current cohabiting partner'
+    ) &
+    PSURGSTR == 'YES',
+  .(
+    CASEID,
+    MTHUSE3,
+    SEX3MO,
+    PSURGSTR,
+    P1YRELP,
+    meth3m_count
+  )
+] |> kable()
+```
+
+This changes two respondents' contraceptive statuses.
 
 
 ## To Do
