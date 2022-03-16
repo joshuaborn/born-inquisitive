@@ -1532,10 +1532,17 @@ Most of the "Not Applicable" values for `WYNOTUSE`, on the other hand, appear to
 
 According to documentations `CURRMETH1` is based on the ED-6 series of questions about method history, which are the `METHX` variables that ask what method(s) were used in specific months. `MTHUSE3` on the other hand is based on either section EF-1 (`USELSTP`, `WYNOLSTP`, and `HPLSTP` variables) or EB series, which pertain to the first method(s) ever used. Thus, there appears to be some contradiction in the answers given by respondents, or there is some contradiction introduced by imputation or peturbation.
 
+I am willing to count just those with either `WYNOLSTP` or `WYNOTUSE` of "Yes" as currently trying to conceive. Those who failed to answer the completely and so were not asked the `WYNOLSTP` or `WYNOTUSE` questions, but are trying to conceive will not be counted.
+
+The larger issue is that the inconsistency between `CURRMETH` and `MTHUSE3` and the `METH3M` series needs to resolved.
+
+
 
 ## To Do
 
-* Finish estimating current non-users
+* Fix inconsistency of `CURRMETH` vs `MTHUSE3` and `METH3M`
+* Estimate females trying to get pregnant
+* Repeat EDA for males
 * Calculate overall current contraceptive usage rate
 * Check everything against `CONSTAT` series recodes
 
