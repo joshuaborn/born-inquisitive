@@ -1819,11 +1819,67 @@ env$estimates[
 The estimates account approximately all of those not using contraception.
 
 
-## To Do
+### Contraceptive Use Rate
 
-* Calculate overall current contraceptive usage rate
-* Repeat EDA for males
-* Check everything against `CONSTAT` series recodes
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      meth3m_count > 0
+    ),
+    subset(
+      fem_2017_2019_svy,
+      SEX3MO == 'YES' &
+        RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+        POSIBLPG == 'Yes' &
+        !(
+          POSIBLMN == 'No' & (
+            P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+            P1YRELP == 'Current cohabiting partner'
+          )
+        ) &
+        !(
+          WYNOTUSE == 'Yes' |
+          WYNOLSTP == 'Yes'
+        )
+    ),
+    svytotal
+  ),
+  title = 'by whether using contraception at last intercourse',
+  domain = 'females who had intercourse with male in previous 3 months, not trying to get pregnant, not married or cohabitating with physically infertile partner, not themselves infertile, and not currently pregnant',
+  type = 'total'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      meth3m_count > 0
+    ),
+    subset(
+      fem_2017_2019_svy,
+      SEX3MO == 'YES' &
+        RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+        POSIBLPG == 'Yes' &
+        !(
+          POSIBLMN == 'No' & (
+            P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+            P1YRELP == 'Current cohabiting partner'
+          )
+        ) &
+        !(
+          WYNOTUSE == 'Yes' |
+          WYNOLSTP == 'Yes'
+        )
+    ),
+    svyciprop
+  ),
+  title = 'by whether using contraception at last intercourse',
+  domain = 'females who had intercourse with male in previous 3 months, not trying to get pregnant, not married or cohabitating with physically infertile partner, not themselves infertile, and not currently pregnant',
+  type = 'proportion'
+) |> kable()
+```
 
 
 ## Male Persons Aged 15-49
@@ -1845,6 +1901,13 @@ male_svy <- svydesign(
 ```
 
 According to the U.S. Census Bureau, ibid. The number of civilian noninstitutionalized male persons in the United States is ~74,238,000.
+
+
+
+## To Do
+
+* Repeat EDA for males
+* Check everything against `CONSTAT` series recodes
 
 
 # Outline
