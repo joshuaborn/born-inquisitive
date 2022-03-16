@@ -186,6 +186,10 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 ```{r fem-process-data, dependson=c('helper-functions', 'fem-load-data')}
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
+  CMINTVW,
+  CMLSEX,
+  CURRMETH1,
+  CURRPREG,
   DATFEMOP_Y,
   DATFEMOP_Y2,
   DATFEMOP_Y3,
@@ -209,6 +213,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   METH3M2,
   METH3M3,
   MTHUSE3,
+  MTHUSE12,
   OTHR,
   OVAREM,
   P1YRELP,
@@ -220,14 +225,17 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   RHADALL2,
   RHADALL3,
   RHADALL4,
+  RSTRSTAT,
   RSURGSTR,
   SECU,
   SEST,
   SEX3MO,
   STRLOPER,
   TUBS,
+  USELSTP,
   VASECT,
   WGT2017_2019,
+  WYNOLSTP,
   WYNOTUSE
 )])
 
@@ -256,6 +264,7 @@ fem_2017_2019_data[
 
 # make existing variables factors
 fem_2017_2019_data[, `:=`(
+  CURRMETH1 = factorize(CURRMETH1, 'METHHXF', fem_2017_2019_formats),
   FECUND = factorize(FECUND, 'FECUND', fem_2017_2019_formats),
   FMEDREAS1 = factorize(FMEDREAS1, 'FMEDREASF', fem_2017_2019_formats),
   FMEDREAS2 = factorize(FMEDREAS2, 'FMEDREASF', fem_2017_2019_formats),
@@ -275,6 +284,7 @@ fem_2017_2019_data[, `:=`(
   METH3M2 = factorize(METH3M2, 'METH3MF', fem_2017_2019_formats),
   METH3M3 = factorize(METH3M3, 'METH3MF', fem_2017_2019_formats),
   MTHUSE3 = factorize(MTHUSE3, 'MTHUSE3F', fem_2017_2019_formats),
+  #MTHUSE12 = factorize(MTHUSE12, 'MTHUSE12F', fem_2017_2019_formats),
   OTHR = factorize(OTHR, 'Y1N5C', fem_2017_2019_formats),
   OVAREM = factorize(OVAREM, 'Y1N5C', fem_2017_2019_formats),
   P1YRELP = factorize(P1YRELP, 'P1YRELP', fem_2017_2019_formats),
@@ -291,6 +301,8 @@ fem_2017_2019_data[, `:=`(
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
   STRLOPER = factorize(STRLOPER, 'STRLOPER', fem_2017_2019_formats),
   TUBS = factorize(TUBS, 'Y1N5C', fem_2017_2019_formats),
+  #USELSTP = factorize(USELSTP, 'Y1N5RDF', fem_2017_2019_formats),
+  WYNOLSTP = factorize(WYNOLSTP, 'Y1N5RDF', fem_2017_2019_formats),
   WYNOTUSE = factorize(WYNOTUSE, 'Y1N5RDF', fem_2017_2019_formats)
 )]
 
@@ -1410,7 +1422,7 @@ It appears that all sterilizing operations reported for husband or cohabitating 
 
 Given this, vasectomies among husbands and cohabitating partners will be handled similarly to tubal ligations. If a female respondent's last sexual intercourse was with H/CP and H/CP is reported to have a vasectomy, then force `using3m_meth3` to be `TRUE`.
 
-```{r}
+```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
   as.integer(MTHUSE3) %in% 2:3 &
     (
@@ -1434,9 +1446,9 @@ This changes two respondents' contraceptive statuses.
 
 #### Trying to Become Pregnant
 
-This is encoded in `WYNOTUSE` for the respondent, and in `HPPREGQ` with regard to respondent's partner. Unfortunately, both these variables are only asked if respondent had sexual intercourse in the month of the interview (comparing periods of non-intercourse as encoded in the `MONSX` series with the century-month of the interview as encoded in `CMINTVW`). There may be respondents who had sexual intercourse in the two months preceding the interview, but not in the month of the interview, and so `WYNOTUSE` might be incomplete for the remaining respondents.
+This is encoded in either `WYNOTUSE` or `WYNOLSTP`. It is encoded in `WYNOTUSE` if respondent had sexual intercourse in month of interview and `WYNOLSTP` otherwise.
 
-```{r}
+```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
   SEX3MO == 'YES' &
     meth3m_count == 0 &
@@ -1448,31 +1460,77 @@ fem_2017_2019_data[
           P1YRELP == 'Current cohabiting partner'
       )
     ),
-  tablena(WYNOTUSE)
+  table(WYNOTUSE, WYNOLSTP)
 ]
 ```
 
-Indeed, `WYNOTUSE` is `NA` for 102 respondents of interest in this analysis.
+It is slightly troubling that there is some contradiction between `WYNOLSTP` and `WYNOTUSE`. Is it the case that "last intercourse with last partner in the past 12 months" means something different than last intercourse in the past 3 months? For instance, does the later include "non-partner" intercourse?
 
-This `CONSTAT` series of recodes also does a exclusively hierarchical classification scheme for "current" contraceptive status. The way they go about this this, though, whether respondent is not sexually active is the last classification, and is judged by sexual activity in past 3 months. Pregnancy intent is higher up in the hierarchy. Effectively, therefore, any respondent not sexually active in the current month is assumed not to be trying to get pregnant, because the `WYNOTUSE` variable is `NA` for these respondents.
+More troubling, why is it the case that there are 71 respondents with "Not Applicable" for both `WYNOTUSE` and `WYNOLSTOP`? To determine this requires investigating the universes of both variables.
 
-There are two main ways to proceed:
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  SEX3MO == 'YES' &
+    meth3m_count == 0 &
+    RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+    POSIBLPG == 'Yes' &
+    !(
+      POSIBLMN == 'No' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+          P1YRELP == 'Current cohabiting partner'
+      )
+    ) &
+    WYNOTUSE == 'Not Applicable' &
+    WYNOLSTP == 'Not Applicable',
+  .(
+    CASEID,
+    MTHUSE12,
+    USELSTP,
+    CMLSEX,
+    CMINTVW,
+    WYNOLSTP_universe = (USELSTP != 1 & CMLSEX != CMINTVW)
+  )
+] |> kable()
+```
 
-# Replace the `SEX3MO` and `MTHUSE3` variables and the `METH3M` series of variables with variables that reflect sexual activity in the month of the interview. This would require calculating new verisons of these variables for the analysis, since there aren't ready-made recodes available, but should be straightfoward to compute.
-# Assume all those outside the universe of `WYNOTUSE` are not trying to get pregnant. This is effectively what the `CONSTAT` series does.
+I see. The abundance of "Not Applicable" values for `WYNOLSTP` seems to be due to it being a raw, rather than recode, variable and so not imputed. There are many instances `NA` values for variables used to determine the universe of `WYNOLSTP`. This is likely due to item nonresponse upstream of the `USELSTP` and `CMLSEX` questions pertaining to sexual history. The `WYNOLSTP` was not asked of respondents who had missing values for `USELSTP` or `CMLSEX`.
 
-I'm not a fan of either approach.
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  SEX3MO == 'YES' &
+    meth3m_count == 0 &
+    RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+    POSIBLPG == 'Yes' &
+    !(
+      POSIBLMN == 'No' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+          P1YRELP == 'Current cohabiting partner'
+      )
+    ) &
+    WYNOTUSE == 'Not Applicable' &
+    WYNOLSTP == 'Not Applicable' &
+    !(USELSTP != 1 & CMLSEX != CMINTVW),
+  .(
+    CASEID,
+    CURRPREG,
+    CMINTVW,
+    RSTRSTAT,
+    CURRMETH1,
+    METH3M1,
+    SEX3MO,
+    MTHUSE3,
+    WYNOTUSE_universe = (
+      CURRPREG == 5 &
+      !is.element(RSTRSTAT, 1:2) &
+      CURRMETH1 == 1
+    )
+  )
+] |> kable()
+```
 
-Whether sexual intercourse in the current month of the interview is highly variable based on when in the month the interview occurred. Those trying to get pregnant might simply have not gotten around to sexual intercourse during the current month, if the interview occurs early in the month. Furthermore, females might be menstruating, etc. etc. I want, therefore, to continue to use a 3 month window for sexual activity as "current."
+Most of the "Not Applicable" values for `WYNOTUSE`, on the other hand, appear to be due to a contradiction between `CURRMETH1` and `MTHUSE3`, with `CURRMETH1` reporting a contraceptive method used and `MTHUSE3` reporting no contraceptive method used. This is more troubling.
 
-However, the universe for all of Section EH about whether trying to get pregnant and reason not using birth control are only those sexually active in the current month.
-
-There is a Section G: Desires and Intentions for Future Births, but this section asks respondents whether they want to have a baby or another baby "some time," not whether they are trying to conceive right now.
-
-I think I am going to use option 2 and report that this may be an underestimate due to a failing in the way the NSFG is administered.
-
-I should assess the extent of the issue.
-
+According to documentations `CURRMETH1` is based on the ED-6 series of questions about method history, which are the `METHX` variables that ask what method(s) were used in specific months. `MTHUSE3` on the other hand is based on either section EF-1 (`USELSTP`, `WYNOLSTP`, and `HPLSTP` variables) or EB series, which pertain to the first method(s) ever used. Thus, there appears to be some contradiction in the answers given by respondents, or there is some contradiction introduced by imputation or peturbation.
 
 
 ## To Do
