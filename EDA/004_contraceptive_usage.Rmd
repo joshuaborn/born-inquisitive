@@ -1664,11 +1664,68 @@ Of the remaining who do intend to have (more) children, most would be pleased if
 
 Thus, respondents who are `NA` for both `WYNOTUSE` and `WYNOLSTP` will be considered as "No" for both.
 
+##### Estimates
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES' &
+        RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+        POSIBLPG == 'Yes' &
+        !(
+          POSIBLMN == 'No' & (
+            P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+            P1YRELP == 'Current cohabiting partner'
+          )
+        ) &
+        (
+          WYNOTUSE == 'Yes' |
+          WYNOLSTP == 'Yes'
+        )
+    ),
+    subset(fem_2017_2019_svy, meth3m_count == 0),
+    svytotal
+  )[level == TRUE],
+  title = 'trying to get pregnant, had sexual intercourse with male in previous 3 months, not currently pregnant, fertile, and not in a sexual relationship with an infertile male',
+  type = 'total',
+  domain = 'females not currently using contraception'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES' &
+        RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+        POSIBLPG == 'Yes' &
+        !(
+          POSIBLMN == 'No' & (
+            P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+            P1YRELP == 'Current cohabiting partner'
+          )
+        ) &
+        (
+          WYNOTUSE == 'Yes' |
+          WYNOLSTP == 'Yes'
+        )
+    ),
+    subset(fem_2017_2019_svy, meth3m_count == 0),
+    svyciprop
+  ),
+  title = 'trying to get pregnant, had sexual intercourse with male in previous 3 months, not currently pregnant, fertile, and not in a sexual relationship with an infertile male',
+  type = 'proportion',
+  domain = 'females not currently using contraception'
+) |> kable()
+```
+
 
 
 ## To Do
 
-* Estimate females trying to get pregnant
+* Rewrite titles for those not using contraception estimates thus far
+* Estimate those just not using contraception
 * Repeat EDA for males
 * Calculate overall current contraceptive usage rate
 * Check everything against `CONSTAT` series recodes
