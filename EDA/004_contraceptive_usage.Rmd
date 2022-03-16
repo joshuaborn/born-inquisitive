@@ -1781,10 +1781,46 @@ collect_estimate(
 ```
 
 
+#### Summary
+
+##### Totals
+
+```{r, dependson=c('fem-process-data')}
+env$estimates[
+  domain == 'females not currently using contraception' &
+    type == 'total',
+  .(
+    title, estimate, se, `2.5 %`, `97.5 %`
+  )
+] |> kable()
+```
+
+##### Proportions
+
+```{r, dependson=c('fem-process-data')}
+env$estimates[
+  domain == 'females not currently using contraception' &
+    type == 'proportion',
+  .(
+    title, estimate, se, `2.5 %`, `97.5 %`
+  )
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+env$estimates[
+  domain == 'females not currently using contraception' &
+    type == 'proportion',
+  lapply(.SD, sum),
+  .SDcols = c('estimate', 'se', '2.5 %', '97.5 %')
+] |> kable()
+```
+
+The estimates account approximately all of those not using contraception.
+
 
 ## To Do
 
-* Summarize EDA for not using contraception
 * Calculate overall current contraceptive usage rate
 * Repeat EDA for males
 * Check everything against `CONSTAT` series recodes
