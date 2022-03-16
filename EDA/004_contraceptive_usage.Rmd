@@ -1452,9 +1452,27 @@ fem_2017_2019_data[
 ]
 ```
 
-Indeed, `WYNOTUSE` is `NA` for 102 respondents of interest in this analysis. This is perhaps why the `CONSTAT` series of recodes uses the current month, not past 3 months.
+Indeed, `WYNOTUSE` is `NA` for 102 respondents of interest in this analysis.
 
-Because of this, it's best to redo the analysis, reframing "currently sexually active" has having had sexual intercourse in the month of the interview.
+This `CONSTAT` series of recodes also does a exclusively hierarchical classification scheme for "current" contraceptive status. The way they go about this this, though, whether respondent is not sexually active is the last classification, and is judged by sexual activity in past 3 months. Pregnancy intent is higher up in the hierarchy. Effectively, therefore, any respondent not sexually active in the current month is assumed not to be trying to get pregnant, because the `WYNOTUSE` variable is `NA` for these respondents.
+
+There are two main ways to proceed:
+
+# Replace the `SEX3MO` and `MTHUSE3` variables and the `METH3M` series of variables with variables that reflect sexual activity in the month of the interview. This would require calculating new verisons of these variables for the analysis, since there aren't ready-made recodes available, but should be straightfoward to compute.
+# Assume all those outside the universe of `WYNOTUSE` are not trying to get pregnant. This is effectively what the `CONSTAT` series does.
+
+I'm not a fan of either approach.
+
+Whether sexual intercourse in the current month of the interview is highly variable based on when in the month the interview occurred. Those trying to get pregnant might simply have not gotten around to sexual intercourse during the current month, if the interview occurs early in the month. Furthermore, females might be menstruating, etc. etc. I want, therefore, to continue to use a 3 month window for sexual activity as "current."
+
+However, the universe for all of Section EH about whether trying to get pregnant and reason not using birth control are only those sexually active in the current month.
+
+There is a Section G: Desires and Intentions for Future Births, but this section asks respondents whether they want to have a baby or another baby "some time," not whether they are trying to conceive right now.
+
+I think I am going to use option 2 and report that this may be an underestimate due to a failing in the way the NSFG is administered.
+
+I should assess the extent of the issue.
+
 
 
 ## To Do
