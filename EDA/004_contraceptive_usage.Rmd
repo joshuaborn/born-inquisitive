@@ -209,18 +209,23 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   FMEDREAS9,
   HADSEX,
   HYST,
+  INTENT,
   METH3M1,
   METH3M2,
   METH3M3,
-  MTHUSE3,
   MTHUSE12,
+  MTHUSE3,
   OTHR,
   OVAREM,
   P1YRELP,
   POSIBLMN,
   POSIBLPG,
+  PST4WKSX,
   PSURGSTR,
+  PSWKCOND2,
+  PXNOFREQ,
   RCURPREG,
+  REACTSLF,
   RHADALL,
   RHADALL2,
   RHADALL3,
@@ -279,7 +284,8 @@ fem_2017_2019_data[, `:=`(
   FMEDREAS20 = factorize(FMEDREAS20, 'FMEDREASF', fem_2017_2019_formats),
   FMEDREAS21 = factorize(FMEDREAS21, 'FMEDREASF', fem_2017_2019_formats),
   HADSEX = factorize(HADSEX, 'HADSEX', fem_2017_2019_formats),
-  HYST = factorize(HYST, 'Y1N5C', fem_2017_2019_formats) ,
+  HYST = factorize(HYST, 'Y1N5C', fem_2017_2019_formats),
+  INTENT = factorize(INTENT, 'INTENT', fem_2017_2019_formats),
   METH3M1 = factorize(METH3M1, 'METH3MF', fem_2017_2019_formats),
   METH3M2 = factorize(METH3M2, 'METH3MF', fem_2017_2019_formats),
   METH3M3 = factorize(METH3M3, 'METH3MF', fem_2017_2019_formats),
@@ -291,7 +297,9 @@ fem_2017_2019_data[, `:=`(
   POSIBLPG = factorize(POSIBLPG, 'Y1N5RDF', fem_2017_2019_formats),
   POSIBLMN = factorize(POSIBLMN, 'Y1N5RDF', fem_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
+  PXNOFREQ = factorize(PXNOFREQ, 'P12METHF', fem_2017_2019_formats),
   RCURPREG = factorize(RCURPREG, 'RCURPREG', fem_2017_2019_formats),
+  REACTSLF = factorize(REACTSLF, 'REACTSLF', fem_2017_2019_formats),
   RHADALL = factorize(RHADALL, 'Y1N5C', fem_2017_2019_formats),
   RHADALL2 = factorize(RHADALL2, 'Y1N5C', fem_2017_2019_formats),
   RHADALL3 = factorize(RHADALL3, 'Y1N5C', fem_2017_2019_formats),
@@ -1532,15 +1540,134 @@ Most of the "Not Applicable" values for `WYNOTUSE`, on the other hand, appear to
 
 According to documentations `CURRMETH1` is based on the ED-6 series of questions about method history, which are the `METHX` variables that ask what method(s) were used in specific months. `MTHUSE3` on the other hand is based on either section EF-1 (`USELSTP`, `WYNOLSTP`, and `HPLSTP` variables) or EB series, which pertain to the first method(s) ever used. Thus, there appears to be some contradiction in the answers given by respondents, or there is some contradiction introduced by imputation or peturbation.
 
-I am willing to count just those with either `WYNOLSTP` or `WYNOTUSE` of "Yes" as currently trying to conceive. Those who failed to answer the completely and so were not asked the `WYNOLSTP` or `WYNOTUSE` questions, but are trying to conceive will not be counted.
+The larger issue is the inconsistency between `CURRMETH` and `MTHUSE3` and the `METH3M`.
 
-The larger issue is that the inconsistency between `CURRMETH` and `MTHUSE3` and the `METH3M` series needs to resolved.
+```{r, dependson=c('fem-process-data')}
+as.data.table(fem_2017_2019_data[
+  as.integer(CURRMETH1) != 1 &
+  SEX3MO == 'YES' &
+  MTHUSE3 != 'USED A METHOD AT LAST INTERCOURSE IN PAST 3 MONTHS',
+  table(CURRMETH1)
+])[N > 0][order(-N)] |> kable()
+```
+
+What may be going on here is that `CURRMETH` reflects what method(s) were reported as being used during the month of the interview, whereas `MTHUSE3` and the `METH3M` series ask more specifically the method(s) used at the last intercourse before the interview. It may be that respondents are using contraceptive methods, but inconsistently, and so did use one or more methods during the month of the interview, but just not at the last intercourse. This is consistent with many of the `CURRMETH1` values in the problem set being condom or withdrawal.
+
+Less apparent are more long-term contraceptive methods such as implants or IUDs being reported in this consistency. Perhaps in these cases the implant or IUD is actually inserted the month of the interview, after last intercourse. Or perhaps these are actual logical inconsistencies.
+
+There isn't a lot of information on consistency of contraceptive usage in the NSFG. There is just Section EL.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  as.integer(CURRMETH1) != 1 &
+  SEX3MO == 'YES' &
+  MTHUSE3 != 'USED A METHOD AT LAST INTERCOURSE IN PAST 3 MONTHS',
+  tablena(PXNOFREQ)
+] |> kable()
+```
+
+Those with conflicting `CURRMETH` and `MTHUSE3` variables don't report using contraceptive methods during the past 12 months "every time" very often. This is indirect evidence that is consistent with the hypothesis that the discrepancy is due to inconsistent contraceptive usage.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  as.integer(CURRMETH1) != 1 &
+  SEX3MO == 'YES' &
+  MTHUSE3 != 'USED A METHOD AT LAST INTERCOURSE IN PAST 3 MONTHS' &
+  PST4WKSX %in% 2:995,
+  tablena(PSWKCOND2 / PST4WKSX)
+] |> kable()
+```
+
+Among those in the problem group who report having sexual intercourse multiple times via `PST4WKSX` and report using condoms, the vast majority used condoms none of the time.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  CURRMETH1 == 'Condom' &
+    PST4WKSX %in% 2:995,
+  tablena(PSWKCOND2 / PST4WKSX)
+] |> kable()
+```
+
+It seems like reported condom use generally tends to either all-or-nothing extreme.
+
+After much investigation, I think it is acceptable to attribute inconsistency between `CURRMETH` and `METH3M` to respondents not using their reported contraceptive methods (`CURRMETH`) during their last sexual intercourse (`METH3M`).
+
+This informs the earlier question about `NA` values for `WYNOTUSE` and `WYNOLSTP`.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  SEX3MO == 'YES' &
+    meth3m_count == 0 &
+    RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+    POSIBLPG == 'Yes' &
+    !(
+      POSIBLMN == 'No' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+          P1YRELP == 'Current cohabiting partner'
+      )
+    ) &
+    WYNOTUSE == 'Not Applicable' &
+    WYNOLSTP == 'Not Applicable'
+    ,
+  tablena(as.integer(CURRMETH1) %in% 2:21)
+] |> kable()
+```
+
+A majority of the respondents for which both `WYNOTUSE` and `WYNOLSTP` are `NA` report currently using a contraceptive method (though not at last intercourse). This majority can be considered to be not trying to get pregnant.
+
+For the rest, they have `NA` values because they were not included in the universe for both `WYNOTUSE` and `WYNOLSTP`.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  SEX3MO == 'YES' &
+    meth3m_count == 0 &
+    RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+    POSIBLPG == 'Yes' &
+    !(
+      POSIBLMN == 'No' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+          P1YRELP == 'Current cohabiting partner'
+      )
+    ) &
+    WYNOTUSE == 'Not Applicable' &
+    WYNOLSTP == 'Not Applicable' &
+    !is.element(as.integer(CURRMETH1), 2:21)
+    ,
+  tablena(INTENT)
+] |> kable()
+```
+
+Of the remaining 31 respondents, about half do not intent to have (more) children.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  SEX3MO == 'YES' &
+    meth3m_count == 0 &
+    RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+    POSIBLPG == 'Yes' &
+    !(
+      POSIBLMN == 'No' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+          P1YRELP == 'Current cohabiting partner'
+      )
+    ) &
+    WYNOTUSE == 'Not Applicable' &
+    WYNOLSTP == 'Not Applicable' &
+    !is.element(as.integer(CURRMETH1), 2:21) &
+    INTENT == 'R DOES NOT INTEND TO HAVE (MORE) CHILDREN'
+  ,
+  tablena(REACTSLF)
+] |> kable()
+```
+
+Of the remaining who do intend to have (more) children, most would be pleased if they discovered they were pregnant, but 2 would be upset and 4 do not have reaction information. This is of course indirect evidence about _current intent_ to have a child. Since this is a small enough number of respondents and there isn't definitive evidence either way, I will not count these respondents as currently intending to have a child.
+
+Thus, respondents who are `NA` for both `WYNOTUSE` and `WYNOLSTP` will be considered as "No" for both.
 
 
 
 ## To Do
 
-* Fix inconsistency of `CURRMETH` vs `MTHUSE3` and `METH3M`
 * Estimate females trying to get pregnant
 * Repeat EDA for males
 * Calculate overall current contraceptive usage rate
