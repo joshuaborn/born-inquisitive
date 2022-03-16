@@ -981,7 +981,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
   )[level == TRUE],
-  title = 'did not have intercourse with male in previous 3 months',
+  title = 'who did not have intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception' 
 ) |> kable()
@@ -994,7 +994,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svymean
   )[level == TRUE],
-  title = 'did not have intercourse with male in previous 3 months',
+  title = 'who did not have intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception' 
 ) |> kable()
@@ -1020,7 +1020,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
   )[level == TRUE],
-  title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
+  title = 'who are currently pregnant, and had intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception' 
 ) |> kable()
@@ -1033,7 +1033,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svymean
   )[level == TRUE],
-  title = 'currently pregnant and had sexual intercourse with male in previous 3 months',
+  title = 'who currently pregnant, and had intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception' 
 ) |> kable()
@@ -1211,7 +1211,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
   )[level == TRUE],
-  title = 'infertile due to noncontraceptive surgery, not currently pregnant, and had sexual intercourse with male in previous 3 months',
+  title = 'who are infertile due to noncontraceptive surgery, not currently pregnant, and had intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception'
 ) |> kable()
@@ -1228,7 +1228,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svyciprop
   ),
-  title = 'infertile due to noncontraceptive surgery, not currently pregnant, and had sexual intercourse with male in previous 3 months',
+  title = 'who are infertile due to noncontraceptive surgery, not currently pregnant, and had intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception'
 ) |> kable()
@@ -1334,7 +1334,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
   )[level == TRUE],
-  title = 'sexually active, but otherwise physically infertile',
+  title = 'who are physically infertile, and had intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception'
 ) |> kable()
@@ -1349,7 +1349,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svyciprop
   ),
-  title = 'sexually active, but otherwise physically infertile',
+  title = 'who are physically infertile, and had intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception'
 ) |> kable()
@@ -1390,7 +1390,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
   )[level == TRUE],
-  title = 'sexually active, not infertile, and married or cohabitating with otherwise physically infertile partner',
+  title = 'who are married or cohabitating with physically infertile partner, not themselves infertile, not currently pregnant, and had intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception'
 ) |> kable()
@@ -1400,15 +1400,18 @@ collect_estimate(
 collect_estimate(
   svyci(
     ~I(
-      SEX3MO == 'YES' & POSIBLPG == 'Yes' & POSIBLMN == 'No' & (
+      SEX3MO == 'YES' &
+      RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+      POSIBLPG == 'Yes' &
+      POSIBLMN == 'No' & (
         P1YRELP == 'Current husband or (current husband from whom she is separated)' |
-          P1YRELP == 'Current cohabiting partner'
+        P1YRELP == 'Current cohabiting partner'
       )
     ),
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svyciprop
   ),
-  title = 'sexually active, not infertile, and married or cohabitating with otherwise physically infertile partner',
+  title = 'who are married or cohabitating with physically infertile partner, not themselves infertile, not currently pregnant, and had intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception'
 ) |> kable()
@@ -1687,7 +1690,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svytotal
   )[level == TRUE],
-  title = 'trying to get pregnant, had sexual intercourse with male in previous 3 months, not currently pregnant, fertile, and not in a sexual relationship with an infertile male',
+  title = 'who are trying to get pregnant, not married or cohabitating with physically infertile partner, not themselves infertile, not currently pregnant, and had intercourse with male in previous 3 months',
   type = 'total',
   domain = 'females not currently using contraception'
 ) |> kable()
@@ -1714,7 +1717,7 @@ collect_estimate(
     subset(fem_2017_2019_svy, meth3m_count == 0),
     svyciprop
   ),
-  title = 'trying to get pregnant, had sexual intercourse with male in previous 3 months, not currently pregnant, fertile, and not in a sexual relationship with an infertile male',
+  title = 'who are trying to get pregnant, not married or cohabitating with physically infertile partner, not themselves infertile, not currently pregnant, and had intercourse with male in previous 3 months',
   type = 'proportion',
   domain = 'females not currently using contraception'
 ) |> kable()
@@ -1724,7 +1727,6 @@ collect_estimate(
 
 ## To Do
 
-* Rewrite titles for those not using contraception estimates thus far
 * Estimate those just not using contraception
 * Repeat EDA for males
 * Calculate overall current contraceptive usage rate
