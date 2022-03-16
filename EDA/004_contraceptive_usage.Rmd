@@ -227,7 +227,8 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   STRLOPER,
   TUBS,
   VASECT,
-  WGT2017_2019
+  WGT2017_2019,
+  WYNOTUSE
 )])
 
 # remove sterility not from contraceptive procedure from METH3M series
@@ -289,7 +290,8 @@ fem_2017_2019_data[, `:=`(
   VASECT = factorize(VASECT, 'Y1N5C', fem_2017_2019_formats),
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
   STRLOPER = factorize(STRLOPER, 'STRLOPER', fem_2017_2019_formats),
-  TUBS = factorize(TUBS, 'Y1N5C', fem_2017_2019_formats)
+  TUBS = factorize(TUBS, 'Y1N5C', fem_2017_2019_formats),
+  WYNOTUSE = factorize(WYNOTUSE, 'Y1N5RDF', fem_2017_2019_formats)
 )]
 
 # create boolean variables for whether each specific method is currently used
@@ -1400,8 +1402,8 @@ This case is very rare.
 Reasons for male sterilizing operations are only asked if the operation occurred within 5 years of the interview and if the female respondent was in a relationship with the husband or cohabitating partner at the time of the operation.
 
 ```{r, dependson=c('fem-process-data')}
-fem_2017_2019_data[PSURGSTR == 'YES', tablena(VASECT)]
-fem_2017_2019_data[VASECT == 'YES', tablena(PSURGSTR)]
+fem_2017_2019_data[PSURGSTR == 'YES', tablena(VASECT)] |> kable()
+fem_2017_2019_data[VASECT == 'YES', tablena(PSURGSTR)] |> kable()
 ```
 
 It appears that all sterilizing operations reported for husband or cohabitating partners are vasectomies. The only difference between `PSURGSTR` and `VASECT` is that `VASECT`'s universe is respondents currently married or cohabitating whereas `PSURGSTR`'s universe is all respondents.
@@ -1428,6 +1430,31 @@ fem_2017_2019_data[
 ```
 
 This changes two respondents' contraceptive statuses.
+
+
+#### Trying to Become Pregnant
+
+This is encoded in `WYNOTUSE` for the respondent, and in `HPPREGQ` with regard to respondent's partner. Unfortunately, both these variables are only asked if respondent had sexual intercourse in the month of the interview (comparing periods of non-intercourse as encoded in the `MONSX` series with the century-month of the interview as encoded in `CMINTVW`). There may be respondents who had sexual intercourse in the two months preceding the interview, but not in the month of the interview, and so `WYNOTUSE` might be incomplete for the remaining respondents.
+
+```{r}
+fem_2017_2019_data[
+  SEX3MO == 'YES' &
+    meth3m_count == 0 &
+    RCURPREG == 'NO (NOT CURRENTLY PREGNANT)' &
+    POSIBLPG == 'Yes' &
+    !(
+      POSIBLMN == 'No' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+          P1YRELP == 'Current cohabiting partner'
+      )
+    ),
+  tablena(WYNOTUSE)
+]
+```
+
+Indeed, `WYNOTUSE` is `NA` for 102 respondents of interest in this analysis. This is perhaps why the `CONSTAT` series of recodes uses the current month, not past 3 months.
+
+Because of this, it's best to redo the analysis, reframing "currently sexually active" has having had sexual intercourse in the month of the interview.
 
 
 ## To Do
