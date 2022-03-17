@@ -2717,11 +2717,61 @@ collect_estimate(
 ```
 
 
+### Contraceptive Use Rate
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      meth3m_count > 0
+    ),
+    subset(
+      male_2017_2019_svy,
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        FATHPOSS != 'No' &
+        (
+          (CWPPOSS != 'No' & CWPPRGNW != 'Yes' & CWPTRYPG != 'Yes') |
+          (P1CURRWIFE != 'Yes' & P1COHABIT != 'Yes')
+        )
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who do not fall into any of the preceding categories, and who had intercourse with a female in previous 3 months',
+  title = 'by whether using contraception at last intercourse',
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      meth3m_count > 0
+    ),
+    subset(
+      male_2017_2019_svy,
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        FATHPOSS != 'No' &
+        (
+          (CWPPOSS != 'No' & CWPPRGNW != 'Yes' & CWPTRYPG != 'Yes') |
+          (P1CURRWIFE != 'Yes' & P1COHABIT != 'Yes')
+        )
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'males who do not fall into any of the preceding categories, and who had intercourse with a female in previous 3 months',
+  title = 'by whether using contraception at last intercourse',
+) |> kable()
+```
+
+
 
 ## To Do
 
 * Repeat EDA for males
-    * Estimate overall contraceptive use rate
+    * Summary
+* Adjust estimates (mostly for females) not to check for a specific value, but to check for negation of opposite value, so that "don't know", etc, are included
 * Check everything against `CONSTAT` series recodes
 * Go over outline and adjust
 
