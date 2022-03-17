@@ -1913,7 +1913,7 @@ male_2017_2019_data[, `:=`(
 )]
 
 # create boolean variables for whether each specific method is currently used
-for (x in c(1:13)) {
+for (x in 1:13) {
   set(
     male_2017_2019_data,
     j = sprintf('using3m_meth%d', x),
@@ -2026,10 +2026,74 @@ collect_estimate(
 ```
 
 
+#### By Method Used, With Those Currently Using Multiple Methods Counted Multiple Times
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    1:13,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~using3m_meth%d', x)),
+        male_2017_2019_svy,
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'METH3MF', male_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'males currently using contraception',
+  title = 'by current contraceptive method'
+) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    1:13,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~using3m_meth%d', x)),
+        male_2017_2019_svy,
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'METH3MF', male_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'males currently using contraception',
+  title = 'by current contraceptive method'
+) |> standard_proportions_plot()
+```
+
+I was expecting similar results to that for females. The overall pattern is similar, but there is a noticeable difference in reported use of tubal ligation as a method of contraception. About half as many men report tubal ligation as a current method of contraception as do women. This may be due to lack of reporting. I should at least try to compensate by going through and counting wives/cohabitating partners with tubal ligations who were the last sex partners.
+
+The other immediately noticeable difference is in calendar rhythm method.
+
+I wonder if both of these are due to males not thinking about what their partners are doing?
+
+
 
 ## To Do
 
 * Repeat EDA for males
+    * Check if last sex partner was wife or cohabitating partner and if wife or cohabitating partner has current tubal ligation
 * Check everything against `CONSTAT` series recodes
 
 
