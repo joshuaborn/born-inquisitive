@@ -2280,6 +2280,94 @@ collect_estimate(
 ```
 
 
+#### By Other Method Used, Among Those Currently Using Something Else
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(list(
+    rbindlist(lapply(
+      1:12,
+      function(x) {
+        svyci(
+          as.formula(sprintf('~using3m_meth%d', x)),
+          subset(male_2017_2019_svy, using3m_meth13),
+          svytotal
+        )[
+          level == TRUE,
+          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        ]
+      }
+    ))[
+      estimate > 0
+    ][
+      , .(
+        level = factorize(level, 'METH3MF', male_2017_2019_formats),
+        estimate, se, `2.5 %`, `97.5 %`
+      )
+    ],
+    as.data.table(
+      svyci(
+        ~I(meth3m_count == 1),
+        subset(male_2017_2019_svy, using3m_meth13),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(
+          level = 'Exclusively SOMETHING ELSE',
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ]
+    )
+  ))[order(-estimate)],
+  type = 'total',
+  domain = 'males currently using something else',
+  title = 'by other contraceptive method'
+) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(list(
+    rbindlist(lapply(
+      1:12,
+      function(x) {
+        svyci(
+          as.formula(sprintf('~using3m_meth%d', x)),
+          subset(male_2017_2019_svy, using3m_meth13),
+          svyciprop
+        )[
+          , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        ]
+      }
+    ))[
+      estimate > 0
+    ][
+      , .(
+        level = factorize(level, 'METH3MF', male_2017_2019_formats),
+        estimate, se, `2.5 %`, `97.5 %`
+      )
+    ],
+    as.data.table(
+      svyci(
+        ~I(meth3m_count == 1),
+        subset(male_2017_2019_svy, using3m_meth13),
+        svyciprop
+      )[
+        , .(
+          level = 'Exclusively SOMETHING ELSE',
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ]
+    )
+  ))[order(-estimate)],
+  type = 'proportion',
+  domain = 'males currently using something else',
+  title = 'by other contraceptive method'
+) |> standard_proportions_plot()
+```
+
+
 
 ## To Do
 
