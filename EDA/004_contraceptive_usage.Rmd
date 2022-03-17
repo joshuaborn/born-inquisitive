@@ -500,8 +500,7 @@ collect_estimate(
   ),
   title = 'by current contraceptive method',
   domain = 'females currently using one method exclusively',
-  type = 'total',
-  plot = TRUE
+  type = 'total'
 ) |> standard_millions_plot() +
   labs(
     subtitle = 'among females currently using one method exclusively',
@@ -556,8 +555,7 @@ collect_estimate(
   ],
   title = 'persons using multiple methods, by method',
   domain = 'females currently using contraception',
-  type = 'total',
-  plot = TRUE
+  type = 'total'
 ) |> standard_millions_plot() +
   labs(
     subtitle = 'among females currently using contraception',
@@ -591,8 +589,7 @@ collect_estimate(
   ],
   title = 'persons using multiple methods, by method',
   domain = 'females currently using contraception',
-  type = 'proportion',
-  plot = TRUE
+  type = 'proportion'
 ) |> standard_proportions_plot() +
   labs(
     subtitle = 'among females currently using contraception',
@@ -2102,6 +2099,35 @@ I was expecting similar results to that for females. The overall pattern is simi
 The other immediately noticeable difference is in calendar rhythm method.
 
 I wonder if both of these are due to males not thinking about what their partners are doing?
+
+
+#### By Method Used, Among Those Currently Using One Method Exclusively
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(METH3M1),
+    subset(male_2017_2019_svy, meth3m_count == 1),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males currently using one method exclusively',
+  title = 'by contraceptive method'
+) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(METH3M1),
+    subset(male_2017_2019_svy, meth3m_count == 1),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males currently using one method exclusively',
+  title = 'by contraceptive method'
+) |> standard_proportions_plot()
+```
 
 
 
