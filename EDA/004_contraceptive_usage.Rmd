@@ -1888,6 +1888,8 @@ male_2017_2019_formats <- male_2017_2019$Formats
 
 ```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  CWPPRGNW,
+  CWPTRYPG,
   HADSEX,
   METH3M1,
   METH3M2,
@@ -1905,6 +1907,8 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
 
 # make existing variables factors
 male_2017_2019_data[, `:=`(
+  CWPPRGNW = factorize(CWPPRGNW, 'Y1N5RDF', male_2017_2019_formats),
+  CWPTRYPG = factorize(CWPTRYPG, 'Y1N5RDF', male_2017_2019_formats),
   HADSEX = factorize(HADSEX, 'HADSEX', male_2017_2019_formats),
   METH3M1 = factorize(METH3M1, 'METH3MF', male_2017_2019_formats),
   METH3M2 = factorize(METH3M2, 'METH3MF', male_2017_2019_formats),
@@ -2376,9 +2380,9 @@ collect_estimate(
     subset(male_2017_2019_svy, meth3m_count == 0),
     svytotal
   )[level == TRUE],
-  title = 'who did not have intercourse with female in previous 3 months',
   type = 'total',
-  domain = 'males not currently using contraception'
+  domain = 'males not currently using contraception',
+  title = 'who did not have intercourse with female in previous 3 months'
 ) |> kable()
 ```
 
@@ -2392,9 +2396,82 @@ collect_estimate(
     subset(male_2017_2019_svy, meth3m_count == 0),
     svymean
   )[level == TRUE],
-  title = 'who did not have intercourse with female in previous 3 months',
   type = 'proportion',
-  domain = 'males not currently using contraception'
+  domain = 'males not currently using contraception',
+  title = 'who did not have intercourse with female in previous 3 months'
+) |> kable()
+```
+
+#### Pregnant
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        CWPPRGNW == 'Yes' &
+        (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes')
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males not currently using contraception',
+  title = 'whose wife or cohabitating partner are pregnant, whose last intercourse was with wife or cohabitating partner, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        CWPPRGNW == 'Yes' &
+        (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes')
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svymean
+  )[level == TRUE],
+  type = 'proportion',
+  domain = 'males not currently using contraception',
+  title = 'whose wife or cohabitating partner are pregnant, whose last intercourse was with wife or cohabitating partner, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+
+#### Trying to Concieve
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        CWPTRYPG == 'Yes' &
+        (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes')
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males not currently using contraception',
+  title = 'who are trying to conceive with wife or cohabitating partner, whose last intercourse was with wife or cohabitating partner, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        CWPTRYPG == 'Yes' &
+        (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes')
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svymean
+  )[level == TRUE],
+  type = 'proportion',
+  domain = 'males not currently using contraception',
+  title = 'who are trying to conceive with wife or cohabitating partner, whose last intercourse was with wife or cohabitating partner, and who had intercourse with a female in previous 3 months',
 ) |> kable()
 ```
 
