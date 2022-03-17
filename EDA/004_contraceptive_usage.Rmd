@@ -1995,6 +1995,37 @@ collect_estimate(
 ```
 
 
+### Currently Using Contraception
+
+#### Number of Methods Used
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(meth3m_count),
+    subset(male_2017_2019_svy, meth3m_count > 0),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males currently using contraception',
+  title = 'by number of contraceptive methods used'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(meth3m_count),
+    subset(male_2017_2019_svy, meth3m_count > 0),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males currently using contraception',
+  title = 'by number of contraceptive methods used'
+) |> kable()
+```
+
+
 
 ## To Do
 
