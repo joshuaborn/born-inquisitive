@@ -1888,6 +1888,7 @@ male_2017_2019_formats <- male_2017_2019$Formats
 
 ```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  HADSEX,
   METH3M1,
   METH3M2,
   METH3M3,
@@ -1904,6 +1905,7 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
 
 # make existing variables factors
 male_2017_2019_data[, `:=`(
+  HADSEX = factorize(HADSEX, 'HADSEX', male_2017_2019_formats),
   METH3M1 = factorize(METH3M1, 'METH3MF', male_2017_2019_formats),
   METH3M2 = factorize(METH3M2, 'METH3MF', male_2017_2019_formats),
   METH3M3 = factorize(METH3M3, 'METH3MF', male_2017_2019_formats),
@@ -2357,6 +2359,43 @@ male_other_methods_totals(1) |> standard_millions_plot()
 
 ```{r, dependson=c('male-process-data', 'male-helper-functions')}
 male_other_methods_props(1) |> standard_proportions_plot()
+```
+
+
+### Not Currently Using Contraception
+
+#### Not Currently Sexually Active
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'NO, DID NOT HAVE INTERCOURSE' |
+        HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svytotal
+  )[level == TRUE],
+  title = 'who did not have intercourse with female in previous 3 months',
+  type = 'total',
+  domain = 'males not currently using contraception'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'NO, DID NOT HAVE INTERCOURSE' |
+        HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svymean
+  )[level == TRUE],
+  title = 'who did not have intercourse with female in previous 3 months',
+  type = 'proportion',
+  domain = 'males not currently using contraception'
+) |> kable()
 ```
 
 
