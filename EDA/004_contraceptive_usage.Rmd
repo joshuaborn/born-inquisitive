@@ -1889,9 +1889,18 @@ male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
 ```
 
 ```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
-male_2017_2019_data <- copy(male_2017_2019$Data)
+male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
 
-male_svy <- svydesign(
+#male_2017_2019_data[, `:=`(
+#)]
+
+male_2017_2019_data[, count := 1]
+
+male_2017_2019_svy <- svydesign(
   ids = ~SECU,
   strata = ~SEST,
   data = male_2017_2019_data,
@@ -1900,7 +1909,19 @@ male_svy <- svydesign(
 )
 ```
 
-According to the U.S. Census Bureau, ibid. The number of civilian noninstitutionalized male persons in the United States is ~74,238,000.
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~count,
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  title = 'males aged 15-49 living in households in the United States'
+) |> kable()
+```
+
+According to the U.S. Census Bureau, ibid. The number of civilian noninstitutionalized male persons in the United States is ~74,238,000. This is consistent with the estimate from the NSFG.
 
 
 
