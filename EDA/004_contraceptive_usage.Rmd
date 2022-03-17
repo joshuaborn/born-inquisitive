@@ -1895,6 +1895,9 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   METH3M2,
   METH3M3,
   METH3M4,
+  P1COHABIT,
+  P1CURRWIFE,
+  PSURGSTR,
   RSURGSTR,
   SECU,
   SEST,
@@ -1908,6 +1911,9 @@ male_2017_2019_data[, `:=`(
   METH3M2 = factorize(METH3M2, 'METH3MF', male_2017_2019_formats),
   METH3M3 = factorize(METH3M3, 'METH3MF', male_2017_2019_formats),
   METH3M4 = factorize(METH3M4, 'METH3MF', male_2017_2019_formats),
+  P1COHABIT = factorize(P1COHABIT, 'Y1N5RDF', male_2017_2019_formats),
+  P1CURRWIFE = factorize(P1CURRWIFE, 'Y1N5RDF', male_2017_2019_formats),
+  PSURGSTR = factorize(PSURGSTR, 'N0Y1CF', male_2017_2019_formats),
   RSURGSTR  = factorize(RSURGSTR, 'N0Y1RDF', male_2017_2019_formats),
   SEX3MO = factorize(SEX3MO, 'SEX3MO', male_2017_2019_formats)
 )]
@@ -1929,6 +1935,15 @@ male_2017_2019_data[, using3m_meth3 := fifelse(
   SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
   TRUE,
   using3m_meth3
+)]
+
+# count any respondents who are sexually active and who are married or cohabitating and whose last intercourse was with wife or cohabitating partner who has active tubal ligation
+male_2017_2019_data[, using3m_meth5 := fifelse(
+  SEX3MO == 'YES, HAD INTERCOURSE' &
+    (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
+    PSURGSTR == 'YES',
+  TRUE,
+  using3m_meth5
 )]
 
 # create variable counting number of current methods
@@ -2093,7 +2108,6 @@ I wonder if both of these are due to males not thinking about what their partner
 ## To Do
 
 * Repeat EDA for males
-    * Check if last sex partner was wife or cohabitating partner and if wife or cohabitating partner has current tubal ligation
 * Check everything against `CONSTAT` series recodes
 
 
