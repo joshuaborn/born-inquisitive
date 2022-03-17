@@ -2130,10 +2130,73 @@ collect_estimate(
 ```
 
 
+#### By Method Used, Among Those Currently Using Multiple Methods
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    1:13,
+    function(x) {
+      svyci(
+        ~I(meth3m_count > 1),
+        subset(
+          male_2017_2019_svy,
+          male_2017_2019_data[, get(sprintf('using3m_meth%d', x))]
+        ),
+        svytotal
+      )[
+        level == TRUE,
+        .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'METH3MF', male_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'males currently using multiple contraceptive methods',
+  title = 'by contraceptive methods'
+) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    1:13,
+    function(x) {
+      svyci(
+        ~I(meth3m_count > 1),
+        subset(
+          male_2017_2019_svy,
+          male_2017_2019_data[, get(sprintf('using3m_meth%d', x))]
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'METH3MF', male_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'males currently using multiple contraceptive methods',
+  title = 'by contraceptive methods'
+) |> standard_proportions_plot()
+```
+
+
 
 ## To Do
 
 * Repeat EDA for males
+    * Find out what "something else" for contraceptive method means
 * Check everything against `CONSTAT` series recodes
 
 
