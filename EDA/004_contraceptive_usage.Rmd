@@ -1886,20 +1886,61 @@ collect_estimate(
 
 ```{r male-load-data}
 male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
+male_2017_2019_formats <- male_2017_2019$Formats
 ```
 
 ```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  METH3M1,
+  METH3M2,
+  METH3M3,
+  METH3M4,
+  RSURGSTR,
   SECU,
   SEST,
+  SEX3MO,
   WGT2017_2019
 )])
 
-#male_2017_2019_data[, `:=`(
-#)]
+# make existing variables factors
+male_2017_2019_data[, `:=`(
+  METH3M1 = factorize(METH3M1, 'METH3MF', male_2017_2019_formats),
+  METH3M2 = factorize(METH3M2, 'METH3MF', male_2017_2019_formats),
+  METH3M3 = factorize(METH3M3, 'METH3MF', male_2017_2019_formats),
+  METH3M4 = factorize(METH3M4, 'METH3MF', male_2017_2019_formats),
+  RSURGSTR  = factorize(RSURGSTR, 'N0Y1RDF', male_2017_2019_formats),
+  SEX3MO = factorize(SEX3MO, 'SEX3MO', male_2017_2019_formats)
+)]
+
+# create boolean variables for whether each specific method is currently used
+for (x in c(1:13)) {
+  set(
+    male_2017_2019_data,
+    j = sprintf('using3m_meth%d', x),
+    value = has_level(male_2017_2019_data$METH3M1, x) |
+      has_level(male_2017_2019_data$METH3M2, x) |
+      has_level(male_2017_2019_data$METH3M3, x) |
+      has_level(male_2017_2019_data$METH3M4, x)
+  )
+}
+
+# count any respondents who are sexually active and who have an active vasectomy as using vasectomy as a contraceptive method
+male_2017_2019_data[, using3m_meth3 := fifelse(
+  SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+  TRUE,
+  using3m_meth3
+)]
+
+# create variable counting number of current methods
+male_2017_2019_data[
+  ,
+  meth3m_count := rowSums(.SD),
+  .SDcols = patterns('^using3m_meth')
+]
 
 male_2017_2019_data[, count := 1]
 
+# create survey design object
 male_2017_2019_svy <- svydesign(
   ids = ~SECU,
   strata = ~SEST,
@@ -1922,6 +1963,36 @@ collect_estimate(
 ```
 
 According to the U.S. Census Bureau, ibid. The number of civilian noninstitutionalized male persons in the United States is ~74,238,000. This is consistent with the estimate from the NSFG.
+
+```{r, dependson=c('male-process-data')}
+male_2017_2019_formats[format_name == 'METH3MF'] |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(meth3m_count > 0),
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'currently using contraception'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(meth3m_count > 0),
+    male_2017_2019_svy,
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'currently using contraception'
+) |> kable()
+```
 
 
 
