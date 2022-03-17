@@ -1888,8 +1888,10 @@ male_2017_2019_formats <- male_2017_2019$Formats
 
 ```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  CWPPOSS,
   CWPPRGNW,
   CWPTRYPG,
+  FATHPOSS,
   HADSEX,
   METH3M1,
   METH3M2,
@@ -1907,8 +1909,10 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
 
 # make existing variables factors
 male_2017_2019_data[, `:=`(
+  CWPPOSS = factorize(CWPPOSS, 'Y1N5RDF', male_2017_2019_formats),
   CWPPRGNW = factorize(CWPPRGNW, 'Y1N5RDF', male_2017_2019_formats),
   CWPTRYPG = factorize(CWPTRYPG, 'Y1N5RDF', male_2017_2019_formats),
+  FATHPOSS = factorize(FATHPOSS, 'Y1N5RDF', male_2017_2019_formats),
   HADSEX = factorize(HADSEX, 'HADSEX', male_2017_2019_formats),
   METH3M1 = factorize(METH3M1, 'METH3MF', male_2017_2019_formats),
   METH3M2 = factorize(METH3M2, 'METH3MF', male_2017_2019_formats),
@@ -2402,6 +2406,7 @@ collect_estimate(
 ) |> kable()
 ```
 
+
 #### Pregnant
 
 ```{r, dependson=c('male-process-data')}
@@ -2472,6 +2477,85 @@ collect_estimate(
   type = 'proportion',
   domain = 'males not currently using contraception',
   title = 'who are trying to conceive with wife or cohabitating partner, whose last intercourse was with wife or cohabitating partner, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+
+#### Infertile Due to Noncontraceptive Surgery
+
+This doesn't seem to be an option for male respondents. All that pertains to this is Section BB, and it is never asked what the intent of the surgery was. All sterilizing operations are assumed to be vasectomies for the purpose of contraception.
+
+
+#### Physically Infertile
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        FATHPOSS == 'No'
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males not currently using contraception',
+  title = 'who are physically unable to father children, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        FATHPOSS == 'No'
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svymean
+  )[level == TRUE],
+  type = 'proportion',
+  domain = 'males not currently using contraception',
+  title = 'who are physically unable to father children, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+
+#### Physically Infertile Wife or Cohabitating Partner
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        FATHPOSS != 'No' &
+        CWPPOSS == 'No' &
+        (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes')
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males not currently using contraception',
+  title = 'whose wife or cohabitating partner are physically unable to have children, whose last intercourse was with wife or cohabitating partner, who are not physically unable to father children, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+        FATHPOSS != 'No' &
+        CWPPOSS == 'No' &
+        (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes')
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svymean
+  )[level == TRUE],
+  type = 'proportion',
+  domain = 'males not currently using contraception',
+  title = 'whose wife or cohabitating partner are physically unable to have children, whose last intercourse was with wife or cohabitating partner, who are not physically unable to father children, and who had intercourse with a female in previous 3 months',
 ) |> kable()
 ```
 
