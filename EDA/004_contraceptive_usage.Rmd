@@ -2449,7 +2449,7 @@ collect_estimate(
 ```
 
 
-#### Trying to Concieve
+#### Trying to Conceive
 
 ```{r, dependson=c('male-process-data')}
 collect_estimate(
@@ -2565,14 +2565,57 @@ collect_estimate(
 ```
 
 
+#### Remaining Not Using Contraception
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+      FATHPOSS != 'No' &
+      (
+        (CWPPOSS != 'No' & CWPPRGNW != 'Yes' & CWPTRYPG != 'Yes') |
+        (P1CURRWIFE != 'Yes' & P1COHABIT != 'Yes')
+      )
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males not currently using contraception',
+  title = 'who do not fall into any of the preceding categories, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      SEX3MO == 'YES, HAD INTERCOURSE' &
+      FATHPOSS != 'No' &
+      (
+        (CWPPOSS != 'No' & CWPPRGNW != 'Yes' & CWPTRYPG != 'Yes') |
+        (P1CURRWIFE != 'Yes' & P1COHABIT != 'Yes')
+      )
+    ),
+    subset(male_2017_2019_svy, meth3m_count == 0),
+    svymean
+  )[level == TRUE],
+  type = 'proportion',
+  domain = 'males not currently using contraception',
+  title = 'who do not fall into any of the preceding categories, and who had intercourse with a female in previous 3 months',
+) |> kable()
+```
+
+
 
 ## To Do
 
 * Repeat EDA for males
-    * Estimate other nonusers
-    * Don't know
+    * Estimate don't know
     * Estimate overall contraceptive use rate
 * Check everything against `CONSTAT` series recodes
+* Go over outline and adjust
 
 
 # Outline
