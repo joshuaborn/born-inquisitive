@@ -2327,6 +2327,39 @@ male_other_methods_props(9) |> standard_proportions_plot()
 ```
 
 
+#### By Other Method Used, Among Those Currently Using Withdrawal
+
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_totals(2) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_props(2) |> standard_proportions_plot()
+```
+
+
+#### By Other Method Used, Among Those Currently Using Pill
+
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_totals(4) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_props(4) |> standard_proportions_plot()
+```
+
+
+#### By Other Method Used, Among Those Currently Using Condom
+
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_totals(1) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_props(1) |> standard_proportions_plot()
+```
+
+
 
 ## To Do
 
