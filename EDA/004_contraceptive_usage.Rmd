@@ -2717,6 +2717,42 @@ collect_estimate(
 ```
 
 
+#### Summary
+
+##### Totals
+
+```{r, dependson=c('male-process-data')}
+env$estimates[
+  domain == 'males not currently using contraception' &
+    type == 'total',
+  .(
+    title, estimate, se, `2.5 %`, `97.5 %`
+  )
+] |> kable()
+```
+
+##### Proportions
+
+```{r, dependson=c('male-process-data')}
+env$estimates[
+  domain == 'males not currently using contraception' &
+    type == 'proportion',
+  .(
+    title, estimate, se, `2.5 %`, `97.5 %`
+  )
+] |> kable()
+```
+
+```{r}
+env$estimates[
+  domain == 'males not currently using contraception' &
+    type == 'total',
+  lapply(.SD, sum),
+  .SDcols = c('estimate', "2.5 %", "97.5 %")
+] |> kable()
+```
+
+
 ### Contraceptive Use Rate
 
 ```{r, dependson=c('male-process-data')}
@@ -2769,8 +2805,7 @@ collect_estimate(
 
 ## To Do
 
-* Repeat EDA for males
-    * Summary
+* Check to make sure that all male respondents are classified into a contraceptive use\nonuse category
 * Adjust estimates (mostly for females) not to check for a specific value, but to check for negation of opposite value, so that "don't know", etc, are included
 * Check everything against `CONSTAT` series recodes
 * Go over outline and adjust
