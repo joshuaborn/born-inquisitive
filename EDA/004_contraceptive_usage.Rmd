@@ -2192,6 +2192,94 @@ collect_estimate(
 ```
 
 
+#### By Other Method Used, Among Those Currently Using Contraceptive Patch
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(list(
+    rbindlist(lapply(
+      c(1:9, 11:13),
+      function(x) {
+        svyci(
+          as.formula(sprintf('~using3m_meth%d', x)),
+          subset(male_2017_2019_svy, using3m_meth10),
+          svytotal
+        )[
+          level == TRUE,
+          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        ]
+      }
+    ))[
+      estimate > 0
+    ][
+      , .(
+        level = factorize(level, 'METH3MF', male_2017_2019_formats),
+        estimate, se, `2.5 %`, `97.5 %`
+      )
+    ],
+    as.data.table(
+      svyci(
+        ~I(meth3m_count == 1),
+        subset(male_2017_2019_svy, using3m_meth10),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(
+          level = 'Exclusively CONTRACEPTIVE PATCH',
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ]
+    )
+  ))[order(-estimate)],
+  type = 'total',
+  domain = 'males currently using contraceptive patch',
+  title = 'by other contraceptive method'
+) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(list(
+    rbindlist(lapply(
+      c(1:9, 11:13),
+      function(x) {
+        svyci(
+          as.formula(sprintf('~using3m_meth%d', x)),
+          subset(male_2017_2019_svy, using3m_meth10),
+          svyciprop
+        )[
+          , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+        ]
+      }
+    ))[
+      estimate > 0
+    ][
+      , .(
+        level = factorize(level, 'METH3MF', male_2017_2019_formats),
+        estimate, se, `2.5 %`, `97.5 %`
+      )
+    ],
+    as.data.table(
+      svyci(
+        ~I(meth3m_count == 1),
+        subset(male_2017_2019_svy, using3m_meth10),
+        svyciprop
+      )[
+        , .(
+          level = 'Exclusively CONTRACEPTIVE PATCH',
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ]
+    )
+  ))[order(-estimate)],
+  type = 'proportion',
+  domain = 'males currently using contraceptive patch',
+  title = 'by other contraceptive method'
+) |> standard_proportions_plot()
+```
+
+
 
 ## To Do
 
