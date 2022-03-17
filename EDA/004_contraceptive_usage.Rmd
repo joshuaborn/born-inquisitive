@@ -2192,179 +2192,127 @@ collect_estimate(
 ```
 
 
-#### By Other Method Used, Among Those Currently Using Contraceptive Patch
+```{r male-helper-functions, dependson=c('male-process-data')}
+male_other_methods_totals <- function(meth_idx) {
+  this_method_var <- sprintf('using3m_meth%d', meth_idx)
+  this_method_label <- male_2017_2019_formats[
+    format_name == 'METH3MF' & factor_value == meth_idx,
+    factor_label
+  ]
+  other_methods_idx <- (1:13)[-meth_idx]
 
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  rbindlist(list(
-    rbindlist(lapply(
-      c(1:9, 11:13),
-      function(x) {
-        svyci(
-          as.formula(sprintf('~using3m_meth%d', x)),
-          subset(male_2017_2019_svy, using3m_meth10),
-          svytotal
-        )[
-          level == TRUE,
-          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
-        ]
-      }
-    ))[
-      estimate > 0
-    ][
-      , .(
-        level = factorize(level, 'METH3MF', male_2017_2019_formats),
-        estimate, se, `2.5 %`, `97.5 %`
-      )
-    ],
-    as.data.table(
-      svyci(
-        ~I(meth3m_count == 1),
-        subset(male_2017_2019_svy, using3m_meth10),
-        svytotal
-      )[
-        level == TRUE
+  collect_estimate(
+    rbindlist(list(
+      rbindlist(lapply(
+        other_methods_idx,
+        function(x) {
+          svyci(
+            as.formula(sprintf('~using3m_meth%d', x)),
+            subset(male_2017_2019_svy, male_2017_2019_data[, get(this_method_var)]),
+            svytotal
+          )[
+            level == TRUE,
+            .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+          ]
+        }
+      ))[
+        estimate > 0
       ][
         , .(
-          level = 'Exclusively CONTRACEPTIVE PATCH',
+          level = factorize(level, 'METH3MF', male_2017_2019_formats),
           estimate, se, `2.5 %`, `97.5 %`
         )
-      ]
-    )
-  ))[order(-estimate)],
-  type = 'total',
-  domain = 'males currently using contraceptive patch',
-  title = 'by other contraceptive method'
-) |> standard_millions_plot()
-```
-
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  rbindlist(list(
-    rbindlist(lapply(
-      c(1:9, 11:13),
-      function(x) {
+      ],
+      as.data.table(
         svyci(
-          as.formula(sprintf('~using3m_meth%d', x)),
-          subset(male_2017_2019_svy, using3m_meth10),
+          ~I(meth3m_count == 1),
+          subset(male_2017_2019_svy, male_2017_2019_data[, get(this_method_var)]),
+          svytotal
+        )[
+          level == TRUE
+        ][
+          , .(
+            level = paste('Exclusively', this_method_label),
+            estimate, se, `2.5 %`, `97.5 %`
+          )
+        ]
+      )
+    ))[order(-estimate)],
+    type = 'total',
+    domain = paste('males currently using', this_method_label),
+    title = 'by other contraceptive method'
+  )
+}
+
+male_other_methods_props <- function(meth_idx) {
+  this_method_var <- sprintf('using3m_meth%d', meth_idx)
+  this_method_label <- male_2017_2019_formats[
+    format_name == 'METH3MF' & factor_value == meth_idx,
+    factor_label
+  ]
+  other_methods_idx <- (1:13)[-meth_idx]
+
+  collect_estimate(
+    rbindlist(list(
+      rbindlist(lapply(
+        other_methods_idx,
+        function(x) {
+          svyci(
+            as.formula(sprintf('~using3m_meth%d', x)),
+            subset(male_2017_2019_svy, male_2017_2019_data[, get(this_method_var)]),
+            svyciprop
+          )[
+            , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+          ]
+        }
+      ))[
+        estimate > 0
+      ][
+        , .(
+          level = factorize(level, 'METH3MF', male_2017_2019_formats),
+          estimate, se, `2.5 %`, `97.5 %`
+        )
+      ],
+      as.data.table(
+        svyci(
+          ~I(meth3m_count == 1),
+          subset(male_2017_2019_svy, male_2017_2019_data[, get(this_method_var)]),
           svyciprop
         )[
-          , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+          , .(
+            level = paste('Exclusively', this_method_label),
+            estimate, se, `2.5 %`, `97.5 %`
+          )
         ]
-      }
-    ))[
-      estimate > 0
-    ][
-      , .(
-        level = factorize(level, 'METH3MF', male_2017_2019_formats),
-        estimate, se, `2.5 %`, `97.5 %`
       )
-    ],
-    as.data.table(
-      svyci(
-        ~I(meth3m_count == 1),
-        subset(male_2017_2019_svy, using3m_meth10),
-        svyciprop
-      )[
-        , .(
-          level = 'Exclusively CONTRACEPTIVE PATCH',
-          estimate, se, `2.5 %`, `97.5 %`
-        )
-      ]
-    )
-  ))[order(-estimate)],
-  type = 'proportion',
-  domain = 'males currently using contraceptive patch',
-  title = 'by other contraceptive method'
-) |> standard_proportions_plot()
+    ))[order(-estimate)],
+    type = 'proportion',
+    domain = paste('males currently using', this_method_label),
+    title = 'by other contraceptive method'
+  )
+}
+```
+
+
+#### By Other Method Used, Among Those Currently Using Contraceptive Patch
+
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_totals(10) |> standard_millions_plot()
+```
+
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_props(10) |> standard_proportions_plot()
 ```
 
 
 #### By Other Method Used, Among Those Currently Using Something Else
 
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  rbindlist(list(
-    rbindlist(lapply(
-      1:12,
-      function(x) {
-        svyci(
-          as.formula(sprintf('~using3m_meth%d', x)),
-          subset(male_2017_2019_svy, using3m_meth13),
-          svytotal
-        )[
-          level == TRUE,
-          .(level = x, estimate, se, `2.5 %`, `97.5 %`)
-        ]
-      }
-    ))[
-      estimate > 0
-    ][
-      , .(
-        level = factorize(level, 'METH3MF', male_2017_2019_formats),
-        estimate, se, `2.5 %`, `97.5 %`
-      )
-    ],
-    as.data.table(
-      svyci(
-        ~I(meth3m_count == 1),
-        subset(male_2017_2019_svy, using3m_meth13),
-        svytotal
-      )[
-        level == TRUE
-      ][
-        , .(
-          level = 'Exclusively SOMETHING ELSE',
-          estimate, se, `2.5 %`, `97.5 %`
-        )
-      ]
-    )
-  ))[order(-estimate)],
-  type = 'total',
-  domain = 'males currently using something else',
-  title = 'by other contraceptive method'
-) |> standard_millions_plot()
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_totals(13) |> standard_millions_plot()
 ```
 
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  rbindlist(list(
-    rbindlist(lapply(
-      1:12,
-      function(x) {
-        svyci(
-          as.formula(sprintf('~using3m_meth%d', x)),
-          subset(male_2017_2019_svy, using3m_meth13),
-          svyciprop
-        )[
-          , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
-        ]
-      }
-    ))[
-      estimate > 0
-    ][
-      , .(
-        level = factorize(level, 'METH3MF', male_2017_2019_formats),
-        estimate, se, `2.5 %`, `97.5 %`
-      )
-    ],
-    as.data.table(
-      svyci(
-        ~I(meth3m_count == 1),
-        subset(male_2017_2019_svy, using3m_meth13),
-        svyciprop
-      )[
-        , .(
-          level = 'Exclusively SOMETHING ELSE',
-          estimate, se, `2.5 %`, `97.5 %`
-        )
-      ]
-    )
-  ))[order(-estimate)],
-  type = 'proportion',
-  domain = 'males currently using something else',
-  title = 'by other contraceptive method'
-) |> standard_proportions_plot()
+```{r, dependson=c('male-process-data', 'male-helper-functions')}
+male_other_methods_props(13) |> standard_proportions_plot()
 ```
 
 
