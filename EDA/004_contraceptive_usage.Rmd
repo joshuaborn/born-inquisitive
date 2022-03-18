@@ -2805,7 +2805,7 @@ collect_estimate(
 
 ## To Do
 
-* Check to make sure that all male respondents are classified into a contraceptive use\nonuse category
+* Check to make sure that all respondents are classified into a contraceptive use\nonuse category
 * Adjust estimates (mostly for females) not to check for a specific value, but to check for negation of opposite value, so that "don't know", etc, are included
 * Check everything against `CONSTAT` series recodes
 * Go over outline and adjust
