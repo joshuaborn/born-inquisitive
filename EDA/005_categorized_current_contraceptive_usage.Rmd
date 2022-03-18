@@ -185,12 +185,18 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   METH3M2,
   METH3M3,
   P1YRELP = factorize(P1YRELP, 'P1YRELP', fem_2017_2019_formats),
+  P1YRELP = factorize(P1YRELP, 'P1YRELP', fem_2017_2019_formats),
+  POSIBLMN = factorize(POSIBLMN, 'Y1N5RDF', fem_2017_2019_formats),
+  POSIBLPG = factorize(POSIBLPG, 'Y1N5RDF', fem_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
+  RCURPREG = factorize(RCURPREG, 'RCURPREG', fem_2017_2019_formats),
   SECU,
   SEST,
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
   TUBS = factorize(TUBS, 'Y1N5C', fem_2017_2019_formats),
-  WGT2017_2019
+  WGT2017_2019,
+  WYNOLSTP = factorize(WYNOLSTP, 'Y1N5RDF', fem_2017_2019_formats),
+  WYNOTUSE = factorize(WYNOTUSE, 'Y1N5RDF', fem_2017_2019_formats)
 )])
 
 # remove sterility not from contraceptive procedure from METH3M series
@@ -258,6 +264,28 @@ fem_2017_2019_data[
   .SDcols = patterns('^using3m_meth')
 ]
 
+# set master categorization for contraceptive use
+fem_2017_2019_data[,
+  curr_use := factor(fcase(
+    meth3m_count > 0,
+      'Used at least one contraceptive method at last intercourse',
+    SEX3MO != 'YES',
+      'Did not have sexual intercourse with male in past 3 months',
+    RCURPREG == 'YES (CURRENTLY PREGNANT)',
+      'Currently pregnant',
+    (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
+      'Currently trying to conceive',
+    POSIBLPG == 'No',
+      'Physically unable to conceive',
+    POSIBLMN == 'No' & (
+      P1YRELP == 'Current cohabiting partner' |
+      P1YRELP == 'Current husband or (current husband from whom she is separated)'
+    ),
+      'Last intercourse was with partner who is physically unable to conceive',
+    default = 'Otherwise did not use contraception at last intercourse'
+  ))
+]
+
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -276,6 +304,10 @@ male_2017_2019_formats <- male_2017_2019$Formats
 
 ```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  CWPPOSS = factorize(CWPPOSS, 'Y1N5RDF', male_2017_2019_formats),
+  CWPPRGNW = factorize(CWPPRGNW, 'Y1N5RDF', male_2017_2019_formats),
+  CWPTRYPG = factorize(CWPTRYPG, 'Y1N5RDF', male_2017_2019_formats),
+  FATHPOSS = factorize(FATHPOSS, 'Y1N5RDF', male_2017_2019_formats),
   METH3M1 = factorize(METH3M1, 'METH3MF', male_2017_2019_formats),
   METH3M2 = factorize(METH3M2, 'METH3MF', male_2017_2019_formats),
   METH3M3 = factorize(METH3M3, 'METH3MF', male_2017_2019_formats),
@@ -325,6 +357,25 @@ male_2017_2019_data[
   .SDcols = patterns('^using3m_meth')
 ]
 
+# set master categorization for contraceptive use
+male_2017_2019_data[,
+  curr_use := factor(fcase(
+    meth3m_count > 0,
+      'Used at least one contraceptive method at last intercourse',
+    SEX3MO != 'YES, HAD INTERCOURSE',
+      'Did not have sexual intercourse with female in past 3 months',
+    (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPRGNW == 'Yes',
+      'Last intercourse was with partner who is pregnant',
+    (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPTRYPG == 'Yes',
+      'Last intercourse was with partner who is trying to conceive',
+    FATHPOSS == 'No',
+      'Physically unable to conceive',
+    (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPOSS == 'No',
+      'Last intercourse was with partner who is physically unable to concieve',
+    default = 'Otherwise did not use contraception at last intercourse'
+  ))
+]
+
 # create survey design object
 male_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -335,12 +386,42 @@ male_2017_2019_svy <- svydesign(
 )
 ```
 
+# Estimates of Master Contraceptive Use or Nonuse
+
+## Females
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~curr_use,
+    fem_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by current contraceptive status',
+)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+## Males
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~curr_use,
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'by current contraceptive status',
+)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
 
 
 ## To Do
 
-* Check to make sure that all respondents are classified into a contraceptive use\nonuse category
-* Adjust estimates (mostly for females) not to check for a specific value, but to check for negation of opposite value, so that "don't know", etc, are included
 * Check everything against `CONSTAT` series recodes
 * Go over outline and adjust
 
