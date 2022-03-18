@@ -422,7 +422,11 @@ collect_estimate(
 
 ## To Do
 
-* Check everything against `CONSTAT` series recodes
+* Compare estimates for females against `CONSTAT1`; see recode specification
+    * Check current contraceptive user estimates by method
+    * Not sexually active is very different
+    * Infertile is very different
+    * Estimate postpartum?
 * Go over outline and adjust
 
 

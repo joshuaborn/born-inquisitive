@@ -1,0 +1,114 @@
+---
+title: "Estimates According to CONSTAT Recode"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(ggplot2)
+library(here)
+library(knitr)
+library(survey)
+
+i_am('EDA/006_CONSTAT_recode.Rmd')
+
+source(here('R/survey_helpers.R'))
+source(here('R/import.R'))
+
+opts_chunk$set(
+  cache = TRUE,
+  echo = TRUE,
+  fig.height = 8,
+  fig.width = 12,
+  warning = FALSE
+)
+```
+
+```{r helper-functions}
+in_millions <- function(dt, round_to = 3, do_round = TRUE) {
+  dt <- as.data.table(dt)
+  cols <- c('estimate', 'se', '2.5 %', '97.5 %')
+  sub_dt <- dt[, cols, with = FALSE] / 10^6
+  if (do_round) {
+    sub_dt <- round(sub_dt, round_to)
+  }
+  dt[, (cols) := sub_dt]
+  dt
+}
+```
+
+```{r fem-load-data}
+fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
+fem_2017_2019_formats <- fem_2017_2019$Formats
+```
+
+```{r fem-process-data, dependson=c('helper-functions', 'fem-load-data')}
+fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
+  CASEID,
+  CONSTAT1 = factorize(CONSTAT1, 'CONSTATF', fem_2017_2019_formats),
+  CONSTAT2 = factorize(CONSTAT2, 'CONSTATF', fem_2017_2019_formats),
+  CONSTAT3 = factorize(CONSTAT3, 'CONSTATF', fem_2017_2019_formats),
+  CONSTAT4 = factorize(CONSTAT4, 'CONSTATF', fem_2017_2019_formats),
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
+
+# create survey design object
+fem_2017_2019_svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = fem_2017_2019_data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+```
+
+# Levels
+
+```{r, dependson=c('fem-process-data')}
+as.data.table(levels(fem_2017_2019_data$CONSTAT1))[
+  , .(
+    ID = .I,
+    level = V1
+  )
+] |> kable()
+```
+
+# Overall
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~CONSTAT1,
+  fem_2017_2019_svy,
+  svytotal,
+  ordered = FALSE
+) |> in_millions() |> kable()
+```
+
+# Using Contraception
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(as.integer(CONSTAT1) %in% 1:22),
+  fem_2017_2019_svy,
+  svytotal,
+  ordered = FALSE
+) |> in_millions() |> kable()
+```
+
+# Not Sexually Active
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(as.integer(CONSTAT1) %in% 31:32),
+  fem_2017_2019_svy,
+  svytotal,
+  ordered = FALSE
+)[level == TRUE] |> in_millions() |> kable()
+```
