@@ -1,5 +1,5 @@
 ---
-title: "Contraceptive Usage"
+title: "Current Contraceptive Usage, Each Category Investigated Individually"
 author: "Joshua Born"
 output:
   html_document:
@@ -15,7 +15,7 @@ library(here)
 library(knitr)
 library(survey)
 
-i_am('EDA/004_contraceptive_usage.Rmd')
+i_am('EDA/004_current_contraceptive_usage.Rmd')
 
 source(here('R/survey_helpers.R'))
 source(here('R/import.R'))
