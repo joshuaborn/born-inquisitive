@@ -704,6 +704,18 @@ More females were using contraception at last intercourse and pregnant in the mo
 For lack of anything better, the analysis will use `LSEXPREG` instead of `RCURPREG`, and count those who were using a contraceptive method at last intercourse as contraceptive users. "Pregnant" will only count those who were pregnant in month of last intercourse and did not use a method of contraception.
 
 
+## Nonusers
+
+```{r, dependson=c('fem-process-data')}
+svytable(
+  ~I(CURRMETH1 == 1)+I(meth3m_count==0),
+  subset(fem_2017_2019_svy, SEX3MO == 'YES')
+) / 10^6
+```
+
+Approximately $3.186$ million females report no contraceptive method used in the month of the interview, but used at least one contraceptive method at last intercourse within the past 3 months. Furthermore, approximately $1.080$ million females report not using any contraceptive method at last intercourse, but using some kind of contraceptive method during month of the interview (or possibily did not reply, didn't know, or were sterile). This accounts for the differences in the estimates of nonusers.
+
+
 # Estimation of Postpartum Females
 
 This is calculated for `CONSTAT1` by comparing `CMINTVW` with `CMLSTPRG`. However, `CMLSTPRG` in the public use files does not contain month information, and the public use files do not contain the day of the interview, so this cannot be calculated from the public use files. Because of this, try to estimate postpartum females using `CONSTAT1`.
@@ -729,8 +741,6 @@ Unfortunately, there is not an equivalent recode for males in the public use dat
 
 # To Do
 
-* Compare estimates for females against `CONSTAT1`; see recode specification
-    * Other nonuser had intercourse in the 3 months prior to interview 5.081 vs 3.917
 * Go over outline and adjust
     * Add "Why do respondents believe themselves to be sterile?"
 
