@@ -645,7 +645,25 @@ Another $0.472$ million females are nonsurgically sterile, but used a contracept
 
 This raises the question, should those who report being sterile be included in the counts for contraceptive use, as was done here up until now? Or should those who are reportedly sterile not be included in the counts of contraceptive use?
 
-A similar question can be asked about those who are pregnant, but using a contraceptive method.
+My thinking on this goes back and forth. On the one hand, there may be people who are infertile, but are using contraceptive methods for noncontraceptive reasons, such as menstrual regulation. On the other hand, there may be people in falsely think they are infertile and who are using contraceptive methods. This is something to handle after investigating these other questions and coming up with estimates of what is more common: noncontraceptive contraception use among infertile females or unsound belief that a someone is infertile.
+
+
+## Pregnant
+
+A similar question can be asked about those who are pregnant, but using a contraceptive method. 
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(
+    meth3m_count > 0 &
+    RCURPREG == 'YES (CURRENTLY PREGNANT)'
+  ),
+  fem_2017_2019_svy,
+  svytotal
+) |> in_millions() |> kable()
+```
+
+There aren't many who fall into this category, but it is nonzero.
 
 
 # Estimation of Postpartum Females
@@ -676,6 +694,7 @@ Unfortunately, there is not an equivalent recode for males in the public use dat
 * Compare estimates for females against `CONSTAT1`; see recode specification
     * Other nonuser had intercourse in the 3 months prior to interview 5.081 vs 3.917
 * Go over outline and adjust
+    * Add "Why do respondents believe themselves to be sterile?"
 
 
 # Outline
