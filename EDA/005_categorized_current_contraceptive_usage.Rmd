@@ -403,6 +403,7 @@ collect_estimate(
 )[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
 
+
 ## Males
 
 ```{r, dependson=c('male-process-data')}
@@ -417,65 +418,3 @@ collect_estimate(
   title = 'by current contraceptive status',
 )[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
-
-
-
-## To Do
-
-* Compare estimates for females against `CONSTAT1`; see recode specification
-    * Check current contraceptive user estimates by method
-    * Not sexually active is very different
-    * Infertile is very different
-    * Estimate postpartum?
-* Go over outline and adjust
-
-
-# Outline
-
-## Frames for analysis
-
-### By Table
-
-* Female persons
-* Male persons
-
-### By Columns
-
-* "Current" -- at last intercourse with male in past 3 months
-* "Recent" -- over previous year
-* "Ever" -- over lifetime
-
-## Questions for Users
-
-* Which contraceptives?
-* How many?
-* For reasons other than contraception?
-* For "recent," how consistent?
-* For "recent" and for multiple methods users, simultaneously or alternatively?
-* For "ever" and who have stopped using a method, why did they stop?
-
-## Questions for Nonusers
-
-* Not sexually active with male?
-    * Ever or just now?
-    * Exclusively same-sex partner(s)?
-* Currently pregnant?
-* Noncontraceptive surgical sterilization
-* Physically unable to have child
-* Cohabitating partner or husband surgical sterilization
-* Cohabitating partner or husband physically unable to have child
-* Trying to get pregnant?
-* For those fertile, heterosexually active, not using contraception, and not desiring pregnancy, why no contraception usage?
-
-## Covariates/Subdomains
-
-* Want children in future, but not just not now
-* By sex education
-* By income
-* By religion
-    * Roman Catholics are a subdomain of interest.
-* Second phase vs. first-phase (to investigate nonresponse bias)
-
-## Other
-
-* Try combining with 2015-2017 data for more precise estimates?

@@ -51,11 +51,16 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
   CONSTAT1 = factorize(CONSTAT1, 'CONSTATF', fem_2017_2019_formats),
+  CONSTAT1,
   CONSTAT2 = factorize(CONSTAT2, 'CONSTATF', fem_2017_2019_formats),
   CONSTAT3 = factorize(CONSTAT3, 'CONSTATF', fem_2017_2019_formats),
   CONSTAT4 = factorize(CONSTAT4, 'CONSTATF', fem_2017_2019_formats),
+  FECUND,
+  RCURPREG = factorize(RCURPREG, 'RCURPREG', fem_2017_2019_formats),
   SECU,
   SEST,
+  SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
+  STRLOPER,
   WGT2017_2019
 )])
 
@@ -112,3 +117,117 @@ svyci(
   ordered = FALSE
 )[level == TRUE] |> in_millions() |> kable()
 ```
+
+
+# Discrepancies
+
+## Not Sexually Active
+
+There is a big discrepancy between the number of sexually inactive females reported here (21.361) and what is estimated by `CONSTAT1` (12.236) million.
+
+Here only females who have had sexual intercourse in the previous 3 months are counted as using contraception. By `CONSTAT1` logic, any females who have had contraceptive sterilizing operations are assigned a `CONSTAT1` value of `01` "Female sterilization."
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(
+    SEX3MO != 'YES' &
+    FECUND == 1 &
+    STRLOPER %in% 1:2
+  ),
+  fem_2017_2019_svy,
+  svytotal
+) |> in_millions() |> kable()
+```
+
+This accounts for 2 million females of the difference in the estimates.
+
+Likewise, all pregnant females are given a `CONSTAT1` of `30`, regardless of whether they are sexually active.
+
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(
+    SEX3MO != 'YES' &
+    RCURPREG == 'YES (CURRENTLY PREGNANT)'
+  ),
+  fem_2017_2019_svy,
+  svytotal
+) |> in_millions() |> kable()
+```
+
+This only accounts for aabout 0.195 million females of the difference in the estimates.
+
+More generally, though,
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(
+    SEX3MO != 'YES' &
+    !is.element(CONSTAT1, 40:41)
+  ),
+  fem_2017_2019_svy,
+  svytotal
+) |> in_millions() |> kable()
+```
+
+all of the females who have not had sexual intercourse in the previous 3 months, but who are given a `CONSTAT1` value not `40` or `41` amount to about 9.208 million females. The difference in the estimates is $21.361 - 12.236$ or $9.125$ million females. Thus, this accounts for the difference in the estimates.
+
+
+## To Do
+
+* Compare estimates for females against `CONSTAT1`; see recode specification
+    * Check current contraceptive user estimates by method
+    * Infertile is very different
+    * Estimate postpartum?
+* Go over outline and adjust
+
+
+# Outline
+
+## Frames for analysis
+
+### By Table
+
+* Female persons
+* Male persons
+
+### By Columns
+
+* "Current" -- at last intercourse with male in past 3 months
+* "Recent" -- over previous year
+* "Ever" -- over lifetime
+
+## Questions for Users
+
+* Which contraceptives?
+* How many?
+* For reasons other than contraception?
+* For "recent," how consistent?
+* For "recent" and for multiple methods users, simultaneously or alternatively?
+* For "ever" and who have stopped using a method, why did they stop?
+
+## Questions for Nonusers
+
+* Not sexually active with male?
+    * Ever or just now?
+    * Exclusively same-sex partner(s)?
+* Currently pregnant?
+* Noncontraceptive surgical sterilization
+* Physically unable to have child
+* Cohabitating partner or husband surgical sterilization
+* Cohabitating partner or husband physically unable to have child
+* Trying to get pregnant?
+* For those fertile, heterosexually active, not using contraception, and not desiring pregnancy, why no contraception usage?
+
+## Covariates/Subdomains
+
+* Want children in future, but not just not now
+* By sex education
+* By income
+* By religion
+    * Roman Catholics are a subdomain of interest.
+* Second phase vs. first-phase (to investigate nonresponse bias)
+
+## Other
+
+* Try combining with 2015-2017 data for more precise estimates?
