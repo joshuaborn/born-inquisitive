@@ -157,8 +157,6 @@ svyci(
 
 This only accounts for aabout 0.195 million females of the difference in the estimates.
 
-More generally, though,
-
 ```{r, dependson=c('fem-process-data')}
 svyci(
   ~I(
@@ -170,15 +168,18 @@ svyci(
 ) |> in_millions() |> kable()
 ```
 
-all of the females who have not had sexual intercourse in the previous 3 months, but who are given a `CONSTAT1` value not `40` or `41` amount to about 9.208 million females. The difference in the estimates is $21.361 - 12.236$ or $9.125$ million females. Thus, this accounts for the difference in the estimates.
+More generally, though, all of the females who have not had sexual intercourse in the previous 3 months, but who are given a `CONSTAT1` value not `40` or `41` amount to about 9.208 million females. The difference in the estimates is $21.361 - 12.236$ or $9.125$ million females. Thus, this accounts for the difference in the estimates.
 
 
 ## To Do
 
 * Compare estimates for females against `CONSTAT1`; see recode specification
-    * Check current contraceptive user estimates by method
-    * Infertile is very different
     * Estimate postpartum?
+    * Pill is more for `CONSTAT1` 10.139 vs 7.947
+    * Implant 1.459 vs 1.161
+    * Injectable 1.423 vs 1.041
+    * Nonsurgical sterile female 1.861 vs 0.369
+    * Other nonuser had intercourse in the 3 months prior to interview 5.081 vs 3.917
 * Go over outline and adjust
 
 
