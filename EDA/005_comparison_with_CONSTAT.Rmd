@@ -185,6 +185,10 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CONSTAT2 = factorize(CONSTAT2, 'CONSTATF', fem_2017_2019_formats),
   CONSTAT3 = factorize(CONSTAT3, 'CONSTATF', fem_2017_2019_formats),
   CONSTAT4 = factorize(CONSTAT4, 'CONSTATF', fem_2017_2019_formats),
+  CURRMETH1,
+  CURRMETH2,
+  CURRMETH3,
+  CURRMETH4,
   FECUND,
   METH3M1,
   METH3M2,
@@ -243,6 +247,18 @@ for (x in c(1:19, 22:24)) {
     value = has_level(fem_2017_2019_data$METH3M1, x) |
       has_level(fem_2017_2019_data$METH3M2, x) |
       has_level(fem_2017_2019_data$METH3M3, x)
+  )
+}
+
+# create boolean variables for whether each specific method is used in month of interview
+for (x in c(2:21, 24:26)) {
+  set(
+    fem_2017_2019_data,
+    j = sprintf('using1m_meth%d', x),
+    value = has_level(fem_2017_2019_data$CURRMETH1, x) |
+      has_level(fem_2017_2019_data$CURRMETH2, x) |
+      has_level(fem_2017_2019_data$CURRMETH3, x) |
+      has_level(fem_2017_2019_data$CURRMETH4, x)
   )
 }
 
@@ -534,7 +550,7 @@ svyci(
 ) |> in_millions() |> kable()
 ```
 
-This only accounts for aabout 0.195 million females of the difference in the estimates.
+This only accounts for about 0.195 million females of the difference in the estimates.
 
 ```{r, dependson=c('fem-process-data')}
 svyci(
@@ -548,6 +564,54 @@ svyci(
 ```
 
 More generally, though, all of the females who have not had sexual intercourse in the previous 3 months, but who are given a `CONSTAT1` value not `40` or `41` amount to about 9.208 million females. The difference in the estimates is $21.361 - 12.236$ or $9.125$ million females. Thus, this accounts for the difference in the estimates.
+
+
+## Pill
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(
+    SEX3MO != 'YES' &
+    using1m_meth3
+  ),
+  fem_2017_2019_svy,
+  svytotal
+) |> in_millions() |> kable()
+```
+
+The estimated 2.899 million females who report using pills in the current month, but who are not sexually active within the past 3 months, more than account for the difference between estimates of $10.139 - 7.847 = 2.292$. The excess is likely due to there being several methods above pill in the `CONSTAT` prioritization.
+
+
+## Hormonal Implant
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(
+    SEX3MO != 'YES' &
+    using1m_meth9
+  ),
+  fem_2017_2019_svy,
+  svytotal
+) |> in_millions() |> kable()
+```
+
+Likewise, users of hormonal plants who have not had sexual intercourse with a male in the past 3 months explains the difference in the corresponding estimates $1.459 - 1.161 = 0.298$.
+
+
+## Hormonal Injectable
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(
+    SEX3MO != 'YES' &
+    using1m_meth8
+  ),
+  fem_2017_2019_svy,
+  svytotal
+) |> in_millions() |> kable()
+```
+
+Similarly, difference in estimates for hormonal injectable use $1.423 - 1.041 = 0.382$ is explained by same-month users who have not had intercourse in 3 months.
 
 
 # Estimation of Postpartum Females
@@ -576,9 +640,6 @@ Unfortunately, there is not an equivalent recode for males in the public use dat
 # To Do
 
 * Compare estimates for females against `CONSTAT1`; see recode specification
-    * Pill is more for `CONSTAT1` 10.139 vs 7.947
-    * Implant 1.459 vs 1.161
-    * Injectable 1.423 vs 1.041
     * Nonsurgical sterile female 1.861 vs 0.369
     * Other nonuser had intercourse in the 3 months prior to interview 5.081 vs 3.917
 * Go over outline and adjust
