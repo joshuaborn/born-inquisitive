@@ -190,6 +190,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CURRMETH3,
   CURRMETH4,
   FECUND,
+  LSEXPREG = factorize(LSEXPREG, 'Y1N2RECF', fem_2017_2019_formats),
   METH3M1,
   METH3M2,
   METH3M3,
@@ -293,8 +294,8 @@ fem_2017_2019_data[,
       'Used at least one contraceptive method at last intercourse',
     SEX3MO != 'YES',
       'Did not have sexual intercourse with male in past 3 months',
-    RCURPREG == 'YES (CURRENTLY PREGNANT)',
-      'Currently pregnant',
+    LSEXPREG == 'YES',
+      'Pregnant in month of last intercourse',
     (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
       'Currently trying to conceive',
     POSIBLPG == 'No',
@@ -315,8 +316,8 @@ fem_2017_2019_data[,
       'Used at least one contraceptive method at last intercourse',
     SEX3MO != 'YES',
       'Did not have sexual intercourse with male in past 3 months',
-    RCURPREG == 'YES (CURRENTLY PREGNANT)',
-      'Currently pregnant',
+    LSEXPREG == 'YES',
+      'Pregnant in month of last intercourse',
     CONSTAT1 == 'Postpartum',
       'Postpartum',
     (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
@@ -664,6 +665,43 @@ svyci(
 ```
 
 There aren't many who fall into this category, but it is nonzero.
+
+There raises yet another issue. The analysis thus far assumes that any females who are currently pregnant were also pregnant during their last sexual intercourse with a male within the past 3 months. This is not necessarily the case. Indeed, it might have been that intercourse that caused a respondent to become pregnant.
+
+Ideally, instead of using `RCURPREG`, which denotes whether a respondent is currently pregnant, the analysis should use whether the respondent was pregnant at last intercourse with a male.
+
+Unfortunately, the month when a pregnancy begins is not included in the NSFG public use data files. Only the years of pregnancy beginnings and endings  and the age of the female at pregnancy beginnings and endings are included.
+
+There is, however, the `LSEXPREG` computed variable.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  SEX3MO == 'YES',
+  table(LSEXPREG, RCURPREG)
+]
+
+svytable(
+  ~LSEXPREG + RCURPREG,
+  subset(fem_2017_2019_svy, SEX3MO == 'YES')
+) / 10^6
+```
+
+There are relatively few females who report not being pregnant at last sexual intercourse with a male and now being currently pregnant, but more who report not being currently pregnant while being pregnant _in month_ of last sexual intercourse. Being pregnant in the month of last sexual intercourse is slightly closer to the question of whether someone was pregnant _during_ last sexual intercourse, but still not exactly the desired information. This would technically still include those who became pregnant because of last sexual intercourse.
+
+```{r, dependson=c('fem-process-data')}
+svyci(
+  ~I(
+    meth3m_count > 0 &
+    LSEXPREG == 'YES'
+  ),
+  fem_2017_2019_svy,
+  svytotal
+) |> in_millions() |> kable()
+```
+
+More females were using contraception at last intercourse and pregnant in the month of last intercourse than were using contraception at last intercourse and currently pregnant.
+
+For lack of anything better, the analysis will use `LSEXPREG` instead of `RCURPREG`, and count those who were using a contraceptive method at last intercourse as contraceptive users. "Pregnant" will only count those who were pregnant in month of last intercourse and did not use a method of contraception.
 
 
 # Estimation of Postpartum Females
