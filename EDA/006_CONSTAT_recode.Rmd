@@ -174,7 +174,6 @@ More generally, though, all of the females who have not had sexual intercourse i
 ## To Do
 
 * Compare estimates for females against `CONSTAT1`; see recode specification
-    * Estimate postpartum?
     * Pill is more for `CONSTAT1` 10.139 vs 7.947
     * Implant 1.459 vs 1.161
     * Injectable 1.423 vs 1.041

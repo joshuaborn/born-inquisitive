@@ -181,6 +181,7 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 ```{r fem-process-data, dependson=c('helper-functions', 'fem-load-data')}
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
+  CONSTAT1,
   METH3M1,
   METH3M2,
   METH3M3,
@@ -273,6 +274,30 @@ fem_2017_2019_data[,
       'Did not have sexual intercourse with male in past 3 months',
     RCURPREG == 'YES (CURRENTLY PREGNANT)',
       'Currently pregnant',
+    (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
+      'Currently trying to conceive',
+    POSIBLPG == 'No',
+      'Physically unable to conceive',
+    POSIBLMN == 'No' & (
+      P1YRELP == 'Current cohabiting partner' |
+      P1YRELP == 'Current husband or (current husband from whom she is separated)'
+    ),
+      'Last intercourse was with partner who is physically unable to conceive',
+    default = 'Otherwise did not use contraception at last intercourse'
+  ))
+]
+
+# set master categorization for contraceptive use and try to estimate postpartum
+fem_2017_2019_data[,
+  curr_use2 := factor(fcase(
+    meth3m_count > 0,
+      'Used at least one contraceptive method at last intercourse',
+    SEX3MO != 'YES',
+      'Did not have sexual intercourse with male in past 3 months',
+    RCURPREG == 'YES (CURRENTLY PREGNANT)',
+      'Currently pregnant',
+    CONSTAT1 == 32,
+      'Postpartum',
     (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
       'Currently trying to conceive',
     POSIBLPG == 'No',
@@ -418,3 +443,25 @@ collect_estimate(
   title = 'by current contraceptive status',
 )[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
+
+
+# Estimation of Postpartum Females
+
+This is calculated for `CONSTAT1` by comparing `CMINTVW` with `CMLSTPRG`. However, `CMLSTPRG` in the public use files does not contain month information, and the public use files do not contain the day of the interview, so this cannot be calculated from the public use files. Because of this, try to estimate postpartum females using `CONSTAT1`.
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~curr_use2,
+    fem_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by current contraceptive status, including postpartum',
+)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+The estimate of postpartum females has a statistically significant difference from zero and does decrease the estimate of those otherwise not using contraception, so it should be included in the estimates, at least for females.
+
+Unfortunately, there is not an equivalent recode for males in the public use data files, so males whose last intercourse was with a postpartum partner cannot be estimated.
