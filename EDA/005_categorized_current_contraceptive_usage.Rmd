@@ -181,7 +181,7 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 ```{r fem-process-data, dependson=c('helper-functions', 'fem-load-data')}
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
-  CONSTAT1,
+  CONSTAT1 = factorize(CONSTAT1, 'CONSTATF', fem_2017_2019_formats),
   METH3M1,
   METH3M2,
   METH3M3,
@@ -296,7 +296,7 @@ fem_2017_2019_data[,
       'Did not have sexual intercourse with male in past 3 months',
     RCURPREG == 'YES (CURRENTLY PREGNANT)',
       'Currently pregnant',
-    CONSTAT1 == 32,
+    CONSTAT1 == 'Postpartum',
       'Postpartum',
     (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
       'Currently trying to conceive',
