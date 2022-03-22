@@ -182,6 +182,7 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   BCREAS = factorize(BCREAS, 'BCREAS', fem_2017_2019_formats),
   CASEID,
+  CONDVAG = factorize(CONDVAG, 'YESNONAF', fem_2017_2019_formats),
   CURRMETH1 = factorize(CURRMETH1, 'METHHXF', fem_2017_2019_formats),
   CURRMETH2 = factorize(CURRMETH2, 'METHHXF', fem_2017_2019_formats),
   CURRMETH3 = factorize(CURRMETH3, 'METHHXF', fem_2017_2019_formats),
@@ -200,6 +201,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   SECU,
   SEST,
   WGT2017_2019,
+  WHYCONDL = factorize(WHYCONDL, 'WHYCONDL', fem_2017_2019_formats),
   YUSEIUD1 = factorize(YUSEIUD1, 'YUSEMTHF', fem_2017_2019_formats),
   YUSEIUD2 = factorize(YUSEIUD2, 'YUSEMTHF', fem_2017_2019_formats),
   YUSEIUD3 = factorize(YUSEIUD3, 'YUSEMTHF', fem_2017_2019_formats),
@@ -1222,12 +1224,75 @@ collect_estimate(
 ```
 
 
+# Condom
+
+```{r}
+collect_estimate(
+  svyci(
+    ~CONDVAG,
+    fem_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by whether condom was used at last vaginal intercourse with a male'
+) |> kable()
+```
+
+```{r}
+collect_estimate(
+  svyci(
+    ~CONDVAG,
+    fem_2017_2019_svy,
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by whether condom was used at last vaginal intercourse with a male'
+) |> kable()
+```
+
+```{r}
+collect_estimate(
+  svyci(
+    ~WHYCONDL,
+    subset(
+      fem_2017_2019_svy,
+      CONDVAG == 'Yes'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who used a condom at last vaginal intercourse with a male',
+  title = 'by reason for condom use'
+) |> kable()
+```
+
+```{r}
+collect_estimate(
+  svyci(
+    ~WHYCONDL,
+    subset(
+      fem_2017_2019_svy,
+      CONDVAG == 'Yes'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who used a condom at last vaginal intercourse with a male',
+  title = 'by reason for condom use'
+) |> kable()
+```
+
 
 
 # Things to Investigate
 
 * Use for reasons other than contraception
-    * Don't forget males
+    * Males
+        * Condom
+        * Vasectomy
+        * Other?
 * Not sexually active with opposite sex
     * Never versus past 3 months
     * Same-sex partner(s)
