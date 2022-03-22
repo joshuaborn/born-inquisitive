@@ -492,29 +492,3 @@ svyci(
   svytotal
 ) |> in_millions() |> kable()
 ```
-
-
-
-# Things to Investigate
-
-* Use for reasons other than contraception
-* Not sexually active with opposite sex
-    * Never versus past 3 months
-    * Same-sex partner(s)
-* Among those at risk for unintended pregnancy, why not using contraception
-* Why respondents believe themselves to be sterile
-* Ever tried over lifetime and why quit
-* Consistency
-* Time periods of contraceptive use for unintended pregnancy detection and efficacy/failure rate estimation
-* Replace analysis in SAS
-    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
-* Combining with 2015-2017 data for more precise estimates
-* Nonresponse bias by comparing second phase vs. first-phase
-
-## Covariates/Subdomains
-
-* Want children in future, but not just not now
-* By sex education
-* By income
-* By religiosity
-
