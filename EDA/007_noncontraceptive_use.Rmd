@@ -192,6 +192,12 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   SECU,
   SEST,
   WGT2017_2019,
+  YUSEIUD1 = factorize(YUSEIUD1, 'YUSEMTHF', fem_2017_2019_formats),
+  YUSEIUD2 = factorize(YUSEIUD2, 'YUSEMTHF', fem_2017_2019_formats),
+  YUSEIUD3 = factorize(YUSEIUD3, 'YUSEMTHF', fem_2017_2019_formats),
+  YUSEIUD4 = factorize(YUSEIUD4, 'YUSEMTHF', fem_2017_2019_formats),
+  YUSEIUD5 = factorize(YUSEIUD5, 'YUSEMTHF', fem_2017_2019_formats),
+  YUSEIUD6 = factorize(YUSEIUD6, 'YUSEMTHF', fem_2017_2019_formats),
   YUSEPILL1 = factorize(YUSEPILL1, 'YUSEMTHF', fem_2017_2019_formats),
   YUSEPILL2 = factorize(YUSEPILL2, 'YUSEMTHF', fem_2017_2019_formats),
   YUSEPILL3 = factorize(YUSEPILL3, 'YUSEMTHF', fem_2017_2019_formats),
@@ -238,7 +244,21 @@ for (x in 1:10) {
   )
 }
 
-# create boolean variables for whether each specific method is reporte das used in either month of inteview or preceding month
+# create boolean variables for whether each specific reason is reported as motivating use of IUD
+for (x in 1:10) {
+  set(
+    fem_2017_2019_data,
+    j = sprintf('whyiud_reason%d', x),
+    value = has_level(fem_2017_2019_data$YUSEIUD1, x) |
+      has_level(fem_2017_2019_data$YUSEIUD2, x) |
+      has_level(fem_2017_2019_data$YUSEIUD3, x) |
+      has_level(fem_2017_2019_data$YUSEIUD4, x) |
+      has_level(fem_2017_2019_data$YUSEIUD5, x) |
+      has_level(fem_2017_2019_data$YUSEIUD6, x)
+  )
+}
+
+# create boolean variables for whether each specific method is reported as used in either month of interview or preceding month
 for (x in c(1:26, 55, 98:99)) {
   set(
     fem_2017_2019_data,
@@ -582,6 +602,271 @@ collect_estimate(
   ],
   type = 'proportion',
   domain = 'females using pill for reasons not including contraception',
+  title = 'by other reason'
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
+## IUD
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:10),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~whyiud_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          twomonths_meth19
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'YUSEMTHF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females aged 15-49 in households in the United States',
+  title = 'by reason for using IUD'
+)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:10),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~whyiud_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          twomonths_meth19
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'YUSEMTHF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females aged 15-49 in households in the United States',
+  title = 'by reason for using IUD'
+)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~whyiud_reason1,
+    subset(
+      fem_2017_2019_svy,
+      twomonths_meth19
+    ),
+    svytotal
+  )[level == FALSE],
+  type = 'total',
+  domain = 'females using IUD',
+  title = 'for reasons not including contraception'
+)[, .(domain, title, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(!whyiud_reason1),
+    subset(
+      fem_2017_2019_svy,
+      twomonths_meth19
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'females using IUD',
+  title = 'for reasons not including contraception'
+)[, .(domain, title, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      whyiud_reason1 &
+      !whyiud_reason2 &
+      !whyiud_reason3 &
+      !whyiud_reason4 &
+      !whyiud_reason5 &
+      !whyiud_reason6 &
+      !whyiud_reason7 &
+      !whyiud_reason8 &
+      !whyiud_reason9 &
+      !whyiud_reason10
+    ),
+    subset(
+      fem_2017_2019_svy,
+      twomonths_meth19
+    ),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'females using IUD',
+  title = 'exclusively for contraception'
+)[, .(domain, title, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      whyiud_reason1 &
+      !whyiud_reason2 &
+      !whyiud_reason3 &
+      !whyiud_reason4 &
+      !whyiud_reason5 &
+      !whyiud_reason6 &
+      !whyiud_reason7 &
+      !whyiud_reason8 &
+      !whyiud_reason9 &
+      !whyiud_reason10
+    ),
+    subset(
+      fem_2017_2019_svy,
+      twomonths_meth19
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'females using IUD',
+  title = 'exclusively for contraception'
+)[, .(domain, title, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      whyiud_reason1 & (
+        whyiud_reason2 | 
+        whyiud_reason3 | 
+        whyiud_reason4 | 
+        whyiud_reason5 | 
+        whyiud_reason6 | 
+        whyiud_reason7 | 
+        whyiud_reason8 | 
+        whyiud_reason9 | 
+        whyiud_reason10
+      )
+    ),
+    subset(
+      fem_2017_2019_svy,
+      twomonths_meth19
+    ),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'females using IUD',
+  title = 'for both contraception and non-contraceptive reasons'
+)[, .(domain, title, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      whyiud_reason1 & (
+        whyiud_reason2 | 
+        whyiud_reason3 | 
+        whyiud_reason4 | 
+        whyiud_reason5 | 
+        whyiud_reason6 | 
+        whyiud_reason7 | 
+        whyiud_reason8 | 
+        whyiud_reason9 | 
+        whyiud_reason10
+      )
+    ),
+    subset(
+      fem_2017_2019_svy,
+      twomonths_meth19
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'females using IUD',
+  title = 'for both contraception and non-contraceptive reasons'
+)[, .(domain, title, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    2:10,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~whyiud_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          twomonths_meth19 & !whyiud_reason1
+        ),
+        svytotal 
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'YUSEMTHF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females using IUD for reasons not including contraception',
+  title = 'by other reason'
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    2:10,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~whyiud_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          twomonths_meth19 & !whyiud_reason1
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'YUSEMTHF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females using IUD for reasons not including contraception',
   title = 'by other reason'
 )[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
