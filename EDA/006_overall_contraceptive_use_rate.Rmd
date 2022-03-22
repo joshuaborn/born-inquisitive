@@ -506,6 +506,8 @@ svyci(
 * Ever tried over lifetime and why quit
 * Consistency
 * Time periods of contraceptive use for unintended pregnancy detection and efficacy/failure rate estimation
+* Replace analysis in SAS
+    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
 * Combining with 2015-2017 data for more precise estimates
 * Nonresponse bias by comparing second phase vs. first-phase
 
