@@ -296,9 +296,11 @@ male_2017_2019_formats <- male_2017_2019$Formats
 ```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   CASEID,
+  CONDVAG = factorize(CONDVAG, 'YESNONAF', male_2017_2019_formats),
   SECU,
   SEST,
-  WGT2017_2019
+  WGT2017_2019,
+  WHYCONDL = factorize(WHYCONDL, 'WHYCONDF', male_2017_2019_formats)
 )])
 
 # create survey design object
@@ -882,7 +884,7 @@ collect_estimate(
 ```
 
 
-# Tubal Ligation and Similar Sterilizing Operations
+## Tubal Ligation and Similar Sterilizing Operations
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -1224,7 +1226,7 @@ collect_estimate(
 ```
 
 
-# Condom
+## Condom
 
 ```{r}
 collect_estimate(
@@ -1283,16 +1285,81 @@ collect_estimate(
   title = 'by reason for condom use'
 ) |> kable()
 ```
+
+
+
+# Males
+
+## Vasectomy
+
+Nowhere in the NSFG are male respondents asked the reason for getting a vasectomy. Thus, it is tacitly assumed all vasectomies are for contraceptive reasons.
+
+
+## Condom
+
+```{r}
+collect_estimate(
+  svyci(
+    ~CONDVAG,
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'by whether condom was used at last vaginal intercourse with a male'
+) |> kable()
+```
+
+```{r}
+collect_estimate(
+  svyci(
+    ~CONDVAG,
+    male_2017_2019_svy,
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'by whether condom was used at last vaginal intercourse with a male'
+) |> kable()
+```
+
+```{r}
+collect_estimate(
+  svyci(
+    ~WHYCONDL,
+    subset(
+      male_2017_2019_svy,
+      CONDVAG == 'Yes'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who used a condom at last vaginal intercourse with a male',
+  title = 'by reason for condom use'
+) |> kable()
+```
+
+```{r}
+collect_estimate(
+  svyci(
+    ~WHYCONDL,
+    subset(
+      male_2017_2019_svy,
+      CONDVAG == 'Yes'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who used a condom at last vaginal intercourse with a male',
+  title = 'by reason for condom use'
+) |> kable()
+```
+
 
 
 
 # Things to Investigate
 
-* Use for reasons other than contraception
-    * Males
-        * Condom
-        * Vasectomy
-        * Other?
 * Not sexually active with opposite sex
     * Never versus past 3 months
     * Same-sex partner(s)
