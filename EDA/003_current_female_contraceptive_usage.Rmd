@@ -17,8 +17,9 @@ library(survey)
 
 i_am('EDA/003_current_female_contraceptive_usage.Rmd')
 
-source(here('R/survey_helpers.R'))
+source(here('R/factor_helpers.R'))
 source(here('R/import.R'))
+source(here('R/survey_helpers.R'))
 
 opts_chunk$set(
   echo = TRUE,
@@ -27,28 +28,6 @@ opts_chunk$set(
 ```
 
 ```{r helper-functions}
-tablena <- function(x) {
-  table(x, useNA = 'always')
-}
-
-in_millions <- function(dt, round_to = 3, do_round = TRUE) {
-  dt <- as.data.table(dt)
-  cols <- c('estimate', 'se', '2.5 %', '97.5 %')
-  sub_dt <- dt[, cols, with = FALSE] / 10^6
-  if (do_round) {
-    sub_dt <- round(sub_dt, round_to)
-  }
-  dt[, (cols) := sub_dt]
-  dt
-}
-
-rounded <- function(dt, round_to = 3) {
-  cols <- c('estimate', 'se', '2.5 %', '97.5 %')
-  sub_dt <- round(dt[, cols, with = FALSE], round_to)
-  dt[, (cols) := sub_dt]
-  dt
-}
-
 label_estimate <- function(est, title, domain = '', type = '', round_to = 3) {
   if (type == 'total') {
     dt <- in_millions(est, round_to)
@@ -67,51 +46,6 @@ label_estimate <- function(est, title, domain = '', type = '', round_to = 3) {
     `2.5 %`,
     `97.5 %`
   )]
-}
-
-env <- new.env()
-
-env$estimates <- data.table()
-
-collect_estimate <- function(est, title, domain = '', type = '', round_to = 3) {
-  this_title <- title
-  this_domain <- domain
-  this_type <- type
-
-  if (type == 'total') {
-    dt <- in_millions(est, round_to)
-  } else if (type == 'proportion') {
-    dt <- rounded(est, round_to)
-  } else {
-    dt <- as.data.table(est)
-  }
-  env$estimates <- rbindlist(list(
-    env$estimates[
-      !(
-        title == this_title &
-          domain == this_domain &
-          type == this_type
-      )
-    ],
-    dt[, .(
-      domain = this_domain,
-      title = this_title,
-      type = this_type,
-      level,
-      estimate,
-      se,
-      `2.5 %`,
-      `97.5 %`
-    )]
-  ))
-
-  kable(
-    env$estimates[
-      title == this_title &
-        domain == this_domain &
-        type == this_type
-    ]
-  )
 }
 ```
 
@@ -400,7 +334,7 @@ fem_cur_props_by_method <- rounded(rbindlist(lapply(
       fem_svy,
       svyciprop
     )[
-      , .(level = x, estimate, se, `2.5 %` = `2.5%`, `97.5 %` = `97.5%`)
+      , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
     ]
   }
 )))
@@ -434,8 +368,8 @@ fem_cur_props_using_another_method <- rbindlist(lapply(
         level = i,
         estimate,
         se,
-        `2.5 %` = `2.5%`,
-        `97.5 %` = `97.5%`
+        `2.5 %`,
+        `97.5 %`
       )
     ]
   }
@@ -493,8 +427,8 @@ fem_cur_calendar_props <- rbindlist(lapply(
         level = i,
         estimate,
         se,
-        `2.5 %` = `2.5%`,
-        `97.5 %` = `97.5%`
+        `2.5 %`,
+        `97.5 %`
       )
     ]
   }
@@ -515,8 +449,8 @@ fem_cur_calendar_props <- rbindlist(list(
       level = 'Exclusively calendar rhythm, Standard Days, or Cycle Beads method',
       estimate = estimate,
       se = se,
-      `2.5 %` = `2.5%`,
-      `97.5 %` = `97.5%`
+      `2.5 %`,
+      `97.5 %`
     )
   ]
 ))

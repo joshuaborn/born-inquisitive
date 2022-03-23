@@ -51,3 +51,21 @@ svybyci <- function(formula, by, design, FUN, ordered = TRUE) {
     dt
   }
 }
+
+in_millions <- function(dt, round_to = 3, do_round = TRUE) {
+  dt <- as.data.table(dt)
+  cols <- c('estimate', 'se', '2.5 %', '97.5 %')
+  sub_dt <- dt[, cols, with = FALSE] / 10^6
+  if (do_round) {
+    sub_dt <- round(sub_dt, round_to)
+  }
+  dt[, (cols) := sub_dt]
+  dt
+}
+
+rounded <- function(dt, round_to = 3) {
+  cols <- c('estimate', 'se', '2.5 %', '97.5 %')
+  sub_dt <- round(dt[, cols, with = FALSE], round_to)
+  dt[, (cols) := sub_dt]
+  dt
+}
