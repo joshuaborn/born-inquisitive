@@ -1,7 +1,8 @@
 **.swp
+**/*_cache/
+**/*_files/
 **/EDA/*.html
-**/EDA/*_cache/
-**/EDA/*_files/
+**/reports/*.html
 .RData
 .Rhistory
 .Rproj.user

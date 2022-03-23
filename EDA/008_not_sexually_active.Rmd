@@ -669,16 +669,3 @@ collect_estimate(
         * BC overall frequency of sexual intercourse and condom use (also past 4 weeks)
         * CF methods used with current wife or cohabitating partner and "most often" used method
         * DG methods used with most recent 3 partners, "main" method, and frequency of condom and any method use
-
-
-# Outline
-
-* Last
-    * Use by Method(s)
-    * Nonuse by Pregnancy, Intent to Conceive, Sterility, etc
-* Not Sexually Active with Opposite Sex
-* Recently
-    * Consistency
-    * Use for Other Reasons (current or previous month)
-    * Reasons for Nonuse (current month)
-* Use Ever and Discontinuation

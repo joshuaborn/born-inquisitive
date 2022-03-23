@@ -1,0 +1,37 @@
+---
+title: "Contraceptive Use and Nonuse in the United States: Based on the 2017-2019 National Survey of Family Growth"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(here)
+
+i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
+```
+
+# Outline
+
+* Summary of use at last intercourse by
+    * used at least one method of contraception at last intercourse (with someone of opposite sex, in past 3 months)
+    * did not have intercourse with someone of opposite sex in past 3 months
+    * who were pregnant at last intercourse or whose last intercourse partner is pregnant
+    * is intending to conceive
+    * is infertile
+    * had last intercourse with infertile partner
+    * otherwise did not use contraception
+* By method, what methods were used at last intercourse
+* By method, what methods were used exclusively at last intercourse
+* By method, what proportion of method users used the method simultaneously with another method
+* Use for reasons other than contraception
+    * for pill
+    * for IUD
+    * for tubal ligation
+    * for condom
+* Among those not sexually active with opposite sex in past 3 months, how many have never had sexual intercourse vs just not recently
+    * of those who have never had sexual intercourse, why
+    * how many who are not sexually active with opposite sex in past 3 months report being mostly or only attracted to the same sex
