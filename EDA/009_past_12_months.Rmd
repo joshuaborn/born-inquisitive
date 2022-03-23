@@ -1,5 +1,5 @@
 ---
-title: "Overall Contraceptive Use Rate"
+title: "Contraceptive Use in Past 12 Months"
 author: "Joshua Born"
 output:
   html_document:
@@ -15,7 +15,7 @@ library(here)
 library(knitr)
 library(survey)
 
-i_am('EDA/006_overall_contraceptive_use_rate.Rmd')
+i_am('EDA/009_past_12_months.Rmd')
 
 source(here('R/EDA_helpers.R'))
 source(here('R/factor_helpers.R'))
@@ -248,105 +248,39 @@ male_2017_2019_svy <- svydesign(
 )
 ```
 
-# Females
-
-## Estimates
-
-```{r, dependson=c('fem-process-data')}
-collect_estimate(
-  svyci(
-    ~curr_use,
-    fem_2017_2019_svy,
-    svytotal
-  ),
-  type = 'total',
-  domain = 'females aged 15-49 living in households in the United States',
-  title = 'by current contraceptive status',
-)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
-```
 
 
-## Contraceptive Use Rate
-
-```{r, dependson=c('fem-process-data')}
-#svyratio(
-#  ~I(curr_use == 'Used at least one contraceptive method at last intercourse'),
-#  ~I(curr_use == 'Used at least one contraceptive method at last intercourse' | curr_use == 'Otherwise did not use contraception at last intercourse'),
-#  fem_2017_2019_svy
-#)
-
-svyci(
-  ~I(
-    curr_use == 'Used at least one contraceptive method at last intercourse'
-  ),
-  subset(
-    fem_2017_2019_svy,
-    curr_use == 'Used at least one contraceptive method at last intercourse' | curr_use == 'Otherwise did not use contraception at last intercourse'
-  ),
-  svymean
-) |> rounded() |> kable()
-```
-
-```{r, dependson=c('fem-process-data')}
-svyci(
-  ~I(
-    curr_use == 'Used at least one contraceptive method at last intercourse'
-  ),
-  subset(
-    fem_2017_2019_svy,
-    curr_use == 'Used at least one contraceptive method at last intercourse' | curr_use == 'Otherwise did not use contraception at last intercourse'
-  ),
-  svytotal
-) |> in_millions() |> kable()
-```
 
 
-# Males
+# Things to Investigate
 
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  svyci(
-    ~curr_use,
-    male_2017_2019_svy,
-    svytotal
-  ),
-  type = 'total',
-  domain = 'males aged 15-49 living in households in the United States',
-  title = 'by current contraceptive status',
-)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
-```
+* Among those who otherwise did not use contraception at last intercourse, was this due to complete nonuse or inconsistent use? That is, how many used a method of contraception with last partner during the previous 12 months?
+* Summarize contraceptive use in previous 12 months by those not sexually active with opposite sex, by those sexually active and did not use contraception at all, and by contraceptive method among those who used at least one method of contraception
+* Among those sexually active with the opposite sex in the previous 12 months and who used at least one method of contraception, how frequently was any method of contraception used?
+* Among those who used condoms in previous 12 months, how frequently were condoms used, in the past 12 months and past 4 weeks?
+* Among females who used the pill in the previous 12 months, how many pills were missed?
+* Can the difference in female and male contraceptive use rates be due to males not being aware of contraception?
+* Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
+* Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
+* Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
+    * Include tubal ligation and vasectomy reversal
+* Replicate analysis in SAS
+    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
+* Combining with 2015-2017 data for more precise estimates
+* Nonresponse bias by comparing second phase vs. first-phase
 
 
-## Contraceptive Use Rate
+## Variables for Recent Contraceptive Use
 
-```{r, dependson=c('fem-process-data')}
-#svyratio(
-#  ~I(curr_use == 'Used at least one contraceptive method at last intercourse'),
-#  ~I(curr_use == 'Used at least one contraceptive method at last intercourse' | curr_use == 'Otherwise did not use contraception at last intercourse'),
-#  fem_2017_2019_svy
-#)
-
-svyci(
-  ~I(
-    curr_use == 'Used at least one contraceptive method at last intercourse'
-  ),
-  subset(
-    male_2017_2019_svy,
-    curr_use == 'Used at least one contraceptive method at last intercourse' | curr_use == 'Otherwise did not use contraception at last intercourse'
-  ),
-  svymean
-) |> rounded() |> kable()
-```
-
-```{r, dependson=c('fem-process-data')}
-svyci(
-  ~I(
-    curr_use == 'Used at least one contraceptive method at last intercourse'
-  ),
-  subset(
-    male_2017_2019_svy,
-    curr_use == 'Used at least one contraceptive method at last intercourse' | curr_use == 'Otherwise did not use contraception at last intercourse'
-  ),
-  svytotal
-) |> in_millions() |> kable()
-```
+* Each month for 3 previous years
+    * Females
+        * EC MONSX whether intercourse occurred in given month
+        * ED METHX each method used in each month
+        * ED SIMSEQX whether methods used together or at different times
+* Past 12 months
+    * Females
+        * EL for frequency of condom or any contraceptive use and missed pills (also past 4 weeks)
+    * Males
+        * BC overall frequency of sexual intercourse and condom use (also past 4 weeks)
+        * CF methods used with current wife or cohabitating partner and "most often" used method
+        * DG methods used with most recent 3 partners, "main" method, and frequency of condom and any method use
