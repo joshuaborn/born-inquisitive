@@ -27,7 +27,6 @@ i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
       * for tubal ligation
       * for condom
 * Nonuse
-    * Among unintentional nonusers at least intercourse, how many previously have used contraception
     * At last intercourse by
         * used at least one method of contraception at last intercourse
         * did not have intercourse with someone of opposite sex in past 3 months
@@ -39,3 +38,4 @@ i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
     * Among those not sexually active with opposite sex in past 3 months, how many have never had sexual intercourse vs just not recently
       * of those who have never had sexual intercourse, why
       * how many who are not sexually active with opposite sex in past 3 months report being mostly or only attracted to the same sex
+    * Among unintentional nonusers at least intercourse, how many previously have used contraception

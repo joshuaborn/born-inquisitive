@@ -46,6 +46,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   METH3M1,
   METH3M2,
   METH3M3,
+  PARTS1YR = factorize(PARTS1YR, 'PARTS1YR', fem_2017_2019_formats),
   P1YRELP = factorize(P1YRELP, 'P1YRELP', fem_2017_2019_formats),
   POSIBLMN = factorize(POSIBLMN, 'Y1N5RDF', fem_2017_2019_formats),
   POSIBLPG = factorize(POSIBLPG, 'Y1N5RDF', fem_2017_2019_formats),
@@ -190,6 +191,7 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   SECU,
   SEST,
   SEX3MO = factorize(SEX3MO, 'SEX3MO', male_2017_2019_formats),
+  SEX12MO = factorize(SEX12MO, 'SEX3MO', male_2017_2019_formats),
   SEXONCE = factorize(SEXONCE, 'SEXONCE', male_2017_2019_formats),
   WGT2017_2019
 )])
@@ -397,6 +399,83 @@ collect_estimate(
 ) |> kable()
 ```
 
+
+# Any Contraceptive Use in Past 12 Months
+
+## Had Intercourse with Opposite Sex in Past 12 Months
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(SEX12MO != 'YES, HAD INTERCOURSE'),
+    male_2017_2019_svy,
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'who have not had intercourse with a female in the past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(PARTS1YR == 'NONE'),
+    fem_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'who have not had intercourse with a male in the past 12 months'
+) |> kable()
+```
+
+
+## Did Not Use Contraception in Past 12 Months
+
+```{r, dependson=c('male-process-data')}
+male_2017_2019_data[
+  SEX12MO == 'YES, HAD INTERCOURSE',
+  .(PXANYUSE, PXANYUSE3, CWPRECBC)
+]
+
+collect_estimate(
+  svyci(
+    ~I(
+      PXANYUSE != 'Yes' &
+      PXANYUSE2 != 'Yes' &
+      PXANYUSE3 != 'Yes' &
+      CWPRECBC != 'Yes'
+    ),
+    subset(
+      male_2017_2019_svy,
+      SEX12MO == 'YES, HAD INTERCOURSE'
+    ),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males who have had intercourse with a female in the past 12 months',
+  title = 'who have not used contraception in the past 12 months'
+) |> kable()
+```
+
+The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all males who have had intercourse in past 12 months.
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(ANYBC12 != 'Yes, at least one month of method use'),
+    subset(
+      fem_2017_2019_svy,
+      PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable'
+    ),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'females who have had intercourse with a male in the past 12 months',
+  title = 'who have not used contraception in the past 12 months'
+) |> kable()
+```
 
 
 # Things to Investigate
