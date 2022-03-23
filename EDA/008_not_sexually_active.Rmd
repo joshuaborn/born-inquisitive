@@ -192,6 +192,16 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   YNOSEX = factorize(YNOSEX, 'YNOSEX', fem_2017_2019_formats)
 )])
 
+# create two-level of SEX3MO
+fem_2017_2019_data[, sex_active := factor(fifelse(
+  SEX3MO == 'YES',
+  'Had sexual intercourse with male in previous 3 months',
+  'Did not have sexual intercourse with male in previous 3 months'
+))]
+
+# remove empty 'Not Applicable' level from ATTRACT
+fem_2017_2019_data[, ATTRACT := factor(ATTRACT)]
+
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -323,7 +333,7 @@ collect_estimate(
     ordered = FALSE
   ),
   type = 'proportion',
-  domain = 'females who have intercourse with male in past 3 months',
+  domain = 'females who have had intercourse with male in past 3 months',
   title = 'by strength of attraction to sexes'
 ) |> kable()
 ```
@@ -430,6 +440,31 @@ collect_estimate(
 ) |> kable()
 ```
 
+### Chi-squared Test
+
+```{r, dependson=c('fem-process-data')}
+svytable(~ATTRACT+sex_active, fem_2017_2019_svy) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+env$estimates[
+  type == 'proportion' &
+    title == 'by strength of attraction to sexes' &
+    (
+      domain == 'females who have not had intercourse with a male in past 3 months' |
+      domain == 'females who have had intercourse with male in past 3 months'
+    ),
+  .(
+    domain, level, estimate, se, `2.5 %`, `97.5 %`
+  )
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+svychisq(~ATTRACT+sex_active, fem_2017_2019_svy)
+```
+
+
 
 ## Sexual Experience with Female Partner
 
@@ -506,8 +541,8 @@ collect_estimate(
 * Among those at risk for unintended pregnancy, why not using contraception
 * Why respondents believe themselves to be sterile
 * Ever tried over lifetime and why quit
-* Consistency
 * Time periods of contraceptive use for unintended pregnancy detection and efficacy/failure rate estimation
+* Consistency
 * Replicate analysis in SAS
     * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
 * Combining with 2015-2017 data for more precise estimates
