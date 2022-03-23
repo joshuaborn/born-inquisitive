@@ -640,19 +640,45 @@ collect_estimate(
 
 # Things to Investigate
 
-* Among those at risk for unintended pregnancy, why not using contraception
-* Why respondents believe themselves to be sterile
-* Ever tried over lifetime and why quit
-* Time periods of contraceptive use for unintended pregnancy detection and efficacy/failure rate estimation
-* Consistency
+* Among those who otherwise did not use contraception at last intercourse, was this due to complete nonuse or inconsistent use? That is, how many used a method of contraception with last partner during the previous 12 months?
+* Summarize contraceptive use in previous 12 months by those not sexually active with opposite sex, by those sexually active and did not use contraception at all, and by contraceptive method among those who used at least one method of contraception
+* Among those sexually active with the opposite sex in the previous 12 months and who used at least one method of contraception, how frequently was any method of contraception used?
+* Among those who used condoms in previous 12 months, how frequently were condoms used, in the past 12 months and past 4 weeks?
+* Among females who used the pill in the previous 12 months, how many pills were missed?
+* Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
+* Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
+* Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
+    * Include tubal ligation and vasectomy reversal
 * Replicate analysis in SAS
     * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
 * Combining with 2015-2017 data for more precise estimates
 * Nonresponse bias by comparing second phase vs. first-phase
 
-## Covariates/Subdomains
 
-* Want children in future, but not just not now
-* By sex education
-* By income
-* By religiosity
+## Variables for Recent Contraceptive Use
+
+* Each month for 3 previous years
+    * Females
+        * EC MONSX whether intercourse occurred in given month
+        * ED METHX each method used in each month
+        * ED SIMSEQX whether methods used together or at different times
+* Past 12 months
+    * Females
+        * EL for frequency of condom or any contraceptive use and missed pills (also past 4 weeks)
+    * Males
+        * BC overall frequency of sexual intercourse and condom use (also past 4 weeks)
+        * CF methods used with current wife or cohabitating partner and "most often" used method
+        * DG methods used with most recent 3 partners, "main" method, and frequency of condom and any method use
+
+
+# Outline
+
+* Last
+    * Use by Method(s)
+    * Nonuse by Pregnancy, Intent to Conceive, Sterility, etc
+* Not Sexually Active with Opposite Sex
+* Recently
+    * Consistency
+    * Use for Other Reasons (current or previous month)
+    * Reasons for Nonuse (current month)
+* Use Ever and Discontinuation
