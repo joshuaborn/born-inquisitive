@@ -38,8 +38,10 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 
 ```{r fem-process-data, dependson=c('fem-load-data')}
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
+  ANYBC12 = factorize(ANYBC12, 'ANYBCF', fem_2017_2019_formats),
   CASEID,
   CONSTAT1 = factorize(CONSTAT1, 'CONSTATF', fem_2017_2019_formats),
+  EVERUSED = factorize(EVERUSED, 'YESNONAF', fem_2017_2019_formats),
   LSEXPREG = factorize(LSEXPREG, 'Y1N2RECF', fem_2017_2019_formats),
   METH3M1,
   METH3M2,
@@ -51,6 +53,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   SECU,
   SEST,
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
+  SEXONCE = factorize(SEXONCE, 'SEXONCE', fem_2017_2019_formats),
   TUBS = factorize(TUBS, 'Y1N5C', fem_2017_2019_formats),
   WGT2017_2019,
   WYNOLSTP = factorize(WYNOLSTP, 'Y1N5RDF', fem_2017_2019_formats),
@@ -166,6 +169,7 @@ male_2017_2019_formats <- male_2017_2019$Formats
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   CWPPOSS = factorize(CWPPOSS, 'Y1N5RDF', male_2017_2019_formats),
   CWPPRGNW = factorize(CWPPRGNW, 'Y1N5RDF', male_2017_2019_formats),
+  CWPRECBC = factorize(CWPRECBC, 'Y1N5RDF', fem_2017_2019_formats),
   CWPTRYPG = factorize(CWPTRYPG, 'Y1N5RDF', male_2017_2019_formats),
   FATHPOSS = factorize(FATHPOSS, 'Y1N5RDF', male_2017_2019_formats),
   METH3M1 = factorize(METH3M1, 'METH3MF', male_2017_2019_formats),
@@ -175,12 +179,18 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   P1COHABIT = factorize(P1COHABIT, 'Y1N5RDF', male_2017_2019_formats),
   P1CURRWIFE = factorize(P1CURRWIFE, 'Y1N5RDF', male_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'N0Y1CF', male_2017_2019_formats),
+  PXANYUSE = factorize(PXANYUSE, 'Y1N5RDF', male_2017_2019_formats),
+  PXANYUSE2 = factorize(PXANYUSE2, 'Y1N5RDF', male_2017_2019_formats),
+  PXANYUSE3 = factorize(PXANYUSE3, 'Y1N5RDF', male_2017_2019_formats),
   PXCPREG = factorize(PXCPREG, 'Y1N5RDF', male_2017_2019_formats),
+  PXFUSE = factorize(PXFUSE, 'Y1N5RDF', male_2017_2019_formats),
+  PXMTONCE = factorize(PXMTONCE, 'Y1N5RDF', male_2017_2019_formats),
   PXTRYING = factorize(PXTRYING, 'Y1N5RDF', male_2017_2019_formats),
   RSURGSTR  = factorize(RSURGSTR, 'N0Y1RDF', male_2017_2019_formats),
   SECU,
   SEST,
   SEX3MO = factorize(SEX3MO, 'SEX3MO', male_2017_2019_formats),
+  SEXONCE = factorize(SEXONCE, 'SEXONCE', male_2017_2019_formats),
   WGT2017_2019
 )])
 
@@ -249,12 +259,148 @@ male_2017_2019_svy <- svydesign(
 ```
 
 
+# Otherwise Did Not Use Contraception at Last Intercourse
+
+Generally, a sizable minority of unintentional nonusers have used a method of contraception at least once in the past 12 months, and a supermajority of female nonusers have used a method of contraception at least once in their lifetimes, so there is some evidence that at least a portion of unintentional nonuse is due to inconsistent use, rather than strict nonuse.
+
+
+## Used Contraception in Past 12 Months
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(
+      PXANYUSE == 'Yes' |
+      PXANYUSE2 == 'Yes' |
+      PXANYUSE3 == 'Yes' |
+      CWPRECBC == 'Yes'
+    ),
+    subset(
+      male_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'males who otherwise did not use contraception at last intercourse',
+  title = 'who used at least one method of contraception in the past 12 months with most recent partner'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(ANYBC12 == 'Yes, at least one month of method use'),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'females who otherwise did not use contraception at last intercourse',
+  title = 'who used at least one method of contraception in the past 12 months'
+) |> kable()
+```
+
+
+## Has Ever Used Contraception
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(EVERUSED == 'Yes'),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'females who otherwise did not use contraception at last intercourse',
+  title = 'who have had sexual intercourse only that one time'
+) |> kable()
+```
+
+I can't find an equivalent to `EVERUSED` for males.
+
+
+## Used Contraception at First Intercourse with Most Recent Partner
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(PXFUSE == 'Yes'),
+    subset(
+      male_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'males who otherwise did not use contraception at last intercourse',
+  title = 'who used at least one method of contraception in the past 12 months with most recent partner'
+) |> kable()
+```
+
+
+## Last Intercourse Was First Intercourse with Partner
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(PXMTONCE == 'Yes'),
+    subset(
+      male_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'males who otherwise did not use contraception at last intercourse',
+  title = 'whose last intercourse was first intercourse with partner'
+) |> kable()
+```
+
+
+## Has Not Had Sexual Intercourse More Than Once
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(SEXONCE == 'YES (R HAS HAD SEX ONLY ONCE)'),
+    subset(
+      male_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who otherwise did not use contraception at last intercourse',
+  title = 'who have had sexual intercourse only that one time'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(SEXONCE == 'YES (R HAS HAD SEX ONLY ONCE)'),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'females who otherwise did not use contraception at last intercourse',
+  title = 'who have had sexual intercourse only that one time'
+) |> kable()
+```
 
 
 
 # Things to Investigate
 
-* Among those who otherwise did not use contraception at last intercourse, was this due to complete nonuse or inconsistent use? That is, how many used a method of contraception with last partner during the previous 12 months?
 * Summarize contraceptive use in previous 12 months by those not sexually active with opposite sex, by those sexually active and did not use contraception at all, and by contraceptive method among those who used at least one method of contraception
 * Among those sexually active with the opposite sex in the previous 12 months and who used at least one method of contraception, how frequently was any method of contraception used?
 * Among those who used condoms in previous 12 months, how frequently were condoms used, in the past 12 months and past 4 weeks?
