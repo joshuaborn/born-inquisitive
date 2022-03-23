@@ -219,11 +219,27 @@ male_2017_2019_formats <- male_2017_2019$Formats
 
 ```{r male-process-data, dependson=c('helper-functions', 'male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  ATTRACT = factorize(ATTRACT, 'ATTRACT', male_2017_2019_formats),
   CASEID,
+  HADSEX = factorize(HADSEX, 'HADSEX', male_2017_2019_formats),
+  MFLASTP = factorize(MFLASTP, 'MALFEMNAF', male_2017_2019_formats),
+  SAMESEXANY = factorize(SAMESEXANY, 'Y1N5NAC', male_2017_2019_formats),
   SECU,
   SEST,
-  WGT2017_2019
+  SEX3MO = factorize(SEX3MO, 'SEX3MO', male_2017_2019_formats),
+  WGT2017_2019,
+  YNOSEX = factorize(YNOSEX, 'YNOSEX', male_2017_2019_formats)
 )])
+
+# create two-level of SEX3MO
+male_2017_2019_data[, sex_active := factor(fifelse(
+  SEX3MO == 'YES, HAD INTERCOURSE',
+  'Had sexual intercourse with female in previous 3 months',
+  'Did not have sexual intercourse with female in previous 3 months'
+))]
+
+# remove empty 'Not Applicable' level from ATTRACT
+male_2017_2019_data[, ATTRACT := factor(ATTRACT)]
 
 # create survey design object
 male_2017_2019_svy <- svydesign(
@@ -244,7 +260,7 @@ collect_estimate(
     ~I(SEX3MO != 'YES'),
     fem_2017_2019_svy,
     svytotal
-  )[level == TRUE],
+  ),
   type = 'total',
   domain = 'females aged 15-49 living in households in the United States',
   title = 'who did not have sexual intercourse with male in past 3 months'
@@ -534,10 +550,240 @@ collect_estimate(
 
 
 
+# Males
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(SEX3MO != 'YES, HAD INTERCOURSE'),
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'who did not have sexual intercourse with female in past 3 months'
+) |> kable()
+```
+
+
+## Never Sexually Active
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
+    subset(
+      male_2017_2019_svy,
+      SEX3MO != 'YES, HAD INTERCOURSE'
+    ),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males who did not have sexual intercourse with female in past 3 months',
+  title = 'who never had sexual intercourse with female'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(HADSEX == 'NO, R NEVER HAD INTERCOURSE'),
+    subset(
+      male_2017_2019_svy,
+      SEX3MO != 'YES, HAD INTERCOURSE'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'males who did not have sexual intercourse with female in past 3 months',
+  title = 'who never had sexual intercourse with female'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~YNOSEX,
+    subset(
+      male_2017_2019_svy,
+      HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who have never had sexual intercourse with female',
+  title = 'by reason for not having had sexual intercourse with female'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~ATTRACT,
+    subset(
+      male_2017_2019_svy,
+      YNOSEX == 'Other'
+    ),
+    svytotal,
+    ordered = FALSE
+  ),
+  type = 'total',
+  domain = 'males who have never had sexual intercourse with female for reason "Other"',
+  title = 'by strength of attraction to sexes'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~ATTRACT,
+    subset(
+      male_2017_2019_svy,
+      YNOSEX == 'Other'
+    ),
+    svymean,
+    ordered = FALSE
+  ),
+  type = 'proportion',
+  domain = 'males who have never had sexual intercourse with female for reason "Other"',
+  title = 'by strength of attraction to sexes'
+) |> kable()
+```
+
+
+## Same-Sex Attraction
+
+```{r, dependson=c('male-process-data')}
+svytable(~ATTRACT+sex_active, male_2017_2019_svy) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~ATTRACT,
+    subset(
+      male_2017_2019_svy,
+      SEX3MO != 'YES, HAD INTERCOURSE'
+    ),
+    svymean,
+    ordered = FALSE
+  ),
+  type = 'proportion',
+  domain = 'males who did not have sexual intercourse with female in past 3 months',
+  title = 'by strength of attraction to sexes'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~ATTRACT,
+    subset(
+      male_2017_2019_svy,
+      SEX3MO == 'YES, HAD INTERCOURSE'
+    ),
+    svymean,
+    ordered = FALSE
+  ),
+  type = 'proportion',
+  domain = 'males have had sexual intercourse with female in past 3 months',
+  title = 'by strength of attraction to sexes'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+svychisq(~ATTRACT+sex_active, male_2017_2019_svy)
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~ATTRACT,
+    subset(
+      male_2017_2019_svy,
+      SEX3MO != 'YES, HAD INTERCOURSE'
+    ),
+    svytotal,
+    ordered = FALSE
+  ),
+  type = 'total',
+  domain = 'males who did not have sexual intercourse with female in past 3 months',
+  title = 'by strength of attraction to sexes'
+) |> kable()
+```
+
+
+## Sexual Experience with Male Partner
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~SAMESEXANY,
+    subset(
+      male_2017_2019_svy,
+      HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who have never had sexual intercourse with female',
+  title = 'by whether had sexual encounter with male'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~SAMESEXANY,
+    subset(
+      male_2017_2019_svy,
+      HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who have never had sexual intercourse with female',
+  title = 'by whether had sexual encounter with male'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(MFLASTP == 'Male'),
+    subset(
+      male_2017_2019_svy,
+      SEX3MO != 'YES, HAD INTERCOURSE'
+    ),
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'males who have not had intercourse with a female in past 3 months',
+  title = 'by whether last sexual experience was with male partner'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(MFLASTP == 'Male'),
+    subset(
+      male_2017_2019_svy,
+      SEX3MO != 'YES, HAD INTERCOURSE'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'males who have not had intercourse with a female in past 3 months',
+  title = 'by whether last sexual experience was with male partner'
+) |> kable()
+```
+
+
+
 # Things to Investigate
 
-* Not sexually active with opposite sex
-    * Males
+* Extract helpers
 * Among those at risk for unintended pregnancy, why not using contraception
 * Why respondents believe themselves to be sterile
 * Ever tried over lifetime and why quit
