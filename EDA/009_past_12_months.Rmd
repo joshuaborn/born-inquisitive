@@ -38,7 +38,6 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 
 ```{r fem-process-data, dependson=c('fem-load-data')}
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
-  ANYBC12 = factorize(ANYBC12, 'ANYBCF', fem_2017_2019_formats),
   CASEID,
   CONSTAT1 = factorize(CONSTAT1, 'CONSTATF', fem_2017_2019_formats),
   EVERUSED = factorize(EVERUSED, 'YESNONAF', fem_2017_2019_formats),
@@ -54,7 +53,6 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   SECU,
   SEST,
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
-  SEXONCE = factorize(SEXONCE, 'SEXONCE', fem_2017_2019_formats),
   TUBS = factorize(TUBS, 'Y1N5C', fem_2017_2019_formats),
   WGT2017_2019,
   WYNOLSTP = factorize(WYNOLSTP, 'Y1N5RDF', fem_2017_2019_formats),
@@ -298,6 +296,7 @@ fem_2017_2019_svy <- svydesign(
 ```
 
 
+
 ```{r male-load-data}
 male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
 male_2017_2019_formats <- male_2017_2019$Formats
@@ -322,14 +321,12 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   PXANYUSE3 = factorize(PXANYUSE3, 'Y1N5RDF', male_2017_2019_formats),
   PXCPREG = factorize(PXCPREG, 'Y1N5RDF', male_2017_2019_formats),
   PXFUSE = factorize(PXFUSE, 'Y1N5RDF', male_2017_2019_formats),
-  PXMTONCE = factorize(PXMTONCE, 'Y1N5RDF', male_2017_2019_formats),
   PXTRYING = factorize(PXTRYING, 'Y1N5RDF', male_2017_2019_formats),
   RSURGSTR  = factorize(RSURGSTR, 'N0Y1RDF', male_2017_2019_formats),
   SECU,
   SEST,
   SEX3MO = factorize(SEX3MO, 'SEX3MO', male_2017_2019_formats),
   SEX12MO = factorize(SEX12MO, 'SEX3MO', male_2017_2019_formats),
-  SEXONCE = factorize(SEXONCE, 'SEXONCE', male_2017_2019_formats),
   WGT2017_2019
 )])
 
@@ -407,181 +404,7 @@ male_2017_2019_svy <- svydesign(
 ```
 
 
-# Otherwise Did Not Use Contraception at Last Intercourse
-
-
-## Used Contraception in Past 12 Months
-
-```{r, dependson=c('fem-process-data')}
-collect_estimate(
-  svyci(
-    ~I(ANYBC12 == 'Yes, at least one month of method use'),
-    subset(
-      fem_2017_2019_svy,
-      curr_use == 'Otherwise did not use contraception at last intercourse'
-    ),
-    svyciprop
-  ),
-  type = 'proportion',
-  domain = 'females who otherwise did not use contraception at last intercourse',
-  title = 'who used at least one method of contraception in the past 12 months'
-) |> kable()
-```
-
-For females, a sizable minority of unintentional female nonusers have used a method of contraception at least once in the past 12 months.
-
-
-## Has Ever Used Contraception
-
-```{r, dependson=c('fem-process-data')}
-collect_estimate(
-  svyci(
-    ~I(EVERUSED == 'Yes'),
-    subset(
-      fem_2017_2019_svy,
-      curr_use == 'Otherwise did not use contraception at last intercourse'
-    ),
-    svyciprop
-  ),
-  type = 'proportion',
-  domain = 'females who otherwise did not use contraception at last intercourse',
-  title = 'who have had sexual intercourse only that one time'
-) |> kable()
-```
-
-A supermajority of female nonusers have used a method of contraception at least once in their lifetimes
-
-I can't find an equivalent to `EVERUSED` for males.
-
-
-## Used Contraception at First Intercourse with Most Recent Partner
-
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  svyci(
-    ~I(PXFUSE == 'Yes'),
-    subset(
-      male_2017_2019_svy,
-      curr_use == 'Otherwise did not use contraception at last intercourse'
-    ),
-    svyciprop
-  ),
-  type = 'proportion',
-  domain = 'males who otherwise did not use contraception at last intercourse',
-  title = 'who used at least one method of contraception in the past 12 months with most recent partner'
-) |> kable()
-```
-
-
-## Last Intercourse Was First Intercourse with Partner
-
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  svyci(
-    ~I(PXMTONCE == 'Yes'),
-    subset(
-      male_2017_2019_svy,
-      curr_use == 'Otherwise did not use contraception at last intercourse'
-    ),
-    svyciprop
-  ),
-  type = 'proportion',
-  domain = 'males who otherwise did not use contraception at last intercourse',
-  title = 'whose last intercourse was first intercourse with partner'
-) |> kable()
-```
-
-
-## Has Not Had Sexual Intercourse More Than Once
-
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  svyci(
-    ~I(SEXONCE == 'YES (R HAS HAD SEX ONLY ONCE)'),
-    subset(
-      male_2017_2019_svy,
-      curr_use == 'Otherwise did not use contraception at last intercourse'
-    ),
-    svytotal
-  ),
-  type = 'total',
-  domain = 'males who otherwise did not use contraception at last intercourse',
-  title = 'who have had sexual intercourse only that one time'
-) |> kable()
-```
-
-```{r, dependson=c('fem-process-data')}
-collect_estimate(
-  svyci(
-    ~I(SEXONCE == 'YES (R HAS HAD SEX ONLY ONCE)'),
-    subset(
-      fem_2017_2019_svy,
-      curr_use == 'Otherwise did not use contraception at last intercourse'
-    ),
-    svyciprop
-  ),
-  type = 'proportion',
-  domain = 'females who otherwise did not use contraception at last intercourse',
-  title = 'who have had sexual intercourse only that one time'
-) |> kable()
-```
-
-
 # Any Contraceptive Use in Past 12 Months
-
-## Had Intercourse with Opposite Sex in Past 12 Months
-
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  svyci(
-    ~I(SEX12MO != 'YES, HAD INTERCOURSE'),
-    male_2017_2019_svy,
-    svytotal
-  )[level == TRUE],
-  type = 'total',
-  domain = 'males aged 15-49 living in households in the United States',
-  title = 'who have not had intercourse with a female in the past 12 months'
-) |> kable()
-```
-
-```{r, dependson=c('fem-process-data')}
-collect_estimate(
-  svyci(
-    ~I(PARTS1YR == 'NONE'),
-    fem_2017_2019_svy,
-    svytotal
-  ),
-  type = 'total',
-  domain = 'females aged 15-49 living in households in the United States',
-  title = 'who have not had intercourse with a male in the past 12 months'
-) |> kable()
-```
-
-
-## Did Not Use Contraception in Past 12 Months
-
-```{r, dependson=c('fem-process-data')}
-collect_estimate(
-  svyci(
-    ~I(ANYBC12 != 'Yes, at least one month of method use'),
-    subset(
-      fem_2017_2019_svy,
-      PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable'
-    ),
-    svytotal
-  )[level == TRUE],
-  type = 'total',
-  domain = 'females who have had intercourse with a male in the past 12 months',
-  title = 'who have not used contraception in the past 12 months'
-) |> kable()
-```
-
-The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all males who have had intercourse in past 12 months. I see. The `PXANYUSE` series is only asked of a respondent if he did not report using contraception at either last or first sex with the partner in question. Similarly, `CWPRECBC` is only asked of a respondent if he reports not using contraception at either last or first sex with current wife or cohabitating partner or of both those were longer ago than past 12 months.
-
-Thus, it's better to estimate any contraception used in past 12 months first, then estimate the remaining nonusers. This is relatively straightforward for females, but for males care must be taken to check, for each possible partner, use at first intercourse and whether first intercourse was within past 12 months, use at last sex and whether last intercourse was within 12 months, and otherwise use within 12 months.
-
-
-## Summary
 
 ### Females
 
@@ -602,6 +425,10 @@ collect_estimate(
 ### Males
 
 For males, a pivot table does not need to be created, but many variables must be checked within the main table.
+
+The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all males who have had intercourse in past 12 months. I see. The `PXANYUSE` series is only asked of a respondent if he did not report using contraception at either last or first sex with the partner in question. Similarly, `CWPRECBC` is only asked of a respondent if he reports not using contraception at either last or first sex with current wife or cohabitating partner or of both those were longer ago than past 12 months.
+
+Thus, it's better to estimate any contraception used in past 12 months first, then estimate the remaining nonusers. This is relatively straightforward for females, but for males care must be taken to check, for each possible partner, use at first intercourse and whether first intercourse was within past 12 months, use at last sex and whether last intercourse was within 12 months, and otherwise use within 12 months.
 
 Last sex with CWP
 
@@ -852,6 +679,55 @@ collect_estimate(
   title = 'by contraceptive method(s)',
 ) |> kable()
 ```
+
+
+
+# Otherwise Did Not Use Contraception at Last Intercourse
+
+## Used Contraception in Past 12 Months
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(anyuse12m_count > 0),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'females who otherwise did not use contraception at last intercourse',
+  title = 'who used at least one method of contraception in the past 12 months'
+) |> kable()
+```
+
+For females, a sizable minority of unintentional female nonusers have used a method of contraception at least once in the past 12 months.
+
+
+## Ever Used Contraception
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(EVERUSED == 'Yes'),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'females who otherwise did not use contraception at last intercourse',
+  title = 'who have had sexual intercourse only that one time'
+) |> kable()
+```
+
+All females who did not use contraception at last intercourse (within the past 3 months) and are not trying to get pregnant, pregnant, or infertile nonusers have used a method of contraception at least once in their lives.
+
+I can't find an equivalent to `EVERUSED` for males.
+
+
 
 
 # Things to Investigate
