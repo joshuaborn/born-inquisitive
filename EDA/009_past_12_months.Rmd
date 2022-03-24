@@ -453,6 +453,89 @@ The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all m
 Thus, it's better to estimate any contraception used in past 12 months first, then estimate the remaining nonusers. This is relatively straightforward for females, but for males care must be taken to check, for each possible partner, use at first intercourse and whether first intercourse was within past 12 months, use at last sex and whether last intercourse was within 12 months, and otherwise use within 12 months.
 
 
+For males, a pivot table does not need to be created, but many variables must be checked within the main table.
+
+Last sex with CWP
+CMLSXCWP
+CWPLMET11
+CWPLMET12
+CWPLMET13
+CWPLMET201
+CWPLMET202
+
+First sex with CWP
+CMFSXCWP
+CWPFMET01
+CWPFMET02
+CWPFMET03
+CWPFMET04
+CWPFMET05
+
+Methods used in past 12 months with CWP
+CWPALLBC01
+CWPALLBC02
+CWPALLBC03
+CWPALLBC04
+CWPALLBC05
+
+Last sex with most recent 3 partners
+CMLSXP1
+PXLRMETH1
+PXLRMETH2
+PXLRMETH3
+PXLPMETH01
+PXLPMETH02
+PXLPMETH03
+CMLSXP2
+PXLRMETH5
+PXLRMETH6
+PXLRMETH7
+PXLPMETH11
+PXLPMETH12
+PXLPMETH13
+CMLSXP3
+PXLRMETH9
+PXLRMETH10
+PXLRMETH11
+PXLPMETH21
+PXLPMETH22
+PXLPMETH23
+
+First sex with most recent 3 partners
+CMFSXP
+PXFMETH01
+PXFMETH02
+PXFMETH03
+PXFMETH04
+CMFSXP2
+PXFMETH14
+PXFMETH15
+PXFMETH16
+PXFMETH17
+CMFSXP3
+PXFMETH27
+PXFMETH28
+PXFMETH29
+PXFMETH30
+
+Methods used in past 12 months most recent 3 partners
+PXMETHOD01
+PXMETHOD02
+PXMETHOD03
+PXMETHOD04
+PXMETHOD05
+PXMETHOD14
+PXMETHOD15
+PXMETHOD16
+PXMETHOD17
+PXMETHOD18
+PXMETHOD27
+PXMETHOD28
+PXMETHOD29
+PXMETHOD30
+PXMETHOD31
+
+
 
 # Things to Investigate
 
@@ -479,6 +562,7 @@ Thus, it's better to estimate any contraception used in past 12 months first, th
         * ED SIMSEQX whether methods used together or at different times
 * Past 12 months
     * Females
+        * ED whether specific methods were used in past 12 months
         * EL for frequency of condom or any contraceptive use and missed pills (also past 4 weeks)
     * Males
         * BC overall frequency of sexual intercourse and condom use (also past 4 weeks)
