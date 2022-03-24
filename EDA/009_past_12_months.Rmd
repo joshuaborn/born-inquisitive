@@ -190,16 +190,16 @@ fem_2017_2019_data[, `:=`(
     ),
     TRUE,
     using3m_meth3
-  )#,
-  #anyuse12m_meth5 = fifelse(
-  #  PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable' &
-  #    PSURGSTR == 'YES' & (
-  #      P1YRELP == 'Current husband or (current husband from whom she is separated)' |
-  #      P1YRELP == 'Current cohabiting partner'
-  #    ),
-  #  TRUE,
-  #  anyuse12m_meth5
-  #)
+  ),
+  anyuse12m_meth5 = fifelse(
+    PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable' &
+      PSURGSTR == 'YES' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+        P1YRELP == 'Current cohabiting partner'
+      ),
+    TRUE,
+    anyuse12m_meth5
+  )
 )]
 
 # count any respondents with current tubal ligations who are sexually active as using tubal ligation as a contraceptive method
@@ -208,12 +208,12 @@ fem_2017_2019_data[, `:=`(
     SEX3MO == 'YES' & TUBS == 'YES',
     TRUE,
     using3m_meth4
-  )#,
-  #anyuse12m_meth6 = fifelse(
-  #  PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable' & TUBS == 'YES',
-  #  TRUE,
-  #  anyuse12m_meth6
-  #)
+  ),
+  anyuse12m_meth6 = fifelse(
+    PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable' & TUBS == 'YES',
+    TRUE,
+    anyuse12m_meth6
+  )
 )]
 
 # create variable counting number of methods used at last intercourse (within past 3 months)
