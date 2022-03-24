@@ -263,31 +263,8 @@ male_2017_2019_svy <- svydesign(
 
 # Otherwise Did Not Use Contraception at Last Intercourse
 
-Generally, a sizable minority of unintentional nonusers have used a method of contraception at least once in the past 12 months, and a supermajority of female nonusers have used a method of contraception at least once in their lifetimes, so there is some evidence that at least a portion of unintentional nonuse is due to inconsistent use, rather than strict nonuse.
-
 
 ## Used Contraception in Past 12 Months
-
-```{r, dependson=c('male-process-data')}
-collect_estimate(
-  svyci(
-    ~I(
-      PXANYUSE == 'Yes' |
-      PXANYUSE2 == 'Yes' |
-      PXANYUSE3 == 'Yes' |
-      CWPRECBC == 'Yes'
-    ),
-    subset(
-      male_2017_2019_svy,
-      curr_use == 'Otherwise did not use contraception at last intercourse'
-    ),
-    svyciprop
-  ),
-  type = 'proportion',
-  domain = 'males who otherwise did not use contraception at last intercourse',
-  title = 'who used at least one method of contraception in the past 12 months with most recent partner'
-) |> kable()
-```
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -304,6 +281,8 @@ collect_estimate(
   title = 'who used at least one method of contraception in the past 12 months'
 ) |> kable()
 ```
+
+For females, a sizable minority of unintentional female nonusers have used a method of contraception at least once in the past 12 months.
 
 
 ## Has Ever Used Contraception
@@ -323,6 +302,8 @@ collect_estimate(
   title = 'who have had sexual intercourse only that one time'
 ) |> kable()
 ```
+
+A supermajority of female nonusers have used a method of contraception at least once in their lifetimes
 
 I can't find an equivalent to `EVERUSED` for males.
 
@@ -433,34 +414,6 @@ collect_estimate(
 
 ## Did Not Use Contraception in Past 12 Months
 
-```{r, dependson=c('male-process-data')}
-male_2017_2019_data[
-  SEX12MO == 'YES, HAD INTERCOURSE',
-  .(PXANYUSE, PXANYUSE3, CWPRECBC)
-]
-
-collect_estimate(
-  svyci(
-    ~I(
-      PXANYUSE != 'Yes' &
-      PXANYUSE2 != 'Yes' &
-      PXANYUSE3 != 'Yes' &
-      CWPRECBC != 'Yes'
-    ),
-    subset(
-      male_2017_2019_svy,
-      SEX12MO == 'YES, HAD INTERCOURSE'
-    ),
-    svytotal
-  )[level == TRUE],
-  type = 'total',
-  domain = 'males who have had intercourse with a female in the past 12 months',
-  title = 'who have not used contraception in the past 12 months'
-) |> kable()
-```
-
-The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all males who have had intercourse in past 12 months.
-
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
@@ -477,6 +430,10 @@ collect_estimate(
 ) |> kable()
 ```
 
+The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all males who have had intercourse in past 12 months. I see. The `PXANYUSE` series is only asked of a respondent if he did not report using contraception at either last or first sex with the partner in question. Similarly, `CWPRECBC` is only asked of a respondent if he reports not using contraception at either last or first sex with current wife or cohabitating partner or of both those were longer ago than past 12 months.
+
+Thus, it's better to estimate any contraception used in past 12 months first, then estimate the remaining nonusers. This is relatively straightforward for females, but for males care must be taken to check, for each possible partner, use at first intercourse and whether first intercourse was within past 12 months, use at last sex and whether last intercourse was within 12 months, and otherwise use within 12 months.
+
 
 # Things to Investigate
 
@@ -491,8 +448,7 @@ collect_estimate(
     * Include tubal ligation and vasectomy reversal
 * Replicate analysis in SAS
     * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
-* Combining with 2015-2017 data for more precise estimates
-* Nonresponse bias by comparing second phase vs. first-phase
+* Experiment using chi-squared tests whether it is worth combining with 2015-2017 data for more precise estimates
 
 
 ## Variables for Recent Contraceptive Use
