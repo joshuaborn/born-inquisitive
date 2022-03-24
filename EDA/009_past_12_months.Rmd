@@ -452,6 +452,7 @@ The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all m
 
 Thus, it's better to estimate any contraception used in past 12 months first, then estimate the remaining nonusers. This is relatively straightforward for females, but for males care must be taken to check, for each possible partner, use at first intercourse and whether first intercourse was within past 12 months, use at last sex and whether last intercourse was within 12 months, and otherwise use within 12 months.
 
+For females, a pivot table needs to be created with the `METHX` series of variables, the `CMMHCCALX` series of variables, the `CASEID` variable, and the `CMINTVW` variable.
 
 For males, a pivot table does not need to be created, but many variables must be checked within the main table.
 
