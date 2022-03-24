@@ -167,35 +167,53 @@ names(fem_2017_2019_METHX_indices) <- paste(
 )
 
 fem_2017_2019_data <- fem_2017_2019_METHX[
-  !is.na(CMMHCALX) &
+  !is.na(METHX) & !is.na(CMMHCALX) &
     CMMHCALX <= CMINTVW &
     CMMHCALX >= CMINTVW - 11,
   lapply(
     fem_2017_2019_METHX_indices,
-    \(x) any(.SD$METHX == x, na.rm = TRUE)
+    \(x) any(.SD$METHX == x)
   ),
   by = CASEID
 ][
   fem_2017_2019_data,
-  on = 'CASEID'
+  on = 'CASEID',
+  nomatch = FALSE
 ]
 
-
-# count any respondents who are sexually active within past 3 months and whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
-fem_2017_2019_data[, using3m_meth3 := fifelse(
-  SEX3MO == 'YES' & PSURGSTR == 'YES' & (
-    P1YRELP == 'Current husband or (current husband from whom she is separated)' |
-    P1YRELP == 'Current cohabiting partner'
-  ),
-  TRUE,
-  using3m_meth3
+# count any respondents  whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
+fem_2017_2019_data[, `:=`(
+  using3m_meth3 = fifelse(
+    SEX3MO == 'YES' & PSURGSTR == 'YES' & (
+      P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+      P1YRELP == 'Current cohabiting partner'
+    ),
+    TRUE,
+    using3m_meth3
+  )#,
+  #anyuse12m_meth5 = fifelse(
+  #  PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable' &
+  #    PSURGSTR == 'YES' & (
+  #      P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+  #      P1YRELP == 'Current cohabiting partner'
+  #    ),
+  #  TRUE,
+  #  anyuse12m_meth5
+  #)
 )]
 
-# count any respondents with current tubal ligations who are sexually active as currently using tubal ligation as a contraceptive method
-fem_2017_2019_data[, using3m_meth4 := fifelse(
-  SEX3MO == 'YES' & TUBS == 'YES',
-  TRUE,
-  using3m_meth4
+# count any respondents with current tubal ligations who are sexually active as using tubal ligation as a contraceptive method
+fem_2017_2019_data[, `:=`(
+  using3m_meth4 = fifelse(
+    SEX3MO == 'YES' & TUBS == 'YES',
+    TRUE,
+    using3m_meth4
+  )#,
+  #anyuse12m_meth6 = fifelse(
+  #  PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable' & TUBS == 'YES',
+  #  TRUE,
+  #  anyuse12m_meth6
+  #)
 )]
 
 # create variable counting number of methods used at last intercourse (within past 3 months)
@@ -203,6 +221,13 @@ fem_2017_2019_data[
   ,
   meth3m_count := rowSums(.SD),
   .SDcols = patterns('^using3m_meth')
+]
+
+# create variable counting number of methods at all in past 12 months
+fem_2017_2019_data[
+  ,
+  anyuse12m_count := rowSums(.SD),
+  .SDcols = patterns('^anyuse12m_meth')
 ]
 
 # set categorization for contraceptive use at last intercourse (within past 3 months)
@@ -234,7 +259,11 @@ fem_2017_2019_data[,
   mos12_use := factor(fcase(
     PARTS1YR == 'NONE' | PARTS1YR == 'Not Applicable',
       'Did not have sexual intercourse with male in past 12 months',
-    default = 'Otherwise did not use contraception in past 12 months'
+    anyuse12m_count == 0,
+      'Did not use contraception at all in past 12 months',
+    anyuse12m_count > 0,
+      'Used contraception at least once in past 12 months',
+    default = 'Slipped_through'
   ))
 ]
 
@@ -531,89 +560,114 @@ The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all m
 
 Thus, it's better to estimate any contraception used in past 12 months first, then estimate the remaining nonusers. This is relatively straightforward for females, but for males care must be taken to check, for each possible partner, use at first intercourse and whether first intercourse was within past 12 months, use at last sex and whether last intercourse was within 12 months, and otherwise use within 12 months.
 
-For females, a pivot table needs to be created with the `METHX` series of variables, the `CMMHCCALX` series of variables, the `CASEID` variable, and the `CMINTVW` variable.
+
+## Summary
+
+### Females
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~mos12_use,
+    fem_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by sexual activity and contraception use in past 12 months'
+) |> kable()
+```
+
+
+### Males
 
 For males, a pivot table does not need to be created, but many variables must be checked within the main table.
 
 Last sex with CWP
-CMLSXCWP
-CWPLMET11
-CWPLMET12
-CWPLMET13
-CWPLMET201
-CWPLMET202
+
+* CMLSXCWP
+* CWPLMET11
+* CWPLMET12
+* CWPLMET13
+* CWPLMET201
+* CWPLMET202
 
 First sex with CWP
-CMFSXCWP
-CWPFMET01
-CWPFMET02
-CWPFMET03
-CWPFMET04
-CWPFMET05
+
+* CMFSXCWP
+* CWPFMET01
+* CWPFMET02
+* CWPFMET03
+* CWPFMET04
+* CWPFMET05
 
 Methods used in past 12 months with CWP
-CWPALLBC01
-CWPALLBC02
-CWPALLBC03
-CWPALLBC04
-CWPALLBC05
+
+* CWPALLBC01
+* CWPALLBC02
+* CWPALLBC03
+* CWPALLBC04
+* CWPALLBC05
 
 Last sex with most recent 3 partners
-CMLSXP1
-PXLRMETH1
-PXLRMETH2
-PXLRMETH3
-PXLPMETH01
-PXLPMETH02
-PXLPMETH03
-CMLSXP2
-PXLRMETH5
-PXLRMETH6
-PXLRMETH7
-PXLPMETH11
-PXLPMETH12
-PXLPMETH13
-CMLSXP3
-PXLRMETH9
-PXLRMETH10
-PXLRMETH11
-PXLPMETH21
-PXLPMETH22
-PXLPMETH23
+
+* CMLSXP1
+* PXLRMETH1
+* PXLRMETH2
+* PXLRMETH3
+* PXLPMETH01
+* PXLPMETH02
+* PXLPMETH03
+* CMLSXP2
+* PXLRMETH5
+* PXLRMETH6
+* PXLRMETH7
+* PXLPMETH11
+* PXLPMETH12
+* PXLPMETH13
+* CMLSXP3
+* PXLRMETH9
+* PXLRMETH10
+* PXLRMETH11
+* PXLPMETH21
+* PXLPMETH22
+* PXLPMETH23
 
 First sex with most recent 3 partners
-CMFSXP
-PXFMETH01
-PXFMETH02
-PXFMETH03
-PXFMETH04
-CMFSXP2
-PXFMETH14
-PXFMETH15
-PXFMETH16
-PXFMETH17
-CMFSXP3
-PXFMETH27
-PXFMETH28
-PXFMETH29
-PXFMETH30
+
+* CMFSXP
+* PXFMETH01
+* PXFMETH02
+* PXFMETH03
+* PXFMETH04
+* CMFSXP2
+* PXFMETH14
+* PXFMETH15
+* PXFMETH16
+* PXFMETH17
+* CMFSXP3
+* PXFMETH27
+* PXFMETH28
+* PXFMETH29
+* PXFMETH30
 
 Methods used in past 12 months most recent 3 partners
-PXMETHOD01
-PXMETHOD02
-PXMETHOD03
-PXMETHOD04
-PXMETHOD05
-PXMETHOD14
-PXMETHOD15
-PXMETHOD16
-PXMETHOD17
-PXMETHOD18
-PXMETHOD27
-PXMETHOD28
-PXMETHOD29
-PXMETHOD30
-PXMETHOD31
+
+* PXMETHOD01
+* PXMETHOD02
+* PXMETHOD03
+* PXMETHOD04
+* PXMETHOD05
+* PXMETHOD14
+* PXMETHOD15
+* PXMETHOD16
+* PXMETHOD17
+* PXMETHOD18
+* PXMETHOD27
+* PXMETHOD28
+* PXMETHOD29
+* PXMETHOD30
+* PXMETHOD31
 
 
 
