@@ -785,6 +785,7 @@ There are 3 different formats in the male data set used for the contraceptive me
 They are mostly compatible with each other, except for "Something else" in MTHDSV2F collides with "Contraceptive patch (Ortho-Evra)" in MTHDSV1F and MTHDSV3F. Care should be taken in this case.
 
 
+
 ## By Number of Methods
 
 ### Females
@@ -971,6 +972,22 @@ collect_estimate(
 ```
 
 For females, a sizable minority of unintentional female nonusers have used a method of contraception at least once in the past 12 months.
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(anyuse12m_count > 0),
+    subset(
+      male_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'males who otherwise did not use contraception at last intercourse',
+  title = 'who used at least one method of contraception in the past 12 months'
+) |> kable()
+```
 
 
 ## Ever Used Contraception
