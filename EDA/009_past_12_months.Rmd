@@ -91,7 +91,7 @@ fem_2017_2019_data[, `:=`(
   METH3M3 = factorize(METH3M3, 'METH3MF', fem_2017_2019_formats)
 )]
 
-# create boolean variables for whether each specific method is currently used
+# create boolean variables for whether each specific method is used at last intercourse (within past 3 months)
 for (x in c(1:19, 22:24)) {
   set(
     fem_2017_2019_data,
@@ -102,7 +102,86 @@ for (x in c(1:19, 22:24)) {
   )
 }
 
-# count any respondents who are sexually active and whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
+# create pivot tables for contraceptive use in past 12 months
+create_pivot_table <- function(
+  column_prefix,
+  idxs,
+  source_dt,
+  id_vars
+) {
+  dt <- copy(
+    source_dt[
+      ,
+      c(id_vars, paste(column_prefix, idxs, sep = '')),
+      with = FALSE
+    ]
+  )
+
+  dt <- melt(
+    dt,
+    id.vars = id_vars,
+    variable.factor = FALSE,
+    value.name = column_prefix
+  )
+
+  dt[
+    ,
+    (paste(column_prefix, 'ID', sep = '')) :=
+      as.integer(sub(column_prefix, '', variable))
+  ]
+
+  dt[, variable := NULL]
+
+  dt
+}
+
+fem_2017_2019_METHX <- create_pivot_table(
+  'METHX',
+  1:192,
+  fem_2017_2019$Data,
+  'CASEID'
+)
+
+fem_2017_2019_METHX[,
+  CMMHCALXID := ceiling(METHXID / 4)
+]
+
+fem_2017_2019_METHX <- fem_2017_2019_METHX[
+  create_pivot_table(
+    'CMMHCALX',
+    1:48,
+    fem_2017_2019$Data,
+    c('CASEID', 'CMINTVW')
+  ),
+  on = c('CASEID', 'CMMHCALXID')
+]
+
+
+# do a group-by query to see if each of the methods have been used within the past 12 months and join to main data table
+fem_2017_2019_METHX_indices <- c(2:13, 19:21, 25:26)
+
+names(fem_2017_2019_METHX_indices) <- paste(
+  'anyuse12m_meth',
+  fem_2017_2019_METHX_indices,
+  sep = ''
+)
+
+fem_2017_2019_data <- fem_2017_2019_METHX[
+  !is.na(CMMHCALX) &
+    CMMHCALX <= CMINTVW &
+    CMMHCALX >= CMINTVW - 11,
+  lapply(
+    fem_2017_2019_METHX_indices,
+    \(x) any(.SD$METHX == x, na.rm = TRUE)
+  ),
+  by = CASEID
+][
+  fem_2017_2019_data,
+  on = 'CASEID'
+]
+
+
+# count any respondents who are sexually active within past 3 months and whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
 fem_2017_2019_data[, using3m_meth3 := fifelse(
   SEX3MO == 'YES' & PSURGSTR == 'YES' & (
     P1YRELP == 'Current husband or (current husband from whom she is separated)' |
@@ -119,14 +198,14 @@ fem_2017_2019_data[, using3m_meth4 := fifelse(
   using3m_meth4
 )]
 
-# create variable counting number of current methods
+# create variable counting number of methods used at last intercourse (within past 3 months)
 fem_2017_2019_data[
   ,
   meth3m_count := rowSums(.SD),
   .SDcols = patterns('^using3m_meth')
 ]
 
-# set master categorization for contraceptive use
+# set categorization for contraceptive use at last intercourse (within past 3 months)
 fem_2017_2019_data[,
   curr_use := factor(fcase(
     meth3m_count > 0,
@@ -150,7 +229,7 @@ fem_2017_2019_data[,
   ))
 ]
 
-# set master categorization for 12 month contraceptive use
+# set categorization for contraceptive use within past 12 months
 fem_2017_2019_data[,
   mos12_use := factor(fcase(
     PARTS1YR == 'NONE' | PARTS1YR == 'Not Applicable',
