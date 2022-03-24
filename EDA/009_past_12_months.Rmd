@@ -150,6 +150,15 @@ fem_2017_2019_data[,
   ))
 ]
 
+# set master categorization for 12 month contraceptive use
+fem_2017_2019_data[,
+  mos12_use := factor(fcase(
+    PARTS1YR == 'NONE' | PARTS1YR == 'Not Applicable',
+      'Did not have sexual intercourse with male in past 12 months',
+    default = 'Otherwise did not use contraception in past 12 months'
+  ))
+]
+
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -247,6 +256,15 @@ male_2017_2019_data[,
     (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPOSS == 'No',
       'Last intercourse was with wife or cohabitating partner who is physically unable to concieve',
     default = 'Otherwise did not use contraception at last intercourse'
+  ))
+]
+
+# set master categorization for 12 month contraceptive use
+male_2017_2019_data[,
+  mos12_use := factor(fcase(
+    SEX12MO != 'YES, HAD INTERCOURSE',
+      'Did not have sexual intercourse with female in past 12 months',
+    default = 'Otherwise did not use contraception in past 12 months'
   ))
 ]
 
@@ -433,6 +451,7 @@ collect_estimate(
 The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all males who have had intercourse in past 12 months. I see. The `PXANYUSE` series is only asked of a respondent if he did not report using contraception at either last or first sex with the partner in question. Similarly, `CWPRECBC` is only asked of a respondent if he reports not using contraception at either last or first sex with current wife or cohabitating partner or of both those were longer ago than past 12 months.
 
 Thus, it's better to estimate any contraception used in past 12 months first, then estimate the remaining nonusers. This is relatively straightforward for females, but for males care must be taken to check, for each possible partner, use at first intercourse and whether first intercourse was within past 12 months, use at last sex and whether last intercourse was within 12 months, and otherwise use within 12 months.
+
 
 
 # Things to Investigate
