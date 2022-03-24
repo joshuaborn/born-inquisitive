@@ -937,6 +937,68 @@ collect_estimate(
 ) |> kable()
 ```
 
+### Males
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    1:13,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~anyuse12m_meth%d', x)),
+        subset(
+          male_2017_2019_svy,
+          anyuse12m_count > 0
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'MTHDSV1F', male_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'males who used at least one method of contraception in past 12 months',
+  title = 'by contraceptive method(s)',
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    1:13,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~anyuse12m_meth%d', x)),
+        subset(
+          male_2017_2019_svy,
+          anyuse12m_count > 0
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'MTHDSV1F', male_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'males who used at least one method of contraception in past 12 months',
+  title = 'by contraceptive method(s)',
+) |> kable()
+```
+
 
 ## By Exclusive Method
 
@@ -1002,6 +1064,68 @@ collect_estimate(
 ) |> kable()
 ```
 
+### Males
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    1:13,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~anyuse12m_meth%d', x)),
+        subset(
+          male_2017_2019_svy,
+          anyuse12m_count == 1
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'MTHDSV1F', male_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'males who used exactly one method of contraception in past 12 months',
+  title = 'by contraceptive method(s)',
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    1:13,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~anyuse12m_meth%d', x)),
+        subset(
+          male_2017_2019_svy,
+          anyuse12m_count == 1
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'MTHDSV1F', male_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'males who used exactly one method of contraception in past 12 months',
+  title = 'by contraceptive method(s)',
+) |> kable()
+```
+
 
 
 # Otherwise Did Not Use Contraception at Last Intercourse
@@ -1041,6 +1165,9 @@ collect_estimate(
   title = 'who used at least one method of contraception in the past 12 months'
 ) |> kable()
 ```
+
+Similarly, a sizable minority of unintentional male nonusers have used a method of contraception at least once in the past 12 months.
+
 
 
 ## Ever Used Contraception
