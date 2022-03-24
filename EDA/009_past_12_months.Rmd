@@ -721,6 +721,28 @@ male_2017_2019_data[,
 ]
 
 
+# set categorization for contraceptive use at last intercourse (within past 3 months)
+male_2017_2019_data[,
+  mos12_num_meth := factor(fcase(
+    SEX12MO != 'YES, HAD INTERCOURSE',
+      'Did not have sexual intercourse with male in past 12 months',
+    anyuse12m_count == 0,
+      'Did not use contraception at all in past 12 months',
+    anyuse12m_count == 1,
+      'Used 1 method of contraception in past 12 months',
+    anyuse12m_count == 2,
+      'Used 2 methods of contraception in past 12 months',
+    anyuse12m_count == 3,
+      'Used 3 methods of contraception in past 12 months',
+    anyuse12m_count == 4,
+      'Used 4 methods of contraception in past 12 months',
+    anyuse12m_count == 5,
+      'Used 5 methods of contraception in past 12 months',
+    default = 'Slipped_through'
+  ))
+]
+
+
 # create survey design object
 male_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -815,6 +837,37 @@ collect_estimate(
   ),
   type = 'proportion',
   domain = 'females who had intercourse with a male in past 12 months',
+  title = 'by number of contraceptive methods used in past 12 months'
+) |> kable()
+```
+
+### Males
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~mos12_num_meth,
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'by number of contraceptive methods used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~mos12_num_meth,
+    subset(
+      male_2017_2019_svy,
+      SEX12MO == 'YES, HAD INTERCOURSE'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who had intercourse with a male in past 12 months',
   title = 'by number of contraceptive methods used in past 12 months'
 ) |> kable()
 ```
