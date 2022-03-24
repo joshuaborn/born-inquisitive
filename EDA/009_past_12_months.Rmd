@@ -654,20 +654,36 @@ male_2017_2019_data[
 
 
 # count any respondents who are sexually active and who have an active vasectomy as using vasectomy as a contraceptive method
-male_2017_2019_data[, using3m_meth3 := fifelse(
-  SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
-  TRUE,
-  using3m_meth3
+male_2017_2019_data[, `:=`(
+  using3m_meth3 = fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+    TRUE,
+    using3m_meth3
+  ),
+  anyuse12m_meth3 = fifelse(
+    SEX12MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+    TRUE,
+    anyuse12m_meth3
+  )
 )]
 
 
 # count any respondents who are sexually active and who are married or cohabitating and whose last intercourse was with wife or cohabitating partner who has active tubal ligation
-male_2017_2019_data[, using3m_meth5 := fifelse(
-  SEX3MO == 'YES, HAD INTERCOURSE' &
-    (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
-    PSURGSTR == 'YES',
-  TRUE,
-  using3m_meth5
+male_2017_2019_data[, `:=`(
+  using3m_meth5 = fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' &
+      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
+      PSURGSTR == 'YES',
+    TRUE,
+    using3m_meth5
+  ),
+  anyuse12m_meth5 = fifelse(
+    SEX12MO == 'YES, HAD INTERCOURSE' &
+      CMINTVW - 11 <= CMLSXCWP &
+      PSURGSTR == 'YES',
+    TRUE,
+    anyuse12m_meth5
+  )
 )]
 
 
@@ -1197,7 +1213,6 @@ I can't find an equivalent to `EVERUSED` for males.
 
 # Things to Investigate
 
-* Summarize contraceptive use in previous 12 months by those not sexually active with opposite sex, by those sexually active and did not use contraception at all, and by contraceptive method among those who used at least one method of contraception
 * Among those sexually active with the opposite sex in the previous 12 months and who used at least one method of contraception, how frequently was any method of contraception used?
 * Among those who used condoms in previous 12 months, how frequently were condoms used, in the past 12 months and past 4 weeks?
 * Among females who used the pill in the previous 12 months, how many pills were missed?
