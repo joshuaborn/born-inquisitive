@@ -792,6 +792,71 @@ collect_estimate(
 ```
 
 
+## By Exclusive Method
+
+### Females
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    fem_2017_2019_METHX_indices,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~anyuse12m_meth%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          anyuse12m_count == 1
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'METHHXF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who used exactly one method of contaception in past 12 months',
+  title = 'by contraceptive method',
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    fem_2017_2019_METHX_indices,
+    function(x) {
+      svyci(
+        as.formula(sprintf('~anyuse12m_meth%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          anyuse12m_count == 1
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'METHHXF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who used exactly one method of contaception in past 12 months',
+  title = 'by contraceptive method(s)',
+) |> kable()
+```
+
+
 # Things to Investigate
 
 * Summarize contraceptive use in previous 12 months by those not sexually active with opposite sex, by those sexually active and did not use contraception at all, and by contraceptive method among those who used at least one method of contraception
