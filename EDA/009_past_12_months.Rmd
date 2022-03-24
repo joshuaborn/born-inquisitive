@@ -274,15 +274,15 @@ fem_2017_2019_data[,
     anyuse12m_count == 0,
       'Did not use contraception at all in past 12 months',
     anyuse12m_count == 1,
-      'Used 1 method of contaception in past 12 months',
+      'Used 1 method of contraception in past 12 months',
     anyuse12m_count == 2,
-      'Used 2 methods of contaception in past 12 months',
+      'Used 2 methods of contraception in past 12 months',
     anyuse12m_count == 3,
-      'Used 3 methods of contaception in past 12 months',
+      'Used 3 methods of contraception in past 12 months',
     anyuse12m_count == 4,
-      'Used 4 methods of contaception in past 12 months',
+      'Used 4 methods of contraception in past 12 months',
     anyuse12m_count == 5,
-      'Used 5 methods of contaception in past 12 months',
+      'Used 5 methods of contraception in past 12 months',
     default = 'Slipped_through'
   ))
 ]
@@ -698,14 +698,11 @@ Methods used in past 12 months most recent 3 partners
 collect_estimate(
   svyci(
     ~mos12_num_meth,
-    subset(
-      fem_2017_2019_svy,
-      PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable'
-    ),
+    fem_2017_2019_svy,
     svytotal
   ),
   type = 'total',
-  domain = 'females who had intercourse with a male in past 12 months',
+  domain = 'females aged 15-49 living in households in the United States',
   title = 'by number of contraceptive methods used in past 12 months'
 ) |> kable()
 ```
@@ -757,7 +754,7 @@ collect_estimate(
     )
   ],
   type = 'total',
-  domain = 'females who used at least one method of contaception in past 12 months',
+  domain = 'females who used at least one method of contraception in past 12 months',
   title = 'by contraceptive method(s)',
 ) |> kable()
 ```
@@ -786,7 +783,7 @@ collect_estimate(
     )
   ],
   type = 'proportion',
-  domain = 'females who used at least one method of contaception in past 12 months',
+  domain = 'females who used at least one method of contraception in past 12 months',
   title = 'by contraceptive method(s)',
 ) |> kable()
 ```
@@ -822,7 +819,7 @@ collect_estimate(
     )
   ],
   type = 'total',
-  domain = 'females who used exactly one method of contaception in past 12 months',
+  domain = 'females who used exactly one method of contraception in past 12 months',
   title = 'by contraceptive method',
 ) |> kable()
 ```
@@ -851,7 +848,7 @@ collect_estimate(
     )
   ],
   type = 'proportion',
-  domain = 'females who used exactly one method of contaception in past 12 months',
+  domain = 'females who used exactly one method of contraception in past 12 months',
   title = 'by contraceptive method(s)',
 ) |> kable()
 ```
