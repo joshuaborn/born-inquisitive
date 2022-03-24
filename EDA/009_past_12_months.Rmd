@@ -304,6 +304,30 @@ male_2017_2019_formats <- male_2017_2019$Formats
 
 ```{r male-process-data, dependson=c('male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  CMFSXCWP,
+  CMFSXP,
+  CMFSXP2,
+  CMFSXP3,
+  CMINTVW,
+  CMLSXCWP,
+  CMLSXP1,
+  CMLSXP2,
+  CMLSXP3,
+  CWPALLBC01,
+  CWPALLBC02,
+  CWPALLBC03,
+  CWPALLBC04,
+  CWPALLBC05,
+  CWPFMET01,
+  CWPFMET02,
+  CWPFMET03,
+  CWPFMET04,
+  CWPFMET05,
+  CWPLMET11,
+  CWPLMET12,
+  CWPLMET13,
+  CWPLMET201,
+  CWPLMET202,
   CWPPOSS = factorize(CWPPOSS, 'Y1N5RDF', male_2017_2019_formats),
   CWPPRGNW = factorize(CWPPRGNW, 'Y1N5RDF', male_2017_2019_formats),
   CWPRECBC = factorize(CWPRECBC, 'Y1N5RDF', fem_2017_2019_formats),
@@ -320,17 +344,63 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   PXANYUSE2 = factorize(PXANYUSE2, 'Y1N5RDF', male_2017_2019_formats),
   PXANYUSE3 = factorize(PXANYUSE3, 'Y1N5RDF', male_2017_2019_formats),
   PXCPREG = factorize(PXCPREG, 'Y1N5RDF', male_2017_2019_formats),
+  PXFMETH01,
+  PXFMETH02,
+  PXFMETH03,
+  PXFMETH04,
+  PXFMETH14,
+  PXFMETH15,
+  PXFMETH16,
+  PXFMETH17,
+  PXFMETH27,
+  PXFMETH28,
+  PXFMETH29,
+  PXFMETH30,
   PXFUSE = factorize(PXFUSE, 'Y1N5RDF', male_2017_2019_formats),
+  PXLPMETH01,
+  PXLPMETH02,
+  PXLPMETH03,
+  PXLPMETH11,
+  PXLPMETH12,
+  PXLPMETH13,
+  PXLPMETH21,
+  PXLPMETH22,
+  PXLPMETH23,
+  PXLRMETH1,
+  PXLRMETH10,
+  PXLRMETH11,
+  PXLRMETH2,
+  PXLRMETH3,
+  PXLRMETH5,
+  PXLRMETH6,
+  PXLRMETH7,
+  PXLRMETH9,
+  PXMETHOD01,
+  PXMETHOD02,
+  PXMETHOD03,
+  PXMETHOD04,
+  PXMETHOD05,
+  PXMETHOD14,
+  PXMETHOD15,
+  PXMETHOD16,
+  PXMETHOD17,
+  PXMETHOD18,
+  PXMETHOD27,
+  PXMETHOD28,
+  PXMETHOD29,
+  PXMETHOD30,
+  PXMETHOD31,
   PXTRYING = factorize(PXTRYING, 'Y1N5RDF', male_2017_2019_formats),
   RSURGSTR  = factorize(RSURGSTR, 'N0Y1RDF', male_2017_2019_formats),
   SECU,
   SEST,
-  SEX3MO = factorize(SEX3MO, 'SEX3MO', male_2017_2019_formats),
   SEX12MO = factorize(SEX12MO, 'SEX3MO', male_2017_2019_formats),
+  SEX3MO = factorize(SEX3MO, 'SEX3MO', male_2017_2019_formats),
   WGT2017_2019
 )])
 
-# create boolean variables for whether each specific method is currently used
+
+# create boolean variables for whether each specific method was used at last intercourse (within the past 3 months)
 for (x in 1:13) {
   set(
     male_2017_2019_data,
@@ -342,12 +412,254 @@ for (x in 1:13) {
   )
 }
 
+
+# create boolean variables for whether each specific method was used at at all in past 12 months 
+for (x in c(1:9, 11:12)) {
+  male_2017_2019_data[
+    ,
+    (sprintf('anyuse12m_meth%d', x)) := !is.na(
+      (CMINTVW - 11 <= CMLSXCWP & (
+        CWPLMET11 == x |
+        CWPLMET12 == x |
+        CWPLMET13 == x |
+        CWPLMET201 == x |
+        CWPLMET202 == x
+      )) |
+      (CMINTVW - 11 <= CMFSXCWP & (
+        CWPFMET01 == x |
+        CWPFMET02 == x |
+        CWPFMET03 == x |
+        CWPFMET04 == x |
+        CWPFMET05 == x
+      )) |
+      CWPALLBC01 == x |
+      CWPALLBC02 == x |
+      CWPALLBC03 == x |
+      CWPALLBC04 == x |
+      CWPALLBC05 == x |
+      (CMINTVW - 11 <= CMLSXP1 & (
+        PXLRMETH1 == x |
+        PXLRMETH2 == x |
+        PXLRMETH3 == x |
+        PXLPMETH01 == x |
+        PXLPMETH02 == x |
+        PXLPMETH03 == x
+      )) |
+      (CMINTVW - 11 <= CMLSXP2 & (
+        PXLRMETH5 == x |
+        PXLRMETH6 == x |
+        PXLRMETH7 == x |
+        PXLPMETH11 == x |
+        PXLPMETH12 == x |
+        PXLPMETH13 == x
+      )) |
+      (CMINTVW - 11 <= CMLSXP3 & (
+        PXLRMETH9 == x |
+        PXLRMETH10 == x |
+        PXLRMETH11 == x |
+        PXLPMETH21 == x |
+        PXLPMETH22 == x |
+        PXLPMETH23 == x
+      )) |
+      (CMINTVW - 11 <= CMFSXP & (
+        PXFMETH01 == x |
+        PXFMETH02 == x |
+        PXFMETH03 == x |
+        PXFMETH04 == x
+      )) |
+      (CMINTVW - 11 <= CMFSXP2 & (
+        PXFMETH14 == x |
+        PXFMETH15 == x |
+        PXFMETH16 == x |
+        PXFMETH17 == x
+      )) |
+      (CMINTVW - 11 <= CMFSXP3 & (
+        PXFMETH27 == x |
+        PXFMETH28 == x |
+        PXFMETH29 == x |
+        PXFMETH30 == x
+      )) |
+      PXMETHOD01 == x |
+      PXMETHOD02 == x |
+      PXMETHOD03 == x |
+      PXMETHOD04 == x |
+      PXMETHOD05 == x |
+      PXMETHOD14 == x |
+      PXMETHOD15 == x |
+      PXMETHOD16 == x |
+      PXMETHOD17 == x |
+      PXMETHOD18 == x |
+      PXMETHOD27 == x |
+      PXMETHOD28 == x |
+      PXMETHOD29 == x |
+      PXMETHOD30 == x |
+      PXMETHOD31 == x
+    )
+  ]
+}
+
+# Set a boolean for "Something else" separately because its encoding collides with "Contraceptive patch (Ortho-Evra)"
+male_2017_2019_data[
+  ,
+  anyuse12m_meth13 := !is.na(
+    (CMINTVW - 11 <= CMLSXCWP & (
+      CWPLMET11 == 10 |
+      CWPLMET12 == 10 |
+      CWPLMET13 == 10 |
+      CWPLMET201 == 13 |
+      CWPLMET202 == 13
+    )) |
+    (CMINTVW - 11 <= CMFSXCWP & (
+      CWPFMET01 == 13 |
+      CWPFMET02 == 13 |
+      CWPFMET03 == 13 |
+      CWPFMET04 == 13 |
+      CWPFMET05 == 13
+    )) |
+    CWPALLBC01 == 13 |
+    CWPALLBC02 == 13 |
+    CWPALLBC03 == 13 |
+    CWPALLBC04 == 13 |
+    CWPALLBC05 == 13 |
+    (CMINTVW - 11 <= CMLSXP1 & (
+      PXLRMETH1 == 10 |
+      PXLRMETH2 == 10 |
+      PXLRMETH3 == 10 |
+      PXLPMETH01 == 13 |
+      PXLPMETH02 == 13 |
+      PXLPMETH03 == 13
+    )) |
+    (CMINTVW - 11 <= CMLSXP2 & (
+      PXLRMETH5 == 10 |
+      PXLRMETH6 == 10 |
+      PXLRMETH7 == 10 |
+      PXLPMETH11 == 13 |
+      PXLPMETH12 == 13 |
+      PXLPMETH13 == 13
+    )) |
+    (CMINTVW - 11 <= CMLSXP3 & (
+      PXLRMETH9 == 10 |
+      PXLRMETH10 == 10 |
+      PXLRMETH11 == 10 |
+      PXLPMETH21 == 13 |
+      PXLPMETH22 == 13 |
+      PXLPMETH23 == 13
+    )) |
+    (CMINTVW - 11 <= CMFSXP & (
+      PXFMETH01 == 13 |
+      PXFMETH02 == 13 |
+      PXFMETH03 == 13 |
+      PXFMETH04 == 13
+    )) |
+    (CMINTVW - 11 <= CMFSXP2 & (
+      PXFMETH14 == 13 |
+      PXFMETH15 == 13 |
+      PXFMETH16 == 13 |
+      PXFMETH17 == 13
+    )) |
+    (CMINTVW - 11 <= CMFSXP3 & (
+      PXFMETH27 == 13 |
+      PXFMETH28 == 13 |
+      PXFMETH29 == 13 |
+      PXFMETH30 == 13
+    )) |
+    PXMETHOD01 == 13 |
+    PXMETHOD02 == 13 |
+    PXMETHOD03 == 13 |
+    PXMETHOD04 == 13 |
+    PXMETHOD05 == 13 |
+    PXMETHOD14 == 13 |
+    PXMETHOD15 == 13 |
+    PXMETHOD16 == 13 |
+    PXMETHOD17 == 13 |
+    PXMETHOD18 == 13 |
+    PXMETHOD27 == 13 |
+    PXMETHOD28 == 13 |
+    PXMETHOD29 == 13 |
+    PXMETHOD30 == 13 |
+    PXMETHOD31 == 13
+  )
+]
+
+# Set a boolean for "Contraceptive patch (Ortho-Evra)" separately because its encoding collides with "Something else"
+male_2017_2019_data[
+  ,
+  anyuse12m_meth10 := !is.na(
+    (CMINTVW - 11 <= CMLSXCWP & (
+      CWPLMET201 == 10 |
+      CWPLMET202 == 10
+    )) |
+    (CMINTVW - 11 <= CMFSXCWP & (
+      CWPFMET01 == 10 |
+      CWPFMET02 == 10 |
+      CWPFMET03 == 10 |
+      CWPFMET04 == 10 |
+      CWPFMET05 == 10
+    )) |
+    CWPALLBC01 == 10 |
+    CWPALLBC02 == 10 |
+    CWPALLBC03 == 10 |
+    CWPALLBC04 == 10 |
+    CWPALLBC05 == 10 |
+    (CMINTVW - 11 <= CMLSXP1 & (
+      PXLPMETH01 == 10 |
+      PXLPMETH02 == 10 |
+      PXLPMETH03 == 10
+    )) |
+    (CMINTVW - 11 <= CMLSXP2 & (
+      PXLPMETH11 == 10 |
+      PXLPMETH12 == 10 |
+      PXLPMETH13 == 10
+    )) |
+    (CMINTVW - 11 <= CMLSXP3 & (
+      PXLPMETH21 == 10 |
+      PXLPMETH22 == 10 |
+      PXLPMETH23 == 10
+    )) |
+    (CMINTVW - 11 <= CMFSXP & (
+      PXFMETH01 == 10 |
+      PXFMETH02 == 10 |
+      PXFMETH03 == 10 |
+      PXFMETH04 == 10
+    )) |
+    (CMINTVW - 11 <= CMFSXP2 & (
+      PXFMETH14 == 10 |
+      PXFMETH15 == 10 |
+      PXFMETH16 == 10 |
+      PXFMETH17 == 10
+    )) |
+    (CMINTVW - 11 <= CMFSXP3 & (
+      PXFMETH27 == 10 |
+      PXFMETH28 == 10 |
+      PXFMETH29 == 10 |
+      PXFMETH30 == 10
+    )) |
+    PXMETHOD01 == 10 |
+    PXMETHOD02 == 10 |
+    PXMETHOD03 == 10 |
+    PXMETHOD04 == 10 |
+    PXMETHOD05 == 10 |
+    PXMETHOD14 == 10 |
+    PXMETHOD15 == 10 |
+    PXMETHOD16 == 10 |
+    PXMETHOD17 == 10 |
+    PXMETHOD18 == 10 |
+    PXMETHOD27 == 10 |
+    PXMETHOD28 == 10 |
+    PXMETHOD29 == 10 |
+    PXMETHOD30 == 10 |
+    PXMETHOD31 == 10
+  )
+]
+
+
 # count any respondents who are sexually active and who have an active vasectomy as using vasectomy as a contraceptive method
 male_2017_2019_data[, using3m_meth3 := fifelse(
   SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
   TRUE,
   using3m_meth3
 )]
+
 
 # count any respondents who are sexually active and who are married or cohabitating and whose last intercourse was with wife or cohabitating partner who has active tubal ligation
 male_2017_2019_data[, using3m_meth5 := fifelse(
@@ -358,14 +670,24 @@ male_2017_2019_data[, using3m_meth5 := fifelse(
   using3m_meth5
 )]
 
-# create variable counting number of current methods
+
+# create variable counting number of methods at last intercourse (within past 3 months)
 male_2017_2019_data[
   ,
   meth3m_count := rowSums(.SD),
   .SDcols = patterns('^using3m_meth')
 ]
 
-# set master categorization for contraceptive use
+
+# create variable counting number of methods at all in past 12 months
+male_2017_2019_data[
+  ,
+  anyuse12m_count := rowSums(.SD),
+  .SDcols = patterns('^anyuse12m_meth')
+]
+
+
+# set categorization for contraceptive use at last intercourse (within past 3 months)
 male_2017_2019_data[,
   curr_use := factor(fcase(
     meth3m_count > 0,
@@ -384,14 +706,20 @@ male_2017_2019_data[,
   ))
 ]
 
-# set master categorization for 12 month contraceptive use
+
+# set categorization for 12 month contraceptive use
 male_2017_2019_data[,
   mos12_use := factor(fcase(
     SEX12MO != 'YES, HAD INTERCOURSE',
       'Did not have sexual intercourse with female in past 12 months',
-    default = 'Otherwise did not use contraception in past 12 months'
+    anyuse12m_count == 0,
+      'Did not use contraception at all in past 12 months',
+    anyuse12m_count > 0,
+      'Used contraception at least once in past 12 months',
+    default = 'Slipped_through'
   ))
 ]
+
 
 # create survey design object
 male_2017_2019_svy <- svydesign(
@@ -421,100 +749,40 @@ collect_estimate(
 ) |> kable()
 ```
 
-
 ### Males
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~mos12_use,
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'by sexual activity and contraception use in past 12 months'
+) |> kable()
+```
 
 For males, a pivot table does not need to be created, but many variables must be checked within the main table.
 
-The universe of the `PXANYUSE` series and `CWPRECBC` does not appear to be all males who have had intercourse in past 12 months. I see. The `PXANYUSE` series is only asked of a respondent if he did not report using contraception at either last or first sex with the partner in question. Similarly, `CWPRECBC` is only asked of a respondent if he reports not using contraception at either last or first sex with current wife or cohabitating partner or of both those were longer ago than past 12 months.
+```{r, dependson='male-load-data'}
+dcast(
+  male_2017_2019_formats[
+    format_name %in% c(
+      'MTHDSV1F',
+      'MTHDSV2F',
+      'MTHDSV3F'
+    )
+  ],
+  factor_value ~ format_name,
+  value.var = 'factor_label'
+) |> kable()
+```
 
-Thus, it's better to estimate any contraception used in past 12 months first, then estimate the remaining nonusers. This is relatively straightforward for females, but for males care must be taken to check, for each possible partner, use at first intercourse and whether first intercourse was within past 12 months, use at last sex and whether last intercourse was within 12 months, and otherwise use within 12 months.
+There are 3 different formats in the male data set used for the contraceptive method variables for last intercourse, first intercourse, and intercourse in last 12 months.
 
-Last sex with CWP
-
-* CMLSXCWP
-* CWPLMET11
-* CWPLMET12
-* CWPLMET13
-* CWPLMET201
-* CWPLMET202
-
-First sex with CWP
-
-* CMFSXCWP
-* CWPFMET01
-* CWPFMET02
-* CWPFMET03
-* CWPFMET04
-* CWPFMET05
-
-Methods used in past 12 months with CWP
-
-* CWPALLBC01
-* CWPALLBC02
-* CWPALLBC03
-* CWPALLBC04
-* CWPALLBC05
-
-Last sex with most recent 3 partners
-
-* CMLSXP1
-* PXLRMETH1
-* PXLRMETH2
-* PXLRMETH3
-* PXLPMETH01
-* PXLPMETH02
-* PXLPMETH03
-* CMLSXP2
-* PXLRMETH5
-* PXLRMETH6
-* PXLRMETH7
-* PXLPMETH11
-* PXLPMETH12
-* PXLPMETH13
-* CMLSXP3
-* PXLRMETH9
-* PXLRMETH10
-* PXLRMETH11
-* PXLPMETH21
-* PXLPMETH22
-* PXLPMETH23
-
-First sex with most recent 3 partners
-
-* CMFSXP
-* PXFMETH01
-* PXFMETH02
-* PXFMETH03
-* PXFMETH04
-* CMFSXP2
-* PXFMETH14
-* PXFMETH15
-* PXFMETH16
-* PXFMETH17
-* CMFSXP3
-* PXFMETH27
-* PXFMETH28
-* PXFMETH29
-* PXFMETH30
-
-Methods used in past 12 months most recent 3 partners
-
-* PXMETHOD01
-* PXMETHOD02
-* PXMETHOD03
-* PXMETHOD04
-* PXMETHOD05
-* PXMETHOD14
-* PXMETHOD15
-* PXMETHOD16
-* PXMETHOD17
-* PXMETHOD18
-* PXMETHOD27
-* PXMETHOD28
-* PXMETHOD29
-* PXMETHOD30
-* PXMETHOD31
+They are mostly compatible with each other, except for "Something else" in MTHDSV2F collides with "Contraceptive patch (Ortho-Evra)" in MTHDSV1F and MTHDSV3F. Care should be taken in this case.
 
 
 ## By Number of Methods
