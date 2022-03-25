@@ -1558,6 +1558,8 @@ male_2017_2019_data$PXANYUSE3 |> table() |> kable()
 
 There aren't enough respondents in who are "Yes" to either `PXANYUSE2` and `PXANYUSE3` to estimate these domains.
 
+The estimates of females who used at least one method of contraception in the past 12 months, but not at last intercourse were already based on too small of a sample (within the subdomain) to be useful. This will only be worse with the males segmented by partner, so I'm just going to skip those.
+
 
 
 ## Condom, Any Use
