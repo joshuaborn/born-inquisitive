@@ -1,3 +1,5 @@
+library(data.table)
+
 env <- new.env()
 
 env$estimates <- data.table()

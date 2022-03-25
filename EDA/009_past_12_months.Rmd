@@ -18,6 +18,7 @@ library(survey)
 i_am('EDA/009_past_12_months.Rmd')
 
 source(here('R/EDA_helpers.R'))
+source(here('R/data_table_helpers.R'))
 source(here('R/factor_helpers.R'))
 source(here('R/import.R'))
 source(here('R/survey_helpers.R'))
@@ -45,11 +46,12 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   METH3M1,
   METH3M2,
   METH3M3,
-  PARTS1YR = factorize(PARTS1YR, 'PARTS1YR', fem_2017_2019_formats),
+  P12MOCON = factorize(P12MOCON, 'P12MOCON', fem_2017_2019_formats),
   P1YRELP = factorize(P1YRELP, 'P1YRELP', fem_2017_2019_formats),
   POSIBLMN = factorize(POSIBLMN, 'Y1N5RDF', fem_2017_2019_formats),
   POSIBLPG = factorize(POSIBLPG, 'Y1N5RDF', fem_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
+  PXNOFREQ = factorize(PXNOFREQ , 'P12METHF', fem_2017_2019_formats),
   SECU,
   SEST,
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
@@ -58,6 +60,7 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   WYNOLSTP = factorize(WYNOLSTP, 'Y1N5RDF', fem_2017_2019_formats),
   WYNOTUSE = factorize(WYNOTUSE, 'Y1N5RDF', fem_2017_2019_formats)
 )])
+
 
 # remove sterility not from contraceptive procedure from METH3M series
 fem_2017_2019_data[
@@ -82,12 +85,14 @@ fem_2017_2019_data[
   )
 ]
 
+
 # make METH3M series variables into factors
 fem_2017_2019_data[, `:=`(
   METH3M1 = factorize(METH3M1, 'METH3MF', fem_2017_2019_formats),
   METH3M2 = factorize(METH3M2, 'METH3MF', fem_2017_2019_formats),
   METH3M3 = factorize(METH3M3, 'METH3MF', fem_2017_2019_formats)
 )]
+
 
 # create boolean variables for whether each specific method is used at last intercourse (within past 3 months)
 for (x in c(1:19, 22:24)) {
@@ -99,6 +104,7 @@ for (x in c(1:19, 22:24)) {
       has_level(fem_2017_2019_data$METH3M3, x)
   )
 }
+
 
 # create pivot tables for contraceptive use in past 12 months
 create_pivot_table <- function(
@@ -149,7 +155,7 @@ fem_2017_2019_METHX <- fem_2017_2019_METHX[
     'CMMHCALX',
     1:48,
     fem_2017_2019$Data,
-    c('CASEID', 'CMINTVW')
+    c('CASEID', 'CMINTVW', 'CMLSTYR')
   ),
   on = c('CASEID', 'CMMHCALXID')
 ]
@@ -166,8 +172,8 @@ names(fem_2017_2019_METHX_indices) <- paste(
 
 fem_2017_2019_data <- fem_2017_2019_METHX[
   !is.na(METHX) & !is.na(CMMHCALX) &
-    CMMHCALX <= CMINTVW &
-    CMMHCALX >= CMINTVW - 11,
+    CMMHCALX >= CMLSTYR &
+    CMMHCALX <= CMINTVW,
   lapply(
     fem_2017_2019_METHX_indices,
     \(x) any(.SD$METHX == x)
@@ -175,9 +181,48 @@ fem_2017_2019_data <- fem_2017_2019_METHX[
   by = CASEID
 ][
   fem_2017_2019_data,
-  on = 'CASEID',
-  nomatch = FALSE
+  on = 'CASEID'
 ]
+
+fem_2017_2019_data[
+  ,
+  names(fem_2017_2019_METHX_indices) := lapply(.SD, na_to_false),
+  .SDcols = names(fem_2017_2019_METHX_indices)
+]
+
+
+# create pivot table and create SEX12MO variable
+fem_2017_2019_MONSX <- create_pivot_table(
+  'CMMONSX',
+  2:48,
+  fem_2017_2019$Data,
+  c('CASEID', 'CMINTVW', 'CMLSTYR')
+)[
+  create_pivot_table(
+    'MONSX',
+    2:48,
+    fem_2017_2019$Data,
+    'CASEID'
+  ),
+  on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
+]
+
+fem_2017_2019_data <- fem_2017_2019_MONSX[
+  !is.na(MONSX) & MONSX == 1 &
+    CMMONSX >= CMLSTYR &
+    CMMONSX <= CMINTVW,
+  .(SEX12MO = .N > 1),
+  by = CASEID
+][
+  fem_2017_2019_data,
+  on = 'CASEID'
+]
+
+fem_2017_2019_data[
+  ,
+  SEX12MO := na_to_false(SEX12MO),
+]
+
 
 # count any respondents  whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
 fem_2017_2019_data[, `:=`(
@@ -190,8 +235,7 @@ fem_2017_2019_data[, `:=`(
     using3m_meth3
   ),
   anyuse12m_meth5 = fifelse(
-    PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable' &
-      PSURGSTR == 'YES' & (
+    SEX12MO & PSURGSTR == 'YES' & (
         P1YRELP == 'Current husband or (current husband from whom she is separated)' |
         P1YRELP == 'Current cohabiting partner'
       ),
@@ -199,6 +243,7 @@ fem_2017_2019_data[, `:=`(
     anyuse12m_meth5
   )
 )]
+
 
 # count any respondents with current tubal ligations who are sexually active as using tubal ligation as a contraceptive method
 fem_2017_2019_data[, `:=`(
@@ -208,11 +253,12 @@ fem_2017_2019_data[, `:=`(
     using3m_meth4
   ),
   anyuse12m_meth6 = fifelse(
-    PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable' & TUBS == 'YES',
+    SEX12MO & TUBS == 'YES',
     TRUE,
     anyuse12m_meth6
   )
 )]
+
 
 # create variable counting number of methods used at last intercourse (within past 3 months)
 fem_2017_2019_data[
@@ -221,12 +267,14 @@ fem_2017_2019_data[
   .SDcols = patterns('^using3m_meth')
 ]
 
+
 # create variable counting number of methods at all in past 12 months
 fem_2017_2019_data[
   ,
   anyuse12m_count := rowSums(.SD),
   .SDcols = patterns('^anyuse12m_meth')
 ]
+
 
 # set categorization for contraceptive use at last intercourse (within past 3 months)
 fem_2017_2019_data[,
@@ -252,10 +300,11 @@ fem_2017_2019_data[,
   ))
 ]
 
-# set categorization for contraceptive use within past 12 months
+
+# create categorical variable for whether used contraception in past 12 months
 fem_2017_2019_data[,
   mos12_use := factor(fcase(
-    PARTS1YR == 'NONE' | PARTS1YR == 'Not Applicable',
+    !SEX12MO,
       'Did not have sexual intercourse with male in past 12 months',
     anyuse12m_count == 0,
       'Did not use contraception at all in past 12 months',
@@ -265,9 +314,11 @@ fem_2017_2019_data[,
   ))
 ]
 
+
+# create categorical variable for number of methods used in past 12 months
 fem_2017_2019_data[,
   mos12_num_meth := factor(fcase(
-    PARTS1YR == 'NONE' | PARTS1YR == 'Not Applicable',
+    !SEX12MO,
       'Did not have sexual intercourse with male in past 12 months',
     anyuse12m_count == 0,
       'Did not use contraception at all in past 12 months',
@@ -285,6 +336,23 @@ fem_2017_2019_data[,
   ))
 ]
 
+
+# create categorical variable for consistency of any contraceptive use in past 12 months
+fem_2017_2019_data[,
+  mos12_consistency := factor(fcase(
+    !SEX12MO,
+      'Did not have sexual intercourse with male in past 12 months',
+    EVERUSED != 'Yes',
+      'Never used contraception',
+    P12MOCON == 'Every time',
+      'Every time',
+    PXNOFREQ != 'Not Applicable',
+      as.character(PXNOFREQ),
+    default = 'SLIPPED_THROUGH!'
+  ))
+]
+
+
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -295,6 +363,14 @@ fem_2017_2019_svy <- svydesign(
 )
 ```
 
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019_data[mos12_consistency == 'SLIPPED_THROUGH!',
+  .(
+    SEX12MO, EVERUSED, P12MOCON, anyuse12m_count, anyuse12m_meth4
+  )
+] |> kable()
+```
 
 
 ```{r male-load-data}
@@ -309,6 +385,7 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   CMFSXP2,
   CMFSXP3,
   CMINTVW,
+  CMLSTYR,
   CMLSXCWP,
   CMLSXP1,
   CMLSXP2,
@@ -418,14 +495,14 @@ for (x in c(1:9, 11:12)) {
   male_2017_2019_data[
     ,
     (sprintf('anyuse12m_meth%d', x)) := !is.na(
-      (CMINTVW - 11 <= CMLSXCWP & (
+      (CMLSTYR <= CMLSXCWP & (
         CWPLMET11 == x |
         CWPLMET12 == x |
         CWPLMET13 == x |
         CWPLMET201 == x |
         CWPLMET202 == x
       )) |
-      (CMINTVW - 11 <= CMFSXCWP & (
+      (CMLSTYR <= CMFSXCWP & (
         CWPFMET01 == x |
         CWPFMET02 == x |
         CWPFMET03 == x |
@@ -437,7 +514,7 @@ for (x in c(1:9, 11:12)) {
       CWPALLBC03 == x |
       CWPALLBC04 == x |
       CWPALLBC05 == x |
-      (CMINTVW - 11 <= CMLSXP1 & (
+      (CMLSTYR <= CMLSXP1 & (
         PXLRMETH1 == x |
         PXLRMETH2 == x |
         PXLRMETH3 == x |
@@ -445,7 +522,7 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH02 == x |
         PXLPMETH03 == x
       )) |
-      (CMINTVW - 11 <= CMLSXP2 & (
+      (CMLSTYR <= CMLSXP2 & (
         PXLRMETH5 == x |
         PXLRMETH6 == x |
         PXLRMETH7 == x |
@@ -453,7 +530,7 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH12 == x |
         PXLPMETH13 == x
       )) |
-      (CMINTVW - 11 <= CMLSXP3 & (
+      (CMLSTYR <= CMLSXP3 & (
         PXLRMETH9 == x |
         PXLRMETH10 == x |
         PXLRMETH11 == x |
@@ -461,19 +538,19 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH22 == x |
         PXLPMETH23 == x
       )) |
-      (CMINTVW - 11 <= CMFSXP & (
+      (CMLSTYR <= CMFSXP & (
         PXFMETH01 == x |
         PXFMETH02 == x |
         PXFMETH03 == x |
         PXFMETH04 == x
       )) |
-      (CMINTVW - 11 <= CMFSXP2 & (
+      (CMLSTYR <= CMFSXP2 & (
         PXFMETH14 == x |
         PXFMETH15 == x |
         PXFMETH16 == x |
         PXFMETH17 == x
       )) |
-      (CMINTVW - 11 <= CMFSXP3 & (
+      (CMLSTYR <= CMFSXP3 & (
         PXFMETH27 == x |
         PXFMETH28 == x |
         PXFMETH29 == x |
@@ -502,14 +579,14 @@ for (x in c(1:9, 11:12)) {
 male_2017_2019_data[
   ,
   anyuse12m_meth13 := !is.na(
-    (CMINTVW - 11 <= CMLSXCWP & (
+    (CMLSTYR <= CMLSXCWP & (
       CWPLMET11 == 10 |
       CWPLMET12 == 10 |
       CWPLMET13 == 10 |
       CWPLMET201 == 13 |
       CWPLMET202 == 13
     )) |
-    (CMINTVW - 11 <= CMFSXCWP & (
+    (CMLSTYR <= CMFSXCWP & (
       CWPFMET01 == 13 |
       CWPFMET02 == 13 |
       CWPFMET03 == 13 |
@@ -521,7 +598,7 @@ male_2017_2019_data[
     CWPALLBC03 == 13 |
     CWPALLBC04 == 13 |
     CWPALLBC05 == 13 |
-    (CMINTVW - 11 <= CMLSXP1 & (
+    (CMLSTYR <= CMLSXP1 & (
       PXLRMETH1 == 10 |
       PXLRMETH2 == 10 |
       PXLRMETH3 == 10 |
@@ -529,7 +606,7 @@ male_2017_2019_data[
       PXLPMETH02 == 13 |
       PXLPMETH03 == 13
     )) |
-    (CMINTVW - 11 <= CMLSXP2 & (
+    (CMLSTYR <= CMLSXP2 & (
       PXLRMETH5 == 10 |
       PXLRMETH6 == 10 |
       PXLRMETH7 == 10 |
@@ -537,7 +614,7 @@ male_2017_2019_data[
       PXLPMETH12 == 13 |
       PXLPMETH13 == 13
     )) |
-    (CMINTVW - 11 <= CMLSXP3 & (
+    (CMLSTYR <= CMLSXP3 & (
       PXLRMETH9 == 10 |
       PXLRMETH10 == 10 |
       PXLRMETH11 == 10 |
@@ -545,19 +622,19 @@ male_2017_2019_data[
       PXLPMETH22 == 13 |
       PXLPMETH23 == 13
     )) |
-    (CMINTVW - 11 <= CMFSXP & (
+    (CMLSTYR <= CMFSXP & (
       PXFMETH01 == 13 |
       PXFMETH02 == 13 |
       PXFMETH03 == 13 |
       PXFMETH04 == 13
     )) |
-    (CMINTVW - 11 <= CMFSXP2 & (
+    (CMLSTYR <= CMFSXP2 & (
       PXFMETH14 == 13 |
       PXFMETH15 == 13 |
       PXFMETH16 == 13 |
       PXFMETH17 == 13
     )) |
-    (CMINTVW - 11 <= CMFSXP3 & (
+    (CMLSTYR <= CMFSXP3 & (
       PXFMETH27 == 13 |
       PXFMETH28 == 13 |
       PXFMETH29 == 13 |
@@ -585,11 +662,11 @@ male_2017_2019_data[
 male_2017_2019_data[
   ,
   anyuse12m_meth10 := !is.na(
-    (CMINTVW - 11 <= CMLSXCWP & (
+    (CMLSTYR <= CMLSXCWP & (
       CWPLMET201 == 10 |
       CWPLMET202 == 10
     )) |
-    (CMINTVW - 11 <= CMFSXCWP & (
+    (CMLSTYR <= CMFSXCWP & (
       CWPFMET01 == 10 |
       CWPFMET02 == 10 |
       CWPFMET03 == 10 |
@@ -601,34 +678,34 @@ male_2017_2019_data[
     CWPALLBC03 == 10 |
     CWPALLBC04 == 10 |
     CWPALLBC05 == 10 |
-    (CMINTVW - 11 <= CMLSXP1 & (
+    (CMLSTYR <= CMLSXP1 & (
       PXLPMETH01 == 10 |
       PXLPMETH02 == 10 |
       PXLPMETH03 == 10
     )) |
-    (CMINTVW - 11 <= CMLSXP2 & (
+    (CMLSTYR <= CMLSXP2 & (
       PXLPMETH11 == 10 |
       PXLPMETH12 == 10 |
       PXLPMETH13 == 10
     )) |
-    (CMINTVW - 11 <= CMLSXP3 & (
+    (CMLSTYR <= CMLSXP3 & (
       PXLPMETH21 == 10 |
       PXLPMETH22 == 10 |
       PXLPMETH23 == 10
     )) |
-    (CMINTVW - 11 <= CMFSXP & (
+    (CMLSTYR <= CMFSXP & (
       PXFMETH01 == 10 |
       PXFMETH02 == 10 |
       PXFMETH03 == 10 |
       PXFMETH04 == 10
     )) |
-    (CMINTVW - 11 <= CMFSXP2 & (
+    (CMLSTYR <= CMFSXP2 & (
       PXFMETH14 == 10 |
       PXFMETH15 == 10 |
       PXFMETH16 == 10 |
       PXFMETH17 == 10
     )) |
-    (CMINTVW - 11 <= CMFSXP3 & (
+    (CMLSTYR <= CMFSXP3 & (
       PXFMETH27 == 10 |
       PXFMETH28 == 10 |
       PXFMETH29 == 10 |
@@ -679,7 +756,7 @@ male_2017_2019_data[, `:=`(
   ),
   anyuse12m_meth5 = fifelse(
     SEX12MO == 'YES, HAD INTERCOURSE' &
-      CMINTVW - 11 <= CMLSXCWP &
+      CMLSTYR <= CMLSXCWP &
       PSURGSTR == 'YES',
     TRUE,
     anyuse12m_meth5
@@ -847,7 +924,7 @@ collect_estimate(
     ~mos12_num_meth,
     subset(
       fem_2017_2019_svy,
-      PARTS1YR != 'NONE' & PARTS1YR != 'Not Applicable'
+      SEX12MO
     ),
     svymean
   ),
@@ -1204,9 +1281,52 @@ collect_estimate(
 ) |> kable()
 ```
 
-All females who did not use contraception at last intercourse (within the past 3 months) and are not trying to get pregnant, pregnant, or infertile nonusers have used a method of contraception at least once in their lives.
+The supermajority of females who did not use contraception at last intercourse (within the past 3 months) and are not trying to get pregnant, pregnant, or infertile nonusers have used a method of contraception at least once in their lives.
 
 I can't find an equivalent to `EVERUSED` for males.
+
+
+
+# Consistency
+
+## Any Method
+
+### Females
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_consistency),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who have had sexual intercourse with a male in the past 12 months',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+### Males
+
+
+## Condom, Any Use
+
+### Females
+
+### Males
+
+
+## Condom, Exclusive Use
+
+### Females
+
+### Males
+
+
+## Pill Use (Females)
 
 
 

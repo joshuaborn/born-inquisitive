@@ -1,3 +1,5 @@
+library(ggplot2)
+
 standard_millions_plot <- function(data) {
   ggplot(
     data = data,
