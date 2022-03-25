@@ -382,6 +382,7 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   CMLSXP1,
   CMLSXP2,
   CMLSXP3,
+  CONDFREQ,
   CWPALLBC01,
   CWPALLBC02,
   CWPALLBC03,
@@ -397,6 +398,7 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   CWPLMET13,
   CWPLMET201,
   CWPLMET202,
+  CWPNOFRQ = factorize(CWPNOFRQ, 'OFTIMEF', male_2017_2019_formats),
   CWPPOSS = factorize(CWPPOSS, 'Y1N5RDF', male_2017_2019_formats),
   CWPPRGNW = factorize(CWPPRGNW, 'Y1N5RDF', male_2017_2019_formats),
   CWPRECBC = factorize(CWPRECBC, 'Y1N5RDF', fem_2017_2019_formats),
@@ -412,6 +414,9 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   PXANYUSE = factorize(PXANYUSE, 'Y1N5RDF', male_2017_2019_formats),
   PXANYUSE2 = factorize(PXANYUSE2, 'Y1N5RDF', male_2017_2019_formats),
   PXANYUSE3 = factorize(PXANYUSE3, 'Y1N5RDF', male_2017_2019_formats),
+  PXCONFRQ,
+  PXCONFRQ2,
+  PXCONFRQ3,
   PXCPREG = factorize(PXCPREG, 'Y1N5RDF', male_2017_2019_formats),
   PXFMETH01,
   PXFMETH02,
@@ -459,6 +464,9 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   PXMETHOD29,
   PXMETHOD30,
   PXMETHOD31,
+  PXNOFREQ = factorize(PXNOFREQ, 'OFTIMEF', male_2017_2019_formats),
+  PXNOFREQ2 = factorize(PXNOFREQ2, 'OFTIMEF', male_2017_2019_formats),
+  PXNOFREQ3 = factorize(PXNOFREQ3, 'OFTIMEF', male_2017_2019_formats),
   PXTRYING = factorize(PXTRYING, 'Y1N5RDF', male_2017_2019_formats),
   RSURGSTR  = factorize(RSURGSTR, 'N0Y1RDF', male_2017_2019_formats),
   SECU,
@@ -824,6 +832,54 @@ male_2017_2019_data[,
     anyuse12m_count == 5,
       'Used 5 methods of contraception in past 12 months',
     default = 'Slipped_through'
+  ))
+]
+
+
+# create categorical variable for consistency of any contraceptive use with wife or cohabitating partner in past 12 months
+male_2017_2019_data[,
+  mos12_cwp_consistency := factor(fcase(
+    RSURGSTR == 'YES' | PSURGSTR == 'YES',
+      'Surgically sterile',
+    CONDFREQ == 100,
+      'Every time',
+    CWPNOFRQ != 'Not Applicable',
+      as.character(CWPNOFRQ),
+    default = 'SLIPPED THROUGH!!!!'
+  ))
+]
+
+
+# create categorical variable for consistency of any contraceptive use with last partner in past 12 months
+male_2017_2019_data[,
+  mos12_p1_consistency := factor(fcase(
+    PXCONFRQ == 100,
+      'Every time',
+    PXNOFREQ != 'Not Applicable',
+      as.character(PXNOFREQ),
+    default = 'Not ascertained'
+  ))
+]
+
+# create categorical variable for consistency of any contraceptive use with 2nd-to-last partner in past 12 months
+male_2017_2019_data[,
+  mos12_p2_consistency := factor(fcase(
+    PXCONFRQ2 == 100,
+      'Every time',
+    PXNOFREQ2 != 'Not Applicable',
+      as.character(PXNOFREQ2),
+    default = 'Not ascertained'
+  ))
+]
+
+# create categorical variable for consistency of any contraceptive use with 3rd-to-last partner in past 12 months
+male_2017_2019_data[,
+  mos12_p3_consistency := factor(fcase(
+    PXCONFRQ3 == 100,
+      'Every time',
+    PXNOFREQ3 != 'Not Applicable',
+      as.character(PXNOFREQ3),
+    default = 'Not ascertained'
   ))
 ]
 
@@ -1430,6 +1486,78 @@ collect_estimate(
 
 
 ### Males
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_cwp_consistency),
+    subset(
+      male_2017_2019_svy,
+      !is.na(CWPALLBC01)
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who used at least one method of contraception in the past 12 months with their wife or cohabitating partner',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_cwp_consistency),
+    subset(
+      male_2017_2019_svy,
+      !is.na(CWPALLBC01)
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who used at least one method of contraception in the past 12 months with their wife or cohabitating partner',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_p1_consistency),
+    subset(
+      male_2017_2019_svy,
+      PXANYUSE == 'Yes'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who used at least one method of contraception in the past 12 months their last partner',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_p1_consistency),
+    subset(
+      male_2017_2019_svy,
+      PXANYUSE == 'Yes'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who used at least one method of contraception in the past 12 months their last partner',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+male_2017_2019_data$PXANYUSE2 |> table() |> kable()
+male_2017_2019_data$PXANYUSE3 |> table() |> kable()
+```
+
+There aren't enough respondents in who are "Yes" to either `PXANYUSE2` and `PXANYUSE3` to estimate these domains.
+
 
 
 ## Condom, Any Use
