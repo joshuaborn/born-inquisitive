@@ -40,6 +40,7 @@ fem_2017_2019_formats <- fem_2017_2019$Formats
 ```{r fem-process-data, dependson=c('fem-load-data')}
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
+  CONDOM,
   CONSTAT1 = factorize(CONSTAT1, 'CONSTATF', fem_2017_2019_formats),
   EVERUSED = factorize(EVERUSED, 'YESNONAF', fem_2017_2019_formats),
   LSEXPREG = factorize(LSEXPREG, 'Y1N2RECF', fem_2017_2019_formats),
@@ -342,13 +343,13 @@ fem_2017_2019_data[,
   mos12_consistency := factor(fcase(
     !SEX12MO,
       'Did not have sexual intercourse with male in past 12 months',
-    EVERUSED != 'Yes',
-      'Never used contraception',
+    EVERUSED != 'Yes' | anyuse12m_count == 0,
+      'Did not use contraception in past 12 months',
     P12MOCON == 'Every time',
       'Every time',
     PXNOFREQ != 'Not Applicable',
       as.character(PXNOFREQ),
-    default = 'SLIPPED_THROUGH!'
+    default = 'Not ascertained'
   ))
 ]
 
@@ -361,15 +362,6 @@ fem_2017_2019_svy <- svydesign(
   nest = TRUE,
   weights = ~WGT2017_2019
 )
-```
-
-
-```{r, dependson='fem-process-data'}
-fem_2017_2019_data[mos12_consistency == 'SLIPPED_THROUGH!',
-  .(
-    SEX12MO, EVERUSED, P12MOCON, anyuse12m_count, anyuse12m_meth4
-  )
-] |> kable()
 ```
 
 
@@ -1233,6 +1225,22 @@ collect_estimate(
       fem_2017_2019_svy,
       curr_use == 'Otherwise did not use contraception at last intercourse'
     ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who otherwise did not use contraception at last intercourse',
+  title = 'who used at least one method of contraception in the past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(anyuse12m_count > 0),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
     svyciprop
   ),
   type = 'proportion',
@@ -1243,7 +1251,23 @@ collect_estimate(
 
 For females, a sizable minority of unintentional female nonusers have used a method of contraception at least once in the past 12 months.
 
-```{r, dependson=c('fem-process-data')}
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(anyuse12m_count > 0),
+    subset(
+      male_2017_2019_svy,
+      curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who otherwise did not use contraception at last intercourse',
+  title = 'who used at least one method of contraception in the past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
 collect_estimate(
   svyci(
     ~I(anyuse12m_count > 0),
@@ -1293,6 +1317,17 @@ I can't find an equivalent to `EVERUSED` for males.
 
 ### Females
 
+```{r, dependson='fem-process-data'}
+fem_2017_2019_data[
+  mos12_consistency == 'Not ascertained',
+  .(
+    CASEID, SEX12MO, CONDOM, P12MOCON, EVERUSED, PXNOFREQ
+  )
+] |> kable()
+```
+
+The respondents in the above table should have been asked `PXNOFREQ`. Indeed, most of them should have been asked `P12MOCON`. This is inexplicable, since they are in the universe for either `P12MOCON` or `PXNOFREQ`. They will be marked "Not ascertained" and included in the estimates, along with the "Don't know" and "Refused."
+
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
@@ -1308,6 +1343,91 @@ collect_estimate(
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_consistency),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who have had sexual intercourse with a male in the past 12 months',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_consistency),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO & anyuse12m_count > 0
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who used at least one method of contraception in the past 12 months',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_consistency),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO & anyuse12m_count > 0
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who used at least one method of contraception in the past 12 months',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_consistency),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO &
+        anyuse12m_count > 0 &
+        curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who used at least one method of contraception in the past 12 months, but not at last intercourse',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_consistency),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO &
+        anyuse12m_count > 0 &
+        curr_use == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who used at least one method of contraception in the past 12 months, but not at last intercourse',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
 
 ### Males
 
