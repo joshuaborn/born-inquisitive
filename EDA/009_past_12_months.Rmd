@@ -345,6 +345,8 @@ fem_2017_2019_data[,
       'Did not have sexual intercourse with male in past 12 months',
     EVERUSED != 'Yes' | anyuse12m_count == 0,
       'Did not use contraception in past 12 months',
+    TUBS == 'YES',
+      'Surgically sterile',
     P12MOCON == 'Every time',
       'Every time',
     PXNOFREQ != 'Not Applicable',
@@ -839,7 +841,7 @@ male_2017_2019_data[,
 # create categorical variable for consistency of any contraceptive use with wife or cohabitating partner in past 12 months
 male_2017_2019_data[,
   mos12_cwp_consistency := factor(fcase(
-    RSURGSTR == 'YES' | PSURGSTR == 'YES',
+    RSURGSTR == 'YES',
       'Surgically sterile',
     CONDFREQ == 100,
       'Every time',
@@ -1392,12 +1394,12 @@ collect_estimate(
     ~factor(mos12_consistency),
     subset(
       fem_2017_2019_svy,
-      SEX12MO
+      SEX12MO & anyuse12m_count > 0 & TUBS != 'YES'
     ),
     svytotal
   ),
   type = 'total',
-  domain = 'females who have had sexual intercourse with a male in the past 12 months',
+  domain = 'females who used at least one method of contraception in the past 12 months and do not have active tubal ligations',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1408,44 +1410,12 @@ collect_estimate(
     ~factor(mos12_consistency),
     subset(
       fem_2017_2019_svy,
-      SEX12MO
+      SEX12MO & anyuse12m_count > 0 & TUBS != 'YES'
     ),
     svymean
   ),
   type = 'proportion',
-  domain = 'females who have had sexual intercourse with a male in the past 12 months',
-  title = 'by how frequently any contraceptive was used in past 12 months'
-) |> kable()
-```
-
-```{r, dependson=c('fem-process-data')}
-collect_estimate(
-  svyci(
-    ~factor(mos12_consistency),
-    subset(
-      fem_2017_2019_svy,
-      SEX12MO & anyuse12m_count > 0
-    ),
-    svytotal
-  ),
-  type = 'total',
-  domain = 'females who used at least one method of contraception in the past 12 months',
-  title = 'by how frequently any contraceptive was used in past 12 months'
-) |> kable()
-```
-
-```{r, dependson=c('fem-process-data')}
-collect_estimate(
-  svyci(
-    ~factor(mos12_consistency),
-    subset(
-      fem_2017_2019_svy,
-      SEX12MO & anyuse12m_count > 0
-    ),
-    svymean
-  ),
-  type = 'proportion',
-  domain = 'females who used at least one method of contraception in the past 12 months',
+  domain = 'females who used at least one method of contraception in the past 12 months and do not have active tubal ligations',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1558,12 +1528,12 @@ collect_estimate(
     ~factor(mos12_cwp_consistency),
     subset(
       male_2017_2019_svy,
-      !is.na(CWPALLBC01) & RSURGSTR != 'YES' & PSURGSTR != 'YES'
+      !is.na(CWPALLBC01) & RSURGSTR != 'YES'
     ),
     svytotal
   ),
   type = 'total',
-  domain = 'males who used at least one method of contraception in the past 12 months with their wife or cohabitating partner and who are not surgically sterile',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with a wife or cohabitating partner',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1574,12 +1544,12 @@ collect_estimate(
     ~factor(mos12_cwp_consistency),
     subset(
       male_2017_2019_svy,
-      !is.na(CWPALLBC01) & RSURGSTR != 'YES' & PSURGSTR != 'YES'
+      !is.na(CWPALLBC01) & RSURGSTR != 'YES'
     ),
     svymean
   ),
   type = 'proportion',
-  domain = 'males who used at least one method of contraception in the past 12 months with their wife or cohabitating partner and who are not surgically sterile',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with a wife or cohabitating partner',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1595,7 +1565,7 @@ collect_estimate(
     svytotal
   ),
   type = 'total',
-  domain = 'males who used at least one method of contraception in the past 12 months their last partner and who are not surgically sterile',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with their last partner',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1611,7 +1581,7 @@ collect_estimate(
     svymean
   ),
   type = 'proportion',
-  domain = 'males who used at least one method of contraception in the past 12 months their last partner and who are not surgically sterile',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with their last partner',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1653,6 +1623,7 @@ It looks like for the most part `PXNOFREQ` and `CWPNOFRQ` are mutually exclusive
 
 # Things to Investigate
 
+* Figure out of "12 months" includes the same month of interview in the preceding year
 * Among those sexually active with the opposite sex in the previous 12 months and who used at least one method of contraception, how frequently was any method of contraception used?
 * Among those who used condoms in previous 12 months, how frequently were condoms used, in the past 12 months and past 4 weeks?
 * Among females who used the pill in the previous 12 months, how many pills were missed?
