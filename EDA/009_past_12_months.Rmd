@@ -853,6 +853,8 @@ male_2017_2019_data[,
 # create categorical variable for consistency of any contraceptive use with last partner in past 12 months
 male_2017_2019_data[,
   mos12_p1_consistency := factor(fcase(
+    RSURGSTR == 'YES',
+      'Surgically sterile',
     PXCONFRQ == 100,
       'Every time',
     PXNOFREQ != 'Not Applicable',
@@ -1448,6 +1450,8 @@ collect_estimate(
 ) |> kable()
 ```
 
+The domain of females who used at least one method of contraception in the past 12 months, but not at last intercourse, is too small to be used for estimation.
+
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
@@ -1482,23 +1486,84 @@ collect_estimate(
   domain = 'females who used at least one method of contraception in the past 12 months, but not at last intercourse',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
+
 ```
 
 
 ### Males
 
+```{r, dependson='male-load-data'}
+male_2017_2019$Data[!is.na(PXNOFREQ) & PXCONFRQ != 100, tablena(PXANYUSE)]
+```
+
+The codebook says that the universe of `PXNOFREQ` is `PXANYUSE == 1 & PXCONFRQ != 100`, but this is clearly not the case. 
+
+```{r, dependson='male-load-data'}
+male_2017_2019$Data[!is.na(PXNOFREQ2), tablena(PXANYUSE2)]
+male_2017_2019$Data[!is.na(PXNOFREQ3), tablena(PXANYUSE3)]
+```
+
+This seems to be the case for `PXNOFREQ2` and `PXNOFREQ3` as well.
+
+```{r, dependson='male-load-data'}
+male_2017_2019$Data[
+  !is.na(PXNOFREQ) & PXCONFRQ != 100,
+  tablena(PXMETHOD01)
+]
+male_2017_2019$Data[
+  !is.na(PXMETHOD01) & PXCONFRQ != 100,
+  tablena(PXNOFREQ)
+]
+male_2017_2019$Data[
+  !is.na(PXNOFREQ2) & PXCONFRQ2 != 100,
+  tablena(PXMETHOD14)
+]
+male_2017_2019$Data[
+  !is.na(PXNOFREQ3) & PXCONFRQ3 != 100,
+  tablena(PXMETHOD27)
+]
+```
+
+There isn't a one-to-one correspondence between specification of `PXMETHOD01` and specification of `PXNOFREQ`, but it is closer than for `PXANYUSE`. There does not appear to be a correspondence between `PXNOFREQ2` and `PXMETHOD14` or `PXNOFREQ3` and `PXMETHOD27` though. I am not sure what is going on with the universe for the `PXNOFREQ` series.
+
+```{r, dependson='male-load-data'}
+male_2017_2019$Data[
+  !is.na(CWPNOFRQ) & CONDFREQ != 100 & RSURGSTR != 1 & PSURGSTR != 1,
+  tablena(CWPALLBC01)
+]
+male_2017_2019$Data[
+  !is.na(CWPALLBC01) & CONDFREQ != 100 & RSURGSTR != 1 & PSURGSTR != 1,
+  tablena(CWPNOFRQ)
+]
+```
+
+It seems that `CWPNOFRQ` is specified whenever `CWPALLBC01` is and vice versa, so long as neither `RSURGSTR` nor `PSURGSTR` are 1.
+
+```{r, dependson='male-load-data'}
+male_2017_2019$Data[
+  !is.na(PXNOFREQ) & PXCONFRQ != 100,
+  tablena(PXMETHOD01)
+]
+male_2017_2019$Data[
+  !is.na(PXMETHOD01) & PXCONFRQ != 100 & RSURGSTR != 1,
+  tablena(PXNOFREQ)
+]
+```
+
+It seems that `PXNOFREQ` is specified for non-`NA` values of `PXMETHOD01` so long as `RSURGSTR != 1`, as well.
+
 ```{r, dependson=c('male-process-data')}
 collect_estimate(
   svyci(
     ~factor(mos12_cwp_consistency),
     subset(
       male_2017_2019_svy,
-      !is.na(CWPALLBC01)
+      !is.na(CWPALLBC01) & RSURGSTR != 'YES' & PSURGSTR != 'YES'
     ),
     svytotal
   ),
   type = 'total',
-  domain = 'males who used at least one method of contraception in the past 12 months with their wife or cohabitating partner',
+  domain = 'males who used at least one method of contraception in the past 12 months with their wife or cohabitating partner and who are not surgically sterile',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1509,12 +1574,12 @@ collect_estimate(
     ~factor(mos12_cwp_consistency),
     subset(
       male_2017_2019_svy,
-      !is.na(CWPALLBC01)
+      !is.na(CWPALLBC01) & RSURGSTR != 'YES' & PSURGSTR != 'YES'
     ),
     svymean
   ),
   type = 'proportion',
-  domain = 'males who used at least one method of contraception in the past 12 months with their wife or cohabitating partner',
+  domain = 'males who used at least one method of contraception in the past 12 months with their wife or cohabitating partner and who are not surgically sterile',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1525,12 +1590,12 @@ collect_estimate(
     ~factor(mos12_p1_consistency),
     subset(
       male_2017_2019_svy,
-      PXANYUSE == 'Yes'
+      !is.na(PXMETHOD01) & RSURGSTR != 'YES'
     ),
     svytotal
   ),
   type = 'total',
-  domain = 'males who used at least one method of contraception in the past 12 months their last partner',
+  domain = 'males who used at least one method of contraception in the past 12 months their last partner and who are not surgically sterile',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1541,25 +1606,30 @@ collect_estimate(
     ~factor(mos12_p1_consistency),
     subset(
       male_2017_2019_svy,
-      PXANYUSE == 'Yes'
+      !is.na(PXMETHOD01) & RSURGSTR != 'YES'
     ),
     svymean
   ),
   type = 'proportion',
-  domain = 'males who used at least one method of contraception in the past 12 months their last partner',
+  domain = 'males who used at least one method of contraception in the past 12 months their last partner and who are not surgically sterile',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
 
-```{r, dependson=c('male-process-data')}
-male_2017_2019_data$PXANYUSE2 |> table() |> kable()
-male_2017_2019_data$PXANYUSE3 |> table() |> kable()
+```{r, dependson='male-load-data'}
+male_2017_2019$Data[!is.na(PXNOFREQ), .N]
+male_2017_2019$Data[PXANYUSE == 1 & PXCONFRQ != 100, .N]
+male_2017_2019$Data[PXCONFRQ == 100, .N]
+male_2017_2019$Data[PXCONFRQ == 100, tablena(PXNOFREQ)]
+male_2017_2019$Data[!is.na(PXNOFREQ), tablena(PXANYUSE)]
 ```
 
-There aren't enough respondents in who are "Yes" to either `PXANYUSE2` and `PXANYUSE3` to estimate these domains.
+```{r, dependson='male-load-data'}
+male_2017_2019$Data[!is.na(PXNOFREQ), tablena(CWPNOFRQ)]
+male_2017_2019$Data[!is.na(CWPNOFRQ), tablena(PXNOFREQ)]
+```
 
-The estimates of females who used at least one method of contraception in the past 12 months, but not at last intercourse were already based on too small of a sample (within the subdomain) to be useful. This will only be worse with the males segmented by partner, so I'm just going to skip those.
-
+It looks like for the most part `PXNOFREQ` and `CWPNOFRQ` are mutually exclusive. The overlap might be due to those who were married or cohabitating during the past 12 months, but also had an additional partner. It is not unreasonable to try to combine these.
 
 
 ## Condom, Any Use
