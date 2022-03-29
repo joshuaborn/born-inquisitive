@@ -1528,12 +1528,12 @@ collect_estimate(
     ~factor(mos12_cwp_consistency),
     subset(
       male_2017_2019_svy,
-      !is.na(CWPALLBC01) & RSURGSTR != 'YES'
+      !is.na(CWPALLBC01) & RSURGSTR != 'YES' & PSURGSTR != 'YES'
     ),
     svytotal
   ),
   type = 'total',
-  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with a wife or cohabitating partner',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with a wife or cohabitating partner who has not had a surgical sterilization',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
@@ -1544,12 +1544,12 @@ collect_estimate(
     ~factor(mos12_cwp_consistency),
     subset(
       male_2017_2019_svy,
-      !is.na(CWPALLBC01) & RSURGSTR != 'YES'
+      !is.na(CWPALLBC01) & RSURGSTR != 'YES' & PSURGSTR != 'YES'
     ),
     svymean
   ),
   type = 'proportion',
-  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with a wife or cohabitating partner',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with a wife or cohabitating partner who has not had a surgical sterilization',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
