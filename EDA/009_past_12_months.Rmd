@@ -173,7 +173,7 @@ names(fem_2017_2019_METHX_indices) <- paste(
 
 fem_2017_2019_data <- fem_2017_2019_METHX[
   !is.na(METHX) & !is.na(CMMHCALX) &
-    CMMHCALX >= CMLSTYR &
+    CMMHCALX > CMLSTYR &
     CMMHCALX <= CMINTVW,
   lapply(
     fem_2017_2019_METHX_indices,
@@ -210,7 +210,7 @@ fem_2017_2019_MONSX <- create_pivot_table(
 
 fem_2017_2019_data <- fem_2017_2019_MONSX[
   !is.na(MONSX) & MONSX == 1 &
-    CMMONSX >= CMLSTYR &
+    CMMONSX > CMLSTYR &
     CMMONSX <= CMINTVW,
   .(SEX12MO = .N > 1),
   by = CASEID
@@ -497,14 +497,14 @@ for (x in c(1:9, 11:12)) {
   male_2017_2019_data[
     ,
     (sprintf('anyuse12m_meth%d', x)) := !is.na(
-      (CMLSTYR <= CMLSXCWP & (
+      (CMLSXCWP > CMLSTYR & (
         CWPLMET11 == x |
         CWPLMET12 == x |
         CWPLMET13 == x |
         CWPLMET201 == x |
         CWPLMET202 == x
       )) |
-      (CMLSTYR <= CMFSXCWP & (
+      (CMFSXCWP > CMLSTYR & (
         CWPFMET01 == x |
         CWPFMET02 == x |
         CWPFMET03 == x |
@@ -516,7 +516,7 @@ for (x in c(1:9, 11:12)) {
       CWPALLBC03 == x |
       CWPALLBC04 == x |
       CWPALLBC05 == x |
-      (CMLSTYR <= CMLSXP1 & (
+      (CMLSXP1 > CMLSTYR & (
         PXLRMETH1 == x |
         PXLRMETH2 == x |
         PXLRMETH3 == x |
@@ -524,7 +524,7 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH02 == x |
         PXLPMETH03 == x
       )) |
-      (CMLSTYR <= CMLSXP2 & (
+      (CMLSXP2 > CMLSTYR & (
         PXLRMETH5 == x |
         PXLRMETH6 == x |
         PXLRMETH7 == x |
@@ -532,7 +532,7 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH12 == x |
         PXLPMETH13 == x
       )) |
-      (CMLSTYR <= CMLSXP3 & (
+      (CMLSXP3 > CMLSTYR & (
         PXLRMETH9 == x |
         PXLRMETH10 == x |
         PXLRMETH11 == x |
@@ -540,19 +540,19 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH22 == x |
         PXLPMETH23 == x
       )) |
-      (CMLSTYR <= CMFSXP & (
+      (CMFSXP > CMLSTYR & (
         PXFMETH01 == x |
         PXFMETH02 == x |
         PXFMETH03 == x |
         PXFMETH04 == x
       )) |
-      (CMLSTYR <= CMFSXP2 & (
+      (CMFSXP2 > CMLSTYR & (
         PXFMETH14 == x |
         PXFMETH15 == x |
         PXFMETH16 == x |
         PXFMETH17 == x
       )) |
-      (CMLSTYR <= CMFSXP3 & (
+      (CMFSXP3 > CMLSTYR & (
         PXFMETH27 == x |
         PXFMETH28 == x |
         PXFMETH29 == x |
@@ -581,14 +581,14 @@ for (x in c(1:9, 11:12)) {
 male_2017_2019_data[
   ,
   anyuse12m_meth13 := !is.na(
-    (CMLSTYR <= CMLSXCWP & (
+    (CMLSXCWP > CMLSTYR & (
       CWPLMET11 == 10 |
       CWPLMET12 == 10 |
       CWPLMET13 == 10 |
       CWPLMET201 == 13 |
       CWPLMET202 == 13
     )) |
-    (CMLSTYR <= CMFSXCWP & (
+    (CMFSXCWP > CMLSTYR & (
       CWPFMET01 == 13 |
       CWPFMET02 == 13 |
       CWPFMET03 == 13 |
@@ -600,7 +600,7 @@ male_2017_2019_data[
     CWPALLBC03 == 13 |
     CWPALLBC04 == 13 |
     CWPALLBC05 == 13 |
-    (CMLSTYR <= CMLSXP1 & (
+    (CMLSXP1 > CMLSTYR & (
       PXLRMETH1 == 10 |
       PXLRMETH2 == 10 |
       PXLRMETH3 == 10 |
@@ -608,7 +608,7 @@ male_2017_2019_data[
       PXLPMETH02 == 13 |
       PXLPMETH03 == 13
     )) |
-    (CMLSTYR <= CMLSXP2 & (
+    (CMLSXP2 > CMLSTYR & (
       PXLRMETH5 == 10 |
       PXLRMETH6 == 10 |
       PXLRMETH7 == 10 |
@@ -616,7 +616,7 @@ male_2017_2019_data[
       PXLPMETH12 == 13 |
       PXLPMETH13 == 13
     )) |
-    (CMLSTYR <= CMLSXP3 & (
+    (CMLSXP3 > CMLSTYR & (
       PXLRMETH9 == 10 |
       PXLRMETH10 == 10 |
       PXLRMETH11 == 10 |
@@ -624,19 +624,19 @@ male_2017_2019_data[
       PXLPMETH22 == 13 |
       PXLPMETH23 == 13
     )) |
-    (CMLSTYR <= CMFSXP & (
+    (CMFSXP > CMLSTYR & (
       PXFMETH01 == 13 |
       PXFMETH02 == 13 |
       PXFMETH03 == 13 |
       PXFMETH04 == 13
     )) |
-    (CMLSTYR <= CMFSXP2 & (
+    (CMFSXP2 > CMLSTYR & (
       PXFMETH14 == 13 |
       PXFMETH15 == 13 |
       PXFMETH16 == 13 |
       PXFMETH17 == 13
     )) |
-    (CMLSTYR <= CMFSXP3 & (
+    (CMFSXP3 > CMLSTYR & (
       PXFMETH27 == 13 |
       PXFMETH28 == 13 |
       PXFMETH29 == 13 |
@@ -664,11 +664,11 @@ male_2017_2019_data[
 male_2017_2019_data[
   ,
   anyuse12m_meth10 := !is.na(
-    (CMLSTYR <= CMLSXCWP & (
+    (CMLSXCWP > CMLSTYR & (
       CWPLMET201 == 10 |
       CWPLMET202 == 10
     )) |
-    (CMLSTYR <= CMFSXCWP & (
+    (CMFSXCWP > CMLSTYR & (
       CWPFMET01 == 10 |
       CWPFMET02 == 10 |
       CWPFMET03 == 10 |
@@ -680,34 +680,34 @@ male_2017_2019_data[
     CWPALLBC03 == 10 |
     CWPALLBC04 == 10 |
     CWPALLBC05 == 10 |
-    (CMLSTYR <= CMLSXP1 & (
+    (CMLSXP1 > CMLSTYR & (
       PXLPMETH01 == 10 |
       PXLPMETH02 == 10 |
       PXLPMETH03 == 10
     )) |
-    (CMLSTYR <= CMLSXP2 & (
+    (CMLSXP2 > CMLSTYR & (
       PXLPMETH11 == 10 |
       PXLPMETH12 == 10 |
       PXLPMETH13 == 10
     )) |
-    (CMLSTYR <= CMLSXP3 & (
+    (CMLSXP3 > CMLSTYR & (
       PXLPMETH21 == 10 |
       PXLPMETH22 == 10 |
       PXLPMETH23 == 10
     )) |
-    (CMLSTYR <= CMFSXP & (
+    (CMFSXP > CMLSTYR & (
       PXFMETH01 == 10 |
       PXFMETH02 == 10 |
       PXFMETH03 == 10 |
       PXFMETH04 == 10
     )) |
-    (CMLSTYR <= CMFSXP2 & (
+    (CMFSXP2 > CMLSTYR & (
       PXFMETH14 == 10 |
       PXFMETH15 == 10 |
       PXFMETH16 == 10 |
       PXFMETH17 == 10
     )) |
-    (CMLSTYR <= CMFSXP3 & (
+    (CMFSXP3 > CMLSTYR & (
       PXFMETH27 == 10 |
       PXFMETH28 == 10 |
       PXFMETH29 == 10 |
@@ -758,7 +758,7 @@ male_2017_2019_data[, `:=`(
   ),
   anyuse12m_meth5 = fifelse(
     SEX12MO == 'YES, HAD INTERCOURSE' &
-      CMLSTYR <= CMLSXCWP &
+      CMLSXCWP > CMLSTYR &
       PSURGSTR == 'YES',
     TRUE,
     anyuse12m_meth5
@@ -1623,10 +1623,9 @@ It looks like for the most part `PXNOFREQ` and `CWPNOFRQ` are mutually exclusive
 
 # Things to Investigate
 
-* Figure out of "12 months" includes the same month of interview in the preceding year
+* Among females who used the pill in the previous 12 months, how many pills were missed?
 * Among those sexually active with the opposite sex in the previous 12 months and who used at least one method of contraception, how frequently was any method of contraception used?
 * Among those who used condoms in previous 12 months, how frequently were condoms used, in the past 12 months and past 4 weeks?
-* Among females who used the pill in the previous 12 months, how many pills were missed?
 * Can the difference in female and male contraceptive use rates be due to males not being aware of contraception?
 * Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
 * Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
