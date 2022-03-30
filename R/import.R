@@ -49,3 +49,13 @@ factorize <- function(x, name, formats_table, fill_na = TRUE) {
     )
   }
 }
+
+cm_greater <- function(x, y) {
+  is.na(x) &
+    x != 9998 &
+    x != 9999 &
+    is.na(y) &
+    y != 9998 &
+    y != 9999 &
+    x > y
+}

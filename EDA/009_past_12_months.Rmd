@@ -561,14 +561,14 @@ for (x in c(1:9, 11:12)) {
   male_2017_2019_data[
     ,
     (sprintf('anyuse12m_meth%d', x)) := !is.na(
-      (CMLSXCWP > CMLSTYR & (
+      (cm_greater(CMLSXCWP, CMLSTYR) & (
         CWPLMET11 == x |
         CWPLMET12 == x |
         CWPLMET13 == x |
         CWPLMET201 == x |
         CWPLMET202 == x
       )) |
-      (CMFSXCWP > CMLSTYR & (
+      (cm_greater(CMFSXCWP, CMLSTYR) & (
         CWPFMET01 == x |
         CWPFMET02 == x |
         CWPFMET03 == x |
@@ -580,7 +580,7 @@ for (x in c(1:9, 11:12)) {
       CWPALLBC03 == x |
       CWPALLBC04 == x |
       CWPALLBC05 == x |
-      (CMLSXP1 > CMLSTYR & (
+      (cm_greater(CMLSXP1, CMLSTYR) & (
         PXLRMETH1 == x |
         PXLRMETH2 == x |
         PXLRMETH3 == x |
@@ -588,7 +588,7 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH02 == x |
         PXLPMETH03 == x
       )) |
-      (CMLSXP2 > CMLSTYR & (
+      (cm_greater(CMLSXP2, CMLSTYR) & (
         PXLRMETH5 == x |
         PXLRMETH6 == x |
         PXLRMETH7 == x |
@@ -596,7 +596,7 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH12 == x |
         PXLPMETH13 == x
       )) |
-      (CMLSXP3 > CMLSTYR & (
+      (cm_greater(CMLSXP3, CMLSTYR) & (
         PXLRMETH9 == x |
         PXLRMETH10 == x |
         PXLRMETH11 == x |
@@ -604,19 +604,19 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH22 == x |
         PXLPMETH23 == x
       )) |
-      (CMFSXP > CMLSTYR & (
+      (cm_greater(CMFSXP, CMLSTYR) & (
         PXFMETH01 == x |
         PXFMETH02 == x |
         PXFMETH03 == x |
         PXFMETH04 == x
       )) |
-      (CMFSXP2 > CMLSTYR & (
+      (cm_greater(CMFSXP2, CMLSTYR) & (
         PXFMETH14 == x |
         PXFMETH15 == x |
         PXFMETH16 == x |
         PXFMETH17 == x
       )) |
-      (CMFSXP3 > CMLSTYR & (
+      (cm_greater(CMFSXP3, CMLSTYR) & (
         PXFMETH27 == x |
         PXFMETH28 == x |
         PXFMETH29 == x |
@@ -645,14 +645,14 @@ for (x in c(1:9, 11:12)) {
 male_2017_2019_data[
   ,
   anyuse12m_meth13 := !is.na(
-    (CMLSXCWP > CMLSTYR & (
+    (cm_greater(CMLSXCWP, CMLSTYR) & (
       CWPLMET11 == 10 |
       CWPLMET12 == 10 |
       CWPLMET13 == 10 |
       CWPLMET201 == 13 |
       CWPLMET202 == 13
     )) |
-    (CMFSXCWP > CMLSTYR & (
+    (cm_greater(CMFSXCWP, CMLSTYR) & (
       CWPFMET01 == 13 |
       CWPFMET02 == 13 |
       CWPFMET03 == 13 |
@@ -664,7 +664,7 @@ male_2017_2019_data[
     CWPALLBC03 == 13 |
     CWPALLBC04 == 13 |
     CWPALLBC05 == 13 |
-    (CMLSXP1 > CMLSTYR & (
+    (cm_greater(CMLSXP1, CMLSTYR) & (
       PXLRMETH1 == 10 |
       PXLRMETH2 == 10 |
       PXLRMETH3 == 10 |
@@ -672,7 +672,7 @@ male_2017_2019_data[
       PXLPMETH02 == 13 |
       PXLPMETH03 == 13
     )) |
-    (CMLSXP2 > CMLSTYR & (
+    (cm_greater(CMLSXP2, CMLSTYR) & (
       PXLRMETH5 == 10 |
       PXLRMETH6 == 10 |
       PXLRMETH7 == 10 |
@@ -680,7 +680,7 @@ male_2017_2019_data[
       PXLPMETH12 == 13 |
       PXLPMETH13 == 13
     )) |
-    (CMLSXP3 > CMLSTYR & (
+    (cm_greater(CMLSXP3, CMLSTYR) & (
       PXLRMETH9 == 10 |
       PXLRMETH10 == 10 |
       PXLRMETH11 == 10 |
@@ -688,19 +688,19 @@ male_2017_2019_data[
       PXLPMETH22 == 13 |
       PXLPMETH23 == 13
     )) |
-    (CMFSXP > CMLSTYR & (
+    (cm_greater(CMFSXP, CMLSTYR) & (
       PXFMETH01 == 13 |
       PXFMETH02 == 13 |
       PXFMETH03 == 13 |
       PXFMETH04 == 13
     )) |
-    (CMFSXP2 > CMLSTYR & (
+    (cm_greater(CMFSXP2, CMLSTYR) & (
       PXFMETH14 == 13 |
       PXFMETH15 == 13 |
       PXFMETH16 == 13 |
       PXFMETH17 == 13
     )) |
-    (CMFSXP3 > CMLSTYR & (
+    (cm_greater(CMFSXP3, CMLSTYR) & (
       PXFMETH27 == 13 |
       PXFMETH28 == 13 |
       PXFMETH29 == 13 |
@@ -728,11 +728,11 @@ male_2017_2019_data[
 male_2017_2019_data[
   ,
   anyuse12m_meth10 := !is.na(
-    (CMLSXCWP > CMLSTYR & (
+    (cm_greater(CMLSXCWP, CMLSTYR) & (
       CWPLMET201 == 10 |
       CWPLMET202 == 10
     )) |
-    (CMFSXCWP > CMLSTYR & (
+    (cm_greater(CMFSXCWP, CMLSTYR) & (
       CWPFMET01 == 10 |
       CWPFMET02 == 10 |
       CWPFMET03 == 10 |
@@ -744,34 +744,34 @@ male_2017_2019_data[
     CWPALLBC03 == 10 |
     CWPALLBC04 == 10 |
     CWPALLBC05 == 10 |
-    (CMLSXP1 > CMLSTYR & (
+    (cm_greater(CMLSXP1, CMLSTYR) & (
       PXLPMETH01 == 10 |
       PXLPMETH02 == 10 |
       PXLPMETH03 == 10
     )) |
-    (CMLSXP2 > CMLSTYR & (
+    (cm_greater(CMLSXP2, CMLSTYR) & (
       PXLPMETH11 == 10 |
       PXLPMETH12 == 10 |
       PXLPMETH13 == 10
     )) |
-    (CMLSXP3 > CMLSTYR & (
+    (cm_greater(CMLSXP3, CMLSTYR) & (
       PXLPMETH21 == 10 |
       PXLPMETH22 == 10 |
       PXLPMETH23 == 10
     )) |
-    (CMFSXP > CMLSTYR & (
+    (cm_greater(CMFSXP, CMLSTYR) & (
       PXFMETH01 == 10 |
       PXFMETH02 == 10 |
       PXFMETH03 == 10 |
       PXFMETH04 == 10
     )) |
-    (CMFSXP2 > CMLSTYR & (
+    (cm_greater(CMFSXP2, CMLSTYR) & (
       PXFMETH14 == 10 |
       PXFMETH15 == 10 |
       PXFMETH16 == 10 |
       PXFMETH17 == 10
     )) |
-    (CMFSXP3 > CMLSTYR & (
+    (cm_greater(CMFSXP3, CMLSTYR) & (
       PXFMETH27 == 10 |
       PXFMETH28 == 10 |
       PXFMETH29 == 10 |
@@ -2161,6 +2161,101 @@ Estimating condom use for this domain seems more reasonable. However, this appro
 
 
 ### Males
+
+```{r, dependson='process-male-data'}
+male_2017_2019$Data[
+  male_2017_2019_data$anyuse12m_meth1 &
+    is.na(P12MOCON) & is.na(P12MOCONO),
+  .N
+]
+```
+
+Not all condom users in the past 12 months have either `P12MOCON` or `P12MOCONO` responses.
+
+```{r, dependson='process-male-data'}
+male_2017_2019$Data[
+  (SEXSTAT %in% c(1, 2, 6) | is.na(SEXSTAT)) &
+    is.na(P12MOCON) & is.na(P12MOCONO),
+  .N
+]
+```
+
+However, the specified universes in the codebook for `P12MOCON` and `P12MOCONO` are at least accurate.
+
+```{r, dependson='process-male-data'}
+male_2017_2019$Data[
+  male_2017_2019_data$anyuse12m_meth1 &
+    is.na(P12MOCON) & is.na(P12MOCONO),
+  .(
+    SEXSTAT,
+    SEX12MO,
+    LSEXDATE,
+    CMLSXP1
+  )
+]
+```
+
+It appears as though the 10 leftovers all did not have intercourse in the past 12 months according to `SEXSTAT`. This is confirmed by 8 of the 10 by `SEX12MO`, but is contradicted by `SEX12MO` for the other 2 cases. These logical contradictions should be resolved.
+
+One issue is that hitherto the century-month values used to determine contraceptive use in past 12 months are not checked for escape values.
+
+```{r, dependson='process-male-data'}
+male_2017_2019_data[
+  anyuse12m_count > 0 & SEX12MO == 'NO, DID NOT HAVE INTERCOURSE',
+  .(
+    CWPALLBC01,
+    CMLSTYR,
+    CMLSXCWP,
+    CMFSXCWP,
+    CMLSXP1,
+    CMLSXP2,
+    CMLSXP3,
+    CMFSXP,
+    CMFSXP2,
+    CMFSXP3
+  )
+] |> kable()
+```
+
+Some of the contradiction between `SEX12MO` and `anyuse12m_count` involves either a 9998 or 9999 escape value being present or a century-month of intercourse being equal to `CMLSTYR`.
+
+The other issue is that the universe for the `CWPALLBC` series of variables appears to include those with `CMLSXCWP` or `CMFSXCWP` greater than _or equal to_ `CMLSTYR`, whereas elsewhere this comparison is _strictly greater than_.
+
+```{r, dependson='process-male-data'}
+male_2017_2019_data[, lapply(.SD, class), .SDcols = c(
+  'CMLSTYR',
+  'CMLSXCWP',
+  'CMFSXCWP',
+  'CMLSXP1',
+  'CMLSXP2',
+  'CMLSXP3',
+  'CMFSXP',
+  'CMFSXP2',
+  'CMFSXP3'
+)]
+```
+
+```{r, dependson='process-male-data'}
+male_2017_2019$Data[
+  SEXSTAT %in% c(0, 3:5, 7) &
+    male_2017_2019_data$anyuse12m_count > 0,
+  .(
+    SEXSTAT,
+    SEX12MO,
+    CMLSTYR,
+    CMLSXCWP,
+    CMFSXCWP,
+    CMLSXP1,
+    CMLSXP2,
+    CMLSXP3,
+    CMFSXP,
+    CMFSXP2,
+    CMFSXP3
+  )
+] |> kable()
+```
+
+
 
 * BC-8a P12MOCONO
 * BC-8b P12MOCON How many times used condom during sex last 12 mons
