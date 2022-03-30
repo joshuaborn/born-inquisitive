@@ -892,6 +892,8 @@ male_2017_2019_data[,
 # create categorical variable for consistency of any contraceptive use with 2nd-to-last partner in past 12 months
 male_2017_2019_data[,
   mos12_p2_consistency := factor(fcase(
+    RSURGSTR == 'YES',
+      'Surgically sterile',
     PXCONFRQ2 == 100,
       'Every time',
     PXNOFREQ2 != 'Not Applicable',
@@ -903,6 +905,8 @@ male_2017_2019_data[,
 # create categorical variable for consistency of any contraceptive use with 3rd-to-last partner in past 12 months
 male_2017_2019_data[,
   mos12_p3_consistency := factor(fcase(
+    RSURGSTR == 'YES',
+      'Surgically sterile',
     PXCONFRQ3 == 100,
       'Every time',
     PXNOFREQ3 != 'Not Applicable',
@@ -1606,6 +1610,70 @@ collect_estimate(
   ),
   type = 'proportion',
   domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with their last partner',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_p2_consistency),
+    subset(
+      male_2017_2019_svy,
+      !is.na(PXMETHOD14) & RSURGSTR != 'YES'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with their 2nd-to-last partner',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_p2_consistency),
+    subset(
+      male_2017_2019_svy,
+      !is.na(PXMETHOD14) & RSURGSTR != 'YES'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with their 2nd-to-last partner',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_p3_consistency),
+    subset(
+      male_2017_2019_svy,
+      !is.na(PXMETHOD27) & RSURGSTR != 'YES'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with their 3rd-to-last partner',
+  title = 'by how frequently any contraceptive was used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_p3_consistency),
+    subset(
+      male_2017_2019_svy,
+      !is.na(PXMETHOD27) & RSURGSTR != 'YES'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who do not have active vasectomies and who used at least one method of contraception in the past 12 months with their 3rd-to-last partner',
   title = 'by how frequently any contraceptive was used in past 12 months'
 ) |> kable()
 ```
