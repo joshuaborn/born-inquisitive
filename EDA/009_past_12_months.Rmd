@@ -60,8 +60,10 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   P1YRELP = factorize(P1YRELP, 'P1YRELP', fem_2017_2019_formats),
   POSIBLMN = factorize(POSIBLMN, 'Y1N5RDF', fem_2017_2019_formats),
   POSIBLPG = factorize(POSIBLPG, 'Y1N5RDF', fem_2017_2019_formats),
-  PST4WKSX,# = factorize(PST4WKSX, 'PSTWKSF', fem_2017_2019_formats),
+  PST4WKSX,
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
+  PSWKCOND1 = factorize(PSWKCOND1, 'Y1N5RDF', fem_2017_2019_formats),
+  PSWKCOND2,
   PXNOFREQ = factorize(PXNOFREQ , 'P12METHF', fem_2017_2019_formats),
   SECU,
   SEST,
@@ -376,6 +378,44 @@ fem_2017_2019_data[,
     is.na(PST4WKSX),
       'Not Ascertained',
     default = 'Slipped through!!!'
+  ))
+]
+
+
+# create variable that combines PSWKCOND1 and PSWKCOND2
+fem_2017_2019_data[
+  , PSWKCOND := fcase(
+    PSWKCOND1 == 'Not Applicable',
+      PSWKCOND2,
+    PSWKCOND1 == 'Yes',
+      1L,
+    PSWKCOND1 == 'No',
+      0L
+  )
+]
+
+# create categorical variable for condom use quotient
+fem_2017_2019_data[
+  , condom_use_quotient := factor(fcase(
+    !anyuse12m_meth4,
+      'Has not used condom in past 12 months',
+    is.na(PST4WKSX) | PST4WKSX == 0,
+      'Has not had intercourse in past 4 weeks',
+    PST4WKSX == 998,
+      'Refused',
+    PST4WKSX == 999,
+      "Don't know",
+    PSWKCOND / PST4WKSX == 0,
+      'None of the time',
+    PSWKCOND / PST4WKSX == 0.5,
+      'Half of the time',
+    PSWKCOND / PST4WKSX >= 1,
+      'All of the time',
+    PSWKCOND / PST4WKSX < 0.5,
+      'Some of the time',
+    PSWKCOND / PST4WKSX > 0.5,
+      'Most of the time',
+    default = 'SLIPPED THROUGH!!!'
   ))
 ]
 
@@ -930,6 +970,10 @@ male_2017_2019_svy <- svydesign(
 # Any Contraceptive Use in Past 12 Months
 
 ### Females
+
+```{r, dependson='fem-load-data'}
+fem_2017_2019_formats[format_name == 'METHHXF'] |> kable()
+```
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -1855,7 +1899,202 @@ collect_estimate(
 
 ### Females
 
+```{r, dependson='fem-process-data'}
+fem_2017_2019$Data[CONDOM == 1 & fem_2017_2019_data$SEX12MO, tablena(P12MOCON)]
+```
+
+Again, the universe of `P12MOCON` is not what is in the codebook. There are 44 respondents who do not have replies to `P12MOCON` but are in the universe specified in the codebook.
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019$Data[
+  fem_2017_2019_data[, anyuse12m_meth4 & SEX12MO],
+  tablena(P12MOCON)
+]
+```
+
+There are only 6 respondents with `NA` values for `P12MOCON` who report using condoms in the past 12 months and who have been sexually active with a male for the past 12 months. This is usable.
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(P12MOCON),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO & anyuse12m_meth4
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who have had intercourse with a male and used condoms in the past 12 months',
+  title = 'by how frequently condoms were used'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(P12MOCON),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO & anyuse12m_meth4
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who have had intercourse with a male and used condoms in the past 12 months',
+  title = 'by how frequently condoms were used'
+) |> kable()
+```
+
+#### Past 4 Weeks
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019$Data[
+  fem_2017_2019_data[, SEX12MO],
+  tablena(PST4WKSX)
+]
+```
+
+Again, there are 50 `NA` values in the supposed universe of `PST4WKSX`.
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019$Data[
+  fem_2017_2019_data[, anyuse12m_meth4 & SEX12MO],
+  tablena(PST4WKSX)
+]
+```
+
+Among those who have used condoms at least once in the past 12 months, there are only 6 `NA` values.
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019$Data[
+  PST4WKSX > 0 & PST4WKSX <= 995 &
+    is.na(PSWKCOND1) & is.na(PSWKCOND2),
+  .N
+]
+```
+
+There are 180 respondents that report having had intercourse with a male in the past 4 weeks via `PST4WKSX`, but do not have reponses for `PSWKCOND1` or `PSWKCOND2`.
+
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019$Data[
+  PST4WKSX > 0 & PST4WKSX <= 995 &
+    is.na(PSWKCOND1) & is.na(PSWKCOND2) &
+    fem_2017_2019_data$anyuse12m_meth4,
+  .N
+]
+```
+
+Fortunately, condom users of the past 12 months who have had intercourse with a male in the past 4 weeks do not have `NA` values for both `PSWKCOND1` and `PSWKCOND2`.
+
+```{r, dependson='fem-process-data'}
+ggplot(
+  data = fem_2017_2019_data[
+    anyuse12m_meth4 & PST4WKSX <= 995
+  ],
+  mapping = aes(
+    x = PST4WKSX,
+    weight = WGT2017_2019
+  )
+) +
+  geom_histogram(binwidth = 5) +
+  labs(
+    title = 'Frequency of intercourse with a male',
+    subtitle = 'among females who have used condoms in the past 12 months'
+  )
+```
+
+```{r, dependson='fem-process-data'}
+ggplot(
+  data = fem_2017_2019_data[
+    anyuse12m_meth4 & PST4WKSX <= 995 & PST4WKSX > 0
+  ],
+  mapping = aes(
+    x = PSWKCOND,
+    weight = WGT2017_2019
+  )
+) +
+  geom_histogram(binwidth = 5) +
+  labs(
+    title = 'Frequency of condom use',
+    subtitle = 'among females who have had intercourse with a male in the past 4 weeks and who have used condoms in the past 12 months'
+  )
+```
+
+```{r, dependson='fem-process-data'}
+ggplot(
+  data = fem_2017_2019_data[
+    anyuse12m_meth4 & PST4WKSX <= 995 & PST4WKSX > 0 & PSWKCOND <= 995,
+    .(
+      quotient = pmin(PSWKCOND / PST4WKSX, rep(1, .N)),
+      WGT2017_2019
+    )
+  ],
+  mapping = aes(
+    x = quotient,
+    weight = WGT2017_2019
+  )
+) +
+  geom_histogram(binwidth = 0.05) +
+  labs(
+    title = 'Proportion of times a condom was used',
+    subtitle = 'among females who have had intercourse with a male in the past 4 weeks and who have used condoms in the past 12 months'
+  )
+```
+
+Since the distribution of proportion of condom use is so polar, this can be binned with 3 levels of 0, 0 < q < 1, and 1. However, there is a small local maximum around 0.5 as well, so perhaps 7 levels of 0, (0, 0.2], (0.2, 0.4], (0.4, 0.6], (0.6, 0.8], (0.8, 1), 1 would show the local maximum at 0.5. Actually, maybe just 0, (0, 0.5), 0.5, (0.5, 1), 1.
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(condom_use_quotient),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO &
+        anyuse12m_meth4 &
+        !is.na(PST4WKSX) &
+        PST4WKSX > 0
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who used condoms in the past 12 months and had intercourse with a male in past 4 weeks',
+  title = 'by how frequently condoms were used in past 4 weeks'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(condom_use_quotient),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO &
+        anyuse12m_meth4 &
+        !is.na(PST4WKSX) &
+        PST4WKSX > 0
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who used condoms in the past 12 months and had intercourse with a male in past 4 weeks',
+  title = 'by how frequently condoms were used in past 4 weeks'
+) |> kable()
+```
+
+
+
 ### Males
+
+* BC-8a P12MOCONO
+* BC-8b P12MOCON How many times used condom during sex last 12 mons
+* BC-9 SEXFREQ # times had sex with female in last 4 weeks
+* BC-10 CONFREQ # times used condom when had sex with female in last 4 wks
+* CF-4 CONDFREQ Percent of time R and CWP used a condom in last 12 mos
+* DG-4 PXCONFRQ  Last 12 mos: percent of time R & P used condom (most recent partner)
+* DG-4 PXCONFRQ2 Last 12 mos: % of time R & 2nd-to-last P used condom
+* DG-4 PXCONFRQ3 Last 12 mos: % of time R & 3rd-to-last P used condom
 
 
 ## Condom, Exclusive Use
@@ -1869,7 +2108,6 @@ collect_estimate(
 
 # Things to Investigate
 
-* Among those sexually active with the opposite sex in the previous 12 months and who used at least one method of contraception, how frequently was any method of contraception used?
 * Among those who used condoms in previous 12 months, how frequently were condoms used, in the past 12 months and past 4 weeks?
 * Can the difference in female and male contraceptive use rates be due to males not being aware of contraception?
 * Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
