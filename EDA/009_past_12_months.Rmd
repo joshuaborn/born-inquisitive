@@ -2083,6 +2083,81 @@ collect_estimate(
 ) |> kable()
 ```
 
+Perhaps better still would be using a domain of females who report using condoms either in the current month or last month.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019$Data[
+  PST4WKSX > 0 & PST4WKSX <= 995 &
+    (
+      CURRMETH1 == 4 |
+      CURRMETH2 == 4 |
+      CURRMETH3 == 4 |
+      CURRMETH4 == 4 |
+      LSTMONMETH1 == 4 |
+      LSTMONMETH2 == 4 |
+      LSTMONMETH3 == 4 |
+      LSTMONMETH4 == 4
+    ) &
+    is.na(PSWKCOND1) & is.na(PSWKCOND2),
+  .N
+]
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(condom_use_quotient),
+    subset(
+      fem_2017_2019_svy,
+      !is.na(PST4WKSX) &
+        PST4WKSX > 0 &
+        (
+          CURRMETH1 == 4 |
+          CURRMETH2 == 4 |
+          CURRMETH3 == 4 |
+          CURRMETH4 == 4 |
+          LSTMONMETH1 == 4 |
+          LSTMONMETH2 == 4 |
+          LSTMONMETH3 == 4 |
+          LSTMONMETH4 == 4
+        )
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who used condoms in the past 2 months and had intercourse with a male in past 4 weeks',
+  title = 'by how frequently condoms were used in past 4 weeks'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(condom_use_quotient),
+    subset(
+      fem_2017_2019_svy,
+      !is.na(PST4WKSX) &
+        PST4WKSX > 0 &
+        (
+          CURRMETH1 == 4 |
+          CURRMETH2 == 4 |
+          CURRMETH3 == 4 |
+          CURRMETH4 == 4 |
+          LSTMONMETH1 == 4 |
+          LSTMONMETH2 == 4 |
+          LSTMONMETH3 == 4 |
+          LSTMONMETH4 == 4
+        )
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who used condoms in the past 2 months and had intercourse with a male in past 4 weeks',
+  title = 'by how frequently condoms were used in past 4 weeks'
+) |> kable()
+```
+
+Estimating condom use for this domain seems more reasonable. However, this approach won't be possible with the males.
 
 
 ### Males
