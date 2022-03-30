@@ -361,7 +361,21 @@ fem_2017_2019_data[,
       'Every time',
     PXNOFREQ != 'Not Applicable',
       as.character(PXNOFREQ),
-    default = 'Not ascertained'
+    default = 'Not Ascertained'
+  ))
+]
+
+
+# create categorical variable for consistency of pill use in past 4 weeks
+fem_2017_2019_data[,
+  pill_consistency := factor(fcase(
+    #PST4WKSX == 0,
+    #  'Did not have intercourse with male in past 4 weeks',
+    MISSPILL != 'Not Applicable',
+      as.character(MISSPILL),
+    is.na(PST4WKSX),
+      'Not Ascertained',
+    default = 'Slipped through!!!'
   ))
 ]
 
@@ -871,7 +885,7 @@ male_2017_2019_data[,
       'Every time',
     PXNOFREQ != 'Not Applicable',
       as.character(PXNOFREQ),
-    default = 'Not ascertained'
+    default = 'Not Ascertained'
   ))
 ]
 
@@ -882,7 +896,7 @@ male_2017_2019_data[,
       'Every time',
     PXNOFREQ2 != 'Not Applicable',
       as.character(PXNOFREQ2),
-    default = 'Not ascertained'
+    default = 'Not Ascertained'
   ))
 ]
 
@@ -893,7 +907,7 @@ male_2017_2019_data[,
       'Every time',
     PXNOFREQ3 != 'Not Applicable',
       as.character(PXNOFREQ3),
-    default = 'Not ascertained'
+    default = 'Not Ascertained'
   ))
 ]
 
@@ -1389,14 +1403,14 @@ I can't find an equivalent to `EVERUSED` for males.
 
 ```{r, dependson='fem-process-data'}
 fem_2017_2019_data[
-  mos12_consistency == 'Not ascertained',
+  mos12_consistency == 'Not Ascertained',
   .(
     CASEID, SEX12MO, CONDOM, P12MOCON, EVERUSED, PXNOFREQ
   )
 ] |> kable()
 ```
 
-The respondents in the above table should have been asked `PXNOFREQ`. Indeed, most of them should have been asked `P12MOCON`. This is inexplicable, since they are in the universe for either `P12MOCON` or `PXNOFREQ`. They will be marked "Not ascertained" and included in the estimates, along with the "Don't know" and "Refused."
+The respondents in the above table should have been asked `PXNOFREQ`. Indeed, most of them should have been asked `P12MOCON`. This is inexplicable, since they are in the universe for either `P12MOCON` or `PXNOFREQ`. They will be marked "Not Ascertained" and included in the estimates, along with the "Don't know" and "Refused."
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -1648,7 +1662,7 @@ fem_2017_2019$Data[
 ]
 ```
 
-Narrowing the domain to just those females who were sexually active in the past 3 months reduces the "Not ascertained" values.
+Narrowing the domain to just those females who were sexually active in the past 3 months reduces the "Not Ascertained" values.
 
 ```{r, dependson='fem-load-data'}
 fem_2017_2019$Data[
@@ -1666,7 +1680,7 @@ fem_2017_2019$Data[
 ]
 ```
 
-Making the universe match `PST4WKSX` seems to eliminate the "Not ascertained" values.
+Making the universe match `PST4WKSX` seems to eliminate the "Not Ascertained" values.
 
 ```{r, dependson='fem-process-data'}
 tablena(fem_2017_2019_data$PST4WKSX)
@@ -1681,7 +1695,7 @@ Unfortunately, the universe of `PST4WKSX` does not appear to exactly what is spe
 
 ```{r, dependson='fem-process-data'}
 fem_2017_2019_data[
-  SEX3MO == 'YES' & is.na(PST4WKSX) & (
+  MISSPILL == 'Not Applicable' & (
     CURRMETH1 == 3 |
     CURRMETH2 == 3 |
     CURRMETH3 == 3 |
@@ -1695,15 +1709,14 @@ fem_2017_2019_data[
 ]
 ```
 
-It may be simply the case that the 5 respondents who have `NA` values for `PST4WKSX` may not have had intercourse with a male in the 4 weeks before the interview, but it's not clear from the codebook.
+Ultimately, there are 160 respondents who should have been asked `MISSPILL`, but were not. This is a greater proportion of the universe than seen previously. It is worth looping back at the end and following up with the NSFG folks about these "Not Ascertained" situations when they start to affect the actual estimates.
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
-    ~I(is.na(PST4WKSX)),
+    ~I(MISSPILL == 'Not Applicable'),
     subset(
       fem_2017_2019_svy,
-      SEX3MO == 'YES' &
         (
           CURRMETH1 == 3 |
           CURRMETH2 == 3 |
@@ -1718,7 +1731,7 @@ collect_estimate(
     svytotal
   ),
   type = 'total',
-  domain = 'females who had intercourse with a male at least once in the past 3 months',
+  domain = 'females who used the pill either the previous or current month',
   title = 'for which it was not ascertained how many times had intercourse with male in past 4 weeks'
 ) |> kable()
 ```
@@ -1726,26 +1739,22 @@ collect_estimate(
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
-    ~factor(MISSPILL),
+    ~factor(pill_consistency),
     subset(
       fem_2017_2019_svy,
-     !is.na(PST4WKSX) &
-        PST4WKSX > 0 &
-        (
-          CURRMETH1 == 3 |
-          CURRMETH2 == 3 |
-          CURRMETH3 == 3 |
-          CURRMETH4 == 3 |
-          LSTMONMETH1 == 3 |
-          LSTMONMETH2 == 3 |
-          LSTMONMETH3 == 3 |
-          LSTMONMETH4 == 3
-        )
+      CURRMETH1 == 3 |
+        CURRMETH2 == 3 |
+        CURRMETH3 == 3 |
+        CURRMETH4 == 3 |
+        LSTMONMETH1 == 3 |
+        LSTMONMETH2 == 3 |
+        LSTMONMETH3 == 3 |
+        LSTMONMETH4 == 3
     ),
     svytotal
   ),
   type = 'total',
-  domain = 'females who had intercourse with a male at least once in the past 4 weeks and used the pill either the previous or current month',
+  domain = 'females used the pill either the previous or current month',
   title = 'by how many pills were missed'
 ) |> kable()
 ```
@@ -1753,26 +1762,22 @@ collect_estimate(
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
-    ~factor(MISSPILL),
+    ~factor(pill_consistency),
     subset(
       fem_2017_2019_svy,
-     !is.na(PST4WKSX) &
-        PST4WKSX > 0 &
-        (
-          CURRMETH1 == 3 |
-          CURRMETH2 == 3 |
-          CURRMETH3 == 3 |
-          CURRMETH4 == 3 |
-          LSTMONMETH1 == 3 |
-          LSTMONMETH2 == 3 |
-          LSTMONMETH3 == 3 |
-          LSTMONMETH4 == 3
-        )
+      CURRMETH1 == 3 |
+        CURRMETH2 == 3 |
+        CURRMETH3 == 3 |
+        CURRMETH4 == 3 |
+        LSTMONMETH1 == 3 |
+        LSTMONMETH2 == 3 |
+        LSTMONMETH3 == 3 |
+        LSTMONMETH4 == 3
     ),
     svymean
   ),
   type = 'proportion',
-  domain = 'females who had intercourse with a male at least once in the past 4 weeks and used the pill either the previous or current month',
+  domain = 'females used the pill either the previous or current month',
   title = 'by how many pills were missed'
 ) |> kable()
 ```
@@ -1803,6 +1808,7 @@ collect_estimate(
 * Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
 * Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
     * Include tubal ligation and vasectomy reversal
+* Review "Not Ascertained" situations and follow up with NSFG administrators
 * Replicate analysis in SAS
     * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
 * Experiment using chi-squared tests whether it is worth combining with 2015-2017 data for more precise estimates
