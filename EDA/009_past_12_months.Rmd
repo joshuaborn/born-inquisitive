@@ -474,6 +474,8 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   METH3M2 = factorize(METH3M2, 'METH3MF', male_2017_2019_formats),
   METH3M3 = factorize(METH3M3, 'METH3MF', male_2017_2019_formats),
   METH3M4 = factorize(METH3M4, 'METH3MF', male_2017_2019_formats),
+  P12MOCONO = factorize(P12MOCONO, 'Y1N5RDF', male_2017_2019_formats),
+  P12MOCON = factorize(P12MOCON, 'OFTIMEF', male_2017_2019_formats),
   P1COHABIT = factorize(P1COHABIT, 'Y1N5RDF', male_2017_2019_formats),
   P1CURRWIFE = factorize(P1CURRWIFE, 'Y1N5RDF', male_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'N0Y1CF', male_2017_2019_formats),
@@ -952,6 +954,20 @@ male_2017_2019_data[,
     PXNOFREQ3 != 'Not Applicable',
       as.character(PXNOFREQ3),
     default = 'Not Ascertained'
+  ))
+]
+
+
+# create unified 12 month condom consistency variable
+male_2017_2019_data[,
+  mos12_condom_consistency := factor(fcase(
+    P12MOCONO == 'Yes',
+      'Every time',
+    P12MOCONO == 'No',
+      'None of the time',
+    !is.na(P12MOCON),
+      as.character(P12MOCON),
+    default = 'Slipped through!'
   ))
 ]
 
@@ -2170,91 +2186,41 @@ male_2017_2019$Data[
 ]
 ```
 
-Not all condom users in the past 12 months have either `P12MOCON` or `P12MOCONO` responses.
+All males who have used a condom at least once in past 12 months have responses for either `P12MOCON` or `P12MOCONO`.
 
-```{r, dependson='process-male-data'}
-male_2017_2019$Data[
-  (SEXSTAT %in% c(1, 2, 6) | is.na(SEXSTAT)) &
-    is.na(P12MOCON) & is.na(P12MOCONO),
-  .N
-]
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_condom_consistency),
+    subset(
+      male_2017_2019_svy,
+      SEX12MO == 'YES, HAD INTERCOURSE' &
+        anyuse12m_meth1
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who had intercourse with a female and used a condom in the past 12 months',
+  title = 'by how frequently condoms were used in past 12 months'
+) |> kable()
 ```
 
-However, the specified universes in the codebook for `P12MOCON` and `P12MOCONO` are at least accurate.
-
-```{r, dependson='process-male-data'}
-male_2017_2019$Data[
-  male_2017_2019_data$anyuse12m_meth1 &
-    is.na(P12MOCON) & is.na(P12MOCONO),
-  .(
-    SEXSTAT,
-    SEX12MO,
-    LSEXDATE,
-    CMLSXP1
-  )
-]
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_condom_consistency),
+    subset(
+      male_2017_2019_svy,
+      SEX12MO == 'YES, HAD INTERCOURSE' &
+        anyuse12m_meth1
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who had intercourse with a female and used a condom in the past 12 months',
+  title = 'by how frequently condoms were used in past 12 months'
+) |> kable()
 ```
-
-It appears as though the 10 leftovers all did not have intercourse in the past 12 months according to `SEXSTAT`. This is confirmed by 8 of the 10 by `SEX12MO`, but is contradicted by `SEX12MO` for the other 2 cases. These logical contradictions should be resolved.
-
-One issue is that hitherto the century-month values used to determine contraceptive use in past 12 months are not checked for escape values.
-
-```{r, dependson='process-male-data'}
-male_2017_2019_data[
-  anyuse12m_count > 0 & SEX12MO == 'NO, DID NOT HAVE INTERCOURSE',
-  .(
-    CWPALLBC01,
-    CMLSTYR,
-    CMLSXCWP,
-    CMFSXCWP,
-    CMLSXP1,
-    CMLSXP2,
-    CMLSXP3,
-    CMFSXP,
-    CMFSXP2,
-    CMFSXP3
-  )
-] |> kable()
-```
-
-Some of the contradiction between `SEX12MO` and `anyuse12m_count` involves either a 9998 or 9999 escape value being present or a century-month of intercourse being equal to `CMLSTYR`.
-
-The other issue is that the universe for the `CWPALLBC` series of variables appears to include those with `CMLSXCWP` or `CMFSXCWP` greater than _or equal to_ `CMLSTYR`, whereas elsewhere this comparison is _strictly greater than_.
-
-```{r, dependson='process-male-data'}
-male_2017_2019_data[, lapply(.SD, class), .SDcols = c(
-  'CMLSTYR',
-  'CMLSXCWP',
-  'CMFSXCWP',
-  'CMLSXP1',
-  'CMLSXP2',
-  'CMLSXP3',
-  'CMFSXP',
-  'CMFSXP2',
-  'CMFSXP3'
-)]
-```
-
-```{r, dependson='process-male-data'}
-male_2017_2019$Data[
-  SEXSTAT %in% c(0, 3:5, 7) &
-    male_2017_2019_data$anyuse12m_count > 0,
-  .(
-    SEXSTAT,
-    SEX12MO,
-    CMLSTYR,
-    CMLSXCWP,
-    CMFSXCWP,
-    CMLSXP1,
-    CMLSXP2,
-    CMLSXP3,
-    CMFSXP,
-    CMFSXP2,
-    CMFSXP3
-  )
-] |> kable()
-```
-
 
 
 * BC-8a P12MOCONO
