@@ -173,7 +173,6 @@ fem_2017_2019_METHX <- fem_2017_2019_METHX[
   on = c('CASEID', 'CMMHCALXID')
 ]
 
-
 # do a group-by query to see if each of the methods have been used within the past 12 months and join to main data table
 fem_2017_2019_METHX_indices <- c(3:21, 25:26)
 
@@ -289,7 +288,7 @@ fem_2017_2019_data[
 ]
 
 
-# set categorization for contraceptive use at last intercourse (within past 3 months)
+# create categorical variable for contraceptive use at last intercourse (within past 3 months)
 fem_2017_2019_data[,
   curr_use := factor(fcase(
     meth3m_count > 0,
