@@ -1,0 +1,212 @@
+---
+title: "Why Not Use Contraception?"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+library(survey)
+
+i_am('EDA/011_why_not_use.Rmd')
+
+source(here('R/data_table_helpers.R'))
+source(here('R/factor_helpers.R'))
+source(here('R/import.R'))
+
+opts_chunk$set(
+  cache = TRUE,
+  echo = TRUE,
+  fig.height = 8,
+  fig.width = 12,
+  warning = FALSE
+)
+```
+
+```{r fem-load-data}
+fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
+fem_2017_2019_formats <- fem_2017_2019$Formats
+```
+
+```{r fem-process-data, dependson=c('fem-load-data')}
+fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
+  CASEID,
+  CMINTVW,
+  CURRMETH1,
+  CURRPREG,
+  RSTRSTAT,
+  SECU,
+  SEST,
+  WGT2017_2019,
+  WYNOTUSE = factorize(WYNOTUSE, 'Y1N5RDF', fem_2017_2019_formats)
+)])
+
+
+# create pivot table for MONSX series variables
+fem_2017_2019_MONSX <- create_pivot_table(
+  'CMMONSX',
+  2:48,
+  fem_2017_2019$Data,
+  c('CASEID', 'CMINTVW', 'CMLSTYR')
+)[
+  create_pivot_table(
+    'MONSX',
+    2:48,
+    fem_2017_2019$Data,
+    'CASEID'
+  ),
+  on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
+]
+
+
+# create boolean variable for whether MONSX series variables indicate respondent had intercourse during month of interview
+fem_2017_2019_data <- fem_2017_2019_MONSX[
+  CMINTVW == CMMONSX,
+  .(
+    CASEID,
+    MONSX,
+    CMMONSX,
+    had_sex_this_month = MONSX == 1
+  )
+][
+  fem_2017_2019_data,
+  on = 'CASEID'
+]
+
+
+# create pivot table for METHX series variables
+fem_2017_2019_METHX <- create_pivot_table(
+  'METHX',
+  1:192,
+  fem_2017_2019$Data,
+  'CASEID'
+)
+
+fem_2017_2019_METHX[,
+  CMMHCALXID := ceiling(METHXID / 4)
+]
+
+fem_2017_2019_METHX <- fem_2017_2019_METHX[
+  create_pivot_table(
+    'CMMHCALX',
+    1:48,
+    fem_2017_2019$Data,
+    c('CASEID', 'CMINTVW', 'CMLSTYR')
+  ),
+  on = c('CASEID', 'CMMHCALXID')
+]
+
+
+# create boolean variable for whether METHX series variables indicate respondent used at least one method of contraception during month of interview
+fem_2017_2019_data <- fem_2017_2019_METHX[
+  CMINTVW == CMMHCALX,
+  .(
+    sterilized = any(METHX == 6, na.rm = TRUE)
+  ),
+  by = CASEID
+][
+  fem_2017_2019_data,
+  on = 'CASEID'
+]
+
+#fem_2017_2019_data[, sterilized := na_to_false(sterilized)]
+
+# create survey design object
+fem_2017_2019_svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = fem_2017_2019_data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+```
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019_data[
+  CURRPREG == 5 &
+    had_sex_this_month &
+    !is.element(RSTRSTAT, 1:2) &
+    !sterilized &
+    CURRMETH1 == 1,
+  table(WYNOTUSE)
+]
+
+fem_2017_2019_data[, tablena(WYNOTUSE)]
+```
+
+It appears the universe for `WYNOTUSE` is once again not as expected from the codebook.
+
+
+These are the rows for which there is a `WYNOTUSE` value, but aren't in the supposed universe for `WYNOTUSE`:
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019_data[
+  WYNOTUSE != 'Not Applicable',
+  .(
+    CASEID,
+    CMINTVW,
+    CURRPREG,
+    MONSX,
+    CMMONSX,
+    had_sex_this_month,
+    RSTRSTAT,
+    sterilized,
+    CURRMETH1,
+    universe = (
+      CURRPREG == 5 &
+      had_sex_this_month &
+      !is.element(RSTRSTAT, 1:2) &
+      !sterilized &
+      CURRMETH1 == 1
+    )
+  )
+][!(universe)] |> kable()
+```
+
+These rows have the correct values for `CURRPREG`, `CURRMETH1`, and whether sterilized based on `METHX` series. However, some of these respondents are have "No" or "Don't know" for whether had intercourse this month based on the `MONSX` series, and some of these respondents are determined to be nonsurgically sterile based on `RSTRSTAT`.
+
+These are the rows that are in the supposed universe for `WYNOTUSE`, but do not have a `WYNOTUSE` value:
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019_data[
+  WYNOTUSE == 'Not Applicable',
+  .(
+    CASEID,
+    CMINTVW,
+    CURRPREG,
+    MONSX,
+    CMMONSX,
+    had_sex_this_month,
+    RSTRSTAT,
+    sterilized,
+    CURRMETH1,
+    universe = (
+      CURRPREG == 5 &
+      had_sex_this_month &
+      !is.element(RSTRSTAT, 1:2) &
+      !sterilized &
+      CURRMETH1 == 1
+    )
+  )
+][(universe)] |> kable()
+```
+
+
+
+# Things to Investigate
+
+* Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
+* Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
+* Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
+    * Include tubal ligation and vasectomy reversal
+* Collect estimates into coherent report
+* Review "Not Ascertained" situations and follow up with NSFG administrators
+* Compare own report with published reports
+* Replicate analysis in SAS
+    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different

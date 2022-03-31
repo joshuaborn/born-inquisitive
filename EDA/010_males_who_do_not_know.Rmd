@@ -296,15 +296,3 @@ svyci(
   svymean
 ) |> rounded() |> kable()
 ```
-
-
-# Things to Investigate
-
-* Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
-* Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
-* Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
-    * Include tubal ligation and vasectomy reversal
-* Review "Not Ascertained" situations and follow up with NSFG administrators
-* Replicate analysis in SAS
-    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
-* Experiment using chi-squared tests whether it is worth combining with 2015-2017 data for more precise estimates
