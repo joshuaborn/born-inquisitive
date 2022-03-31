@@ -16,9 +16,11 @@ library(survey)
 
 i_am('EDA/011_why_not_use.Rmd')
 
+source(here('R/EDA_helpers.R'))
 source(here('R/data_table_helpers.R'))
 source(here('R/factor_helpers.R'))
 source(here('R/import.R'))
+source(here('R/survey_helpers.R'))
 
 opts_chunk$set(
   cache = TRUE,
@@ -40,10 +42,17 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CMINTVW,
   CURRMETH1,
   CURRPREG,
+  HPPREGQ = factorize(HPPREGQ, 'HPPREGQ', fem_2017_2019_formats),
+  MAINNOUSE  = factorize(MAINNOUSE, 'MAINNOUSE', fem_2017_2019_formats),
   RSTRSTAT,
   SECU,
   SEST,
   WGT2017_2019,
+  WHYNOUSING1 = factorize(WHYNOUSING1, 'WHYNOUSNG', fem_2017_2019_formats),
+  WHYNOUSING2 = factorize(WHYNOUSING2, 'WHYNOUSNG', fem_2017_2019_formats),
+  WHYNOUSING3 = factorize(WHYNOUSING3, 'WHYNOUSNG', fem_2017_2019_formats),
+  WHYNOUSING4 = factorize(WHYNOUSING4, 'WHYNOUSNG', fem_2017_2019_formats),
+  WHYNOUSING5 = factorize(WHYNOUSING5, 'WHYNOUSNG', fem_2017_2019_formats),
   WYNOTUSE = factorize(WYNOTUSE, 'Y1N5RDF', fem_2017_2019_formats)
 )])
 
@@ -115,7 +124,62 @@ fem_2017_2019_data <- fem_2017_2019_METHX[
   on = 'CASEID'
 ]
 
-#fem_2017_2019_data[, sterilized := na_to_false(sterilized)]
+fem_2017_2019_data[, sterilized := na_to_false(sterilized)]
+
+
+# create categorical variable for contraceptive nonuse status
+fem_2017_2019_data[, nonuse_status := factor(fcase(
+  WYNOTUSE == 'Not Applicable',
+    'Outside of universe: currently pregnant, did not have sex in month of interview, sterilized or sterile, or used a contraceptive method in month of interview',
+  WYNOTUSE == 'Yes',
+    'Trying to get pregnant',
+  HPPREGQ == 'Yes',
+    'Partner wants respondent to get pregnant',
+  WYNOTUSE == "Don't know" | HPPREGQ == "Don't know",
+    "Don't know",
+  WYNOTUSE == 'Refused' | HPPREGQ == 'Refused',
+    'Refused',
+  HPPREGQ == '(If volunteered:) no current partner',
+    'No current partner',
+  WHYNOUSING1 != 'Not Applicable',
+    'Other',
+  default = 'Slipped through!'
+))]
+
+
+# create boolean variables for each nonuse reason
+for (x in c(1:9, 98:99)) {
+  set(
+    fem_2017_2019_data,
+    j = sprintf('nonuse_reason%d', x),
+    value = has_level(fem_2017_2019_data$WHYNOUSING1, x) |
+      has_level(fem_2017_2019_data$WHYNOUSING2, x) |
+      has_level(fem_2017_2019_data$WHYNOUSING3, x) |
+      has_level(fem_2017_2019_data$WHYNOUSING4, x) |
+      has_level(fem_2017_2019_data$WHYNOUSING5, x)
+  )
+}
+
+
+# create variable counting number of nonuse reasons
+fem_2017_2019_data[
+  ,
+  nonuse_reason_count := rowSums(.SD),
+  .SDcols = patterns('^nonuse_reason')
+]
+
+
+# create categorical variable combining WHYNOUSING1 and MAINNOUSE
+fem_2017_2019_data[, nonuse_main_reason := factor(fcase(
+  is.na(nonuse_reason_count) | nonuse_reason_count == 0,
+    'Not Applicable',
+  nonuse_reason_count == 1,
+    as.character(WHYNOUSING1),
+  nonuse_reason_count > 1,
+    as.character(MAINNOUSE),
+  default = 'Slipped through'
+))]
+
 
 # create survey design object
 fem_2017_2019_svy <- svydesign(
@@ -197,16 +261,312 @@ fem_2017_2019_data[
 ][(universe)] |> kable()
 ```
 
+I'm going to proceed with this inconsistency for now, pretending that the universe for `WYNOTUSE` and related variables is as specified in the codebook.
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~I(WYNOTUSE != 'Not Applicable'),
+    fem_2017_2019_svy,
+    svytotal
+  )[level == TRUE],
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+)[, .(domain, title, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(WYNOTUSE),
+    subset(
+      fem_2017_2019_svy,
+      WYNOTUSE != 'Not Applicable'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by whether trying to become pregnant',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(WYNOTUSE),
+    subset(
+      fem_2017_2019_svy,
+      WYNOTUSE != 'Not Applicable'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by whether trying to become pregnant',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(HPPREGQ),
+    subset(
+      fem_2017_2019_svy,
+      WYNOTUSE != 'Yes' & WYNOTUSE != 'Not Applicable'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who are not trying to become pregnant, not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by whether partner wants them to become pregnant',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(HPPREGQ),
+    subset(
+      fem_2017_2019_svy,
+      WYNOTUSE != 'Yes' & WYNOTUSE != 'Not Applicable'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who are not trying to become pregnant, not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by whether partner wants them to become pregnant',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(nonuse_status),
+    fem_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by contraceptive nonuse status',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-load-data')}
+fem_2017_2019$Data[
+  !is.na(WYNOTUSE) & WYNOTUSE %in% c(5, 8, 9) &
+    !is.na(HPPREGQ) & HPPREGQ %in% c(5, 8, 9),
+  tablena(WHYNOUSING1)
+]
+
+fem_2017_2019$Data[
+  !is.na(WHYNOUSING1),
+  tablena(
+    !is.na(WYNOTUSE) & WYNOTUSE %in% c(5, 8, 9) &
+    !is.na(HPPREGQ) & HPPREGQ %in% c(5, 8, 9)
+  )
+]
+```
+
+```{r, dependson='fem-load-data'}
+dcast(
+  fem_2017_2019_formats[
+    format_name %in% c(
+      'WHYNOUSNG',
+      'MAINNOUSE'
+    )
+  ],
+  factor_value ~ format_name,
+  value.var = 'factor_label'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:9, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~nonuse_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          nonuse_status == 'Other'
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'WHYNOUSNG', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who are not trying to become pregnant, whose partners do not want them become pregnant, are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by reason for not using contraception, with multiple mentions counted multiple times',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:9, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~nonuse_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          nonuse_status == 'Other'
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'WHYNOUSNG', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who are not trying to become pregnant, whose partners do not want them become pregnant, are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by reason for not using contraception, with multiple mentions counted multiple times',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(WHYNOUSING1),
+    subset(
+      fem_2017_2019_svy,
+      nonuse_status == 'Other' &
+        nonuse_reason_count == 1
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who only one reason for not using contraception, who are not trying to become pregnant, whose partners do not want them become pregnant, are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by reason for not using contraception',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(WHYNOUSING1),
+    subset(
+      fem_2017_2019_svy,
+      nonuse_status == 'Other' &
+        nonuse_reason_count == 1
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who have only one reason for not using contraception, who are not trying to become pregnant, whose partners do not want them become pregnant, are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by reason for not using contraception',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  nonuse_reason_count > 1,
+  tablena(MAINNOUSE)
+]
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  MAINNOUSE != 'Not Applicable',
+  tablena(nonuse_reason_count)
+]
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(MAINNOUSE),
+    subset(
+      fem_2017_2019_svy,
+      nonuse_status == 'Other' &
+        nonuse_reason_count > 1
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who have more than one reason for not using contraception, who are not trying to become pregnant, whose partners do not want them become pregnant, are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by main reason for not using contraception',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(MAINNOUSE),
+    subset(
+      fem_2017_2019_svy,
+      nonuse_status == 'Other' &
+        nonuse_reason_count > 1
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who have more than one reason for not using contraception, who are not trying to become pregnant, whose partners do not want them become pregnant, are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by main reason for not using contraception',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(nonuse_main_reason),
+    subset(
+      fem_2017_2019_svy,
+      nonuse_status == 'Other'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who are not trying to become pregnant, whose partners do not want them become pregnant, are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by main or only reason for not using contraception',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(nonuse_main_reason),
+    subset(
+      fem_2017_2019_svy,
+      nonuse_status == 'Other' &
+        nonuse_reason_count > 1
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who are not trying to become pregnant, whose partners do not want them become pregnant, are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview',
+  title = 'by main or only reason for not using contraception',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
 
 
 # Things to Investigate
 
-* Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
-* Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
+* EH-2 WHYNOTPG
+* Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP, Male: None)
 * Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
     * Include tubal ligation and vasectomy reversal
 * Collect estimates into coherent report
-* Review "Not Ascertained" situations and follow up with NSFG administrators
+* Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Compare own report with published reports
 * Replicate analysis in SAS
     * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
