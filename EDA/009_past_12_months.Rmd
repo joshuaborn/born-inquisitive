@@ -2240,6 +2240,44 @@ collect_estimate(
 
 #### Past 4 Weeks
 
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(condom_use_quotient),
+    subset(
+      fem_2017_2019_svy,
+      !is.na(PST4WKSX) &
+        PST4WKSX > 0 &
+        past2m_meth4 &
+        past2m_count == 1
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who had intercourse with a male in past 4 weeks and whose only method of contraception in past 2 months is condoms',
+  title = 'by how frequently condoms were used in past 4 weeks'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(condom_use_quotient),
+    subset(
+      fem_2017_2019_svy,
+      !is.na(PST4WKSX) &
+        PST4WKSX > 0 &
+        past2m_meth4 &
+        past2m_count == 1
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who had intercourse with a male in past 4 weeks and whose only method of contraception in past 2 months is condoms',
+  title = 'by how frequently condoms were used in past 4 weeks'
+) |> kable()
+```
+
 
 ### Males
 
@@ -2284,7 +2322,6 @@ collect_estimate(
 
 # Things to Investigate
 
-* Among those who used condoms in previous 12 months, how frequently were condoms used, in the past 12 months and past 4 weeks?
 * Can the difference in female and male contraceptive use rates be due to males not being aware of contraception?
 * Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
 * Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
