@@ -319,13 +319,7 @@ collect_estimate(
 
 ## Contraceptive Use Rate
 
-```{r, dependson=c('fem-process-data')}
-#svyratio(
-#  ~I(curr_use == 'Used at least one contraceptive method at last intercourse'),
-#  ~I(curr_use == 'Used at least one contraceptive method at last intercourse' | curr_use == 'Otherwise did not use contraception at last intercourse'),
-#  fem_2017_2019_svy
-#)
-
+```{r, dependson=c('male-process-data')}
 svyci(
   ~I(
     curr_use == 'Used at least one contraceptive method at last intercourse'
@@ -338,7 +332,7 @@ svyci(
 ) |> rounded() |> kable()
 ```
 
-```{r, dependson=c('fem-process-data')}
+```{r, dependson=c('male-process-data')}
 svyci(
   ~I(
     curr_use == 'Used at least one contraceptive method at last intercourse'

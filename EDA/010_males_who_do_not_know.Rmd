@@ -16,8 +16,10 @@ library(survey)
 
 i_am('EDA/010_males_who_do_not_know.Rmd')
 
+source(here('R/EDA_helpers.R'))
 source(here('R/factor_helpers.R'))
 source(here('R/import.R'))
+source(here('R/survey_helpers.R'))
 
 opts_chunk$set(
   cache = TRUE,
@@ -36,6 +38,8 @@ male_2017_2019_formats <- male_2017_2019$Formats
 
 ```{r male-process-data, dependson=c('male-load-data')}
 male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  CWPLMET201 = factorize(CWPLMET201, 'MTHDSV3F', male_2017_2019_formats),
+  CWPLUSE2 = factorize(CWPLUSE2, 'Y1N5RDF', male_2017_2019_formats),
   CWPPOSS = factorize(CWPPOSS, 'Y1N5RDF', male_2017_2019_formats),
   CWPPRGNW = factorize(CWPPRGNW, 'Y1N5RDF', male_2017_2019_formats),
   CWPTRYPG = factorize(CWPTRYPG, 'Y1N5RDF', male_2017_2019_formats),
@@ -48,6 +52,9 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
   P1CURRWIFE = factorize(P1CURRWIFE, 'Y1N5RDF', male_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'N0Y1CF', male_2017_2019_formats),
   PXCPREG = factorize(PXCPREG, 'Y1N5RDF', male_2017_2019_formats),
+  PXLPMETH01 = factorize(PXLPMETH01, 'MTHDSV3F', male_2017_2019_formats),
+  PXLPUSE = factorize(PXLPUSE, 'Y1N5RDF', male_2017_2019_formats),
+  PXLSXPRB = factorize(PXLSXPRB, 'Y1N5RDF', male_2017_2019_formats),
   PXTRYING = factorize(PXTRYING, 'Y1N5RDF', male_2017_2019_formats),
   RSURGSTR  = factorize(RSURGSTR, 'N0Y1RDF', male_2017_2019_formats),
   SECU,
@@ -60,7 +67,7 @@ male_2017_2019_data <- copy(male_2017_2019$Data[, .(
 for (x in 1:13) {
   set(
     male_2017_2019_data,
-    j = sprintf('using3m_meth%d', x),
+    j = sprintf('last3m_meth%d', x),
     value = has_level(male_2017_2019_data$METH3M1, x) |
       has_level(male_2017_2019_data$METH3M2, x) |
       has_level(male_2017_2019_data$METH3M3, x) |
@@ -69,31 +76,31 @@ for (x in 1:13) {
 }
 
 # count any respondents who are sexually active and who have an active vasectomy as using vasectomy as a contraceptive method
-male_2017_2019_data[, using3m_meth3 := fifelse(
+male_2017_2019_data[, last3m_meth3 := fifelse(
   SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
   TRUE,
-  using3m_meth3
+  last3m_meth3
 )]
 
 # count any respondents who are sexually active and who are married or cohabitating and whose last intercourse was with wife or cohabitating partner who has active tubal ligation
-male_2017_2019_data[, using3m_meth5 := fifelse(
+male_2017_2019_data[, last3m_meth5 := fifelse(
   SEX3MO == 'YES, HAD INTERCOURSE' &
     (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
     PSURGSTR == 'YES',
   TRUE,
-  using3m_meth5
+  last3m_meth5
 )]
 
 # create variable counting number of current methods
 male_2017_2019_data[
   ,
   meth3m_count := rowSums(.SD),
-  .SDcols = patterns('^using3m_meth')
+  .SDcols = patterns('^last3m_meth')
 ]
 
-# set master categorization for contraceptive use
+# create categorical variable for contraceptive use at last intercourse (in past 3 months)
 male_2017_2019_data[,
-  curr_use := factor(fcase(
+  last_used_3m := factor(fcase(
     meth3m_count > 0,
       'Used at least one contraceptive method at last intercourse',
     SEX3MO != 'YES, HAD INTERCOURSE',
@@ -110,6 +117,52 @@ male_2017_2019_data[,
   ))
 ]
 
+
+# create categorical variable for whether don't know if partner used contraceptive at last intercourse
+male_2017_2019_data[,
+  do_not_know_last_used_3m := factor(fcase(
+    meth3m_count > 0,
+      'Used at least one contraceptive method at last intercourse',
+    SEX3MO != 'YES, HAD INTERCOURSE',
+      'Did not have sexual intercourse with female in past 3 months',
+    CWPLUSE2 == "Don't know" |
+      CWPLMET201 == "Don't know" |
+      PXLPUSE == "Don't know" |
+      PXLPMETH01 == "Don't know" |
+      PXLSXPRB == 'Yes' |
+      PXLSXPRB == "Don't know",
+      "Don't know if partner used contraception at last intercourse",
+    default = 'Did not use contraception at last intercourse'
+  ))
+]
+
+# create categorical variable for contraceptive use at last intercourse (in past 3 months), taking account "don't know" cases
+male_2017_2019_data[,
+  last_used_3m_2 := factor(fcase(
+    meth3m_count > 0,
+      'Used at least one contraceptive method at last intercourse',
+    SEX3MO != 'YES, HAD INTERCOURSE',
+      'Did not have sexual intercourse with female in past 3 months',
+    PXCPREG == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPRGNW == 'Yes'),
+      'Last intercourse was with partner who is pregnant',
+    PXTRYING == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPTRYPG == 'Yes'),
+      'Last intercourse was with partner who is trying to conceive',
+    FATHPOSS == 'No',
+      'Physically unable to conceive',
+    (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPOSS == 'No',
+      'Last intercourse was with wife or cohabitating partner who is physically unable to concieve',
+    CWPLUSE2 == "Don't know" |
+      CWPLMET201 == "Don't know" |
+      PXLPUSE == "Don't know" |
+      PXLPMETH01 == "Don't know" |
+      PXLSXPRB == 'Yes' |
+      PXLSXPRB == "Don't know",
+      "Don't know if partner used contraception at last intercourse",
+    default = 'Otherwise did not use contraception at last intercourse'
+  ))
+]
+
+
 # create survey design object
 male_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -121,17 +174,132 @@ male_2017_2019_svy <- svydesign(
 ```
 
 
+```{r, dependson='male-process-data'}
+male_2017_2019_data[
+  last_used_3m == 'Otherwise did not use contraception at last intercourse',
+  .N
+] |> kable()
+```
 
+```{r, dependson='male-process-data'}
+male_2017_2019_data[
+  last_used_3m == 'Otherwise did not use contraception at last intercourse',
+  tablena(CWPLUSE2)
+] |> kable()
+```
+
+```{r, dependson='male-process-data'}
+male_2017_2019_data[
+  last_used_3m == 'Otherwise did not use contraception at last intercourse',
+  tablena(PXLPUSE)
+] |> kable()
+```
+
+```{r, dependson='male-process-data'}
+male_2017_2019_data[
+  last_used_3m == 'Otherwise did not use contraception at last intercourse',
+  tablena(PXLPMETH01)
+] |> kable()
+```
+
+```{r, dependson='male-process-data'}
+male_2017_2019_data[
+  last_used_3m == 'Otherwise did not use contraception at last intercourse',
+  tablena(PXLSXPRB)
+] |> kable()
+```
+
+
+```{r, dependson='male-process-data'}
+male_2017_2019_data[
+  last_used_3m == 'Otherwise did not use contraception at last intercourse' &
+    CWPLUSE2 == 'Not Applicable' &
+    CWPLMET201 == 'Not Applicable' &
+    PXLPUSE == 'Not Applicable' &
+    PXLPMETH01 == 'Not Applicable' &
+    PXLSXPRB == 'Not Applicable',
+  .N
+]
+```
+
+Together these 5 variables cover all respondents who otherwise did not use contraception at last intercourse.
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(do_not_know_last_used_3m),
+    subset(
+      male_2017_2019_svy,
+      last_used_3m == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who had intercourse with a female in the past 3 months and did not report use of a contraceptive method, without a reason',
+  title = 'by whether do not know if partner used contraception'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(do_not_know_last_used_3m),
+    subset(
+      male_2017_2019_svy,
+      last_used_3m == 'Otherwise did not use contraception at last intercourse'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who had intercourse with a female in the past 3 months and did not report use of a contraceptive method, without a reason',
+  title = 'by whether do not know if partner used contraception'
+) |> kable()
+```
+
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~last_used_3m_2,
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'by current contraceptive status, taking into account those who do not know',
+)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~last_used_3m_2,
+    male_2017_2019_svy,
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'by current contraceptive status, taking into account those who do not know',
+)[, .(level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+svyci(
+  ~I(
+    last_used_3m_2 == 'Used at least one contraceptive method at last intercourse'
+  ),
+  subset(
+    male_2017_2019_svy,
+    last_used_3m_2 == 'Used at least one contraceptive method at last intercourse' |
+      last_used_3m_2 == 'Otherwise did not use contraception at last intercourse'
+  ),
+  svymean
+) |> rounded() |> kable()
+```
 
 
 # Things to Investigate
 
-* Can the difference in female and male contraceptive use rates be due to males not being aware of contraception?
-    * CWPLUSE2
-    * CWPLMET201
-    * PXLPUSE
-    * PXLPMETH01
-    * PXLSXPRB
 * Among those at risk for unintended pregnancy, why not using contraception (Fem: EH-2, Male: None)
 * Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP & EH-2 WHYNOTPG, Male: None)
 * Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
