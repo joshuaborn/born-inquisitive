@@ -2223,21 +2223,86 @@ collect_estimate(
 ```
 
 
-* BC-8a P12MOCONO
-* BC-8b P12MOCON How many times used condom during sex last 12 mons
-* BC-9 SEXFREQ # times had sex with female in last 4 weeks
-* BC-10 CONFREQ # times used condom when had sex with female in last 4 wks
-* CF-4 CONDFREQ Percent of time R and CWP used a condom in last 12 mos
-* DG-4 PXCONFRQ  Last 12 mos: percent of time R & P used condom (most recent partner)
-* DG-4 PXCONFRQ2 Last 12 mos: % of time R & 2nd-to-last P used condom
-* DG-4 PXCONFRQ3 Last 12 mos: % of time R & 3rd-to-last P used condom
-
-
 ## Condom, Exclusive Use
 
 ### Females
 
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(P12MOCON),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO &
+        anyuse12m_meth4 &
+        anyuse12m_count == 1
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females who have had intercourse with a male in the past 12 months and whose only method of contraception is condoms',
+  title = 'by how frequently condoms were used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(P12MOCON),
+    subset(
+      fem_2017_2019_svy,
+      SEX12MO &
+        anyuse12m_meth4 &
+        anyuse12m_count == 1
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females who have had intercourse with a male in the past 12 months and whose only method of contraception is condoms',
+  title = 'by how frequently condoms were used in past 12 months'
+) |> kable()
+```
+
+#### Past 4 Weeks
+
+
 ### Males
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_condom_consistency),
+    subset(
+      male_2017_2019_svy,
+      SEX12MO == 'YES, HAD INTERCOURSE' &
+        anyuse12m_meth1 &
+        anyuse12m_count == 1
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who had intercourse with a female in the past 12 months and whose only method of contraception is condoms',
+  title = 'by how frequently condoms were used in past 12 months'
+) |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(mos12_condom_consistency),
+    subset(
+      male_2017_2019_svy,
+      SEX12MO == 'YES, HAD INTERCOURSE' &
+        anyuse12m_meth1 &
+        anyuse12m_count == 1
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males who had intercourse with a female and used a condom in the past 12 months',
+  title = 'by how frequently condoms were used in past 12 months'
+) |> kable()
+```
 
 
 
