@@ -119,6 +119,25 @@ for (x in c(1:19, 22:24)) {
 }
 
 
+# create boolean variables for whether each specific method was used in month of interview or previous month
+fem_2017_2019_METHX_indices <- c(3:21, 25:26)
+
+for (x in fem_2017_2019_METHX_indices) {
+  set(
+    fem_2017_2019_data,
+    j = sprintf('past2m_meth%d', x),
+    value = has_level(fem_2017_2019_data$CURRMETH1, x) |
+      has_level(fem_2017_2019_data$CURRMETH2, x) |
+      has_level(fem_2017_2019_data$CURRMETH3, x) |
+      has_level(fem_2017_2019_data$CURRMETH4, x) |
+      has_level(fem_2017_2019_data$LSTMONMETH1, x) |
+      has_level(fem_2017_2019_data$LSTMONMETH2, x) |
+      has_level(fem_2017_2019_data$LSTMONMETH3, x) |
+      has_level(fem_2017_2019_data$LSTMONMETH4, x)
+  )
+}
+
+
 # create pivot tables for contraceptive use in past 12 months
 create_pivot_table <- function(
   column_prefix,
@@ -173,9 +192,8 @@ fem_2017_2019_METHX <- fem_2017_2019_METHX[
   on = c('CASEID', 'CMMHCALXID')
 ]
 
-# do a group-by query to see if each of the methods have been used within the past 12 months and join to main data table
-fem_2017_2019_METHX_indices <- c(3:21, 25:26)
 
+# do a group-by query to see if each of the methods have been used within the past 12 months and join to main data table
 names(fem_2017_2019_METHX_indices) <- paste(
   'anyuse12m_meth',
   fem_2017_2019_METHX_indices,
@@ -236,7 +254,7 @@ fem_2017_2019_data[
 ]
 
 
-# count any respondents  whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
+# count any respondents whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
 fem_2017_2019_data[, `:=`(
   using3m_meth3 = fifelse(
     SEX3MO == 'YES' & PSURGSTR == 'YES' & (
@@ -277,6 +295,14 @@ fem_2017_2019_data[
   ,
   meth3m_count := rowSums(.SD),
   .SDcols = patterns('^using3m_meth')
+]
+
+
+# create variable counting number of methods used in past 2 months
+fem_2017_2019_data[
+  ,
+  past2m_count := rowSums(.SD),
+  .SDcols = patterns('^past2m_meth')
 ]
 
 
@@ -1822,16 +1848,7 @@ Unfortunately, the universe of `PST4WKSX` does not appear to exactly what is spe
 
 ```{r, dependson='fem-process-data'}
 fem_2017_2019_data[
-  MISSPILL == 'Not Applicable' & (
-    CURRMETH1 == 3 |
-    CURRMETH2 == 3 |
-    CURRMETH3 == 3 |
-    CURRMETH4 == 3 |
-    LSTMONMETH1 == 3 |
-    LSTMONMETH2 == 3 |
-    LSTMONMETH3 == 3 |
-    LSTMONMETH4 == 3
-  ),
+  MISSPILL == 'Not Applicable' & past2m_meth3,
   .N
 ]
 ```
@@ -1844,16 +1861,7 @@ collect_estimate(
     ~I(MISSPILL == 'Not Applicable'),
     subset(
       fem_2017_2019_svy,
-        (
-          CURRMETH1 == 3 |
-          CURRMETH2 == 3 |
-          CURRMETH3 == 3 |
-          CURRMETH4 == 3 |
-          LSTMONMETH1 == 3 |
-          LSTMONMETH2 == 3 |
-          LSTMONMETH3 == 3 |
-          LSTMONMETH4 == 3
-        )
+      past2m_meth3
     ),
     svytotal
   ),
@@ -1869,14 +1877,7 @@ collect_estimate(
     ~factor(pill_consistency),
     subset(
       fem_2017_2019_svy,
-      CURRMETH1 == 3 |
-        CURRMETH2 == 3 |
-        CURRMETH3 == 3 |
-        CURRMETH4 == 3 |
-        LSTMONMETH1 == 3 |
-        LSTMONMETH2 == 3 |
-        LSTMONMETH3 == 3 |
-        LSTMONMETH4 == 3
+      past2m_meth3
     ),
     svytotal
   ),
@@ -1892,14 +1893,7 @@ collect_estimate(
     ~factor(pill_consistency),
     subset(
       fem_2017_2019_svy,
-      CURRMETH1 == 3 |
-        CURRMETH2 == 3 |
-        CURRMETH3 == 3 |
-        CURRMETH4 == 3 |
-        LSTMONMETH1 == 3 |
-        LSTMONMETH2 == 3 |
-        LSTMONMETH3 == 3 |
-        LSTMONMETH4 == 3
+      past2m_meth3
     ),
     svymean
   ),
@@ -2126,16 +2120,7 @@ collect_estimate(
       fem_2017_2019_svy,
       !is.na(PST4WKSX) &
         PST4WKSX > 0 &
-        (
-          CURRMETH1 == 4 |
-          CURRMETH2 == 4 |
-          CURRMETH3 == 4 |
-          CURRMETH4 == 4 |
-          LSTMONMETH1 == 4 |
-          LSTMONMETH2 == 4 |
-          LSTMONMETH3 == 4 |
-          LSTMONMETH4 == 4
-        )
+        past2m_meth4
     ),
     svytotal
   ),
@@ -2153,16 +2138,7 @@ collect_estimate(
       fem_2017_2019_svy,
       !is.na(PST4WKSX) &
         PST4WKSX > 0 &
-        (
-          CURRMETH1 == 4 |
-          CURRMETH2 == 4 |
-          CURRMETH3 == 4 |
-          CURRMETH4 == 4 |
-          LSTMONMETH1 == 4 |
-          LSTMONMETH2 == 4 |
-          LSTMONMETH3 == 4 |
-          LSTMONMETH4 == 4
-        )
+        past2m_meth4
     ),
     svymean
   ),
