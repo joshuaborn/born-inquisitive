@@ -17,6 +17,7 @@ library(survey)
 i_am('EDA/013_ever_used_discontinued.Rmd')
 
 source(here('R/EDA_helpers.R'))
+source(here('R/data_table_helpers.R'))
 source(here('R/factor_helpers.R'))
 source(here('R/import.R'))
 source(here('R/survey_helpers.R'))
@@ -32,16 +33,83 @@ opts_chunk$set(
 
 ```{r fem-load-data}
 fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
-fem_2017_2019_formats <- fem_2017_2019$Formats
 ```
 
 ```{r fem-process-data, dependson=c('fem-load-data')}
+# create new format encoding for everused_meth series
+fem_everused_format <- copy(fem_2017_2019$Formats[
+  (format_name == 'METHHXF' & factor_value %in% c(3:21, 25:26, 98:99)) |
+    (format_name == 'OTHRMETHF' & factor_value == 24)
+][
+  order(factor_value)
+])
+
+fem_everused_format[, format_name := 'everused_meth']
+
+fem_2017_2019_formats <- rbindlist(list(
+  fem_2017_2019$Formats,
+  fem_everused_format
+))
+
+
+# copy working data table
 fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   CASEID,
+  CONDOMR,
+  DEPOPROV,
+  ESSURE,
+  EVERTUBS,
+  HADSEX = factorize(HADSEX, 'HADSEX', fem_2017_2019_formats),
+  MORNPILL,
+  OTHRMETH01,
+  OTHRMETH02,
+  OTHRMETH03,
+  OTHRMETH04,
+  OTHRMETH05,
+  OTHRMETH06,
+  OTHRMETH07,
+  PATCH,
+  PILLR,
+  RHYTHM,
+  RING,
   SECU,
   SEST,
-  WGT2017_2019
+  TEMPSAFE,
+  VASECTMY,
+  WGT2017_2019,
+  WIDRAWAL
 )])
+
+
+# create boolean variables for whether ever used specific contraceptive methods
+fem_2017_2019_data[, `:=`(
+  everused_meth3  = na_to_false(PILLR == 1),
+  everused_meth4  = na_to_false(CONDOMR == 1),
+  everused_meth5  = na_to_false(VASECTMY == 1),
+  everused_meth6  = na_to_false(EVERTUBS %in% c(1, 4) | ESSURE == 1),
+  everused_meth7  = na_to_false(WIDRAWAL == 1),
+  everused_meth8  = na_to_false(DEPOPROV == 1),
+  everused_meth10 = na_to_false(RHYTHM == 1),
+  everused_meth11 = na_to_false(TEMPSAFE == 1),
+  everused_meth20 = na_to_false(MORNPILL == 1),
+  everused_meth25 = na_to_false(PATCH == 1),
+  everused_meth26 = na_to_false(RING == 1)
+)]
+
+for (x in c(9, 12:19, 21, 24)) {
+  fem_2017_2019_data[
+    ,
+    (sprintf('everused_meth%d', x)) := na_to_false(
+      has_level(OTHRMETH01, x) |
+      has_level(OTHRMETH02, x) |
+      has_level(OTHRMETH03, x) |
+      has_level(OTHRMETH04, x) |
+      has_level(OTHRMETH05, x) |
+      has_level(OTHRMETH06, x) |
+      has_level(OTHRMETH07, x)
+    )
+  ]
+}
 
 
 # create survey design object
@@ -55,35 +123,183 @@ fem_2017_2019_svy <- svydesign(
 ```
 
 
+# Encoding of `OTHRMETH` Series
+
+```{r, dependson='fem-load-data'}
+dcast(
+  fem_2017_2019_formats[
+    format_name %in% c(
+      'OTHRMETHF',
+      'METHHXF'
+    )
+  ],
+  factor_value ~ format_name,
+  value.var = 'factor_label'
+) |> kable()
+```
+
+The `OTHRMETH` series uses the `OTHERMETHF` format, which is mostly a subset of the `METHHXF` format. The only exception is 24 Lunelle.
+
+
+# Ever Used Method
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(3:21, 24:26),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~everused_meth%d', x)),
+        fem_2017_2019_svy,
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'everused_meth', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by whether ever used each contraception method',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(3:21, 24:26),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~everused_meth%d', x)),
+        fem_2017_2019_svy,
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'everused_meth', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by whether ever used each contraception method',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
+# Females Who Have Ever Had Intercourse with a Male
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(HADSEX),
+    fem_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by whether ever had intercourse with a male',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(HADSEX),
+    fem_2017_2019_svy,
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by whether ever had intercourse with a male',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
+# Had Sex and Ever Used Method
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(3:21, 24:26),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~everused_meth%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          HADSEX == 'YES, R EVER HAD INTERCOURSE'
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'everused_meth', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have had sexual intercourse with a male',
+  title = 'by whether ever used each contraception method',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(3:21, 24:26),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~everused_meth%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          HADSEX == 'YES, R EVER HAD INTERCOURSE'
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'everused_meth', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have had sexual intercourse with a male',
+  title = 'by whether ever used each contraception method',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
 
 
 # Variables for Ever Used and Ever Discontinued
 
 * Whether ever had tubal ligation and whether ever reversed
-    * EVERTUBS
     * REVSTUBL
 * Whether ever had vasectomy and whether ever reversed (male table)
     * EVEROPER
     * RVRSVAS
 * Whether ever used
-    * PILLR
-    * CONDOMR
-    * VASECTMY
-    * DEPOPROV
-    * WIDRAWAL
-    * RHYTHM
-    * SDAYCBDS
-    * TEMPSAFE
-    * PATCH
-    * RING
-    * MORNPILL
-    * OTHRMETH01
-    * OTHRMETH02
-    * OTHRMETH03
-    * OTHRMETH04
-    * OTHRMETH05
-    * OTHRMETH06
-    * OTHRMETH07
     * Break out kind of IUD?
         * EVIUDTYP1
         * EVIUDTYP2
@@ -109,7 +325,9 @@ fem_2017_2019_svy <- svydesign(
     * IUD REASIUD01-08 and STOPIUD1-5
 
 
-# Things to Investigate
+
+
+# Things to Do
 
 * Collect estimates into coherent report
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
