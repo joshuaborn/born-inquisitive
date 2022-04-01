@@ -480,11 +480,95 @@ collect_estimate(
 
 
 
+# Vasectomy Reversal
+
+```{r male-load-data, depeondson='setup'}
+male_2017_2019 <- load_NSFG_data('2017_2019', 'Male')
+male_2017_2019_formats <- male_2017_2019$Formats
+```
+
+```{r male-process-data, dependson=c('male-load-data')}
+male_2017_2019_data <- copy(male_2017_2019$Data[, .(
+  RVRSVAS = factorize(RVRSVAS, 'Y1N5RDF', male_2017_2019_formats),
+  SECU,
+  SEST,
+  TYPEOPER = factorize(TYPEOPER, 'TYPEOPER', male_2017_2019_formats),
+  WGT2017_2019
+)])
+
+
+# create survey design object
+male_2017_2019_svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = male_2017_2019_data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(TYPEOPER == 'Vasectomy'),
+    male_2017_2019_svy,
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'who have ever had a vasectomy',
+)[, .(domain, title, type, level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(TYPEOPER == 'Vasectomy'),
+    male_2017_2019_svy,
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'males aged 15-49 living in households in the United States',
+  title = 'who have ever had a vasectomy',
+)[, .(domain, title, type, level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(RVRSVAS),
+    subset(
+      male_2017_2019_svy,
+      TYPEOPER == 'Vasectomy'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'males who have ever had a vasectomy',
+  title = 'by whether ever had a reversal procedure',
+)[, .(domain, title, type, level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('male-process-data')}
+collect_estimate(
+  svyci(
+    ~I(RVRSVAS == 'Yes'),
+    subset(
+      male_2017_2019_svy,
+      TYPEOPER == 'Vasectomy'
+    ),
+    svyciprop
+  ),
+  type = 'proportion',
+  domain = 'males who have ever had a vasectomy',
+  title = 'who ever had a reversal procedure',
+)[, .(domain, title, type, level, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
+
 # Variables for Ever Used and Ever Discontinued
 
-* Whether ever had vasectomy and whether ever reversed (male table)
-    * EVEROPER
-    * RVRSVAS
 * Reason for dissatisfaction leading to discontinuation
     * Pill REASPILL01-09 and STOPPILL1-6
     * Condom REASCONDO01-07
