@@ -1,0 +1,118 @@
+---
+title: "Whether Ever Used or Discontinued Specific Methods"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+library(survey)
+
+i_am('EDA/013_ever_used_discontinued.Rmd')
+
+source(here('R/EDA_helpers.R'))
+source(here('R/factor_helpers.R'))
+source(here('R/import.R'))
+source(here('R/survey_helpers.R'))
+
+opts_chunk$set(
+  cache = TRUE,
+  echo = TRUE,
+  fig.height = 8,
+  fig.width = 12,
+  warning = FALSE
+)
+```
+
+```{r fem-load-data}
+fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
+fem_2017_2019_formats <- fem_2017_2019$Formats
+```
+
+```{r fem-process-data, dependson=c('fem-load-data')}
+fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
+  CASEID,
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
+
+
+# create survey design object
+fem_2017_2019_svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = fem_2017_2019_data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+```
+
+
+
+
+# Variables for Ever Used and Ever Discontinued
+
+* Whether ever had tubal ligation and whether ever reversed
+    * EVERTUBS
+    * REVSTUBL
+* Whether ever had vasectomy and whether ever reversed (male table)
+    * EVEROPER
+    * RVRSVAS
+* Whether ever used
+    * PILLR
+    * CONDOMR
+    * VASECTMY
+    * DEPOPROV
+    * WIDRAWAL
+    * RHYTHM
+    * SDAYCBDS
+    * TEMPSAFE
+    * PATCH
+    * RING
+    * MORNPILL
+    * OTHRMETH01
+    * OTHRMETH02
+    * OTHRMETH03
+    * OTHRMETH04
+    * OTHRMETH05
+    * OTHRMETH06
+    * OTHRMETH07
+    * Break out kind of IUD?
+        * EVIUDTYP1
+        * EVIUDTYP2
+        * EVIUDTYP3
+* Whether ever discontinued due to dissatisfaction
+    * METHSTOP01
+    * METHSTOP02
+    * METHSTOP03
+    * METHSTOP04
+    * METHSTOP05
+    * METHSTOP06
+    * METHSTOP07
+    * METHSTOP08
+    * METHSTOP09
+    * METHSTOP10
+    * Break out kind of IUD?
+        * TYPEIUD_1
+        * TYPEIUD_2
+        * TYPEIUD_3
+* Reason for dissatisfaction leading to discontinuation
+    * Pill REASPILL01-09 and STOPPILL1-6
+    * Condom REASCONDO01-07
+    * IUD REASIUD01-08 and STOPIUD1-5
+
+
+# Things to Investigate
+
+* Collect estimates into coherent report
+* Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
+* Compare own report with published reports
+* Replicate analysis in SAS
+    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
