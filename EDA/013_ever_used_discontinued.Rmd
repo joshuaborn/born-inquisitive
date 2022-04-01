@@ -71,6 +71,16 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   EVIUDTYP2,
   EVIUDTYP3,
   HADSEX = factorize(HADSEX, 'HADSEX', fem_2017_2019_formats),
+  METHSTOP01,
+  METHSTOP02,
+  METHSTOP03,
+  METHSTOP04,
+  METHSTOP05,
+  METHSTOP06,
+  METHSTOP07,
+  METHSTOP08,
+  METHSTOP09,
+  METHSTOP10,
   MORNPILL,
   OTHRMETH01,
   OTHRMETH02,
@@ -86,6 +96,9 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   SECU,
   SEST,
   TEMPSAFE,
+  TYPEIUD_1,
+  TYPEIUD_2,
+  TYPEIUD_3,
   VASECTMY,
   WGT2017_2019,
   WIDRAWAL
@@ -139,6 +152,44 @@ for (x in c(1:2)) {
 }
 
 
+# create boolean variables for whether specific contraceptive methods were discontinued due to dissatisfaction
+for (x in c(3:18, 20:21, 24:26)) {
+  fem_2017_2019_data[
+    ,
+    (sprintf('everquit_meth%d', x)) := na_to_false(
+      has_level(METHSTOP01, x) |
+      has_level(METHSTOP02, x) |
+      has_level(METHSTOP03, x) |
+      has_level(METHSTOP04, x) |
+      has_level(METHSTOP05, x) |
+      has_level(METHSTOP06, x) |
+      has_level(METHSTOP07, x) |
+      has_level(METHSTOP08, x) |
+      has_level(METHSTOP09, x) |
+      has_level(METHSTOP10, x)
+    )
+  ]
+}
+
+for (x in c(1:2)) {
+  fem_2017_2019_data[
+    ,
+    (sprintf('everquit_meth%d', 30 + x)) := na_to_false(
+      has_level(TYPEIUD_1, x) |
+      has_level(TYPEIUD_2, x) |
+      has_level(TYPEIUD_3, x)
+    )
+  ]
+}
+
+fem_2017_2019_data[
+  ,
+  everquit_meth33 := na_to_false(
+    has_level(TYPEIUD_1, c(3, 9)) |
+    has_level(TYPEIUD_2, c(3, 9)) |
+    has_level(TYPEIUD_3, c(3, 9))
+)]
+
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -157,7 +208,8 @@ dcast(
   fem_2017_2019_formats[
     format_name %in% c(
       'OTHRMETHF',
-      'METHHXF'
+      'METHHXF',
+      'METHSTOPF'
     )
   ],
   factor_value ~ format_name,
@@ -317,6 +369,65 @@ collect_estimate(
 ```
 
 
+# Ever Discontinued Due to Dissatisfication
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(3:18, 21, 24:26, 31:33),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~everquit_meth%d', x)),
+        fem_2017_2019_svy,
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'everused_meth', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females aged 15-49 living in households in the United States',
+  title = 'by whether ever discontinued a contraception method due to dissatisfaction',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(3:18, 21, 24:26, 31:33),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~everquit_meth%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          fem_2017_2019_data[, get(sprintf('everused_meth%d', x))]
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'everused_meth', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who used the specific method of contraception',
+  title = 'by whether ever discontinued due to dissatisfaction',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
 
 
 # Variables for Ever Used and Ever Discontinued
@@ -326,21 +437,6 @@ collect_estimate(
 * Whether ever had vasectomy and whether ever reversed (male table)
     * EVEROPER
     * RVRSVAS
-* Whether ever discontinued due to dissatisfaction
-    * METHSTOP01
-    * METHSTOP02
-    * METHSTOP03
-    * METHSTOP04
-    * METHSTOP05
-    * METHSTOP06
-    * METHSTOP07
-    * METHSTOP08
-    * METHSTOP09
-    * METHSTOP10
-    * Break out kind of IUD?
-        * TYPEIUD_1
-        * TYPEIUD_2
-        * TYPEIUD_3
 * Reason for dissatisfaction leading to discontinuation
     * Pill REASPILL01-09 and STOPPILL1-6
     * Condom REASCONDO01-07
