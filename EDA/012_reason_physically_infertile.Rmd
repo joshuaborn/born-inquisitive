@@ -47,6 +47,8 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   POSIBLMN = factorize(POSIBLMN, 'Y1N5RDF', fem_2017_2019_formats),
   POSIBLPG = factorize(POSIBLPG, 'Y1N5RDF', fem_2017_2019_formats),
   PSURGSTR = factorize(PSURGSTR, 'Y1N5C', fem_2017_2019_formats),
+  REASIMPP = factorize(REASIMPP, 'REASP', fem_2017_2019_formats),
+  REASIMPR = factorize(REASIMPR, 'REASR', fem_2017_2019_formats),
   SECU,
   SEST,
   SEX3MO = factorize(SEX3MO, 'Y1N2RECF', fem_2017_2019_formats),
@@ -156,12 +158,196 @@ fem_2017_2019_svy <- svydesign(
 ```
 
 
+# Universe of `POSIBLPG`
+
+```{r, dependson='fem-load-data'}
+fem_2017_2019$Data[
+  RSURGSTR == 5 & CURRPREG == 5,
+  tablena(POSIBLPG)
+] |> kable()
+```
+
+```{r, dependson='fem-load-data'}
+fem_2017_2019$Data[
+  !is.na(POSIBLPG),
+  table(RSURGSTR, CURRPREG)
+]
+```
+
+For the most part, the actual universe of `POSIBLPG` matches what is in the codebook. There is one respondent that has a `POSIBLPG` response, but is also surgically sterile according to `RSURGSTR`. This is the one and only exception.
+
+
+# Universe of `REASIMPR` in Domain of Interest
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019$Data[
+  fem_2017_2019_data[, curr_use == 'Physically unable to conceive'],
+  tablena(REASIMPR)
+] |> kable()
+```
+
+Since the 'Physically unable to conceive' status is set based on `POSIBLPG`, it should not be surprising that `REASIMPR` is fully specified for the respondents with this status.
+
+
+# Universe of `REASIMPP` in Domain of Interest
+
+```{r, dependson='fem-process-data'}
+fem_2017_2019$Data[
+  fem_2017_2019_data[
+    , curr_use == 'Last intercourse was with partner who is physically unable to conceive'
+  ],
+  tablena(REASIMPP)
+] |> kable()
+```
+
+Likewise, `REASIMPP` is fully specified for the "Last intercourse was with partner who is physically unable to conceive" status.
+
+
+# Reasons Nonsurgically Sterile
+
+## In Domain of Interest
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(REASIMPR),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Physically unable to conceive'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females with current contraceptive status of "Physically unable to conceive"',
+  title = 'by reason physically unable to conceive',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(REASIMPR),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Physically unable to conceive'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females with current contraceptive status of "Physically unable to conceive"',
+  title = 'by reason physically unable to conceive',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+## Generally
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(REASIMPR),
+    subset(
+      fem_2017_2019_svy,
+      POSIBLPG == 'No'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females physically unable to conceive',
+  title = 'by reason physically unable to conceive',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(REASIMPR),
+    subset(
+      fem_2017_2019_svy,
+      POSIBLPG == 'No'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females physically unable to conceive',
+  title = 'by reason physically unable to conceive',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
+# Reasons Partner Nonsurgically Sterile
+
+## In Domain of Interest
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(REASIMPP),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Last intercourse was with partner who is physically unable to conceive'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females with current contraceptive status "Last intercourse was with partner who is physically unable to conceive"',
+  title = 'by reason partner is physically unable to conceive',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(REASIMPP),
+    subset(
+      fem_2017_2019_svy,
+      curr_use == 'Last intercourse was with partner who is physically unable to conceive'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females with current contraceptive status "Last intercourse was with partner who is physically unable to conceive"',
+  title = 'by reason partner is physically unable to conceive',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+## Generally
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(REASIMPP),
+    subset(
+      fem_2017_2019_svy,
+      POSIBLMN == 'No'
+    ),
+    svytotal
+  ),
+  type = 'total',
+  domain = 'females whose partners are physically unable to conceive',
+  title = 'by reason partner is physically unable to conceive',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  svyci(
+    ~factor(REASIMPP),
+    subset(
+      fem_2017_2019_svy,
+      POSIBLMN == 'No'
+    ),
+    svymean
+  ),
+  type = 'proportion',
+  domain = 'females whose partners are physically unable to conceive',
+  title = 'by reason partner is physically unable to conceive',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
 
 
 
 # Things to Investigate
 
-* Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP, Male: None)
 * Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
     * Include tubal ligation and vasectomy reversal
 * Collect estimates into coherent report
