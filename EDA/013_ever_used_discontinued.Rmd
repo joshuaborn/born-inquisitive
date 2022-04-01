@@ -36,19 +36,27 @@ fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
 ```
 
 ```{r fem-process-data, dependson=c('fem-load-data')}
+
 # create new format encoding for everused_meth series
 fem_everused_format <- copy(fem_2017_2019$Formats[
-  (format_name == 'METHHXF' & factor_value %in% c(3:21, 25:26, 98:99)) |
+  (format_name == 'METHHXF' & factor_value %in% c(3:18, 20:21, 25:26, 98:99)) |
     (format_name == 'OTHRMETHF' & factor_value == 24)
-][
-  order(factor_value)
 ])
 
 fem_everused_format[, format_name := 'everused_meth']
 
 fem_2017_2019_formats <- rbindlist(list(
   fem_2017_2019$Formats,
-  fem_everused_format
+  fem_everused_format,
+  data.table(
+    format_name = 'everused_meth',
+    format_value = c(31:33),
+    format_label = c(
+      'Copper-bearing IUD (such as Copper-T or ParaGard)',
+      'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)',
+      'Other or unknown IUD'
+    )
+  )
 ))
 
 
@@ -59,6 +67,9 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   DEPOPROV,
   ESSURE,
   EVERTUBS,
+  EVIUDTYP1,
+  EVIUDTYP2,
+  EVIUDTYP3,
   HADSEX = factorize(HADSEX, 'HADSEX', fem_2017_2019_formats),
   MORNPILL,
   OTHRMETH01,
@@ -93,10 +104,15 @@ fem_2017_2019_data[, `:=`(
   everused_meth11 = na_to_false(TEMPSAFE == 1),
   everused_meth20 = na_to_false(MORNPILL == 1),
   everused_meth25 = na_to_false(PATCH == 1),
-  everused_meth26 = na_to_false(RING == 1)
+  everused_meth26 = na_to_false(RING == 1),
+  everused_meth33 = na_to_false(
+    has_level(EVIUDTYP1, c(3, 9)) |
+    has_level(EVIUDTYP2, c(3, 9)) |
+    has_level(EVIUDTYP3, c(3, 9))
+  )
 )]
 
-for (x in c(9, 12:19, 21, 24)) {
+for (x in c(9, 12:18, 21, 24)) {
   fem_2017_2019_data[
     ,
     (sprintf('everused_meth%d', x)) := na_to_false(
@@ -107,6 +123,17 @@ for (x in c(9, 12:19, 21, 24)) {
       has_level(OTHRMETH05, x) |
       has_level(OTHRMETH06, x) |
       has_level(OTHRMETH07, x)
+    )
+  ]
+}
+
+for (x in c(1:2)) {
+  fem_2017_2019_data[
+    ,
+    (sprintf('everused_meth%d', 30 + x)) := na_to_false(
+      has_level(EVIUDTYP1, x) |
+      has_level(EVIUDTYP2, x) |
+      has_level(EVIUDTYP3, x)
     )
   ]
 }
@@ -146,7 +173,7 @@ The `OTHRMETH` series uses the `OTHERMETHF` format, which is mostly a subset of 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(lapply(
-    c(3:21, 24:26),
+    c(3:18, 20:21, 24:26, 31:33),
     function(x) {
       svyci(
         as.formula(sprintf('~everused_meth%d', x)),
@@ -174,7 +201,7 @@ collect_estimate(
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(lapply(
-    c(3:21, 24:26),
+    c(3:18, 20:21, 24:26, 31:33),
     function(x) {
       svyci(
         as.formula(sprintf('~everused_meth%d', x)),
@@ -232,7 +259,7 @@ collect_estimate(
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(lapply(
-    c(3:21, 24:26),
+    c(3:18, 20:21, 24:26, 31:33),
     function(x) {
       svyci(
         as.formula(sprintf('~everused_meth%d', x)),
@@ -263,7 +290,7 @@ collect_estimate(
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   rbindlist(lapply(
-    c(3:21, 24:26),
+    c(3:18, 20:21, 24:26, 31:33),
     function(x) {
       svyci(
         as.formula(sprintf('~everused_meth%d', x)),
@@ -299,11 +326,6 @@ collect_estimate(
 * Whether ever had vasectomy and whether ever reversed (male table)
     * EVEROPER
     * RVRSVAS
-* Whether ever used
-    * Break out kind of IUD?
-        * EVIUDTYP1
-        * EVIUDTYP2
-        * EVIUDTYP3
 * Whether ever discontinued due to dissatisfaction
     * METHSTOP01
     * METHSTOP02
