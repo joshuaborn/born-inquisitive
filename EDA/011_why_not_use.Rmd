@@ -173,6 +173,17 @@ for (x in c(1:9, 98:99)) {
 }
 
 
+# create boolean variables for each WHYNOTPG1 reason
+for (x in c(1:13, 97:99)) {
+  set(
+    fem_2017_2019_data,
+    j = sprintf('impossible_reason%d', x),
+    value = has_level(fem_2017_2019_data$WHYNOTPG1, x) |
+      has_level(fem_2017_2019_data$WHYNOTPG2, x)
+  )
+}
+
+
 # create variable counting number of nonuse reasons
 fem_2017_2019_data[
   ,
@@ -570,7 +581,9 @@ collect_estimate(
 ```
 
 
-# Universe Check of `WHYNOTPG1`
+# Reasons Respondent Does Not Believe She Can Pregnant
+
+## Universe Check of `WHYNOTPG1`
 
 ```{r, dependson=c('fem-process-data'), include=FALSE}
 fem_2017_2019$Data[
@@ -604,7 +617,7 @@ This value appears to be missing entirely.
 
 Manually adding the row to the `fem_2017_2019_formats` in the fem-load-data block fixes this issue.
 
-## Reverse Universe Check
+## Reverse Universe Check of `WHYNOTPG1`
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
@@ -615,11 +628,73 @@ fem_2017_2019_data[
 
 The `WHYNOTPG1` is specified if and only if `nonuse_reason2` is true, as expected.
 
+## Estimates
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:13, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~impossible_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          nonuse_reason2
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'WHYNOTPGF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who mentioned "do not think you can get pregnant" as reason for not using contraception',
+  title = 'by reason respondent thinks cannot get pregnant',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:13, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~impossible_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          nonuse_reason2
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'WHYNOTPGF', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who mentioned "do not think you can get pregnant" as reason for not using contraception',
+  title = 'by reason respondent thinks cannot get pregnant',
+)[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
 
 
 # Things to Investigate
 
-* EH-2 WHYNOTPG
 * Add table of contents to this EDA file
 * Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP, Male: None)
 * Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
