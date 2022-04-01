@@ -720,17 +720,3 @@ collect_estimate(
   title = 'by reason respondent thinks cannot get pregnant',
 )[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
-
-
-
-
-# Things to Investigate
-
-* Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP, Male: None)
-* Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
-    * Include tubal ligation and vasectomy reversal
-* Collect estimates into coherent report
-* Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
-* Compare own report with published reports
-* Replicate analysis in SAS
-    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
