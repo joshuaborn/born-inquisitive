@@ -214,6 +214,10 @@ fem_2017_2019_svy <- svydesign(
 )
 ```
 
+
+
+# Universe Check of `WHYNOTUSE`
+
 ```{r, dependson='fem-process-data'}
 fem_2017_2019_data[
   CURRPREG == 5 &
@@ -222,13 +226,10 @@ fem_2017_2019_data[
     !sterilized &
     CURRMETH1 == 1,
   table(WYNOTUSE)
-]
-
-fem_2017_2019_data[, tablena(WYNOTUSE)]
+] |> kable()
 ```
 
 It appears the universe for `WYNOTUSE` is once again not as expected from the codebook.
-
 
 These are the rows for which there is a `WYNOTUSE` value, but aren't in the supposed universe for `WYNOTUSE`:
 
@@ -286,6 +287,9 @@ fem_2017_2019_data[
 
 I'm going to proceed with this inconsistency for now, pretending that the universe for `WYNOTUSE` and related variables is as specified in the codebook.
 
+
+# Size of `WYNOTUSE` Universe
+
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
@@ -299,6 +303,9 @@ collect_estimate(
 )[, .(domain, title, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
 
+
+# Females Trying to Get Pregnant `WYNOTUSE`
+
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
@@ -331,6 +338,9 @@ collect_estimate(
 )[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
 
+
+# Females Whose Partner Wants Them to Become Pregnant `HPPREGQ`
+
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
@@ -362,6 +372,9 @@ collect_estimate(
   title = 'by whether partner wants them to become pregnant',
 )[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
+
+
+# Combined Intent to Conceive Estimates `nonuse_status`
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -392,6 +405,9 @@ fem_2017_2019$Data[
 ]
 ```
 
+
+# Format Specifications of `WHYNOUSNG` and `MAINNOUSE`
+
 ```{r, dependson='fem-load-data'}
 dcast(
   fem_2017_2019_formats[
@@ -404,6 +420,9 @@ dcast(
   value.var = 'factor_label'
 ) |> kable()
 ```
+
+
+# Estimates of Reasons Not Using Contraception in `nonuse_reason` Series
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -465,6 +484,9 @@ collect_estimate(
 )[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
 
+
+# Exclusive Reason for Not Using Contraception
+
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
@@ -499,19 +521,25 @@ collect_estimate(
 )[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
 
+
+# Universe Check of `MAINNOUSE`
+
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
   nonuse_reason_count > 1,
   tablena(MAINNOUSE)
-]
+] |> kable()
 ```
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
   MAINNOUSE != 'Not Applicable',
   tablena(nonuse_reason_count)
-]
+]|> kable()
 ```
+
+
+# Main Reason for Not Using Contraception
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -546,6 +574,9 @@ collect_estimate(
   title = 'by main reason for not using contraception',
 )[, .(domain, title, level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
+
+
+# Combined Main/Exclusive Reason for Not Using Contraception
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -599,7 +630,7 @@ fem_2017_2019_data[
 ] |> kable()
 ```
 
-## Format Encoding Issue
+## Format Specifications of `WHYNOTPGF` and Encoding Issue
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_formats[format_name == 'WHYNOTPGF'] |> kable()
@@ -695,7 +726,6 @@ collect_estimate(
 
 # Things to Investigate
 
-* Add table of contents to this EDA file
 * Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP, Male: None)
 * Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
     * Include tubal ligation and vasectomy reversal
