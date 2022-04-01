@@ -34,6 +34,16 @@ opts_chunk$set(
 ```{r fem-load-data}
 fem_2017_2019 <- load_NSFG_data('2017_2019', 'FemResp')
 fem_2017_2019_formats <- fem_2017_2019$Formats
+
+fem_2017_2019_formats <- rbindlist(list(
+  fem_2017_2019_formats,
+  data.table(
+    format_name = 'WHYNOTPGF',
+    factor_value = 13,
+    factor_label = 'No menstrual cycle or menstrual irregularity'
+  )
+))
+
 ```
 
 ```{r fem-process-data, dependson=c('fem-load-data')}
@@ -48,6 +58,8 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   SECU,
   SEST,
   WGT2017_2019,
+  WHYNOTPG1 = factorize(WHYNOTPG1, 'WHYNOTPGF', fem_2017_2019_formats),
+  WHYNOTPG2 = factorize(WHYNOTPG2, 'WHYNOTPGF', fem_2017_2019_formats),
   WHYNOUSING1 = factorize(WHYNOUSING1, 'WHYNOUSNG', fem_2017_2019_formats),
   WHYNOUSING2 = factorize(WHYNOUSING2, 'WHYNOUSNG', fem_2017_2019_formats),
   WHYNOUSING3 = factorize(WHYNOUSING3, 'WHYNOUSNG', fem_2017_2019_formats),
@@ -558,10 +570,57 @@ collect_estimate(
 ```
 
 
+# Universe Check of `WHYNOTPG1`
+
+```{r, dependson=c('fem-process-data'), include=FALSE}
+fem_2017_2019$Data[
+  fem_2017_2019_data[, (nonuse_reason2)],
+  tablena(WHYNOTPG1)
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  (nonuse_reason2),
+  tablena(WHYNOTPG1)
+] |> kable()
+```
+
+## Format Encoding Issue
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_formats[format_name == 'WHYNOTPGF'] |> kable()
+```
+
+There are 6 rows that have the value `13` for `WHYNOTPG1`, which is not defined in the `WHYNOTPGF` format. Because of this, they get loaded as `NA` values when `WHYNOTPG1` is factorized.
+
+According to the codebook, `13` should be mapped to "No menstrual cycle or menstrual irregularity."
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_formats[factor_label == 'No menstrual cycle or menstrual irregularity'] |> kable()
+```
+
+This value appears to be missing entirely.
+
+Manually adding the row to the `fem_2017_2019_formats` in the fem-load-data block fixes this issue.
+
+## Reverse Universe Check
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  WHYNOTPG1 != 'Not Applicable',
+  tablena(nonuse_reason2)
+] |> kable()
+```
+
+The `WHYNOTPG1` is specified if and only if `nonuse_reason2` is true, as expected.
+
+
 
 # Things to Investigate
 
 * EH-2 WHYNOTPG
+* Add table of contents to this EDA file
 * Why respondents believe themselves to be sterile (Fem: DE-2 REASIMPP, Male: None)
 * Ever tried over lifetime and why quit (Fem: EA, DC; Male: BB)
     * Include tubal ligation and vasectomy reversal
