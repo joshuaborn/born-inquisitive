@@ -289,6 +289,18 @@ for (x in c(1:23, 97:99)) {
 }
 
 
+# create boolean variables for reason volunteered by respondents for dissatisfaction with condoms
+for (x in c(1:9, 97:99)) {
+  fem_2017_2019_data[
+    ,
+    (sprintf('specificcond_reason%d', x)) := na_to_false(
+      has_level(STOPCOND1, x) |
+      has_level(STOPCOND2, x)
+    )
+  ]
+}
+
+
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -1026,11 +1038,142 @@ collect_estimate(
 
 
 
+# `STOPCONDFMT` Encoding
+
+```{r, dependson='fem-data-load'}
+fem_2017_2019_formats[format_name == 'STOPCONDFMT'] |> kable()
+```
+
+
+
+# Reason(s) for Dissatisfaction leading to Discontinuation of Condoms
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:15, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~condquit_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth4
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'REASMFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have discontinued using condoms due to dissatisfaction',
+  title = 'by reason(s) for dissatisfaction with condoms',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:15, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~condquit_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth4
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'REASMFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have discontinued using condoms due to dissatisfaction',
+  title = 'by reason(s) for dissatisfaction with condoms',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:9, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~specificcond_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          condquit_reason3 | condquit_reason6 | condquit_reason15
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'STOPCONDFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have discontinued using the comdoms because "too difficult to use," "side effects," or "other" reason',
+  title = 'by reason(s) volunteered for dissatisfaction with condoms',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:9, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~specificcond_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          condquit_reason3 | condquit_reason6 | condquit_reason15
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'STOPCONDFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have discontinued using the comdoms because "too difficult to use," "side effects," or "other" reason',
+  title = 'by reason(s) volunteered for dissatisfaction with condoms',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
+
+
 # Variables for Ever Used and Ever Discontinued
 
 * Reason for dissatisfaction leading to discontinuation
-    * Pill REASPILL01-09 and STOPPILL1-6
-    * Condom REASCONDO01-07 and STOPCOND1-2
     * IUD REASIUD01-08 and STOPIUD1-5
 
 
