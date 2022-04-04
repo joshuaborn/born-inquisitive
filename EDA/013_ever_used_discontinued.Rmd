@@ -1436,14 +1436,3 @@ collect_estimate(
   title = 'by reason(s) volunteered for dissatisfaction the IUD',
 )[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
 ```
-
-
-
-# Things to Do
-
-* Collect estimates into coherent report
-* Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
-* Compare own report with published reports
-* Look into what it takes to publish in an academic journal
-* Replicate analysis in SAS
-    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different

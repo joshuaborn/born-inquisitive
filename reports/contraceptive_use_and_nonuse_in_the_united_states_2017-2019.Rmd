@@ -14,28 +14,60 @@ library(here)
 i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
 ```
 
+
 # Outline
 
+* Those currently (at last intercourse with opposite sex in past 3 months) using contraception versus not using contraception
+* During last intercourse
+    * By number of methods used
+    * By method(s) used
+    * By method, among those using only one method
+    * By method, proportion also using another method
+    * By other method(s) used, among those using methods commonly used with other methods
+* Past 12 months
+    * Number of methods
+    * By method(s) used
+    * By method, among those using only one method
+* Consistency
+    * Did not use at last intercourse, but used at least one method in past 12 months
+    * Did not use at last intercourse, but ever used contraception (females)
+    * Frequency of any method use in past 12 months
+    * Frequency of condom use in past 12 months
+    * Frequency of condom use in past 12 months, among exclusive condom users
+    * Frequency of condom use in past 4 weeks (females)
+    * Number of missed pills in past 4 weeks (females)
+* Ever (females)
+    * By method(s)
+    * By method(s) among those who have had intercourse with opposite sex
+    * Ever discontinued due to dissatisfaction
+    * Reason for dissatisfaction with pill
+    * Reason for dissatisfaction with condoms
+    * Reason for dissatisfaction with IUDs
+* Not currently using contraception, overview by category
+* Not sexually active currently
+    * Never
+        * Reason for never
+    * Same-sex attractedness
+* Physically infertile category (females)
+    * By reason in domain
+    * By reason generally
+    * Partner infertile generally
+* Why not using contraception (females)
+    * By reason(s)
+    * By main or exclusive reason
+    * Reasons(s) for those who believe themselves infertile to think themselves infertile
+* Overall contraception rate
+* Use for reasons other than contraception
+    * Condom, pill, IUD, and tubal ligation among females
+    * Condom among males
 
-* Use
-  * By method, what methods were used at last intercourse
-  * By method, what methods were used exclusively at last intercourse
-  * By method, what proportion of method users used the method simultaneously with another method
-  * Use for reasons other than contraception
-      * for pill
-      * for IUD
-      * for tubal ligation
-      * for condom
-* Nonuse
-    * At last intercourse by
-        * used at least one method of contraception at last intercourse
-        * did not have intercourse with someone of opposite sex in past 3 months
-        * who were pregnant at last intercourse or whose last intercourse partner is pregnant
-        * is intending to conceive
-        * is infertile
-        * had last intercourse with infertile partner
-        * otherwise did not use contraception
-    * Among those not sexually active with opposite sex in past 3 months, how many have never had sexual intercourse vs just not recently
-      * of those who have never had sexual intercourse, why
-      * how many who are not sexually active with opposite sex in past 3 months report being mostly or only attracted to the same sex
-    * Among unintentional nonusers at least intercourse, how many previously have used contraception
+
+
+# Things to Do
+
+* Collect estimates into coherent report
+* Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
+* Compare own report with published reports
+* Look into what it takes to publish in an academic journal
+* Replicate analysis in SAS
+    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
