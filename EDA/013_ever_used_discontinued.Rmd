@@ -273,6 +273,22 @@ for (x in c(1:15, 98:99)) {
 }
 
 
+# create boolean variables for reason volunteered by respondents for dissatisfaction with pill
+for (x in c(1:23, 97:99)) {
+  fem_2017_2019_data[
+    ,
+    (sprintf('specificpill_reason%d', x)) := na_to_false(
+      has_level(STOPPILL1, x) |
+      has_level(STOPPILL2, x) |
+      has_level(STOPPILL3, x) |
+      has_level(STOPPILL4, x) |
+      has_level(STOPPILL5, x) |
+      has_level(STOPPILL6, x)
+    )
+  ]
+}
+
+
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -877,6 +893,136 @@ fem_2017_2019_data[
 ] |> kable()
 ```
 
+
+
+# `STOPPILL` Encoding
+
+```{r, dependson='fem-load-data'}
+fem_2017_2019_formats[format_name == 'STOPPILLFMT'] |> kable()
+```
+
+
+# Reason(s) for Dissatisfaction leading to Discontinuation of the Pill
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:15, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~pillquit_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth3
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'REASMFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have discontinued using the pill due to dissatisfaction',
+  title = 'by reason(s) for dissatisfaction with the pill',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:15, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~pillquit_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth3
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'REASMFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have discontinued using the pill due to dissatisfaction',
+  title = 'by reason(s) for dissatisfaction with the pill',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:23, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~specificpill_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          pillquit_reason3 | pillquit_reason6 | pillquit_reason15
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'STOPPILLFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have discontinued using the pill because "too difficult to use," "side effects," or "other" reason',
+  title = 'by reason(s) volunteered for dissatisfaction with the pill',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:23, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~specificpill_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          pillquit_reason3 | pillquit_reason6 | pillquit_reason15
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'STOPPILLFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have discontinued using the pill because "too difficult to use," "side effects," or "other" reason',
+  title = 'by reason(s) volunteered for dissatisfaction with the pill',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
 
 
 
