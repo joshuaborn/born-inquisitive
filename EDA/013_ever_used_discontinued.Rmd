@@ -91,11 +91,49 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
   OTHRMETH07,
   PATCH,
   PILLR,
+  REASCOND01,
+  REASCOND02,
+  REASCOND03,
+  REASCOND04,
+  REASCOND05,
+  REASCOND06,
+  REASCOND07,
+  REASPILL01,
+  REASPILL02,
+  REASPILL03,
+  REASPILL04,
+  REASPILL05,
+  REASPILL06,
+  REASPILL07,
+  REASPILL08,
+  REASPILL08,
+  REASPILL09,
+  REASIUD01,
+  REASIUD02,
+  REASIUD03,
+  REASIUD04,
+  REASIUD05,
+  REASIUD06,
+  REASIUD07,
+  REASIUD08,
   REVSTUBL = factorize(REVSTUBL, 'Y1N5RDF', fem_2017_2019_formats),
   RHYTHM,
   RING,
   SECU,
   SEST,
+  STOPCOND1,
+  STOPCOND2,
+  STOPIUD1,
+  STOPIUD2,
+  STOPIUD3,
+  STOPIUD4,
+  STOPIUD5,
+  STOPPILL1,
+  STOPPILL2,
+  STOPPILL3,
+  STOPPILL4,
+  STOPPILL5,
+  STOPPILL6,
   TEMPSAFE,
   TYPEIUD_1,
   TYPEIUD_2,
@@ -190,6 +228,50 @@ fem_2017_2019_data[
     has_level(TYPEIUD_2, c(3, 9)) |
     has_level(TYPEIUD_3, c(3, 9))
 )]
+
+
+# create boolean variables for reason a method was discontinued due to dissatisfaction
+for (x in c(1:15, 98:99)) {
+  fem_2017_2019_data[
+    ,
+    (sprintf('pillquit_reason%d', x)) := na_to_false(
+      has_level(REASPILL01, x) |
+      has_level(REASPILL02, x) |
+      has_level(REASPILL03, x) |
+      has_level(REASPILL04, x) |
+      has_level(REASPILL05, x) |
+      has_level(REASPILL06, x) |
+      has_level(REASPILL07, x) |
+      has_level(REASPILL08, x) |
+      has_level(REASPILL09, x)
+    )
+  ]
+
+  fem_2017_2019_data[
+    ,
+    (sprintf('condquit_reason%d', x)) := na_to_false(
+      has_level(REASCOND01, x) |
+      has_level(REASCOND02, x) |
+      has_level(REASCOND03, x) |
+      has_level(REASCOND04, x) |
+      has_level(REASCOND05, x) |
+      has_level(REASCOND06, x) |
+      has_level(REASCOND07, x)
+    )
+  ]
+
+  fem_2017_2019_data[
+    ,
+    (sprintf('iudquit_reason%d', x)) := na_to_false(
+      has_level(REASIUD01, x) |
+      has_level(REASIUD02, x) |
+      has_level(REASIUD03, x) |
+      has_level(REASIUD04, x) |
+      has_level(REASIUD05, x)
+    )
+  ]
+}
+
 
 # create survey design object
 fem_2017_2019_svy <- svydesign(
@@ -567,11 +649,242 @@ collect_estimate(
 
 
 
+# Universe Checks of Reasons for Dissatisfaction Variables
+
+## `REASPILL` Series Universe Check
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019$Data[
+  fem_2017_2019_data$everquit_meth3,
+  tablena(REASPILL01)
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  fem_2017_2019$Data[, !is.na(REASPILL01)],
+  tablena(everused_meth3)
+] |> kable()
+```
+
+The universe of `REASPILL01` is as specified in the codebook.
+
+
+## `REASMFMT` Encoding
+
+```{r, dependson='fem-load-data'}
+fem_2017_2019_formats[format_name == 'REASMFMT'] |> kable()
+```
+
+
+## `STOPPILL` Series Universe Check
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019$Data[
+  fem_2017_2019_data$pillquit_reason3 |
+    fem_2017_2019_data$pillquit_reason6 |
+    fem_2017_2019_data$pillquit_reason15,
+  tablena(STOPPILL1)
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  fem_2017_2019$Data[, !is.na(STOPPILL1)],
+  .(
+    .N,
+    true = sum(
+      pillquit_reason3 |
+        pillquit_reason6 |
+        pillquit_reason15
+    ),
+    false = sum(!(
+      pillquit_reason3 |
+        pillquit_reason6 |
+        pillquit_reason15
+    ))
+  )
+] |> kable()
+```
+
+The universe of `STOPPILL1` is as specified in the codebook.
+
+
+## `REASCOND` Universe Check
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019$Data[
+  fem_2017_2019_data$everquit_meth4,
+  tablena(REASCOND01)
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  fem_2017_2019$Data[, !is.na(REASCOND01)],
+  tablena(everused_meth4)
+] |> kable()
+```
+
+The universe of `REASCOND01` is as specified in the codebook.
+
+
+## `STOPCOND` Series Universe Check
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019$Data[
+  fem_2017_2019_data$condquit_reason3 |
+    fem_2017_2019_data$condquit_reason6 |
+    fem_2017_2019_data$condquit_reason15,
+  tablena(STOPCOND1)
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  fem_2017_2019$Data[, !is.na(STOPCOND1)],
+  .(
+    .N,
+    true = sum(
+      condquit_reason3 |
+        condquit_reason6 |
+        condquit_reason15
+    ),
+    false = sum(!(
+      condquit_reason3 |
+        condquit_reason6 |
+        condquit_reason15
+    ))
+  )
+] |> kable()
+```
+
+The universe of `STOPCOND1` is as specified in the codebook.
+
+
+## `REASIUD` Universe Check
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019$Data[
+  fem_2017_2019_data$everquit_meth31 |
+    fem_2017_2019_data$everquit_meth32 |
+    fem_2017_2019_data$everquit_meth33,
+  tablena(REASIUD01)
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  is.na(REASIUD01) & (
+    everquit_meth31 |
+      everquit_meth32 |
+      everquit_meth33
+  ),
+  .(
+    CASEID,
+    everquit_meth31,
+    everquit_meth32,
+    everquit_meth33,
+    METHSTOP01,
+    METHSTOP02,
+    METHSTOP03,
+    METHSTOP04,
+    METHSTOP05,
+    METHSTOP06,
+    METHSTOP07,
+    METHSTOP08,
+    METHSTOP09,
+    METHSTOP10,
+    TYPEIUD_1,
+    TYPEIUD_2,
+    TYPEIUD_3
+  )
+]
+```
+
+There is a logical inconsistency with cases 86949 and 88045. They do not have a value of 19 for any `METHSTOP` variable, but yet have answers for `TYPEIUD_1`. This does not make sense. If a respondent has not indicated they have stopped using an IUD due to dissatisfaction, then they should not be asked what type of IUD they stopped using due to dissatisfaction.
+
+This is getting frustrating. Going forward, I'm not going to try to resolve such inconsistencies. Instead I'm going to create a "No answer provided in public use data files" category to handle these issues, and then explain why these answers exist in the report.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  fem_2017_2019$Data[, !is.na(REASIUD01)],
+  .(
+    .N,
+    true = sum(
+      everquit_meth31 |
+        everquit_meth32 |
+        everquit_meth33
+    ),
+    false = sum(!(
+      everquit_meth31 |
+        everquit_meth32 |
+        everquit_meth33
+    ))
+  )
+] |> kable()
+```
+
+
+## `STOPIUD` Series Universe Check
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019$Data[
+  fem_2017_2019_data$iudquit_reason3 |
+    fem_2017_2019_data$iudquit_reason6 |
+    fem_2017_2019_data$iudquit_reason15,
+  tablena(STOPIUD1)
+] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019$Data[
+  (
+    fem_2017_2019_data$iudquit_reason3 |
+    fem_2017_2019_data$iudquit_reason6 |
+    fem_2017_2019_data$iudquit_reason15
+  ) & is.na(STOPIUD1),
+  .(
+    CASEID,
+    REASIUD01,
+    REASIUD02,
+    REASIUD03,
+    REASIUD04,
+    REASIUD05,
+    STOPIUD1
+  )
+] |> kable()
+```
+
+Case 83425 does not have a `STOPIUD` value, despite 15 being its `REASIUD01` value.
+
+```{r, dependson=c('fem-process-data')}
+fem_2017_2019_data[
+  fem_2017_2019$Data[, !is.na(STOPIUD1)],
+  .(
+    .N,
+    true = sum(
+      iudquit_reason3 |
+        iudquit_reason6 |
+        iudquit_reason15
+    ),
+    false = sum(!(
+      iudquit_reason3 |
+        iudquit_reason6 |
+        iudquit_reason15
+    ))
+  )
+] |> kable()
+```
+
+
+
+
 # Variables for Ever Used and Ever Discontinued
 
 * Reason for dissatisfaction leading to discontinuation
     * Pill REASPILL01-09 and STOPPILL1-6
-    * Condom REASCONDO01-07
+    * Condom REASCONDO01-07 and STOPCOND1-2
     * IUD REASIUD01-08 and STOPIUD1-5
 
 
@@ -579,8 +892,10 @@ collect_estimate(
 
 # Things to Do
 
+* Go back and make "No answer in public use data file"
 * Collect estimates into coherent report
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Compare own report with published reports
+* Look into what it takes to publish in an academic journal
 * Replicate analysis in SAS
     * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
