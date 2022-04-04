@@ -892,7 +892,6 @@ fem_2017_2019_data[
 
 # Things to Do
 
-* Go back and make "No answer in public use data file"
 * Collect estimates into coherent report
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Compare own report with published reports

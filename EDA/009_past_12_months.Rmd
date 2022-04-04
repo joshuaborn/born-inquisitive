@@ -348,7 +348,7 @@ fem_2017_2019_data[,
       'Did not use contraception at all in past 12 months',
     anyuse12m_count > 0,
       'Used contraception at least once in past 12 months',
-    default = 'Slipped_through'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -370,7 +370,7 @@ fem_2017_2019_data[,
       'Used 4 methods of contraception in past 12 months',
     anyuse12m_count == 5,
       'Used 5 methods of contraception in past 12 months',
-    default = 'Slipped_through'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -388,7 +388,7 @@ fem_2017_2019_data[,
       'Every time',
     PXNOFREQ != 'Not Applicable',
       as.character(PXNOFREQ),
-    default = 'Not Ascertained'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -400,9 +400,9 @@ fem_2017_2019_data[,
     #  'Did not have intercourse with male in past 4 weeks',
     MISSPILL != 'Not Applicable',
       as.character(MISSPILL),
-    is.na(PST4WKSX),
-      'Not Ascertained',
-    default = 'Slipped through!!!'
+    #is.na(PST4WKSX),
+      #'No answer in public use data file',
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -440,7 +440,7 @@ fem_2017_2019_data[
       'Some of the time',
     PSWKCOND / PST4WKSX > 0.5,
       'Most of the time',
-    default = 'SLIPPED THROUGH!!!'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -902,7 +902,7 @@ male_2017_2019_data[,
       'Did not use contraception at all in past 12 months',
     anyuse12m_count > 0,
       'Used contraception at least once in past 12 months',
-    default = 'Slipped_through'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -924,7 +924,7 @@ male_2017_2019_data[,
       'Used 4 methods of contraception in past 12 months',
     anyuse12m_count == 5,
       'Used 5 methods of contraception in past 12 months',
-    default = 'Slipped_through'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -938,7 +938,7 @@ male_2017_2019_data[,
       'Every time',
     CWPNOFRQ != 'Not Applicable',
       as.character(CWPNOFRQ),
-    default = 'SLIPPED THROUGH!!!!'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -952,7 +952,7 @@ male_2017_2019_data[,
       'Every time',
     PXNOFREQ != 'Not Applicable',
       as.character(PXNOFREQ),
-    default = 'Not Ascertained'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -965,7 +965,7 @@ male_2017_2019_data[,
       'Every time',
     PXNOFREQ2 != 'Not Applicable',
       as.character(PXNOFREQ2),
-    default = 'Not Ascertained'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -978,7 +978,7 @@ male_2017_2019_data[,
       'Every time',
     PXNOFREQ3 != 'Not Applicable',
       as.character(PXNOFREQ3),
-    default = 'Not Ascertained'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -992,7 +992,7 @@ male_2017_2019_data[,
       'None of the time',
     !is.na(P12MOCON),
       as.character(P12MOCON),
-    default = 'Slipped through!'
+    default = 'No answer in public use data file'
   ))
 ]
 
@@ -1492,14 +1492,14 @@ I can't find an equivalent to `EVERUSED` for males.
 
 ```{r, dependson='fem-process-data'}
 fem_2017_2019_data[
-  mos12_consistency == 'Not Ascertained',
+  mos12_consistency == 'No answer in public use data file',
   .(
     CASEID, SEX12MO, CONDOM, P12MOCON, EVERUSED, PXNOFREQ
   )
 ] |> kable()
 ```
 
-The respondents in the above table should have been asked `PXNOFREQ`. Indeed, most of them should have been asked `P12MOCON`. This is inexplicable, since they are in the universe for either `P12MOCON` or `PXNOFREQ`. They will be marked "Not Ascertained" and included in the estimates, along with the "Don't know" and "Refused."
+The respondents in the above table should have been asked `PXNOFREQ`. Indeed, most of them should have been asked `P12MOCON`. This is inexplicable, since they are in the universe for either `P12MOCON` or `PXNOFREQ`. They will be marked "No answer in public use data file" and included in the estimates, along with the "Don't know" and "Refused."
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
@@ -1815,7 +1815,7 @@ fem_2017_2019$Data[
 ]
 ```
 
-Narrowing the domain to just those females who were sexually active in the past 3 months reduces the "Not Ascertained" values.
+Narrowing the domain to just those females who were sexually active in the past 3 months reduces the "No answer in public use data file" values.
 
 ```{r, dependson='fem-load-data'}
 fem_2017_2019$Data[
@@ -1833,7 +1833,7 @@ fem_2017_2019$Data[
 ]
 ```
 
-Making the universe match `PST4WKSX` seems to eliminate the "Not Ascertained" values.
+Making the universe match `PST4WKSX` seems to eliminate the "No answer in public use data file" values.
 
 ```{r, dependson='fem-process-data'}
 tablena(fem_2017_2019_data$PST4WKSX)
@@ -1853,7 +1853,7 @@ fem_2017_2019_data[
 ]
 ```
 
-Ultimately, there are 160 respondents who should have been asked `MISSPILL`, but were not. This is a greater proportion of the universe than seen previously. It is worth looping back at the end and following up with the NSFG folks about these "Not Ascertained" situations when they start to affect the actual estimates.
+Ultimately, there are 160 respondents who should have been asked `MISSPILL`, but were not. This is a greater proportion of the universe than seen previously. It is worth looping back at the end and following up with the NSFG folks about these "No answer in public use data file" situations when they start to affect the actual estimates.
 
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
