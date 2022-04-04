@@ -301,6 +301,21 @@ for (x in c(1:9, 97:99)) {
 }
 
 
+# create boolean variables for reason volunteered by respondents for dissatisfaction with an IUD
+for (x in c(1:13, 97:99)) {
+  fem_2017_2019_data[
+    ,
+    (sprintf('specificiud_reason%d', x)) := na_to_false(
+      has_level(STOPIUD1, x) |
+      has_level(STOPIUD2, x) |
+      has_level(STOPIUD3, x) |
+      has_level(STOPIUD4, x) |
+      has_level(STOPIUD5, x)
+    )
+  ]
+}
+
+
 # create survey design object
 fem_2017_2019_svy <- svydesign(
   ids = ~SECU,
@@ -1170,12 +1185,257 @@ collect_estimate(
 
 
 
+# `STOPIUDFMT` Encoding
 
-# Variables for Ever Used and Ever Discontinued
+```{r, dependson='fem-data-load'}
+fem_2017_2019_formats[format_name == 'STOPIUDFMT'] |> kable()
+```
 
-* Reason for dissatisfaction leading to discontinuation
-    * IUD REASIUD01-08 and STOPIUD1-5
 
+# Reason(s) for Dissatisfaction Leading to Discontinuation of Hormonal IUDs
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:15, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~iudquit_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth32
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'REASMFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have discontinued using a hormonal IUD to dissatisfaction',
+  title = 'by reason(s) for dissatisfaction with the IUD',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:15, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~iudquit_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth32
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'REASMFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have discontinued using a hormonal IUD to dissatisfaction',
+  title = 'by reason(s) for dissatisfaction with the IUD',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:13, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~specificiud_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth32 & (iudquit_reason3 | iudquit_reason6 | iudquit_reason15)
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'STOPIUDFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have discontinued using an hormonal IUD because "too difficult to use," "side effects," or "other" reason',
+  title = 'by reason(s) volunteered for dissatisfaction the IUD',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:13, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~specificiud_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth32 & (iudquit_reason3 | iudquit_reason6 | iudquit_reason15)
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'STOPIUDFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have discontinued using an hormonal IUD because "too difficult to use," "side effects," or "other" reason',
+  title = 'by reason(s) volunteered for dissatisfaction the IUD',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+
+# Reason(s) for Dissatisfaction Leading to Discontinuation of Copper IUDs
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:15, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~iudquit_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth31
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'REASMFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have discontinued using a copper IUD to dissatisfaction',
+  title = 'by reason(s) for dissatisfaction with the IUD',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:15, 98:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~iudquit_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth31
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'REASMFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have discontinued using a copper IUD to dissatisfaction',
+  title = 'by reason(s) for dissatisfaction with the IUD',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:13, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~specificiud_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth31 & (iudquit_reason3 | iudquit_reason6 | iudquit_reason15)
+        ),
+        svytotal
+      )[
+        level == TRUE
+      ][
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'STOPIUDFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'total',
+  domain = 'females who have discontinued using a copper IUD because "too difficult to use," "side effects," or "other" reason',
+  title = 'by reason(s) volunteered for dissatisfaction the IUD',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
+
+```{r, dependson=c('fem-process-data')}
+collect_estimate(
+  rbindlist(lapply(
+    c(1:13, 97:99),
+    function(x) {
+      svyci(
+        as.formula(sprintf('~specificiud_reason%d', x)),
+        subset(
+          fem_2017_2019_svy,
+          everquit_meth31 & (iudquit_reason3 | iudquit_reason6 | iudquit_reason15)
+        ),
+        svyciprop
+      )[
+        , .(level = x, estimate, se, `2.5 %`, `97.5 %`)
+      ]
+    }
+  ))[
+    order(-estimate),
+    .(
+      level = factorize(level, 'STOPIUDFMT', fem_2017_2019_formats),
+      estimate, se, `2.5 %`, `97.5 %`
+    )
+  ],
+  type = 'proportion',
+  domain = 'females who have discontinued using a copper IUD because "too difficult to use," "side effects," or "other" reason',
+  title = 'by reason(s) volunteered for dissatisfaction the IUD',
+)[, .(level, type, estimate, se, `2.5 %`, `97.5 %`)] |> kable()
+```
 
 
 
