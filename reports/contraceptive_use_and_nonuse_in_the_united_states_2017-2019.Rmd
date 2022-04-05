@@ -203,6 +203,16 @@ pretty_estimates <- function(dt) {
     rounded_estimates() |>
     string_estimates()
 }
+
+svy <- function(dt) {
+  svydesign(
+    ids = ~SECU,
+    strata = ~SEST,
+    data = dt,
+    nest = TRUE,
+    weights = ~WGT2017_2019
+  )
+}
 ```
 
 
@@ -260,7 +270,7 @@ fem1719dt[,
 # reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
 set_count_mention_variables(fem1719dt, 'usedlast3m_meth')
 
-# create categorical variable for whether currently using contraception
+
 fem1719dt[,
   usedlast3m := factor(fifelse(
     usedlast3m_meth_count > 0,
@@ -269,17 +279,9 @@ fem1719dt[,
   ))
 ]
 
-fem1719svy <- svydesign(
-  ids = ~SECU,
-  strata = ~SEST,
-  data = fem1719dt,
-  nest = TRUE,
-  weights = ~WGT2017_2019
-)
-
 estimate_totals_and_percentages(
   ~usedlast3m,
-  fem1719svy
+  svy(fem1719dt)
 ) |> pretty_estimates() |> kable()
 ```
 
@@ -329,7 +331,7 @@ male1719dt[,
 # reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
 set_count_mention_variables(male1719dt, 'usedlast3m_meth')
 
-# create categorical variable for whether currently using contraception
+
 male1719dt[,
   usedlast3m := factor(fifelse(
     usedlast3m_meth_count > 0,
@@ -338,17 +340,9 @@ male1719dt[,
   ))
 ]
 
-male1719svy <- svydesign(
-  ids = ~SECU,
-  strata = ~SEST,
-  data = male1719dt,
-  nest = TRUE,
-  weights = ~WGT2017_2019
-)
-
 estimate_totals_and_percentages(
   ~usedlast3m,
-  male1719svy
+  svy(male1719dt)
 ) |> pretty_estimates() |> kable()
 ```
 
