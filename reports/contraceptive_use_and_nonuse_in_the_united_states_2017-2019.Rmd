@@ -151,10 +151,33 @@ set_mentions_to_booleans(
 
 import_variables_as_factors(
   variables = c(
+    P1YRELP = 'P1YRELP',
+    PSURGSTR = 'Y1N5C',
     SEX3MO = 'Y1N2RECF',
     TUBS = 'Y1N5C'
   )
 )
+
+# set any respondents who are sexually active in past 3 months and whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
+fem1719dt[,
+  usedlast3m_meth3 := fifelse(
+    SEX3MO == 'YES' & PSURGSTR == 'YES' & (
+      P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+      P1YRELP == 'Current cohabiting partner'
+    ),
+    TRUE,
+    usedlast3m_meth3
+  )
+]
+
+# set any respondents with current tubal ligations who are sexually active as currently using tubal ligation as a contraceptive method
+fem1719dt[,
+  usedlast3m_meth4 := fifelse(
+    SEX3MO == 'YES' & TUBS == 'YES',
+    TRUE,
+    usedlast3m_meth4
+  )
+]
 ```
 
 
