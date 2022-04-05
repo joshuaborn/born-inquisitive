@@ -152,7 +152,7 @@ estimate_totals_and_percentages <- function(f, svy) {
   )
 }
 
-rounded_estimates <- function(dt, total_digits = 3, percentage_digits = 3) {
+rounded_estimates <- function(dt) {
   cbind(
     dt[
       ,
@@ -161,39 +161,41 @@ rounded_estimates <- function(dt, total_digits = 3, percentage_digits = 3) {
     ],
     dt[
       ,
-      lapply(.SD, \(col) round(col / 10^6, total_digits)),
+      lapply(.SD, \(col) round(col / 10^6, 3)),
       .SDcols = patterns('^total')
     ],
     dt[
       ,
-      lapply(.SD, \(col) round(col, percentage_digits) * 100),
+      lapply(.SD, \(col) round(col, 3) * 100),
       .SDcols = patterns('^percentage')
     ]
   )
 }
 
-stringified_estimates <- function(dt) {
-  cbind(
-    dt[
-      ,
-      .SD,
-      .SDcols = patterns('^[^(total)|(percentage)]')
-    ],
-    dt[
-      ,
-      lapply(.SD, \(col) paste(col, 'M', sep = '')),
-      .SDcols = patterns('^total')
-    ],
-    dt[
-      ,
-      lapply(.SD, \(col) paste(col, '%', sep = '')),
-      .SDcols = patterns('^percentage')
-    ]
-  )
+string_estimates <- function(dt) {
+  dt[,
+    .(
+      description,
+      total = sprintf("%.3fM", total),
+      total_CI = sprintf(
+        "(%.3fM, %.3fM)",
+        total_CI_low,
+        total_CI_high
+      ),
+      percentage = sprintf("%0.1f%%", percentage),
+      percentage_CI = sprintf(
+        "(%0.1f%%, %0.1f%%)",
+        percentage_CI_low,
+        percentage_CI_high
+      )
+    )
+  ]
 }
 
 pretty_estimates <- function(dt) {
-  dt |> rounded_estimates() |> stringified_estimates()
+  dt |>
+    rounded_estimates() |>
+    string_estimates()
 }
 ```
 
