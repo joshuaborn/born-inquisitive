@@ -118,7 +118,7 @@ set_mentions_to_booleans <- function(
   set_count_mention_variables(dt, out_prefix)
 }
 
-import_variables_as_factors <- function(variables, sex = 'fem') {
+set_variables_as_factors <- function(variables, sex = 'fem') {
   raw_import <- get_raw_import_for_sex(sex)
   dt <- get_dt_for_sex(sex)
 
@@ -264,7 +264,7 @@ set_mentions_to_booleans(
   skip = 20:21
 )
 
-import_variables_as_factors(
+set_variables_as_factors(
   variables = c(
     P1YRELP = 'P1YRELP',
     PSURGSTR = 'Y1N5C',
@@ -324,7 +324,7 @@ set_mentions_to_booleans(
   skip = 95:96
 )
 
-import_variables_as_factors(
+set_variables_as_factors(
   sex = 'male',
   variables = c(
     P1COHABIT = 'Y1N5RDF',
@@ -422,7 +422,9 @@ estimate_totals_and_percentages(
 
 # Things to Do
 
-* Collect estimates into coherent report
+* Collect estimates into this report
+* Style plots and tables for output
+* Write text of report
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Compare own report with published reports
 * Look into what it takes to publish in an academic journal
