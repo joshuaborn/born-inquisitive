@@ -79,6 +79,12 @@ get_idxs <- function(format, skip = NULL, sex = 'fem') {
 }
 
 set_count_mention_variables <- function(dt, prefix) {
+  if (paste(prefix, 'count', sep = '_') %in% colnames(dt)) {
+    dt[
+      ,
+      (paste(prefix, 'count', sep = '_')) := NULL
+    ]
+  }
   dt[
     ,
     (paste(prefix, 'count', sep = '_')) := rowSums(.SD),
@@ -210,6 +216,8 @@ Domain: Persons aged 15-49 living in households in the United States
 
 Description: By whether had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
+## Females
+
 ```{r, dependson='helpers'}
 set_mentions_to_booleans(
   out_prefix = 'usedlast3m_meth',
@@ -249,6 +257,9 @@ fem1719dt[,
   )
 ]
 
+# reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
+set_count_mention_variables(fem1719dt, 'usedlast3m_meth')
+
 # create categorical variable for whether currently using contraception
 fem1719dt[,
   usedlast3m := factor(fifelse(
@@ -269,6 +280,75 @@ fem1719svy <- svydesign(
 estimate_totals_and_percentages(
   ~usedlast3m,
   fem1719svy
+) |> pretty_estimates() |> kable()
+```
+
+## Males
+
+```{r, dependson='helpers'}
+set_mentions_to_booleans(
+  sex = 'male',
+  out_prefix = 'usedlast3m_meth',
+  in_prefix = 'METH3M',
+  in_series = 1:4,
+  format = 'METH3MF',
+  skip = 95:96
+)
+
+import_variables_as_factors(
+  sex = 'male',
+  variables = c(
+    P1COHABIT = 'Y1N5RDF',
+    P1CURRWIFE = 'Y1N5RDF',
+    PSURGSTR = 'N0Y1CF',
+    RSURGSTR = 'N0Y1RDF',
+    SEX3MO = 'SEX3MO'
+  )
+)
+
+# count any respondents who are sexually active and who have an active vasectomy as using vasectomy as a contraceptive method
+male1719dt[,
+  usedlast3m_meth3 := fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+    TRUE,
+    usedlast3m_meth3
+  )
+]
+
+# count any respondents who are sexually active and who are married or cohabitating and whose last intercourse was with wife or cohabitating partner who has active tubal ligation
+male1719dt[,
+  usedlast3m_meth5 := fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' &
+      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
+      PSURGSTR == 'YES',
+    TRUE,
+    usedlast3m_meth5
+  )
+]
+
+# reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
+set_count_mention_variables(male1719dt, 'usedlast3m_meth')
+
+# create categorical variable for whether currently using contraception
+male1719dt[,
+  usedlast3m := factor(fifelse(
+    usedlast3m_meth_count > 0,
+    'Currently using contraception',
+    'Not currently using contraception'
+  ))
+]
+
+male1719svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = male1719dt,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+
+estimate_totals_and_percentages(
+  ~usedlast3m,
+  male1719svy
 ) |> pretty_estimates() |> kable()
 ```
 
