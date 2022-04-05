@@ -218,6 +218,33 @@ svy <- function(dt) {
 
 # Persons in Populations
 
+Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
+
+## Females
+
+```{r, dependson='helpers'}
+fem1719dt[, person := 1]
+
+(estimate_totals_and_percentages(
+  ~person,
+  svy(fem1719dt)
+) |> pretty_estimates())[
+  , .(total, total_CI)
+] |> kable()
+```
+
+## Males
+
+```{r, dependson='helpers'}
+male1719dt[, person := 1]
+
+(estimate_totals_and_percentages(
+  ~person,
+  svy(male1719dt)
+) |> pretty_estimates())[
+  , .(total, total_CI)
+] |> kable()
+```
 
 
 # Currently Using Contraception
