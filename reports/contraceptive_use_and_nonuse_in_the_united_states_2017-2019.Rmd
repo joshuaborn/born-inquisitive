@@ -12,6 +12,7 @@ output:
 library(data.table)
 library(here)
 library(knitr)
+library(survey)
 
 source(here('R/import.R'))
 
@@ -127,6 +128,29 @@ import_variables_as_factors <- function(variables, sex = 'fem') {
     dt[, (variable_name) := ..values]
   }
 }
+
+estimate_totals_and_percentages <- function(f, svy) {
+  totals <- svytotal(f, svy)
+  totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
+  names(totals_ci) <- c('total_CI_low', 'total_CI_high')
+  percentages <- svymean(f, svy)
+  percentages_ci <- as.data.frame(confint(percentages, df = degf(svy)))
+  names(percentages_ci) <- c('percentage_CI_low', 'percentage_CI_high')
+  level_prefix <- as.character(f)
+  level_prefix <- level_prefix[seq(2, length(level_prefix))]
+
+  cbind(
+    data.table(
+      description = sub(level_prefix, '', names(totals), fixed = TRUE),
+      total = as.vector(totals)
+    ),
+    totals_ci,
+    data.table(
+      percentage = as.vector(percentages)
+    ),
+    percentages_ci
+  )
+}
 ```
 
 
@@ -178,6 +202,28 @@ fem1719dt[,
     usedlast3m_meth4
   )
 ]
+
+# create categorical variable for whether currently using contraception
+fem1719dt[,
+  usedlast3m := factor(fifelse(
+    usedlast3m_meth_count > 0,
+    'Currently using contraception',
+    'Not currently using contraception'
+  ))
+]
+
+fem1719svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = fem1719dt,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+
+estimate_totals_and_percentages(
+  ~usedlast3m,
+  fem1719svy
+) |> kable()
 ```
 
 
