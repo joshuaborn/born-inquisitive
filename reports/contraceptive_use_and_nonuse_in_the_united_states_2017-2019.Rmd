@@ -112,12 +112,13 @@ set_mentions_to_booleans <- function(
   set_count_mention_variables(dt, out_prefix)
 }
 
-import_variables <- function(variables, formats = c(), sex = 'fem') {
+import_variables_as_factors <- function(variables, sex = 'fem') {
   raw_import <- get_raw_import_for_sex(sex)
   dt <- get_dt_for_sex(sex)
 
   for (x in seq(length(variables))) {
-    variable_name <- variables[x]
+    variable_name <- names(variables)[x]
+    format_name <- variables[x]
 
     set(
       dt,
@@ -125,16 +126,14 @@ import_variables <- function(variables, formats = c(), sex = 'fem') {
       value = raw_import$Data[, ..variable_name]
     )
 
-    if (length(formats) > 0 & !is.na(formats[x])) {
-      dt[
-        ,
-        (variable_name) := factorize(
-          get(variable_name),
-          formats[x],
-          raw_import$Formats
-        )
-      ]
-    }
+    dt[
+      ,
+      (variable_name) := factorize(
+        get(variable_name),
+        format_name,
+        raw_import$Formats
+      )
+    ]
   }
 }
 ```
@@ -159,14 +158,10 @@ set_mentions_to_booleans(
   skip = 20:21
 )
 
-import_variables(
+import_variables_as_factors(
   variables = c(
-    'SEX3MO',
-    'TUBS'
-  ),
-  formats = c(
-    'Y1N2RECF',
-    'Y1N5C'
+    SEX3MO = 'Y1N2RECF',
+    TUBS = 'Y1N5C'
   )
 )
 ```
