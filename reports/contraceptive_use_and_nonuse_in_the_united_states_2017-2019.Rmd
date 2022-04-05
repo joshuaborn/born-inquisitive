@@ -119,21 +119,13 @@ import_variables_as_factors <- function(variables, sex = 'fem') {
   for (x in seq(length(variables))) {
     variable_name <- names(variables)[x]
     format_name <- variables[x]
-
-    set(
-      dt,
-      j = variable_name,
-      value = raw_import$Data[, ..variable_name]
+    values <- factorize(
+      raw_import$Data[, get(variable_name)],
+      format_name,
+      raw_import$Formats
     )
 
-    dt[
-      ,
-      (variable_name) := factorize(
-        get(variable_name),
-        format_name,
-        raw_import$Formats
-      )
-    ]
+    dt[, (variable_name) := ..values]
   }
 }
 ```
