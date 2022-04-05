@@ -80,8 +80,7 @@ get_idxs <- function(format, skip = NULL, sex = 'fem') {
 set_count_mention_variables <- function(dt, prefix) {
   dt[
     ,
-
-        (paste(prefix, 'count', sep = '_')) := rowSums(.SD),
+    (paste(prefix, 'count', sep = '_')) := rowSums(.SD),
     .SDcols = patterns(paste('^', prefix, sep = ''))
   ]
 }
