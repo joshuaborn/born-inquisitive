@@ -151,6 +151,50 @@ estimate_totals_and_percentages <- function(f, svy) {
     percentages_ci
   )
 }
+
+rounded_estimates <- function(dt, total_digits = 3, percentage_digits = 3) {
+  cbind(
+    dt[
+      ,
+      .SD,
+      .SDcols = patterns('^[^(total)|(percentage)]')
+    ],
+    dt[
+      ,
+      lapply(.SD, \(col) round(col / 10^6, total_digits)),
+      .SDcols = patterns('^total')
+    ],
+    dt[
+      ,
+      lapply(.SD, \(col) round(col, percentage_digits) * 100),
+      .SDcols = patterns('^percentage')
+    ]
+  )
+}
+
+stringified_estimates <- function(dt) {
+  cbind(
+    dt[
+      ,
+      .SD,
+      .SDcols = patterns('^[^(total)|(percentage)]')
+    ],
+    dt[
+      ,
+      lapply(.SD, \(col) paste(col, 'M', sep = '')),
+      .SDcols = patterns('^total')
+    ],
+    dt[
+      ,
+      lapply(.SD, \(col) paste(col, '%', sep = '')),
+      .SDcols = patterns('^percentage')
+    ]
+  )
+}
+
+pretty_estimates <- function(dt) {
+  dt |> rounded_estimates() |> stringified_estimates()
+}
 ```
 
 
@@ -223,7 +267,7 @@ fem1719svy <- svydesign(
 estimate_totals_and_percentages(
   ~usedlast3m,
   fem1719svy
-) |> kable()
+) |> pretty_estimates() |> kable()
 ```
 
 
