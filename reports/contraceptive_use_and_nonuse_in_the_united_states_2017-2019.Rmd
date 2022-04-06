@@ -19,7 +19,7 @@ source(here('R/import.R'))
 i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
 
 opts_chunk$set(
-  cache = TRUE,
+  cache = FALSE,
   echo = TRUE,
   fig.height = 8,
   fig.width = 12,
@@ -70,7 +70,8 @@ get_dt_for_sex <- function(sex) {
 }
 
 get_idxs <- function(format, skip = NULL, sex = 'fem') {
-  idxs <- fem1719$Formats[format_name == format, factor_value]
+  raw_import <- get_raw_import_for_sex(sex)
+  idxs <- raw_import$Formats[format_name == format, factor_value]
   if (!is.null(skip)) {
     idxs[!is.element(idxs, skip)]
   } else {
@@ -212,6 +213,39 @@ svy <- function(dt) {
     nest = TRUE,
     weights = ~WGT2017_2019
   )
+}
+
+
+estimate_mentions <- function(
+  svy,
+  prefix,
+  series,
+  format,
+  skip = NULL,
+  sex = 'fem'
+) {
+  raw_import <- get_raw_import_for_sex(sex)
+  dt <- get_dt_for_sex(sex)
+
+  estimates <- rbindlist(lapply(
+    get_idxs(format, skip, sex),
+    function(x) {
+      row <- estimate_totals_and_percentages(
+        as.formula(paste('~', prefix, x, sep = '')),
+        svy
+      )[
+        description == TRUE
+      ]
+      row[, description := x]
+      row
+    }
+  ))
+
+  estimates[
+    , description := factorize(description, format, raw_import$Formats)
+  ]
+
+  estimates
 }
 ```
 
@@ -378,7 +412,7 @@ estimate_totals_and_percentages(
 
 # Contraception Method(s) at Last Intercourse
 
-## By Number of Methods
+## Number of Methods
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
@@ -407,6 +441,45 @@ estimate_totals_and_percentages(
   )
 ) |> pretty_estimates() |> kable()
 ```
+
+
+## Number of Methods
+
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
+
+Description: By method(s), with those using multiple methods counted multiple times
+
+### Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    usedlast3m_meth_count > 0
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:3,
+  skip = 20:21,
+  format = 'METH3MF'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Males
+
+```{r, dependson='usedlast3m-meth-male'}
+estimate_mentions(
+  sex = 'male',
+  svy = subset(
+    svy(male1719dt),
+    usedlast3m_meth_count > 0
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:4,
+  skip = 95:96,
+  format = 'METH3MF'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
 
 
 * During last intercourse
