@@ -244,15 +244,16 @@ fem1719dt <- copy(fem1719$Data[, .(
 set_variables_as_factors(
   variables = c(
     CONSTAT1 = 'CONSTATF',
+    HADSEX = 'HADSEX',
     LSEXPREG = 'Y1N2RECF',
+    P1YRELP = 'P1YRELP',
     POSIBLMN = 'Y1N5RDF',
     POSIBLPG = 'Y1N5RDF',
-    WYNOTUSE = 'Y1N5RDF',
-    WYNOLSTP = 'Y1N5RDF',
-    P1YRELP = 'P1YRELP',
     PSURGSTR = 'Y1N5C',
     SEX3MO = 'Y1N2RECF',
-    TUBS = 'Y1N5C'
+    TUBS = 'Y1N5C',
+    WYNOLSTP = 'Y1N5RDF',
+    WYNOTUSE = 'Y1N5RDF'
   )
 )
 
@@ -352,6 +353,7 @@ set_variables_as_factors(
     CWPPRGNW ='Y1N5RDF',
     CWPTRYPG = 'Y1N5RDF',
     FATHPOSS = 'Y1N5RDF',
+    HADSEX = 'HADSEX',
     P1COHABIT = 'Y1N5RDF',
     P1CURRWIFE = 'Y1N5RDF',
     PSURGSTR = 'N0Y1CF',
@@ -577,6 +579,8 @@ estimate_totals_and_percentages(
 
 # Reported Ignorance of Contraceptive Use
 
+Domain: Males who had intercourse with a female in the past 3 months
+
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
   ~not_aware,
@@ -586,6 +590,8 @@ estimate_totals_and_percentages(
   )
 ) |> pretty_estimates() |> kable()
 ```
+
+Domain: Males who had intercourse with a female in the past 3 months
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -598,6 +604,36 @@ estimate_totals_and_percentages(
   )
 ) |> pretty_estimates() |> kable()
 ```
+
+
+# Not Sexually Active
+
+Domain: Persons who have not had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview
+
+## Females
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(HADSEX),
+  subset(
+    svy(fem1719dt),
+    SEX3MO != 'YES'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+## Males
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(HADSEX),
+  subset(
+    svy(male1719dt),
+    SEX3MO != 'YES, HAD INTERCOURSE'
+  )
+) |> pretty_estimates() |> kable()
+```
+
 
 
 # Method(s) at Last Intercourse
@@ -925,8 +961,6 @@ estimate_mentions(
 
 
 
-* Overall contraception rate
-    * Males who don't know
 * Not sexually active currently
     * Never
         * Reason for never
