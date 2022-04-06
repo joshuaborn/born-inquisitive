@@ -198,7 +198,6 @@ svy <- function(dt) {
 estimate_mentions <- function(
   svy,
   prefix,
-  series,
   format,
   skip = NULL,
   sex = 'fem'
@@ -230,6 +229,14 @@ estimate_mentions <- function(
 
 ```{r load-data}
 fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
+fem1719$Formats <- rbindlist(list(
+  fem1719$Formats,
+  data.table(
+    format_name = 'WHYNOTPGF',
+    factor_value = 13,
+    factor_label = 'No menstrual cycle or menstrual irregularity'
+  )
+))
 male1719 <- load_NSFG_data('2017_2019', 'Male')
 ```
 
@@ -373,6 +380,22 @@ fem1719dt[,
     )
   )
 ]
+
+
+set_mentions_to_booleans(
+  out_prefix = 'nonuse_reason',
+  in_prefix = 'WHYNOUSING',
+  in_series = 1:5,
+  format = 'WHYNOUSNG'
+)
+
+
+set_mentions_to_booleans(
+  out_prefix = 'pregnancy_impossible_reason',
+  in_prefix = 'WHYNOTPG',
+  in_series = 1:2,
+  format = 'WHYNOTPGF'
+)
 ```
 
 ```{r process-male-data, dependson=c('helpers', 'load-data')}
@@ -799,6 +822,8 @@ estimate_totals_and_percentages(
 
 ## Intent to Conceive
 
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive
+
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(pregnancy_intent_status),
@@ -807,6 +832,36 @@ estimate_totals_and_percentages(
     WYNOTUSE != 'Not Applicable'
   )
 ) |> pretty_estimates() |> kable()
+```
+
+## Reason(s) for Nonuse When Not Intending to Conceive
+
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    pregnancy_intent_status == 'Not intending to conceive'
+  ),
+  prefix = 'nonuse_reason',
+  format = 'WHYNOUSNG'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+## Reason(s) Respondent Believes She Cannot Become Pregnant
+
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    nonuse_reason2
+  ),
+  prefix = 'pregnancy_impossible_reason',
+  format = 'WHYNOTPGF'
+)[order(-total)] |> pretty_estimates() |> kable()
 ```
 
 
@@ -858,7 +913,6 @@ estimate_mentions(
     usedlast3m_meth_count > 0
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:3,
   skip = 20:21,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -874,7 +928,6 @@ estimate_mentions(
     usedlast3m_meth_count > 0
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:4,
   skip = 95:96,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -894,7 +947,6 @@ estimate_mentions(
     usedlast3m_meth_count == 1
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:3,
   skip = 20:21,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -910,7 +962,6 @@ estimate_mentions(
     usedlast3m_meth_count == 1
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:4,
   skip = 95:96,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -997,7 +1048,6 @@ estimate_mentions(
     usedlast3m_meth8
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:3,
   skip = c(8, 20:21),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1013,7 +1063,6 @@ estimate_mentions(
     usedlast3m_meth9
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:4,
   skip = c(9, 95:96),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1035,7 +1084,6 @@ estimate_mentions(
     usedlast3m_meth5
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:3,
   skip = c(5, 20:21),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1051,7 +1099,6 @@ estimate_mentions(
     usedlast3m_meth2
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:4,
   skip = c(2, 95:96),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1073,7 +1120,6 @@ estimate_mentions(
     usedlast3m_meth2
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:3,
   skip = c(2, 20:21),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1089,7 +1135,6 @@ estimate_mentions(
     usedlast3m_meth1
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:4,
   skip = c(1, 95:96),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1111,7 +1156,6 @@ estimate_mentions(
     usedlast3m_meth1
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:3,
   skip = c(1, 20:21),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1127,7 +1171,6 @@ estimate_mentions(
     usedlast3m_meth4
   ),
   prefix = 'usedlast3m_meth',
-  series = 1:4,
   skip = c(4, 95:96),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1136,9 +1179,6 @@ estimate_mentions(
 
 
 * Why not using contraception (females)
-    * Domain size
-    * By intent to conceive
-    * By reason(s)
     * Reasons(s) for those who believe themselves infertile to think themselves infertile
 * Method(s) used at last intercourse
 * Past 12 months
