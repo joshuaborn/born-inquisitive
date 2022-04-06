@@ -459,7 +459,7 @@ male1719dt[,
 
 Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
 
-## Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 fem1719dt[, person := 1]
@@ -472,7 +472,7 @@ fem1719dt[, person := 1]
 ] |> kable()
 ```
 
-## Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 male1719dt[, person := 1]
@@ -492,7 +492,7 @@ Domain: Persons aged 15-49 living in households in the United States
 
 Description: By whether had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
-## Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -501,7 +501,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-## Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -517,7 +517,7 @@ Domain: Persons not currently using contraception, as defined above
 
 Description: Categorized into exclusive hierarchy, such that individuals categorized earlier in the hierarchy are not counted in later categories
 
-## Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -529,7 +529,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-## Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -546,7 +546,7 @@ estimate_totals_and_percentages(
 
 Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview, are not nor had last intercourse with someone who is pregnant, postpartum, trying to conceive, or physically infertile
 
-## Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -561,7 +561,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-## Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -610,7 +610,7 @@ estimate_totals_and_percentages(
 
 Domain: Persons who have not had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview
 
-## Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -622,7 +622,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-## Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -644,7 +644,7 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 
 Description: By number of methods used at last intercourse
 
-### Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -656,7 +656,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-### Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -675,7 +675,7 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 
 Description: By method(s), with those using multiple methods counted multiple times
 
-### Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_mentions(
@@ -690,7 +690,7 @@ estimate_mentions(
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
-### Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_mentions(
@@ -711,7 +711,7 @@ estimate_mentions(
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used **one and only one** method of contraception during last intercourse
 
-### Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_mentions(
@@ -726,7 +726,7 @@ estimate_mentions(
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
-### Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_mentions(
@@ -749,7 +749,7 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 
 Description: Proportion who also used other method(s)
 
-### Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 (function() {
@@ -778,7 +778,7 @@ Description: Proportion who also used other method(s)
 })()[!is.nan(total_CI_low)][order(-total)] |> pretty_estimates() |> kable()
 ```
 
-### Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 (function() {
@@ -814,7 +814,7 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 
 Description: By method(s), with those using multiple methods counted multiple times
 
-### Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_mentions(
@@ -829,7 +829,7 @@ estimate_mentions(
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
 ```
 
-### Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_mentions(
@@ -852,7 +852,7 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 
 Description: By method(s), with those using multiple methods counted multiple times
 
-### Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_mentions(
@@ -867,7 +867,7 @@ estimate_mentions(
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
 ```
 
-### Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_mentions(
@@ -890,7 +890,7 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 
 Description: By method(s), with those using multiple methods counted multiple times
 
-### Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_mentions(
@@ -905,7 +905,7 @@ estimate_mentions(
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
 ```
 
-### Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_mentions(
@@ -928,7 +928,7 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 
 Description: By method(s), with those using multiple methods counted multiple times
 
-### Females
+**Females**
 
 ```{r, dependson='process-fem-data'}
 estimate_mentions(
@@ -943,7 +943,7 @@ estimate_mentions(
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
 ```
 
-### Males
+**Males**
 
 ```{r, dependson='process-male-data'}
 estimate_mentions(
