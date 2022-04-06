@@ -246,6 +246,7 @@ set_variables_as_factors(
     ATTRACT = 'ATTRACT',
     CONSTAT1 = 'CONSTATF',
     HADSEX = 'HADSEX',
+    HPPREGQ = 'HPPREGQ',
     LSEXPREG = 'Y1N2RECF',
     P1YRELP = 'P1YRELP',
     POSIBLMN = 'Y1N5RDF',
@@ -255,6 +256,7 @@ set_variables_as_factors(
     REASIMPR = 'REASR',
     SEX3MO = 'Y1N2RECF',
     TUBS = 'Y1N5C',
+    WHYNOUSING1 = 'WHYNOUSNG',
     WYNOLSTP = 'Y1N5RDF',
     WYNOTUSE = 'Y1N5RDF',
     YNOSEX = 'YNOSEX'
@@ -335,6 +337,39 @@ fem1719dt[,
       'Physically unable to conceive',
       'Last intercourse was with partner who is physically unable to conceive',
       'Otherwise did not use contraception at last intercourse'
+    )
+  )
+]
+
+fem1719dt[,
+  pregnancy_intent_status := factor(
+    fcase(
+      WYNOTUSE == 'Not Applicable',
+        'Outside of domain',
+      WYNOTUSE == 'Yes',
+        'Wants to get pregnant',
+      HPPREGQ == 'Yes',
+        'Partner wants respondent to get pregnant',
+      WYNOTUSE == "Don't know" | HPPREGQ == "Don't know",
+        "Don't know",
+      WYNOTUSE == 'Refused' | HPPREGQ == 'Refused',
+        'Refused',
+      HPPREGQ == '(If volunteered:) no current partner',
+        'Volunteered no current partner',
+      WHYNOUSING1 != 'Not Applicable',
+        'Not intending to conceive',
+      default = 'No answer provided in public use data file'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Outside of domain',
+      'Wants to get pregnant',
+      'Partner wants respondent to get pregnant',
+      "Don't know",
+      'Refused',
+      'Volunteered no current partner',
+      'Not intending to conceive',
+      'No answer provided in public use data file'
     )
   )
 ]
@@ -751,6 +786,8 @@ estimate_totals_and_percentages(
 
 # Reason(s) for Nonuse
 
+## Size of Domain
+
 Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
 
 ```{r, dependson='process-fem-data'}
@@ -760,6 +797,17 @@ estimate_totals_and_percentages(
 )[description == TRUE] |> pretty_estimates() |> kable()
 ```
 
+## Intent to Conceive
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(pregnancy_intent_status),
+  subset(
+    svy(fem1719dt),
+    WYNOTUSE != 'Not Applicable'
+  )
+) |> pretty_estimates() |> kable()
+```
 
 
 # Method(s) at Last Intercourse
