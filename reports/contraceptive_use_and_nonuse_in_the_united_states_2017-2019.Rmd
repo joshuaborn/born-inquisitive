@@ -485,8 +485,6 @@ estimate_mentions(
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used **one and only one** method of contraception during last intercourse
 
-Description: By method
-
 ### Females
 
 ```{r, dependson='usedlast3m-meth-fem'}
@@ -516,6 +514,71 @@ estimate_mentions(
   skip = 95:96,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+## Proportion of Method Users Who Also Used Other Method(s)
+
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used each specific method of contraception during last intercourse
+
+Description: Proportion who also used other method(s)
+
+### Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+(function() {
+  estimates <- rbindlist(lapply(
+    get_idxs('METH3MF', 20:21, 'fem'),
+    function(x) {
+      row <- estimate_totals_and_percentages(
+        ~I(usedlast3m_meth_count > 1),
+        subset(
+          svy(fem1719dt),
+          fem1719dt[, get(sprintf('usedlast3m_meth%d', x))]
+        )
+      )[
+        description == TRUE
+      ]
+      row[, description := x]
+      row
+    }
+  ))
+
+  estimates[
+    , description := factorize(description, 'METH3MF', fem1719$Formats)
+  ]
+
+  estimates
+})()[!is.nan(total_CI_low)][order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Males
+
+```{r, dependson='usedlast3m-meth-male'}
+(function() {
+  estimates <- rbindlist(lapply(
+    get_idxs('METH3MF', 95:96, 'male'),
+    function(x) {
+      row <- estimate_totals_and_percentages(
+        ~I(usedlast3m_meth_count > 1),
+        subset(
+          svy(male1719dt),
+          male1719dt[, get(sprintf('usedlast3m_meth%d', x))]
+        )
+      )[
+        description == TRUE
+      ]
+      row[, description := x]
+      row
+    }
+  ))
+
+  estimates[
+    , description := factorize(description, 'METH3MF', male1719$Formats)
+  ]
+
+  estimates
+})()[order(-total)] |> pretty_estimates() |> kable()
 ```
 
 
