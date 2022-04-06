@@ -1,5 +1,5 @@
 ---
-title: "Contraceptive Use and Nonuse in the United States: Based on the 2017-2019 National Survey of Family Growth"
+title: "Use and Nonuse of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
 author: "Joshua Born"
 output:
   html_document:
@@ -410,7 +410,7 @@ estimate_totals_and_percentages(
 ```
 
 
-# Contraception Method(s) at Last Intercourse
+# Method(s) at Last Intercourse
 
 ## Number of Methods
 
@@ -735,6 +735,21 @@ estimate_mentions(
 
 
 
+* Not currently using contraception, overview by category
+* Not sexually active currently
+    * Never
+        * Reason for never
+    * Same-sex attractedness
+* Physically infertile category (females)
+    * By reason in domain
+    * By reason generally
+    * Partner infertile generally
+* Why not using contraception (females)
+    * By reason(s)
+    * By main or exclusive reason
+    * Reasons(s) for those who believe themselves infertile to think themselves infertile
+* Overall contraception rate
+* Method(s) used at last intercourse
 * Past 12 months
     * Number of methods
     * By method(s) used
@@ -754,20 +769,6 @@ estimate_mentions(
     * Reason for dissatisfaction with pill
     * Reason for dissatisfaction with condoms
     * Reason for dissatisfaction with IUDs
-* Not currently using contraception, overview by category
-* Not sexually active currently
-    * Never
-        * Reason for never
-    * Same-sex attractedness
-* Physically infertile category (females)
-    * By reason in domain
-    * By reason generally
-    * Partner infertile generally
-* Why not using contraception (females)
-    * By reason(s)
-    * By main or exclusive reason
-    * Reasons(s) for those who believe themselves infertile to think themselves infertile
-* Overall contraception rate
 * Use for reasons other than contraception
     * Condom, pill, IUD, and tubal ligation among females
     * Condom among males
