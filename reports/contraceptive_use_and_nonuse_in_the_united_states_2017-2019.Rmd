@@ -521,6 +521,41 @@ estimate_totals_and_percentages(
 ```
 
 
+# Contraception Use Rate
+
+Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview, are not nor had last intercourse with someone who is pregnant, postpartum, trying to conceive, or physically infertile
+
+## Females
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(usedlast3m_status),
+  subset(
+    svy(fem1719dt),
+    usedlast3m_status %in% c(
+      'Used at least one contraceptive method at last intercourse',
+      'Otherwise did not use contraception at last intercourse'
+    )
+  )
+) |> pretty_estimates() |> kable()
+```
+
+## Males
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(usedlast3m_status),
+  subset(
+    svy(male1719dt),
+    usedlast3m_status %in% c(
+      'Used at least one contraceptive method at last intercourse',
+      'Otherwise did not use contraception at last intercourse'
+    )
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
 # Method(s) at Last Intercourse
 
 ## Number of Methods
