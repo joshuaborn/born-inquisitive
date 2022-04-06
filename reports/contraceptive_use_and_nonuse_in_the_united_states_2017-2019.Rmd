@@ -722,7 +722,7 @@ estimate_totals_and_percentages(
 ```
 
 
-# Reasons for Physical Inability to Conceive
+# Reason for Physical Inability to Conceive
 
 Domain: Females who report being physically unable to get pregnant
 
@@ -747,6 +747,19 @@ estimate_totals_and_percentages(
   )
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
+
+
+# Reason(s) for Nonuse
+
+Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(WYNOTUSE != 'Not Applicable'),
+  svy(fem1719dt)
+)[description == TRUE] |> pretty_estimates() |> kable()
+```
+
 
 
 # Method(s) at Last Intercourse
@@ -1074,13 +1087,10 @@ estimate_mentions(
 
 
 
-* Physically infertile category (females)
-    * By reason in domain
-    * By reason generally
-    * Partner infertile generally
 * Why not using contraception (females)
+    * Domain size
+    * By intent to conceive
     * By reason(s)
-    * By main or exclusive reason
     * Reasons(s) for those who believe themselves infertile to think themselves infertile
 * Method(s) used at last intercourse
 * Past 12 months
