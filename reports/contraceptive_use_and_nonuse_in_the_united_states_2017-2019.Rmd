@@ -408,6 +408,126 @@ estimate_totals_and_percentages(
 ```
 
 
+# Reason for Nonuse
+
+Domain: Persons not currently using contraception, as defined above
+
+Description: Categorized into exclusive hierarchy, such that individuals categorized earlier in the hierarchy are not counted in later categories
+
+## Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+set_variables_as_factors(
+  variables = c(
+    CONSTAT1 = 'CONSTATF',
+    LSEXPREG = 'Y1N2RECF',
+    POSIBLMN = 'Y1N5RDF',
+    POSIBLPG = 'Y1N5RDF',
+    WYNOTUSE = 'Y1N5RDF',
+    WYNOLSTP = 'Y1N5RDF'
+  )
+)
+
+fem1719dt[,
+  usedlast3m_status := factor(
+    fcase(
+      usedlast3m_meth_count > 0,
+        'Used at least one contraceptive method at last intercourse',
+      SEX3MO != 'YES',
+        'Did not have sexual intercourse with male in past 3 months',
+      LSEXPREG == 'YES',
+        'Pregnant in month of last intercourse',
+      CONSTAT1 == 'Postpartum',
+        'Postpartum',
+      (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
+        'Currently trying to conceive',
+      POSIBLPG == 'No',
+        'Physically unable to conceive',
+      POSIBLMN == 'No' & (
+        P1YRELP == 'Current cohabiting partner' |
+        P1YRELP == 'Current husband or (current husband from whom she is separated)'
+      ),
+        'Last intercourse was with partner who is physically unable to conceive',
+      default = 'Otherwise did not use contraception at last intercourse'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Used at least one contraceptive method at last intercourse',
+      'Did not have sexual intercourse with male in past 3 months',
+      'Pregnant in month of last intercourse',
+      'Postpartum',
+      'Currently trying to conceive',
+      'Physically unable to conceive',
+      'Last intercourse was with partner who is physically unable to conceive',
+      'Otherwise did not use contraception at last intercourse'
+    )
+  )
+]
+
+estimate_totals_and_percentages(
+  ~factor(usedlast3m_status),
+  subset(
+    svy(fem1719dt),
+    usedlast3m_meth_count == 0
+  )
+) |> pretty_estimates() |> kable()
+```
+
+## Males
+
+```{r, dependson='usedlast3m-meth-fem'}
+set_variables_as_factors(
+  sex = 'male',
+  variables = c(
+    CWPPOSS = 'Y1N5RDF',
+    CWPPRGNW ='Y1N5RDF',
+    CWPTRYPG = 'Y1N5RDF',
+    FATHPOSS = 'Y1N5RDF',
+    PXCPREG = 'Y1N5RDF',
+    PXTRYING = 'Y1N5RDF'
+  )
+)
+
+male1719dt[,
+  usedlast3m_status := factor(
+    fcase(
+      usedlast3m_meth_count > 0,
+        'Used at least one contraceptive method at last intercourse',
+      SEX3MO != 'YES, HAD INTERCOURSE',
+        'Did not have sexual intercourse with female in past 3 months',
+      PXCPREG == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPRGNW == 'Yes'),
+        'Last intercourse was with partner who is pregnant',
+      PXTRYING == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPTRYPG == 'Yes'),
+        'Last intercourse was with partner who is trying to conceive',
+      FATHPOSS == 'No',
+        'Physically unable to conceive',
+      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPOSS == 'No',
+        'Last intercourse was with partner who is physically unable to concieve',
+      default = 'Otherwise did not use contraception at last intercourse'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Used at least one contraceptive method at last intercourse',
+      'Did not have sexual intercourse with female in past 3 months',
+      'Last intercourse was with partner who is pregnant',
+      'Last intercourse was with partner who is trying to conceive',
+      'Physically unable to conceive',
+      'Last intercourse was with partner who is physically unable to concieve',
+      'Otherwise did not use contraception at last intercourse'
+    )
+  )
+]
+
+estimate_totals_and_percentages(
+  ~factor(usedlast3m_status),
+  subset(
+    svy(male1719dt),
+    usedlast3m_meth_count == 0
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
 # Method(s) at Last Intercourse
 
 ## Number of Methods
@@ -733,7 +853,8 @@ estimate_mentions(
 
 
 
-* Not currently using contraception, overview by category
+* Overall contraception rate
+    * Males who don't know
 * Not sexually active currently
     * Never
         * Reason for never
@@ -746,8 +867,6 @@ estimate_mentions(
     * By reason(s)
     * By main or exclusive reason
     * Reasons(s) for those who believe themselves infertile to think themselves infertile
-* Overall contraception rate
-    * Males who don't know
 * Method(s) used at last intercourse
 * Past 12 months
     * Number of methods
