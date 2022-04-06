@@ -251,6 +251,8 @@ set_variables_as_factors(
     POSIBLMN = 'Y1N5RDF',
     POSIBLPG = 'Y1N5RDF',
     PSURGSTR = 'Y1N5C',
+    REASIMPP = 'REASP',
+    REASIMPR = 'REASR',
     SEX3MO = 'Y1N2RECF',
     TUBS = 'Y1N5C',
     WYNOLSTP = 'Y1N5RDF',
@@ -720,6 +722,33 @@ estimate_totals_and_percentages(
 ```
 
 
+# Reasons for Physical Inability to Conceive
+
+Domain: Females who report being physically unable to get pregnant
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(REASIMPR),
+  subset(
+    svy(fem1719dt),
+    POSIBLPG == 'No'
+  )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+Domain: Females who report their partner is unable to father a child
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(REASIMPP),
+  subset(
+    svy(fem1719dt),
+    POSIBLMN == 'No'
+  )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
 # Method(s) at Last Intercourse
 
 ## Number of Methods
@@ -1045,10 +1074,6 @@ estimate_mentions(
 
 
 
-* Not sexually active currently
-    * Never
-        * Reason for never
-    * Same-sex attractedness
 * Physically infertile category (females)
     * By reason in domain
     * By reason generally
