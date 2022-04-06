@@ -443,7 +443,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Number of Methods
+## Method(s) Used at Last Intercourse
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
@@ -472,6 +472,44 @@ estimate_mentions(
   svy = subset(
     svy(male1719dt),
     usedlast3m_meth_count > 0
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:4,
+  skip = 95:96,
+  format = 'METH3MF'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+## Method Used Exclusively at Last Intercourse
+
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used **one and only one** method of contraception during last intercourse
+
+Description: By method
+
+### Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    usedlast3m_meth_count == 1
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:3,
+  skip = 20:21,
+  format = 'METH3MF'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Males
+
+```{r, dependson='usedlast3m-meth-male'}
+estimate_mentions(
+  sex = 'male',
+  svy = subset(
+    svy(male1719dt),
+    usedlast3m_meth_count == 1
   ),
   prefix = 'usedlast3m_meth',
   series = 1:4,
