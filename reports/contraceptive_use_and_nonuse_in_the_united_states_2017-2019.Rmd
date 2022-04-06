@@ -243,6 +243,7 @@ fem1719dt <- copy(fem1719$Data[, .(
 
 set_variables_as_factors(
   variables = c(
+    ATTRACT = 'ATTRACT',
     CONSTAT1 = 'CONSTATF',
     HADSEX = 'HADSEX',
     LSEXPREG = 'Y1N2RECF',
@@ -253,7 +254,8 @@ set_variables_as_factors(
     SEX3MO = 'Y1N2RECF',
     TUBS = 'Y1N5C',
     WYNOLSTP = 'Y1N5RDF',
-    WYNOTUSE = 'Y1N5RDF'
+    WYNOTUSE = 'Y1N5RDF',
+    YNOSEX = 'YNOSEX'
   )
 )
 
@@ -347,6 +349,7 @@ male1719dt <- copy(male1719$Data[, .(
 set_variables_as_factors(
   sex = 'male',
   variables = c(
+    ATTRACT = 'ATTRACT',
     CWPLMET201 = 'MTHDSV3F',
     CWPLUSE2 = 'Y1N5RDF',
     CWPPOSS = 'Y1N5RDF',
@@ -363,7 +366,8 @@ set_variables_as_factors(
     PXLSXPRB = 'Y1N5RDF',
     PXTRYING = 'Y1N5RDF',
     RSURGSTR = 'N0Y1RDF',
-    SEX3MO = 'SEX3MO'
+    SEX3MO = 'SEX3MO',
+    YNOSEX = 'YNOSEX'
   )
 )
 
@@ -608,6 +612,8 @@ estimate_totals_and_percentages(
 
 # Not Sexually Active
 
+## Never Had Intercourse with Opposite Sex
+
 Domain: Persons who have not had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview
 
 **Females**
@@ -634,6 +640,84 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
+### Reason for Never Having Intercourse
+
+Domain: Persons who have never had sexual intercourse with someone of the opposite sex
+
+**Females**
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(YNOSEX),
+  subset(
+    svy(fem1719dt),
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+  )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+**Males**
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(YNOSEX),
+  subset(
+    svy(male1719dt),
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+  )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+## Attraction by Sex
+
+Domain: Females who have not had sexual intercourse with a male in the past 3 months
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(ATTRACT),
+  subset(
+    svy(fem1719dt),
+    SEX3MO != 'YES'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Females who had sexual intercourse with a male in the past 3 months
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(ATTRACT),
+  subset(
+    svy(fem1719dt),
+    SEX3MO == 'YES'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Males who have not had sexual intercourse with a female in the past 3 months
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(ATTRACT),
+  subset(
+    svy(male1719dt),
+    SEX3MO != 'YES, HAD INTERCOURSE'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Males who had sexual intercourse with a female in the past 3 months
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(ATTRACT),
+  subset(
+    svy(male1719dt),
+    SEX3MO == 'YES, HAD INTERCOURSE'
+  )
+) |> pretty_estimates() |> kable()
+```
 
 
 # Method(s) at Last Intercourse
