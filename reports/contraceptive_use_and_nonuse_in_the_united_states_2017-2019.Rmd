@@ -233,7 +233,7 @@ fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
 male1719 <- load_NSFG_data('2017_2019', 'Male')
 ```
 
-```{r usedlast3m-meth-fem, dependson=c('helpers', 'load-data')}
+```{r process-fem-data, dependson=c('helpers', 'load-data')}
 fem1719dt <- copy(fem1719$Data[, .(
   CASEID,
   SECU,
@@ -241,21 +241,27 @@ fem1719dt <- copy(fem1719$Data[, .(
   WGT2017_2019
 )])
 
+set_variables_as_factors(
+  variables = c(
+    CONSTAT1 = 'CONSTATF',
+    LSEXPREG = 'Y1N2RECF',
+    POSIBLMN = 'Y1N5RDF',
+    POSIBLPG = 'Y1N5RDF',
+    WYNOTUSE = 'Y1N5RDF',
+    WYNOLSTP = 'Y1N5RDF',
+    P1YRELP = 'P1YRELP',
+    PSURGSTR = 'Y1N5C',
+    SEX3MO = 'Y1N2RECF',
+    TUBS = 'Y1N5C'
+  )
+)
+
 set_mentions_to_booleans(
   out_prefix = 'usedlast3m_meth',
   in_prefix = 'METH3M',
   in_series = 1:3,
   format = 'METH3MF',
   skip = 20:21
-)
-
-set_variables_as_factors(
-  variables = c(
-    P1YRELP = 'P1YRELP',
-    PSURGSTR = 'Y1N5C',
-    SEX3MO = 'Y1N2RECF',
-    TUBS = 'Y1N5C'
-  )
 )
 
 # set any respondents who are sexually active in past 3 months and whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
@@ -281,101 +287,8 @@ fem1719dt[,
 
 # reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
 set_mention_count_variable(fem1719dt, 'usedlast3m_meth')
-```
-
-```{r usedlast3m-meth-male, dependson=c('helpers', 'load-data')}
-male1719dt <- copy(male1719$Data[, .(
-  CASEID,
-  SECU,
-  SEST,
-  WGT2017_2019
-)])
-
-set_mentions_to_booleans(
-  sex = 'male',
-  out_prefix = 'usedlast3m_meth',
-  in_prefix = 'METH3M',
-  in_series = 1:4,
-  format = 'METH3MF',
-  skip = 95:96
-)
-
-set_variables_as_factors(
-  sex = 'male',
-  variables = c(
-    P1COHABIT = 'Y1N5RDF',
-    P1CURRWIFE = 'Y1N5RDF',
-    PSURGSTR = 'N0Y1CF',
-    RSURGSTR = 'N0Y1RDF',
-    SEX3MO = 'SEX3MO'
-  )
-)
-
-# count any respondents who are sexually active and who have an active vasectomy as using vasectomy as a contraceptive method
-male1719dt[,
-  usedlast3m_meth3 := fifelse(
-    SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
-    TRUE,
-    usedlast3m_meth3
-  )
-]
-
-# count any respondents who are sexually active and who are married or cohabitating and whose last intercourse was with wife or cohabitating partner who has active tubal ligation
-male1719dt[,
-  usedlast3m_meth5 := fifelse(
-    SEX3MO == 'YES, HAD INTERCOURSE' &
-      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
-      PSURGSTR == 'YES',
-    TRUE,
-    usedlast3m_meth5
-  )
-]
-
-# reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
-set_mention_count_variable(male1719dt, 'usedlast3m_meth')
-```
 
 
-# Persons in Populations
-
-Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
-
-## Females
-
-```{r, dependson='usedlast3m-meth-fem'}
-fem1719dt[, person := 1]
-
-(estimate_totals_and_percentages(
-  ~person,
-  svy(fem1719dt)
-) |> pretty_estimates())[
-  , .(total, total_CI)
-] |> kable()
-```
-
-## Males
-
-```{r, dependson='usedlast3m-meth-male'}
-male1719dt[, person := 1]
-
-(estimate_totals_and_percentages(
-  ~person,
-  svy(male1719dt)
-) |> pretty_estimates())[
-  , .(total, total_CI)
-] |> kable()
-```
-
-
-# Currently Using Contraception
-
-Domain: Persons aged 15-49 living in households in the United States
-
-Description: By whether had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
-
-## Females
-
-```{r, dependson='usedlast3m-meth-fem'}
 fem1719dt[,
   usedlast3m := factor(fifelse(
     usedlast3m_meth_count > 0,
@@ -384,49 +297,6 @@ fem1719dt[,
   ))
 ]
 
-estimate_totals_and_percentages(
-  ~usedlast3m,
-  svy(fem1719dt)
-) |> pretty_estimates() |> kable()
-```
-
-## Males
-
-```{r, dependson='usedlast3m-meth-male'}
-male1719dt[,
-  usedlast3m := factor(fifelse(
-    usedlast3m_meth_count > 0,
-    'Currently using contraception',
-    'Not currently using contraception'
-  ))
-]
-
-estimate_totals_and_percentages(
-  ~usedlast3m,
-  svy(male1719dt)
-) |> pretty_estimates() |> kable()
-```
-
-
-# Reason for Nonuse
-
-Domain: Persons not currently using contraception, as defined above
-
-Description: Categorized into exclusive hierarchy, such that individuals categorized earlier in the hierarchy are not counted in later categories
-
-## Females
-
-```{r, dependson='usedlast3m-meth-fem'}
-set_variables_as_factors(
-  variables = c(
-    CONSTAT1 = 'CONSTATF',
-    LSEXPREG = 'Y1N2RECF',
-    POSIBLMN = 'Y1N5RDF',
-    POSIBLPG = 'Y1N5RDF',
-    WYNOTUSE = 'Y1N5RDF',
-    WYNOLSTP = 'Y1N5RDF'
-  )
-)
 
 fem1719dt[,
   usedlast3m_status := factor(
@@ -463,19 +333,16 @@ fem1719dt[,
     )
   )
 ]
-
-estimate_totals_and_percentages(
-  ~factor(usedlast3m_status),
-  subset(
-    svy(fem1719dt),
-    usedlast3m_meth_count == 0
-  )
-) |> pretty_estimates() |> kable()
 ```
 
-## Males
+```{r process-male-data, dependson=c('helpers', 'load-data')}
+male1719dt <- copy(male1719$Data[, .(
+  CASEID,
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
 
-```{r, dependson='usedlast3m-meth-fem'}
 set_variables_as_factors(
   sex = 'male',
   variables = c(
@@ -484,9 +351,56 @@ set_variables_as_factors(
     CWPTRYPG = 'Y1N5RDF',
     FATHPOSS = 'Y1N5RDF',
     PXCPREG = 'Y1N5RDF',
-    PXTRYING = 'Y1N5RDF'
+    PXTRYING = 'Y1N5RDF',
+    P1COHABIT = 'Y1N5RDF',
+    P1CURRWIFE = 'Y1N5RDF',
+    PSURGSTR = 'N0Y1CF',
+    RSURGSTR = 'N0Y1RDF',
+    SEX3MO = 'SEX3MO'
   )
 )
+
+set_mentions_to_booleans(
+  sex = 'male',
+  out_prefix = 'usedlast3m_meth',
+  in_prefix = 'METH3M',
+  in_series = 1:4,
+  format = 'METH3MF',
+  skip = 95:96
+)
+
+# count any respondents who are sexually active and who have an active vasectomy as using vasectomy as a contraceptive method
+male1719dt[,
+  usedlast3m_meth3 := fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+    TRUE,
+    usedlast3m_meth3
+  )
+]
+
+# count any respondents who are sexually active and who are married or cohabitating and whose last intercourse was with wife or cohabitating partner who has active tubal ligation
+male1719dt[,
+  usedlast3m_meth5 := fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' &
+      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
+      PSURGSTR == 'YES',
+    TRUE,
+    usedlast3m_meth5
+  )
+]
+
+# reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
+set_mention_count_variable(male1719dt, 'usedlast3m_meth')
+
+
+male1719dt[,
+  usedlast3m := factor(fifelse(
+    usedlast3m_meth_count > 0,
+    'Currently using contraception',
+    'Not currently using contraception'
+  ))
+]
+
 
 male1719dt[,
   usedlast3m_status := factor(
@@ -517,7 +431,86 @@ male1719dt[,
     )
   )
 ]
+```
 
+
+# Persons in Populations
+
+Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
+
+## Females
+
+```{r, dependson='process-fem-data'}
+fem1719dt[, person := 1]
+
+(estimate_totals_and_percentages(
+  ~person,
+  svy(fem1719dt)
+) |> pretty_estimates())[
+  , .(total, total_CI)
+] |> kable()
+```
+
+## Males
+
+```{r, dependson='process-male-data'}
+male1719dt[, person := 1]
+
+(estimate_totals_and_percentages(
+  ~person,
+  svy(male1719dt)
+) |> pretty_estimates())[
+  , .(total, total_CI)
+] |> kable()
+```
+
+
+# Currently Using Contraception
+
+Domain: Persons aged 15-49 living in households in the United States
+
+Description: By whether had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
+
+## Females
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~usedlast3m,
+  svy(fem1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+## Males
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~usedlast3m,
+  svy(male1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+
+# Reason for Nonuse
+
+Domain: Persons not currently using contraception, as defined above
+
+Description: Categorized into exclusive hierarchy, such that individuals categorized earlier in the hierarchy are not counted in later categories
+
+## Females
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(usedlast3m_status),
+  subset(
+    svy(fem1719dt),
+    usedlast3m_meth_count == 0
+  )
+) |> pretty_estimates() |> kable()
+```
+
+## Males
+
+```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
   ~factor(usedlast3m_status),
   subset(
@@ -538,7 +531,7 @@ Description: By number of methods used at last intercourse
 
 ### Females
 
-```{r, dependson='usedlast3m-meth-fem'}
+```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(usedlast3m_meth_count),
   subset(
@@ -550,7 +543,7 @@ estimate_totals_and_percentages(
 
 ### Males
 
-```{r, dependson='usedlast3m-meth-male'}
+```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
   ~factor(usedlast3m_meth_count),
   subset(
@@ -569,7 +562,7 @@ Description: By method(s), with those using multiple methods counted multiple ti
 
 ### Females
 
-```{r, dependson='usedlast3m-meth-fem'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -584,7 +577,7 @@ estimate_mentions(
 
 ### Males
 
-```{r, dependson='usedlast3m-meth-male'}
+```{r, dependson='process-male-data'}
 estimate_mentions(
   sex = 'male',
   svy = subset(
@@ -605,7 +598,7 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 
 ### Females
 
-```{r, dependson='usedlast3m-meth-fem'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -620,7 +613,7 @@ estimate_mentions(
 
 ### Males
 
-```{r, dependson='usedlast3m-meth-male'}
+```{r, dependson='process-male-data'}
 estimate_mentions(
   sex = 'male',
   svy = subset(
@@ -643,7 +636,7 @@ Description: Proportion who also used other method(s)
 
 ### Females
 
-```{r, dependson='usedlast3m-meth-fem'}
+```{r, dependson='process-fem-data'}
 (function() {
   estimates <- rbindlist(lapply(
     get_idxs('METH3MF', 20:21, 'fem'),
@@ -672,7 +665,7 @@ Description: Proportion who also used other method(s)
 
 ### Males
 
-```{r, dependson='usedlast3m-meth-male'}
+```{r, dependson='process-male-data'}
 (function() {
   estimates <- rbindlist(lapply(
     get_idxs('METH3MF', 95:96, 'male'),
@@ -708,7 +701,7 @@ Description: By method(s), with those using multiple methods counted multiple ti
 
 ### Females
 
-```{r, dependson='usedlast3m-meth-fem'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -723,7 +716,7 @@ estimate_mentions(
 
 ### Males
 
-```{r, dependson='usedlast3m-meth-male'}
+```{r, dependson='process-male-data'}
 estimate_mentions(
   sex = 'male',
   svy = subset(
@@ -746,7 +739,7 @@ Description: By method(s), with those using multiple methods counted multiple ti
 
 ### Females
 
-```{r, dependson='usedlast3m-meth-fem'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -761,7 +754,7 @@ estimate_mentions(
 
 ### Males
 
-```{r, dependson='usedlast3m-meth-male'}
+```{r, dependson='process-male-data'}
 estimate_mentions(
   sex = 'male',
   svy = subset(
@@ -784,7 +777,7 @@ Description: By method(s), with those using multiple methods counted multiple ti
 
 ### Females
 
-```{r, dependson='usedlast3m-meth-fem'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -799,7 +792,7 @@ estimate_mentions(
 
 ### Males
 
-```{r, dependson='usedlast3m-meth-male'}
+```{r, dependson='process-male-data'}
 estimate_mentions(
   sex = 'male',
   svy = subset(
@@ -822,7 +815,7 @@ Description: By method(s), with those using multiple methods counted multiple ti
 
 ### Females
 
-```{r, dependson='usedlast3m-meth-fem'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -837,7 +830,7 @@ estimate_mentions(
 
 ### Males
 
-```{r, dependson='usedlast3m-meth-male'}
+```{r, dependson='process-male-data'}
 estimate_mentions(
   sex = 'male',
   svy = subset(
