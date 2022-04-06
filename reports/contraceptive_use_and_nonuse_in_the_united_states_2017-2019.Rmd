@@ -549,7 +549,7 @@ Description: Proportion who also used other method(s)
   ]
 
   estimates
-})()[!is.nan(total_CI_low)][order(-total)] |> pretty_estimates() |> kable()
+})()[!is.nan(total_CI_low)][order(-percentage)] |> pretty_estimates() |> kable()
 ```
 
 ### Males
@@ -578,17 +578,163 @@ Description: Proportion who also used other method(s)
   ]
 
   estimates
-})()[order(-total)] |> pretty_estimates() |> kable()
+})()[order(-percentage)] |> pretty_estimates() |> kable()
+```
+
+
+## Other Method(s) Used at Last Intercourse with Calendar Method
+
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a calendar method during last intercourse
+
+Description: By method(s), with those using multiple methods counted multiple times
+
+### Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    usedlast3m_meth8
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:3,
+  skip = c(8, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Males
+
+```{r, dependson='usedlast3m-meth-male'}
+estimate_mentions(
+  sex = 'male',
+  svy = subset(
+    svy(male1719dt),
+    usedlast3m_meth9
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:4,
+  skip = c(9, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+## Other Method(s) Used at Last Intercourse with Withdrawal
+
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used withdrawal during last intercourse
+
+Description: By method(s), with those using multiple methods counted multiple times
+
+### Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    usedlast3m_meth5
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:3,
+  skip = c(5, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Males
+
+```{r, dependson='usedlast3m-meth-male'}
+estimate_mentions(
+  sex = 'male',
+  svy = subset(
+    svy(male1719dt),
+    usedlast3m_meth2
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:4,
+  skip = c(2, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+## Other Method(s) Used at Last Intercourse with Condoms
+
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used condoms during last intercourse
+
+Description: By method(s), with those using multiple methods counted multiple times
+
+### Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    usedlast3m_meth2
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:3,
+  skip = c(2, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Males
+
+```{r, dependson='usedlast3m-meth-male'}
+estimate_mentions(
+  sex = 'male',
+  svy = subset(
+    svy(male1719dt),
+    usedlast3m_meth1
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:4,
+  skip = c(1, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+## Other Method(s) Used at Last Intercourse with Pill
+
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used the pill during last intercourse
+
+Description: By method(s), with those using multiple methods counted multiple times
+
+### Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    usedlast3m_meth1
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:3,
+  skip = c(1, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Males
+
+```{r, dependson='usedlast3m-meth-male'}
+estimate_mentions(
+  sex = 'male',
+  svy = subset(
+    svy(male1719dt),
+    usedlast3m_meth4
+  ),
+  prefix = 'usedlast3m_meth',
+  series = 1:4,
+  skip = c(4, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
 ```
 
 
 
-* During last intercourse
-    * By number of methods used
-    * By method(s) used
-    * By method, among those using only one method
-    * By method, proportion also using another method
-    * By other method(s) used, among those using methods commonly used with other methods
 * Past 12 months
     * Number of methods
     * By method(s) used
