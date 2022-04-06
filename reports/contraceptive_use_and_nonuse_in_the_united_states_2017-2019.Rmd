@@ -78,7 +78,7 @@ get_idxs <- function(format, skip = NULL, sex = 'fem') {
   }
 }
 
-set_count_mention_variables <- function(dt, prefix) {
+set_mention_count_variable <- function(dt, prefix) {
   if (paste(prefix, 'count', sep = '_') %in% colnames(dt)) {
     dt[
       ,
@@ -115,7 +115,7 @@ set_mentions_to_booleans <- function(
     )
   }
 
-  set_count_mention_variables(dt, out_prefix)
+  set_mention_count_variable(dt, out_prefix)
 }
 
 set_variables_as_factors <- function(variables, sex = 'fem') {
@@ -255,7 +255,7 @@ Description: By whether had intercourse with opposite sex during the 3 months pr
 
 ## Females
 
-```{r, dependson='helpers'}
+```{r usedlast3m-meth-fem, dependson='helpers'}
 set_mentions_to_booleans(
   out_prefix = 'usedlast3m_meth',
   in_prefix = 'METH3M',
@@ -295,9 +295,10 @@ fem1719dt[,
 ]
 
 # reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
-set_count_mention_variables(fem1719dt, 'usedlast3m_meth')
+set_mention_count_variable(fem1719dt, 'usedlast3m_meth')
+```
 
-
+```{r, dependson='usedlast3m-meth-fem'}
 fem1719dt[,
   usedlast3m := factor(fifelse(
     usedlast3m_meth_count > 0,
@@ -314,7 +315,7 @@ estimate_totals_and_percentages(
 
 ## Males
 
-```{r, dependson='helpers'}
+```{r usedlast3m-meth-male, dependson='helpers'}
 set_mentions_to_booleans(
   sex = 'male',
   out_prefix = 'usedlast3m_meth',
@@ -356,9 +357,10 @@ male1719dt[,
 ]
 
 # reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
-set_count_mention_variables(male1719dt, 'usedlast3m_meth')
+set_mention_count_variable(male1719dt, 'usedlast3m_meth')
+```
 
-
+```{r, dependson='usedlast3m-meth-male'}
 male1719dt[,
   usedlast3m := factor(fifelse(
     usedlast3m_meth_count > 0,
@@ -373,6 +375,38 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
+
+# Contraception Method(s) at Last Intercourse
+
+## By Number of Methods
+
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
+
+Description: By number of methods used at last intercourse
+
+### Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+estimate_totals_and_percentages(
+  ~factor(usedlast3m_meth_count),
+  subset(
+    svy(fem1719dt),
+    usedlast3m_meth_count > 0
+  )
+) |> pretty_estimates() |> kable()
+```
+
+### Males
+
+```{r, dependson='usedlast3m-meth-male'}
+estimate_totals_and_percentages(
+  ~factor(usedlast3m_meth_count),
+  subset(
+    svy(male1719dt),
+    usedlast3m_meth_count > 0
+  )
+) |> pretty_estimates() |> kable()
+```
 
 
 * During last intercourse
