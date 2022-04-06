@@ -346,15 +346,20 @@ male1719dt <- copy(male1719$Data[, .(
 set_variables_as_factors(
   sex = 'male',
   variables = c(
+    CWPLMET201 = 'MTHDSV3F',
+    CWPLUSE2 = 'Y1N5RDF',
     CWPPOSS = 'Y1N5RDF',
     CWPPRGNW ='Y1N5RDF',
     CWPTRYPG = 'Y1N5RDF',
     FATHPOSS = 'Y1N5RDF',
-    PXCPREG = 'Y1N5RDF',
-    PXTRYING = 'Y1N5RDF',
     P1COHABIT = 'Y1N5RDF',
     P1CURRWIFE = 'Y1N5RDF',
     PSURGSTR = 'N0Y1CF',
+    PXCPREG = 'Y1N5RDF',
+    PXLPMETH01 = 'MTHDSV3F',
+    PXLPUSE = 'Y1N5RDF',
+    PXLSXPRB = 'Y1N5RDF',
+    PXTRYING = 'Y1N5RDF',
     RSURGSTR = 'N0Y1RDF',
     SEX3MO = 'SEX3MO'
   )
@@ -431,6 +436,20 @@ male1719dt[,
     )
   )
 ]
+
+male1719dt[,
+  not_aware := factor(fifelse(
+    CWPLUSE2 == "Don't know" |
+      CWPLMET201 == "Don't know" |
+      PXLPUSE == "Don't know" |
+      PXLPMETH01 == "Don't know" |
+      PXLSXPRB == 'Yes' |
+      PXLSXPRB == "Don't know",
+    'Reports not knowing if partner used contraceptive method at last intercourse',
+    'Does not report not knowing if partner used contraceptive method at last intercourse'
+  ))
+]
+
 ```
 
 
@@ -549,6 +568,31 @@ estimate_totals_and_percentages(
     svy(male1719dt),
     usedlast3m_status %in% c(
       'Used at least one contraceptive method at last intercourse',
+      'Otherwise did not use contraception at last intercourse'
+    )
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
+# Reported Ignorance of Contraceptive Use
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~not_aware,
+  subset(
+    svy(male1719dt),
+    SEX3MO == 'YES, HAD INTERCOURSE'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~not_aware,
+  subset(
+    svy(male1719dt),
+    usedlast3m_status %in% c(
       'Otherwise did not use contraception at last intercourse'
     )
   )
