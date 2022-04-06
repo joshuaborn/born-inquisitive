@@ -19,7 +19,7 @@ source(here('R/import.R'))
 i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
 
 opts_chunk$set(
-  cache = FALSE,
+  cache = TRUE,
   echo = TRUE,
   fig.height = 8,
   fig.width = 12,
@@ -27,28 +27,7 @@ opts_chunk$set(
 )
 ```
 
-```{r load-data}
-fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
-male1719 <- load_NSFG_data('2017_2019', 'Male')
-```
-
-```{r start-data-tables, dependson='load-data'}
-fem1719dt <- copy(fem1719$Data[, .(
-  CASEID,
-  SECU,
-  SEST,
-  WGT2017_2019
-)])
-
-male1719dt <- copy(male1719$Data[, .(
-  CASEID,
-  SECU,
-  SEST,
-  WGT2017_2019
-)])
-```
-
-```{r helpers, dependson='start-data-tables'}
+```{r helpers}
 has_level <- function(x, ids) {
   !is.na(x) & is.element(as.integer(x), ids)
 }
@@ -249,47 +228,19 @@ estimate_mentions <- function(
 }
 ```
 
-
-# Persons in Populations
-
-Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
-
-## Females
-
-```{r, dependson='helpers'}
-fem1719dt[, person := 1]
-
-(estimate_totals_and_percentages(
-  ~person,
-  svy(fem1719dt)
-) |> pretty_estimates())[
-  , .(total, total_CI)
-] |> kable()
+```{r load-data}
+fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
+male1719 <- load_NSFG_data('2017_2019', 'Male')
 ```
 
-## Males
+```{r usedlast3m-meth-fem, dependson=c('helpers', 'load-data')}
+fem1719dt <- copy(fem1719$Data[, .(
+  CASEID,
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
 
-```{r, dependson='helpers'}
-male1719dt[, person := 1]
-
-(estimate_totals_and_percentages(
-  ~person,
-  svy(male1719dt)
-) |> pretty_estimates())[
-  , .(total, total_CI)
-] |> kable()
-```
-
-
-# Currently Using Contraception
-
-Domain: Persons aged 15-49 living in households in the United States
-
-Description: By whether had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
-
-## Females
-
-```{r usedlast3m-meth-fem, dependson='helpers'}
 set_mentions_to_booleans(
   out_prefix = 'usedlast3m_meth',
   in_prefix = 'METH3M',
@@ -332,24 +283,14 @@ fem1719dt[,
 set_mention_count_variable(fem1719dt, 'usedlast3m_meth')
 ```
 
-```{r, dependson='usedlast3m-meth-fem'}
-fem1719dt[,
-  usedlast3m := factor(fifelse(
-    usedlast3m_meth_count > 0,
-    'Currently using contraception',
-    'Not currently using contraception'
-  ))
-]
+```{r usedlast3m-meth-male, dependson=c('helpers', 'load-data')}
+male1719dt <- copy(male1719$Data[, .(
+  CASEID,
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
 
-estimate_totals_and_percentages(
-  ~usedlast3m,
-  svy(fem1719dt)
-) |> pretty_estimates() |> kable()
-```
-
-## Males
-
-```{r usedlast3m-meth-male, dependson='helpers'}
 set_mentions_to_booleans(
   sex = 'male',
   out_prefix = 'usedlast3m_meth',
@@ -393,6 +334,63 @@ male1719dt[,
 # reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
 set_mention_count_variable(male1719dt, 'usedlast3m_meth')
 ```
+
+
+# Persons in Populations
+
+Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
+
+## Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+fem1719dt[, person := 1]
+
+(estimate_totals_and_percentages(
+  ~person,
+  svy(fem1719dt)
+) |> pretty_estimates())[
+  , .(total, total_CI)
+] |> kable()
+```
+
+## Males
+
+```{r, dependson='usedlast3m-meth-male'}
+male1719dt[, person := 1]
+
+(estimate_totals_and_percentages(
+  ~person,
+  svy(male1719dt)
+) |> pretty_estimates())[
+  , .(total, total_CI)
+] |> kable()
+```
+
+
+# Currently Using Contraception
+
+Domain: Persons aged 15-49 living in households in the United States
+
+Description: By whether had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
+
+## Females
+
+```{r, dependson='usedlast3m-meth-fem'}
+fem1719dt[,
+  usedlast3m := factor(fifelse(
+    usedlast3m_meth_count > 0,
+    'Currently using contraception',
+    'Not currently using contraception'
+  ))
+]
+
+estimate_totals_and_percentages(
+  ~usedlast3m,
+  svy(fem1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+## Males
 
 ```{r, dependson='usedlast3m-meth-male'}
 male1719dt[,
@@ -549,7 +547,7 @@ Description: Proportion who also used other method(s)
   ]
 
   estimates
-})()[!is.nan(total_CI_low)][order(-percentage)] |> pretty_estimates() |> kable()
+})()[!is.nan(total_CI_low)][order(-total)] |> pretty_estimates() |> kable()
 ```
 
 ### Males
@@ -578,7 +576,7 @@ Description: Proportion who also used other method(s)
   ]
 
   estimates
-})()[order(-percentage)] |> pretty_estimates() |> kable()
+})()[order(-total)] |> pretty_estimates() |> kable()
 ```
 
 
@@ -749,6 +747,7 @@ estimate_mentions(
     * By main or exclusive reason
     * Reasons(s) for those who believe themselves infertile to think themselves infertile
 * Overall contraception rate
+    * Males who don't know
 * Method(s) used at last intercourse
 * Past 12 months
     * Number of methods
