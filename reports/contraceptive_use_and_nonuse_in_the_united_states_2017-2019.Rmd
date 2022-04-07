@@ -194,7 +194,6 @@ svy <- function(dt) {
   )
 }
 
-
 estimate_mentions <- function(
   svy,
   prefix,
@@ -271,6 +270,9 @@ na_to_false <- function(x) {
 
 ```{r load-data}
 fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
+male1719 <- load_NSFG_data('2017_2019', 'Male')
+
+# Include missing level 13 for WHYNOTPGF format.
 fem1719$Formats <- rbindlist(list(
   fem1719$Formats,
   data.table(
@@ -279,10 +281,10 @@ fem1719$Formats <- rbindlist(list(
     factor_label = 'No menstrual cycle or menstrual irregularity'
   )
 ))
-male1719 <- load_NSFG_data('2017_2019', 'Male')
 ```
 
 ```{r process-fem-data, dependson=c('helpers', 'load-data')}
+# Start working female respondents data table.
 fem1719dt <- copy(fem1719$Data[, .(
   CASEID,
   SECU,
@@ -290,6 +292,8 @@ fem1719dt <- copy(fem1719$Data[, .(
   WGT2017_2019
 )])
 
+
+# Copy variables to working data table and set them to factors.
 set_variables_as_factors(
   variables = c(
     ATTRACT = 'ATTRACT',
@@ -312,6 +316,8 @@ set_variables_as_factors(
   )
 )
 
+
+# Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
 set_mentions_to_booleans(
   out_prefix = 'usedlast3m_meth',
   in_prefix = 'METH3M',
@@ -320,6 +326,8 @@ set_mentions_to_booleans(
   skip = 20:21
 )
 
+
+# If last intercourse within the past 3 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
 fem1719dt[,
   usedlast3m_meth3 := fifelse(
     SEX3MO == 'YES' & PSURGSTR == 'YES' & (
@@ -331,6 +339,8 @@ fem1719dt[,
   )
 ]
 
+
+# If respondent has had intercourse in the past 3 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
 fem1719dt[,
   usedlast3m_meth4 := fifelse(
     SEX3MO == 'YES' & TUBS == 'YES',
@@ -339,10 +349,12 @@ fem1719dt[,
   )
 ]
 
-# reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
+
+# Reset count of methods used at last intercourse within the past 3 months to include overrides of vasectomy and tubal ligation boolean variables.
 set_mention_count_variable(fem1719dt, 'usedlast3m_meth')
 
 
+# Create categorical variable for whether used contraception at last intercourse within the past 3 months.
 fem1719dt[,
   usedlast3m := factor(fifelse(
     usedlast3m_meth_count > 0,
@@ -352,6 +364,7 @@ fem1719dt[,
 ]
 
 
+# Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
 fem1719dt[,
   usedlast3m_status := factor(
     fcase(
@@ -388,6 +401,8 @@ fem1719dt[,
   )
 ]
 
+
+# Create categorical variable specifying whether respondent or partner wants to conceive.
 fem1719dt[,
   pregnancy_intent_status := factor(
     fcase(
@@ -422,6 +437,7 @@ fem1719dt[,
 ]
 
 
+# Create boolean variables for whether each reason for not using contraception was mentioned.
 set_mentions_to_booleans(
   out_prefix = 'nonuse_reason',
   in_prefix = 'WHYNOUSING',
@@ -430,6 +446,7 @@ set_mentions_to_booleans(
 )
 
 
+# Create boolean variables for whether each reason for not being able to get pregnant was mentioned.
 set_mentions_to_booleans(
   out_prefix = 'pregnancy_impossible_reason',
   in_prefix = 'WHYNOTPG',
@@ -437,7 +454,8 @@ set_mentions_to_booleans(
   format = 'WHYNOTPGF'
 )
 
-# create boolean variables for whether each method was used at all in the past 3 months
+
+# Create boolean variables for whether each method was used at all in the past 3 months.
 fem1719METHXidxs <- get_idxs('METHSTOPF', skip = 98:99)
 names(fem1719METHXidxs) <- paste('anyuse12m_meth', fem1719METHXidxs, sep = '')
 fem1719METHX <- create_NSFG_pivot_table('METHX', 1:192)
@@ -466,7 +484,7 @@ fem1719dt[,
 ]
 
 
-# create SEX12MO variable using pivot table
+# Create SEX12MO variable for females using a pivot table.
 fem1719dt <- create_NSFG_pivot_table(
   'CMMONSX',
   2:48,
@@ -487,6 +505,7 @@ fem1719dt <- create_NSFG_pivot_table(
 fem1719dt[, SEX12MO := na_to_false(SEX12MO)]
 
 
+# If last intercourse within the past 12 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use in the past 12 months to true.
 fem1719dt[,
   anyuse12m_meth5 := fifelse(
     SEX12MO & PSURGSTR == 'YES' & (
@@ -499,6 +518,7 @@ fem1719dt[,
 ]
 
 
+# If respondent has had intercourse in past 12 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at in the past 12 months to true.
 fem1719dt[,
   anyuse12m_meth6 := fifelse(
     SEX12MO & TUBS == 'YES',
@@ -508,10 +528,12 @@ fem1719dt[,
 ]
 
 
+# Reset count of methods used in the past 12 months to include overrides of vasectomy and tubal ligation boolean variables.
 set_mention_count_variable(fem1719dt, 'anyuse12m_meth')
 ```
 
 ```{r process-male-data, dependson=c('helpers', 'load-data')}
+# Start working male respondents data table.
 male1719dt <- copy(male1719$Data[, .(
   CASEID,
   SECU,
@@ -519,6 +541,8 @@ male1719dt <- copy(male1719$Data[, .(
   WGT2017_2019
 )])
 
+
+# Copy variables to working data table and set them to factors.
 set_variables_as_factors(
   sex = 'male',
   variables = c(
@@ -544,6 +568,8 @@ set_variables_as_factors(
   )
 )
 
+
+# Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
 set_mentions_to_booleans(
   sex = 'male',
   out_prefix = 'usedlast3m_meth',
@@ -553,16 +579,8 @@ set_mentions_to_booleans(
   skip = 95:96
 )
 
-# count any respondents who are sexually active and who have an active vasectomy as using vasectomy as a contraceptive method
-male1719dt[,
-  usedlast3m_meth3 := fifelse(
-    SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
-    TRUE,
-    usedlast3m_meth3
-  )
-]
 
-# count any respondents who are sexually active and who are married or cohabitating and whose last intercourse was with wife or cohabitating partner who has active tubal ligation
+# If last intercourse within the past 3 months was with husband or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
 male1719dt[,
   usedlast3m_meth5 := fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE' &
@@ -573,10 +591,22 @@ male1719dt[,
   )
 ]
 
-# reset count of methods used at last intercourse to include overrides of tubal ligations and vasectomies
+
+# If respondent has had intercourse in the past 3 months and has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
+male1719dt[,
+  usedlast3m_meth3 := fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+    TRUE,
+    usedlast3m_meth3
+  )
+]
+
+
+# Reset count of methods used at last intercourse within the past 3 months to include overrides of tubal ligation and vasectomy boolean variables.
 set_mention_count_variable(male1719dt, 'usedlast3m_meth')
 
 
+# Create categorical variable for whether used contraception at last intercourse within the past 3 months.
 male1719dt[,
   usedlast3m := factor(fifelse(
     usedlast3m_meth_count > 0,
@@ -586,6 +616,7 @@ male1719dt[,
 ]
 
 
+# Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
 male1719dt[,
   usedlast3m_status := factor(
     fcase(
@@ -616,6 +647,8 @@ male1719dt[,
   )
 ]
 
+
+# Create categorical variable specifying whether respondent ever indicated he does not know if a partner used a method of contraception during last intercourse.
 male1719dt[,
   not_aware := factor(fifelse(
     CWPLUSE2 == "Don't know" |
@@ -1333,13 +1366,9 @@ estimate_totals_and_percentages(
 
 # Things to Do
 
-* Collect estimates into this report
-* Comment code to explain what is happening
+* Finish collecting estimates into this document
 * Organize helper methods into NSFG-specific and more general
 * Style plots and tables for output
 * Write text of report
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Compare own report with published reports
-* Look into what it takes to publish in an academic journal
-* Replicate analysis in SAS
-    * Attempt single-factor categorical data analysis, e.g., whether totals of otherwise not using contraception and currently trying to conceive are different
