@@ -32,6 +32,16 @@ has_level <- function(x, ids) {
   !is.na(x) & is.element(as.integer(x), ids)
 }
 
+cm_greater <- function(x, y) {
+  is.na(x) &
+    x != 9998 &
+    x != 9999 &
+    is.na(y) &
+    y != 9998 &
+    y != 9999 &
+    x > y
+}
+
 get_raw_import_for_sex <- function(sex) {
   if (startsWith(sex, 'f')) {
     fem1719
@@ -536,6 +546,8 @@ set_mention_count_variable(fem1719dt, 'anyuse12m_meth')
 # Start working male respondents data table.
 male1719dt <- copy(male1719$Data[, .(
   CASEID,
+  CMLSTYR,
+  CMLSXCWP,
   SECU,
   SEST,
   WGT2017_2019
@@ -563,6 +575,7 @@ set_variables_as_factors(
     PXLSXPRB = 'Y1N5RDF',
     PXTRYING = 'Y1N5RDF',
     RSURGSTR = 'N0Y1RDF',
+    SEX12MO = 'SEX3MO',
     SEX3MO = 'SEX3MO',
     YNOSEX = 'YNOSEX'
   )
@@ -580,7 +593,7 @@ set_mentions_to_booleans(
 )
 
 
-# If last intercourse within the past 3 months was with husband or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
+# If last intercourse within the past 3 months was with wife or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
 male1719dt[,
   usedlast3m_meth5 := fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE' &
@@ -661,6 +674,297 @@ male1719dt[,
     'Does not report not knowing if partner used contraceptive method at last intercourse'
   ))
 ]
+
+
+# Create boolean variables for whether each specific method was used in past 12 months.
+for (x in get_idxs('MTHDSV1F', skip = c(10, 98:99), sex = 'male')) {
+  male1719dt[,
+    (sprintf('anyuse12m_meth%d', x)) := male1719$Data[,
+      !is.na(
+        (cm_greater(CMLSXCWP, CMLSTYR) & (
+          CWPLMET11 == x |
+          CWPLMET12 == x |
+          CWPLMET13 == x |
+          CWPLMET201 == x |
+          CWPLMET202 == x
+        )) |
+        (cm_greater(CMFSXCWP, CMLSTYR) & (
+          CWPFMET01 == x |
+          CWPFMET02 == x |
+          CWPFMET03 == x |
+          CWPFMET04 == x |
+          CWPFMET05 == x
+        )) |
+        CWPALLBC01 == x |
+        CWPALLBC02 == x |
+        CWPALLBC03 == x |
+        CWPALLBC04 == x |
+        CWPALLBC05 == x |
+        (cm_greater(CMLSXP1, CMLSTYR) & (
+          PXLRMETH1 == x |
+          PXLRMETH2 == x |
+          PXLRMETH3 == x |
+          PXLPMETH01 == x |
+          PXLPMETH02 == x |
+          PXLPMETH03 == x
+        )) |
+        (cm_greater(CMLSXP2, CMLSTYR) & (
+          PXLRMETH5 == x |
+          PXLRMETH6 == x |
+          PXLRMETH7 == x |
+          PXLPMETH11 == x |
+          PXLPMETH12 == x |
+          PXLPMETH13 == x
+        )) |
+        (cm_greater(CMLSXP3, CMLSTYR) & (
+          PXLRMETH9 == x |
+          PXLRMETH10 == x |
+          PXLRMETH11 == x |
+          PXLPMETH21 == x |
+          PXLPMETH22 == x |
+          PXLPMETH23 == x
+        )) |
+        (cm_greater(CMFSXP, CMLSTYR) & (
+          PXFMETH01 == x |
+          PXFMETH02 == x |
+          PXFMETH03 == x |
+          PXFMETH04 == x
+        )) |
+        (cm_greater(CMFSXP2, CMLSTYR) & (
+          PXFMETH14 == x |
+          PXFMETH15 == x |
+          PXFMETH16 == x |
+          PXFMETH17 == x
+        )) |
+        (cm_greater(CMFSXP3, CMLSTYR) & (
+          PXFMETH27 == x |
+          PXFMETH28 == x |
+          PXFMETH29 == x |
+          PXFMETH30 == x
+        )) |
+        PXMETHOD01 == x |
+        PXMETHOD02 == x |
+        PXMETHOD03 == x |
+        PXMETHOD04 == x |
+        PXMETHOD05 == x |
+        PXMETHOD14 == x |
+        PXMETHOD15 == x |
+        PXMETHOD16 == x |
+        PXMETHOD17 == x |
+        PXMETHOD18 == x |
+        PXMETHOD27 == x |
+        PXMETHOD28 == x |
+        PXMETHOD29 == x |
+        PXMETHOD30 == x |
+        PXMETHOD31 == x
+      )
+    ]
+  ]
+}
+
+# Set a boolean variable for whether "Something else" was used in past 12 months separately because its encoding collides with "Contraceptive patch (Ortho-Evra)".
+male1719dt[,
+  anyuse12m_meth13 := male1719$Data[,
+    !is.na(
+      (cm_greater(CMLSXCWP, CMLSTYR) & (
+        CWPLMET11 == 10 |
+        CWPLMET12 == 10 |
+        CWPLMET13 == 10 |
+        CWPLMET201 == 13 |
+        CWPLMET202 == 13
+      )) |
+      (cm_greater(CMFSXCWP, CMLSTYR) & (
+        CWPFMET01 == 13 |
+        CWPFMET02 == 13 |
+        CWPFMET03 == 13 |
+        CWPFMET04 == 13 |
+        CWPFMET05 == 13
+      )) |
+      CWPALLBC01 == 13 |
+      CWPALLBC02 == 13 |
+      CWPALLBC03 == 13 |
+      CWPALLBC04 == 13 |
+      CWPALLBC05 == 13 |
+      (cm_greater(CMLSXP1, CMLSTYR) & (
+        PXLRMETH1 == 10 |
+        PXLRMETH2 == 10 |
+        PXLRMETH3 == 10 |
+        PXLPMETH01 == 13 |
+        PXLPMETH02 == 13 |
+        PXLPMETH03 == 13
+      )) |
+      (cm_greater(CMLSXP2, CMLSTYR) & (
+        PXLRMETH5 == 10 |
+        PXLRMETH6 == 10 |
+        PXLRMETH7 == 10 |
+        PXLPMETH11 == 13 |
+        PXLPMETH12 == 13 |
+        PXLPMETH13 == 13
+      )) |
+      (cm_greater(CMLSXP3, CMLSTYR) & (
+        PXLRMETH9 == 10 |
+        PXLRMETH10 == 10 |
+        PXLRMETH11 == 10 |
+        PXLPMETH21 == 13 |
+        PXLPMETH22 == 13 |
+        PXLPMETH23 == 13
+      )) |
+      (cm_greater(CMFSXP, CMLSTYR) & (
+        PXFMETH01 == 13 |
+        PXFMETH02 == 13 |
+        PXFMETH03 == 13 |
+        PXFMETH04 == 13
+      )) |
+      (cm_greater(CMFSXP2, CMLSTYR) & (
+        PXFMETH14 == 13 |
+        PXFMETH15 == 13 |
+        PXFMETH16 == 13 |
+        PXFMETH17 == 13
+      )) |
+      (cm_greater(CMFSXP3, CMLSTYR) & (
+        PXFMETH27 == 13 |
+        PXFMETH28 == 13 |
+        PXFMETH29 == 13 |
+        PXFMETH30 == 13
+      )) |
+      PXMETHOD01 == 13 |
+      PXMETHOD02 == 13 |
+      PXMETHOD03 == 13 |
+      PXMETHOD04 == 13 |
+      PXMETHOD05 == 13 |
+      PXMETHOD14 == 13 |
+      PXMETHOD15 == 13 |
+      PXMETHOD16 == 13 |
+      PXMETHOD17 == 13 |
+      PXMETHOD18 == 13 |
+      PXMETHOD27 == 13 |
+      PXMETHOD28 == 13 |
+      PXMETHOD29 == 13 |
+      PXMETHOD30 == 13 |
+      PXMETHOD31 == 13
+    )
+  ]
+]
+
+
+# Set a boolean variable for whether "Contraceptive patch (Ortho-Evra)" was used in past 12 months separately because its encoding collides with "Something else".
+male1719dt[,
+  anyuse12m_meth13 := male1719$Data[,
+    !is.na(
+      (cm_greater(CMLSXCWP, CMLSTYR) & (
+        CWPLMET11 == 10 |
+        CWPLMET12 == 10 |
+        CWPLMET13 == 10 |
+        CWPLMET201 == 13 |
+        CWPLMET202 == 13
+      )) |
+      (cm_greater(CMFSXCWP, CMLSTYR) & (
+        CWPFMET01 == 13 |
+        CWPFMET02 == 13 |
+        CWPFMET03 == 13 |
+        CWPFMET04 == 13 |
+        CWPFMET05 == 13
+      )) |
+      CWPALLBC01 == 13 |
+      CWPALLBC02 == 13 |
+      CWPALLBC03 == 13 |
+      CWPALLBC04 == 13 |
+      CWPALLBC05 == 13 |
+      (cm_greater(CMLSXP1, CMLSTYR) & (
+        PXLRMETH1 == 10 |
+        PXLRMETH2 == 10 |
+        PXLRMETH3 == 10 |
+        PXLPMETH01 == 13 |
+        PXLPMETH02 == 13 |
+        PXLPMETH03 == 13
+      )) |
+      (cm_greater(CMLSXP2, CMLSTYR) & (
+        PXLRMETH5 == 10 |
+        PXLRMETH6 == 10 |
+        PXLRMETH7 == 10 |
+        PXLPMETH11 == 13 |
+        PXLPMETH12 == 13 |
+        PXLPMETH13 == 13
+      )) |
+      (cm_greater(CMLSXP3, CMLSTYR) & (
+        PXLRMETH9 == 10 |
+        PXLRMETH10 == 10 |
+        PXLRMETH11 == 10 |
+        PXLPMETH21 == 13 |
+        PXLPMETH22 == 13 |
+        PXLPMETH23 == 13
+      )) |
+      (cm_greater(CMFSXP, CMLSTYR) & (
+        PXFMETH01 == 13 |
+        PXFMETH02 == 13 |
+        PXFMETH03 == 13 |
+        PXFMETH04 == 13
+      )) |
+      (cm_greater(CMFSXP2, CMLSTYR) & (
+        PXFMETH14 == 13 |
+        PXFMETH15 == 13 |
+        PXFMETH16 == 13 |
+        PXFMETH17 == 13
+      )) |
+      (cm_greater(CMFSXP3, CMLSTYR) & (
+        PXFMETH27 == 13 |
+        PXFMETH28 == 13 |
+        PXFMETH29 == 13 |
+        PXFMETH30 == 13
+      )) |
+      PXMETHOD01 == 13 |
+      PXMETHOD02 == 13 |
+      PXMETHOD03 == 13 |
+      PXMETHOD04 == 13 |
+      PXMETHOD05 == 13 |
+      PXMETHOD14 == 13 |
+      PXMETHOD15 == 13 |
+      PXMETHOD16 == 13 |
+      PXMETHOD17 == 13 |
+      PXMETHOD18 == 13 |
+      PXMETHOD27 == 13 |
+      PXMETHOD28 == 13 |
+      PXMETHOD29 == 13 |
+      PXMETHOD30 == 13 |
+      PXMETHOD31 == 13
+    )
+  ]
+]
+male1719dt[,
+  usedlast3m_meth5 := fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' &
+      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
+      PSURGSTR == 'YES',
+    TRUE,
+    usedlast3m_meth5
+  )
+]
+
+
+# If respondent has had intercourse in the past 12 months and has an active vasectomy, then set boolean variable of vasectomy use at in the past 12 months to true.
+male1719dt[,
+  anyuse12m_meth3 := fifelse(
+    SEX12MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+    TRUE,
+    anyuse12m_meth3
+  )
+]
+
+
+# If last intercourse with wife or cohabitating partner was within the past 12 months, and wife or cohabitating partner has an active tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at in the past 12 months to true.
+male1719dt[,
+  anyuse12m_meth5 := fifelse(
+    SEX12MO == 'YES, HAD INTERCOURSE' &
+      cm_greater(CMLSXCWP, CMLSTYR) &
+      PSURGSTR == 'YES',
+    TRUE,
+    anyuse12m_meth5
+  )
+]
+
+
+# Count number of contraceptive methods used in past 12 months.
+set_mention_count_variable(male1719dt, 'anyuse12m_meth')
 ```
 
 
@@ -1338,9 +1642,22 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
+Domain: Males who have had intercourse with a female in the past 12 months
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(anyuse12m_meth_count),
+  subset(
+    svy(male1719dt),
+    SEX12MO == 'YES, HAD INTERCOURSE'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
+
 
 * Past 12 months
-    * Number of methods
     * By method(s) used
     * By method, among those using only one method
 * Consistency
@@ -1366,6 +1683,7 @@ estimate_totals_and_percentages(
 
 # Things to Do
 
+* Resolve conflicting results for male number of methods used in past 12 months between here and EDA
 * Finish collecting estimates into this document
 * Organize helper functions into NSFG-specific and more general
 * Style plots and tables for output
