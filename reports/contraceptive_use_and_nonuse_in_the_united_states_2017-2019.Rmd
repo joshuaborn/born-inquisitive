@@ -308,6 +308,7 @@ set_variables_as_factors(
   variables = c(
     ATTRACT = 'ATTRACT',
     CONSTAT1 = 'CONSTATF',
+    EVERUSED = 'YESNONAF',
     HADSEX = 'HADSEX',
     HPPREGQ = 'HPPREGQ',
     LSEXPREG = 'Y1N2RECF',
@@ -372,7 +373,6 @@ fem1719dt[,
     'Not currently using contraception'
   ))
 ]
-
 
 # Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
 fem1719dt[,
@@ -1727,9 +1727,55 @@ estimate_mentions(
 ```
 
 
+# Consistency
+
+## Use of Contraception Prior to Nonuse at Last Intercourse
+
+Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
+
+Description: By whether used a method of contraception in past 12 months
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~I(anyuse12m_meth_count > 0),
+  subset(
+    svy(fem1719dt),
+    usedlast3m_status == 'Otherwise did not use contraception at last intercourse'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
+
+Description: By whether used a method of contraception ever
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(EVERUSED),
+  subset(
+    svy(fem1719dt),
+    usedlast3m_status == 'Otherwise did not use contraception at last intercourse'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Males who have had intercourse with a female in the past 3 months and did not use a method of contraception at last intercourse
+
+Description: By whether used a method of contraception in past 12 months
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~I(anyuse12m_meth_count > 0),
+  subset(
+    svy(male1719dt),
+    usedlast3m_status == 'Otherwise did not use contraception at last intercourse'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
+
 * Consistency
-    * Did not use at last intercourse, but used at least one method in past 12 months
-    * Did not use at last intercourse, but ever used contraception (females)
     * Frequency of any method use in past 12 months
     * Frequency of condom use in past 12 months
     * Frequency of condom use in past 12 months, among exclusive condom users
