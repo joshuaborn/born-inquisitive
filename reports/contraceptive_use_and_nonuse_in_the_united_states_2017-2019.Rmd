@@ -494,7 +494,7 @@ fem1719dt[,
 ]
 
 
-# Create SEX12MO variable for females using a pivot table.
+# Create sex12mo variable for females using a pivot table.
 fem1719dt <- create_NSFG_pivot_table(
   'CMMONSX',
   2:48,
@@ -506,19 +506,19 @@ fem1719dt <- create_NSFG_pivot_table(
   !is.na(MONSX) & MONSX == 1 &
     CMMONSX > CMLSTYR &
     CMMONSX <= CMINTVW,
-  .(SEX12MO = .N > 1),
+  .(sex12mo = .N > 1),
   by = CASEID
 ][
   fem1719dt,
   on = 'CASEID'
 ]
-fem1719dt[, SEX12MO := na_to_false(SEX12MO)]
+fem1719dt[, sex12mo := na_to_false(sex12mo)]
 
 
 # If last intercourse within the past 12 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use in the past 12 months to true.
 fem1719dt[,
   anyuse12m_meth5 := fifelse(
-    SEX12MO & PSURGSTR == 'YES' & (
+    sex12mo & PSURGSTR == 'YES' & (
         P1YRELP == 'Current husband or (current husband from whom she is separated)' |
         P1YRELP == 'Current cohabiting partner'
       ),
@@ -531,7 +531,7 @@ fem1719dt[,
 # If respondent has had intercourse in past 12 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at in the past 12 months to true.
 fem1719dt[,
   anyuse12m_meth6 := fifelse(
-    SEX12MO & TUBS == 'YES',
+    sex12mo & TUBS == 'YES',
     TRUE,
     anyuse12m_meth6
   )
@@ -1615,7 +1615,7 @@ Description: Persons who have had intercourse with opposite in the past 12 month
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~factor(SEX12MO),
+  ~factor(sex12mo),
   svy(fem1719dt)
 ) |> pretty_estimates() |> kable()
 ```
@@ -1639,7 +1639,7 @@ estimate_totals_and_percentages(
   ~factor(anyuse12m_meth_count),
   subset(
     svy(fem1719dt),
-    SEX12MO
+    sex12mo
   )
 ) |> pretty_estimates() |> kable()
 ```
