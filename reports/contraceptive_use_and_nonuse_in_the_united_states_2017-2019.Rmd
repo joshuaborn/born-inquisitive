@@ -575,6 +575,10 @@ male1719dt <- copy(male1719$Data[, .(
   CASEID,
   CMLSTYR,
   CMLSXCWP,
+  CONDFREQ,
+  CWPALLBC01,
+  PXCONFRQ,
+  PXMETHOD01,
   SECU,
   SEST,
   WGT2017_2019
@@ -588,6 +592,7 @@ set_variables_as_factors(
     ATTRACT = 'ATTRACT',
     CWPLMET201 = 'MTHDSV3F',
     CWPLUSE2 = 'Y1N5RDF',
+    CWPNOFRQ = 'OFTIMEF',
     CWPPOSS = 'Y1N5RDF',
     CWPPRGNW ='Y1N5RDF',
     CWPTRYPG = 'Y1N5RDF',
@@ -600,6 +605,7 @@ set_variables_as_factors(
     PXLPMETH01 = 'MTHDSV3F',
     PXLPUSE = 'Y1N5RDF',
     PXLSXPRB = 'Y1N5RDF',
+    PXNOFREQ = 'OFTIMEF',
     PXTRYING = 'Y1N5RDF',
     RSURGSTR = 'N0Y1RDF',
     SEX12MO = 'SEX3MO',
@@ -971,6 +977,56 @@ male1719dt[,
 
 # Count number of contraceptive methods used in past 12 months.
 set_mention_count_variable(male1719dt, 'anyuse12m_meth')
+
+
+# Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with wife or cohabitating partner that combines CONDFREQ and CWPNOFRQ.
+male1719dt[,
+  anyuse12m_wcp_consistency := factor(
+    fcase(
+      CONDFREQ == 100,
+        'Every time',
+      CWPNOFRQ != 'Not Applicable',
+        as.character(CWPNOFRQ),
+      default = 'No answer provided in public use data files'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided in public use data files'
+    )
+  )
+]
+
+
+# Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with last partner, who is not wife or cohabitating partner, that combines PXCONFRQ and PXNOFREQ.
+male1719dt[,
+  anyuse12m_p1_consistency := factor(
+    fcase(
+      PXCONFRQ == 100,
+        'Every time',
+      PXNOFREQ != 'Not Applicable',
+        as.character(PXNOFREQ),
+      default = 'No answer provided in public use data files'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided in public use data files'
+    )
+  )
+]
 ```
 
 
@@ -1803,9 +1859,7 @@ estimate_totals_and_percentages(
 
 ## Any Method During Past 12 Months
 
-Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview, who used a method of contraception at least once, and who do not have active sterilizing operations such as tubal ligations or vasectomies
-
-**Females**
+Domain: Females who had intercourse with a male during the 12 months prior to interview, who used a method of contraception at least once, and who do not have active sterilizing operations such as tubal ligations or vasectomies
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -1815,6 +1869,33 @@ estimate_totals_and_percentages(
     sex12mo &
       anyuse12m_meth_count > 0 &
       TUBS != 'YES'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Males who had used at least one method of contraception during intercourse with wife or cohabitating partner during the 12 months prior to interview, who do not have active sterilizing operations such as vasectomies, and whose partners do not have active sterilizing operations such as tubal ligations
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(anyuse12m_wcp_consistency),
+  subset(
+    svy(male1719dt),
+    !is.na(CWPALLBC01) &
+      RSURGSTR != 'YES' &
+      PSURGSTR != 'YES'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Males who had used at least one method of contraception during intercourse with last partner, who is not wife or cohabitating partner, during the 12 months prior to interview, and who do not have active sterilizing operations such as vasectomies
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(anyuse12m_p1_consistency),
+  subset(
+    svy(male1719dt),
+    !is.na(PXMETHOD01) &
+      RSURGSTR != 'YES'
   )
 ) |> pretty_estimates() |> kable()
 ```
