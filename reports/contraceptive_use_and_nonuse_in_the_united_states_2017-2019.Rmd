@@ -1693,8 +1693,40 @@ estimate_mentions(
 ```
 
 
-* Past 12 months
-    * By method, among those using only one method
+## Method Used Exclusively in Past 12 Months
+
+Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview and reporting using only one method of contraception during the 12 months prior to interview
+
+**Females**
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    anyuse12m_meth_count == 1
+  ),
+  prefix = 'anyuse12m_meth',
+  skip = c(1:2, 22:23, 55, 98:99),
+  format = 'METHHXF'
+)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+```
+
+**Males**
+
+```{r, dependson='process-male-data'}
+estimate_mentions(
+  sex = 'male',
+  svy = subset(
+    svy(male1719dt),
+    anyuse12m_meth_count == 1
+  ),
+  prefix = 'anyuse12m_meth',
+  skip = 98:99,
+  format = 'MTHDSV1F'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
 * Consistency
     * Did not use at last intercourse, but used at least one method in past 12 months
     * Did not use at last intercourse, but ever used contraception (females)
