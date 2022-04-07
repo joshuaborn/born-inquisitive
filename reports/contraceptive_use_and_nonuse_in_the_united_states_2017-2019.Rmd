@@ -570,6 +570,64 @@ fem1719dt[,
     )
   )
 ]
+
+
+# Create boolean variables for whether each method was used in the month preceding the interview.
+set_mentions_to_booleans(
+  out_prefix = 'lastmonth_meth',
+  in_prefix = 'LSTMONMETH',
+  in_series = 1:4,
+  format = 'METHHXF',
+  skip = c(1:2, 22:23, 55, 98:99)
+)
+
+
+# Create boolean variables for whether each method was used in the month of the interview.
+set_mentions_to_booleans(
+  out_prefix = 'thismonth_meth',
+  in_prefix = 'CURRMETH',
+  in_series = 1:4,
+  format = 'METHHXF',
+  skip = c(1:2, 22:23, 55, 98:99)
+)
+
+
+# Create boolean variables for each reason for using the pill.
+set_mentions_to_booleans(
+  out_prefix = 'whypill_reason',
+  in_prefix = 'YUSEPILL',
+  in_series = 1:6,
+  format = 'YUSEMTHF',
+  skip = 98:99
+)
+
+
+# Create categorical variable reflecting overall motivation for pill use.
+fem1719dt[,
+  pill_motivation := factor(
+    fcase(
+      whypill_reason1 & !(
+        whypill_reason2 |
+        whypill_reason3 |
+        whypill_reason4 |
+        whypill_reason5 |
+        whypill_reason6 |
+        whypill_reason7 |
+        whypill_reason8
+      ), 'Only for birth control',
+      !whypill_reason1 & (
+        whypill_reason2 |
+        whypill_reason3 |
+        whypill_reason4 |
+        whypill_reason5 |
+        whypill_reason6 |
+        whypill_reason7 |
+        whypill_reason8
+      ), 'Only for reasons other than contraception',
+      default = 'For both reasons'
+    )
+  )
+]
 ```
 
 ```{r process-male-data, dependson=c('helpers', 'load-data')}
@@ -2035,7 +2093,7 @@ estimate_totals_and_percentages(
 
 ### Size of Domain
 
-Domain: Females aged 15-49 living in households in the United States
+Description: By whether used a condom at last intercourse with a male
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2044,7 +2102,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-Domain: Males aged 15-49 living in households in the United States
+Domain: By whether used a condom at last intercourse with a female
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -2080,12 +2138,58 @@ estimate_totals_and_percentages(
 ```
 
 
+## Pill
+
+### Size of Domain
+
+Description: By whether used the pill either during the month of interview or the month preceding the interview
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~I(thismonth_meth3 | lastmonth_meth3),
+  svy(fem1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+### Reason(s) for Use
+
+Domain: Females who used the pill either during the month of interview or the month preceding the interview
+
+Description: By reason(s), with those mentioning multiple reasons counted multiple times
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    thismonth_meth3 | lastmonth_meth3
+  ),
+  prefix = 'whypill_reason',
+  format = 'YUSEMTHF',
+  skip = 98:99
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Contraceptive vs. Noncontraceptive Reasons
+
+Domain: Females who used the pill either during the month of interview or the month preceding the interview
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~pill_motivation,
+  subset(
+    svy(fem1719dt),
+    thismonth_meth3 | lastmonth_meth3
+  )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
 
 * Use for reasons other than contraception
     * Condom
     * Pill
     * IUD
-    * Tubal Ligation and Vasectomy
+    * Tubal Ligation
 * Ever (females)
     * By method(s)
     * By method(s) among those who have had intercourse with opposite sex
