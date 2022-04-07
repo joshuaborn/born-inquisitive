@@ -849,95 +849,74 @@ male1719dt[,
 
 # Set a boolean variable for whether "Contraceptive patch (Ortho-Evra)" was used in past 12 months separately because its encoding collides with "Something else".
 male1719dt[,
-  anyuse12m_meth13 := male1719$Data[,
+  anyuse12m_meth10 := male1719$Data[,
     !is.na(
       (cm_greater(CMLSXCWP, CMLSTYR) & (
-        CWPLMET11 == 10 |
-        CWPLMET12 == 10 |
-        CWPLMET13 == 10 |
-        CWPLMET201 == 13 |
-        CWPLMET202 == 13
+        CWPLMET201 == 10 |
+        CWPLMET202 == 10
       )) |
       (cm_greater(CMFSXCWP, CMLSTYR) & (
-        CWPFMET01 == 13 |
-        CWPFMET02 == 13 |
-        CWPFMET03 == 13 |
-        CWPFMET04 == 13 |
-        CWPFMET05 == 13
+        CWPFMET01 == 10 |
+        CWPFMET02 == 10 |
+        CWPFMET03 == 10 |
+        CWPFMET04 == 10 |
+        CWPFMET05 == 10
       )) |
-      CWPALLBC01 == 13 |
-      CWPALLBC02 == 13 |
-      CWPALLBC03 == 13 |
-      CWPALLBC04 == 13 |
-      CWPALLBC05 == 13 |
+      CWPALLBC01 == 10 |
+      CWPALLBC02 == 10 |
+      CWPALLBC03 == 10 |
+      CWPALLBC04 == 10 |
+      CWPALLBC05 == 10 |
       (cm_greater(CMLSXP1, CMLSTYR) & (
-        PXLRMETH1 == 10 |
-        PXLRMETH2 == 10 |
-        PXLRMETH3 == 10 |
-        PXLPMETH01 == 13 |
-        PXLPMETH02 == 13 |
-        PXLPMETH03 == 13
+        PXLPMETH01 == 10 |
+        PXLPMETH02 == 10 |
+        PXLPMETH03 == 10
       )) |
       (cm_greater(CMLSXP2, CMLSTYR) & (
-        PXLRMETH5 == 10 |
-        PXLRMETH6 == 10 |
-        PXLRMETH7 == 10 |
-        PXLPMETH11 == 13 |
-        PXLPMETH12 == 13 |
-        PXLPMETH13 == 13
+        PXLPMETH11 == 10 |
+        PXLPMETH12 == 10 |
+        PXLPMETH13 == 10
       )) |
       (cm_greater(CMLSXP3, CMLSTYR) & (
-        PXLRMETH9 == 10 |
-        PXLRMETH10 == 10 |
-        PXLRMETH11 == 10 |
-        PXLPMETH21 == 13 |
-        PXLPMETH22 == 13 |
-        PXLPMETH23 == 13
+        PXLPMETH21 == 10 |
+        PXLPMETH22 == 10 |
+        PXLPMETH23 == 10
       )) |
       (cm_greater(CMFSXP, CMLSTYR) & (
-        PXFMETH01 == 13 |
-        PXFMETH02 == 13 |
-        PXFMETH03 == 13 |
-        PXFMETH04 == 13
+        PXFMETH01 == 10 |
+        PXFMETH02 == 10 |
+        PXFMETH03 == 10 |
+        PXFMETH04 == 10
       )) |
       (cm_greater(CMFSXP2, CMLSTYR) & (
-        PXFMETH14 == 13 |
-        PXFMETH15 == 13 |
-        PXFMETH16 == 13 |
-        PXFMETH17 == 13
+        PXFMETH14 == 10 |
+        PXFMETH15 == 10 |
+        PXFMETH16 == 10 |
+        PXFMETH17 == 10
       )) |
       (cm_greater(CMFSXP3, CMLSTYR) & (
-        PXFMETH27 == 13 |
-        PXFMETH28 == 13 |
-        PXFMETH29 == 13 |
-        PXFMETH30 == 13
+        PXFMETH27 == 10 |
+        PXFMETH28 == 10 |
+        PXFMETH29 == 10 |
+        PXFMETH30 == 10
       )) |
-      PXMETHOD01 == 13 |
-      PXMETHOD02 == 13 |
-      PXMETHOD03 == 13 |
-      PXMETHOD04 == 13 |
-      PXMETHOD05 == 13 |
-      PXMETHOD14 == 13 |
-      PXMETHOD15 == 13 |
-      PXMETHOD16 == 13 |
-      PXMETHOD17 == 13 |
-      PXMETHOD18 == 13 |
-      PXMETHOD27 == 13 |
-      PXMETHOD28 == 13 |
-      PXMETHOD29 == 13 |
-      PXMETHOD30 == 13 |
-      PXMETHOD31 == 13
+      PXMETHOD01 == 10 |
+      PXMETHOD02 == 10 |
+      PXMETHOD03 == 10 |
+      PXMETHOD04 == 10 |
+      PXMETHOD05 == 10 |
+      PXMETHOD14 == 10 |
+      PXMETHOD15 == 10 |
+      PXMETHOD16 == 10 |
+      PXMETHOD17 == 10 |
+      PXMETHOD18 == 10 |
+      PXMETHOD27 == 10 |
+      PXMETHOD28 == 10 |
+      PXMETHOD29 == 10 |
+      PXMETHOD30 == 10 |
+      PXMETHOD31 == 10
     )
   ]
-]
-male1719dt[,
-  usedlast3m_meth5 := fifelse(
-    SEX3MO == 'YES, HAD INTERCOURSE' &
-      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
-      PSURGSTR == 'YES',
-    TRUE,
-    usedlast3m_meth5
-  )
 ]
 
 
@@ -1626,7 +1605,7 @@ estimate_mentions(
 ```
 
 
-# Method(s) Used in Past 12 Months
+# Method(s) in Past 12 Months
 
 ## Number of Methods
 
@@ -1655,6 +1634,40 @@ estimate_totals_and_percentages(
 ```
 
 
+## Method(s) Used at Last Intercourse
+
+Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview and used a method of contraception at least once
+
+Description: By method(s), with those using multiple methods counted multiple times
+
+**Females**
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    anyuse12m_meth_count > 0
+  ),
+  prefix = 'anyuse12m_meth',
+  skip = c(1:2, 22:23, 55, 98:99),
+  format = 'METHHXF'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+**Males**
+
+```{r, dependson='process-male-data'}
+estimate_mentions(
+  sex = 'male',
+  svy = subset(
+    svy(male1719dt),
+    anyuse12m_meth_count > 0
+  ),
+  prefix = 'anyuse12m_meth',
+  skip = 98:99,
+  format = 'MTHDSV1F'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
 
 
 * Past 12 months
