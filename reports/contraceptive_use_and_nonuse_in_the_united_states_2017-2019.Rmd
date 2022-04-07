@@ -307,6 +307,7 @@ fem1719dt <- copy(fem1719$Data[, .(
 set_variables_as_factors(
   variables = c(
     ATTRACT = 'ATTRACT',
+    CONDVAG = 'YESNONAF',
     CONSTAT1 = 'CONSTATF',
     EVERUSED = 'YESNONAF',
     HADSEX = 'HADSEX',
@@ -323,6 +324,7 @@ set_variables_as_factors(
     REASIMPR = 'REASR',
     SEX3MO = 'Y1N2RECF',
     TUBS = 'Y1N5C',
+    WHYCONDL = 'WHYCONDL',
     WHYNOUSING1 = 'WHYNOUSNG',
     WYNOLSTP = 'Y1N5RDF',
     WYNOTUSE = 'Y1N5RDF',
@@ -591,6 +593,7 @@ set_variables_as_factors(
   sex = 'male',
   variables = c(
     ATTRACT = 'ATTRACT',
+    CONDVAG = 'YESNONAF',
     CWPLMET201 = 'MTHDSV3F',
     CWPLUSE2 = 'Y1N5RDF',
     CWPNOFRQ = 'OFTIMEF',
@@ -613,6 +616,7 @@ set_variables_as_factors(
     RSURGSTR = 'N0Y1RDF',
     SEX12MO = 'SEX3MO',
     SEX3MO = 'SEX3MO',
+    WHYCONDL = 'WHYCONDF',
     YNOSEX = 'YNOSEX'
   )
 )
@@ -2009,7 +2013,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Pull Use During Past 4 Weeks
+## Pill Use During Past 4 Weeks
 
 Domain: Females who used the pill in the month of the interview or the previous month*
 
@@ -2025,9 +2029,63 @@ estimate_totals_and_percentages(
 
 
 
+# Use of Contraceptive Methods for Other Reasons
+
+## Condoms
+
+### Size of Domain
+
+Domain: Females aged 15-49 living in households in the United States
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(CONDVAG),
+  svy(fem1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Males aged 15-49 living in households in the United States
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(CONDVAG),
+  svy(male1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+### Reason for Use
+
+Domain: Females who used a condom at last intercourse with a male
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(WHYCONDL),
+  subset(
+    svy(fem1719dt),
+    CONDVAG == 'Yes'
+  )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+Domain: Males who used a condom at last intercourse with a female
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(WHYCONDL),
+  subset(
+    svy(male1719dt),
+    CONDVAG == 'Yes'
+  )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+
 * Use for reasons other than contraception
-    * Condom, pill, IUD, and tubal ligation among females
-    * Condom among males
+    * Condom
+    * Pill
+    * IUD
+    * Tubal Ligation and Vasectomy
 * Ever (females)
     * By method(s)
     * By method(s) among those who have had intercourse with opposite sex
