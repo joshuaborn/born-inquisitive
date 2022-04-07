@@ -1607,6 +1607,29 @@ estimate_mentions(
 
 # Method(s) in Past 12 Months
 
+## Size of Domain
+
+Description: Persons who have had intercourse with opposite in the past 12 months
+
+**Females**
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(SEX12MO),
+  svy(fem1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+**Males**
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(SEX12MO == 'YES, HAD INTERCOURSE'),
+  svy(male1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+
 ## Number of Methods
 
 Domain: Females who have had intercourse with a male in the past 12 months
@@ -1671,7 +1694,6 @@ estimate_mentions(
 
 
 * Past 12 months
-    * By method(s) used
     * By method, among those using only one method
 * Consistency
     * Did not use at last intercourse, but used at least one method in past 12 months
@@ -1696,7 +1718,6 @@ estimate_mentions(
 
 # Things to Do
 
-* Resolve conflicting results for male number of methods used in past 12 months between here and EDA
 * Finish collecting estimates into this document
 * Organize helper functions into NSFG-specific and more general
 * Style plots and tables for output
