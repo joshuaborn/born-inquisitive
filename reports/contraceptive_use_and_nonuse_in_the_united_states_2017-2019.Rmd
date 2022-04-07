@@ -456,7 +456,7 @@ set_mentions_to_booleans(
 
 
 # Create boolean variables for whether each method was used at all in the past 3 months.
-fem1719METHXidxs <- get_idxs('METHSTOPF', skip = 98:99)
+fem1719METHXidxs <- get_idxs('METHHXF', skip = c(1:2, 22:23, 55, 98:99))
 names(fem1719METHXidxs) <- paste('anyuse12m_meth', fem1719METHXidxs, sep = '')
 fem1719METHX <- create_NSFG_pivot_table('METHX', 1:192)
 fem1719METHX[, CMMHCALXID := ceiling(METHXID / 4)]
@@ -1367,7 +1367,7 @@ estimate_totals_and_percentages(
 # Things to Do
 
 * Finish collecting estimates into this document
-* Organize helper methods into NSFG-specific and more general
+* Organize helper functions into NSFG-specific and more general
 * Style plots and tables for output
 * Write text of report
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
