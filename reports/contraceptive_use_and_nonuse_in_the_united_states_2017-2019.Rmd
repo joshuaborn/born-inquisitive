@@ -312,10 +312,12 @@ set_variables_as_factors(
     HADSEX = 'HADSEX',
     HPPREGQ = 'HPPREGQ',
     LSEXPREG = 'Y1N2RECF',
+    P12MOCON = 'P12MOCON',
     P1YRELP = 'P1YRELP',
     POSIBLMN = 'Y1N5RDF',
     POSIBLPG = 'Y1N5RDF',
     PSURGSTR = 'Y1N5C',
+    PXNOFREQ = 'P12METHF',
     REASIMPP = 'REASP',
     REASIMPR = 'REASR',
     SEX3MO = 'Y1N2RECF',
@@ -540,6 +542,31 @@ fem1719dt[,
 
 # Reset count of methods used in the past 12 months to include overrides of vasectomy and tubal ligation boolean variables.
 set_mention_count_variable(fem1719dt, 'anyuse12m_meth')
+
+
+# Create categorical variable specifying consistency of any contraceptive method use over previous 12 months that combines P12MOCON and PXNOFREQ.
+fem1719dt[,
+  anyuse12m_consistency := factor(
+    fcase(
+      P12MOCON == 'Every time',
+        'Every time',
+      PXNOFREQ != 'Not Applicable',
+        as.character(PXNOFREQ),
+      default = 'No answer provided in public use data files'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided in public use data files'
+    )
+  )
+]
 ```
 
 ```{r process-male-data, dependson=c('helpers', 'load-data')}
@@ -1769,6 +1796,25 @@ estimate_totals_and_percentages(
   subset(
     svy(male1719dt),
     usedlast3m_status == 'Otherwise did not use contraception at last intercourse'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
+## Any Method During Past 12 Months
+
+Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview, who used a method of contraception at least once, and who do not have active sterilizing operations such as tubal ligations or vasectomies
+
+**Females**
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(anyuse12m_consistency),
+  subset(
+    svy(fem1719dt),
+    sex12mo &
+      anyuse12m_meth_count > 0 &
+      TUBS != 'YES'
   )
 ) |> pretty_estimates() |> kable()
 ```
