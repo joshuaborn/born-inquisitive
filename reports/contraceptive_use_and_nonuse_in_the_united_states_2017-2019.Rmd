@@ -219,11 +219,53 @@ estimate_mentions <- function(
     }
   ))
 
+  
   estimates[
     , description := factorize(description, format, raw_import$Formats)
   ]
 
   estimates
+}
+
+create_pivot_table <- function(
+  prefix,
+  series,
+  id_vars,
+  source_dt
+) {
+  dt <- copy(
+    source_dt[
+      ,
+      c(id_vars, paste(prefix, series, sep = '')),
+      with = FALSE
+    ]
+  )
+
+  dt <- melt(
+    dt,
+    id.vars = id_vars,
+    variable.factor = FALSE,
+    value.name = prefix
+  )
+
+  dt[
+    ,
+    (paste(prefix, 'ID', sep = '')) :=
+      as.integer(sub(prefix, '', variable))
+  ]
+
+  dt[, variable := NULL]
+
+  dt
+}
+
+create_NSFG_pivot_table <- function(prefix, series, id_vars = 'CASEID', sex = 'fem') {
+  raw_import <- get_raw_import_for_sex(sex)
+  create_pivot_table(prefix, series, id_vars, raw_import$Data)
+}
+
+na_to_false <- function(x) {
+  fifelse(is.na(x), FALSE, x)
 }
 ```
 
@@ -278,7 +320,6 @@ set_mentions_to_booleans(
   skip = 20:21
 )
 
-# set any respondents who are sexually active in past 3 months and whose last intercourse was with husband or cohabitating partner who has an active vasectomy as using vasectomy as a contraceptive method
 fem1719dt[,
   usedlast3m_meth3 := fifelse(
     SEX3MO == 'YES' & PSURGSTR == 'YES' & (
@@ -290,7 +331,6 @@ fem1719dt[,
   )
 ]
 
-# set any respondents with current tubal ligations who are sexually active as currently using tubal ligation as a contraceptive method
 fem1719dt[,
   usedlast3m_meth4 := fifelse(
     SEX3MO == 'YES' & TUBS == 'YES',
@@ -396,6 +436,79 @@ set_mentions_to_booleans(
   in_series = 1:2,
   format = 'WHYNOTPGF'
 )
+
+# create boolean variables for whether each method was used at all in the past 3 months
+fem1719METHXidxs <- get_idxs('METHSTOPF', skip = 98:99)
+names(fem1719METHXidxs) <- paste('anyuse12m_meth', fem1719METHXidxs, sep = '')
+fem1719METHX <- create_NSFG_pivot_table('METHX', 1:192)
+fem1719METHX[, CMMHCALXID := ceiling(METHXID / 4)]
+fem1719METHX <- fem1719METHX[
+  create_NSFG_pivot_table(
+    'CMMHCALX',
+    1:48,
+    c('CASEID', 'CMINTVW', 'CMLSTYR')
+  ),
+  on = c('CASEID', 'CMMHCALXID')
+]
+fem1719dt <- fem1719METHX[
+  !is.na(METHX) & !is.na(CMMHCALX) &
+    CMMHCALX > CMLSTYR &
+    CMMHCALX <= CMINTVW,
+  lapply(
+    fem1719METHXidxs,
+    \(x) any(.SD$METHX == x)
+  ),
+  by = CASEID
+][fem1719dt, on = 'CASEID']
+fem1719dt[,
+  names(fem1719METHXidxs) := lapply(.SD, na_to_false),
+  .SDcols = names(fem1719METHXidxs)
+]
+
+
+# create SEX12MO variable using pivot table
+fem1719dt <- create_NSFG_pivot_table(
+  'CMMONSX',
+  2:48,
+  c('CASEID', 'CMINTVW', 'CMLSTYR')
+)[
+  create_NSFG_pivot_table('MONSX', 2:48),
+  on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
+][
+  !is.na(MONSX) & MONSX == 1 &
+    CMMONSX > CMLSTYR &
+    CMMONSX <= CMINTVW,
+  .(SEX12MO = .N > 1),
+  by = CASEID
+][
+  fem1719dt,
+  on = 'CASEID'
+]
+fem1719dt[, SEX12MO := na_to_false(SEX12MO)]
+
+
+fem1719dt[,
+  anyuse12m_meth5 := fifelse(
+    SEX12MO & PSURGSTR == 'YES' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+        P1YRELP == 'Current cohabiting partner'
+      ),
+    TRUE,
+    anyuse12m_meth5
+  )
+]
+
+
+fem1719dt[,
+  anyuse12m_meth6 := fifelse(
+    SEX12MO & TUBS == 'YES',
+    TRUE,
+    anyuse12m_meth6
+  )
+]
+
+
+set_mention_count_variable(fem1719dt, 'anyuse12m_meth')
 ```
 
 ```{r process-male-data, dependson=c('helpers', 'load-data')}
@@ -515,7 +628,6 @@ male1719dt[,
     'Does not report not knowing if partner used contraceptive method at last intercourse'
   ))
 ]
-
 ```
 
 
@@ -1177,10 +1289,23 @@ estimate_mentions(
 ```
 
 
+# Method(s) Used in Past 12 Months
 
-* Why not using contraception (females)
-    * Reasons(s) for those who believe themselves infertile to think themselves infertile
-* Method(s) used at last intercourse
+## Number of Methods
+
+Domain: Females who have had intercourse with a male in the past 12 months
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(anyuse12m_meth_count),
+  subset(
+    svy(fem1719dt),
+    SEX12MO
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
 * Past 12 months
     * Number of methods
     * By method(s) used
@@ -1193,6 +1318,9 @@ estimate_mentions(
     * Frequency of condom use in past 12 months, among exclusive condom users
     * Frequency of condom use in past 4 weeks (females)
     * Number of missed pills in past 4 weeks (females)
+* Use for reasons other than contraception
+    * Condom, pill, IUD, and tubal ligation among females
+    * Condom among males
 * Ever (females)
     * By method(s)
     * By method(s) among those who have had intercourse with opposite sex
@@ -1200,15 +1328,14 @@ estimate_mentions(
     * Reason for dissatisfaction with pill
     * Reason for dissatisfaction with condoms
     * Reason for dissatisfaction with IUDs
-* Use for reasons other than contraception
-    * Condom, pill, IUD, and tubal ligation among females
-    * Condom among males
 
 
 
 # Things to Do
 
 * Collect estimates into this report
+* Comment code to explain what is happening
+* Organize helper methods into NSFG-specific and more general
 * Style plots and tables for output
 * Write text of report
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
