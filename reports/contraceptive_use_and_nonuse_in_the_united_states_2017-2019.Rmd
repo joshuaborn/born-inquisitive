@@ -598,6 +598,8 @@ set_variables_as_factors(
     CWPTRYPG = 'Y1N5RDF',
     FATHPOSS = 'Y1N5RDF',
     HADSEX = 'HADSEX',
+    P12MOCON = 'OFTIMEF',
+    P12MOCONO = 'Y1N5RDF',
     P1COHABIT = 'Y1N5RDF',
     P1CURRWIFE = 'Y1N5RDF',
     PSURGSTR = 'N0Y1CF',
@@ -1012,6 +1014,32 @@ male1719dt[,
         'Every time',
       PXNOFREQ != 'Not Applicable',
         as.character(PXNOFREQ),
+      default = 'No answer provided in public use data files'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided in public use data files'
+    )
+  )
+]
+
+# Create categorical variable specifying consistency of condom use over previous 12 months that combines P12MOCONO and P12MOCON.
+male1719dt[,
+  condom12m_consistency := factor(
+    fcase(
+      P12MOCONO == 'Yes',
+        'Every time',
+      P12MOCONO == 'No',
+        'None of the time',
+      !is.na(P12MOCON),
+        as.character(P12MOCON),
       default = 'No answer provided in public use data files'
     ),
     ordered = TRUE,
@@ -1859,7 +1887,7 @@ estimate_totals_and_percentages(
 
 ## Any Method During Past 12 Months
 
-Domain: Females who had intercourse with a male during the 12 months prior to interview, who used a method of contraception at least once, and who do not have active sterilizing operations such as tubal ligations or vasectomies
+Domain: Females who had intercourse with a male during the 12 months prior to interview, who used a method of contraception at least once, and who do not have active sterilizing operations such as tubal ligations
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -1901,10 +1929,48 @@ estimate_totals_and_percentages(
 ```
 
 
+## Condom Use
+
+Domain: Females who had intercourse with a male during the 12 months prior to interview, who used condoms at least once in the past 12 months
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(
+    P12MOCON,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      'Not Applicable'
+    )
+  ),
+  subset(
+    svy(fem1719dt),
+    sex12mo &
+      anyuse12m_meth4
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Males who had intercourse with a female during the 12 months prior to interview, who used condoms at least once in the past 12 months
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(condom12m_consistency),
+  subset(
+    svy(male1719dt),
+    SEX12MO == 'YES, HAD INTERCOURSE' &
+        anyuse12m_meth1
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
 
 * Consistency
-    * Frequency of any method use in past 12 months
-    * Frequency of condom use in past 12 months
     * Frequency of condom use in past 12 months, among exclusive condom users
     * Frequency of condom use in past 4 weeks (females)
     * Number of missed pills in past 4 weeks (females)
