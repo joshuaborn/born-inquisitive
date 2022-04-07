@@ -312,6 +312,7 @@ set_variables_as_factors(
     HADSEX = 'HADSEX',
     HPPREGQ = 'HPPREGQ',
     LSEXPREG = 'Y1N2RECF',
+    MISSPILL = 'MISSPILL',
     P12MOCON = 'P12MOCON',
     P1YRELP = 'P1YRELP',
     POSIBLMN = 'Y1N5RDF',
@@ -1929,7 +1930,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Condom Use
+## Condom Use During Past 12 Months
 
 Domain: Females who had intercourse with a male during the 12 months prior to interview, who used condoms at least once in the past 12 months
 
@@ -2008,11 +2009,22 @@ estimate_totals_and_percentages(
 ```
 
 
+## Pull Use During Past 4 Weeks
 
-* Consistency
-    * Frequency of condom use in past 12 months, among exclusive condom users
-    * Frequency of condom use in past 4 weeks (females)
-    * Number of missed pills in past 4 weeks (females)
+Domain: Females who used the pill in the month of the interview or the previous month*
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(MISSPILL),
+  subset(
+    svy(fem1719dt),
+    MISSPILL != 'Not Applicable'
+  )
+) |> pretty_estimates() |> kable()
+```
+
+
+
 * Use for reasons other than contraception
     * Condom, pill, IUD, and tubal ligation among females
     * Condom among males
