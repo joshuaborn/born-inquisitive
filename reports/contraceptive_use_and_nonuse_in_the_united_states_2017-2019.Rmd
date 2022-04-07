@@ -1968,6 +1968,45 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
+Domain: Females who had intercourse with a male during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condoms
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(
+    P12MOCON,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      'Not Applicable'
+    )
+  ),
+  subset(
+    svy(fem1719dt),
+    sex12mo &
+      anyuse12m_meth4 &
+      anyuse12m_meth_count == 1
+  )
+) |> pretty_estimates() |> kable()
+```
+
+Domain: Males who had intercourse with a female during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condoms
+
+```{r, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(condom12m_consistency),
+  subset(
+    svy(male1719dt),
+    SEX12MO == 'YES, HAD INTERCOURSE' &
+      anyuse12m_meth1 &
+      anyuse12m_meth_count == 1
+  )
+) |> pretty_estimates() |> kable()
+```
+
 
 
 * Consistency
