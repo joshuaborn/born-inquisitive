@@ -221,8 +221,6 @@ estimate_mentions <- function(
   sex = 'fem'
 ) {
   formats <- get_formats_for_sex(sex)
-  dt <- get_dt_for_sex(sex)
-
   estimates <- rbindlist(lapply(
     get_idxs(format, skip, sex),
     function(x) {
@@ -236,12 +234,21 @@ estimate_mentions <- function(
       row
     }
   ))
+  estimates[, description := factorize(description, format, formats)]
+  estimates
+}
 
-  
-  estimates[
-    , description := factorize(description, format, formats)
-  ]
-
+estimate_mentions_in_subdomains <- function(FUN, format, skip = NULL, sex = 'fem') {
+  formats <- get_formats_for_sex(sex)
+  estimates <- rbindlist(lapply(
+    get_idxs(format, skip, sex),
+    function(x) {
+      row <- FUN(x)[description == TRUE]
+      row[, description := x]
+      row
+    }
+  ))
+  estimates[, description := factorize(description, format, formats)]
   estimates
 }
 
@@ -753,6 +760,33 @@ set_mentions_to_booleans(
   format = 'OTHRMETHF',
   skip = c(19, 95)
 )
+
+
+# Create boolean variables for whether each contraceptive method was ever discontinued due to dissatisfaction. Because IUD types have been split out, these cases must be handled individually.
+set_mentions_to_booleans(
+  out_prefix = 'everquit_meth',
+  in_prefix = 'METHSTOP',
+  in_series = sprintf('%02d', 1:10),
+  format = 'METHSTOPF',
+  skip = c(19)
+)
+for (x in c(1:2)) {
+  fem1719dt[
+    fem1719$Data,
+    (sprintf('everquit_meth%d', 30 + x)) := na_to_false(
+      has_level(i.TYPEIUD_1, x) |
+      has_level(i.TYPEIUD_2, x) |
+      has_level(i.TYPEIUD_3, x)
+    )
+  ]
+}
+fem1719dt[
+  fem1719$Data,
+  everquit_meth33 := na_to_false(
+    has_level(i.TYPEIUD_1, c(3, 9)) |
+    has_level(i.TYPEIUD_2, c(3, 9)) |
+    has_level(i.TYPEIUD_3, c(3, 9))
+)]
 ```
 
 ```{r process-male-data, dependson=c('helpers', 'load-data')}
@@ -1704,59 +1738,38 @@ Description: Proportion who also used other method(s)
 **Females**
 
 ```{r, dependson='process-fem-data'}
-(function() {
-  estimates <- rbindlist(lapply(
-    get_idxs('METH3MF', 20:21, 'fem'),
-    function(x) {
-      row <- estimate_totals_and_percentages(
-        ~I(usedlast3m_meth_count > 1),
-        subset(
-          svy(fem1719dt),
-          fem1719dt[, get(sprintf('usedlast3m_meth%d', x))]
-        )
-      )[
-        description == TRUE
-      ]
-      row[, description := x]
-      row
-    }
-  ))
-
-  estimates[
-    , description := factorize(description, 'METH3MF', fem1719$Formats)
-  ]
-
-  estimates
-})()[!is.nan(total_CI_low)][order(-total)] |> pretty_estimates() |> kable()
+estimate_mentions_in_subdomains(
+  FUN = function(x) {
+    estimate_totals_and_percentages(
+      ~I(usedlast3m_meth_count > 1),
+      subset(
+        svy(fem1719dt),
+        fem1719dt[, get(sprintf('usedlast3m_meth%d', x))]
+      )
+    )
+  },
+  format = 'METH3MF',
+  skip = 20:21,
+)[!is.nan(total_CI_low)][order(-total)] |> pretty_estimates() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-(function() {
-  estimates <- rbindlist(lapply(
-    get_idxs('METH3MF', 95:96, 'male'),
-    function(x) {
-      row <- estimate_totals_and_percentages(
-        ~I(usedlast3m_meth_count > 1),
-        subset(
-          svy(male1719dt),
-          male1719dt[, get(sprintf('usedlast3m_meth%d', x))]
-        )
-      )[
-        description == TRUE
-      ]
-      row[, description := x]
-      row
-    }
-  ))
-
-  estimates[
-    , description := factorize(description, 'METH3MF', male1719$Formats)
-  ]
-
-  estimates
-})()[order(-total)] |> pretty_estimates() |> kable()
+estimate_mentions_in_subdomains(
+  sex = 'male',
+  FUN = function(x) {
+    estimate_totals_and_percentages(
+      ~I(usedlast3m_meth_count > 1),
+      subset(
+        svy(male1719dt),
+        male1719dt[, get(sprintf('usedlast3m_meth%d', x))]
+      )
+    )
+  },
+  format = 'METH3MF',
+  skip = 95:96
+)[order(-total)] |> pretty_estimates() |> kable()
 ```
 
 
@@ -2358,6 +2371,7 @@ estimate_totals_and_percentages(
 ```
 
 
+
 # Method(s) Ever Used
 
 Domain: Females aged 15-49 living in households in the United States
@@ -2394,6 +2408,9 @@ estimate_mentions(
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
+
+
+# Discontinuation Due to Dissatisfaction
 
 
 
