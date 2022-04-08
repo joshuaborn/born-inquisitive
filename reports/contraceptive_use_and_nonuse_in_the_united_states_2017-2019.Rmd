@@ -157,6 +157,38 @@ estimate_totals_and_percentages <- function(f, svy) {
   )
 }
 
+estimate_row_total_and_percentage <- function(f, svy) {
+  totals <- svytotal(f, svy)
+  totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
+  names(totals_ci) <- c('total_CI_low', 'total_CI_high')
+  totals_df <- cbind(totals, totals_ci)
+  level_prefix <- as.character(f)
+  level_prefix <- level_prefix[seq(2, length(level_prefix))]
+  rownames(totals_df) <- sub(level_prefix, '', rownames(totals_df), fixed = TRUE)
+  totals_df <- totals_df[rownames(totals_df) == 'TRUE', -2]
+  if (nrow(svy) > 0) {
+    percentage <- svyciprop(f, svy)
+    percentage_ci <- as.data.frame(confint(percentage, df = degf(svy)))
+    names(percentage_ci) <- c('percentage_CI_low', 'percentage_CI_high')
+    as.data.table(cbind(
+      totals_df,
+      data.table(
+        percentage = as.vector(percentage)
+      ),
+      percentage_ci
+    ))
+  } else {
+    as.data.table(cbind(
+      totals_df,
+      data.table(
+        percentage = 0,
+        percentage_CI_low = NaN,
+        percentage_CI_high = NaN
+      )
+    ))
+  }
+}
+
 rounded_estimates <- function(dt) {
   cbind(
     dt[
@@ -224,14 +256,19 @@ estimate_mentions <- function(
   estimates <- rbindlist(lapply(
     get_idxs(format, skip, sex),
     function(x) {
-      row <- estimate_totals_and_percentages(
-        as.formula(paste('~', prefix, x, sep = '')),
-        svy
-      )[
-        description == TRUE
-      ]
-      row[, description := x]
-      row
+      tryCatch(
+        expr = {
+          row <- estimate_row_total_and_percentage(
+            as.formula(paste('~', prefix, x, sep = '')),
+            svy
+          )
+          row[, description := x]
+          row
+        },
+        error = function(err) {
+          message(paste('Error with row', x, ':', err))
+        }
+      )
     }
   ))
   estimates[, description := factorize(description, format, formats)]
@@ -243,7 +280,7 @@ estimate_mentions_in_subdomains <- function(FUN, format, skip = NULL, sex = 'fem
   estimates <- rbindlist(lapply(
     get_idxs(format, skip, sex),
     function(x) {
-      row <- FUN(x)[description == TRUE]
+      row <- FUN(x)
       row[, description := x]
       row
     }
@@ -1740,7 +1777,7 @@ Description: Proportion who also used other method(s)
 ```{r, dependson='process-fem-data'}
 estimate_mentions_in_subdomains(
   FUN = function(x) {
-    estimate_totals_and_percentages(
+    estimate_row_total_and_percentage(
       ~I(usedlast3m_meth_count > 1),
       subset(
         svy(fem1719dt),
@@ -1749,8 +1786,8 @@ estimate_mentions_in_subdomains(
     )
   },
   format = 'METH3MF',
-  skip = 20:21,
-)[!is.nan(total_CI_low)][order(-total)] |> pretty_estimates() |> kable()
+  skip = c(20:22)
+)[order(-total)] |> pretty_estimates() |> kable()
 ```
 
 **Males**
@@ -1759,7 +1796,7 @@ estimate_mentions_in_subdomains(
 estimate_mentions_in_subdomains(
   sex = 'male',
   FUN = function(x) {
-    estimate_totals_and_percentages(
+    estimate_row_total_and_percentage(
       ~I(usedlast3m_meth_count > 1),
       subset(
         svy(male1719dt),
