@@ -2470,6 +2470,56 @@ estimate_mentions_in_subdomains(
 ```
 
 
+## Dissatisfaction with Condoms
+
+```{r process-condom-quit, dependson='process-fem-data'}
+set_mentions_to_booleans(
+  out_prefix = 'condquit_reason',
+  in_prefix = 'REASCOND0',
+  in_series = 1:7,
+  format = 'REASMFMT'
+)
+
+set_mentions_to_booleans(
+  out_prefix = 'specificcond_reason',
+  in_prefix = 'STOPCOND',
+  in_series = 1:2,
+  format = 'STOPCONDFMT'
+)
+```
+
+
+Domain: Females who have ever discontinued using condoms due to dissatisfaction
+
+Description: Reason(s) for dissatisfaction selected from list provided in survey
+
+```{r, dependson='process-condom-quit'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    everquit_meth4
+  ),
+  prefix = 'condquit_reason',
+  format = 'REASMFMT'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+Domain: Females who have discontinued using condoms because "too difficult to use," "side effects," or "other" reason
+
+Description: Reason(s) for dissatisfaction volunteered by respondents
+
+```{r, dependson='process-condom-quit'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    condquit_reason3 | condquit_reason6 | condquit_reason15
+  ),
+  prefix = 'specificcond_reason',
+  format = 'STOPCONDFMT'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
 ## Dissatisfaction with the Pill
 
 ```{r process-pill-quit, dependson='process-fem-data'}
@@ -2530,7 +2580,6 @@ estimate_mentions(
 # Things to Do
 
 * Finish collecting estimates into this document
-* Move data processing code used by one or two blocks out of big processing block
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Organize helper functions into NSFG-specific and more general
 * Style plots and tables for output
