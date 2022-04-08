@@ -26,3 +26,4 @@ opts_chunk$set(
 ```
 
 * `MISSPILL`
+* `YUSEIUD1`

@@ -299,7 +299,8 @@ fem1719dt <- copy(fem1719$Data[, .(
   CASEID,
   SECU,
   SEST,
-  WGT2017_2019
+  WGT2017_2019,
+  YUSEIUD1
 )])
 
 
@@ -597,8 +598,7 @@ set_mentions_to_booleans(
   out_prefix = 'whypill_reason',
   in_prefix = 'YUSEPILL',
   in_series = 1:6,
-  format = 'YUSEMTHF',
-  skip = 98:99
+  format = 'YUSEMTHF'
 )
 
 
@@ -625,6 +625,57 @@ fem1719dt[,
         whypill_reason8
       ), 'Only for reasons other than contraception',
       default = 'For both reasons'
+    )
+  )
+]
+
+
+# Create boolean variables for each reason for using an IUD.
+set_mentions_to_booleans(
+  out_prefix = 'whyiud_reason',
+  in_prefix = 'YUSEIUD',
+  in_series = 1:6,
+  format = 'YUSEMTHF'
+)
+
+
+# Create categorical variable reflecting overall motivation for IUD use.
+fem1719dt[,
+  iud_motivation := factor(
+    fcase(
+      whyiud_reason99,
+      "Don't know",
+      whyiud_reason1 & (
+        whyiud_reason2 |
+        whyiud_reason3 |
+        whyiud_reason4 |
+        whyiud_reason5 |
+        whyiud_reason6 |
+        whyiud_reason7 |
+        whyiud_reason8
+      ),
+      'For both reasons',
+      whyiud_reason1 & !(
+        whyiud_reason2 |
+        whyiud_reason3 |
+        whyiud_reason4 |
+        whyiud_reason5 |
+        whyiud_reason6 |
+        whyiud_reason7 |
+        whyiud_reason8
+      ),
+      'Only for contraception',
+      !whyiud_reason1 & (
+        whyiud_reason2 |
+        whyiud_reason3 |
+        whyiud_reason4 |
+        whyiud_reason5 |
+        whyiud_reason6 |
+        whyiud_reason7 |
+        whyiud_reason8
+      ),
+      'Only for reasons other than contraception',
+      default = 'Not Applicable'
     )
   )
 ]
@@ -2184,12 +2235,56 @@ estimate_totals_and_percentages(
 ```
 
 
+## IUD
 
-* Use for reasons other than contraception
-    * Condom
-    * Pill
-    * IUD
-    * Tubal Ligation
+### Size of Domain
+
+Description: By whether used an IUD either during the month of interview or the month preceding the interview
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  #~I(thismonth_meth19 | lastmonth_meth19),
+  ~I(!is.na(YUSEIUD1)),
+  svy(fem1719dt)
+) |> pretty_estimates() |> kable()
+```
+
+### Reason(s) for Use
+
+Domain: Females who used an IUD either during the month of interview or the month preceding the interview
+
+Description: By reason(s), with those mentioning multiple reasons counted multiple times
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    #thismonth_meth19 | lastmonth_meth19
+    !is.na(YUSEIUD1)
+  ),
+  prefix = 'whyiud_reason',
+  format = 'YUSEMTHF',
+  skip = 98:99
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+### Contraceptive vs. Noncontraceptive Reasons
+
+Domain: Females who used an IUD either during the month of interview or the month preceding the interview
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(iud_motivation),
+  subset(
+    svy(fem1719dt),
+    #thismonth_meth19 | lastmonth_meth19
+    !is.na(YUSEIUD1)
+  )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+
 * Ever (females)
     * By method(s)
     * By method(s) among those who have had intercourse with opposite sex
