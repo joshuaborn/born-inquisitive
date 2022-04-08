@@ -153,3 +153,12 @@ fem1719$Formats[
   .(factor_value, factor_label)
 ][order(factor_value)] |> kable()
 ```
+
+# `STOPIUDFMT`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'STOPIUDFMT',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```

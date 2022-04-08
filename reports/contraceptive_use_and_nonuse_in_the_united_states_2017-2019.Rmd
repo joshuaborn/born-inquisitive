@@ -824,6 +824,51 @@ fem1719dt[
     has_level(i.TYPEIUD_2, c(3, 9)) |
     has_level(i.TYPEIUD_3, c(3, 9))
 )]
+
+
+# Create boolean variables for reason(s) for dissatisfaction with condom.
+set_mentions_to_booleans(
+  out_prefix = 'condquit_reason',
+  in_prefix = 'REASCOND0',
+  in_series = 1:7,
+  format = 'REASMFMT'
+)
+set_mentions_to_booleans(
+  out_prefix = 'specificcond_reason',
+  in_prefix = 'STOPCOND',
+  in_series = 1:2,
+  format = 'STOPCONDFMT'
+)
+
+
+# Create boolean variables for reason(s) for dissatisfaction with the pill.
+set_mentions_to_booleans(
+  out_prefix = 'pillquit_reason',
+  in_prefix = 'REASPILL0',
+  in_series = 1:9,
+  format = 'REASMFMT'
+)
+set_mentions_to_booleans(
+  out_prefix = 'specificpill_reason',
+  in_prefix = 'STOPPILL',
+  in_series = 1:6,
+  format = 'STOPPILLFMT'
+)
+
+
+# Create boolean variables for reason(s) for dissatisfaction with IUDs.
+set_mentions_to_booleans(
+  out_prefix = 'iudquit_reason',
+  in_prefix = 'REASIUD0',
+  in_series = 1:5,
+  format = 'REASMFMT'
+)
+set_mentions_to_booleans(
+  out_prefix = 'specificiud_reason',
+  in_prefix = 'STOPIUD',
+  in_series = 1:5,
+  format = 'STOPIUDFMT'
+)
 ```
 
 ```{r process-male-data, dependson=c('helpers', 'load-data')}
@@ -2472,28 +2517,11 @@ estimate_mentions_in_subdomains(
 
 ## Dissatisfaction with Condoms
 
-```{r process-condom-quit, dependson='process-fem-data'}
-set_mentions_to_booleans(
-  out_prefix = 'condquit_reason',
-  in_prefix = 'REASCOND0',
-  in_series = 1:7,
-  format = 'REASMFMT'
-)
-
-set_mentions_to_booleans(
-  out_prefix = 'specificcond_reason',
-  in_prefix = 'STOPCOND',
-  in_series = 1:2,
-  format = 'STOPCONDFMT'
-)
-```
-
-
 Domain: Females who have ever discontinued using condoms due to dissatisfaction
 
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
-```{r, dependson='process-condom-quit'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -2508,7 +2536,7 @@ Domain: Females who have discontinued using condoms because "too difficult to us
 
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
-```{r, dependson='process-condom-quit'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -2522,28 +2550,11 @@ estimate_mentions(
 
 ## Dissatisfaction with the Pill
 
-```{r process-pill-quit, dependson='process-fem-data'}
-set_mentions_to_booleans(
-  out_prefix = 'pillquit_reason',
-  in_prefix = 'REASPILL0',
-  in_series = 1:9,
-  format = 'REASMFMT'
-)
-
-set_mentions_to_booleans(
-  out_prefix = 'specificpill_reason',
-  in_prefix = 'STOPPILL',
-  in_series = 1:6,
-  format = 'STOPPILLFMT'
-)
-```
-
-
 Domain: Females who have ever discontinued using the pill due to dissatisfaction
 
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
-```{r, dependson='process-pill-quit'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -2558,7 +2569,7 @@ Domain: Females who have discontinued using the pill because "too difficult to u
 
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
-```{r, dependson='process-pill-quit'}
+```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
@@ -2570,10 +2581,78 @@ estimate_mentions(
 ```
 
 
+## Dissatisfaction with Hormonal IUDs
+
+Domain: Females who have ever discontinued using an hormonal IUD due to dissatisfaction
+
+Description: Reason(s) for dissatisfaction selected from list provided in survey
+
+```{r, dependson='process-pill-quit'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    everquit_meth32
+  ),
+  prefix = 'iudquit_reason',
+  format = 'REASMFMT'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+Domain: Females who have discontinued using an hormonal IUD because "too difficult to use," "side effects," or "other" reason
+
+Description: Reason(s) for dissatisfaction volunteered by respondents
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    everquit_meth32 & (
+      iudquit_reason3 |
+        iudquit_reason6 |
+        iudquit_reason15
+    )
+  ),
+  prefix = 'specificiud_reason',
+  format = 'STOPIUDFMT'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
 
 
-* Reason for dissatisfaction with condoms
-* Reason for dissatisfaction with IUDs
+## Dissatisfaction with Copper IUDs
+
+Domain: Females who have ever discontinued using a copper IUD due to dissatisfaction
+
+Description: Reason(s) for dissatisfaction selected from list provided in survey
+
+```{r, dependson='process-pill-quit'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    everquit_meth31
+  ),
+  prefix = 'iudquit_reason',
+  format = 'REASMFMT'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+Domain: Females who have discontinued using copper IUD because "too difficult to use," "side effects," or "other" reason
+
+Description: Reason(s) for dissatisfaction volunteered by respondents
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    everquit_meth31 & (
+      iudquit_reason3 |
+        iudquit_reason6 |
+        iudquit_reason15
+    )
+  ),
+  prefix = 'specificiud_reason',
+  format = 'STOPIUDFMT'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
 
 
 
