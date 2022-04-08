@@ -2370,6 +2370,31 @@ estimate_mentions(
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
+## Among Those Who Have Ever Had Intercourse
+
+Description: Females who have ever had intercourse with a male
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(HADSEX),
+  svy(fem1719dt)
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+Domain: Females who have ever had intercourse with a male
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = subset(
+    svy(fem1719dt),
+    HADSEX == 'YES, R EVER HAD INTERCOURSE'
+  ),
+  prefix = 'everused_meth',
+  format = 'everused_meth'
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
 
 
 * Ever (females)
