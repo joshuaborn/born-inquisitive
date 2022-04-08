@@ -135,3 +135,21 @@ fem1719$Formats[
   .(factor_value, factor_label)
 ][order(factor_value)] |> kable()
 ```
+
+# `REASMFMT`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'REASMFMT',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```
+
+# `STOPPILLFMT`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'STOPPILLFMT',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```
