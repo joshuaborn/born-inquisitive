@@ -25,6 +25,7 @@ opts_chunk$set(
 )
 ```
 
+* `WHYNOTUSE`
 * `MISSPILL`
 * `YUSEIUD1`
 * `TYPEIUD_1` vs `METHSTOP` series

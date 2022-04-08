@@ -1654,7 +1654,7 @@ estimate_totals_and_percentages(
 
 ## Size of Domain
 
-Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
+Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -1665,7 +1665,7 @@ estimate_totals_and_percentages(
 
 ## Intent to Conceive
 
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive*
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2658,7 +2658,7 @@ estimate_mentions(
 
 # Things to Do
 
-* Finish collecting estimates into this document
+* Make "condom" singular and remove "the" before "pill" for consistency
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Organize helper functions into NSFG-specific and more general
 * Style plots and tables for output
