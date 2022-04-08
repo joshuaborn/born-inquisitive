@@ -2449,15 +2449,33 @@ estimate_mentions(
 
 # Discontinuation Due to Dissatisfaction
 
+Domain: For each method, females who have ever used the method
+
+Description: For each method, females who have stopped using the method due to dissatisfaction
+
+```{r, dependson='process-fem-data'}
+estimate_mentions_in_subdomains(
+  FUN = function(x) {
+    estimate_row_total_and_percentage(
+      as.formula(sprintf('~everquit_meth%d', x)),
+      subset(
+        svy(fem1719dt),
+        fem1719dt[, get(sprintf('everused_meth%d', x))]
+      )
+    )
+  },
+  format = 'everused_meth',
+  skip = c(20)
+)[order(-total)] |> pretty_estimates() |> kable()
+```
 
 
-* Ever (females)
-    * By method(s)
-    * By method(s) among those who have had intercourse with opposite sex
-    * Ever discontinued due to dissatisfaction
-    * Reason for dissatisfaction with pill
-    * Reason for dissatisfaction with condoms
-    * Reason for dissatisfaction with IUDs
+
+
+* Ever discontinued due to dissatisfaction
+* Reason for dissatisfaction with pill
+* Reason for dissatisfaction with condoms
+* Reason for dissatisfaction with IUDs
 
 
 
