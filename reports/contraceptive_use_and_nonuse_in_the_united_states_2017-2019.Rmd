@@ -50,6 +50,14 @@ get_raw_import_for_sex <- function(sex) {
   }
 }
 
+get_formats_for_sex <- function(sex) {
+  if (startsWith(sex, 'f')) {
+    fem1719formats
+  } else {
+    male1719$Formats
+  }
+}
+
 get_dt_for_sex <- function(sex) {
   if (startsWith(sex, 'f')) {
     setDT(fem1719dt)
@@ -59,8 +67,8 @@ get_dt_for_sex <- function(sex) {
 }
 
 get_idxs <- function(format, skip = NULL, sex = 'fem') {
-  raw_import <- get_raw_import_for_sex(sex)
-  idxs <- raw_import$Formats[format_name == format, factor_value]
+  formats <- get_formats_for_sex(sex)
+  idxs <- formats[format_name == format, factor_value]
   if (!is.null(skip)) {
     idxs[!is.element(idxs, skip)]
   } else {
@@ -110,6 +118,7 @@ set_mentions_to_booleans <- function(
 
 set_variables_as_factors <- function(variables, sex = 'fem') {
   raw_import <- get_raw_import_for_sex(sex)
+  formats <- get_formats_for_sex(sex)
   dt <- get_dt_for_sex(sex)
 
   for (x in seq(length(variables))) {
@@ -118,7 +127,7 @@ set_variables_as_factors <- function(variables, sex = 'fem') {
     values <- factorize(
       raw_import$Data[, get(variable_name)],
       format_name,
-      raw_import$Formats
+      formats
     )
 
     dt[, (variable_name) := ..values]
@@ -211,7 +220,7 @@ estimate_mentions <- function(
   skip = NULL,
   sex = 'fem'
 ) {
-  raw_import <- get_raw_import_for_sex(sex)
+  formats <- get_formats_for_sex(sex)
   dt <- get_dt_for_sex(sex)
 
   estimates <- rbindlist(lapply(
@@ -230,7 +239,7 @@ estimate_mentions <- function(
 
   
   estimates[
-    , description := factorize(description, format, raw_import$Formats)
+    , description := factorize(description, format, formats)
   ]
 
   estimates
@@ -270,7 +279,8 @@ create_pivot_table <- function(
 
 create_NSFG_pivot_table <- function(prefix, series, id_vars = 'CASEID', sex = 'fem') {
   raw_import <- get_raw_import_for_sex(sex)
-  create_pivot_table(prefix, series, id_vars, raw_import$Data)
+  pivot_table <- create_pivot_table(prefix, series, id_vars, raw_import$Data)
+  setkeyv(pivot_table, id_vars)
 }
 
 na_to_false <- function(x) {
@@ -281,19 +291,45 @@ na_to_false <- function(x) {
 ```{r load-data}
 fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
 male1719 <- load_NSFG_data('2017_2019', 'Male')
+```
 
-# Include missing level 13 for WHYNOTPGF format.
-fem1719$Formats <- rbindlist(list(
+```{r process-fem-data, dependson=c('helpers', 'load-data')}
+fem1719formats <- rbindlist(list(
   fem1719$Formats,
+  # Include missing level 13 for WHYNOTPGF format.
   data.table(
     format_name = 'WHYNOTPGF',
     factor_value = 13,
     factor_label = 'No menstrual cycle or menstrual irregularity'
+  ),
+  # Create custom format encoding for everused_meth series from METHHXF and OTHRMETHF.
+  fem1719$Formats[
+    (
+      format_name == 'METHHXF' &
+        factor_value %in% c(3:18, 20:21, 25:26, 98:99)
+    ) | (
+      format_name == 'OTHRMETHF' &
+        factor_value == 24
+    ),
+    .(
+      format_name = 'everused_meth',
+      factor_value,
+      factor_label
+    )
+  ],
+  data.table(
+    format_name = 'everused_meth',
+    factor_value = c(31:33),
+    factor_label = c(
+      'Copper-bearing IUD (such as Copper-T or ParaGard)',
+      'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)',
+      'Other or unknown IUD'
+    )
   )
 ))
-```
+setkey(fem1719formats, format_name, factor_value)
 
-```{r process-fem-data, dependson=c('helpers', 'load-data')}
+
 # Start working female respondents data table.
 fem1719dt <- copy(fem1719$Data[, .(
   CASEID,
@@ -493,7 +529,7 @@ fem1719dt <- fem1719METHX[
     \(x) any(.SD$METHX == x)
   ),
   by = CASEID
-][fem1719dt, on = 'CASEID']
+][fem1719dt]
 fem1719dt[,
   names(fem1719METHXidxs) := lapply(.SD, na_to_false),
   .SDcols = names(fem1719METHXidxs)
@@ -514,10 +550,7 @@ fem1719dt <- create_NSFG_pivot_table(
     CMMONSX <= CMINTVW,
   .(sex12mo = .N > 1),
   by = CASEID
-][
-  fem1719dt,
-  on = 'CASEID'
-]
+][fem1719dt]
 fem1719dt[, sex12mo := na_to_false(sex12mo)]
 
 
@@ -679,6 +712,47 @@ fem1719dt[,
     )
   )
 ]
+
+
+# Create boolean variables for whether specific contraceptive method was ever used. Because this is encoded in various method-specific variables in addition to the OTHRMETH series, this has to be done in two parts. Additionally, IUD is being split into copper and hormone based IUDs, so this is handled as special cases.
+fem1719dt[
+  fem1719$Data,
+  `:=`(
+    everused_meth3  = na_to_false(i.PILLR == 1),
+    everused_meth4  = na_to_false(i.CONDOMR == 1),
+    everused_meth5  = na_to_false(i.VASECTMY == 1),
+    everused_meth6  = na_to_false(i.EVERTUBS %in% c(1, 4) | i.ESSURE == 1),
+    everused_meth7  = na_to_false(i.WIDRAWAL == 1),
+    everused_meth8  = na_to_false(i.DEPOPROV == 1),
+    everused_meth10 = na_to_false(i.RHYTHM == 1),
+    everused_meth11 = na_to_false(i.TEMPSAFE == 1),
+    everused_meth20 = na_to_false(i.MORNPILL == 1),
+    everused_meth25 = na_to_false(i.PATCH == 1),
+    everused_meth26 = na_to_false(i.RING == 1),
+    everused_meth33 = na_to_false(
+      has_level(i.EVIUDTYP1, c(3, 9)) |
+      has_level(i.EVIUDTYP2, c(3, 9)) |
+      has_level(i.EVIUDTYP3, c(3, 9))
+    )
+  )
+]
+for (x in c(1:2)) {
+  fem1719dt[
+    fem1719$Data,
+    (sprintf('everused_meth%d', 30 + x)) := na_to_false(
+      has_level(i.EVIUDTYP1, x) |
+      has_level(i.EVIUDTYP2, x) |
+      has_level(i.EVIUDTYP3, x)
+    )
+  ]
+}
+set_mentions_to_booleans(
+  out_prefix = 'everused_meth',
+  in_prefix = 'OTHRMETH0',
+  in_series = 1:7,
+  format = 'OTHRMETHF',
+  skip = c(19, 95)
+)
 ```
 
 ```{r process-male-data, dependson=c('helpers', 'load-data')}
@@ -2239,7 +2313,7 @@ estimate_totals_and_percentages(
 
 ### Size of Domain
 
-Description: By whether used an IUD either during the month of interview or the month preceding the interview
+Description: By whether used an IUD either during the month of interview or the month preceding the interview*
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2253,7 +2327,7 @@ estimate_totals_and_percentages(
 
 Domain: Females who used an IUD either during the month of interview or the month preceding the interview
 
-Description: By reason(s), with those mentioning multiple reasons counted multiple times
+Description: By reason(s), with those mentioning multiple reasons counted multiple times*
 
 ```{r, dependson='process-fem-data'}
 estimate_mentions(
@@ -2270,7 +2344,7 @@ estimate_mentions(
 
 ### Contraceptive vs. Noncontraceptive Reasons
 
-Domain: Females who used an IUD either during the month of interview or the month preceding the interview
+Domain: Females who used an IUD either during the month of interview or the month preceding the interview*
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2280,6 +2354,19 @@ estimate_totals_and_percentages(
     #thismonth_meth19 | lastmonth_meth19
     !is.na(YUSEIUD1)
   )
+)[order(-total)] |> pretty_estimates() |> kable()
+```
+
+
+# Method(s) Ever Used
+
+Domain: Females aged 15-49 living in households in the United States
+
+```{r, dependson='process-fem-data'}
+estimate_mentions(
+  svy = svy(fem1719dt),
+  prefix = 'everused_meth',
+  format = 'everused_meth'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
@@ -2298,8 +2385,10 @@ estimate_totals_and_percentages(
 # Things to Do
 
 * Finish collecting estimates into this document
+* Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Organize helper functions into NSFG-specific and more general
 * Style plots and tables for output
-* Write text of report
-* Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
+* Write results and discussion section of report
 * Compare own report with published reports
+* Write introduction section of report
+* Publish report on blog

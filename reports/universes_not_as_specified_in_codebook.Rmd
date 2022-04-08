@@ -27,3 +27,4 @@ opts_chunk$set(
 
 * `MISSPILL`
 * `YUSEIUD1`
+* `TYPEIUD_1` vs `METHSTOP` series
