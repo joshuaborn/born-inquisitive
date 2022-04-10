@@ -14,9 +14,9 @@ library(here)
 library(knitr)
 library(survey)
 
-source(here('R/import.R'))
-
 i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
+
+source(here('R/import.R'))
 
 opts_chunk$set(
   cache = TRUE,
@@ -405,6 +405,7 @@ set_variables_as_factors(
     REASIMPR = 'REASR',
     SEX3MO = 'Y1N2RECF',
     TUBS = 'Y1N5C',
+    VAGSEX = 'YESNONAF',
     WHYCONDL = 'WHYCONDL',
     WHYNOUSING1 = 'WHYNOUSNG',
     WYNOLSTP = 'Y1N5RDF',
@@ -915,6 +916,7 @@ set_variables_as_factors(
     RSURGSTR = 'N0Y1RDF',
     SEX12MO = 'SEX3MO',
     SEX3MO = 'SEX3MO',
+    VAGSEX = 'YESNONAF',
     WHYCONDL = 'WHYCONDF',
     YNOSEX = 'YNOSEX'
   )
@@ -2313,21 +2315,37 @@ estimate_totals_and_percentages(
 
 ### Size of Domain
 
+Domain: Females who have had vaginal intercourse with a male
+
 Description: By whether used condom at last intercourse with a male
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(CONDVAG),
-  svy(fem1719dt)
+  subset(
+    svy(fem1719dt),
+    VAGSEX %in% c(
+      'Yes',
+      'Not Applicable'
+    )
+  )
 ) |> pretty_estimates() |> kable()
 ```
 
-Domain: By whether used condom at last intercourse with a female
+Domain: Males who have had vaginal intercourse with a female
+
+Description: By whether used condom at last intercourse with a female
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
   ~factor(CONDVAG),
-  svy(male1719dt)
+  subset(
+    svy(male1719dt),
+    VAGSEX %in% c(
+      'Yes',
+      'Not Applicable'
+    )
+  )
 ) |> pretty_estimates() |> kable()
 ```
 
@@ -2659,7 +2677,6 @@ estimate_mentions(
 # Things to Do
 
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
-    * Go through EDAs and look for any notes of universes not behaving like they are supposed to
 * Style tables for output
 * Organize helper functions into NSFG-specific and more general
 * Style plots for output

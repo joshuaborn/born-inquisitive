@@ -3,7 +3,7 @@ title: "Variables Discovered Whose Universes Are Not as Specified in Codebook"
 author: "Joshua Born"
 output:
   html_document:
-    code_folding: hide
+    code_folding: show
     toc: true
     toc_depth: 5
 ---
@@ -16,6 +16,8 @@ library(survey)
 
 i_am('reports/universes_not_as_specified_in_codebook.Rmd')
 
+source(here('R/import.R'))
+
 opts_chunk$set(
   cache = TRUE,
   echo = TRUE,
@@ -25,7 +27,54 @@ opts_chunk$set(
 )
 ```
 
-* `CONDVAG`
+```{r load-data}
+fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
+male1719 <- load_NSFG_data('2017_2019', 'Male')
+```
+
+# `CONDVAG`
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  is.na(VAGSEX) | VAGSEX == 1,
+  table(
+    CONDVAG,
+    useNA = 'ifany'
+  )
+]
+```
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  !is.na(CONDVAG),
+  table(
+    VAGSEX,
+    useNA = 'ifany'
+  )
+]
+```
+
+```{r, dependson='load-data'}
+male1719$Data[
+  is.na(VAGSEX) | VAGSEX == 1,
+  table(
+    CONDVAG,
+    useNA = 'ifany'
+  )
+]
+```
+
+```{r, dependson='load-data'}
+male1719$Data[
+  !is.na(CONDVAG),
+  table(
+    VAGSEX,
+    useNA = 'ifany'
+  )
+]
+```
+
+
 * `MISSPILL`
 * `P12MOCON` and `PXNOFREQ`
 * `TYPEIUD_1` vs `METHSTOP` series
