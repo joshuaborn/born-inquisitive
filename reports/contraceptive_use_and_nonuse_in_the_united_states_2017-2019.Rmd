@@ -346,7 +346,7 @@ fem1719formats <- rbindlist(list(
     factor_value = 13,
     factor_label = 'No menstrual cycle or menstrual irregularity'
   ),
-  # Create custom format encoding for everused_meth series from METHHXF and OTHRMETHF.
+  # Create custom format encoding for ever_used_method series from METHHXF and OTHRMETHF.
   fem1719$Formats[
     (
       format_name == 'METHHXF' &
@@ -356,13 +356,13 @@ fem1719formats <- rbindlist(list(
         factor_value == 24
     ),
     .(
-      format_name = 'everused_meth',
+      format_name = 'ever_used_method',
       factor_value,
       factor_label
     )
   ],
   data.table(
-    format_name = 'everused_meth',
+    format_name = 'ever_used_method',
     factor_value = c(31:33),
     factor_label = c(
       'Copper-bearing IUD (such as Copper-T or ParaGard)',
@@ -416,7 +416,7 @@ set_variables_as_factors(
 
 # Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
 set_mentions_to_booleans(
-  out_prefix = 'usedlast3m_meth',
+  out_prefix = 'used_last_3m_method',
   in_prefix = 'METH3M',
   in_series = 1:3,
   format = 'METH3MF',
@@ -426,35 +426,35 @@ set_mentions_to_booleans(
 
 # If last intercourse within the past 3 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
 fem1719dt[,
-  usedlast3m_meth3 := fifelse(
+  used_last_3m_method3 := fifelse(
     SEX3MO == 'YES' & PSURGSTR == 'YES' & (
       P1YRELP == 'Current husband or (current husband from whom she is separated)' |
       P1YRELP == 'Current cohabiting partner'
     ),
     TRUE,
-    usedlast3m_meth3
+    used_last_3m_method3
   )
 ]
 
 
 # If respondent has had intercourse in the past 3 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
 fem1719dt[,
-  usedlast3m_meth4 := fifelse(
+  used_last_3m_method4 := fifelse(
     SEX3MO == 'YES' & TUBS == 'YES',
     TRUE,
-    usedlast3m_meth4
+    used_last_3m_method4
   )
 ]
 
 
 # Reset count of methods used at last intercourse within the past 3 months to include overrides of vasectomy and tubal ligation boolean variables.
-set_mention_count_variable(fem1719dt, 'usedlast3m_meth')
+set_mention_count_variable(fem1719dt, 'used_last_3m_method')
 
 
 # Create categorical variable for whether used contraception at last intercourse within the past 3 months.
 fem1719dt[,
-  usedlast3m := factor(fifelse(
-    usedlast3m_meth_count > 0,
+  used_last_3m := factor(fifelse(
+    used_last_3m_method_count > 0,
     'Currently using contraception',
     'Not currently using contraception'
   ))
@@ -462,9 +462,9 @@ fem1719dt[,
 
 # Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
 fem1719dt[,
-  usedlast3m_status := factor(
+  used_last_3m_status := factor(
     fcase(
-      usedlast3m_meth_count > 0,
+      used_last_3m_method_count > 0,
         'Used at least one contraceptive method at last intercourse',
       SEX3MO != 'YES',
         'Did not have sexual intercourse with male in past 3 months',
@@ -553,7 +553,7 @@ set_mentions_to_booleans(
 
 # Create boolean variables for whether each method was used at all in the past 3 months.
 fem1719METHXidxs <- get_idxs('METHHXF', skip = c(1:2, 22:23, 55, 98:99))
-names(fem1719METHXidxs) <- paste('anyuse12m_meth', fem1719METHXidxs, sep = '')
+names(fem1719METHXidxs) <- paste('any_use_12m_method', fem1719METHXidxs, sep = '')
 fem1719METHX <- create_NSFG_pivot_table('METHX', 1:192)
 fem1719METHX[, CMMHCALXID := ceiling(METHXID / 4)]
 fem1719METHX <- fem1719METHX[
@@ -600,34 +600,34 @@ fem1719dt[, sex12mo := na_to_false(sex12mo)]
 
 # If last intercourse within the past 12 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use in the past 12 months to true.
 fem1719dt[,
-  anyuse12m_meth5 := fifelse(
+  any_use_12m_method5 := fifelse(
     sex12mo & PSURGSTR == 'YES' & (
         P1YRELP == 'Current husband or (current husband from whom she is separated)' |
         P1YRELP == 'Current cohabiting partner'
       ),
     TRUE,
-    anyuse12m_meth5
+    any_use_12m_method5
   )
 ]
 
 
 # If respondent has had intercourse in past 12 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at in the past 12 months to true.
 fem1719dt[,
-  anyuse12m_meth6 := fifelse(
+  any_use_12m_method6 := fifelse(
     sex12mo & TUBS == 'YES',
     TRUE,
-    anyuse12m_meth6
+    any_use_12m_method6
   )
 ]
 
 
 # Reset count of methods used in the past 12 months to include overrides of vasectomy and tubal ligation boolean variables.
-set_mention_count_variable(fem1719dt, 'anyuse12m_meth')
+set_mention_count_variable(fem1719dt, 'any_use_12m_method')
 
 
 # Create categorical variable specifying consistency of any contraceptive method use over previous 12 months that combines P12MOCON and PXNOFREQ.
 fem1719dt[,
-  anyuse12m_consistency := factor(
+  any_use_12m_consistency := factor(
     fcase(
       P12MOCON == 'Every time',
         'Every time',
@@ -652,7 +652,7 @@ fem1719dt[,
 
 # Create boolean variables for whether each method was used in the month preceding the interview.
 set_mentions_to_booleans(
-  out_prefix = 'lastmonth_meth',
+  out_prefix = 'last_month_method',
   in_prefix = 'LSTMONMETH',
   in_series = 1:4,
   format = 'METHHXF',
@@ -662,7 +662,7 @@ set_mentions_to_booleans(
 
 # Create boolean variables for whether each method was used in the month of the interview.
 set_mentions_to_booleans(
-  out_prefix = 'thismonth_meth',
+  out_prefix = 'this_month_method',
   in_prefix = 'CURRMETH',
   in_series = 1:4,
   format = 'METHHXF',
@@ -672,7 +672,7 @@ set_mentions_to_booleans(
 
 # Create boolean variables for each reason for using pill.
 set_mentions_to_booleans(
-  out_prefix = 'whypill_reason',
+  out_prefix = 'why_use_pill_reason',
   in_prefix = 'YUSEPILL',
   in_series = 1:6,
   format = 'YUSEMTHF'
@@ -683,23 +683,23 @@ set_mentions_to_booleans(
 fem1719dt[,
   pill_motivation := factor(
     fcase(
-      whypill_reason1 & !(
-        whypill_reason2 |
-        whypill_reason3 |
-        whypill_reason4 |
-        whypill_reason5 |
-        whypill_reason6 |
-        whypill_reason7 |
-        whypill_reason8
+      why_use_pill_reason1 & !(
+        why_use_pill_reason2 |
+        why_use_pill_reason3 |
+        why_use_pill_reason4 |
+        why_use_pill_reason5 |
+        why_use_pill_reason6 |
+        why_use_pill_reason7 |
+        why_use_pill_reason8
       ), 'Only for birth control',
-      !whypill_reason1 & (
-        whypill_reason2 |
-        whypill_reason3 |
-        whypill_reason4 |
-        whypill_reason5 |
-        whypill_reason6 |
-        whypill_reason7 |
-        whypill_reason8
+      !why_use_pill_reason1 & (
+        why_use_pill_reason2 |
+        why_use_pill_reason3 |
+        why_use_pill_reason4 |
+        why_use_pill_reason5 |
+        why_use_pill_reason6 |
+        why_use_pill_reason7 |
+        why_use_pill_reason8
       ), 'Only for reasons other than contraception',
       default = 'For both reasons'
     )
@@ -709,7 +709,7 @@ fem1719dt[,
 
 # Create boolean variables for each reason for using an IUD.
 set_mentions_to_booleans(
-  out_prefix = 'whyiud_reason',
+  out_prefix = 'why_use_iud_reason',
   in_prefix = 'YUSEIUD',
   in_series = 1:6,
   format = 'YUSEMTHF'
@@ -720,36 +720,36 @@ set_mentions_to_booleans(
 fem1719dt[,
   iud_motivation := factor(
     fcase(
-      whyiud_reason99,
+      why_use_iud_reason99,
       "Don't know",
-      whyiud_reason1 & (
-        whyiud_reason2 |
-        whyiud_reason3 |
-        whyiud_reason4 |
-        whyiud_reason5 |
-        whyiud_reason6 |
-        whyiud_reason7 |
-        whyiud_reason8
+      why_use_iud_reason1 & (
+        why_use_iud_reason2 |
+        why_use_iud_reason3 |
+        why_use_iud_reason4 |
+        why_use_iud_reason5 |
+        why_use_iud_reason6 |
+        why_use_iud_reason7 |
+        why_use_iud_reason8
       ),
       'For both reasons',
-      whyiud_reason1 & !(
-        whyiud_reason2 |
-        whyiud_reason3 |
-        whyiud_reason4 |
-        whyiud_reason5 |
-        whyiud_reason6 |
-        whyiud_reason7 |
-        whyiud_reason8
+      why_use_iud_reason1 & !(
+        why_use_iud_reason2 |
+        why_use_iud_reason3 |
+        why_use_iud_reason4 |
+        why_use_iud_reason5 |
+        why_use_iud_reason6 |
+        why_use_iud_reason7 |
+        why_use_iud_reason8
       ),
       'Only for contraception',
-      !whyiud_reason1 & (
-        whyiud_reason2 |
-        whyiud_reason3 |
-        whyiud_reason4 |
-        whyiud_reason5 |
-        whyiud_reason6 |
-        whyiud_reason7 |
-        whyiud_reason8
+      !why_use_iud_reason1 & (
+        why_use_iud_reason2 |
+        why_use_iud_reason3 |
+        why_use_iud_reason4 |
+        why_use_iud_reason5 |
+        why_use_iud_reason6 |
+        why_use_iud_reason7 |
+        why_use_iud_reason8
       ),
       'Only for reasons other than contraception',
       default = 'Not Applicable'
@@ -762,18 +762,18 @@ fem1719dt[,
 fem1719dt[
   fem1719$Data,
   `:=`(
-    everused_meth3  = na_to_false(i.PILLR == 1),
-    everused_meth4  = na_to_false(i.CONDOMR == 1),
-    everused_meth5  = na_to_false(i.VASECTMY == 1),
-    everused_meth6  = na_to_false(i.EVERTUBS %in% c(1, 4) | i.ESSURE == 1),
-    everused_meth7  = na_to_false(i.WIDRAWAL == 1),
-    everused_meth8  = na_to_false(i.DEPOPROV == 1),
-    everused_meth10 = na_to_false(i.RHYTHM == 1),
-    everused_meth11 = na_to_false(i.TEMPSAFE == 1),
-    everused_meth20 = na_to_false(i.MORNPILL == 1),
-    everused_meth25 = na_to_false(i.PATCH == 1),
-    everused_meth26 = na_to_false(i.RING == 1),
-    everused_meth33 = na_to_false(
+    ever_used_method3  = na_to_false(i.PILLR == 1),
+    ever_used_method4  = na_to_false(i.CONDOMR == 1),
+    ever_used_method5  = na_to_false(i.VASECTMY == 1),
+    ever_used_method6  = na_to_false(i.EVERTUBS %in% c(1, 4) | i.ESSURE == 1),
+    ever_used_method7  = na_to_false(i.WIDRAWAL == 1),
+    ever_used_method8  = na_to_false(i.DEPOPROV == 1),
+    ever_used_method10 = na_to_false(i.RHYTHM == 1),
+    ever_used_method11 = na_to_false(i.TEMPSAFE == 1),
+    ever_used_method20 = na_to_false(i.MORNPILL == 1),
+    ever_used_method25 = na_to_false(i.PATCH == 1),
+    ever_used_method26 = na_to_false(i.RING == 1),
+    ever_used_method33 = na_to_false(
       has_level(i.EVIUDTYP1, c(3, 9)) |
       has_level(i.EVIUDTYP2, c(3, 9)) |
       has_level(i.EVIUDTYP3, c(3, 9))
@@ -783,7 +783,7 @@ fem1719dt[
 for (x in c(1:2)) {
   fem1719dt[
     fem1719$Data,
-    (sprintf('everused_meth%d', 30 + x)) := na_to_false(
+    (sprintf('ever_used_method%d', 30 + x)) := na_to_false(
       has_level(i.EVIUDTYP1, x) |
       has_level(i.EVIUDTYP2, x) |
       has_level(i.EVIUDTYP3, x)
@@ -791,7 +791,7 @@ for (x in c(1:2)) {
   ]
 }
 set_mentions_to_booleans(
-  out_prefix = 'everused_meth',
+  out_prefix = 'ever_used_method',
   in_prefix = 'OTHRMETH0',
   in_series = 1:7,
   format = 'OTHRMETHF',
@@ -801,7 +801,7 @@ set_mentions_to_booleans(
 
 # Create boolean variables for whether each contraceptive method was ever discontinued due to dissatisfaction. Because IUD types have been split out, these cases must be handled individually.
 set_mentions_to_booleans(
-  out_prefix = 'everquit_meth',
+  out_prefix = 'ever_quit_method',
   in_prefix = 'METHSTOP',
   in_series = sprintf('%02d', 1:10),
   format = 'METHSTOPF',
@@ -810,7 +810,7 @@ set_mentions_to_booleans(
 for (x in c(1:2)) {
   fem1719dt[
     fem1719$Data,
-    (sprintf('everquit_meth%d', 30 + x)) := na_to_false(
+    (sprintf('ever_quit_method%d', 30 + x)) := na_to_false(
       has_level(i.TYPEIUD_1, x) |
       has_level(i.TYPEIUD_2, x) |
       has_level(i.TYPEIUD_3, x)
@@ -819,7 +819,7 @@ for (x in c(1:2)) {
 }
 fem1719dt[
   fem1719$Data,
-  everquit_meth33 := na_to_false(
+  ever_quit_method33 := na_to_false(
     has_level(i.TYPEIUD_1, c(3, 9)) |
     has_level(i.TYPEIUD_2, c(3, 9)) |
     has_level(i.TYPEIUD_3, c(3, 9))
@@ -828,13 +828,13 @@ fem1719dt[
 
 # Create boolean variables for reason(s) for dissatisfaction with condom.
 set_mentions_to_booleans(
-  out_prefix = 'condquit_reason',
+  out_prefix = 'condom_quit_reason',
   in_prefix = 'REASCOND0',
   in_series = 1:7,
   format = 'REASMFMT'
 )
 set_mentions_to_booleans(
-  out_prefix = 'specificcond_reason',
+  out_prefix = 'specific_condom_quit_reason',
   in_prefix = 'STOPCOND',
   in_series = 1:2,
   format = 'STOPCONDFMT'
@@ -843,13 +843,13 @@ set_mentions_to_booleans(
 
 # Create boolean variables for reason(s) for dissatisfaction with pill.
 set_mentions_to_booleans(
-  out_prefix = 'pillquit_reason',
+  out_prefix = 'pill_quit_reason',
   in_prefix = 'REASPILL0',
   in_series = 1:9,
   format = 'REASMFMT'
 )
 set_mentions_to_booleans(
-  out_prefix = 'specificpill_reason',
+  out_prefix = 'specific_pill_quit_reason',
   in_prefix = 'STOPPILL',
   in_series = 1:6,
   format = 'STOPPILLFMT'
@@ -858,13 +858,13 @@ set_mentions_to_booleans(
 
 # Create boolean variables for reason(s) for dissatisfaction with IUDs.
 set_mentions_to_booleans(
-  out_prefix = 'iudquit_reason',
+  out_prefix = 'iud_quit_reason',
   in_prefix = 'REASIUD0',
   in_series = 1:5,
   format = 'REASMFMT'
 )
 set_mentions_to_booleans(
-  out_prefix = 'specificiud_reason',
+  out_prefix = 'specific_iud_quit_reason',
   in_prefix = 'STOPIUD',
   in_series = 1:5,
   format = 'STOPIUDFMT'
@@ -924,7 +924,7 @@ set_variables_as_factors(
 # Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
 set_mentions_to_booleans(
   sex = 'male',
-  out_prefix = 'usedlast3m_meth',
+  out_prefix = 'used_last_3m_method',
   in_prefix = 'METH3M',
   in_series = 1:4,
   format = 'METH3MF',
@@ -934,34 +934,34 @@ set_mentions_to_booleans(
 
 # If last intercourse within the past 3 months was with wife or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
 male1719dt[,
-  usedlast3m_meth5 := fifelse(
+  used_last_3m_method5 := fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE' &
       (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
       PSURGSTR == 'YES',
     TRUE,
-    usedlast3m_meth5
+    used_last_3m_method5
   )
 ]
 
 
 # If respondent has had intercourse in the past 3 months and has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
 male1719dt[,
-  usedlast3m_meth3 := fifelse(
+  used_last_3m_method3 := fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
     TRUE,
-    usedlast3m_meth3
+    used_last_3m_method3
   )
 ]
 
 
 # Reset count of methods used at last intercourse within the past 3 months to include overrides of tubal ligation and vasectomy boolean variables.
-set_mention_count_variable(male1719dt, 'usedlast3m_meth')
+set_mention_count_variable(male1719dt, 'used_last_3m_method')
 
 
 # Create categorical variable for whether used contraception at last intercourse within the past 3 months.
 male1719dt[,
-  usedlast3m := factor(fifelse(
-    usedlast3m_meth_count > 0,
+  used_last_3m := factor(fifelse(
+    used_last_3m_method_count > 0,
     'Currently using contraception',
     'Not currently using contraception'
   ))
@@ -970,9 +970,9 @@ male1719dt[,
 
 # Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
 male1719dt[,
-  usedlast3m_status := factor(
+  used_last_3m_status := factor(
     fcase(
-      usedlast3m_meth_count > 0,
+      used_last_3m_method_count > 0,
         'Used at least one contraceptive method at last intercourse',
       SEX3MO != 'YES, HAD INTERCOURSE',
         'Did not have sexual intercourse with female in past 3 months',
@@ -1018,7 +1018,7 @@ male1719dt[,
 # Create boolean variables for whether each specific method was used in past 12 months.
 for (x in get_idxs('MTHDSV1F', skip = c(10, 98:99), sex = 'male')) {
   male1719dt[,
-    (sprintf('anyuse12m_meth%d', x)) := male1719$Data[,
+    (sprintf('any_use_12m_method%d', x)) := male1719$Data[,
       !is.na(
         (cm_greater(CMLSXCWP, CMLSTYR) & (
           CWPLMET11 == x |
@@ -1103,7 +1103,7 @@ for (x in get_idxs('MTHDSV1F', skip = c(10, 98:99), sex = 'male')) {
 
 # Set a boolean variable for whether "Something else" was used in past 12 months separately because its encoding collides with "Contraceptive patch (Ortho-Evra)".
 male1719dt[,
-  anyuse12m_meth13 := male1719$Data[,
+  any_use_12m_method13 := male1719$Data[,
     !is.na(
       (cm_greater(CMLSXCWP, CMLSTYR) & (
         CWPLMET11 == 10 |
@@ -1188,7 +1188,7 @@ male1719dt[,
 
 # Set a boolean variable for whether "Contraceptive patch (Ortho-Evra)" was used in past 12 months separately because its encoding collides with "Something else".
 male1719dt[,
-  anyuse12m_meth10 := male1719$Data[,
+  any_use_12m_method10 := male1719$Data[,
     !is.na(
       (cm_greater(CMLSXCWP, CMLSTYR) & (
         CWPLMET201 == 10 |
@@ -1261,33 +1261,33 @@ male1719dt[,
 
 # If respondent has had intercourse in the past 12 months and has an active vasectomy, then set boolean variable of vasectomy use at in the past 12 months to true.
 male1719dt[,
-  anyuse12m_meth3 := fifelse(
+  any_use_12m_method3 := fifelse(
     SEX12MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
     TRUE,
-    anyuse12m_meth3
+    any_use_12m_method3
   )
 ]
 
 
 # If last intercourse with wife or cohabitating partner was within the past 12 months, and wife or cohabitating partner has an active tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at in the past 12 months to true.
 male1719dt[,
-  anyuse12m_meth5 := fifelse(
+  any_use_12m_method5 := fifelse(
     SEX12MO == 'YES, HAD INTERCOURSE' &
       cm_greater(CMLSXCWP, CMLSTYR) &
       PSURGSTR == 'YES',
     TRUE,
-    anyuse12m_meth5
+    any_use_12m_method5
   )
 ]
 
 
 # Count number of contraceptive methods used in past 12 months.
-set_mention_count_variable(male1719dt, 'anyuse12m_meth')
+set_mention_count_variable(male1719dt, 'any_use_12m_method')
 
 
 # Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with wife or cohabitating partner that combines CONDFREQ and CWPNOFRQ.
 male1719dt[,
-  anyuse12m_wcp_consistency := factor(
+  any_use_12m_wcp_consistency := factor(
     fcase(
       CONDFREQ == 100,
         'Every time',
@@ -1312,7 +1312,7 @@ male1719dt[,
 
 # Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with last partner, who is not wife or cohabitating partner, that combines PXCONFRQ and PXNOFREQ.
 male1719dt[,
-  anyuse12m_p1_consistency := factor(
+  any_use_12m_p1_consistency := factor(
     fcase(
       PXCONFRQ == 100,
         'Every time',
@@ -1336,7 +1336,7 @@ male1719dt[,
 
 # Create categorical variable specifying consistency of condom use over previous 12 months that combines P12MOCONO and P12MOCON.
 male1719dt[,
-  condom12m_consistency := factor(
+  condom_12m_consistency := factor(
     fcase(
       P12MOCONO == 'Yes',
         'Every time',
@@ -1403,7 +1403,7 @@ Description: By whether had intercourse with opposite sex during the 3 months pr
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~usedlast3m,
+  ~used_last_3m,
   svy(fem1719dt)
 ) |> pretty_estimates() |> kable()
 ```
@@ -1412,7 +1412,7 @@ estimate_totals_and_percentages(
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~usedlast3m,
+  ~used_last_3m,
   svy(male1719dt)
 ) |> pretty_estimates() |> kable()
 ```
@@ -1428,10 +1428,10 @@ Description: Categorized into exclusive hierarchy, such that individuals categor
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~factor(usedlast3m_status),
+  ~factor(used_last_3m_status),
   subset(
     svy(fem1719dt),
-    usedlast3m_meth_count == 0
+    used_last_3m_method_count == 0
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -1440,10 +1440,10 @@ estimate_totals_and_percentages(
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~factor(usedlast3m_status),
+  ~factor(used_last_3m_status),
   subset(
     svy(male1719dt),
-    usedlast3m_meth_count == 0
+    used_last_3m_method_count == 0
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -1457,10 +1457,10 @@ Domain: Persons who had sexual intercourse with someone of the opposite sex in t
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~factor(usedlast3m_status),
+  ~factor(used_last_3m_status),
   subset(
     svy(fem1719dt),
-    usedlast3m_status %in% c(
+    used_last_3m_status %in% c(
       'Used at least one contraceptive method at last intercourse',
       'Otherwise did not use contraception at last intercourse'
     )
@@ -1472,10 +1472,10 @@ estimate_totals_and_percentages(
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~factor(usedlast3m_status),
+  ~factor(used_last_3m_status),
   subset(
     svy(male1719dt),
-    usedlast3m_status %in% c(
+    used_last_3m_status %in% c(
       'Used at least one contraceptive method at last intercourse',
       'Otherwise did not use contraception at last intercourse'
     )
@@ -1505,7 +1505,7 @@ estimate_totals_and_percentages(
   ~not_aware,
   subset(
     svy(male1719dt),
-    usedlast3m_status %in% c(
+    used_last_3m_status %in% c(
       'Otherwise did not use contraception at last intercourse'
     )
   )
@@ -1720,10 +1720,10 @@ Description: By number of methods used at last intercourse
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~factor(usedlast3m_meth_count),
+  ~factor(used_last_3m_method_count),
   subset(
     svy(fem1719dt),
-    usedlast3m_meth_count > 0
+    used_last_3m_method_count > 0
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -1732,10 +1732,10 @@ estimate_totals_and_percentages(
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~factor(usedlast3m_meth_count),
+  ~factor(used_last_3m_method_count),
   subset(
     svy(male1719dt),
-    usedlast3m_meth_count > 0
+    used_last_3m_method_count > 0
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -1753,9 +1753,9 @@ Description: By method(s), with those using multiple methods counted multiple ti
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    usedlast3m_meth_count > 0
+    used_last_3m_method_count > 0
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = 20:21,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -1768,9 +1768,9 @@ estimate_mentions(
   sex = 'male',
   svy = subset(
     svy(male1719dt),
-    usedlast3m_meth_count > 0
+    used_last_3m_method_count > 0
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = 95:96,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -1787,9 +1787,9 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    usedlast3m_meth_count == 1
+    used_last_3m_method_count == 1
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = 20:21,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -1802,9 +1802,9 @@ estimate_mentions(
   sex = 'male',
   svy = subset(
     svy(male1719dt),
-    usedlast3m_meth_count == 1
+    used_last_3m_method_count == 1
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = 95:96,
   format = 'METH3MF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -1823,10 +1823,10 @@ Description: Proportion who also used other method(s)
 estimate_mentions_in_subdomains(
   FUN = function(x) {
     estimate_row_total_and_percentage(
-      ~I(usedlast3m_meth_count > 1),
+      ~I(used_last_3m_method_count > 1),
       subset(
         svy(fem1719dt),
-        fem1719dt[, get(sprintf('usedlast3m_meth%d', x))]
+        fem1719dt[, get(sprintf('used_last_3m_method%d', x))]
       )
     )
   },
@@ -1842,10 +1842,10 @@ estimate_mentions_in_subdomains(
   sex = 'male',
   FUN = function(x) {
     estimate_row_total_and_percentage(
-      ~I(usedlast3m_meth_count > 1),
+      ~I(used_last_3m_method_count > 1),
       subset(
         svy(male1719dt),
-        male1719dt[, get(sprintf('usedlast3m_meth%d', x))]
+        male1719dt[, get(sprintf('used_last_3m_method%d', x))]
       )
     )
   },
@@ -1867,9 +1867,9 @@ Description: By method(s), with those using multiple methods counted multiple ti
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    usedlast3m_meth8
+    used_last_3m_method8
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = c(8, 20:21),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1882,9 +1882,9 @@ estimate_mentions(
   sex = 'male',
   svy = subset(
     svy(male1719dt),
-    usedlast3m_meth9
+    used_last_3m_method9
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = c(9, 95:96),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1903,9 +1903,9 @@ Description: By method(s), with those using multiple methods counted multiple ti
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    usedlast3m_meth5
+    used_last_3m_method5
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = c(5, 20:21),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1918,9 +1918,9 @@ estimate_mentions(
   sex = 'male',
   svy = subset(
     svy(male1719dt),
-    usedlast3m_meth2
+    used_last_3m_method2
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = c(2, 95:96),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1939,9 +1939,9 @@ Description: By method(s), with those using multiple methods counted multiple ti
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    usedlast3m_meth2
+    used_last_3m_method2
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = c(2, 20:21),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1954,9 +1954,9 @@ estimate_mentions(
   sex = 'male',
   svy = subset(
     svy(male1719dt),
-    usedlast3m_meth1
+    used_last_3m_method1
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = c(1, 95:96),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1975,9 +1975,9 @@ Description: By method(s), with those using multiple methods counted multiple ti
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    usedlast3m_meth1
+    used_last_3m_method1
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = c(1, 20:21),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -1990,9 +1990,9 @@ estimate_mentions(
   sex = 'male',
   svy = subset(
     svy(male1719dt),
-    usedlast3m_meth4
+    used_last_3m_method4
   ),
-  prefix = 'usedlast3m_meth',
+  prefix = 'used_last_3m_method',
   skip = c(4, 95:96),
   format = 'METH3MF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -2030,7 +2030,7 @@ Domain: Females who have had intercourse with a male in the past 12 months
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~factor(anyuse12m_meth_count),
+  ~factor(any_use_12m_method_count),
   subset(
     svy(fem1719dt),
     sex12mo
@@ -2042,7 +2042,7 @@ Domain: Males who have had intercourse with a female in the past 12 months
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~factor(anyuse12m_meth_count),
+  ~factor(any_use_12m_method_count),
   subset(
     svy(male1719dt),
     SEX12MO == 'YES, HAD INTERCOURSE'
@@ -2063,9 +2063,9 @@ Description: By method(s), with those using multiple methods counted multiple ti
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    anyuse12m_meth_count > 0
+    any_use_12m_method_count > 0
   ),
-  prefix = 'anyuse12m_meth',
+  prefix = 'any_use_12m_method',
   skip = c(1:2, 22:23, 55, 98:99),
   format = 'METHHXF'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -2078,9 +2078,9 @@ estimate_mentions(
   sex = 'male',
   svy = subset(
     svy(male1719dt),
-    anyuse12m_meth_count > 0
+    any_use_12m_method_count > 0
   ),
-  prefix = 'anyuse12m_meth',
+  prefix = 'any_use_12m_method',
   skip = 98:99,
   format = 'MTHDSV1F'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -2097,9 +2097,9 @@ Domain: Persons who had intercourse with opposite sex during the 12 months prior
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    anyuse12m_meth_count == 1
+    any_use_12m_method_count == 1
   ),
-  prefix = 'anyuse12m_meth',
+  prefix = 'any_use_12m_method',
   skip = c(1:2, 22:23, 55, 98:99),
   format = 'METHHXF'
 )[total > 0][order(-total)] |> pretty_estimates() |> kable()
@@ -2112,9 +2112,9 @@ estimate_mentions(
   sex = 'male',
   svy = subset(
     svy(male1719dt),
-    anyuse12m_meth_count == 1
+    any_use_12m_method_count == 1
   ),
-  prefix = 'anyuse12m_meth',
+  prefix = 'any_use_12m_method',
   skip = 98:99,
   format = 'MTHDSV1F'
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -2131,10 +2131,10 @@ Description: By whether used a method of contraception in past 12 months
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~I(anyuse12m_meth_count > 0),
+  ~I(any_use_12m_method_count > 0),
   subset(
     svy(fem1719dt),
-    usedlast3m_status == 'Otherwise did not use contraception at last intercourse'
+    used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -2148,7 +2148,7 @@ estimate_totals_and_percentages(
   ~factor(EVERUSED),
   subset(
     svy(fem1719dt),
-    usedlast3m_status == 'Otherwise did not use contraception at last intercourse'
+    used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -2159,10 +2159,10 @@ Description: By whether used a method of contraception in past 12 months
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~I(anyuse12m_meth_count > 0),
+  ~I(any_use_12m_method_count > 0),
   subset(
     svy(male1719dt),
-    usedlast3m_status == 'Otherwise did not use contraception at last intercourse'
+    used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -2174,11 +2174,11 @@ Domain: Females who had intercourse with a male during the 12 months prior to in
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~factor(anyuse12m_consistency),
+  ~factor(any_use_12m_consistency),
   subset(
     svy(fem1719dt),
     sex12mo &
-      anyuse12m_meth_count > 0 &
+      any_use_12m_method_count > 0 &
       TUBS != 'YES'
   )
 ) |> pretty_estimates() |> kable()
@@ -2188,7 +2188,7 @@ Domain: Males who had used at least one method of contraception during intercour
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~factor(anyuse12m_wcp_consistency),
+  ~factor(any_use_12m_wcp_consistency),
   subset(
     svy(male1719dt),
     !is.na(CWPALLBC01) &
@@ -2202,7 +2202,7 @@ Domain: Males who had used at least one method of contraception during intercour
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~factor(anyuse12m_p1_consistency),
+  ~factor(any_use_12m_p1_consistency),
   subset(
     svy(male1719dt),
     !is.na(PXMETHOD01) &
@@ -2233,7 +2233,7 @@ estimate_totals_and_percentages(
   subset(
     svy(fem1719dt),
     sex12mo &
-      anyuse12m_meth4
+      any_use_12m_method4
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -2242,11 +2242,11 @@ Domain: Males who had intercourse with a female during the 12 months prior to in
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~factor(condom12m_consistency),
+  ~factor(condom_12m_consistency),
   subset(
     svy(male1719dt),
     SEX12MO == 'YES, HAD INTERCOURSE' &
-        anyuse12m_meth1
+        any_use_12m_method1
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -2270,8 +2270,8 @@ estimate_totals_and_percentages(
   subset(
     svy(fem1719dt),
     sex12mo &
-      anyuse12m_meth4 &
-      anyuse12m_meth_count == 1
+      any_use_12m_method4 &
+      any_use_12m_method_count == 1
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -2280,12 +2280,12 @@ Domain: Males who had intercourse with a female during the 12 months prior to in
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
-  ~factor(condom12m_consistency),
+  ~factor(condom_12m_consistency),
   subset(
     svy(male1719dt),
     SEX12MO == 'YES, HAD INTERCOURSE' &
-      anyuse12m_meth1 &
-      anyuse12m_meth_count == 1
+      any_use_12m_method1 &
+      any_use_12m_method_count == 1
   )
 ) |> pretty_estimates() |> kable()
 ```
@@ -2366,7 +2366,7 @@ Description: By whether used pill either during the month of interview or the mo
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~I(thismonth_meth3 | lastmonth_meth3),
+  ~I(this_month_method3 | last_month_method3),
   svy(fem1719dt)
 ) |> pretty_estimates() |> kable()
 ```
@@ -2381,9 +2381,9 @@ Description: By reason(s), with those mentioning multiple reasons counted multip
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    thismonth_meth3 | lastmonth_meth3
+    this_month_method3 | last_month_method3
   ),
-  prefix = 'whypill_reason',
+  prefix = 'why_use_pill_reason',
   format = 'YUSEMTHF',
   skip = 98:99
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -2398,7 +2398,7 @@ estimate_totals_and_percentages(
   ~pill_motivation,
   subset(
     svy(fem1719dt),
-    thismonth_meth3 | lastmonth_meth3
+    this_month_method3 | last_month_method3
   )
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2412,7 +2412,7 @@ Description: By whether used an IUD either during the month of interview or the 
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  #~I(thismonth_meth19 | lastmonth_meth19),
+  #~I(this_month_method19 | last_month_method19),
   ~I(!is.na(YUSEIUD1)),
   svy(fem1719dt)
 ) |> pretty_estimates() |> kable()
@@ -2428,10 +2428,10 @@ Description: By reason(s), with those mentioning multiple reasons counted multip
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    #thismonth_meth19 | lastmonth_meth19
+    #this_month_method19 | last_month_method19
     !is.na(YUSEIUD1)
   ),
-  prefix = 'whyiud_reason',
+  prefix = 'why_use_iud_reason',
   format = 'YUSEMTHF',
   skip = 98:99
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -2446,7 +2446,7 @@ estimate_totals_and_percentages(
   ~factor(iud_motivation),
   subset(
     svy(fem1719dt),
-    #thismonth_meth19 | lastmonth_meth19
+    #this_month_method19 | last_month_method19
     !is.na(YUSEIUD1)
   )
 )[order(-total)] |> pretty_estimates() |> kable()
@@ -2461,8 +2461,8 @@ Domain: Females aged 15-49 living in households in the United States
 ```{r, dependson='process-fem-data'}
 estimate_mentions(
   svy = svy(fem1719dt),
-  prefix = 'everused_meth',
-  format = 'everused_meth'
+  prefix = 'ever_used_method',
+  format = 'ever_used_method'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
@@ -2485,8 +2485,8 @@ estimate_mentions(
     svy(fem1719dt),
     HADSEX == 'YES, R EVER HAD INTERCOURSE'
   ),
-  prefix = 'everused_meth',
-  format = 'everused_meth'
+  prefix = 'ever_used_method',
+  format = 'ever_used_method'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
@@ -2502,14 +2502,14 @@ Description: For each method, females who have stopped using the method due to d
 estimate_mentions_in_subdomains(
   FUN = function(x) {
     estimate_row_total_and_percentage(
-      as.formula(sprintf('~everquit_meth%d', x)),
+      as.formula(sprintf('~ever_quit_method%d', x)),
       subset(
         svy(fem1719dt),
-        fem1719dt[, get(sprintf('everused_meth%d', x))]
+        fem1719dt[, get(sprintf('ever_used_method%d', x))]
       )
     )
   },
-  format = 'everused_meth',
+  format = 'ever_used_method',
   skip = c(20)
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2525,9 +2525,9 @@ Description: Reason(s) for dissatisfaction selected from list provided in survey
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    everquit_meth4
+    ever_quit_method4
   ),
-  prefix = 'condquit_reason',
+  prefix = 'condom_quit_reason',
   format = 'REASMFMT'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2540,9 +2540,9 @@ Description: Reason(s) for dissatisfaction volunteered by respondents
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    condquit_reason3 | condquit_reason6 | condquit_reason15
+    condom_quit_reason3 | condom_quit_reason6 | condom_quit_reason15
   ),
-  prefix = 'specificcond_reason',
+  prefix = 'specific_condom_quit_reason',
   format = 'STOPCONDFMT'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2558,9 +2558,9 @@ Description: Reason(s) for dissatisfaction selected from list provided in survey
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    everquit_meth3
+    ever_quit_method3
   ),
-  prefix = 'pillquit_reason',
+  prefix = 'pill_quit_reason',
   format = 'REASMFMT'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2573,9 +2573,9 @@ Description: Reason(s) for dissatisfaction volunteered by respondents
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    pillquit_reason3 | pillquit_reason6 | pillquit_reason15
+    pill_quit_reason3 | pill_quit_reason6 | pill_quit_reason15
   ),
-  prefix = 'specificpill_reason',
+  prefix = 'specific_pill_quit_reason',
   format = 'STOPPILLFMT'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2591,9 +2591,9 @@ Description: Reason(s) for dissatisfaction selected from list provided in survey
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    everquit_meth32
+    ever_quit_method32
   ),
-  prefix = 'iudquit_reason',
+  prefix = 'iud_quit_reason',
   format = 'REASMFMT'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2606,13 +2606,13 @@ Description: Reason(s) for dissatisfaction volunteered by respondents
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    everquit_meth32 & (
-      iudquit_reason3 |
-        iudquit_reason6 |
-        iudquit_reason15
+    ever_quit_method32 & (
+      iud_quit_reason3 |
+        iud_quit_reason6 |
+        iud_quit_reason15
     )
   ),
-  prefix = 'specificiud_reason',
+  prefix = 'specific_iud_quit_reason',
   format = 'STOPIUDFMT'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2628,9 +2628,9 @@ Description: Reason(s) for dissatisfaction selected from list provided in survey
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    everquit_meth31
+    ever_quit_method31
   ),
-  prefix = 'iudquit_reason',
+  prefix = 'iud_quit_reason',
   format = 'REASMFMT'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2643,13 +2643,13 @@ Description: Reason(s) for dissatisfaction volunteered by respondents
 estimate_mentions(
   svy = subset(
     svy(fem1719dt),
-    everquit_meth31 & (
-      iudquit_reason3 |
-        iudquit_reason6 |
-        iudquit_reason15
+    ever_quit_method31 & (
+      iud_quit_reason3 |
+        iud_quit_reason6 |
+        iud_quit_reason15
     )
   ),
-  prefix = 'specificiud_reason',
+  prefix = 'specific_iud_quit_reason',
   format = 'STOPIUDFMT'
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
@@ -2659,7 +2659,6 @@ estimate_mentions(
 # Things to Do
 
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
-    * Check domains of estimates used in this report for non-standard domains
     * Go through EDAs and look for any notes of universes not behaving like they are supposed to
 * Style tables for output
 * Organize helper functions into NSFG-specific and more general
