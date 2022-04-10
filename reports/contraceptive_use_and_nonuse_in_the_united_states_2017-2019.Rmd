@@ -461,6 +461,7 @@ fem1719dt[,
   ))
 ]
 
+
 # Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
 fem1719dt[,
   used_last_3m_status := factor(
@@ -2676,9 +2677,9 @@ estimate_mentions(
 
 # Things to Do
 
+* Organize helper functions into NSFG-specific and more general
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Style tables for output
-* Organize helper functions into NSFG-specific and more general
 * Style plots for output
 * Write results and discussion section of report
 * Compare own report with published reports
