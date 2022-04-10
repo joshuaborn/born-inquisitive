@@ -25,7 +25,10 @@ opts_chunk$set(
 )
 ```
 
-* `WHYNOTUSE`
+* `CONDVAG`
 * `MISSPILL`
-* `YUSEIUD1`
+* `P12MOCON` and `PXNOFREQ`
 * `TYPEIUD_1` vs `METHSTOP` series
+* `WHYNOTUSE`
+* `YNOSEX` vs `HADSEX`
+* `YUSEIUD1`

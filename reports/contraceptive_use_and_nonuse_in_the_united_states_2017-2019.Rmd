@@ -2659,7 +2659,6 @@ estimate_mentions(
 # Things to Do
 
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
-    * Check presence of "Not Applicable" values in this report
     * Check domains of estimates used in this report for non-standard domains
     * Go through EDAs and look for any notes of universes not behaving like they are supposed to
 * Style tables for output
