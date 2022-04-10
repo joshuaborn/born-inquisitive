@@ -670,7 +670,7 @@ set_mentions_to_booleans(
 )
 
 
-# Create boolean variables for each reason for using the pill.
+# Create boolean variables for each reason for using pill.
 set_mentions_to_booleans(
   out_prefix = 'whypill_reason',
   in_prefix = 'YUSEPILL',
@@ -841,7 +841,7 @@ set_mentions_to_booleans(
 )
 
 
-# Create boolean variables for reason(s) for dissatisfaction with the pill.
+# Create boolean variables for reason(s) for dissatisfaction with pill.
 set_mentions_to_booleans(
   out_prefix = 'pillquit_reason',
   in_prefix = 'REASPILL0',
@@ -1927,9 +1927,9 @@ estimate_mentions(
 ```
 
 
-## Other Method(s) Used at Last Intercourse with Condoms
+## Other Method(s) Used at Last Intercourse with Condom
 
-Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used condoms during last intercourse
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used condom during last intercourse
 
 Description: By method(s), with those using multiple methods counted multiple times
 
@@ -1965,7 +1965,7 @@ estimate_mentions(
 
 ## Other Method(s) Used at Last Intercourse with Pill
 
-Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used the pill during last intercourse
+Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used pill during last intercourse
 
 Description: By method(s), with those using multiple methods counted multiple times
 
@@ -2214,7 +2214,7 @@ estimate_totals_and_percentages(
 
 ## Condom Use During Past 12 Months
 
-Domain: Females who had intercourse with a male during the 12 months prior to interview, who used condoms at least once in the past 12 months
+Domain: Females who had intercourse with a male during the 12 months prior to interview, who used condom at least once in the past 12 months
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2238,7 +2238,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-Domain: Males who had intercourse with a female during the 12 months prior to interview, who used condoms at least once in the past 12 months
+Domain: Males who had intercourse with a female during the 12 months prior to interview, who used condom at least once in the past 12 months
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -2251,7 +2251,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-Domain: Females who had intercourse with a male during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condoms
+Domain: Females who had intercourse with a male during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condom
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2276,7 +2276,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-Domain: Males who had intercourse with a female during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condoms
+Domain: Males who had intercourse with a female during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condom
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -2293,7 +2293,7 @@ estimate_totals_and_percentages(
 
 ## Pill Use During Past 4 Weeks
 
-Domain: Females who used the pill in the month of the interview or the previous month*
+Domain: Females who used pill in the month of the interview or the previous month*
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2309,11 +2309,11 @@ estimate_totals_and_percentages(
 
 # Use of Contraceptive Methods for Other Reasons
 
-## Condoms
+## Condom
 
 ### Size of Domain
 
-Description: By whether used a condom at last intercourse with a male
+Description: By whether used condom at last intercourse with a male
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2322,7 +2322,7 @@ estimate_totals_and_percentages(
 ) |> pretty_estimates() |> kable()
 ```
 
-Domain: By whether used a condom at last intercourse with a female
+Domain: By whether used condom at last intercourse with a female
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -2333,7 +2333,7 @@ estimate_totals_and_percentages(
 
 ### Reason for Use
 
-Domain: Females who used a condom at last intercourse with a male
+Domain: Females who used condom at last intercourse with a male
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2345,7 +2345,7 @@ estimate_totals_and_percentages(
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
-Domain: Males who used a condom at last intercourse with a female
+Domain: Males who used condom at last intercourse with a female
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -2362,7 +2362,7 @@ estimate_totals_and_percentages(
 
 ### Size of Domain
 
-Description: By whether used the pill either during the month of interview or the month preceding the interview
+Description: By whether used pill either during the month of interview or the month preceding the interview
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2373,7 +2373,7 @@ estimate_totals_and_percentages(
 
 ### Reason(s) for Use
 
-Domain: Females who used the pill either during the month of interview or the month preceding the interview
+Domain: Females who used pill either during the month of interview or the month preceding the interview
 
 Description: By reason(s), with those mentioning multiple reasons counted multiple times
 
@@ -2391,7 +2391,7 @@ estimate_mentions(
 
 ### Contraceptive vs. Noncontraceptive Reasons
 
-Domain: Females who used the pill either during the month of interview or the month preceding the interview
+Domain: Females who used pill either during the month of interview or the month preceding the interview
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2515,9 +2515,9 @@ estimate_mentions_in_subdomains(
 ```
 
 
-## Dissatisfaction with Condoms
+## Dissatisfaction with Condom
 
-Domain: Females who have ever discontinued using condoms due to dissatisfaction
+Domain: Females who have ever discontinued using condom due to dissatisfaction
 
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
@@ -2532,7 +2532,7 @@ estimate_mentions(
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
-Domain: Females who have discontinued using condoms because "too difficult to use," "side effects," or "other" reason
+Domain: Females who have discontinued using condom because "too difficult to use," "side effects," or "other" reason
 
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
@@ -2548,9 +2548,9 @@ estimate_mentions(
 ```
 
 
-## Dissatisfaction with the Pill
+## Dissatisfaction with Pill
 
-Domain: Females who have ever discontinued using the pill due to dissatisfaction
+Domain: Females who have ever discontinued using pill due to dissatisfaction
 
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
@@ -2565,7 +2565,7 @@ estimate_mentions(
 )[order(-total)] |> pretty_estimates() |> kable()
 ```
 
-Domain: Females who have discontinued using the pill because "too difficult to use," "side effects," or "other" reason
+Domain: Females who have discontinued using pill because "too difficult to use," "side effects," or "other" reason
 
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
@@ -2658,10 +2658,13 @@ estimate_mentions(
 
 # Things to Do
 
-* Make "condom" singular and remove "the" before "pill" for consistency
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
+    * Check presence of "Not Applicable" values in this report
+    * Check domains of estimates used in this report for non-standard domains
+    * Go through EDAs and look for any notes of universes not behaving like they are supposed to
+* Style tables for output
 * Organize helper functions into NSFG-specific and more general
-* Style plots and tables for output
+* Style plots for output
 * Write results and discussion section of report
 * Compare own report with published reports
 * Write introduction section of report
