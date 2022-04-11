@@ -60,113 +60,10 @@ fem1719_sex_this_month <- fem1719_MONSX[
 
 
 
-# `CONDVAG`
-
-For both males and females, all the cases that are in the universe for `CONDVAG` as specified in the codebook have answers for `CONDVAG`. However, some cases not in the universe for `CONDVAG` as specified in the codebook also have answers for `CONDVAG`. All of these cases have "Not ascertained" answers for `VAGSEX`.
+# Both Missing And Extra Answers
 
 
-## Females
-
-```{r, dependson='load-data'}
-fem1719$Data[
-  is.na(VAGSEX) | VAGSEX == 1,
-  table(
-    CONDVAG,
-    useNA = 'ifany'
-  )
-] |> kable()
-```
-
-```{r, dependson='load-data'}
-fem1719$Data[
-  !is.na(CONDVAG),
-  table(
-    VAGSEX,
-    useNA = 'ifany'
-  )
-] |> kable()
-```
-
-
-## Males
-
-```{r, dependson='load-data'}
-male1719$Data[
-  is.na(VAGSEX) | VAGSEX == 1,
-  table(
-    CONDVAG,
-    useNA = 'ifany'
-  )
-] |> kable()
-```
-
-```{r, dependson='load-data'}
-male1719$Data[
-  !is.na(CONDVAG),
-  table(
-    VAGSEX,
-    useNA = 'ifany'
-  )
-] |> kable()
-```
-
-
-
-# `MISSPILL`
-
-There cases that are in the universe for `MISSPILL` as specified in the codebook, but do not have answers for `MISSPILL`. However, all of the cases that have answers for `MISSPILL` are in the universe for `MISSPILL` specified in the codebook.
-
-```{r, dependson='load-data'}
-fem1719$Data[
-  is.na(MISSPILL) &
-    (
-      equals(CURRMETH1, 3) |
-      equals(CURRMETH2, 3) |
-      equals(CURRMETH3, 3) |
-      equals(CURRMETH4, 3) |
-      equals(LSTMONMETH1, 3) |
-      equals(LSTMONMETH2, 3) |
-      equals(LSTMONMETH3, 3) |
-      equals(LSTMONMETH4, 3)
-    ),
-  .(
-    CASEID,
-    MISSPILL,
-    CURRMETH1,
-    CURRMETH2,
-    CURRMETH3,
-    CURRMETH4,
-    LSTMONMETH1,
-    LSTMONMETH2,
-    LSTMONMETH3,
-    LSTMONMETH4
-  )
-] |> kable()
-```
-
-```{r, dependson='load-data'}
-fem1719$Data[
-  !is.na(MISSPILL),
-  table(
-    equals(CURRMETH1, 3) |
-      equals(CURRMETH2, 3) |
-      equals(CURRMETH3, 3) |
-      equals(CURRMETH4, 3) |
-      equals(LSTMONMETH1, 3) |
-      equals(LSTMONMETH2, 3) |
-      equals(LSTMONMETH3, 3) |
-      equals(LSTMONMETH4, 3),
-    useNA = 'ifany'
-  )
-] |> kable()
-```
-
-
-
-# `P12MOCON`, `P12MOCONO`, and `PXNOFREQ`
-
-
-## Females
+## `P12MOCON` and `PXNOFREQ` for Females
 
 There cases that are in the universe for `P12MOCON` as specified in the codebook, but do not have answers for `P12MOCON`. Additionally, there are answers for `P12MOCON` for cases not in the universe for `P12MOCON` specified in the codebook.
 
@@ -233,7 +130,194 @@ fem1719_sex12mo[
 ```
 
 
-## Males
+## `WYNOTUSE`
+
+There cases that are in the universe for `WYNOTUSE` as specified in the codebook, but do not have answers for `WYNOTUSE`. Additionally, there are answers for `WYNOTUSE` for cases not in the universe for `WYNOTUSE` specified in the codebook.
+
+```{r, dependson='create-pivot-tables'}
+fem1719_sex_this_month[
+  fem1719$Data
+][
+  equals(CURRPREG, 5) &
+    sex_this_month &
+    !is.element(RSTRSTAT, 1:2) &
+    equals(CURRMETH1, 1) &
+    is.na(WYNOTUSE),
+  .(
+    CASEID,
+    CURRPREG,
+    sex_this_month,
+    RSTRSTAT,
+    CURRMETH1,
+    WYNOTUSE
+  )
+] |> kable()
+```
+
+```{r, dependson='create-pivot-tables'}
+fem1719_sex_this_month[
+  fem1719$Data
+][
+  !(
+    equals(CURRPREG, 5) &
+      sex_this_month &
+      !is.element(RSTRSTAT, 1:2) &
+      equals(CURRMETH1, 1)
+    ) &
+    !is.na(WYNOTUSE),
+  .(
+    CASEID,
+    CURRPREG,
+    sex_this_month,
+    RSTRSTAT,
+    CURRMETH1,
+    WYNOTUSE
+  )
+] |> kable()
+```
+
+
+# Missing Answers and No Extra Answers
+
+
+## `YNOSEX`
+
+There are cases in the universe for `YNOSEX` as specified in the codebook that do not have answers for `YNOSEX`. However, all of the cases with answers to `YNOSEX` are in the universe for `YNOSEX` specified in the codebook.
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  equals(RHADSEX, 5) & is.na(YNOSEX),
+  .(
+    CASEID,
+    RHADSEX,
+    YNOSEX
+  )
+] |> kable()
+```
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  !is.na(YNOSEX),
+  tablena(RHADSEX)
+] |> kable()
+```
+
+### `RHADSEX` vs `HADSEX`
+
+These variables appear identical, just with "No" values coded differently. This is also what is specified in the recode specifications.
+
+```{r, dependson='load-data'}
+all.equal(
+  fem1719$Data[, equals(HADSEX, 1)],
+  fem1719$Data[, equals(RHADSEX, 1)]
+)
+```
+
+
+## `YUSEIUD1`
+
+There are cases in the universe for `YUSEIUD1` as specified in the codebook that do not have answers for `YUSEIUD1`. However, all of the cases with answers to `YUSEIUD1` are in the universe for `YUSEIUD1` specified in the codebook.
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  is.na(YUSEIUD1) &
+    (
+      equals(CURRMETH1, 19) |
+      equals(CURRMETH2, 19) |
+      equals(CURRMETH3, 19) |
+      equals(CURRMETH4, 19) |
+      equals(LSTMONMETH1, 19) |
+      equals(LSTMONMETH2, 19) |
+      equals(LSTMONMETH3, 19) |
+      equals(LSTMONMETH4, 19)
+    ),
+  .(
+    CASEID,
+    YUSEIUD1,
+    CURRMETH1,
+    CURRMETH2,
+    CURRMETH3,
+    CURRMETH4,
+    LSTMONMETH1,
+    LSTMONMETH2,
+    LSTMONMETH3,
+    LSTMONMETH4
+  )
+] |> kable()
+```
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  !is.na(YUSEIUD1),
+  tablena(
+      equals(CURRMETH1, 19) |
+      equals(CURRMETH2, 19) |
+      equals(CURRMETH3, 19) |
+      equals(CURRMETH4, 19) |
+      equals(LSTMONMETH1, 19) |
+      equals(LSTMONMETH2, 19) |
+      equals(LSTMONMETH3, 19) |
+      equals(LSTMONMETH4, 19)
+    )
+] |> kable()
+```
+
+
+## `MISSPILL`
+
+There cases that are in the universe for `MISSPILL` as specified in the codebook, but do not have answers for `MISSPILL`. However, all of the cases that have answers for `MISSPILL` are in the universe for `MISSPILL` specified in the codebook.
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  is.na(MISSPILL) &
+    (
+      equals(CURRMETH1, 3) |
+      equals(CURRMETH2, 3) |
+      equals(CURRMETH3, 3) |
+      equals(CURRMETH4, 3) |
+      equals(LSTMONMETH1, 3) |
+      equals(LSTMONMETH2, 3) |
+      equals(LSTMONMETH3, 3) |
+      equals(LSTMONMETH4, 3)
+    ),
+  .(
+    CASEID,
+    MISSPILL,
+    CURRMETH1,
+    CURRMETH2,
+    CURRMETH3,
+    CURRMETH4,
+    LSTMONMETH1,
+    LSTMONMETH2,
+    LSTMONMETH3,
+    LSTMONMETH4
+  )
+] |> kable()
+```
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  !is.na(MISSPILL),
+  table(
+    equals(CURRMETH1, 3) |
+      equals(CURRMETH2, 3) |
+      equals(CURRMETH3, 3) |
+      equals(CURRMETH4, 3) |
+      equals(LSTMONMETH1, 3) |
+      equals(LSTMONMETH2, 3) |
+      equals(LSTMONMETH3, 3) |
+      equals(LSTMONMETH4, 3),
+    useNA = 'ifany'
+  )
+] |> kable()
+```
+
+
+
+# Missing Answers, But Only for Cases Outside Domain of Interest
+
+
+## `P12MOCON`, `P12MOCONO`, and `PXNOFREQ` for Males
 
 All the cases that are in the universe for `P12MOCON` as specified in the codebook have answers for `P12MOCON`, and all of the cases with answers to `P12MOCON` are in the universe for `P12MOCON` specified in the codebook.
 
@@ -293,7 +377,10 @@ male1719$Data[
 
 
 
-# `TYPEIUD_1`
+# Just Extra Answers
+
+
+## `TYPEIUD_1`
 
 All the cases that are in the universe for `TYPEIUD_1` as specified in the codebook have answers for `TYPEIUD_1`. However, two cases not in the universe for `TYPEIUD_1` as specified in the codebook also have answers for `TYPEIUD_1`.
 
@@ -348,136 +435,50 @@ fem1719$Data[
 ```
 
 
+## `CONDVAG`
 
-# `WYNOTUSE`
+For both males and females, all the cases that are in the universe for `CONDVAG` as specified in the codebook have answers for `CONDVAG`. However, some cases not in the universe for `CONDVAG` as specified in the codebook also have answers for `CONDVAG`. All of these cases have "Not ascertained" answers for `VAGSEX`.
 
-There cases that are in the universe for `WYNOTUSE` as specified in the codebook, but do not have answers for `WYNOTUSE`. Additionally, there are answers for `WYNOTUSE` for cases not in the universe for `WYNOTUSE` specified in the codebook.
-
-```{r, dependson='create-pivot-tables'}
-fem1719_sex_this_month[
-  fem1719$Data
-][
-  equals(CURRPREG, 5) &
-    sex_this_month &
-    !is.element(RSTRSTAT, 1:2) &
-    equals(CURRMETH1, 1) &
-    is.na(WYNOTUSE),
-  .(
-    CASEID,
-    CURRPREG,
-    sex_this_month,
-    RSTRSTAT,
-    CURRMETH1,
-    WYNOTUSE
-  )
-] |> kable()
-```
-
-```{r, dependson='create-pivot-tables'}
-fem1719_sex_this_month[
-  fem1719$Data
-][
-  !(
-    equals(CURRPREG, 5) &
-      sex_this_month &
-      !is.element(RSTRSTAT, 1:2) &
-      equals(CURRMETH1, 1)
-    ) &
-    !is.na(WYNOTUSE),
-  .(
-    CASEID,
-    CURRPREG,
-    sex_this_month,
-    RSTRSTAT,
-    CURRMETH1,
-    WYNOTUSE
-  )
-] |> kable()
-```
-
-
-
-# `RHADSEX` vs `HADSEX`
-
-These variables appear identical, just with "No" values coded differently. This is also what is specified in the recode specifications.
-
-```{r, dependson='load-data'}
-all.equal(
-  fem1719$Data[, equals(HADSEX, 1)],
-  fem1719$Data[, equals(RHADSEX, 1)]
-)
-```
-
-
-
-# `YNOSEX`
-
-There are cases in the universe for `YNOSEX` as specified in the codebook that do not have answers for `YNOSEX`. However, all of the cases with answers to `YNOSEX` are in the universe for `YNOSEX` specified in the codebook.
+### Females
 
 ```{r, dependson='load-data'}
 fem1719$Data[
-  equals(RHADSEX, 5) & is.na(YNOSEX),
-  .(
-    CASEID,
-    RHADSEX,
-    YNOSEX
-  )
-]
-```
-
-```{r, dependson='load-data'}
-fem1719$Data[
-  !is.na(YNOSEX),
-  tablena(RHADSEX)
-]
-```
-
-
-
-# `YUSEIUD1`
-
-There are cases in the universe for `YUSEIUD1` as specified in the codebook that do not have answers for `YUSEIUD1`. However, all of the cases with answers to `YUSEIUD1` are in the universe for `YUSEIUD1` specified in the codebook.
-
-```{r, dependson='load-data'}
-fem1719$Data[
-  is.na(YUSEIUD1) &
-    (
-      equals(CURRMETH1, 19) |
-      equals(CURRMETH2, 19) |
-      equals(CURRMETH3, 19) |
-      equals(CURRMETH4, 19) |
-      equals(LSTMONMETH1, 19) |
-      equals(LSTMONMETH2, 19) |
-      equals(LSTMONMETH3, 19) |
-      equals(LSTMONMETH4, 19)
-    ),
-  .(
-    CASEID,
-    YUSEIUD1,
-    CURRMETH1,
-    CURRMETH2,
-    CURRMETH3,
-    CURRMETH4,
-    LSTMONMETH1,
-    LSTMONMETH2,
-    LSTMONMETH3,
-    LSTMONMETH4
+  is.na(VAGSEX) | VAGSEX == 1,
+  table(
+    CONDVAG,
+    useNA = 'ifany'
   )
 ] |> kable()
 ```
 
 ```{r, dependson='load-data'}
 fem1719$Data[
-  !is.na(YUSEIUD1),
-  tablena(
-      equals(CURRMETH1, 19) |
-      equals(CURRMETH2, 19) |
-      equals(CURRMETH3, 19) |
-      equals(CURRMETH4, 19) |
-      equals(LSTMONMETH1, 19) |
-      equals(LSTMONMETH2, 19) |
-      equals(LSTMONMETH3, 19) |
-      equals(LSTMONMETH4, 19)
-    )
+  !is.na(CONDVAG),
+  table(
+    VAGSEX,
+    useNA = 'ifany'
+  )
+] |> kable()
+```
+
+### Males
+
+```{r, dependson='load-data'}
+male1719$Data[
+  is.na(VAGSEX) | VAGSEX == 1,
+  table(
+    CONDVAG,
+    useNA = 'ifany'
+  )
+] |> kable()
+```
+
+```{r, dependson='load-data'}
+male1719$Data[
+  !is.na(CONDVAG),
+  table(
+    VAGSEX,
+    useNA = 'ifany'
+  )
 ] |> kable()
 ```
