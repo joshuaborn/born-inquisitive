@@ -86,6 +86,23 @@ fem1719_sex12mo[
 ] |> kable()
 ```
 
+```{r, dependson='create-pivot-tables', eval=FALSE}
+fem1719_sex12mo[
+  fem1719$Data
+][
+  sex12mo & CONDOM == 1 & is.na(P12MOCON),
+  c(
+    'CASEID',
+    'P12MOCON',
+    'CONDOM',
+    'CMINTVW',
+    'CMMONSX',
+    'MONSX',
+    paste0(c('CMMONSX', 'MONSX'), 2:48)
+  )
+] |> fwrite(here('output', 'P12MOCON-missing-fem_2017-19.csv'))
+```
+
 ```{r, dependson='create-pivot-tables'}
 fem1719_sex12mo[
   fem1719$Data
