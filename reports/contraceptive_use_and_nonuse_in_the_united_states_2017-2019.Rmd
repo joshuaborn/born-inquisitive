@@ -84,6 +84,8 @@ set_NSFG_variables_as_factors(
     ATTRACT = 'ATTRACT',
     CONDVAG = 'YESNONAF',
     CONSTAT1 = 'CONSTATF',
+    CURRMETH1 = 'METHHXF',
+    CURRPREG = 'Y1N5C',
     EVERUSED = 'YESNONAF',
     HADSEX = 'HADSEX',
     HPPREGQ = 'HPPREGQ',
@@ -97,6 +99,7 @@ set_NSFG_variables_as_factors(
     PXNOFREQ = 'P12METHF',
     REASIMPP = 'REASP',
     REASIMPR = 'REASR',
+    RSTRSTAT = 'RSTRSTAT',
     SEX3MO = 'Y1N2RECF',
     TUBS = 'Y1N5C',
     VAGSEX = 'YESNONAF',
@@ -199,7 +202,7 @@ fem1719dt[,
   pregnancy_intent_status := factor(
     fcase(
       WYNOTUSE == 'Not Applicable',
-        'Outside of domain',
+        'No answer provided in public use data file',
       WYNOTUSE == 'Yes',
         'Wants to get pregnant',
       HPPREGQ == 'Yes',
@@ -209,21 +212,20 @@ fem1719dt[,
       WYNOTUSE == 'Refused' | HPPREGQ == 'Refused',
         'Refused',
       HPPREGQ == '(If volunteered:) no current partner',
-        'Volunteered no current partner',
-      WHYNOUSING1 != 'Not Applicable',
-        'Not intending to conceive',
-      default = 'No answer provided in public use data file'
+        '(If volunteered:) no current partner',
+      HPPREGQ == 'Not Applicable',
+        'No answer provided in public use data file',
+      default = 'Not intending to conceive'
     ),
     ordered = TRUE,
     levels = c(
-      'Outside of domain',
+      'No answer provided in public use data file',
       'Wants to get pregnant',
       'Partner wants respondent to get pregnant',
       "Don't know",
       'Refused',
-      'Volunteered no current partner',
-      'Not intending to conceive',
-      'No answer provided in public use data file'
+      '(If volunteered:) no current partner',
+      'Not intending to conceive'
     )
   )
 ]
@@ -276,15 +278,19 @@ fem1719dt[,
 ]
 
 
-# Create sex12mo variable for females using a pivot table.
-fem1719dt <- create_NSFG_pivot_table(
+# Create pivot table of MONSX variables for creating the sex12mo and sex_this_month variables below.
+fem1719MONSX <- create_NSFG_pivot_table(
   'CMMONSX',
   2:48,
   c('CASEID', 'CMINTVW', 'CMLSTYR')
 )[
   create_NSFG_pivot_table('MONSX', 2:48),
   on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
-][
+]
+
+
+# Create sex12mo variable for females.
+fem1719dt <- fem1719MONSX[
   !is.na(MONSX) & MONSX == 1 &
     CMMONSX > CMLSTYR &
     CMMONSX <= CMINTVW,
@@ -292,6 +298,15 @@ fem1719dt <- create_NSFG_pivot_table(
   by = CASEID
 ][fem1719dt]
 fem1719dt[, sex12mo := na_to_false(sex12mo)]
+
+
+# Create sex_this_month variable.
+fem1719dt <- fem1719MONSX[
+  CMMONSX == CMINTVW,
+  .(sex_this_month = equals(MONSX, 1)),
+  by = CASEID
+][fem1719dt]
+fem1719dt[, sex_this_month := na_to_false(sex_this_month)]
 
 
 # If last intercourse within the past 12 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use in the past 12 months to true.
@@ -1355,7 +1370,15 @@ Description: Females who are not currently pregnant, had intercourse in the mont
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~factor(WYNOTUSE != 'Not Applicable'),
+  ~I(
+    CURRPREG == 'NO' &
+      sex_this_month &
+      !is.element(
+        RSTRSTAT,
+        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
+      ) &
+      CURRMETH1 == 'No method used'
+  ),
   get_NSFG_survey_design_for_sex('fem')
 )[description == TRUE] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
@@ -1369,7 +1392,13 @@ estimate_totals_and_percentages(
   ~factor(pregnancy_intent_status),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    WYNOTUSE != 'Not Applicable'
+    CURRPREG == 'NO' &
+      sex_this_month &
+      !is.element(
+        RSTRSTAT,
+        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
+      ) &
+      CURRMETH1 == 'No method used'
   )
 ) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
@@ -2374,4 +2403,5 @@ estimate_NSFG_mentions(
 * Write results and discussion section of report
 * Compare own report with published reports
 * Write introduction section of report
+* Add license to GitHub repository
 * Publish report on blog
