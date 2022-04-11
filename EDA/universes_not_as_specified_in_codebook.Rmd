@@ -63,7 +63,7 @@ fem1719_sex_this_month <- fem1719_MONSX[
 # Both Missing And Extra Answers
 
 
-## `WYNOTUSE`
+## `WYNOTUSE` 0.039M 0.7%
 
 There cases that are in the universe for `WYNOTUSE` as specified in the codebook, but do not have answers for `WYNOTUSE`. Additionally, there are answers for `WYNOTUSE` for cases not in the universe for `WYNOTUSE` specified in the codebook.
 
@@ -158,7 +158,7 @@ fem1719_sex_this_month[
 # Missing Answers and No Extra Answers
 
 
-## `P12MOCON` and `PXNOFREQ` for Females
+## `P12MOCON` and `PXNOFREQ` for Females 0.086M 0.2%
 
 There cases that are in the universe for `P12MOCON` as specified in the codebook, but do not have answers for `P12MOCON`. However, all of the cases with answers to `P12MOCON` are in the universe for `P12MOCON` specified in the codebook.
 
@@ -232,7 +232,7 @@ fem1719_sex12mo[
 ```
 
 
-## `YNOSEX`
+## `YNOSEX` 0.088M 1.0%
 
 There are cases in the universe for `YNOSEX` as specified in the codebook that do not have answers for `YNOSEX`. However, all of the cases with answers to `YNOSEX` are in the universe for `YNOSEX` specified in the codebook.
 
@@ -277,7 +277,7 @@ all.equal(
 ```
 
 
-## `YUSEIUD1`
+## `YUSEIUD1` 1.473M 21.8%
 
 There are cases in the universe for `YUSEIUD1` as specified in the codebook that do not have answers for `YUSEIUD1`. However, all of the cases with answers to `YUSEIUD1` are in the universe for `YUSEIUD1` specified in the codebook.
 
@@ -354,7 +354,7 @@ fem1719$Data[
 ```
 
 
-## `MISSPILL`
+## `MISSPILL` 1.961M 17.7%
 
 There cases that are in the universe for `MISSPILL` as specified in the codebook, but do not have answers for `MISSPILL`. However, all of the cases that have answers for `MISSPILL` are in the universe for `MISSPILL` specified in the codebook.
 
