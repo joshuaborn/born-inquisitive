@@ -21,6 +21,11 @@ na_to_false <- function(x) {
   fifelse(is.na(x), FALSE, x)
 }
 
+equals <- function(x, y) {
+  !is.na(x) & !is.na(y) & x == y
+}
+
+
 
 #
 # DATA MANIPULATION

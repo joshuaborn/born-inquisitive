@@ -17,6 +17,7 @@ library(survey)
 i_am('EDA/universes_not_as_specified_in_codebook.Rmd')
 
 source(here('R/NSFG_helpers.R'))
+source(here('R/general_helpers.R'))
 
 opts_chunk$set(
   cache = TRUE,
@@ -34,7 +35,7 @@ male1719 <- load_NSFG_data('2017_2019', 'Male')
 
 # `CONDVAG`
 
-This is actually as specified in the codebook, with the exception that some answers for `CONDVAG` exist for cases that have "Not ascertained" values for `VAGSEX`.
+For both males and females, all the cases that are in the universe for `CONDVAG` as specified in the codebook have answers for `CONDVAG`. However, some cases not in the universe for `CONDVAG` as specified in the codebook also have answers for `CONDVAG`. All of these cases have "Not ascertained" answers for `VAGSEX`.
 
 ## Females
 
@@ -83,20 +84,20 @@ male1719$Data[
 
 # `MISSPILL`
 
-There are numerous missing `MISSPILL` values for cases that should have `MISSPILL` values as specified in the codebook. However, all of the cases for which there are `MISSPILL` values are cases that are within the universe specified in the codebook.
+There cases that are in the universe for `MISSPILL` as specified in the codebook, but do not have answers for `MISSPILL`. However, all of the cases that have answers for `MISSPILL` are in the universe for `MISSPILL` specified in the codebook.
 
 ```{r, dependson='load-data'}
 fem1719$Data[
   is.na(MISSPILL) &
     (
-      CURRMETH1 == 3 |
-      CURRMETH2 == 3 |
-      CURRMETH3 == 3 |
-      CURRMETH4 == 3 |
-      LSTMONMETH1 == 3 |
-      LSTMONMETH2 == 3 |
-      LSTMONMETH3 == 3 |
-      LSTMONMETH4 == 3
+      equals(CURRMETH1, 3) |
+      equals(CURRMETH2, 3) |
+      equals(CURRMETH3, 3) |
+      equals(CURRMETH4, 3) |
+      equals(LSTMONMETH1, 3) |
+      equals(LSTMONMETH2, 3) |
+      equals(LSTMONMETH3, 3) |
+      equals(LSTMONMETH4, 3)
     ),
   .(
     CASEID,
@@ -117,75 +118,29 @@ fem1719$Data[
 fem1719$Data[
   !is.na(MISSPILL),
   table(
-    CURRMETH1 == 3 |
-      CURRMETH2 == 3 |
-      CURRMETH3 == 3 |
-      CURRMETH4 == 3 |
-      LSTMONMETH1 == 3 |
-      LSTMONMETH2 == 3 |
-      LSTMONMETH3 == 3 |
-      LSTMONMETH4 == 3,
+    equals(CURRMETH1, 3) |
+      equals(CURRMETH2, 3) |
+      equals(CURRMETH3, 3) |
+      equals(CURRMETH4, 3) |
+      equals(LSTMONMETH1, 3) |
+      equals(LSTMONMETH2, 3) |
+      equals(LSTMONMETH3, 3) |
+      equals(LSTMONMETH4, 3),
     useNA = 'ifany'
   )
 ] |> kable()
 ```
 
 
-# `P12MOCON` and `PXNOFREQ`
+# `P12MOCON`, `P12MOCONO`, and `PXNOFREQ`
 
 ## Females
 
-There are a lot of non-answers for cases that are supposed to be in the universe of `P12MOCON`, and a lot of answers for cases not in the universe of `P12MOCON`. I should verify this manually to make sure there is not an error in the way I'm deploying the pivot tables.
+There cases that are in the universe for `P12MOCON` as specified in the codebook, but do not have answers for `P12MOCON`. Additionally, there are answers for `P12MOCON` for cases not in the universe for `P12MOCON` specified in the codebook.
 
-For `PXNOFREQ`, all the cases within the universe specified in the codebook have answers in the data table. However, there are answers for `PXNOFREQ` for some cases that are not within the universe specified in the codebook.
+All the cases that are in the universe for `PXNOFREQ` as specified in the codebook have answers for `PXNOFREQ`. However, some cases not in the universe for `PXNOFREQ` as specified in the codebook also have answers for `PXNOFREQ`.
 
 ```{r, dependson='load-data'}
-get_raw_import_for_sex <- function(sex) {
-  if (startsWith(sex, 'f')) {
-    fem1719
-  } else {
-    male1719
-  }
-}
-
-create_pivot_table <- function(
-  prefix,
-  series,
-  id_vars,
-  source_dt
-) {
-  dt <- copy(
-    source_dt[
-      ,
-      c(id_vars, paste0(prefix, series)),
-      with = FALSE
-    ]
-  )
-
-  dt <- melt(
-    dt,
-    id.vars = id_vars,
-    variable.factor = FALSE,
-    value.name = prefix
-  )
-
-  dt[
-    ,
-    (paste0(prefix, 'ID')) :=
-      as.integer(sub(prefix, '', variable))
-  ]
-
-  dt[, variable := NULL]
-
-  dt
-}
-
-create_NSFG_pivot_table <- function(prefix, series, id_vars = 'CASEID', sex = 'fem') {
-  raw_import <- get_raw_import_for_sex(sex)
-  pivot_table <- create_pivot_table(prefix, series, id_vars, raw_import$Data)
-  setkeyv(pivot_table, id_vars)
-}
-
 fem1719_MONSX <- create_NSFG_pivot_table(
   'CMMONSX',
   2:48,
@@ -237,7 +192,7 @@ fem1719_sex12mo[
   fem1719$Data
 ][
   sex12mo &
-    EVERUSED == 1 &
+    equals(EVERUSED, 1) &
     P12MOCON != 1,
   table(PXNOFREQ, useNA = 'ifany')
 ] |> kable()
@@ -248,7 +203,7 @@ fem1719_sex12mo[
 ][
   !is.na(PXNOFREQ) & !(
     sex12mo &
-    EVERUSED == 1 &
+    equals(EVERUSED, 1) &
     P12MOCON != 1
   ),
   .(
@@ -263,13 +218,15 @@ fem1719_sex12mo[
 
 ## Males
 
-Unlike in the females table, there are exactly answers for the universes of `P12MOCON` and `P12MOCONO` as specified in the codebook.
+All the cases that are in the universe for `P12MOCON` as specified in the codebook have answers for `P12MOCON`, and all of the cases with answers to `P12MOCON` are in the universe for `P12MOCON` specified in the codebook.
 
-There is one case without an answer to `PXNOFREQ`, but in the universe specified in the codebook. However, all of the cases with answers to `PXNOFREQ` are within the universe specified in the codebook, however.
+Similarly, all the cases that are in the universe for `P12MOCONO` as specified in the codebook have answers for `P12MOCONO`, and all of the cases with answers to `P12MOCONO` are in the universe for `P12MOCONO` specified in the codebook.
+
+One of the cases in the universe for `PXNOFREQ` as specified in the codebook does not have an answer for `PXNOFREQ`. However, all of the cases with answers to `PXNOFREQ` are in the universe for `PXNOFREQ` specified in the codebook.
 
 ```{r, dependson='load-data'}
 male1719$Data[
-  SEXSTAT == 1,
+  equals(SEXSTAT, 1),
   table(P12MOCONO, useNA = 'ifany')
 ] |> kable()
 ```
@@ -297,7 +254,7 @@ male1719$Data[
 
 ```{r, dependson='load-data'}
 male1719$Data[
-  PXANYUSE == 1 & PXCONFRQ != 100 & is.na(PXNOFREQ),
+  equals(PXANYUSE, 1) & PXCONFRQ != 100 & is.na(PXNOFREQ),
   .(
     CASEID,
     PXANYUSE,
@@ -310,7 +267,7 @@ male1719$Data[
 ```{r, dependson='load-data'}
 male1719$Data[
   !is.na(PXNOFREQ) & !(
-    PXANYUSE == 1 & PXCONFRQ != 100
+    equals(PXANYUSE, 1) & PXCONFRQ != 100
   ),
  .N
 ] |> kable()
@@ -319,13 +276,9 @@ male1719$Data[
 
 # `TYPEIUD_1`
 
-While `TYPEIUD_1` has answers for all cases in the universe specified in the codebook, there are two cases that are not in the universe that have answers for `TYPEIUD_1`.
+All the cases that are in the universe for `TYPEIUD_1` as specified in the codebook have answers for `TYPEIUD_1`. However, two cases not in the universe for `TYPEIUD_1` as specified in the codebook also have answers for `TYPEIUD_1`.
 
 ```{r, dependson='load-data'}
-equals <- function(x, y) {
-  !is.na(x) & !is.na(y) & x == y
-}
-
 fem1719$Data[
   equals(METHSTOP01, 19) |
   equals(METHSTOP02, 19) |
