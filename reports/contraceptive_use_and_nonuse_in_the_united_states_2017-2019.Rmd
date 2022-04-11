@@ -1991,14 +1991,15 @@ estimate_totals_and_percentages(
 
 ## Pill Use During Past 4 Weeks
 
-Domain: Females who used pill in the month of the interview or the previous month*
+Domain: Females who used pill in the month of the interview or the previous month
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(MISSPILL),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    MISSPILL != 'Not Applicable'
+    #MISSPILL != 'Not Applicable'
+    last_month_method3 | this_month_method3
   )
 ) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
