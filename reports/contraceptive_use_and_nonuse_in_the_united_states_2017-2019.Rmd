@@ -74,8 +74,7 @@ fem1719dt <- copy(fem1719$Data[, .(
   CASEID,
   SECU,
   SEST,
-  WGT2017_2019,
-  YUSEIUD1
+  WGT2017_2019
 )])
 
 
@@ -418,7 +417,7 @@ fem1719dt[,
   iud_motivation := factor(
     fcase(
       why_use_iud_reason99,
-      "Don't know",
+        "Don't know",
       why_use_iud_reason1 & (
         why_use_iud_reason2 |
         why_use_iud_reason3 |
@@ -428,7 +427,7 @@ fem1719dt[,
         why_use_iud_reason7 |
         why_use_iud_reason8
       ),
-      'For both reasons',
+        'For both reasons',
       why_use_iud_reason1 & !(
         why_use_iud_reason2 |
         why_use_iud_reason3 |
@@ -438,7 +437,7 @@ fem1719dt[,
         why_use_iud_reason7 |
         why_use_iud_reason8
       ),
-      'Only for contraception',
+        'Only for contraception',
       !why_use_iud_reason1 & (
         why_use_iud_reason2 |
         why_use_iud_reason3 |
@@ -448,8 +447,8 @@ fem1719dt[,
         why_use_iud_reason7 |
         why_use_iud_reason8
       ),
-      'Only for reasons other than contraception',
-      default = 'Not Applicable'
+        'Only for reasons other than contraception',
+      default = 'No answer provided in public use data file'
     )
   )
 ]
@@ -1998,7 +1997,6 @@ estimate_totals_and_percentages(
   ~factor(MISSPILL),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    #MISSPILL != 'Not Applicable'
     last_month_method3 | this_month_method3
   )
 ) |> prettify_estimates_of_totals_and_percentages() |> kable()
@@ -2127,8 +2125,7 @@ Description: By whether used an IUD either during the month of interview or the 
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  #~I(this_month_method19 | last_month_method19),
-  ~I(!is.na(YUSEIUD1)),
+  ~I(this_month_method19 | last_month_method19),
   get_NSFG_survey_design_for_sex('fem')
 ) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
@@ -2143,8 +2140,7 @@ Description: By reason(s), with those mentioning multiple reasons counted multip
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
-    #this_month_method19 | last_month_method19
-    !is.na(YUSEIUD1)
+    this_month_method19 | last_month_method19
   ),
   prefix = 'why_use_iud_reason',
   format = 'YUSEMTHF',
@@ -2161,8 +2157,7 @@ estimate_totals_and_percentages(
   ~factor(iud_motivation),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    #this_month_method19 | last_month_method19
-    !is.na(YUSEIUD1)
+    this_month_method19 | last_month_method19
   )
 )[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
