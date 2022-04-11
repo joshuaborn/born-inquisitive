@@ -63,11 +63,61 @@ fem1719_sex_this_month <- fem1719_MONSX[
 # Both Missing And Extra Answers
 
 
+## `WYNOTUSE`
+
+There cases that are in the universe for `WYNOTUSE` as specified in the codebook, but do not have answers for `WYNOTUSE`. Additionally, there are answers for `WYNOTUSE` for cases not in the universe for `WYNOTUSE` specified in the codebook.
+
+```{r, dependson='create-pivot-tables'}
+fem1719_sex_this_month[
+  fem1719$Data
+][
+  equals(CURRPREG, 5) &
+    sex_this_month &
+    !is.element(RSTRSTAT, 1:2) &
+    equals(CURRMETH1, 1) &
+    is.na(WYNOTUSE),
+  .(
+    CASEID,
+    CURRPREG,
+    sex_this_month,
+    RSTRSTAT,
+    CURRMETH1,
+    WYNOTUSE
+  )
+] |> kable()
+```
+
+```{r, dependson='create-pivot-tables'}
+fem1719_sex_this_month[
+  fem1719$Data
+][
+  !(
+    equals(CURRPREG, 5) &
+      sex_this_month &
+      !is.element(RSTRSTAT, 1:2) &
+      equals(CURRMETH1, 1)
+    ) &
+    !is.na(WYNOTUSE),
+  .(
+    CASEID,
+    CURRPREG,
+    sex_this_month,
+    RSTRSTAT,
+    CURRMETH1,
+    WYNOTUSE
+  )
+] |> kable()
+```
+
+
+# Missing Answers and No Extra Answers
+
+
 ## `P12MOCON` and `PXNOFREQ` for Females
 
 There cases that are in the universe for `P12MOCON` as specified in the codebook, but do not have answers for `P12MOCON`. However, all of the cases with answers to `P12MOCON` are in the universe for `P12MOCON` specified in the codebook.
 
-All the cases that are in the universe for `PXNOFREQ` as specified in the codebook have answers for `PXNOFREQ`. However, some cases not in the universe for `PXNOFREQ` as specified in the codebook also have answers for `PXNOFREQ`.
+All the cases that are in the universe for `PXNOFREQ` as specified in the codebook have answers for `PXNOFREQ`, and all of the cases with answers to `PXNOFREQ` are in the universe for `PXNOFREQ` specified in the codebook.
 
 
 ```{r, dependson='create-pivot-tables'}
@@ -132,65 +182,9 @@ fem1719_sex12mo[
     equals(EVERUSED, 1) &
     P12MOCON != 1
   ),
-  .(
-    CASEID,
-    PXNOFREQ,
-    sex12mo,
-    EVERUSED,
-    P12MOCON
-  )
+  .N
 ] |> kable()
 ```
-
-
-## `WYNOTUSE`
-
-There cases that are in the universe for `WYNOTUSE` as specified in the codebook, but do not have answers for `WYNOTUSE`. Additionally, there are answers for `WYNOTUSE` for cases not in the universe for `WYNOTUSE` specified in the codebook.
-
-```{r, dependson='create-pivot-tables'}
-fem1719_sex_this_month[
-  fem1719$Data
-][
-  equals(CURRPREG, 5) &
-    sex_this_month &
-    !is.element(RSTRSTAT, 1:2) &
-    equals(CURRMETH1, 1) &
-    is.na(WYNOTUSE),
-  .(
-    CASEID,
-    CURRPREG,
-    sex_this_month,
-    RSTRSTAT,
-    CURRMETH1,
-    WYNOTUSE
-  )
-] |> kable()
-```
-
-```{r, dependson='create-pivot-tables'}
-fem1719_sex_this_month[
-  fem1719$Data
-][
-  !(
-    equals(CURRPREG, 5) &
-      sex_this_month &
-      !is.element(RSTRSTAT, 1:2) &
-      equals(CURRMETH1, 1)
-    ) &
-    !is.na(WYNOTUSE),
-  .(
-    CASEID,
-    CURRPREG,
-    sex_this_month,
-    RSTRSTAT,
-    CURRMETH1,
-    WYNOTUSE
-  )
-] |> kable()
-```
-
-
-# Missing Answers and No Extra Answers
 
 
 ## `YNOSEX`
