@@ -396,5 +396,42 @@ fem1719_sex_this_month[
 ```
 
 
-* `YNOSEX` vs `HADSEX`
+
+# `RHADSEX` vs `HADSEX`
+
+These variables appear identical, just with "No" values coded differently. This is also what is specified in the recode specifications.
+
+```{r, dependson='load-data'}
+all.equal(
+  fem1719$Data[, equals(HADSEX, 1)],
+  fem1719$Data[, equals(RHADSEX, 1)]
+)
+```
+
+
+
+# `YNOSEX`
+
+There are cases in the universe for `YNOSEX` as specified in the codebook does not have an answer for `YNOSEX`. However, all of the cases with answers to `YNOSEX` are in the universe for `YNOSEX` specified in the codebook.
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  equals(RHADSEX, 5) & is.na(YNOSEX),
+  .(
+    CASEID,
+    RHADSEX,
+    YNOSEX
+  )
+]
+```
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  !is.na(YNOSEX),
+  tablena(RHADSEX)
+]
+```
+
+
+
 * `YUSEIUD1`
