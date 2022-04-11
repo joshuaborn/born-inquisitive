@@ -2398,6 +2398,7 @@ estimate_NSFG_mentions(
 # Things to Do
 
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
+* Exclude two cases with `TYPEIUD_1` answers, but no `METHSTOP` with 13
 * Style tables for output
 * Style plots for output
 * Write results and discussion section of report
