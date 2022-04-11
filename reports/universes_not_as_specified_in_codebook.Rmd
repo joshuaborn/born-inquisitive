@@ -16,7 +16,7 @@ library(survey)
 
 i_am('reports/universes_not_as_specified_in_codebook.Rmd')
 
-source(here('R/import.R'))
+source(here('R/NSFG_helpers.R'))
 
 opts_chunk$set(
   cache = TRUE,
@@ -157,7 +157,7 @@ create_pivot_table <- function(
   dt <- copy(
     source_dt[
       ,
-      c(id_vars, paste(prefix, series, sep = '')),
+      c(id_vars, paste0(prefix, series)),
       with = FALSE
     ]
   )
@@ -171,7 +171,7 @@ create_pivot_table <- function(
 
   dt[
     ,
-    (paste(prefix, 'ID', sep = '')) :=
+    (paste0(prefix, 'ID')) :=
       as.integer(sub(prefix, '', variable))
   ]
 

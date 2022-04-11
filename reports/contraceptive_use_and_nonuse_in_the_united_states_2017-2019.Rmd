@@ -16,7 +16,8 @@ library(survey)
 
 i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
 
-source(here('R/import.R'))
+source(here('R/NSFG_helpers.R'))
+source(here('R/general_helpers.R'))
 
 opts_chunk$set(
   cache = TRUE,
@@ -27,317 +28,11 @@ opts_chunk$set(
 )
 ```
 
-```{r helpers}
-has_level <- function(x, ids) {
-  !is.na(x) & is.element(as.integer(x), ids)
-}
-
-cm_greater <- function(x, y) {
-  is.na(x) &
-    x != 9998 &
-    x != 9999 &
-    is.na(y) &
-    y != 9998 &
-    y != 9999 &
-    x > y
-}
-
-get_raw_import_for_sex <- function(sex) {
-  if (startsWith(sex, 'f')) {
-    fem1719
-  } else {
-    male1719
-  }
-}
-
-get_formats_for_sex <- function(sex) {
-  if (startsWith(sex, 'f')) {
-    fem1719formats
-  } else {
-    male1719$Formats
-  }
-}
-
-get_dt_for_sex <- function(sex) {
-  if (startsWith(sex, 'f')) {
-    setDT(fem1719dt)
-  } else {
-    setDT(male1719dt)
-  }
-}
-
-get_idxs <- function(format, skip = NULL, sex = 'fem') {
-  formats <- get_formats_for_sex(sex)
-  idxs <- formats[format_name == format, factor_value]
-  if (!is.null(skip)) {
-    idxs[!is.element(idxs, skip)]
-  } else {
-    idxs
-  }
-}
-
-set_mention_count_variable <- function(dt, prefix) {
-  if (paste(prefix, 'count', sep = '_') %in% colnames(dt)) {
-    dt[
-      ,
-      (paste(prefix, 'count', sep = '_')) := NULL
-    ]
-  }
-  dt[
-    ,
-    (paste(prefix, 'count', sep = '_')) := rowSums(.SD),
-    .SDcols = patterns(paste('^', prefix, sep = ''))
-  ]
-}
-
-set_mentions_to_booleans <- function(
-  out_prefix,
-  in_prefix,
-  in_series,
-  format,
-  skip = NULL,
-  sex = 'fem'
-) {
-  dt <- get_dt_for_sex(sex)
-  in_vars <- paste(in_prefix, in_series, sep = '')
-
-  for (x in get_idxs(format, skip, sex)) {
-    set(
-      dt,
-      j = paste(out_prefix, x, sep = ''),
-      value = get_raw_import_for_sex(sex)$Data[
-        ,
-        lapply(.SD, \(col) has_level(col, x)),
-        .SDcols = in_vars
-      ] |> apply(1, any)
-    )
-  }
-
-  set_mention_count_variable(dt, out_prefix)
-}
-
-set_variables_as_factors <- function(variables, sex = 'fem') {
-  raw_import <- get_raw_import_for_sex(sex)
-  formats <- get_formats_for_sex(sex)
-  dt <- get_dt_for_sex(sex)
-
-  for (x in seq(length(variables))) {
-    variable_name <- names(variables)[x]
-    format_name <- variables[x]
-    values <- factorize(
-      raw_import$Data[, get(variable_name)],
-      format_name,
-      formats
-    )
-
-    dt[, (variable_name) := ..values]
-  }
-}
-
-estimate_totals_and_percentages <- function(f, svy) {
-  totals <- svytotal(f, svy)
-  totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
-  names(totals_ci) <- c('total_CI_low', 'total_CI_high')
-  percentages <- svymean(f, svy)
-  percentages_ci <- as.data.frame(confint(percentages, df = degf(svy)))
-  names(percentages_ci) <- c('percentage_CI_low', 'percentage_CI_high')
-  level_prefix <- as.character(f)
-  level_prefix <- level_prefix[seq(2, length(level_prefix))]
-
-  cbind(
-    data.table(
-      description = sub(level_prefix, '', names(totals), fixed = TRUE),
-      total = as.vector(totals)
-    ),
-    totals_ci,
-    data.table(
-      percentage = as.vector(percentages)
-    ),
-    percentages_ci
-  )
-}
-
-estimate_row_total_and_percentage <- function(f, svy) {
-  totals <- svytotal(f, svy)
-  totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
-  names(totals_ci) <- c('total_CI_low', 'total_CI_high')
-  totals_df <- cbind(totals, totals_ci)
-  level_prefix <- as.character(f)
-  level_prefix <- level_prefix[seq(2, length(level_prefix))]
-  rownames(totals_df) <- sub(level_prefix, '', rownames(totals_df), fixed = TRUE)
-  totals_df <- totals_df[rownames(totals_df) == 'TRUE', -2]
-  if (nrow(svy) > 0) {
-    percentage <- svyciprop(f, svy)
-    percentage_ci <- as.data.frame(confint(percentage, df = degf(svy)))
-    names(percentage_ci) <- c('percentage_CI_low', 'percentage_CI_high')
-    as.data.table(cbind(
-      totals_df,
-      data.table(
-        percentage = as.vector(percentage)
-      ),
-      percentage_ci
-    ))
-  } else {
-    as.data.table(cbind(
-      totals_df,
-      data.table(
-        percentage = 0,
-        percentage_CI_low = NaN,
-        percentage_CI_high = NaN
-      )
-    ))
-  }
-}
-
-rounded_estimates <- function(dt) {
-  cbind(
-    dt[
-      ,
-      .SD,
-      .SDcols = patterns('^[^(total)|(percentage)]')
-    ],
-    dt[
-      ,
-      lapply(.SD, \(col) round(col / 10^6, 3)),
-      .SDcols = patterns('^total')
-    ],
-    dt[
-      ,
-      lapply(.SD, \(col) round(col, 3) * 100),
-      .SDcols = patterns('^percentage')
-    ]
-  )
-}
-
-string_estimates <- function(dt) {
-  dt[,
-    .(
-      description,
-      total = sprintf("%.3fM", total),
-      total_CI = sprintf(
-        "(%.3fM, %.3fM)",
-        total_CI_low,
-        total_CI_high
-      ),
-      percentage = sprintf("%0.1f%%", percentage),
-      percentage_CI = sprintf(
-        "(%0.1f%%, %0.1f%%)",
-        percentage_CI_low,
-        percentage_CI_high
-      )
-    )
-  ]
-}
-
-pretty_estimates <- function(dt) {
-  dt |>
-    rounded_estimates() |>
-    string_estimates()
-}
-
-svy <- function(dt) {
-  svydesign(
-    ids = ~SECU,
-    strata = ~SEST,
-    data = dt,
-    nest = TRUE,
-    weights = ~WGT2017_2019
-  )
-}
-
-estimate_mentions <- function(
-  svy,
-  prefix,
-  format,
-  skip = NULL,
-  sex = 'fem'
-) {
-  formats <- get_formats_for_sex(sex)
-  estimates <- rbindlist(lapply(
-    get_idxs(format, skip, sex),
-    function(x) {
-      tryCatch(
-        expr = {
-          row <- estimate_row_total_and_percentage(
-            as.formula(paste('~', prefix, x, sep = '')),
-            svy
-          )
-          row[, description := x]
-          row
-        },
-        error = function(err) {
-          message(paste('Error with row', x, ':', err))
-        }
-      )
-    }
-  ))
-  estimates[, description := factorize(description, format, formats)]
-  estimates
-}
-
-estimate_mentions_in_subdomains <- function(FUN, format, skip = NULL, sex = 'fem') {
-  formats <- get_formats_for_sex(sex)
-  estimates <- rbindlist(lapply(
-    get_idxs(format, skip, sex),
-    function(x) {
-      row <- FUN(x)
-      row[, description := x]
-      row
-    }
-  ))
-  estimates[, description := factorize(description, format, formats)]
-  estimates
-}
-
-create_pivot_table <- function(
-  prefix,
-  series,
-  id_vars,
-  source_dt
-) {
-  dt <- copy(
-    source_dt[
-      ,
-      c(id_vars, paste(prefix, series, sep = '')),
-      with = FALSE
-    ]
-  )
-
-  dt <- melt(
-    dt,
-    id.vars = id_vars,
-    variable.factor = FALSE,
-    value.name = prefix
-  )
-
-  dt[
-    ,
-    (paste(prefix, 'ID', sep = '')) :=
-      as.integer(sub(prefix, '', variable))
-  ]
-
-  dt[, variable := NULL]
-
-  dt
-}
-
-create_NSFG_pivot_table <- function(prefix, series, id_vars = 'CASEID', sex = 'fem') {
-  raw_import <- get_raw_import_for_sex(sex)
-  pivot_table <- create_pivot_table(prefix, series, id_vars, raw_import$Data)
-  setkeyv(pivot_table, id_vars)
-}
-
-na_to_false <- function(x) {
-  fifelse(is.na(x), FALSE, x)
-}
-```
-
 ```{r load-data}
-fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
-male1719 <- load_NSFG_data('2017_2019', 'Male')
+set_NSFG_2017_2019_data()
 ```
 
-```{r process-fem-data, dependson=c('helpers', 'load-data')}
+```{r process-fem-data, dependson='load-data'}
 fem1719formats <- rbindlist(list(
   fem1719$Formats,
   # Include missing level 13 for WHYNOTPGF format.
@@ -385,7 +80,7 @@ fem1719dt <- copy(fem1719$Data[, .(
 
 
 # Copy variables to working data table and set them to factors.
-set_variables_as_factors(
+set_NSFG_variables_as_factors(
   variables = c(
     ATTRACT = 'ATTRACT',
     CONDVAG = 'YESNONAF',
@@ -416,7 +111,7 @@ set_variables_as_factors(
 
 
 # Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'used_last_3m_method',
   in_prefix = 'METH3M',
   in_series = 1:3,
@@ -449,7 +144,7 @@ fem1719dt[,
 
 
 # Reset count of methods used at last intercourse within the past 3 months to include overrides of vasectomy and tubal ligation boolean variables.
-set_mention_count_variable(fem1719dt, 'used_last_3m_method')
+set_count_variable_for_mentions(fem1719dt, 'used_last_3m_method')
 
 
 # Create categorical variable for whether used contraception at last intercourse within the past 3 months.
@@ -536,7 +231,7 @@ fem1719dt[,
 
 
 # Create boolean variables for whether each reason for not using contraception was mentioned.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'nonuse_reason',
   in_prefix = 'WHYNOUSING',
   in_series = 1:5,
@@ -545,7 +240,7 @@ set_mentions_to_booleans(
 
 
 # Create boolean variables for whether each reason for not being able to get pregnant was mentioned.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'pregnancy_impossible_reason',
   in_prefix = 'WHYNOTPG',
   in_series = 1:2,
@@ -554,8 +249,8 @@ set_mentions_to_booleans(
 
 
 # Create boolean variables for whether each method was used at all in the past 3 months.
-fem1719METHXidxs <- get_idxs('METHHXF', skip = c(1:2, 22:23, 55, 98:99))
-names(fem1719METHXidxs) <- paste('any_use_12m_method', fem1719METHXidxs, sep = '')
+fem1719METHXidxs <- get_NSFG_format_indices('METHHXF', skip = c(1:2, 22:23, 55, 98:99))
+names(fem1719METHXidxs) <- paste0('any_use_12m_method', fem1719METHXidxs)
 fem1719METHX <- create_NSFG_pivot_table('METHX', 1:192)
 fem1719METHX[, CMMHCALXID := ceiling(METHXID / 4)]
 fem1719METHX <- fem1719METHX[
@@ -624,7 +319,7 @@ fem1719dt[,
 
 
 # Reset count of methods used in the past 12 months to include overrides of vasectomy and tubal ligation boolean variables.
-set_mention_count_variable(fem1719dt, 'any_use_12m_method')
+set_count_variable_for_mentions(fem1719dt, 'any_use_12m_method')
 
 
 # Create categorical variable specifying consistency of any contraceptive method use over previous 12 months that combines P12MOCON and PXNOFREQ.
@@ -653,7 +348,7 @@ fem1719dt[,
 
 
 # Create boolean variables for whether each method was used in the month preceding the interview.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'last_month_method',
   in_prefix = 'LSTMONMETH',
   in_series = 1:4,
@@ -663,7 +358,7 @@ set_mentions_to_booleans(
 
 
 # Create boolean variables for whether each method was used in the month of the interview.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'this_month_method',
   in_prefix = 'CURRMETH',
   in_series = 1:4,
@@ -673,7 +368,7 @@ set_mentions_to_booleans(
 
 
 # Create boolean variables for each reason for using pill.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'why_use_pill_reason',
   in_prefix = 'YUSEPILL',
   in_series = 1:6,
@@ -710,7 +405,7 @@ fem1719dt[,
 
 
 # Create boolean variables for each reason for using an IUD.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'why_use_iud_reason',
   in_prefix = 'YUSEIUD',
   in_series = 1:6,
@@ -792,7 +487,7 @@ for (x in c(1:2)) {
     )
   ]
 }
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'ever_used_method',
   in_prefix = 'OTHRMETH0',
   in_series = 1:7,
@@ -802,7 +497,7 @@ set_mentions_to_booleans(
 
 
 # Create boolean variables for whether each contraceptive method was ever discontinued due to dissatisfaction. Because IUD types have been split out, these cases must be handled individually.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'ever_quit_method',
   in_prefix = 'METHSTOP',
   in_series = sprintf('%02d', 1:10),
@@ -829,13 +524,13 @@ fem1719dt[
 
 
 # Create boolean variables for reason(s) for dissatisfaction with condom.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'condom_quit_reason',
   in_prefix = 'REASCOND0',
   in_series = 1:7,
   format = 'REASMFMT'
 )
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'specific_condom_quit_reason',
   in_prefix = 'STOPCOND',
   in_series = 1:2,
@@ -844,13 +539,13 @@ set_mentions_to_booleans(
 
 
 # Create boolean variables for reason(s) for dissatisfaction with pill.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'pill_quit_reason',
   in_prefix = 'REASPILL0',
   in_series = 1:9,
   format = 'REASMFMT'
 )
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'specific_pill_quit_reason',
   in_prefix = 'STOPPILL',
   in_series = 1:6,
@@ -859,13 +554,13 @@ set_mentions_to_booleans(
 
 
 # Create boolean variables for reason(s) for dissatisfaction with IUDs.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'iud_quit_reason',
   in_prefix = 'REASIUD0',
   in_series = 1:5,
   format = 'REASMFMT'
 )
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   out_prefix = 'specific_iud_quit_reason',
   in_prefix = 'STOPIUD',
   in_series = 1:5,
@@ -873,7 +568,7 @@ set_mentions_to_booleans(
 )
 ```
 
-```{r process-male-data, dependson=c('helpers', 'load-data')}
+```{r process-male-data, dependson='load-data'}
 # Start working male respondents data table.
 male1719dt <- copy(male1719$Data[, .(
   CASEID,
@@ -890,7 +585,7 @@ male1719dt <- copy(male1719$Data[, .(
 
 
 # Copy variables to working data table and set them to factors.
-set_variables_as_factors(
+set_NSFG_variables_as_factors(
   sex = 'male',
   variables = c(
     ATTRACT = 'ATTRACT',
@@ -925,7 +620,7 @@ set_variables_as_factors(
 
 
 # Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
-set_mentions_to_booleans(
+set_NSFG_mentions_to_booleans(
   sex = 'male',
   out_prefix = 'used_last_3m_method',
   in_prefix = 'METH3M',
@@ -958,7 +653,7 @@ male1719dt[,
 
 
 # Reset count of methods used at last intercourse within the past 3 months to include overrides of tubal ligation and vasectomy boolean variables.
-set_mention_count_variable(male1719dt, 'used_last_3m_method')
+set_count_variable_for_mentions(male1719dt, 'used_last_3m_method')
 
 
 # Create categorical variable for whether used contraception at last intercourse within the past 3 months.
@@ -1019,7 +714,7 @@ male1719dt[,
 
 
 # Create boolean variables for whether each specific method was used in past 12 months.
-for (x in get_idxs('MTHDSV1F', skip = c(10, 98:99), sex = 'male')) {
+for (x in get_NSFG_format_indices('MTHDSV1F', skip = c(10, 98:99), sex = 'male')) {
   male1719dt[,
     (sprintf('any_use_12m_method%d', x)) := male1719$Data[,
       !is.na(
@@ -1285,7 +980,7 @@ male1719dt[,
 
 
 # Count number of contraceptive methods used in past 12 months.
-set_mention_count_variable(male1719dt, 'any_use_12m_method')
+set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
 
 
 # Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with wife or cohabitating partner that combines CONDFREQ and CWPNOFRQ.
@@ -1376,8 +1071,8 @@ fem1719dt[, person := 1]
 
 (estimate_totals_and_percentages(
   ~person,
-  svy(fem1719dt)
-) |> pretty_estimates())[
+  get_NSFG_survey_design_for_sex('fem')
+) |> prettify_estimates_of_totals_and_percentages())[
   , .(total, total_CI)
 ] |> kable()
 ```
@@ -1389,8 +1084,8 @@ male1719dt[, person := 1]
 
 (estimate_totals_and_percentages(
   ~person,
-  svy(male1719dt)
-) |> pretty_estimates())[
+  get_NSFG_survey_design_for_sex('male')
+) |> prettify_estimates_of_totals_and_percentages())[
   , .(total, total_CI)
 ] |> kable()
 ```
@@ -1407,8 +1102,8 @@ Description: By whether had intercourse with opposite sex during the 3 months pr
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~used_last_3m,
-  svy(fem1719dt)
-) |> pretty_estimates() |> kable()
+  get_NSFG_survey_design_for_sex('fem')
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
@@ -1416,8 +1111,8 @@ estimate_totals_and_percentages(
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
   ~used_last_3m,
-  svy(male1719dt)
-) |> pretty_estimates() |> kable()
+  get_NSFG_survey_design_for_sex('male')
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1433,10 +1128,10 @@ Description: Categorized into exclusive hierarchy, such that individuals categor
 estimate_totals_and_percentages(
   ~factor(used_last_3m_status),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_method_count == 0
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
@@ -1445,10 +1140,10 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(used_last_3m_status),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_method_count == 0
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1462,13 +1157,13 @@ Domain: Persons who had sexual intercourse with someone of the opposite sex in t
 estimate_totals_and_percentages(
   ~factor(used_last_3m_status),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_status %in% c(
       'Used at least one contraceptive method at last intercourse',
       'Otherwise did not use contraception at last intercourse'
     )
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
@@ -1477,13 +1172,13 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(used_last_3m_status),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_status %in% c(
       'Used at least one contraceptive method at last intercourse',
       'Otherwise did not use contraception at last intercourse'
     )
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1495,10 +1190,10 @@ Domain: Males who had intercourse with a female in the past 3 months
 estimate_totals_and_percentages(
   ~not_aware,
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     SEX3MO == 'YES, HAD INTERCOURSE'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who had intercourse with a female in the past 3 months
@@ -1507,12 +1202,12 @@ Domain: Males who had intercourse with a female in the past 3 months
 estimate_totals_and_percentages(
   ~not_aware,
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_status %in% c(
       'Otherwise did not use contraception at last intercourse'
     )
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1528,10 +1223,10 @@ Domain: Persons who have not had sexual intercourse with someone of the opposite
 estimate_totals_and_percentages(
   ~factor(HADSEX),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     SEX3MO != 'YES'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
@@ -1540,10 +1235,10 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(HADSEX),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     SEX3MO != 'YES, HAD INTERCOURSE'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ### Reason for Never Having Intercourse
@@ -1556,10 +1251,10 @@ Domain: Persons who have never had sexual intercourse with someone of the opposi
 estimate_totals_and_percentages(
   ~factor(YNOSEX),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
@@ -1568,10 +1263,10 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(YNOSEX),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1583,10 +1278,10 @@ Domain: Females who have not had sexual intercourse with a male in the past 3 mo
 estimate_totals_and_percentages(
   ~factor(ATTRACT),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     SEX3MO != 'YES'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who had sexual intercourse with a male in the past 3 months
@@ -1595,10 +1290,10 @@ Domain: Females who had sexual intercourse with a male in the past 3 months
 estimate_totals_and_percentages(
   ~factor(ATTRACT),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     SEX3MO == 'YES'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who have not had sexual intercourse with a female in the past 3 months
@@ -1607,10 +1302,10 @@ Domain: Males who have not had sexual intercourse with a female in the past 3 mo
 estimate_totals_and_percentages(
   ~factor(ATTRACT),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     SEX3MO != 'YES, HAD INTERCOURSE'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who had sexual intercourse with a female in the past 3 months
@@ -1619,10 +1314,10 @@ Domain: Males who had sexual intercourse with a female in the past 3 months
 estimate_totals_and_percentages(
   ~factor(ATTRACT),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     SEX3MO == 'YES, HAD INTERCOURSE'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1634,10 +1329,10 @@ Domain: Females who report being physically unable to get pregnant
 estimate_totals_and_percentages(
   ~factor(REASIMPR),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     POSIBLPG == 'No'
   )
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who report their partner is unable to father a child
@@ -1646,10 +1341,10 @@ Domain: Females who report their partner is unable to father a child
 estimate_totals_and_percentages(
   ~factor(REASIMPP),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     POSIBLMN == 'No'
   )
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1662,8 +1357,8 @@ Description: Females who are not currently pregnant, had intercourse in the mont
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(WYNOTUSE != 'Not Applicable'),
-  svy(fem1719dt)
-)[description == TRUE] |> pretty_estimates() |> kable()
+  get_NSFG_survey_design_for_sex('fem')
+)[description == TRUE] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ## Intent to Conceive
@@ -1674,10 +1369,10 @@ Domain: Females who are not currently pregnant, had intercourse in the month of 
 estimate_totals_and_percentages(
   ~factor(pregnancy_intent_status),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     WYNOTUSE != 'Not Applicable'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ## Reason(s) for Nonuse When Not Intending to Conceive
@@ -1685,14 +1380,14 @@ estimate_totals_and_percentages(
 Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     pregnancy_intent_status == 'Not intending to conceive'
   ),
   prefix = 'nonuse_reason',
   format = 'WHYNOUSNG'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ## Reason(s) Respondent Believes She Cannot Become Pregnant
@@ -1700,14 +1395,14 @@ estimate_mentions(
 Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     nonuse_reason2
   ),
   prefix = 'pregnancy_impossible_reason',
   format = 'WHYNOTPGF'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1725,10 +1420,10 @@ Description: By number of methods used at last intercourse
 estimate_totals_and_percentages(
   ~factor(used_last_3m_method_count),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_method_count > 0
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
@@ -1737,10 +1432,10 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(used_last_3m_method_count),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_method_count > 0
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1753,30 +1448,30 @@ Description: By method(s), with those using multiple methods counted multiple ti
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_method_count > 0
   ),
   prefix = 'used_last_3m_method',
   skip = 20:21,
   format = 'METH3MF'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions(
+estimate_NSFG_mentions(
   sex = 'male',
-  svy = subset(
-    svy(male1719dt),
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_method_count > 0
   ),
   prefix = 'used_last_3m_method',
   skip = 95:96,
   format = 'METH3MF'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1787,30 +1482,30 @@ Domain: Persons who had intercourse with opposite sex during the 3 months prior 
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_method_count == 1
   ),
   prefix = 'used_last_3m_method',
   skip = 20:21,
   format = 'METH3MF'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions(
+estimate_NSFG_mentions(
   sex = 'male',
-  svy = subset(
-    svy(male1719dt),
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_method_count == 1
   ),
   prefix = 'used_last_3m_method',
   skip = 95:96,
   format = 'METH3MF'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1823,38 +1518,38 @@ Description: Proportion who also used other method(s)
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions_in_subdomains(
-  FUN = function(x) {
+estimate_NSFG_mentions_in_subdomains(
+  row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       ~I(used_last_3m_method_count > 1),
       subset(
-        svy(fem1719dt),
+        get_NSFG_survey_design_for_sex('fem'),
         fem1719dt[, get(sprintf('used_last_3m_method%d', x))]
       )
     )
   },
   format = 'METH3MF',
   skip = c(20:22)
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions_in_subdomains(
+estimate_NSFG_mentions_in_subdomains(
   sex = 'male',
-  FUN = function(x) {
+  row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       ~I(used_last_3m_method_count > 1),
       subset(
-        svy(male1719dt),
+        get_NSFG_survey_design_for_sex('male'),
         male1719dt[, get(sprintf('used_last_3m_method%d', x))]
       )
     )
   },
   format = 'METH3MF',
   skip = 95:96
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1867,30 +1562,30 @@ Description: By method(s), with those using multiple methods counted multiple ti
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_method8
   ),
   prefix = 'used_last_3m_method',
   skip = c(8, 20:21),
   format = 'METH3MF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions(
+estimate_NSFG_mentions(
   sex = 'male',
-  svy = subset(
-    svy(male1719dt),
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_method9
   ),
   prefix = 'used_last_3m_method',
   skip = c(9, 95:96),
   format = 'METH3MF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1903,30 +1598,30 @@ Description: By method(s), with those using multiple methods counted multiple ti
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_method5
   ),
   prefix = 'used_last_3m_method',
   skip = c(5, 20:21),
   format = 'METH3MF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions(
+estimate_NSFG_mentions(
   sex = 'male',
-  svy = subset(
-    svy(male1719dt),
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_method2
   ),
   prefix = 'used_last_3m_method',
   skip = c(2, 95:96),
   format = 'METH3MF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1939,30 +1634,30 @@ Description: By method(s), with those using multiple methods counted multiple ti
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_method2
   ),
   prefix = 'used_last_3m_method',
   skip = c(2, 20:21),
   format = 'METH3MF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions(
+estimate_NSFG_mentions(
   sex = 'male',
-  svy = subset(
-    svy(male1719dt),
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_method1
   ),
   prefix = 'used_last_3m_method',
   skip = c(1, 95:96),
   format = 'METH3MF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -1975,30 +1670,30 @@ Description: By method(s), with those using multiple methods counted multiple ti
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_method1
   ),
   prefix = 'used_last_3m_method',
   skip = c(1, 20:21),
   format = 'METH3MF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions(
+estimate_NSFG_mentions(
   sex = 'male',
-  svy = subset(
-    svy(male1719dt),
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_method4
   ),
   prefix = 'used_last_3m_method',
   skip = c(4, 95:96),
   format = 'METH3MF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2013,8 +1708,8 @@ Description: Persons who have had intercourse with opposite in the past 12 month
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(sex12mo),
-  svy(fem1719dt)
-) |> pretty_estimates() |> kable()
+  get_NSFG_survey_design_for_sex('fem')
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
@@ -2022,8 +1717,8 @@ estimate_totals_and_percentages(
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(SEX12MO == 'YES, HAD INTERCOURSE'),
-  svy(male1719dt)
-) |> pretty_estimates() |> kable()
+  get_NSFG_survey_design_for_sex('male')
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2035,10 +1730,10 @@ Domain: Females who have had intercourse with a male in the past 12 months
 estimate_totals_and_percentages(
   ~factor(any_use_12m_method_count),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     sex12mo
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who have had intercourse with a female in the past 12 months
@@ -2047,10 +1742,10 @@ Domain: Males who have had intercourse with a female in the past 12 months
 estimate_totals_and_percentages(
   ~factor(any_use_12m_method_count),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     SEX12MO == 'YES, HAD INTERCOURSE'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2063,30 +1758,30 @@ Description: By method(s), with those using multiple methods counted multiple ti
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     any_use_12m_method_count > 0
   ),
   prefix = 'any_use_12m_method',
   skip = c(1:2, 22:23, 55, 98:99),
   format = 'METHHXF'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions(
+estimate_NSFG_mentions(
   sex = 'male',
-  svy = subset(
-    svy(male1719dt),
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('male'),
     any_use_12m_method_count > 0
   ),
   prefix = 'any_use_12m_method',
   skip = 98:99,
   format = 'MTHDSV1F'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2097,30 +1792,30 @@ Domain: Persons who had intercourse with opposite sex during the 12 months prior
 **Females**
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     any_use_12m_method_count == 1
   ),
   prefix = 'any_use_12m_method',
   skip = c(1:2, 22:23, 55, 98:99),
   format = 'METHHXF'
-)[total > 0][order(-total)] |> pretty_estimates() |> kable()
+)[total > 0][order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 **Males**
 
 ```{r, dependson='process-male-data'}
-estimate_mentions(
+estimate_NSFG_mentions(
   sex = 'male',
-  svy = subset(
-    svy(male1719dt),
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('male'),
     any_use_12m_method_count == 1
   ),
   prefix = 'any_use_12m_method',
   skip = 98:99,
   format = 'MTHDSV1F'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2136,10 +1831,10 @@ Description: By whether used a method of contraception in past 12 months
 estimate_totals_and_percentages(
   ~I(any_use_12m_method_count > 0),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
@@ -2150,10 +1845,10 @@ Description: By whether used a method of contraception ever
 estimate_totals_and_percentages(
   ~factor(EVERUSED),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who have had intercourse with a female in the past 3 months and did not use a method of contraception at last intercourse
@@ -2164,10 +1859,10 @@ Description: By whether used a method of contraception in past 12 months
 estimate_totals_and_percentages(
   ~I(any_use_12m_method_count > 0),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2179,12 +1874,12 @@ Domain: Females who had intercourse with a male during the 12 months prior to in
 estimate_totals_and_percentages(
   ~factor(any_use_12m_consistency),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     sex12mo &
       any_use_12m_method_count > 0 &
       TUBS != 'YES'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who had used at least one method of contraception during intercourse with wife or cohabitating partner during the 12 months prior to interview, who do not have active sterilizing operations such as vasectomies, and whose partners do not have active sterilizing operations such as tubal ligations
@@ -2193,12 +1888,12 @@ Domain: Males who had used at least one method of contraception during intercour
 estimate_totals_and_percentages(
   ~factor(any_use_12m_wcp_consistency),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     !is.na(CWPALLBC01) &
       RSURGSTR != 'YES' &
       PSURGSTR != 'YES'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who had used at least one method of contraception during intercourse with last partner, who is not wife or cohabitating partner, during the 12 months prior to interview, and who do not have active sterilizing operations such as vasectomies
@@ -2207,11 +1902,11 @@ Domain: Males who had used at least one method of contraception during intercour
 estimate_totals_and_percentages(
   ~factor(any_use_12m_p1_consistency),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     !is.na(PXMETHOD01) &
       RSURGSTR != 'YES'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2234,11 +1929,11 @@ estimate_totals_and_percentages(
     )
   ),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     sex12mo &
       any_use_12m_method4
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who had intercourse with a female during the 12 months prior to interview, who used condom at least once in the past 12 months
@@ -2247,11 +1942,11 @@ Domain: Males who had intercourse with a female during the 12 months prior to in
 estimate_totals_and_percentages(
   ~factor(condom_12m_consistency),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     SEX12MO == 'YES, HAD INTERCOURSE' &
         any_use_12m_method1
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who had intercourse with a male during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condom
@@ -2271,12 +1966,12 @@ estimate_totals_and_percentages(
     )
   ),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     sex12mo &
       any_use_12m_method4 &
       any_use_12m_method_count == 1
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who had intercourse with a female during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condom
@@ -2285,12 +1980,12 @@ Domain: Males who had intercourse with a female during the 12 months prior to in
 estimate_totals_and_percentages(
   ~factor(condom_12m_consistency),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     SEX12MO == 'YES, HAD INTERCOURSE' &
       any_use_12m_method1 &
       any_use_12m_method_count == 1
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2302,10 +1997,10 @@ Domain: Females who used pill in the month of the interview or the previous mont
 estimate_totals_and_percentages(
   ~factor(MISSPILL),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     MISSPILL != 'Not Applicable'
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2324,13 +2019,13 @@ Description: By whether used condom at last intercourse with a male
 estimate_totals_and_percentages(
   ~factor(CONDVAG),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     VAGSEX %in% c(
       'Yes',
       'Not Applicable'
     )
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who have had vaginal intercourse with a female
@@ -2341,13 +2036,13 @@ Description: By whether used condom at last intercourse with a female
 estimate_totals_and_percentages(
   ~factor(CONDVAG),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     VAGSEX %in% c(
       'Yes',
       'Not Applicable'
     )
   )
-) |> pretty_estimates() |> kable()
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ### Reason for Use
@@ -2358,10 +2053,10 @@ Domain: Females who used condom at last intercourse with a male
 estimate_totals_and_percentages(
   ~factor(WHYCONDL),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     CONDVAG == 'Yes'
   )
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Males who used condom at last intercourse with a female
@@ -2370,10 +2065,10 @@ Domain: Males who used condom at last intercourse with a female
 estimate_totals_and_percentages(
   ~factor(WHYCONDL),
   subset(
-    svy(male1719dt),
+    get_NSFG_survey_design_for_sex('male'),
     CONDVAG == 'Yes'
   )
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2386,8 +2081,8 @@ Description: By whether used pill either during the month of interview or the mo
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~I(this_month_method3 | last_month_method3),
-  svy(fem1719dt)
-) |> pretty_estimates() |> kable()
+  get_NSFG_survey_design_for_sex('fem')
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ### Reason(s) for Use
@@ -2397,15 +2092,15 @@ Domain: Females who used pill either during the month of interview or the month 
 Description: By reason(s), with those mentioning multiple reasons counted multiple times
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     this_month_method3 | last_month_method3
   ),
   prefix = 'why_use_pill_reason',
   format = 'YUSEMTHF',
   skip = 98:99
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ### Contraceptive vs. Noncontraceptive Reasons
@@ -2416,10 +2111,10 @@ Domain: Females who used pill either during the month of interview or the month 
 estimate_totals_and_percentages(
   ~pill_motivation,
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     this_month_method3 | last_month_method3
   )
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2433,8 +2128,8 @@ Description: By whether used an IUD either during the month of interview or the 
 estimate_totals_and_percentages(
   #~I(this_month_method19 | last_month_method19),
   ~I(!is.na(YUSEIUD1)),
-  svy(fem1719dt)
-) |> pretty_estimates() |> kable()
+  get_NSFG_survey_design_for_sex('fem')
+) |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ### Reason(s) for Use
@@ -2444,16 +2139,16 @@ Domain: Females who used an IUD either during the month of interview or the mont
 Description: By reason(s), with those mentioning multiple reasons counted multiple times*
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     #this_month_method19 | last_month_method19
     !is.na(YUSEIUD1)
   ),
   prefix = 'why_use_iud_reason',
   format = 'YUSEMTHF',
   skip = 98:99
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ### Contraceptive vs. Noncontraceptive Reasons
@@ -2464,11 +2159,11 @@ Domain: Females who used an IUD either during the month of interview or the mont
 estimate_totals_and_percentages(
   ~factor(iud_motivation),
   subset(
-    svy(fem1719dt),
+    get_NSFG_survey_design_for_sex('fem'),
     #this_month_method19 | last_month_method19
     !is.na(YUSEIUD1)
   )
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2478,11 +2173,11 @@ estimate_totals_and_percentages(
 Domain: Females aged 15-49 living in households in the United States
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = get_NSFG_survey_design_for_sex('fem'),
   prefix = 'ever_used_method',
   format = 'ever_used_method'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 ## Among Those Who Have Ever Had Intercourse
@@ -2492,21 +2187,21 @@ Description: Females who have ever had intercourse with a male
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(HADSEX),
-  svy(fem1719dt)
-)[order(-total)] |> pretty_estimates() |> kable()
+  get_NSFG_survey_design_for_sex('fem')
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who have ever had intercourse with a male
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     HADSEX == 'YES, R EVER HAD INTERCOURSE'
   ),
   prefix = 'ever_used_method',
   format = 'ever_used_method'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2518,19 +2213,19 @@ Domain: For each method, females who have ever used the method
 Description: For each method, females who have stopped using the method due to dissatisfaction
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions_in_subdomains(
-  FUN = function(x) {
+estimate_NSFG_mentions_in_subdomains(
+  row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       as.formula(sprintf('~ever_quit_method%d', x)),
       subset(
-        svy(fem1719dt),
+        get_NSFG_survey_design_for_sex('fem'),
         fem1719dt[, get(sprintf('ever_used_method%d', x))]
       )
     )
   },
   format = 'ever_used_method',
   skip = c(20)
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2541,14 +2236,14 @@ Domain: Females who have ever discontinued using condom due to dissatisfaction
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     ever_quit_method4
   ),
   prefix = 'condom_quit_reason',
   format = 'REASMFMT'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who have discontinued using condom because "too difficult to use," "side effects," or "other" reason
@@ -2556,14 +2251,14 @@ Domain: Females who have discontinued using condom because "too difficult to use
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     condom_quit_reason3 | condom_quit_reason6 | condom_quit_reason15
   ),
   prefix = 'specific_condom_quit_reason',
   format = 'STOPCONDFMT'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2574,14 +2269,14 @@ Domain: Females who have ever discontinued using pill due to dissatisfaction
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     ever_quit_method3
   ),
   prefix = 'pill_quit_reason',
   format = 'REASMFMT'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who have discontinued using pill because "too difficult to use," "side effects," or "other" reason
@@ -2589,14 +2284,14 @@ Domain: Females who have discontinued using pill because "too difficult to use,"
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     pill_quit_reason3 | pill_quit_reason6 | pill_quit_reason15
   ),
   prefix = 'specific_pill_quit_reason',
   format = 'STOPPILLFMT'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2607,14 +2302,14 @@ Domain: Females who have ever discontinued using an hormonal IUD due to dissatis
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
 ```{r, dependson='process-pill-quit'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     ever_quit_method32
   ),
   prefix = 'iud_quit_reason',
   format = 'REASMFMT'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who have discontinued using an hormonal IUD because "too difficult to use," "side effects," or "other" reason
@@ -2622,9 +2317,9 @@ Domain: Females who have discontinued using an hormonal IUD because "too difficu
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     ever_quit_method32 & (
       iud_quit_reason3 |
         iud_quit_reason6 |
@@ -2633,7 +2328,7 @@ estimate_mentions(
   ),
   prefix = 'specific_iud_quit_reason',
   format = 'STOPIUDFMT'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
@@ -2644,14 +2339,14 @@ Domain: Females who have ever discontinued using a copper IUD due to dissatisfac
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
 ```{r, dependson='process-pill-quit'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     ever_quit_method31
   ),
   prefix = 'iud_quit_reason',
   format = 'REASMFMT'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 Domain: Females who have discontinued using copper IUD because "too difficult to use," "side effects," or "other" reason
@@ -2659,9 +2354,9 @@ Domain: Females who have discontinued using copper IUD because "too difficult to
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
 ```{r, dependson='process-fem-data'}
-estimate_mentions(
-  svy = subset(
-    svy(fem1719dt),
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
     ever_quit_method31 & (
       iud_quit_reason3 |
         iud_quit_reason6 |
@@ -2670,14 +2365,13 @@ estimate_mentions(
   ),
   prefix = 'specific_iud_quit_reason',
   format = 'STOPIUDFMT'
-)[order(-total)] |> pretty_estimates() |> kable()
+)[order(-total)] |> prettify_estimates_of_totals_and_percentages() |> kable()
 ```
 
 
 
 # Things to Do
 
-* Organize helper functions into NSFG-specific and more general
 * Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
 * Style tables for output
 * Style plots for output

@@ -16,11 +16,9 @@ library(survey)
 
 i_am('EDA/011_why_not_use.Rmd')
 
-source(here('R/EDA_helpers.R'))
-source(here('R/data_table_helpers.R'))
-source(here('R/factor_helpers.R'))
-source(here('R/import.R'))
-source(here('R/survey_helpers.R'))
+source(here('R/NSFG_helpers.R'))
+source(here('R/deprecated_helpers.R'))
+source(here('R/general_helpers.R'))
 
 opts_chunk$set(
   cache = TRUE,
@@ -73,14 +71,14 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
 fem_2017_2019_MONSX <- create_pivot_table(
   'CMMONSX',
   2:48,
-  fem_2017_2019$Data,
-  c('CASEID', 'CMINTVW', 'CMLSTYR')
+  c('CASEID', 'CMINTVW', 'CMLSTYR'),
+  fem_2017_2019$Data
 )[
   create_pivot_table(
     'MONSX',
     2:48,
-    fem_2017_2019$Data,
-    'CASEID'
+    'CASEID',
+    fem_2017_2019$Data
   ),
   on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
 ]
@@ -105,8 +103,8 @@ fem_2017_2019_data <- fem_2017_2019_MONSX[
 fem_2017_2019_METHX <- create_pivot_table(
   'METHX',
   1:192,
-  fem_2017_2019$Data,
-  'CASEID'
+  'CASEID',
+  fem_2017_2019$Data
 )
 
 fem_2017_2019_METHX[,
@@ -117,8 +115,8 @@ fem_2017_2019_METHX <- fem_2017_2019_METHX[
   create_pivot_table(
     'CMMHCALX',
     1:48,
-    fem_2017_2019$Data,
-    c('CASEID', 'CMINTVW', 'CMLSTYR')
+    c('CASEID', 'CMINTVW', 'CMLSTYR'),
+    fem_2017_2019$Data
   ),
   on = c('CASEID', 'CMMHCALXID')
 ]

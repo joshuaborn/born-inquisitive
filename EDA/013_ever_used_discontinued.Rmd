@@ -16,11 +16,9 @@ library(survey)
 
 i_am('EDA/013_ever_used_discontinued.Rmd')
 
-source(here('R/EDA_helpers.R'))
-source(here('R/data_table_helpers.R'))
-source(here('R/factor_helpers.R'))
-source(here('R/import.R'))
-source(here('R/survey_helpers.R'))
+source(here('R/NSFG_helpers.R'))
+source(here('R/deprecated_helpers.R'))
+source(here('R/general_helpers.R'))
 
 opts_chunk$set(
   cache = TRUE,

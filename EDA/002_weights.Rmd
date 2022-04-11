@@ -15,7 +15,9 @@ library(knitr)
 
 i_am('EDA/002_weights.Rmd')
 
-source(here('R/import.R'))
+source(here('R/NSFG_helpers.R'))
+source(here('R/deprecated_helpers.R'))
+source(here('R/general_helpers.R'))
 
 opts_chunk$set(
   echo = TRUE,

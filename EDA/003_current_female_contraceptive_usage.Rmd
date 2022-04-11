@@ -17,9 +17,9 @@ library(survey)
 
 i_am('EDA/003_current_female_contraceptive_usage.Rmd')
 
-source(here('R/factor_helpers.R'))
-source(here('R/import.R'))
-source(here('R/survey_helpers.R'))
+source(here('R/NSFG_helpers.R'))
+source(here('R/deprecated_helpers.R'))
+source(here('R/general_helpers.R'))
 
 opts_chunk$set(
   echo = TRUE,

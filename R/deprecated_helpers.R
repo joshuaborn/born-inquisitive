@@ -1,6 +1,51 @@
 library(data.table)
-library(knitr)
+library(here)
 library(survey)
+
+i_am('R/deprecated_helpers.R')
+
+env <- new.env()
+
+env$estimates <- data.table()
+
+collect_estimate <- function(est, title, domain = '', type = '', round_to = 3, plot = FALSE) {
+  this_title <- title
+  this_domain <- domain
+  this_type <- type
+
+  if (type == 'total') {
+    dt <- in_millions(est, round_to)
+  } else if (type == 'proportion') {
+    dt <- rounded(est, round_to)
+  } else {
+    dt <- as.data.table(est)
+  }
+  env$estimates <- rbindlist(list(
+    env$estimates[
+      !(
+        title == this_title &
+          domain == this_domain &
+          type == this_type
+      )
+    ],
+    dt[, .(
+      domain = this_domain,
+      title = this_title,
+      type = this_type,
+      level,
+      estimate,
+      se,
+      `2.5 %`,
+      `97.5 %`
+    )]
+  ))
+
+  env$estimates[
+    title == this_title &
+      domain == this_domain &
+      type == this_type
+  ]
+}
 
 rename_CI_columns <- function(names) {
   these_names <- names
@@ -68,4 +113,27 @@ rounded <- function(dt, round_to = 3) {
   sub_dt <- round(dt[, cols, with = FALSE], round_to)
   dt[, (cols) := sub_dt]
   dt
+}
+
+factorize <- function(x, name, formats_table, fill_na = TRUE) {
+  if (fill_na) {
+    nafill_value <- max(formats_table[format_name == name, factor_value]) + 1
+    factor(
+      nafill(x, fill = nafill_value),
+      levels = c(
+        formats_table[format_name == name, factor_value],
+        nafill_value
+      ),
+      labels = c(
+        formats_table[format_name == name, factor_label],
+        'Not Applicable'
+      )
+    )
+  } else {
+    factor(
+      x,
+      levels = formats_table[format_name == name, factor_value],
+      labels = formats_table[format_name == name, factor_label]
+    )
+  }
 }
