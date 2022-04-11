@@ -294,7 +294,7 @@ fem1719dt <- fem1719MONSX[
   !is.na(MONSX) & MONSX == 1 &
     CMMONSX > CMLSTYR &
     CMMONSX <= CMINTVW,
-  .(sex12mo = .N > 1),
+  .(sex12mo = TRUE),
   by = CASEID
 ][fem1719dt]
 fem1719dt[, sex12mo := na_to_false(sex12mo)]

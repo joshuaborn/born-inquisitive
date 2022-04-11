@@ -47,7 +47,7 @@ fem1719_sex12mo <- fem1719_MONSX[
   !is.na(MONSX) & MONSX == 1 &
     CMMONSX > CMLSTYR &
     CMMONSX <= CMINTVW,
-  .(sex12mo = .N > 1),
+  .(sex12mo = TRUE),
   by = CASEID
 ]
 
@@ -65,7 +65,7 @@ fem1719_sex_this_month <- fem1719_MONSX[
 
 ## `P12MOCON` and `PXNOFREQ` for Females
 
-There cases that are in the universe for `P12MOCON` as specified in the codebook, but do not have answers for `P12MOCON`. Additionally, there are answers for `P12MOCON` for cases not in the universe for `P12MOCON` specified in the codebook.
+There cases that are in the universe for `P12MOCON` as specified in the codebook, but do not have answers for `P12MOCON`. However, all of the cases with answers to `P12MOCON` are in the universe for `P12MOCON` specified in the codebook.
 
 All the cases that are in the universe for `PXNOFREQ` as specified in the codebook have answers for `PXNOFREQ`. However, some cases not in the universe for `PXNOFREQ` as specified in the codebook also have answers for `PXNOFREQ`.
 
@@ -84,19 +84,14 @@ fem1719_sex12mo[
     P12MOCON
   )
 ] |> kable()
+```
 
-
+```{r, dependson='create-pivot-tables'}
 fem1719_sex12mo[
   fem1719$Data
 ][
   !is.na(P12MOCON) & (!sex12mo | CONDOM != 1),
-  .(
-    CASEID,
-    P12MOCON,
-    CASEID,
-    sex12mo,
-    CONDOM
-  )
+  .N
 ] |> kable()
 ```
 
@@ -109,8 +104,9 @@ fem1719_sex12mo[
     P12MOCON != 1,
   table(PXNOFREQ, useNA = 'ifany')
 ] |> kable()
+```
 
-
+```{r, dependson='create-pivot-tables'}
 fem1719_sex12mo[
   fem1719$Data
 ][
