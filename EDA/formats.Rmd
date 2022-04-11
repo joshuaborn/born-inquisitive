@@ -13,7 +13,7 @@ library(data.table)
 library(here)
 library(knitr)
 
-i_am('reports/formats.Rmd')
+i_am('EDA/formats.Rmd')
 
 source(here('R/NSFG_helpers.R'))
 

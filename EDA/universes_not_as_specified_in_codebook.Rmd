@@ -14,7 +14,7 @@ library(here)
 library(knitr)
 library(survey)
 
-i_am('reports/universes_not_as_specified_in_codebook.Rmd')
+i_am('EDA/universes_not_as_specified_in_codebook.Rmd')
 
 source(here('R/NSFG_helpers.R'))
 
