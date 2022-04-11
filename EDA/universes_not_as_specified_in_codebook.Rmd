@@ -33,9 +33,12 @@ fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
 male1719 <- load_NSFG_data('2017_2019', 'Male')
 ```
 
+
+
 # `CONDVAG`
 
 For both males and females, all the cases that are in the universe for `CONDVAG` as specified in the codebook have answers for `CONDVAG`. However, some cases not in the universe for `CONDVAG` as specified in the codebook also have answers for `CONDVAG`. All of these cases have "Not ascertained" answers for `VAGSEX`.
+
 
 ## Females
 
@@ -59,6 +62,7 @@ fem1719$Data[
 ] |> kable()
 ```
 
+
 ## Males
 
 ```{r, dependson='load-data'}
@@ -80,6 +84,7 @@ male1719$Data[
   )
 ] |> kable()
 ```
+
 
 
 # `MISSPILL`
@@ -132,7 +137,9 @@ fem1719$Data[
 ```
 
 
+
 # `P12MOCON`, `P12MOCONO`, and `PXNOFREQ`
+
 
 ## Females
 
@@ -216,13 +223,14 @@ fem1719_sex12mo[
 ] |> kable()
 ```
 
+
 ## Males
 
 All the cases that are in the universe for `P12MOCON` as specified in the codebook have answers for `P12MOCON`, and all of the cases with answers to `P12MOCON` are in the universe for `P12MOCON` specified in the codebook.
 
 Similarly, all the cases that are in the universe for `P12MOCONO` as specified in the codebook have answers for `P12MOCONO`, and all of the cases with answers to `P12MOCONO` are in the universe for `P12MOCONO` specified in the codebook.
 
-One of the cases in the universe for `PXNOFREQ` as specified in the codebook does not have an answer for `PXNOFREQ`. However, all of the cases with answers to `PXNOFREQ` are in the universe for `PXNOFREQ` specified in the codebook.
+One of the cases in the universe for `PXNOFREQ` as specified in the codebook does not have an answer for `PXNOFREQ`. However, this case has a `RSURGSTR` value of `1` and so is outside the domain of interest. All of the cases with answers to `PXNOFREQ` are in the universe for `PXNOFREQ` specified in the codebook.
 
 ```{r, dependson='load-data'}
 male1719$Data[
@@ -259,7 +267,8 @@ male1719$Data[
     CASEID,
     PXANYUSE,
     PXCONFRQ,
-    PXNOFREQ
+    PXNOFREQ,
+    RSURGSTR
   )
 ] |> kable()
 ```
@@ -272,6 +281,7 @@ male1719$Data[
  .N
 ] |> kable()
 ```
+
 
 
 # `TYPEIUD_1`
