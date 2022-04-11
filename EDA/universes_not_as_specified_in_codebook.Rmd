@@ -33,6 +33,31 @@ fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
 male1719 <- load_NSFG_data('2017_2019', 'Male')
 ```
 
+```{r create-pivot-tables, dependson='load-data'}
+fem1719_MONSX <- create_NSFG_pivot_table(
+  'CMMONSX',
+  2:48,
+  c('CASEID', 'CMINTVW', 'CMLSTYR')
+)[
+  create_NSFG_pivot_table('MONSX', 2:48),
+  on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
+]
+
+fem1719_sex12mo <- fem1719_MONSX[
+  !is.na(MONSX) & MONSX == 1 &
+    CMMONSX > CMLSTYR &
+    CMMONSX <= CMINTVW,
+  .(sex12mo = .N > 1),
+  by = CASEID
+]
+
+fem1719_sex_this_month <- fem1719_MONSX[
+    CMMONSX == CMINTVW,
+  .(sex_this_month = equals(MONSX, 1)),
+  by = CASEID
+]
+```
+
 
 
 # `CONDVAG`
@@ -147,25 +172,8 @@ There cases that are in the universe for `P12MOCON` as specified in the codebook
 
 All the cases that are in the universe for `PXNOFREQ` as specified in the codebook have answers for `PXNOFREQ`. However, some cases not in the universe for `PXNOFREQ` as specified in the codebook also have answers for `PXNOFREQ`.
 
-```{r, dependson='load-data'}
-fem1719_MONSX <- create_NSFG_pivot_table(
-  'CMMONSX',
-  2:48,
-  c('CASEID', 'CMINTVW', 'CMLSTYR')
-)[
-  create_NSFG_pivot_table('MONSX', 2:48),
-  on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
-]
 
-fem1719_sex12mo <- fem1719_MONSX[
-  !is.na(MONSX) & MONSX == 1 &
-    CMMONSX > CMLSTYR &
-    CMMONSX <= CMINTVW,
-  .(sex12mo = .N > 1),
-  by = CASEID
-]
-
-
+```{r, dependson='create-pivot-tables'}
 fem1719_sex12mo[
   fem1719$Data
 ][
@@ -193,8 +201,9 @@ fem1719_sex12mo[
     CONDOM
   )
 ] |> kable()
+```
 
-
+```{r, dependson='create-pivot-tables'}
 fem1719_sex12mo[
   fem1719$Data
 ][
@@ -339,6 +348,53 @@ fem1719$Data[
 ```
 
 
-* `WHYNOTUSE`
+
+# `WYNOTUSE`
+
+There cases that are in the universe for `WYNOTUSE` as specified in the codebook, but do not have answers for `WYNOTUSE`. Additionally, there are answers for `WYNOTUSE` for cases not in the universe for `WYNOTUSE` specified in the codebook.
+
+```{r, dependson='create-pivot-tables'}
+fem1719_sex_this_month[
+  fem1719$Data
+][
+  equals(CURRPREG, 5) &
+    sex_this_month &
+    !is.element(RSTRSTAT, 1:2) &
+    equals(CURRMETH1, 1) &
+    is.na(WYNOTUSE),
+  .(
+    CASEID,
+    CURRPREG,
+    sex_this_month,
+    RSTRSTAT,
+    CURRMETH1,
+    WYNOTUSE
+  )
+] |> kable()
+```
+
+```{r, dependson='create-pivot-tables'}
+fem1719_sex_this_month[
+  fem1719$Data
+][
+  !(
+    equals(CURRPREG, 5) &
+      sex_this_month &
+      !is.element(RSTRSTAT, 1:2) &
+      equals(CURRMETH1, 1)
+    ) &
+    !is.na(WYNOTUSE),
+  .(
+    CASEID,
+    CURRPREG,
+    sex_this_month,
+    RSTRSTAT,
+    CURRMETH1,
+    WYNOTUSE
+  )
+] |> kable()
+```
+
+
 * `YNOSEX` vs `HADSEX`
 * `YUSEIUD1`
