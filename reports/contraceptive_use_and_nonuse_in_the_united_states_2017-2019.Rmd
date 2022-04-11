@@ -515,13 +515,12 @@ set_NSFG_mentions_to_booleans(
   out_prefix = 'ever_quit_method',
   in_prefix = 'METHSTOP',
   in_series = sprintf('%02d', 1:10),
-  format = 'METHSTOPF',
-  skip = c(19)
+  format = 'METHSTOPF'
 )
 for (x in c(1:2)) {
   fem1719dt[
     fem1719$Data,
-    (sprintf('ever_quit_method%d', 30 + x)) := na_to_false(
+    (sprintf('ever_quit_method%d', 30 + x)) := ever_quit_method19 & (
       has_level(i.TYPEIUD_1, x) |
       has_level(i.TYPEIUD_2, x) |
       has_level(i.TYPEIUD_3, x)
@@ -530,11 +529,12 @@ for (x in c(1:2)) {
 }
 fem1719dt[
   fem1719$Data,
-  ever_quit_method33 := na_to_false(
+  ever_quit_method33 := ever_quit_method19 & (
     has_level(i.TYPEIUD_1, c(3, 9)) |
     has_level(i.TYPEIUD_2, c(3, 9)) |
     has_level(i.TYPEIUD_3, c(3, 9))
-)]
+  )
+]
 
 
 # Create boolean variables for reason(s) for dissatisfaction with condom.
@@ -2397,8 +2397,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Review situations in which universes do not match specifications in codebooks and follow up with NSFG administrators
-* Exclude two cases with `TYPEIUD_1` answers, but no `METHSTOP` with 13
 * Style tables for output
 * Style plots for output
 * Write results and discussion section of report
