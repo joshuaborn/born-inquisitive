@@ -412,7 +412,7 @@ all.equal(
 
 # `YNOSEX`
 
-There are cases in the universe for `YNOSEX` as specified in the codebook does not have an answer for `YNOSEX`. However, all of the cases with answers to `YNOSEX` are in the universe for `YNOSEX` specified in the codebook.
+There are cases in the universe for `YNOSEX` as specified in the codebook that do not have answers for `YNOSEX`. However, all of the cases with answers to `YNOSEX` are in the universe for `YNOSEX` specified in the codebook.
 
 ```{r, dependson='load-data'}
 fem1719$Data[
@@ -434,4 +434,50 @@ fem1719$Data[
 
 
 
-* `YUSEIUD1`
+# `YUSEIUD1`
+
+There are cases in the universe for `YUSEIUD1` as specified in the codebook that do not have answers for `YUSEIUD1`. However, all of the cases with answers to `YUSEIUD1` are in the universe for `YUSEIUD1` specified in the codebook.
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  is.na(YUSEIUD1) &
+    (
+      equals(CURRMETH1, 19) |
+      equals(CURRMETH2, 19) |
+      equals(CURRMETH3, 19) |
+      equals(CURRMETH4, 19) |
+      equals(LSTMONMETH1, 19) |
+      equals(LSTMONMETH2, 19) |
+      equals(LSTMONMETH3, 19) |
+      equals(LSTMONMETH4, 19)
+    ),
+  .(
+    CASEID,
+    YUSEIUD1,
+    CURRMETH1,
+    CURRMETH2,
+    CURRMETH3,
+    CURRMETH4,
+    LSTMONMETH1,
+    LSTMONMETH2,
+    LSTMONMETH3,
+    LSTMONMETH4
+  )
+] |> kable()
+```
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  !is.na(YUSEIUD1),
+  tablena(
+      equals(CURRMETH1, 19) |
+      equals(CURRMETH2, 19) |
+      equals(CURRMETH3, 19) |
+      equals(CURRMETH4, 19) |
+      equals(LSTMONMETH1, 19) |
+      equals(LSTMONMETH2, 19) |
+      equals(LSTMONMETH3, 19) |
+      equals(LSTMONMETH4, 19)
+    )
+] |> kable()
+```
