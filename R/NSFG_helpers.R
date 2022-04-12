@@ -187,3 +187,18 @@ cm_greater <- function(x, y) {
     y != 9999 &
     x > y
 }
+
+estimate_and_combine_NSFG_totals_and_percentages <- function(f) {
+  style_and_vertically_combine_totals_and_percentages(
+    'Females',
+    estimate_totals_and_percentages(
+      f,
+      get_NSFG_survey_design_for_sex('fem')
+    ),
+    'Males',
+    estimate_totals_and_percentages(
+      f,
+      get_NSFG_survey_design_for_sex('male')
+    )
+  )
+}
