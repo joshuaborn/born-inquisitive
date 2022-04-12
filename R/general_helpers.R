@@ -171,52 +171,6 @@ estimate_row_total_and_percentage <- function(f, svy) {
   }
 }
 
-round_estimates_of_totals_and_percentages <- function(dt) {
-  cbind(
-    dt[
-      ,
-      .SD,
-      .SDcols = patterns('^[^(total)|(percentage)]')
-    ],
-    dt[
-      ,
-      lapply(.SD, \(col) round(col / 10^6, 3)),
-      .SDcols = patterns('^total')
-    ],
-    dt[
-      ,
-      lapply(.SD, \(col) round(col, 3) * 100),
-      .SDcols = patterns('^percentage')
-    ]
-  )
-}
-
-stringify_estimates_of_totals_and_percentages <- function(dt) {
-  dt[,
-    .(
-      description,
-      total = sprintf("%.3fM", total),
-      total_CI = sprintf(
-        "(%.3fM, %.3fM)",
-        total_CI_low,
-        total_CI_high
-      ),
-      percentage = sprintf("%0.1f%%", percentage),
-      percentage_CI = sprintf(
-        "(%0.1f%%, %0.1f%%)",
-        percentage_CI_low,
-        percentage_CI_high
-      )
-    )
-  ]
-}
-
-prettify_estimates_of_totals_and_percentages <- function(dt) {
-  dt |>
-    round_estimates_of_totals_and_percentages() |>
-    stringify_estimates_of_totals_and_percentages()
-}
-
 estimate_mentions <- function(
   survey_design,
   prefix,
