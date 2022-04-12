@@ -10,9 +10,12 @@ output:
 
 ```{r setup, include=FALSE}
 library(data.table)
+library(flextable)
 library(here)
 library(knitr)
+library(officer)
 library(survey)
+library(tidyfst)
 
 i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
 
@@ -1117,7 +1120,45 @@ Description: By whether had intercourse with opposite sex during the 3 months pr
 estimate_totals_and_percentages(
   ~used_last_3m,
   get_NSFG_survey_design_for_sex('fem')
-) |> prettify_estimates_of_totals_and_percentages() |> kable()
+) |>
+  mutate_vars('percentage', \(x) 100 * x) |>
+  mutate_vars('total', \(x) x / 10e6) |>
+  mutate_dt(
+    total_CI = sprintf("(%.3fM, %.3fM)", total_CI_low, total_CI_high),
+    percentage_CI = sprintf("(%0.1f%%, %0.1f%%)", percentage_CI_low, percentage_CI_high)
+  ) |>
+  flextable(
+    col_keys = c(
+    'description',
+    'total',
+    'total_CI',
+    'percentage',
+    'percentage_CI'
+    )
+  ) |>
+  colformat_double(j = 'total', suffix = 'M', digits = 3) |>
+  colformat_double(j = 'percentage', suffix = '%', digits = 1) |>
+  set_header_labels(values = list(
+    description = '',
+    total = 'Estimate',
+    total_CI = '95% C.I.',
+    percentage = 'Estimate',
+    percentage_CI = '95% C.I.'
+  )) |>
+  add_header_row(
+    values = c('', 'Total', 'Percentage'),
+    colwidths = c(1, 2, 2)
+  ) |>
+  align(i = 1, part = 'header', align = 'center') |>
+  align(i = 2, part = 'header', align = 'center') |>
+  align(i = 1:2, j = 2:5, part = 'body', align = 'center') |>
+  padding(i = 1, padding.bottom = 0, part = 'header') |>
+  bold(part = 'header') |>
+  border_remove() |>
+  hline_bottom(part = 'body', border = fp_border(width = 2)) |>
+  hline_top(part = 'header', border = fp_border(width = 2)) |>
+  hline_bottom(part = 'header', border = fp_border(width = 1)) |>
+  autofit()
 ```
 
 **Males**
