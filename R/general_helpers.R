@@ -255,7 +255,7 @@ estimate_mentions_in_subdomains <- function(row_estimation_function, indices) {
 
 style_totals_and_percentages <- function(dt) {
   dt |>
-  mutate_vars('total', \(x) x / 10e6) |>
+  mutate_vars('total', \(x) x / 10e5) |>
   mutate_dt(
     total = sprintf("%.3fM", total),
     total_CI = sprintf(
