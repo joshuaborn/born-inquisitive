@@ -1113,13 +1113,9 @@ Domain: Persons aged 15-49 living in households in the United States
 
 Description: By whether had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
-**Females**
-
 ```{r, dependson=c('process-fem-data', 'process-male-data')}
-estimate_totals_and_percentages(
-  ~used_last_3m,
-  get_NSFG_survey_design_for_sex('fem')
-) |>
+style_totals_and_percentages <- function(dt) {
+  dt |>
   mutate_vars('total', \(x) x / 10e6) |>
   mutate_dt(
     total = sprintf("%.3fM", total),
@@ -1147,11 +1143,62 @@ estimate_totals_and_percentages(
   set_all_padding(everywhere, everywhere, 4) |>
   set_left_padding(everywhere, c(2, 4), 12) |>
   set_tb_padding(1:2, everywhere, 0)
+}
 
-estimate_totals_and_percentages(
-  ~used_last_3m,
-  get_NSFG_survey_design_for_sex('male')
-) |> kable()
+combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {
+  if (!all.equal(ht1[header_rows(ht1),], ht2[header_rows(ht2),])) {
+    stop('huxtables do not have identical headers and cannot be combined vertically')
+  } else {
+    ht <- rbind(
+      ht1,
+      ht2[!header_rows(ht2), ]
+    )
+    body_rows1 <- which(!header_rows(ht1))
+    body_rows2 <- which(!header_rows(ht2))
+    body_start_index1 <- body_rows1[1]
+    body_start_index2 <- body_rows1[-1] + 1
+    label_column <- rep('', nrow(ht))
+    label_column[body_start_index1] <- label1
+    label_column[body_start_index2] <- label2
+    header_column_index <- 1
+    insert_column(ht, label_column) |>
+      set_header_cols(header_column_index, TRUE) |>
+      style_header_cols(valign = 'middle') |>
+      set_rowspan(
+        body_start_index1,
+        header_column_index,
+        length(body_rows1)
+      ) |>
+      set_rowspan(
+        body_start_index2,
+        header_column_index,
+        length(body_rows2)
+      ) |>
+      theme_article() |>
+      set_left_padding(everywhere, header_column_index, 4) |>
+      set_right_padding(everywhere, final(1), 4) |>
+      set_right_padding(everywhere, header_column_index, 12) |>
+      set_tb_padding(everywhere, header_column_index, 0) |>
+      set_bottom_border(body_rows1[-1], everywhere)
+  }
+}
+
+combine_huxtables_vertically(
+  'Females',
+  style_totals_and_percentages(
+    estimate_totals_and_percentages(
+      ~used_last_3m,
+      get_NSFG_survey_design_for_sex('fem')
+    )
+  ),
+  'Males',
+  style_totals_and_percentages(
+    estimate_totals_and_percentages(
+      ~used_last_3m,
+      get_NSFG_survey_design_for_sex('male')
+    )
+  )
+)
 ```
 
 
