@@ -10,10 +10,9 @@ output:
 
 ```{r setup, include=FALSE}
 library(data.table)
-library(flextable)
 library(here)
+library(huxtable)
 library(knitr)
-library(officer)
 library(survey)
 library(tidyfst)
 
@@ -1116,58 +1115,43 @@ Description: By whether had intercourse with opposite sex during the 3 months pr
 
 **Females**
 
-```{r, dependson='process-fem-data'}
+```{r, dependson=c('process-fem-data', 'process-male-data')}
 estimate_totals_and_percentages(
   ~used_last_3m,
   get_NSFG_survey_design_for_sex('fem')
 ) |>
-  mutate_vars('percentage', \(x) 100 * x) |>
   mutate_vars('total', \(x) x / 10e6) |>
   mutate_dt(
-    total_CI = sprintf("(%.3fM, %.3fM)", total_CI_low, total_CI_high),
-    percentage_CI = sprintf("(%0.1f%%, %0.1f%%)", percentage_CI_low, percentage_CI_high)
-  ) |>
-  flextable(
-    col_keys = c(
-    'description',
-    'total',
-    'total_CI',
-    'percentage',
-    'percentage_CI'
+    total = sprintf("%.3fM", total),
+    total_CI = sprintf(
+      "(%.3fM, %.3fM)",
+      total_CI_low,
+      total_CI_high
+    ),
+    percentage_CI = sprintf(
+      "(%0.1f%%, %0.1f%%)",
+      100 * percentage_CI_low,
+      100 * percentage_CI_high
     )
   ) |>
-  colformat_double(j = 'total', suffix = 'M', digits = 3) |>
-  colformat_double(j = 'percentage', suffix = '%', digits = 1) |>
-  set_header_labels(values = list(
-    description = '',
-    total = 'Estimate',
-    total_CI = '95% C.I.',
-    percentage = 'Estimate',
-    percentage_CI = '95% C.I.'
-  )) |>
-  add_header_row(
-    values = c('', 'Total', 'Percentage'),
-    colwidths = c(1, 2, 2)
-  ) |>
-  align(i = 1, part = 'header', align = 'center') |>
-  align(i = 2, part = 'header', align = 'center') |>
-  align(i = 1:2, j = 2:5, part = 'body', align = 'center') |>
-  padding(i = 1, padding.bottom = 0, part = 'header') |>
-  bold(part = 'header') |>
-  border_remove() |>
-  hline_bottom(part = 'body', border = fp_border(width = 2)) |>
-  hline_top(part = 'header', border = fp_border(width = 2)) |>
-  hline_bottom(part = 'header', border = fp_border(width = 1)) |>
-  autofit()
-```
+  select_dt(description, total, total_CI, percentage, percentage_CI) |>
+  as_huxtable() |>
+  set_number_format(everywhere, 'percentage', fmt_percent(1)) |>
+  set_contents(1, everywhere, c('', rep(c('Estimate', '95% C.I.'), 2))) |>
+  insert_row('', 'Total', '', 'Percentage', '', after = 0) |>
+  merge_cells(1, 2:3) |>
+  merge_cells(1, 4:5) |>
+  set_header_rows(1:2, TRUE) |>
+  theme_article() |>
+  set_align(everywhere, 2:5, 'center') |>
+  set_all_padding(everywhere, everywhere, 4) |>
+  set_left_padding(everywhere, c(2, 4), 12) |>
+  set_tb_padding(1:2, everywhere, 0)
 
-**Males**
-
-```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
   ~used_last_3m,
   get_NSFG_survey_design_for_sex('male')
-) |> prettify_estimates_of_totals_and_percentages() |> kable()
+) |> kable()
 ```
 
 
