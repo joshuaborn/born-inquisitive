@@ -1139,6 +1139,7 @@ style_totals_and_percentages <- function(dt) {
   merge_cells(1, 4:5) |>
   set_header_rows(1:2, TRUE) |>
   theme_article() |>
+  set_header_cols(1, TRUE) |>
   set_align(everywhere, 2:5, 'center') |>
   set_all_padding(everywhere, everywhere, 4) |>
   set_left_padding(everywhere, c(2, 4), 12) |>
@@ -1161,6 +1162,7 @@ combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {
     label_column[body_start_index1] <- label1
     label_column[body_start_index2] <- label2
     header_column_index <- 1
+    old_header_columns <- names(header_cols(ht))[header_cols(ht)]
     insert_column(ht, label_column) |>
       set_header_cols(header_column_index, TRUE) |>
       style_header_cols(valign = 'middle') |>
@@ -1175,6 +1177,7 @@ combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {
         length(body_rows2)
       ) |>
       theme_article() |>
+      set_bold(everywhere, old_header_columns, FALSE) |>
       set_left_padding(everywhere, header_column_index, 4) |>
       set_right_padding(everywhere, final(1), 4) |>
       set_right_padding(everywhere, header_column_index, 12) |>
