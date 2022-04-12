@@ -1186,20 +1186,27 @@ combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {
   }
 }
 
-combine_huxtables_vertically(
+style_and_vertically_combine_totals_and_percentages <- function(
+  label1, estimate1, label2, estimate2
+) {
+  combine_huxtables_vertically(
+    label1,
+    style_totals_and_percentages(estimate1),
+    label2,
+    style_totals_and_percentages(estimate2)
+  )
+}
+
+style_and_vertically_combine_totals_and_percentages(
   'Females',
-  style_totals_and_percentages(
-    estimate_totals_and_percentages(
-      ~used_last_3m,
-      get_NSFG_survey_design_for_sex('fem')
-    )
+  estimate_totals_and_percentages(
+    ~used_last_3m,
+    get_NSFG_survey_design_for_sex('fem')
   ),
   'Males',
-  style_totals_and_percentages(
-    estimate_totals_and_percentages(
-      ~used_last_3m,
-      get_NSFG_survey_design_for_sex('male')
-    )
+  estimate_totals_and_percentages(
+    ~used_last_3m,
+    get_NSFG_survey_design_for_sex('male')
   )
 )
 ```
