@@ -1240,9 +1240,9 @@ estimate_totals_and_percentages(
 ```
 
 
-# Not Sexually Active (with Opposite Sex)
+# Sexually Inactivity (with Opposite Sex)
 
-## Never Had Intercourse (with Opposite Sex)
+## Recently vs. Ever
 
 Domain: Persons who have not had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview
 
@@ -2409,8 +2409,6 @@ estimate_NSFG_mentions(
   format = 'STOPIUDFMT'
 )[order(-total)] |> style_totals_and_percentages()
 ```
-
-
 
 
 
