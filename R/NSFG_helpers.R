@@ -95,7 +95,7 @@ factorize_NSFG_variable <- function(x, name, sex = 'fem', fill_na = TRUE) {
       ),
       labels = c(
         formats_table[format_name == name, factor_label],
-        'Not Applicable'
+        'No answer provided'
       )
     )
   } else {

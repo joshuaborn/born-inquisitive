@@ -20,6 +20,7 @@ i_am('EDA/004_current_contraceptive_usage.Rmd')
 source(here('R/NSFG_helpers.R'))
 source(here('R/deprecated_helpers.R'))
 source(here('R/general_helpers.R'))
+source(here('R/standard_plots.R'))
 
 opts_chunk$set(
   cache = TRUE,
@@ -821,7 +822,7 @@ kable(tablena(fem_2017_2019_data$SEX3MO))
 
 kable(tablena(fem_2017_2019_data$HADSEX))
 
-fem_2017_2019_data[MTHUSE3 == 'Not Applicable', .N] ==
+fem_2017_2019_data[MTHUSE3 == 'No answer provided', .N] ==
   fem_2017_2019_data[SEX3MO == 'NO', .N] +
   fem_2017_2019_data[HADSEX == 'NO, R NEVER HAD INTERCOURSE', .N]
 ```
@@ -1331,7 +1332,7 @@ fem_2017_2019_data[
 
 It is slightly troubling that there is some contradiction between `WYNOLSTP` and `WYNOTUSE`. Is it the case that "last intercourse with last partner in the past 12 months" means something different than last intercourse in the past 3 months? For instance, does the later include "non-partner" intercourse?
 
-More troubling, why is it the case that there are 71 respondents with "Not Applicable" for both `WYNOTUSE` and `WYNOLSTOP`? To determine this requires investigating the universes of both variables.
+More troubling, why is it the case that there are 71 respondents with "No answer provided" for both `WYNOTUSE` and `WYNOLSTOP`? To determine this requires investigating the universes of both variables.
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
@@ -1345,8 +1346,8 @@ fem_2017_2019_data[
           P1YRELP == 'Current cohabiting partner'
       )
     ) &
-    WYNOTUSE == 'Not Applicable' &
-    WYNOLSTP == 'Not Applicable',
+    WYNOTUSE == 'No answer provided' &
+    WYNOLSTP == 'No answer provided',
   .(
     CASEID,
     MTHUSE12,
@@ -1358,7 +1359,7 @@ fem_2017_2019_data[
 ] |> kable()
 ```
 
-I see. The abundance of "Not Applicable" values for `WYNOLSTP` seems to be due to it being a raw, rather than recode, variable and so not imputed. There are many instances `NA` values for variables used to determine the universe of `WYNOLSTP`. This is likely due to item nonresponse upstream of the `USELSTP` and `CMLSEX` questions pertaining to sexual history. The `WYNOLSTP` was not asked of respondents who had missing values for `USELSTP` or `CMLSEX`.
+I see. The abundance of "No answer provided" values for `WYNOLSTP` seems to be due to it being a raw, rather than recode, variable and so not imputed. There are many instances `NA` values for variables used to determine the universe of `WYNOLSTP`. This is likely due to item nonresponse upstream of the `USELSTP` and `CMLSEX` questions pertaining to sexual history. The `WYNOLSTP` was not asked of respondents who had missing values for `USELSTP` or `CMLSEX`.
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
@@ -1372,8 +1373,8 @@ fem_2017_2019_data[
           P1YRELP == 'Current cohabiting partner'
       )
     ) &
-    WYNOTUSE == 'Not Applicable' &
-    WYNOLSTP == 'Not Applicable' &
+    WYNOTUSE == 'No answer provided' &
+    WYNOLSTP == 'No answer provided' &
     !(USELSTP != 1 & CMLSEX != CMINTVW),
   .(
     CASEID,
@@ -1393,7 +1394,7 @@ fem_2017_2019_data[
 ] |> kable()
 ```
 
-Most of the "Not Applicable" values for `WYNOTUSE`, on the other hand, appear to be due to a contradiction between `CURRMETH1` and `MTHUSE3`, with `CURRMETH1` reporting a contraceptive method used and `MTHUSE3` reporting no contraceptive method used. This is more troubling.
+Most of the "No answer provided" values for `WYNOTUSE`, on the other hand, appear to be due to a contradiction between `CURRMETH1` and `MTHUSE3`, with `CURRMETH1` reporting a contraceptive method used and `MTHUSE3` reporting no contraceptive method used. This is more troubling.
 
 According to documentations `CURRMETH1` is based on the ED-6 series of questions about method history, which are the `METHX` variables that ask what method(s) were used in specific months. `MTHUSE3` on the other hand is based on either section EF-1 (`USELSTP`, `WYNOLSTP`, and `HPLSTP` variables) or EB series, which pertain to the first method(s) ever used. Thus, there appears to be some contradiction in the answers given by respondents, or there is some contradiction introduced by imputation or peturbation.
 
@@ -1463,8 +1464,8 @@ fem_2017_2019_data[
           P1YRELP == 'Current cohabiting partner'
       )
     ) &
-    WYNOTUSE == 'Not Applicable' &
-    WYNOLSTP == 'Not Applicable'
+    WYNOTUSE == 'No answer provided' &
+    WYNOLSTP == 'No answer provided'
     ,
   tablena(as.integer(CURRMETH1) %in% 2:21)
 ] |> kable()
@@ -1486,8 +1487,8 @@ fem_2017_2019_data[
           P1YRELP == 'Current cohabiting partner'
       )
     ) &
-    WYNOTUSE == 'Not Applicable' &
-    WYNOLSTP == 'Not Applicable' &
+    WYNOTUSE == 'No answer provided' &
+    WYNOLSTP == 'No answer provided' &
     !is.element(as.integer(CURRMETH1), 2:21)
     ,
   tablena(INTENT)
@@ -1508,8 +1509,8 @@ fem_2017_2019_data[
           P1YRELP == 'Current cohabiting partner'
       )
     ) &
-    WYNOTUSE == 'Not Applicable' &
-    WYNOLSTP == 'Not Applicable' &
+    WYNOTUSE == 'No answer provided' &
+    WYNOLSTP == 'No answer provided' &
     !is.element(as.integer(CURRMETH1), 2:21) &
     INTENT == 'R DOES NOT INTEND TO HAVE (MORE) CHILDREN'
   ,

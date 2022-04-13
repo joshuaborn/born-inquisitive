@@ -746,7 +746,7 @@ collect_estimate(
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
-    ~I(RHADALL != 'Not Applicable'),
+    ~I(RHADALL != 'No answer provided'),
     fem_2017_2019_svy,
     svytotal
   )[level == TRUE],
@@ -764,7 +764,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svytotal
   )[level == TRUE],
@@ -782,7 +782,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svyciprop
   ),
@@ -803,7 +803,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svytotal
   )[level == TRUE],
@@ -824,7 +824,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svyciprop
   ),
@@ -846,7 +846,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svytotal
   )[level == TRUE],
@@ -868,7 +868,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svyciprop
   ),
@@ -890,7 +890,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svytotal
   )[level == TRUE],
@@ -912,7 +912,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svyciprop
   ),
@@ -938,7 +938,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svytotal
   )[level == TRUE],
@@ -964,7 +964,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svyciprop
   ),
@@ -989,7 +989,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svytotal
   )[level == TRUE],
@@ -1014,7 +1014,7 @@ collect_estimate(
     ),
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable'
+      RHADALL != 'No answer provided'
     ),
     svyciprop
   ),
@@ -1046,7 +1046,7 @@ collect_estimate(
     ~MINCDNNR,
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable' &
+      RHADALL != 'No answer provided' &
       FMEDREAS1 != 'No medical reason for operation' & (
         RHADALL == 'Yes' |
         HHADALL == 'Yes' |
@@ -1067,7 +1067,7 @@ collect_estimate(
     ~MINCDNNR,
     subset(
       fem_2017_2019_svy,
-      RHADALL != 'Not Applicable' &
+      RHADALL != 'No answer provided' &
       FMEDREAS1 != 'No medical reason for operation' & (
         RHADALL == 'Yes' |
         HHADALL == 'Yes' |

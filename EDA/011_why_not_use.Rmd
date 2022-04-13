@@ -139,7 +139,7 @@ fem_2017_2019_data[, sterilized := na_to_false(sterilized)]
 
 # create categorical variable for contraceptive nonuse status
 fem_2017_2019_data[, nonuse_status := factor(fcase(
-  WYNOTUSE == 'Not Applicable',
+  WYNOTUSE == 'No answer provided',
     'Outside of universe: currently pregnant, did not have sex in month of interview, sterilized or sterile, or used a contraceptive method in month of interview',
   WYNOTUSE == 'Yes',
     'Trying to get pregnant',
@@ -151,7 +151,7 @@ fem_2017_2019_data[, nonuse_status := factor(fcase(
     'Refused',
   HPPREGQ == '(If volunteered:) no current partner',
     'No current partner',
-  WHYNOUSING1 != 'Not Applicable',
+  WHYNOUSING1 != 'No answer provided',
     'Other',
   default = 'No answer in public use data file'
 ))]
@@ -193,7 +193,7 @@ fem_2017_2019_data[
 # create categorical variable combining WHYNOUSING1 and MAINNOUSE
 fem_2017_2019_data[, nonuse_main_reason := factor(fcase(
   is.na(nonuse_reason_count) | nonuse_reason_count == 0,
-    'Not Applicable',
+    'No answer provided',
   nonuse_reason_count == 1,
     as.character(WHYNOUSING1),
   nonuse_reason_count > 1,
@@ -233,7 +233,7 @@ These are the rows for which there is a `WYNOTUSE` value, but aren't in the supp
 
 ```{r, dependson='fem-process-data'}
 fem_2017_2019_data[
-  WYNOTUSE != 'Not Applicable',
+  WYNOTUSE != 'No answer provided',
   .(
     CASEID,
     CMINTVW,
@@ -261,7 +261,7 @@ These are the rows that are in the supposed universe for `WYNOTUSE`, but do not 
 
 ```{r, dependson='fem-process-data'}
 fem_2017_2019_data[
-  WYNOTUSE == 'Not Applicable',
+  WYNOTUSE == 'No answer provided',
   .(
     CASEID,
     CMINTVW,
@@ -291,7 +291,7 @@ I'm going to proceed with this inconsistency for now, pretending that the univer
 ```{r, dependson=c('fem-process-data')}
 collect_estimate(
   svyci(
-    ~I(WYNOTUSE != 'Not Applicable'),
+    ~I(WYNOTUSE != 'No answer provided'),
     fem_2017_2019_svy,
     svytotal
   )[level == TRUE],
@@ -310,7 +310,7 @@ collect_estimate(
     ~factor(WYNOTUSE),
     subset(
       fem_2017_2019_svy,
-      WYNOTUSE != 'Not Applicable'
+      WYNOTUSE != 'No answer provided'
     ),
     svytotal
   ),
@@ -326,7 +326,7 @@ collect_estimate(
     ~factor(WYNOTUSE),
     subset(
       fem_2017_2019_svy,
-      WYNOTUSE != 'Not Applicable'
+      WYNOTUSE != 'No answer provided'
     ),
     svymean
   ),
@@ -345,7 +345,7 @@ collect_estimate(
     ~factor(HPPREGQ),
     subset(
       fem_2017_2019_svy,
-      WYNOTUSE != 'Yes' & WYNOTUSE != 'Not Applicable'
+      WYNOTUSE != 'Yes' & WYNOTUSE != 'No answer provided'
     ),
     svytotal
   ),
@@ -361,7 +361,7 @@ collect_estimate(
     ~factor(HPPREGQ),
     subset(
       fem_2017_2019_svy,
-      WYNOTUSE != 'Yes' & WYNOTUSE != 'Not Applicable'
+      WYNOTUSE != 'Yes' & WYNOTUSE != 'No answer provided'
     ),
     svymean
   ),
@@ -531,7 +531,7 @@ fem_2017_2019_data[
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  MAINNOUSE != 'Not Applicable',
+  MAINNOUSE != 'No answer provided',
   tablena(nonuse_reason_count)
 ]|> kable()
 ```
@@ -650,7 +650,7 @@ Manually adding the row to the `fem_2017_2019_formats` in the fem-load-data bloc
 
 ```{r, dependson=c('fem-process-data')}
 fem_2017_2019_data[
-  WHYNOTPG1 != 'Not Applicable',
+  WHYNOTPG1 != 'No answer provided',
   tablena(nonuse_reason2)
 ] |> kable()
 ```

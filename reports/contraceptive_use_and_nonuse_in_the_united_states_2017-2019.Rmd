@@ -209,8 +209,8 @@ fem1719dt[,
 fem1719dt[,
   pregnancy_intent_status := factor(
     fcase(
-      WYNOTUSE == 'Not Applicable',
-        'No answer provided in public use data file',
+      WYNOTUSE == 'No answer provided',
+        'No answer provided',
       WYNOTUSE == 'Yes',
         'Wants to get pregnant',
       HPPREGQ == 'Yes',
@@ -221,13 +221,13 @@ fem1719dt[,
         'Refused',
       HPPREGQ == '(If volunteered:) no current partner',
         '(If volunteered:) no current partner',
-      HPPREGQ == 'Not Applicable',
-        'No answer provided in public use data file',
+      HPPREGQ == 'No answer provided',
+        'No answer provided',
       default = 'Not intending to conceive'
     ),
     ordered = TRUE,
     levels = c(
-      'No answer provided in public use data file',
+      'No answer provided',
       'Wants to get pregnant',
       'Partner wants respondent to get pregnant',
       "Don't know",
@@ -350,9 +350,9 @@ fem1719dt[,
     fcase(
       P12MOCON == 'Every time',
         'Every time',
-      PXNOFREQ != 'Not Applicable',
+      PXNOFREQ != 'No answer provided',
         as.character(PXNOFREQ),
-      default = 'No answer provided in public use data files'
+      default = 'No answer provided'
     ),
     ordered = TRUE,
     levels = c(
@@ -363,7 +363,7 @@ fem1719dt[,
       'None of the time',
       'Refused',
       "Don't know",
-      'No answer provided in public use data files'
+      'No answer provided'
     )
   )
 ]
@@ -471,7 +471,7 @@ fem1719dt[,
         why_use_iud_reason8
       ),
         'Only for reasons other than contraception',
-      default = 'No answer provided in public use data file'
+      default = 'No answer provided'
     )
   )
 ]
@@ -1021,9 +1021,9 @@ male1719dt[,
     fcase(
       CONDFREQ == 100,
         'Every time',
-      CWPNOFRQ != 'Not Applicable',
+      CWPNOFRQ != 'No answer provided',
         as.character(CWPNOFRQ),
-      default = 'No answer provided in public use data files'
+      default = 'No answer provided'
     ),
     ordered = TRUE,
     levels = c(
@@ -1034,7 +1034,7 @@ male1719dt[,
       'None of the time',
       'Refused',
       "Don't know",
-      'No answer provided in public use data files'
+      'No answer provided'
     )
   )
 ]
@@ -1046,9 +1046,9 @@ male1719dt[,
     fcase(
       PXCONFRQ == 100,
         'Every time',
-      PXNOFREQ != 'Not Applicable',
+      PXNOFREQ != 'No answer provided',
         as.character(PXNOFREQ),
-      default = 'No answer provided in public use data files'
+      default = 'No answer provided'
     ),
     ordered = TRUE,
     levels = c(
@@ -1059,7 +1059,7 @@ male1719dt[,
       'None of the time',
       'Refused',
       "Don't know",
-      'No answer provided in public use data files'
+      'No answer provided'
     )
   )
 ]
@@ -1072,9 +1072,9 @@ male1719dt[,
         'Every time',
       P12MOCONO == 'No',
         'None of the time',
-      P12MOCON != 'Not Applicable',
+      P12MOCON != 'No answer provided',
         as.character(P12MOCON),
-      default = 'No answer provided in public use data files'
+      default = 'No answer provided'
     ),
     ordered = TRUE,
     levels = c(
@@ -1085,7 +1085,7 @@ male1719dt[,
       'None of the time',
       'Refused',
       "Don't know",
-      'No answer provided in public use data files'
+      'No answer provided'
     )
   )
 ]
@@ -1896,7 +1896,7 @@ estimate_totals_and_percentages(
       'Some of the time',
       'None of the time',
       'Refused',
-      'Not Applicable'
+      'No answer provided'
     )
   ),
   subset(
@@ -1933,7 +1933,7 @@ estimate_totals_and_percentages(
       'Some of the time',
       'None of the time',
       'Refused',
-      'Not Applicable'
+      'No answer provided'
     )
   ),
   subset(
@@ -1991,7 +1991,7 @@ estimate_totals_and_percentages(
     get_NSFG_survey_design_for_sex('fem'),
     VAGSEX %in% c(
       'Yes',
-      'Not Applicable'
+      'No answer provided'
     )
   )
 ) |> style_totals_and_percentages()
@@ -2008,7 +2008,7 @@ estimate_totals_and_percentages(
     get_NSFG_survey_design_for_sex('male'),
     VAGSEX %in% c(
       'Yes',
-      'Not Applicable'
+      'No answer provided'
     )
   )
 ) |> style_totals_and_percentages()

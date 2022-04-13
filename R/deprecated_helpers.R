@@ -126,7 +126,7 @@ factorize <- function(x, name, formats_table, fill_na = TRUE) {
       ),
       labels = c(
         formats_table[format_name == name, factor_label],
-        'Not Applicable'
+        'No answer provided'
       )
     )
   } else {

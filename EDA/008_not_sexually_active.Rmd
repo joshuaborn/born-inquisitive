@@ -56,7 +56,7 @@ fem_2017_2019_data[, sex_active := factor(fifelse(
   'Did not have sexual intercourse with male in previous 3 months'
 ))]
 
-# remove empty 'Not Applicable' level from ATTRACT
+# remove empty 'No answer provided' level from ATTRACT
 fem_2017_2019_data[, ATTRACT := factor(ATTRACT)]
 
 # create survey design object
@@ -95,7 +95,7 @@ male_2017_2019_data[, sex_active := factor(fifelse(
   'Did not have sexual intercourse with female in previous 3 months'
 ))]
 
-# remove empty 'Not Applicable' level from ATTRACT
+# remove empty 'No answer provided' level from ATTRACT
 male_2017_2019_data[, ATTRACT := factor(ATTRACT)]
 
 # create survey design object

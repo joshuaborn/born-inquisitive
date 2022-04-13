@@ -212,11 +212,11 @@ male_2017_2019_data[
 ```{r, dependson='male-process-data'}
 male_2017_2019_data[
   last_used_3m == 'Otherwise did not use contraception at last intercourse' &
-    CWPLUSE2 == 'Not Applicable' &
-    CWPLMET201 == 'Not Applicable' &
-    PXLPUSE == 'Not Applicable' &
-    PXLPMETH01 == 'Not Applicable' &
-    PXLSXPRB == 'Not Applicable',
+    CWPLUSE2 == 'No answer provided' &
+    CWPLMET201 == 'No answer provided' &
+    PXLPUSE == 'No answer provided' &
+    PXLPMETH01 == 'No answer provided' &
+    PXLSXPRB == 'No answer provided',
   .N
 ]
 ```
