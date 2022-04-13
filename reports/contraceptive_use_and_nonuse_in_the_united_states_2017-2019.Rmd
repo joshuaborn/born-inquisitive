@@ -1052,7 +1052,7 @@ male1719dt[,
         'Every time',
       P12MOCONO == 'No',
         'None of the time',
-      !is.na(P12MOCON),
+      P12MOCON != 'Not Applicable',
         as.character(P12MOCON),
       default = 'No answer provided in public use data files'
     ),
@@ -2364,7 +2364,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Fix NAs in condom_12m_consistency for males
 * Make capitalization in descriptions consistent
 * Style plots for output
 * Write results and discussion section of report
