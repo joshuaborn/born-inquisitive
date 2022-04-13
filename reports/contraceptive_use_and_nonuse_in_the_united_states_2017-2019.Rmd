@@ -1104,7 +1104,7 @@ estimate_and_combine_NSFG_totals_and_percentages(~person)
 ```
 
 
-# Contraception Use at Most Recent Intercourse
+# Use of Contraception at Most Recent Intercourse
 
 Domain: Persons aged 15-49 living in households in the United States as estimated by the NSFG
 
@@ -1116,6 +1116,8 @@ male1719dt[, person := 1]
 
 estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m)
 ```
+
+## Domain Size
 
 Domain: Persons aged 15-49 living in households in the United States who had intercourse with the opposite sex in the 3 months preceding the interview
 
@@ -1240,9 +1242,7 @@ estimate_totals_and_percentages(
 ```
 
 
-# Sexual Inactivity (with Opposite Sex)
-
-## Recently vs. Ever
+## Sexual Inactivity (with Opposite Sex)
 
 Domain: Persons who have not had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview
 
@@ -1299,7 +1299,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Attraction by Sex
+### Attraction by Sex
 
 Domain: Females who have not had sexual intercourse with a male in the past 3 months
 
@@ -1352,7 +1352,7 @@ style_and_combine_totals_and_percentages_horizontally(
 ```
 
 
-# Reason for Physical Inability to Conceive
+## Reason for Physical Inability to Conceive
 
 Domain: Females who report being physically unable to get pregnant
 
@@ -1378,8 +1378,6 @@ estimate_totals_and_percentages(
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
-
-# Method(s) at Last Intercourse
 
 ## Number of Methods
 
@@ -1412,7 +1410,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Method(s) Used at Last Intercourse
+## Method(s) Used
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
@@ -1448,7 +1446,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Method Used Exclusively at Last Intercourse
+## Method Used Exclusively
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used **one and only one** method of contraception during last intercourse
 
@@ -1526,7 +1524,7 @@ estimate_NSFG_mentions_in_subdomains(
 ```
 
 
-## Other Method(s) Used at Last Intercourse with Calendar Method
+## Other Method(s) Used with Calendar Method
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a calendar method during last intercourse
 
@@ -1562,7 +1560,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Other Method(s) Used at Last Intercourse with Withdrawal
+## Other Method(s) Used with Withdrawal
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used withdrawal during last intercourse
 
@@ -1598,7 +1596,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Other Method(s) Used at Last Intercourse with Condom
+## Other Method(s) Used with Condom
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used condom during last intercourse
 
@@ -1634,7 +1632,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Other Method(s) Used at Last Intercourse with Pill
+## Other Method(s) Used with Pill
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used pill during last intercourse
 
@@ -1670,9 +1668,9 @@ estimate_NSFG_mentions(
 ```
 
 
-# Method(s) in Past 12 Months
+# Use of Contraception during Past 12 Months
 
-## Size of Domain
+## Domain Size
 
 Description: Persons who have had intercourse with opposite in the past 12 months
 
@@ -1722,7 +1720,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Method(s) Used at Last Intercourse
+## Method(s) Used
 
 Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview and used a method of contraception at least once
 
@@ -1792,7 +1790,7 @@ estimate_NSFG_mentions(
 ```
 
 
-# Consistency
+# Consistency of Use of Contraception
 
 ## Use of Contraception Prior to Nonuse at Last Intercourse
 
@@ -1982,8 +1980,6 @@ estimate_totals_and_percentages(
 
 ## Condom
 
-### Size of Domain
-
 Domain: Females who have had vaginal intercourse with a male
 
 Description: By whether used condom at last intercourse with a male
@@ -2018,8 +2014,6 @@ estimate_totals_and_percentages(
 ) |> style_totals_and_percentages()
 ```
 
-### Reason for Use
-
 Domain: Females who used condom at last intercourse with a male
 
 ```{r, dependson='process-fem-data'}
@@ -2047,8 +2041,6 @@ estimate_totals_and_percentages(
 
 ## Pill
 
-### Size of Domain
-
 Description: By whether used pill either during the month of interview or the month preceding the interview
 
 ```{r, dependson='process-fem-data'}
@@ -2057,8 +2049,6 @@ estimate_totals_and_percentages(
   get_NSFG_survey_design_for_sex('fem')
 ) |> style_totals_and_percentages()
 ```
-
-### Reason(s) for Use
 
 Domain: Females who used pill either during the month of interview or the month preceding the interview
 
@@ -2076,8 +2066,6 @@ estimate_NSFG_mentions(
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
-### Contraceptive vs. Noncontraceptive Reasons
-
 Domain: Females who used pill either during the month of interview or the month preceding the interview
 
 ```{r, dependson='process-fem-data'}
@@ -2093,8 +2081,6 @@ estimate_totals_and_percentages(
 
 ## IUD
 
-### Size of Domain
-
 Description: By whether used an IUD either during the month of interview or the month preceding the interview*
 
 ```{r, dependson='process-fem-data'}
@@ -2103,8 +2089,6 @@ estimate_totals_and_percentages(
   get_NSFG_survey_design_for_sex('fem')
 ) |> style_totals_and_percentages()
 ```
-
-### Reason(s) for Use
 
 Domain: Females who used an IUD either during the month of interview or the month preceding the interview
 
@@ -2122,8 +2106,6 @@ estimate_NSFG_mentions(
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
-### Contraceptive vs. Noncontraceptive Reasons
-
 Domain: Females who used an IUD either during the month of interview or the month preceding the interview*
 
 ```{r, dependson='process-fem-data'}
@@ -2139,7 +2121,7 @@ estimate_totals_and_percentages(
 
 # Reason(s) for Not Currently Using Contraception
 
-## Size of Domain
+## Domain Size
 
 Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
 
@@ -2210,7 +2192,7 @@ estimate_NSFG_mentions(
 
 
 
-# Method(s) Ever Used
+# Use of Contraception Ever During Lifetime
 
 Domain: Females aged 15-49 living in households in the United States
 
@@ -2271,7 +2253,7 @@ estimate_NSFG_mentions_in_subdomains(
 ```
 
 
-## Dissatisfaction with Condom
+## Condom
 
 Domain: Females who have ever discontinued using condom due to dissatisfaction
 
@@ -2304,7 +2286,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Dissatisfaction with Pill
+## Pill
 
 Domain: Females who have ever discontinued using pill due to dissatisfaction
 
@@ -2337,7 +2319,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Dissatisfaction with Hormonal IUDs
+## Hormonal IUDs
 
 Domain: Females who have ever discontinued using an hormonal IUD due to dissatisfaction
 
@@ -2374,7 +2356,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Dissatisfaction with Copper IUDs
+## Copper IUDs
 
 Domain: Females who have ever discontinued using a copper IUD due to dissatisfaction
 
@@ -2416,6 +2398,9 @@ estimate_NSFG_mentions(
 
 * Make capitalization in descriptions consistent
 * Style plots for output
+* Estimate those who have ever used any method of contraception
+    * among the entire population
+    * among those who have had sexual intercourse
 * Estimate proportion of females who did not use contraception at last intercourse, but report using a method of contraception in the month of last intercourse
 * Write results and discussion section of report
 * Compare own report with published reports
