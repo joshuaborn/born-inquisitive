@@ -49,9 +49,9 @@ get_NSFG_raw_import_for_sex <- function(sex) {
 
 get_NSFG_formats_for_sex <- function(sex) {
   if (startsWith(sex, 'f')) {
-    fem1719formats
+    setDT(fem1719formats)
   } else {
-    male1719formats
+    setDT(male1719formats)
   }
 }
 

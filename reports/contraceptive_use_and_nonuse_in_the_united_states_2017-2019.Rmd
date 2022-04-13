@@ -67,6 +67,17 @@ fem1719formats <- rbindlist(list(
 setkey(fem1719formats, format_name, factor_value)
 
 
+# Make IF VOLUNTEERED: text in factor labels not all caps.
+fem1719formats[,
+  factor_label := gsub(
+    "(.?If volunteered:.?\\s?)(.*)",
+    'If volunteered: \\2',
+    factor_label,
+    ignore.case = TRUE
+  )
+]
+
+
 # Start working female respondents data table.
 fem1719dt <- copy(fem1719$Data[, .(
   CASEID,
@@ -219,21 +230,21 @@ fem1719dt[,
         "Don't know",
       WYNOTUSE == 'Refused' | HPPREGQ == 'Refused',
         'Refused',
-      HPPREGQ == '(If volunteered:) no current partner',
-        '(If volunteered:) no current partner'
+      HPPREGQ == 'If volunteered: no current partner',
+        'If volunteered: No current partner',
       HPPREGQ == 'No answer provided',
         'No answer provided',
       default = 'Not intending to conceive'
     ),
     ordered = TRUE,
     levels = c(
-      'No answer provided',
       'Wants to get pregnant',
       'Partner wants respondent to get pregnant',
       "Don't know",
       'Refused',
-      '(If volunteered:) no current partner',
-      'Not intending to conceive'
+      'If volunteered: No current partner',
+      'Not intending to conceive',
+      'No answer provided'
     )
   )
 ]
@@ -2457,8 +2468,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Make capitalization in descriptions consistent
-* Fix pregnancy_intent_status for females
 * Style plots for output
 * Estimate those who have ever used any method of contraception
     * among the entire population
