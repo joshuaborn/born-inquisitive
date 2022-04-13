@@ -16,6 +16,7 @@ i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
 
 source(here('R/NSFG_helpers.R'))
 source(here('R/general_helpers.R'))
+source(here('R/general_plots.R'))
 
 knitr::opts_chunk$set(
   cache = TRUE,
@@ -1499,7 +1500,7 @@ estimate_NSFG_mentions(
   prefix = 'used_last_3m_method',
   skip = 20:21,
   format = 'METH3MF'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0] |> plot_totals_with_CIs()
 ```
 
 **Males**
@@ -1573,7 +1574,7 @@ estimate_NSFG_mentions_in_subdomains(
   },
   format = 'METH3MF',
   skip = c(20:22)
-)[order(-total)] |> style_totals_and_percentages()
+)[!is.nan(percentage_CI_low)] |> plot_percentages_with_CIs()
 ```
 
 **Males**
