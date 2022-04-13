@@ -586,14 +586,14 @@ for (x in c(1:9, 11:12)) {
   male_2017_2019_data[
     ,
     (sprintf('anyuse12m_meth%d', x)) := !is.na(
-      (cm_greater(CMLSXCWP, CMLSTYR) & (
+      (century_month_comparison(`>`, CMLSXCWP, CMLSTYR) & (
         CWPLMET11 == x |
         CWPLMET12 == x |
         CWPLMET13 == x |
         CWPLMET201 == x |
         CWPLMET202 == x
       )) |
-      (cm_greater(CMFSXCWP, CMLSTYR) & (
+      (century_month_comparison(`>`, CMFSXCWP, CMLSTYR) & (
         CWPFMET01 == x |
         CWPFMET02 == x |
         CWPFMET03 == x |
@@ -605,7 +605,7 @@ for (x in c(1:9, 11:12)) {
       CWPALLBC03 == x |
       CWPALLBC04 == x |
       CWPALLBC05 == x |
-      (cm_greater(CMLSXP1, CMLSTYR) & (
+      (century_month_comparison(`>`, CMLSXP1, CMLSTYR) & (
         PXLRMETH1 == x |
         PXLRMETH2 == x |
         PXLRMETH3 == x |
@@ -613,7 +613,7 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH02 == x |
         PXLPMETH03 == x
       )) |
-      (cm_greater(CMLSXP2, CMLSTYR) & (
+      (century_month_comparison(`>`, CMLSXP2, CMLSTYR) & (
         PXLRMETH5 == x |
         PXLRMETH6 == x |
         PXLRMETH7 == x |
@@ -621,7 +621,7 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH12 == x |
         PXLPMETH13 == x
       )) |
-      (cm_greater(CMLSXP3, CMLSTYR) & (
+      (century_month_comparison(`>`, CMLSXP3, CMLSTYR) & (
         PXLRMETH9 == x |
         PXLRMETH10 == x |
         PXLRMETH11 == x |
@@ -629,19 +629,19 @@ for (x in c(1:9, 11:12)) {
         PXLPMETH22 == x |
         PXLPMETH23 == x
       )) |
-      (cm_greater(CMFSXP, CMLSTYR) & (
+      (century_month_comparison(`>`, CMFSXP, CMLSTYR) & (
         PXFMETH01 == x |
         PXFMETH02 == x |
         PXFMETH03 == x |
         PXFMETH04 == x
       )) |
-      (cm_greater(CMFSXP2, CMLSTYR) & (
+      (century_month_comparison(`>`, CMFSXP2, CMLSTYR) & (
         PXFMETH14 == x |
         PXFMETH15 == x |
         PXFMETH16 == x |
         PXFMETH17 == x
       )) |
-      (cm_greater(CMFSXP3, CMLSTYR) & (
+      (century_month_comparison(`>`, CMFSXP3, CMLSTYR) & (
         PXFMETH27 == x |
         PXFMETH28 == x |
         PXFMETH29 == x |
@@ -670,14 +670,14 @@ for (x in c(1:9, 11:12)) {
 male_2017_2019_data[
   ,
   anyuse12m_meth13 := !is.na(
-    (cm_greater(CMLSXCWP, CMLSTYR) & (
+    (century_month_comparison(`>`, CMLSXCWP, CMLSTYR) & (
       CWPLMET11 == 10 |
       CWPLMET12 == 10 |
       CWPLMET13 == 10 |
       CWPLMET201 == 13 |
       CWPLMET202 == 13
     )) |
-    (cm_greater(CMFSXCWP, CMLSTYR) & (
+    (century_month_comparison(`>`, CMFSXCWP, CMLSTYR) & (
       CWPFMET01 == 13 |
       CWPFMET02 == 13 |
       CWPFMET03 == 13 |
@@ -689,7 +689,7 @@ male_2017_2019_data[
     CWPALLBC03 == 13 |
     CWPALLBC04 == 13 |
     CWPALLBC05 == 13 |
-    (cm_greater(CMLSXP1, CMLSTYR) & (
+    (century_month_comparison(`>`, CMLSXP1, CMLSTYR) & (
       PXLRMETH1 == 10 |
       PXLRMETH2 == 10 |
       PXLRMETH3 == 10 |
@@ -697,7 +697,7 @@ male_2017_2019_data[
       PXLPMETH02 == 13 |
       PXLPMETH03 == 13
     )) |
-    (cm_greater(CMLSXP2, CMLSTYR) & (
+    (century_month_comparison(`>`, CMLSXP2, CMLSTYR) & (
       PXLRMETH5 == 10 |
       PXLRMETH6 == 10 |
       PXLRMETH7 == 10 |
@@ -705,7 +705,7 @@ male_2017_2019_data[
       PXLPMETH12 == 13 |
       PXLPMETH13 == 13
     )) |
-    (cm_greater(CMLSXP3, CMLSTYR) & (
+    (century_month_comparison(`>`, CMLSXP3, CMLSTYR) & (
       PXLRMETH9 == 10 |
       PXLRMETH10 == 10 |
       PXLRMETH11 == 10 |
@@ -713,19 +713,19 @@ male_2017_2019_data[
       PXLPMETH22 == 13 |
       PXLPMETH23 == 13
     )) |
-    (cm_greater(CMFSXP, CMLSTYR) & (
+    (century_month_comparison(`>`, CMFSXP, CMLSTYR) & (
       PXFMETH01 == 13 |
       PXFMETH02 == 13 |
       PXFMETH03 == 13 |
       PXFMETH04 == 13
     )) |
-    (cm_greater(CMFSXP2, CMLSTYR) & (
+    (century_month_comparison(`>`, CMFSXP2, CMLSTYR) & (
       PXFMETH14 == 13 |
       PXFMETH15 == 13 |
       PXFMETH16 == 13 |
       PXFMETH17 == 13
     )) |
-    (cm_greater(CMFSXP3, CMLSTYR) & (
+    (century_month_comparison(`>`, CMFSXP3, CMLSTYR) & (
       PXFMETH27 == 13 |
       PXFMETH28 == 13 |
       PXFMETH29 == 13 |
@@ -753,11 +753,11 @@ male_2017_2019_data[
 male_2017_2019_data[
   ,
   anyuse12m_meth10 := !is.na(
-    (cm_greater(CMLSXCWP, CMLSTYR) & (
+    (century_month_comparison(`>`, CMLSXCWP, CMLSTYR) & (
       CWPLMET201 == 10 |
       CWPLMET202 == 10
     )) |
-    (cm_greater(CMFSXCWP, CMLSTYR) & (
+    (century_month_comparison(`>`, CMFSXCWP, CMLSTYR) & (
       CWPFMET01 == 10 |
       CWPFMET02 == 10 |
       CWPFMET03 == 10 |
@@ -769,34 +769,34 @@ male_2017_2019_data[
     CWPALLBC03 == 10 |
     CWPALLBC04 == 10 |
     CWPALLBC05 == 10 |
-    (cm_greater(CMLSXP1, CMLSTYR) & (
+    (century_month_comparison(`>`, CMLSXP1, CMLSTYR) & (
       PXLPMETH01 == 10 |
       PXLPMETH02 == 10 |
       PXLPMETH03 == 10
     )) |
-    (cm_greater(CMLSXP2, CMLSTYR) & (
+    (century_month_comparison(`>`, CMLSXP2, CMLSTYR) & (
       PXLPMETH11 == 10 |
       PXLPMETH12 == 10 |
       PXLPMETH13 == 10
     )) |
-    (cm_greater(CMLSXP3, CMLSTYR) & (
+    (century_month_comparison(`>`, CMLSXP3, CMLSTYR) & (
       PXLPMETH21 == 10 |
       PXLPMETH22 == 10 |
       PXLPMETH23 == 10
     )) |
-    (cm_greater(CMFSXP, CMLSTYR) & (
+    (century_month_comparison(`>`, CMFSXP, CMLSTYR) & (
       PXFMETH01 == 10 |
       PXFMETH02 == 10 |
       PXFMETH03 == 10 |
       PXFMETH04 == 10
     )) |
-    (cm_greater(CMFSXP2, CMLSTYR) & (
+    (century_month_comparison(`>`, CMFSXP2, CMLSTYR) & (
       PXFMETH14 == 10 |
       PXFMETH15 == 10 |
       PXFMETH16 == 10 |
       PXFMETH17 == 10
     )) |
-    (cm_greater(CMFSXP3, CMLSTYR) & (
+    (century_month_comparison(`>`, CMFSXP3, CMLSTYR) & (
       PXFMETH27 == 10 |
       PXFMETH28 == 10 |
       PXFMETH29 == 10 |

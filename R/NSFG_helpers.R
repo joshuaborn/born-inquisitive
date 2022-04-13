@@ -178,14 +178,14 @@ create_NSFG_pivot_table <- function(prefix, series, id_vars = 'CASEID', sex = 'f
   setkeyv(pivot_table, id_vars)
 }
 
-cm_greater <- function(x, y) {
-  is.na(x) &
+century_month_comparison <- function(operator, x, y) {
+  !is.na(x) &
     x != 9998 &
     x != 9999 &
-    is.na(y) &
+    !is.na(y) &
     y != 9998 &
     y != 9999 &
-    x > y
+    operator(x, y)
 }
 
 estimate_and_combine_NSFG_totals_and_percentages <- function(f) {

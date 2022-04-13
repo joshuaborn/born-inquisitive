@@ -6,6 +6,8 @@ library(tidyfst)
 
 i_am('R/general_helpers.R')
 
+options(huxtable.knit_print_df = FALSE)
+
 
 #
 # GENERAL PURPOSE
