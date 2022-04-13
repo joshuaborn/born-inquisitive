@@ -228,6 +228,20 @@ theme_article_extra <- function(ht) {
     )
 }
 
+conditionally_stripe_rows <- function(ht) {
+  body_rows <- which(!header_rows(ht))
+  if (length(body_rows) > 4) {
+    ht |>
+      set_background_color(
+        stripe(2, min(body_rows) + 1),
+        everywhere,
+        'grey93'
+      )
+  } else {
+    ht
+  }
+}
+
 style_totals_and_percentages <- function(dt) {
   dt |>
   mutate_vars('total', \(x) x / 10e5) |>
@@ -253,7 +267,8 @@ style_totals_and_percentages <- function(dt) {
   merge_cells(1, 4:5) |>
   set_header_rows(1:2, TRUE) |>
   set_header_cols(1, TRUE) |>
-  theme_article_extra()
+  theme_article_extra() |>
+  conditionally_stripe_rows()
 }
 
 combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {

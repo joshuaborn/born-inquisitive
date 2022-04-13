@@ -2364,8 +2364,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Style tables for output
-    * Add alternating row shadowing
 * Fix NAs in condom_12m_consistency for males
 * Make capitalization in descriptions consistent
 * Style plots for output
