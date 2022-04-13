@@ -216,6 +216,7 @@ theme_article_extra <- function(ht) {
   body_cols <- which(!header_cols(ht))
   ht |>
     theme_article() |>
+    set_wrap(everywhere, body_cols, FALSE) |>
     set_align(everywhere, body_cols, 'center') |>
     set_tb_padding(header_rows, everywhere, 0) |>
     set_all_padding(body_rows, everywhere, 3) |>
