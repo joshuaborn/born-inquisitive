@@ -220,7 +220,7 @@ fem1719dt[,
       WYNOTUSE == 'Refused' | HPPREGQ == 'Refused',
         'Refused',
       HPPREGQ == '(If volunteered:) no current partner',
-        '(If volunteered:) no current partner',
+        '(If volunteered:) no current partner'
       HPPREGQ == 'No answer provided',
         'No answer provided',
       default = 'Not intending to conceive'
@@ -591,6 +591,67 @@ set_NSFG_mentions_to_booleans(
 ```
 
 ```{r process-male-data, dependson='load-data'}
+
+# Fix the labeling used by METH3MF for males to be more like that of females.
+METH3MF1719_join_table <- as.data.table(matrix(
+  data = c(
+    1, 2,
+    2, 5,
+    4, 1,
+    5, 4,
+    6, 6,
+    8, 7,
+    9, 8,
+    10, 23,
+    11, 24,
+    12, 17,
+    13, 19
+  ),
+  ncol = 2,
+  byrow = TRUE,
+  dimnames = list(
+    NULL,
+    c('male_factor_value', 'fem_factor_value')
+  )
+))
+METH3MF1719_replacements <- rbindlist(list(
+  fem1719formats[
+    format_name == 'METH3MF',
+    .(
+      fem_factor_value = factor_value,
+      factor_label
+    )
+  ][
+    METH3MF1719_join_table,
+    .(
+      factor_value = male_factor_value,
+      factor_label = factor_label
+    ),
+    on = 'fem_factor_value'
+  ],
+  data.table(
+    factor_value = c(
+      3,
+      7,
+      95,
+      96
+    ),
+    factor_label = c(
+      'Vasectomy',
+      'Spermicidal foam, jelly, cream, film, or suppository',
+      "Don't know",
+      'No method used at last sex in the past 3 months'
+    )
+  )
+))
+METH3MF1719_replacements[, format_name := 'METH3MF']
+male1719formats[
+  METH3MF1719_replacements,
+  factor_label := i.factor_label,
+  on = c('format_name', 'factor_value')
+]
+
+
 # Start working male respondents data table.
 male1719dt <- copy(male1719$Data[, .(
   CASEID,
@@ -2397,6 +2458,7 @@ estimate_NSFG_mentions(
 # Things to Do
 
 * Make capitalization in descriptions consistent
+* Fix pregnancy_intent_status for females
 * Style plots for output
 * Estimate those who have ever used any method of contraception
     * among the entire population
