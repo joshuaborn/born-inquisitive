@@ -110,6 +110,16 @@ set_NSFG_variables_as_factors(
 )
 
 
+# Create categorical variable for whether had intercourse with opposite sex in previous 3 months.
+fem1719dt[,
+  sexually_active_3m := factor(fifelse(
+    SEX3MO == 'YES',
+    'Sexually active with opposite sex in past 3 months',
+    'Not sexually active with opposite sex in past 3 months'
+  ))
+]
+
+
 # Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'used_last_3m_method',
@@ -151,8 +161,8 @@ set_count_variable_for_mentions(fem1719dt, 'used_last_3m_method')
 fem1719dt[,
   used_last_3m := factor(fifelse(
     used_last_3m_method_count > 0,
-    'Used contraception',
-    'Did not use contraception'
+    'Used contraception at last intercourse',
+    'Did not use contraception at last intercourse'
   ))
 ]
 
@@ -631,6 +641,16 @@ set_NSFG_variables_as_factors(
 )
 
 
+# Create categorical variable for whether had intercourse with opposite sex in previous 3 months.
+male1719dt[,
+  sexually_active_3m := factor(fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE',
+    'Sexually active with opposite sex in past 3 months',
+    'Not sexually active with opposite sex in past 3 months'
+  ))
+]
+
+
 # Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
 set_NSFG_mentions_to_booleans(
   sex = 'male',
@@ -672,8 +692,8 @@ set_count_variable_for_mentions(male1719dt, 'used_last_3m_method')
 male1719dt[,
   used_last_3m := factor(fifelse(
     used_last_3m_method_count > 0,
-    'Used contraception',
-    'Did not use contraception'
+    'Used contraception at last intercourse',
+    'Did not use contraception at last intercourse'
   ))
 ]
 
@@ -1072,7 +1092,7 @@ male1719dt[,
 ```
 
 
-# Persons in Populations
+# Population Size
 
 Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
 
@@ -1083,21 +1103,49 @@ male1719dt[, person := 1]
 estimate_and_combine_NSFG_totals_and_percentages(~person)
 ```
 
+Domain: Persons aged 15-49 living in households in the United States as estimated by the NSFG
+
+Description: By whether person had intercourse with someone of the opposite sex during the 3 months preceding the interview
+
+```{r, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[, person := 1]
+male1719dt[, person := 1]
+
+estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m)
+```
+
 
 # Contraception Use During Most Recent Intercourse
 
-Domain: Persons aged 15-49 living in households in the United States
+Domain: Persons aged 15-49 living in households in the United States who had intercourse with the opposite sex in the 3 months preceding the interview
 
-Description: By whether had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
+Description: By whether used a method of contraception during last intercourse
 
 ```{r, dependson=c('process-fem-data', 'process-male-data')}
-estimate_and_combine_NSFG_totals_and_percentages(~used_last_3m)
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~used_last_3m,
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      sexually_active_3m == 'Sexually active with opposite sex in past 3 months'
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~used_last_3m,
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      sexually_active_3m == 'Sexually active with opposite sex in past 3 months'
+    )
+  )
+)
 ```
 
 
 # Reason for Nonuse
 
-Domain: Persons not currently using contraception, as defined above
+Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview and did not use a method of contraception during most recent intercourse
 
 Description: Categorized into exclusive hierarchy, such that individuals categorized earlier in the hierarchy are not counted in later categories
 
@@ -1108,7 +1156,8 @@ estimate_totals_and_percentages(
   ~factor(used_last_3m_status),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_method_count == 0
+    used_last_3m_method_count == 0 &
+      SEX3MO == 'YES'
   )
 ) |> style_totals_and_percentages()
 ```
@@ -1120,7 +1169,8 @@ estimate_totals_and_percentages(
   ~factor(used_last_3m_status),
   subset(
     get_NSFG_survey_design_for_sex('male'),
-    used_last_3m_method_count == 0
+    used_last_3m_method_count == 0 &
+      SEX3MO == 'YES, HAD INTERCOURSE'
   )
 ) |> style_totals_and_percentages()
 ```
@@ -1128,7 +1178,7 @@ estimate_totals_and_percentages(
 
 # Contraception Use Rate
 
-Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview, are not nor had last intercourse with someone who is pregnant, postpartum, trying to conceive, or physically infertile
+Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview, did not use a method of contraception during most recent intercourse, and neither are nor had last intercourse with someone who is pregnant, postpartum, trying to conceive, or physically infertile
 
 **Females**
 
@@ -1161,7 +1211,7 @@ estimate_totals_and_percentages(
 ```
 
 
-# Reported Ignorance of Contraceptive Use
+## Reported Ignorance of Contraceptive Use
 
 Domain: Males who had intercourse with a female in the past 3 months
 
@@ -2364,7 +2414,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Redo domains for analysis to take out those who are not sexually active earlier
 * Make capitalization in descriptions consistent
 * Style plots for output
 * Write results and discussion section of report
