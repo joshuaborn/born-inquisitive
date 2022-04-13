@@ -1255,50 +1255,52 @@ estimate_totals_and_percentages(
 
 Domain: Females who have not had sexual intercourse with a male in the past 3 months
 
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(ATTRACT),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    SEX3MO != 'YES'
-  )
-) |> style_totals_and_percentages()
-```
-
 Domain: Females who had sexual intercourse with a male in the past 3 months
 
 ```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(ATTRACT),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    SEX3MO == 'YES'
+style_and_horizontally_combine_totals_and_percentages(
+  'Sexually active with opposite sex',
+  estimate_totals_and_percentages(
+    ~factor(ATTRACT),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      SEX3MO == 'YES'
+    )
+  ),
+  'Not sexually active with opposite sex',
+  estimate_totals_and_percentages(
+    ~factor(ATTRACT),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      SEX3MO != 'YES'
+    )
   )
-) |> style_totals_and_percentages()
+)
 ```
 
 Domain: Males who have not had sexual intercourse with a female in the past 3 months
 
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(ATTRACT),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    SEX3MO != 'YES, HAD INTERCOURSE'
-  )
-) |> style_totals_and_percentages()
-```
-
 Domain: Males who had sexual intercourse with a female in the past 3 months
 
 ```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(ATTRACT),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    SEX3MO == 'YES, HAD INTERCOURSE'
+style_and_horizontally_combine_totals_and_percentages(
+  'Sexually active with opposite sex',
+  estimate_totals_and_percentages(
+    ~ATTRACT,
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      SEX3MO != 'YES, HAD INTERCOURSE'
+    )
+  ),
+  'Not sexually active with opposite sex',
+  estimate_totals_and_percentages(
+    ~ATTRACT,
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      SEX3MO == 'YES, HAD INTERCOURSE'
+    )
   )
-) |> style_totals_and_percentages()
+)
 ```
 
 
@@ -2365,6 +2367,8 @@ estimate_NSFG_mentions(
 # Things to Do
 
 * Style tables for output
+    * Add alternating row shadowing
+    * Limit width of description column so C.I. columns don't get wrapped
 * Style plots for output
 * Write results and discussion section of report
 * Compare own report with published reports
