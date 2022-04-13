@@ -247,7 +247,7 @@ style_totals_and_percentages <- function(dt) {
   select_dt(description, total, total_CI, percentage, percentage_CI) |>
   as_huxtable() |>
   set_number_format(everywhere, 'percentage', fmt_percent(1)) |>
-  set_contents(1, everywhere, c('', rep(c('Estimate', '95% C.I.'), 2))) |>
+  set_contents(1, everywhere, c('', rep(c('Est.', '95% C.I.'), 2))) |>
   insert_row('', 'Total', '', 'Percentage', '', after = 0) |>
   merge_cells(1, 2:3) |>
   merge_cells(1, 4:5) |>
@@ -332,7 +332,9 @@ combine_huxtables_horizontally <- function(label1, ht1, label2, ht2) {
     ) |>
     theme_article_extra() |>
     set_left_border(everywhere, body_start_index1) |>
-    set_left_border(everywhere, body_start_index2)
+    set_left_padding(everywhere, body_start_index1, 4) |>
+    set_left_border(everywhere, body_start_index2) |>
+    set_left_padding(everywhere, body_start_index2, 4)
 }
 
 style_and_combine_totals_and_percentages_horizontally <- function(
