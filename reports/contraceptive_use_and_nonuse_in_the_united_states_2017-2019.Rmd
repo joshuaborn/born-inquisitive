@@ -1103,6 +1103,9 @@ male1719dt[, person := 1]
 estimate_and_combine_NSFG_totals_and_percentages(~person)
 ```
 
+
+# Contraception Use at Most Recent Intercourse
+
 Domain: Persons aged 15-49 living in households in the United States as estimated by the NSFG
 
 Description: By whether person had intercourse with someone of the opposite sex during the 3 months preceding the interview
@@ -1113,9 +1116,6 @@ male1719dt[, person := 1]
 
 estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m)
 ```
-
-
-# Contraception Use at Most Recent Intercourse
 
 Domain: Persons aged 15-49 living in households in the United States who had intercourse with the opposite sex in the 3 months preceding the interview
 
