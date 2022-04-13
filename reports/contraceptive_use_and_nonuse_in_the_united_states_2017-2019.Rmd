@@ -1334,10 +1334,10 @@ Domain: Males who had sexual intercourse with a female in the past 3 months
 style_and_combine_totals_and_percentages_horizontally(
   'Sexually active with opposite sex',
   estimate_totals_and_percentages(
-    ~ATTRACT,
+    ~factor(ATTRACT),
     subset(
       get_NSFG_survey_design_for_sex('male'),
-      SEX3MO != 'YES, HAD INTERCOURSE'
+      SEX3MO == 'YES, HAD INTERCOURSE'
     )
   ),
   'Not sexually active with opposite sex',
@@ -1345,9 +1345,9 @@ style_and_combine_totals_and_percentages_horizontally(
     ~ATTRACT,
     subset(
       get_NSFG_survey_design_for_sex('male'),
-      SEX3MO == 'YES, HAD INTERCOURSE'
+      SEX3MO != 'YES, HAD INTERCOURSE'
     )
-  )
+  )[1:9, ]
 )
 ```
 
@@ -2416,6 +2416,7 @@ estimate_NSFG_mentions(
 
 * Make capitalization in descriptions consistent
 * Style plots for output
+* Estimate proportion of females who did not use contraception at last intercourse, but report using a method of contraception in the month of last intercourse
 * Write results and discussion section of report
 * Compare own report with published reports
 * Write introduction section of report
