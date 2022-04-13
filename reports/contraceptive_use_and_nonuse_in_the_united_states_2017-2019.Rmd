@@ -1115,7 +1115,7 @@ estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m)
 ```
 
 
-# Contraception Use During Most Recent Intercourse
+# Contraception Use at Most Recent Intercourse
 
 Domain: Persons aged 15-49 living in households in the United States who had intercourse with the opposite sex in the 3 months preceding the interview
 
@@ -1143,7 +1143,7 @@ style_and_combine_totals_and_percentages_vertically(
 ```
 
 
-# Reason for Nonuse
+## Reason for Nonuse
 
 Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview and did not use a method of contraception during most recent intercourse
 
@@ -1176,7 +1176,7 @@ estimate_totals_and_percentages(
 ```
 
 
-# Contraception Use Rate
+## Contraception Use Rate
 
 Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview, did not use a method of contraception during most recent intercourse, and neither are nor had last intercourse with someone who is pregnant, postpartum, trying to conceive, or physically infertile
 
@@ -1211,7 +1211,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Reported Ignorance of Contraceptive Use
+### Reported Ignorance of Contraceptive Use
 
 Domain: Males who had intercourse with a female in the past 3 months
 
@@ -1240,9 +1240,9 @@ estimate_totals_and_percentages(
 ```
 
 
-# Not Sexually Active
+# Not Sexually Active (with Opposite Sex)
 
-## Never Had Intercourse with Opposite Sex
+## Never Had Intercourse (with Opposite Sex)
 
 Domain: Persons who have not had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview
 
@@ -1375,78 +1375,6 @@ estimate_totals_and_percentages(
     get_NSFG_survey_design_for_sex('fem'),
     POSIBLMN == 'No'
   )
-)[order(-total)] |> style_totals_and_percentages()
-```
-
-
-# Reason(s) for Nonuse
-
-## Size of Domain
-
-Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~I(
-    CURRPREG == 'NO' &
-      sex_this_month &
-      !is.element(
-        RSTRSTAT,
-        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
-      ) &
-      CURRMETH1 == 'No method used'
-  ),
-  get_NSFG_survey_design_for_sex('fem')
-)[description == TRUE] |> style_totals_and_percentages()
-```
-
-## Intent to Conceive
-
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive*
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(pregnancy_intent_status),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    CURRPREG == 'NO' &
-      sex_this_month &
-      !is.element(
-        RSTRSTAT,
-        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
-      ) &
-      CURRMETH1 == 'No method used'
-  )
-) |> style_totals_and_percentages()
-```
-
-## Reason(s) for Nonuse When Not Intending to Conceive
-
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
-
-```{r, dependson='process-fem-data'}
-estimate_NSFG_mentions(
-  survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    pregnancy_intent_status == 'Not intending to conceive'
-  ),
-  prefix = 'nonuse_reason',
-  format = 'WHYNOUSNG'
-)[order(-total)] |> style_totals_and_percentages()
-```
-
-## Reason(s) Respondent Believes She Cannot Become Pregnant
-
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
-
-```{r, dependson='process-fem-data'}
-estimate_NSFG_mentions(
-  survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    nonuse_reason2
-  ),
-  prefix = 'pregnancy_impossible_reason',
-  format = 'WHYNOTPGF'
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
@@ -2209,6 +2137,78 @@ estimate_totals_and_percentages(
 ```
 
 
+# Reason(s) for Not Currently Using Contraception
+
+## Size of Domain
+
+Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~I(
+    CURRPREG == 'NO' &
+      sex_this_month &
+      !is.element(
+        RSTRSTAT,
+        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
+      ) &
+      CURRMETH1 == 'No method used'
+  ),
+  get_NSFG_survey_design_for_sex('fem')
+)[description == TRUE] |> style_totals_and_percentages()
+```
+
+## Intent to Conceive
+
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive*
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(pregnancy_intent_status),
+  subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    CURRPREG == 'NO' &
+      sex_this_month &
+      !is.element(
+        RSTRSTAT,
+        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
+      ) &
+      CURRMETH1 == 'No method used'
+  )
+) |> style_totals_and_percentages()
+```
+
+## Reason(s) for Nonuse When Not Intending to Conceive
+
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
+
+```{r, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    pregnancy_intent_status == 'Not intending to conceive'
+  ),
+  prefix = 'nonuse_reason',
+  format = 'WHYNOUSNG'
+)[order(-total)] |> style_totals_and_percentages()
+```
+
+## Reason(s) Respondent Believes She Cannot Become Pregnant
+
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
+
+```{r, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    nonuse_reason2
+  ),
+  prefix = 'pregnancy_impossible_reason',
+  format = 'WHYNOTPGF'
+)[order(-total)] |> style_totals_and_percentages()
+```
+
+
 
 # Method(s) Ever Used
 
@@ -2409,6 +2409,8 @@ estimate_NSFG_mentions(
   format = 'STOPIUDFMT'
 )[order(-total)] |> style_totals_and_percentages()
 ```
+
+
 
 
 
