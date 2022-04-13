@@ -151,8 +151,8 @@ set_count_variable_for_mentions(fem1719dt, 'used_last_3m_method')
 fem1719dt[,
   used_last_3m := factor(fifelse(
     used_last_3m_method_count > 0,
-    'Currently using contraception',
-    'Not currently using contraception'
+    'Used contraception',
+    'Did not use contraception'
   ))
 ]
 
@@ -672,8 +672,8 @@ set_count_variable_for_mentions(male1719dt, 'used_last_3m_method')
 male1719dt[,
   used_last_3m := factor(fifelse(
     used_last_3m_method_count > 0,
-    'Currently using contraception',
-    'Not currently using contraception'
+    'Used contraception',
+    'Did not use contraception'
   ))
 ]
 
@@ -1084,7 +1084,7 @@ estimate_and_combine_NSFG_totals_and_percentages(~person)
 ```
 
 
-# Currently Using Contraception
+# Contraception Use During Most Recent Intercourse
 
 Domain: Persons aged 15-49 living in households in the United States
 
@@ -2364,6 +2364,7 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
+* Redo domains for analysis to take out those who are not sexually active earlier
 * Make capitalization in descriptions consistent
 * Style plots for output
 * Write results and discussion section of report
