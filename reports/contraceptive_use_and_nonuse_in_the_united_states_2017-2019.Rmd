@@ -1258,7 +1258,7 @@ Domain: Females who have not had sexual intercourse with a male in the past 3 mo
 Domain: Females who had sexual intercourse with a male in the past 3 months
 
 ```{r, dependson='process-fem-data'}
-style_and_horizontally_combine_totals_and_percentages(
+style_and_combine_totals_and_percentages_horizontally(
   'Sexually active with opposite sex',
   estimate_totals_and_percentages(
     ~factor(ATTRACT),
@@ -1283,7 +1283,7 @@ Domain: Males who have not had sexual intercourse with a female in the past 3 mo
 Domain: Males who had sexual intercourse with a female in the past 3 months
 
 ```{r, dependson='process-male-data'}
-style_and_horizontally_combine_totals_and_percentages(
+style_and_combine_totals_and_percentages_horizontally(
   'Sexually active with opposite sex',
   estimate_totals_and_percentages(
     ~ATTRACT,
@@ -2369,6 +2369,7 @@ estimate_NSFG_mentions(
 * Style tables for output
     * Add alternating row shadowing
     * Limit width of description column so C.I. columns don't get wrapped
+* Make capitalization in descriptions consistent
 * Style plots for output
 * Write results and discussion section of report
 * Compare own report with published reports

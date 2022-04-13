@@ -289,7 +289,7 @@ combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {
     set_top_border(body_start_index2, everywhere)
 }
 
-style_and_vertically_combine_totals_and_percentages <- function(
+style_and_combine_totals_and_percentages_vertically <- function(
   label1, estimate1, label2, estimate2
 ) {
   combine_huxtables_vertically(
@@ -332,7 +332,7 @@ combine_huxtables_horizontally <- function(label1, ht1, label2, ht2) {
     set_left_border(everywhere, body_start_index2)
 }
 
-style_and_horizontally_combine_totals_and_percentages <- function(
+style_and_combine_totals_and_percentages_horizontally <- function(
   label1, estimate1, label2, estimate2
 ) {
   combine_huxtables_horizontally(
