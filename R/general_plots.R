@@ -1,49 +1,61 @@
 library(ggplot2)
 
-plot_totals_with_CIs <- function(data, reorder_factor = TRUE) {
-  scale_factor <- 10e-7
-
-  if (reorder_factor) {
-    this_plot <- ggplot(
+plot_with_CIs <- function(
+  data,
+  val_col,
+  reordering = TRUE,
+  scale_factor = 1,
+  label_col = 'description'
+) {
+  if (reordering) {
+    ggplot(
       data = data,
       mapping = aes(
-        y = reorder(description, total)
+        y = reorder(.data[[label_col]], .data[[val_col]])
       )
     ) +
     geom_segment(
-      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
-      mapping = aes(
-        x = total_CI_low * scale_factor,
-        xend = total_CI_high * scale_factor,
-        yend = reorder(description, total)
+      aes(
+        x = .data[[paste0(val_col, '_CI_low')]] * scale_factor,
+        xend = .data[[paste0(val_col, '_CI_high')]] * scale_factor,
+        yend = reorder(.data[[label_col]], .data[[val_col]])
       ),
+      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
       size = 0.5
+    ) +
+    geom_point(
+      aes(
+        x = .data[[val_col]] * scale_factor
+      ),
+      size = 2
     )
   } else {
     this_plot <- ggplot(
       data = data,
       mapping = aes(
-        y = description
+        y = .data[[label_col]]
       )
     ) +
     geom_segment(
-      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
-      mapping = aes(
-        x = total_CI_low * scale_factor,
-        xend = total_CI_high * scale_factor,
-        yend = description
+      aes(
+        x = .data[[paste0(val_col, '_CI_low')]] * scale_factor,
+        xend = .data[[paste0(val_col, '_CI_high')]] * scale_factor,
+        yend = .data[[label_col]]
       ),
+      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
       size = 0.5
-    )
-  }
-
-  this_plot +
+    ) +
     geom_point(
       aes(
-        x = total * scale_factor
+        x = .data[[val_col]] * scale_factor
       ),
       size = 2
-    ) +
+    )
+  }
+}
+
+plot_totals_with_CIs <- function(data, reordering = TRUE) {
+  plot_with_CIs(data, 'total', reordering, scale_factor = 10e-7) +
     scale_x_continuous(
       labels = scales::label_number(suffix = 'M', accuracy = 0.1),
     ) +
@@ -57,48 +69,8 @@ plot_totals_with_CIs <- function(data, reorder_factor = TRUE) {
     xlab('Total Persons')
 }
 
-plot_percentages_with_CIs <- function(data, reorder_factor = TRUE) {
-  if (reorder_factor) {
-    this_plot <- ggplot(
-      data = data,
-      mapping = aes(
-        y = reorder(description, percentage)
-      )
-    ) +
-    geom_segment(
-      aes(
-        yend = reorder(description, percentage),
-        x = percentage_CI_low,
-        xend = percentage_CI_high
-      ),
-      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
-      size = 0.5
-    )
-  } else {
-    this_plot <- ggplot(
-      data = data,
-      mapping = aes(
-        y = description
-      )
-    ) +
-    geom_segment(
-      aes(
-        x = percentage_CI_low,
-        xend = percentage_CI_high,
-        yend = description
-      ),
-      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
-      size = 0.5
-    )
-  }
-
-  this_plot +
-    geom_point(
-      aes(
-        x = percentage
-      ),
-      size = 2
-    ) +
+plot_percentages_with_CIs <- function(data, reordering = TRUE) {
+  plot_with_CIs(data, 'percentage', reordering) +
     scale_x_continuous(
       labels = scales::label_percent(1)
     ) +
