@@ -2469,7 +2469,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Style plots for output
 * Estimate those who have ever used any method of contraception
     * among the entire population
     * among those who have had sexual intercourse

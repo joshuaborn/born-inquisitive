@@ -8,39 +8,23 @@ plot_with_CIs <- function(
   label_col = 'description'
 ) {
   if (reordering) {
-    ggplot(
-      data = data,
-      mapping = aes(
-        y = reorder(.data[[label_col]], .data[[val_col]])
-      )
-    ) +
-    geom_segment(
-      aes(
-        x = .data[[paste0(val_col, '_CI_low')]] * scale_factor,
-        xend = .data[[paste0(val_col, '_CI_high')]] * scale_factor,
-        yend = reorder(.data[[label_col]], .data[[val_col]])
-      ),
-      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
-      size = 0.5
-    ) +
-    geom_point(
-      aes(
-        x = .data[[val_col]] * scale_factor
-      ),
-      size = 2
-    )
+    y_expr <- expr(reorder(.data[[label_col]], .data[[val_col]]))
+    y_end_expr <- expr(reorder(.data[[label_col]], .data[[val_col]]))
   } else {
-    this_plot <- ggplot(
-      data = data,
-      mapping = aes(
-        y = .data[[label_col]]
-      )
-    ) +
+    y_expr <- expr(.data[[label_col]])
+    y_end_expr <- expr(.data[[label_col]])
+  }
+  ggplot(
+    data = data,
+    mapping = aes(
+      y = !!y_expr
+    )
+  ) +
     geom_segment(
       aes(
         x = .data[[paste0(val_col, '_CI_low')]] * scale_factor,
         xend = .data[[paste0(val_col, '_CI_high')]] * scale_factor,
-        yend = .data[[label_col]]
+        yend = !!y_end_expr
       ),
       arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
       size = 0.5
@@ -51,7 +35,6 @@ plot_with_CIs <- function(
       ),
       size = 2
     )
-  }
 }
 
 plot_totals_with_CIs <- function(data, reordering = TRUE) {
