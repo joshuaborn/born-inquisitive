@@ -6,6 +6,9 @@ output:
     code_folding: hide
     toc: true
     toc_depth: 5
+bibliography: "bibliographies/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.bib"
+csl: "bibliographies/chicago-author-date.csl"
+link-citations: true
 ---
 
 ```{r setup, include=FALSE}
@@ -1179,6 +1182,8 @@ male1719dt[,
 
 
 # Population Size
+
+[@us_census_bureau_table_2010]
 
 Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
 

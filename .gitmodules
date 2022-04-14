@@ -1,0 +1,3 @@
+[submodule "reports/bibliographies"]
+	path = reports/bibliographies
+	url = git@github.com:joshuaborn/bibliographies.git
