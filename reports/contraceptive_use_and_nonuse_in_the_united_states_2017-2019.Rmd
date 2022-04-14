@@ -278,7 +278,7 @@ fem1719METHX <- fem1719METHX[
   create_NSFG_pivot_table(
     'CMMHCALX',
     1:48,
-    c('CASEID', 'CMINTVW', 'CMLSTYR')
+    c('CASEID', 'CMINTVW', 'CMLSTYR', 'LSEXDATE')
   ),
   on = c('CASEID', 'CMMHCALXID')
 ]
@@ -296,6 +296,19 @@ fem1719dt[,
   names(fem1719METHXidxs) := lapply(.SD, na_to_false),
   .SDcols = names(fem1719METHXidxs)
 ]
+
+
+# Create boolean variable for whether any contraceptive was used in the month of last intercourse.
+fem1719dt <- fem1719METHX[
+  century_month_comparison(`==`, LSEXDATE, CMMHCALX) &
+    !is.na(METHX) &
+    !is.element(METHX, c(1, 95, 98, 99)),
+  .(
+    used_in_month_last_sex = .N > 0
+  ),
+  by = CASEID
+][fem1719dt]
+fem1719dt[, used_in_month_last_sex := na_to_false(used_in_month_last_sex)]
 
 
 # Create pivot table of MONSX variables for creating the sex12mo and sex_this_month variables below.
@@ -1883,6 +1896,20 @@ estimate_totals_and_percentages(
 
 Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
 
+Description: By whether reported using a method in the month of last intercourse
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(used_in_month_last_sex),
+  subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
+  )
+) |> style_totals_and_percentages()
+```
+
+Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
+
 Description: By whether used a method of contraception ever
 
 ```{r, dependson='process-fem-data'}
@@ -2494,7 +2521,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Estimate proportion of females who did not use contraception at last intercourse, but report using a method of contraception in the month of last intercourse
 * Write results and discussion section of report
 * Compare own report with published reports
 * Write introduction section of report
