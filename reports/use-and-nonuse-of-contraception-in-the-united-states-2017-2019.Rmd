@@ -12,7 +12,7 @@ output:
 library(data.table)
 library(here)
 
-i_am('reports/contraceptive_use_and_nonuse_in_the_united_states_2017-2019.Rmd')
+i_am('reports/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.Rmd')
 
 source(here('R/NSFG_helpers.R'))
 source(here('R/general_helpers.R'))
