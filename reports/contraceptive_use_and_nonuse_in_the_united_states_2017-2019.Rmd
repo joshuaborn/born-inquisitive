@@ -2269,6 +2269,17 @@ estimate_NSFG_mentions(
 
 Domain: Females aged 15-49 living in households in the United States
 
+Description: By whether ever used any method of contraception
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~I(ever_used_method_count > 0),
+  get_NSFG_survey_design_for_sex('fem')
+)[order(-total)] |> style_totals_and_percentages()
+```
+
+Description: By whether ever used specific methods of contraception
+
 ```{r, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = get_NSFG_survey_design_for_sex('fem'),
@@ -2289,6 +2300,20 @@ estimate_totals_and_percentages(
 ```
 
 Domain: Females who have ever had intercourse with a male
+
+Description: By whether ever used any method of contraception
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~I(ever_used_method_count > 0),
+  subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    HADSEX == 'YES, R EVER HAD INTERCOURSE'
+  )
+)[order(-total)] |> style_totals_and_percentages()
+```
+
+Description: By whether ever used specific methods of contraception
 
 ```{r, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -2469,9 +2494,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Estimate those who have ever used any method of contraception
-    * among the entire population
-    * among those who have had sexual intercourse
 * Estimate proportion of females who did not use contraception at last intercourse, but report using a method of contraception in the month of last intercourse
 * Write results and discussion section of report
 * Compare own report with published reports
