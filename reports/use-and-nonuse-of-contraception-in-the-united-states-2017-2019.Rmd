@@ -14,6 +14,7 @@ link-citations: true
 ```{r setup, include=FALSE}
 library(data.table)
 library(here)
+library(tidyfst)
 
 i_am('reports/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.Rmd')
 
@@ -23,7 +24,7 @@ source(here('R/general_plots.R'))
 
 knitr::opts_chunk$set(
   cache = TRUE,
-  echo = TRUE,
+  echo = FALSE,
   fig.height = 8,
   fig.width = 12,
   warning = FALSE
@@ -71,7 +72,7 @@ fem1719formats <- rbindlist(list(
 setkey(fem1719formats, format_name, factor_value)
 
 
-# Make IF VOLUNTEERED: text in factor labels not all caps.
+## Make IF VOLUNTEERED: text in factor labels not all caps.
 fem1719formats[,
   factor_label := gsub(
     "(.?If volunteered:.?\\s?)(.*)",
@@ -82,7 +83,7 @@ fem1719formats[,
 ]
 
 
-# Start working female respondents data table.
+## Start working female respondents data table.
 fem1719dt <- copy(fem1719$Data[, .(
   CASEID,
   SECU,
@@ -91,7 +92,7 @@ fem1719dt <- copy(fem1719$Data[, .(
 )])
 
 
-# Copy variables to working data table and set them to factors.
+## Copy variables to working data table and set them to factors.
 set_NSFG_variables_as_factors(
   variables = c(
     ATTRACT = 'ATTRACT',
@@ -125,7 +126,7 @@ set_NSFG_variables_as_factors(
 )
 
 
-# Create categorical variable for whether had intercourse with opposite sex in previous 3 months.
+## Create categorical variable for whether had intercourse with opposite sex in previous 3 months.
 fem1719dt[,
   sexually_active_3m := factor(fifelse(
     SEX3MO == 'YES',
@@ -135,7 +136,7 @@ fem1719dt[,
 ]
 
 
-# Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
+## Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'used_last_3m_method',
   in_prefix = 'METH3M',
@@ -145,7 +146,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# If last intercourse within the past 3 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
+## If last intercourse within the past 3 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
 fem1719dt[,
   used_last_3m_method3 := fifelse(
     SEX3MO == 'YES' & PSURGSTR == 'YES' & (
@@ -158,7 +159,7 @@ fem1719dt[,
 ]
 
 
-# If respondent has had intercourse in the past 3 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
+## If respondent has had intercourse in the past 3 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
 fem1719dt[,
   used_last_3m_method4 := fifelse(
     SEX3MO == 'YES' & TUBS == 'YES',
@@ -168,11 +169,11 @@ fem1719dt[,
 ]
 
 
-# Reset count of methods used at last intercourse within the past 3 months to include overrides of vasectomy and tubal ligation boolean variables.
+## Reset count of methods used at last intercourse within the past 3 months to include overrides of vasectomy and tubal ligation boolean variables.
 set_count_variable_for_mentions(fem1719dt, 'used_last_3m_method')
 
 
-# Create categorical variable for whether used contraception at last intercourse within the past 3 months.
+## Create categorical variable for whether used contraception at last intercourse within the past 3 months.
 fem1719dt[,
   used_last_3m := factor(fifelse(
     used_last_3m_method_count > 0,
@@ -182,7 +183,7 @@ fem1719dt[,
 ]
 
 
-# Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
+## Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
 fem1719dt[,
   used_last_3m_status := factor(
     fcase(
@@ -220,7 +221,7 @@ fem1719dt[,
 ]
 
 
-# Create categorical variable specifying whether respondent or partner wants to conceive.
+## Create categorical variable specifying whether respondent or partner wants to conceive.
 fem1719dt[,
   pregnancy_intent_status := factor(
     fcase(
@@ -254,7 +255,7 @@ fem1719dt[,
 ]
 
 
-# Create boolean variables for whether each reason for not using contraception was mentioned.
+## Create boolean variables for whether each reason for not using contraception was mentioned.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'nonuse_reason',
   in_prefix = 'WHYNOUSING',
@@ -263,7 +264,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create boolean variables for whether each reason for not being able to get pregnant was mentioned.
+## Create boolean variables for whether each reason for not being able to get pregnant was mentioned.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'pregnancy_impossible_reason',
   in_prefix = 'WHYNOTPG',
@@ -272,7 +273,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create boolean variables for whether each method was used at all in the past 3 months.
+## Create boolean variables for whether each method was used at all in the past 3 months.
 fem1719METHXidxs <- get_NSFG_format_indices('METHHXF', skip = c(1:2, 22:23, 55, 98:99))
 names(fem1719METHXidxs) <- paste0('any_use_12m_method', fem1719METHXidxs)
 fem1719METHX <- create_NSFG_pivot_table('METHX', 1:192)
@@ -301,7 +302,7 @@ fem1719dt[,
 ]
 
 
-# Create boolean variable for whether any contraceptive was used in the month of last intercourse.
+## Create boolean variable for whether any contraceptive was used in the month of last intercourse.
 fem1719dt <- fem1719METHX[
   century_month_comparison(`==`, LSEXDATE, CMMHCALX) &
     !is.na(METHX) &
@@ -314,7 +315,7 @@ fem1719dt <- fem1719METHX[
 fem1719dt[, used_in_month_last_sex := na_to_false(used_in_month_last_sex)]
 
 
-# Create pivot table of MONSX variables for creating the sex12mo and sex_this_month variables below.
+## Create pivot table of MONSX variables for creating the sex12mo and sex_this_month variables below.
 fem1719MONSX <- create_NSFG_pivot_table(
   'CMMONSX',
   2:48,
@@ -325,7 +326,7 @@ fem1719MONSX <- create_NSFG_pivot_table(
 ]
 
 
-# Create sex12mo variable for females.
+## Create sex12mo variable for females.
 fem1719dt <- fem1719MONSX[
   !is.na(MONSX) & MONSX == 1 &
     CMMONSX > CMLSTYR &
@@ -336,7 +337,7 @@ fem1719dt <- fem1719MONSX[
 fem1719dt[, sex12mo := na_to_false(sex12mo)]
 
 
-# Create sex_this_month variable.
+## Create sex_this_month variable.
 fem1719dt <- fem1719MONSX[
   CMMONSX == CMINTVW,
   .(sex_this_month = equals(MONSX, 1)),
@@ -345,7 +346,7 @@ fem1719dt <- fem1719MONSX[
 fem1719dt[, sex_this_month := na_to_false(sex_this_month)]
 
 
-# If last intercourse within the past 12 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use in the past 12 months to true.
+## If last intercourse within the past 12 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use in the past 12 months to true.
 fem1719dt[,
   any_use_12m_method5 := fifelse(
     sex12mo & PSURGSTR == 'YES' & (
@@ -358,7 +359,7 @@ fem1719dt[,
 ]
 
 
-# If respondent has had intercourse in past 12 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at in the past 12 months to true.
+## If respondent has had intercourse in past 12 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at in the past 12 months to true.
 fem1719dt[,
   any_use_12m_method6 := fifelse(
     sex12mo & TUBS == 'YES',
@@ -368,11 +369,11 @@ fem1719dt[,
 ]
 
 
-# Reset count of methods used in the past 12 months to include overrides of vasectomy and tubal ligation boolean variables.
+## Reset count of methods used in the past 12 months to include overrides of vasectomy and tubal ligation boolean variables.
 set_count_variable_for_mentions(fem1719dt, 'any_use_12m_method')
 
 
-# Create categorical variable specifying consistency of any contraceptive method use over previous 12 months that combines P12MOCON and PXNOFREQ.
+## Create categorical variable specifying consistency of any contraceptive method use over previous 12 months that combines P12MOCON and PXNOFREQ.
 fem1719dt[,
   any_use_12m_consistency := factor(
     fcase(
@@ -397,7 +398,7 @@ fem1719dt[,
 ]
 
 
-# Create boolean variables for whether each method was used in the month preceding the interview.
+## Create boolean variables for whether each method was used in the month preceding the interview.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'last_month_method',
   in_prefix = 'LSTMONMETH',
@@ -407,7 +408,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create boolean variables for whether each method was used in the month of the interview.
+## Create boolean variables for whether each method was used in the month of the interview.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'this_month_method',
   in_prefix = 'CURRMETH',
@@ -417,7 +418,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create boolean variables for each reason for using pill.
+## Create boolean variables for each reason for using pill.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'why_use_pill_reason',
   in_prefix = 'YUSEPILL',
@@ -426,7 +427,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create categorical variable reflecting overall motivation for pill use.
+## Create categorical variable reflecting overall motivation for pill use.
 fem1719dt[,
   pill_motivation := factor(
     fcase(
@@ -454,7 +455,7 @@ fem1719dt[,
 ]
 
 
-# Create boolean variables for each reason for using an IUD.
+## Create boolean variables for each reason for using an IUD.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'why_use_iud_reason',
   in_prefix = 'YUSEIUD',
@@ -463,7 +464,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create categorical variable reflecting overall motivation for IUD use.
+## Create categorical variable reflecting overall motivation for IUD use.
 fem1719dt[,
   iud_motivation := factor(
     fcase(
@@ -505,7 +506,7 @@ fem1719dt[,
 ]
 
 
-# Create boolean variables for whether specific contraceptive method was ever used. Because this is encoded in various method-specific variables in addition to the OTHRMETH series, this has to be done in two parts. Additionally, IUD is being split into copper and hormone based IUDs, so this is handled as special cases.
+## Create boolean variables for whether specific contraceptive method was ever used. Because this is encoded in various method-specific variables in addition to the OTHRMETH series, this has to be done in two parts. Additionally, IUD is being split into copper and hormone based IUDs, so this is handled as special cases.
 fem1719dt[
   fem1719$Data,
   `:=`(
@@ -546,7 +547,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create boolean variables for whether each contraceptive method was ever discontinued due to dissatisfaction. Because IUD types have been split out, these cases must be handled individually.
+## Create boolean variables for whether each contraceptive method was ever discontinued due to dissatisfaction. Because IUD types have been split out, these cases must be handled individually.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'ever_quit_method',
   in_prefix = 'METHSTOP',
@@ -573,7 +574,7 @@ fem1719dt[
 ]
 
 
-# Create boolean variables for reason(s) for dissatisfaction with condom.
+## Create boolean variables for reason(s) for dissatisfaction with condom.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'condom_quit_reason',
   in_prefix = 'REASCOND0',
@@ -588,7 +589,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create boolean variables for reason(s) for dissatisfaction with pill.
+## Create boolean variables for reason(s) for dissatisfaction with pill.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'pill_quit_reason',
   in_prefix = 'REASPILL0',
@@ -603,7 +604,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# Create boolean variables for reason(s) for dissatisfaction with IUDs.
+## Create boolean variables for reason(s) for dissatisfaction with IUDs.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'iud_quit_reason',
   in_prefix = 'REASIUD0',
@@ -620,7 +621,7 @@ set_NSFG_mentions_to_booleans(
 
 ```{r process-male-data, dependson='load-data'}
 
-# Fix the labeling used by METH3MF for males to be more like that of females.
+## Fix the labeling used by METH3MF for males to be more like that of females.
 METH3MF1719_join_table <- as.data.table(matrix(
   data = c(
     1, 2,
@@ -680,7 +681,7 @@ male1719formats[
 ]
 
 
-# Start working male respondents data table.
+## Start working male respondents data table.
 male1719dt <- copy(male1719$Data[, .(
   CASEID,
   CMLSTYR,
@@ -695,7 +696,7 @@ male1719dt <- copy(male1719$Data[, .(
 )])
 
 
-# Copy variables to working data table and set them to factors.
+## Copy variables to working data table and set them to factors.
 set_NSFG_variables_as_factors(
   sex = 'male',
   variables = c(
@@ -730,7 +731,7 @@ set_NSFG_variables_as_factors(
 )
 
 
-# Create categorical variable for whether had intercourse with opposite sex in previous 3 months.
+## Create categorical variable for whether had intercourse with opposite sex in previous 3 months.
 male1719dt[,
   sexually_active_3m := factor(fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE',
@@ -740,7 +741,7 @@ male1719dt[,
 ]
 
 
-# Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
+## Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
 set_NSFG_mentions_to_booleans(
   sex = 'male',
   out_prefix = 'used_last_3m_method',
@@ -751,7 +752,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-# If last intercourse within the past 3 months was with wife or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
+## If last intercourse within the past 3 months was with wife or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
 male1719dt[,
   used_last_3m_method5 := fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE' &
@@ -763,7 +764,7 @@ male1719dt[,
 ]
 
 
-# If respondent has had intercourse in the past 3 months and has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
+## If respondent has had intercourse in the past 3 months and has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
 male1719dt[,
   used_last_3m_method3 := fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
@@ -773,11 +774,11 @@ male1719dt[,
 ]
 
 
-# Reset count of methods used at last intercourse within the past 3 months to include overrides of tubal ligation and vasectomy boolean variables.
+## Reset count of methods used at last intercourse within the past 3 months to include overrides of tubal ligation and vasectomy boolean variables.
 set_count_variable_for_mentions(male1719dt, 'used_last_3m_method')
 
 
-# Create categorical variable for whether used contraception at last intercourse within the past 3 months.
+## Create categorical variable for whether used contraception at last intercourse within the past 3 months.
 male1719dt[,
   used_last_3m := factor(fifelse(
     used_last_3m_method_count > 0,
@@ -787,7 +788,7 @@ male1719dt[,
 ]
 
 
-# Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
+## Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
 male1719dt[,
   used_last_3m_status := factor(
     fcase(
@@ -819,7 +820,7 @@ male1719dt[,
 ]
 
 
-# Create categorical variable specifying whether respondent ever indicated he does not know if a partner used a method of contraception during last intercourse.
+## Create categorical variable specifying whether respondent ever indicated he does not know if a partner used a method of contraception during last intercourse.
 male1719dt[,
   not_aware := factor(fifelse(
     CWPLUSE2 == "Don't know" |
@@ -834,7 +835,7 @@ male1719dt[,
 ]
 
 
-# Create boolean variables for whether each specific method was used in past 12 months.
+## Create boolean variables for whether each specific method was used in past 12 months.
 for (x in get_NSFG_format_indices('MTHDSV1F', skip = c(10, 98:99), sex = 'male')) {
   male1719dt[,
     (sprintf('any_use_12m_method%d', x)) := male1719$Data[,
@@ -920,7 +921,7 @@ for (x in get_NSFG_format_indices('MTHDSV1F', skip = c(10, 98:99), sex = 'male')
   ]
 }
 
-# Set a boolean variable for whether "Something else" was used in past 12 months separately because its encoding collides with "Contraceptive patch (Ortho-Evra)".
+## Set a boolean variable for whether "Something else" was used in past 12 months separately because its encoding collides with "Contraceptive patch (Ortho-Evra)".
 male1719dt[,
   any_use_12m_method13 := male1719$Data[,
     !is.na(
@@ -1005,7 +1006,7 @@ male1719dt[,
 ]
 
 
-# Set a boolean variable for whether "Contraceptive patch (Ortho-Evra)" was used in past 12 months separately because its encoding collides with "Something else".
+## Set a boolean variable for whether "Contraceptive patch (Ortho-Evra)" was used in past 12 months separately because its encoding collides with "Something else".
 male1719dt[,
   any_use_12m_method10 := male1719$Data[,
     !is.na(
@@ -1078,7 +1079,7 @@ male1719dt[,
 ]
 
 
-# If respondent has had intercourse in the past 12 months and has an active vasectomy, then set boolean variable of vasectomy use at in the past 12 months to true.
+## If respondent has had intercourse in the past 12 months and has an active vasectomy, then set boolean variable of vasectomy use at in the past 12 months to true.
 male1719dt[,
   any_use_12m_method3 := fifelse(
     SEX12MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
@@ -1088,7 +1089,7 @@ male1719dt[,
 ]
 
 
-# If last intercourse with wife or cohabitating partner was within the past 12 months, and wife or cohabitating partner has an active tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at in the past 12 months to true.
+## If last intercourse with wife or cohabitating partner was within the past 12 months, and wife or cohabitating partner has an active tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at in the past 12 months to true.
 male1719dt[,
   any_use_12m_method5 := fifelse(
     SEX12MO == 'YES, HAD INTERCOURSE' &
@@ -1100,11 +1101,11 @@ male1719dt[,
 ]
 
 
-# Count number of contraceptive methods used in past 12 months.
+## Count number of contraceptive methods used in past 12 months.
 set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
 
 
-# Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with wife or cohabitating partner that combines CONDFREQ and CWPNOFRQ.
+## Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with wife or cohabitating partner that combines CONDFREQ and CWPNOFRQ.
 male1719dt[,
   any_use_12m_wcp_consistency := factor(
     fcase(
@@ -1129,7 +1130,7 @@ male1719dt[,
 ]
 
 
-# Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with last partner, who is not wife or cohabitating partner, that combines PXCONFRQ and PXNOFREQ.
+## Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with last partner, who is not wife or cohabitating partner, that combines PXCONFRQ and PXNOFREQ.
 male1719dt[,
   any_use_12m_p1_consistency := factor(
     fcase(
@@ -1153,7 +1154,7 @@ male1719dt[,
   )
 ]
 
-# Create categorical variable specifying consistency of condom use over previous 12 months that combines P12MOCONO and P12MOCON.
+## Create categorical variable specifying consistency of condom use over previous 12 months that combines P12MOCONO and P12MOCON.
 male1719dt[,
   condom_12m_consistency := factor(
     fcase(
@@ -1181,21 +1182,58 @@ male1719dt[,
 ```
 
 
-# Population Size
 
-[@us_census_bureau_table_2010]
+# Results
 
-Description: Persons aged 15-49 living in households in the United States as estimated by the NSFG
+## Population Size
 
-```{r, dependson=c('process-fem-data', 'process-male-data')}
+In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males. Therefore, separate estimates for females and males are given throughout this report.
+
+
+```{r, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
 fem1719dt[, person := 1]
 male1719dt[, person := 1]
 
-estimate_and_combine_NSFG_totals_and_percentages(~person)
+this <- list()
+
+this$dt <- rbind(
+  estimate_totals_and_percentages(
+    ~I(person),
+    get_NSFG_survey_design_for_sex('fem')
+  ),
+  estimate_totals_and_percentages(
+    ~I(person),
+    get_NSFG_survey_design_for_sex('male')
+  )
+)[
+  , .(
+    sex = c('Female', 'Male'),
+    total = sprintf("%.3fM", total / 10e5),
+    total_CI = sprintf(
+      "(%.3fM, %.3fM)",
+      total_CI_low / 10e5,
+      total_CI_high / 10e5
+    )
+  )
+][, .(sex, output = paste(total, total_CI))]
+
+this$fem <- this$dt[sex == 'Female', output]
+this$male <- this$dt[sex == 'Male', output]
 ```
 
+The target population of the NSFG are persons aged 15-49 living in households in the United States. As a consequence of sampling design, the population does not include those without a current residential address nor does it include those living in group housing, such military bases, prisons, etc. However, the population does include college students living in dormitories by way of their parents' households.
 
-# Use of Contraception at Most Recent Intercourse
+Based on the NSFG, there is an estimated `r this$fem` 95\% C.I.[^ci] females and `r this$male` 95\% C.I. males living in households in the United States.  According census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size cover the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.
+
+[^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals), and the syntax of stating a point estimate followed by its corresponding 95\% confidence interval in parentheses is used throughout this report. The "M" in the figures refers to "millions," such that "72.6M" persons describes approximately seventy two million, six hundred thousand persons.
+
+[^census]: As of the writing of this report, the full results of the 2020 U.S. Census have not been released. Therefore, the 2010 Census was used. Census counts from 2010 can be expected to be lesser than what would have been the census counts from the 2017-2019 time frame, if there was any population growth between 2010 and 2017.
+
+Furthermore, the point estimates of population size based on the NSFG are quite close to the census counts, though the census counts are more than a million persons higher for both females and males. Unlike the NSFG estimates, the U.S. Census does count those without a current residential address and those living in group housing, which might account for these differences.
+
+
+
+### Use of Contraception at Most Recent Intercourse
 
 Domain: Persons aged 15-49 living in households in the United States as estimated by the NSFG
 
@@ -1208,7 +1246,7 @@ male1719dt[, person := 1]
 estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m)
 ```
 
-## Domain Size
+#### Domain Size
 
 Domain: Persons aged 15-49 living in households in the United States who had intercourse with the opposite sex in the 3 months preceding the interview
 
@@ -1236,7 +1274,7 @@ style_and_combine_totals_and_percentages_vertically(
 ```
 
 
-## Reason for Nonuse
+#### Reason for Nonuse
 
 Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview and did not use a method of contraception during most recent intercourse
 
@@ -1269,7 +1307,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Contraception Use Rate
+### Contraception Use Rate
 
 Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview, did not use a method of contraception during most recent intercourse, and neither are nor had last intercourse with someone who is pregnant, postpartum, trying to conceive, or physically infertile
 
@@ -1304,7 +1342,7 @@ estimate_totals_and_percentages(
 ```
 
 
-### Reported Ignorance of Contraceptive Use
+#### Reported Ignorance of Contraceptive Use
 
 Domain: Males who had intercourse with a female in the past 3 months
 
@@ -1333,7 +1371,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Sexual Inactivity (with Opposite Sex)
+### Sexual Inactivity (with Opposite Sex)
 
 Domain: Persons who have not had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview
 
@@ -1361,7 +1399,7 @@ estimate_totals_and_percentages(
 ) |> style_totals_and_percentages()
 ```
 
-### Reason for Never Having Intercourse
+#### Reason for Never Having Intercourse
 
 Domain: Persons who have never had sexual intercourse with someone of the opposite sex
 
@@ -1390,7 +1428,7 @@ estimate_totals_and_percentages(
 ```
 
 
-### Attraction by Sex
+#### Attraction by Sex
 
 Domain: Females who have not had sexual intercourse with a male in the past 3 months
 
@@ -1443,7 +1481,7 @@ style_and_combine_totals_and_percentages_horizontally(
 ```
 
 
-## Reason for Physical Inability to Conceive
+### Reason for Physical Inability to Conceive
 
 Domain: Females who report being physically unable to get pregnant
 
@@ -1470,7 +1508,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Number of Methods
+### Number of Methods
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
@@ -1501,7 +1539,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Method(s) Used
+### Method(s) Used
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
@@ -1537,7 +1575,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Method Used Exclusively
+### Method Used Exclusively
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used **one and only one** method of contraception during last intercourse
 
@@ -1571,7 +1609,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Proportion of Method Users Who Also Used Other Method(s)
+### Proportion of Method Users Who Also Used Other Method(s)
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used each specific method of contraception during last intercourse
 
@@ -1615,7 +1653,7 @@ estimate_NSFG_mentions_in_subdomains(
 ```
 
 
-## Other Method(s) Used with Calendar Method
+### Other Method(s) Used with Calendar Method
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a calendar method during last intercourse
 
@@ -1651,7 +1689,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Other Method(s) Used with Withdrawal
+### Other Method(s) Used with Withdrawal
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used withdrawal during last intercourse
 
@@ -1687,7 +1725,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Other Method(s) Used with Condom
+### Other Method(s) Used with Condom
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used condom during last intercourse
 
@@ -1723,7 +1761,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Other Method(s) Used with Pill
+### Other Method(s) Used with Pill
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used pill during last intercourse
 
@@ -1759,9 +1797,9 @@ estimate_NSFG_mentions(
 ```
 
 
-# Use of Contraception during Past 12 Months
+## Use of Contraception during Past 12 Months
 
-## Domain Size
+### Domain Size
 
 Description: Persons who have had intercourse with opposite in the past 12 months
 
@@ -1784,7 +1822,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Number of Methods
+### Number of Methods
 
 Domain: Females who have had intercourse with a male in the past 12 months
 
@@ -1811,7 +1849,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Method(s) Used
+### Method(s) Used
 
 Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview and used a method of contraception at least once
 
@@ -1847,7 +1885,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Method Used Exclusively in Past 12 Months
+### Method Used Exclusively in Past 12 Months
 
 Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview and reporting using only one method of contraception during the 12 months prior to interview
 
@@ -1881,9 +1919,9 @@ estimate_NSFG_mentions(
 ```
 
 
-# Consistency of Use of Contraception
+## Consistency of Use of Contraception
 
-## Use of Contraception Prior to Nonuse at Last Intercourse
+### Use of Contraception Prior to Nonuse at Last Intercourse
 
 Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
 
@@ -1942,7 +1980,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Any Method During Past 12 Months
+### Any Method During Past 12 Months
 
 Domain: Females who had intercourse with a male during the 12 months prior to interview, who used a method of contraception at least once, and who do not have active sterilizing operations such as tubal ligations
 
@@ -1986,7 +2024,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Condom Use During Past 12 Months
+### Condom Use During Past 12 Months
 
 Domain: Females who had intercourse with a male during the 12 months prior to interview, who used condom at least once in the past 12 months
 
@@ -2065,7 +2103,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Pill Use During Past 4 Weeks
+### Pill Use During Past 4 Weeks
 
 Domain: Females who used pill in the month of the interview or the previous month
 
@@ -2081,9 +2119,9 @@ estimate_totals_and_percentages(
 
 
 
-# Use of Contraceptive Methods for Other Reasons
+## Use of Contraceptive Methods for Other Reasons
 
-## Condom
+### Condom
 
 Domain: Females who have had vaginal intercourse with a male
 
@@ -2144,7 +2182,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## Pill
+### Pill
 
 Description: By whether used pill either during the month of interview or the month preceding the interview
 
@@ -2184,7 +2222,7 @@ estimate_totals_and_percentages(
 ```
 
 
-## IUD
+### IUD
 
 Description: By whether used an IUD either during the month of interview or the month preceding the interview*
 
@@ -2224,9 +2262,9 @@ estimate_totals_and_percentages(
 ```
 
 
-# Reason(s) for Not Currently Using Contraception
+## Reason(s) for Not Currently Using Contraception
 
-## Domain Size
+### Domain Size
 
 Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
 
@@ -2245,7 +2283,7 @@ estimate_totals_and_percentages(
 )[description == TRUE] |> style_totals_and_percentages()
 ```
 
-## Intent to Conceive
+### Intent to Conceive
 
 Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive*
 
@@ -2265,7 +2303,7 @@ estimate_totals_and_percentages(
 ) |> style_totals_and_percentages()
 ```
 
-## Reason(s) for Nonuse When Not Intending to Conceive
+### Reason(s) for Nonuse When Not Intending to Conceive
 
 Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
 
@@ -2280,7 +2318,7 @@ estimate_NSFG_mentions(
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
-## Reason(s) Respondent Believes She Cannot Become Pregnant
+### Reason(s) Respondent Believes She Cannot Become Pregnant
 
 Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
 
@@ -2297,7 +2335,7 @@ estimate_NSFG_mentions(
 
 
 
-# Use of Contraception Ever During Lifetime
+## Use of Contraception Ever During Lifetime
 
 Domain: Females aged 15-49 living in households in the United States
 
@@ -2320,7 +2358,7 @@ estimate_NSFG_mentions(
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
-## Among Those Who Have Ever Had Intercourse
+### Among Those Who Have Ever Had Intercourse
 
 Description: Females who have ever had intercourse with a male
 
@@ -2360,7 +2398,7 @@ estimate_NSFG_mentions(
 
 
 
-# Discontinuation Due to Dissatisfaction
+## Discontinuation Due to Dissatisfaction
 
 Domain: For each method, females who have ever used the method
 
@@ -2383,7 +2421,7 @@ estimate_NSFG_mentions_in_subdomains(
 ```
 
 
-## Condom
+### Condom
 
 Domain: Females who have ever discontinued using condom due to dissatisfaction
 
@@ -2416,7 +2454,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Pill
+### Pill
 
 Domain: Females who have ever discontinued using pill due to dissatisfaction
 
@@ -2449,7 +2487,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Hormonal IUDs
+### Hormonal IUDs
 
 Domain: Females who have ever discontinued using an hormonal IUD due to dissatisfaction
 
@@ -2486,7 +2524,7 @@ estimate_NSFG_mentions(
 ```
 
 
-## Copper IUDs
+### Copper IUDs
 
 Domain: Females who have ever discontinued using a copper IUD due to dissatisfaction
 
@@ -2527,7 +2565,7 @@ estimate_NSFG_mentions(
 # Things to Do
 
 * Write results and discussion section of report
+* Add license to GitHub repository
 * Compare own report with published reports
 * Write introduction section of report
-* Add license to GitHub repository
 * Publish report on blog
