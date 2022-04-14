@@ -1165,12 +1165,45 @@ male1719dt[,
 
 
 
-# Results
+# Introduction
 
-## Population Size
+The target population of the NSFG are persons aged 15-49 living in households in the United States. As a consequence of sampling design, the population does not include those without a current residential address nor does it include those living in group housing, such military bases, prisons, etc. However, the population does include college students living in dormitories by way of their parents' households.
 
 In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males. Therefore, separate estimates for females and males are given throughout this report.
 
+Use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception. Therefore, the NSFG and this report focus extensively on sexual intercourse between individuals of opposite sex. All mentions of intercourse in this report that are not further qualified should be interpreted to refer to sexual intercourse with the opposite sex.
+
+## Use at Last Intercourse versus Use over Period of Time
+
+The NSFG asks respondents about their use of contraception in two ways. In the first way, questions pertain to use of contraception during a specific sexual encounter. For instance, male respondents are asked what contraceptive method(s) were used at their first intercourse with their 3 most recent partners. In the second way, questions pertain to the use of contraception over some period of time. For instance, female respondents fill out a calendar indicating their use of contraception for the 3 years prior to their interview.
+
+There are at least two advantages to analysis of the use of contraception at the most recent intercourse:
+
+* There is some measurement error in the reporting of contraceptive use over specific time periods. As seen in Section \@ref(any-method-during-past-12-months), some respondents who report using a method of contraception during a specific time frame, when asked about how consistently they used a method of contraception during the same time frame, report a frequency of "never," and as seen in Section \@ref(reasons-for-nonuse-when-not-intending-to-conceive), some respondents who report not using a method of contraception during the month of the interview, when asked why not, volunteer that they are using a method of contraception during the month of the interview. Analysis of contraceptive use at last intercourse rather than over a time period is intended to minimize this kind of measurement error.
+* More detailed information is available on contraceptive use over periods of time for female respondents than for male respondents in the NSFG. In particular, whereas female respondents are asked whether multiple contraceptive methods used in the same month were used simultaneously or alternatively when completing their contraceptive history calendars, no such information is available for male respondents. However, analysis of contraceptive use at last intercourse can report equivalent statistics for both females and males.
+
+One major disadvantage of analysis of contraceptive use at last intercourse is that there is variation among respondents in how long it has been, at the time of the interview, since their last intercourse.
+
+Therefore, Section \@ref(use-of-contraception-at-most-recent-intercourse), which contains the most extensive analysis in this report, focuses on contraceptive use at the last intercourse within the 3 months prior to the interview.
+
+## Failure to Report Sterilizing Operations as Contraceptive Methods
+
+Some NSFG respondents reported having an active sterilizing operation, such as a tubal ligation or vasectomy, or having last had intercourse with a spouse or cohabitating partner with an active sterilizing operation, but in response to other questions do not report using said sterilizing operation as a method of contraception.
+
+This is may be due to confusion on the part of respondents with questions referring to a specific sexual encounter or to a specific period of time, since the sterilizing operations in question are likely performed well in advance of the specific encounter or time frame.
+
+Therefore, all those who reported having an active sterilizing operation or having intercourse with a spouse or cohabitating partner with an active sterilizing operation are counted as using said sterilizing operation as a method of contraception for the appropriate encounters or time frames, even if the respondents did not themselves mention the sterilizing operation when asked about methods of contraception.
+
+Thus, even if a respondent does not mention using a partner's vasectomy when asked what methods were used during the last intercourse, if the respondent reports her last intercourse was with her husband and reports her husband has an active vasectomy, then the respondent is counted as using a partner's vasectomy as a contraceptive method at last intercourse.
+
+Similarly, even if a respondent did not mention using tubal ligation during any of the 12 months preceding the interview, if the respondent had sexual intercourse during the 12 months preceding the interview and has an active tubal ligation, then the respondent is counted as using tubal ligation as a contraceptive method during the 12 months preceding the interview.
+
+
+# Results
+
+Sections \@ref(use-of-contraception-at-most-recent-intercourse) and \@ref(use-of-contraceptive-methods-for-other-reasons) pertain to what contraceptive method(s) were used at the sexual intercourse that occurred most recently before the respondents' interviews. Sections \@ref(use-of-contraception-during-past-12-months) and \@ref(consistency-of-use-of-contraception) focus on contraceptive use over the 12 months preceding the interview. Section \@ref(reasons-for-not-currently-using-contraception) pertains to contraceptive use reported in the month of the interview. Sections \@ref(use-of-contraception-ever-during-lifetime) and \@ref(discontinuation-due-to-dissatisfaction) pertain to contraceptive use ever during the lifetime of respondents.
+
+## Population Size
 
 ```{r, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
 fem1719dt[, person := 1]
@@ -1203,9 +1236,7 @@ this$fem <- this$dt[sex == 'Female', output]
 this$male <- this$dt[sex == 'Male', output]
 ```
 
-The target population of the NSFG are persons aged 15-49 living in households in the United States. As a consequence of sampling design, the population does not include those without a current residential address nor does it include those living in group housing, such military bases, prisons, etc. However, the population does include college students living in dormitories by way of their parents' households.
-
-Based on the NSFG, there is an estimated `r this$fem` 95\% C.I.[^ci] females and `r this$male` 95\% C.I. males living in households in the United States.  According census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size cover the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.[^consistent]
+Based on the NSFG, there is an estimated `r this$fem` 95\% C.I.[^ci] females and `r this$male` 95\% C.I. males living in households in the United States.  According census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size include the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.[^consistent]
 
 [^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals), and the syntax of stating a point estimate followed by its corresponding 95\% confidence interval in parentheses is used throughout this report. The "M" in the figures refers to "millions," such that "72.6M persons" describes approximately seventy two million, six hundred thousand persons.
 
@@ -1217,13 +1248,6 @@ Based on the NSFG, there is an estimated `r this$fem` 95\% C.I.[^ci] females and
 
 ## Use of Contraception at Most Recent Intercourse
 
-The NSFG asks respondents about their use of contraception in two ways. In the first, questions pertain to the use of contraception over some period of time. For instance, female respondents fill out a calendar indicating their use of contraception for the 3 years prior to their interview. In the second way, questions pertain to use of contraception during a specific sexual encounter. For instance, male respondents are asked what contraceptive method(s) were used at the first intercourse with their 3 most recent partners.
-
-This section pertains to what contraceptive method(s) were used at the sexual intercourse that occurred most recently before the respondents' interviews, and it contains the most extensive analysis of contraceptive behavior in this report. Use of contraception at most recent intercourse is chosen for this extensive analysis for two reasons:
-
-* There is some measurement error in the reporting of contraceptive use over specific time periods. As seen in Section \@ref(any-method-during-past-12-months), some respondents who report using a method of contraception during a specific time frame, when asked about how consistently they used a method of contraception during the same time frame, report a frequency of "never," and as seen in Section \@ref(reasons-for-nonuse-when-not-intending-to-conceive), some respondents who report not using a method of contraception during the month of the interview, when asked why not, volunteer that they are using a method of contraception during the month of the interview. Analysis of contraceptive use at last intercourse rather than over a time period is intended to minimize this kind of measurement error.
-* More detailed information is available on contraceptive use over periods of time for female respondents than for male respondents in the NSFG. In particular, whereas female respondents are asked whether multiple contraceptive methods used in the same month were used simultaneously or alternatively when completing their contraceptive history calendars, no such information is available for male respondents. However, analysis of contraceptive use at last intercourse can report equivalent statistics for both females and males.
-
 ```{r sexually-active, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
 this <- list()
 this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m)
@@ -1233,9 +1257,7 @@ this$fem <- this$df[4, 3]
 this$male <- this$df[6, 3]
 ```
 
-On the other hand, a major drawback of analysis of contraceptive use at last intercourse is that there is variation among respondents in how long it has been since the last intercourse at the time of the interview. Furthermore, use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception.
-
-Therefore, this section analyses a subsample of respondents who have had sexual intercourse with a member of the opposite sex within 3 months prior to being interviewed. This implies that estimates in this section pertain to a subdomain of persons in the United States who had intercourse with someone of the opposite sex in the past 3 months. There are approximately `r this$fem` females and `r this$male` males in this subdomain. (Table \@ref(tab:sexually-active))
+This section analyzes respondents who have had sexual intercourse with a member of the opposite sex within 3 months prior to being interviewed. This implies that estimates in this section pertain to a subdomain of persons in the United States who had intercourse with someone of the opposite sex in the past 3 months. There are approximately `r this$fem` females and `r this$male` males in this subdomain. (Table \@ref(tab:sexually-active))
 
 ```{r used-last-3m-at-all, dependson=c('process-fem-data', 'process-male-data')}
 fem1719dt[,
@@ -1275,11 +1297,7 @@ style_and_combine_totals_and_percentages_vertically(
   set_caption('Persons who used any method of contraception at their last sexual intercourse, among those who have had intercourse with the opposite sex in the past 3 months.')
 ```
 
-Table \@ref(tab:used-last-3m-at-all) contains estimates of the number of persons who used at least one method of contraception at their last intercourse.
-
-Some respondents who in their answers to other questions reported having an active sterilizing operation, such as a tubal ligation or vasectomy, or having last had intercourse with a spouse or cohabitating partner with an active sterilizing operation did not report using said sterilizing operation as a contraceptive method at their last intercourse.
-
-This is may be due to confusion on the part of respondents with questions referring to a specific encounter of sexual intercourse, since such sterilizing operations were performed at some time before the encounter. Therefore, all those who reported having an active sterilizing operation or last intercourse with a spouse or cohabitating partner with an active sterilizing operation were counted as using such sterilizing operations as a method of contraception at last intercourse.
+Table \@ref(tab:used-last-3m-at-all) contains estimates of the number of persons who used at least one method of contraception at their last intercourse. For both females and males, over three quarters of persons sexually active with the opposite sex used at least one method of contraception at their most recent intercourse. A slightly greater proportion of females report using contraception than males.
 
 
 ### Reason for Nonuse
