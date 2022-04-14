@@ -1225,11 +1225,11 @@ The target population of the NSFG are persons aged 15-49 living in households in
 
 Based on the NSFG, there is an estimated `r this$fem` 95\% C.I.[^ci] females and `r this$male` 95\% C.I. males living in households in the United States.  According census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size cover the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.
 
-[^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals), and the syntax of stating a point estimate followed by its corresponding 95\% confidence interval in parentheses is used throughout this report. The "M" in the figures refers to "millions," such that "72.6M" persons describes approximately seventy two million, six hundred thousand persons.
+[^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals), and the syntax of stating a point estimate followed by its corresponding 95\% confidence interval in parentheses is used throughout this report. The "M" in the figures refers to "millions," such that "72.6M persons" describes approximately seventy two million, six hundred thousand persons.
 
-[^census]: As of the writing of this report, the full results of the 2020 U.S. Census have not been released. Therefore, the 2010 Census was used. Census counts from 2010 can be expected to be lesser than what would have been the census counts from the 2017-2019 time frame, if there was any population growth between 2010 and 2017.
+[^census]: As of the writing of this report, the full results of the 2020 U.S. Census have not been released. Therefore, the 2010 Census is used. Census counts from 2010 can be expected to be lesser than what would have been the census counts from the 2017-2019 time frame, if there was any population growth between 2010 and 2017.
 
-Furthermore, the point estimates of population size based on the NSFG are quite close to the census counts, though the census counts are more than a million persons higher for both females and males. Unlike the NSFG estimates, the U.S. Census does count those without a current residential address and those living in group housing, which might account for these differences.
+Furthermore, the point estimates of population size based on the NSFG are quite close to the census counts, though the census counts are more than a million persons greater for both females and males. Unlike the NSFG estimates, the U.S. Census does count those without a current residential address and those living in group housing, which might account for these differences.
 
 
 
