@@ -1210,30 +1210,10 @@ fem1719dt[, person := 1]
 male1719dt[, person := 1]
 
 this <- list()
-
-this$dt <- rbind(
-  estimate_totals_and_percentages(
-    ~I(person),
-    get_NSFG_survey_design_for_sex('fem')
-  ),
-  estimate_totals_and_percentages(
-    ~I(person),
-    get_NSFG_survey_design_for_sex('male')
-  )
-)[
-  , .(
-    sex = c('Female', 'Male'),
-    total = sprintf("%.3fM", total / 10e5),
-    total_CI = sprintf(
-      "(%.3fM, %.3fM)",
-      total_CI_low / 10e5,
-      total_CI_high / 10e5
-    )
-  )
-][, .(sex, output = paste(total, total_CI))]
-
-this$fem <- this$dt[sex == 'Female', output]
-this$male <- this$dt[sex == 'Male', output]
+this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~person, digits = 1)
+this$df <- as.data.frame(this$ht)
+this$fem <- paste(this$df[3, 3], this$df[3, 4])
+this$male <- paste(this$df[4, 3], this$df[4, 4])
 ```
 
 Based on the NSFG, there is an estimated `r this$fem` 95\% C.I.[^ci] females and `r this$male` 95\% C.I. males living in households in the United States.  According census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size include the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.[^consistent]
@@ -2590,7 +2570,6 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
-* Use only 3 significant figures for totals estimates
 * Write results and discussion section of report
 * Add license to GitHub repository
 * Compare own report with published reports

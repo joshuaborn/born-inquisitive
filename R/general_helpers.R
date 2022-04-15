@@ -29,6 +29,14 @@ equals <- function(x, y) {
   !is.na(x) & !is.na(y) & x == y
 }
 
+pretty_millions <- function(x, digits = 2) {
+  formatC(
+    round(x / 10e5, digits = digits),
+    format = 'f',
+    digits = digits
+  )
+}
+
 
 
 #
@@ -242,20 +250,20 @@ conditionally_stripe_rows <- function(ht) {
   }
 }
 
-style_totals_and_percentages <- function(dt) {
+style_totals_and_percentages <- function(dt, digits = 2) {
   dt |>
-  mutate_vars('total', \(x) x / 10e5) |>
+  mutate_vars('total', \(x) pretty_millions(x, digits)) |>
   mutate_dt(
-    total = sprintf("%.3fM", total),
+    total = paste0(total, 'M'),
     total_CI = sprintf(
-      "(%.3fM, %.3fM)",
+      "(%sM, %sM)",
       total_CI_low,
       total_CI_high
     ),
     percentage_CI = sprintf(
       "(%0.1f%%, %0.1f%%)",
-      100 * percentage_CI_low,
-      100 * percentage_CI_high
+      round(100 * percentage_CI_low, digits = 1),
+      round(100 * percentage_CI_high, digits = 1)
     )
   ) |>
   select_dt(description, total, total_CI, percentage, percentage_CI) |>
@@ -308,13 +316,13 @@ combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {
 }
 
 style_and_combine_totals_and_percentages_vertically <- function(
-  label1, estimate1, label2, estimate2
+  label1, estimate1, label2, estimate2, digits = 2
 ) {
   combine_huxtables_vertically(
     label1,
-    style_totals_and_percentages(estimate1),
+    style_totals_and_percentages(estimate1, digits = digits),
     label2,
-    style_totals_and_percentages(estimate2)
+    style_totals_and_percentages(estimate2, digits = digits)
   )
 }
 
@@ -353,12 +361,12 @@ combine_huxtables_horizontally <- function(label1, ht1, label2, ht2) {
 }
 
 style_and_combine_totals_and_percentages_horizontally <- function(
-  label1, estimate1, label2, estimate2
+  label1, estimate1, label2, estimate2, digits = 2
 ) {
   combine_huxtables_horizontally(
     label1,
-    style_totals_and_percentages(estimate1),
+    style_totals_and_percentages(estimate1, digits = digits),
     label2,
-    style_totals_and_percentages(estimate2)
+    style_totals_and_percentages(estimate2, digits = digits)
   )
 }

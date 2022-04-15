@@ -188,7 +188,7 @@ century_month_comparison <- function(operator, x, y) {
     operator(x, y)
 }
 
-estimate_and_combine_NSFG_totals_and_percentages <- function(f) {
+estimate_and_combine_NSFG_totals_and_percentages <- function(f, digits = 2) {
   style_and_combine_totals_and_percentages_vertically(
     'Females',
     estimate_totals_and_percentages(
@@ -199,6 +199,7 @@ estimate_and_combine_NSFG_totals_and_percentages <- function(f) {
     estimate_totals_and_percentages(
       f,
       get_NSFG_survey_design_for_sex('male')
-    )
+    ),
+    digits = digits
   )
 }
