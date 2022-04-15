@@ -802,21 +802,6 @@ male1719dt[,
 ]
 
 
-## Create categorical variable specifying whether respondent ever indicated he does not know if a partner used a method of contraception during last intercourse.
-male1719dt[,
-  not_aware := factor(fifelse(
-    CWPLUSE2 == "Don't know" |
-      CWPLMET201 == "Don't know" |
-      PXLPUSE == "Don't know" |
-      PXLPMETH01 == "Don't know" |
-      PXLSXPRB == 'Yes' |
-      PXLSXPRB == "Don't know",
-    'Reports not knowing if partner used contraceptive method during last intercourse',
-    'Does not report not knowing if partner used contraceptive method during last intercourse'
-  ))
-]
-
-
 ## Create boolean variables for whether each specific method was used in past 12 months.
 for (x in get_NSFG_format_indices('MTHDSV1F', skip = c(10, 98:99), sex = 'male')) {
   male1719dt[,
@@ -1173,6 +1158,8 @@ In the NSFG, female respondents and male respondents are given different questio
 
 Use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception. Therefore, the NSFG and this report focus extensively on sexual intercourse between individuals of opposite sex. All mentions of sexual activity in this report should be interpreted to refer to sexual intercourse with the opposite sex unless stated otherwise.
 
+## Disclosure Risk Reduction
+
 ## Use during last intercourse versus Use over Period of Time
 
 The NSFG asks respondents about their use of contraception in two ways. In the first way, questions pertain to use of contraception during a specific sexual encounter. For instance, male respondents are asked what contraceptive method(s) were used during their first intercourse with their 3 most recent partners. In the second way, questions pertain to the use of contraception over some period of time. For instance, female respondents fill out a calendar indicating their use of contraception for the 3 years prior to their interview.
@@ -1322,66 +1309,92 @@ The "Physically infertile not due to sterilization procedure" category is explor
 
 ### Contraception Use Rate
 
-Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview, did not use a method of contraception during most recent intercourse, and neither are nor had last intercourse with someone who is pregnant, postpartum, trying to conceive, or physically infertile
-
-**Females**
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(used_last_3m_status),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_status %in% c(
-      'Used at least one contraceptive method during last intercourse',
-      'Otherwise did not use contraception during last intercourse'
+```{r contraception-use-rate, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_status),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      used_last_3m_status %in% c(
+        'Used at least one contraceptive method during last intercourse',
+        'Otherwise did not use contraception during last intercourse'
+      )
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_status),
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      used_last_3m_status %in% c(
+        'Used at least one contraceptive method during last intercourse',
+        'Otherwise did not use contraception during last intercourse'
+      )
     )
   )
-) |> style_totals_and_percentages()
+) |>
+  set_caption('Contraceptive use among persons who had sexual intercourse with someone of the opposite sex in past 3 months and are not themselves nor had intercourse with a partner who is intending to become pregnant, pregnant, postpartum, or physically infertile.')
 ```
 
-**Males**
+Combining the estimates from Table \@ref(tab:used-last-3m-at-all) and Table \@ref(tab:reason-for-nonuse), an overall contraceptive use rate can be be calculated with the number of persons using contraception in the numerator and the sum of the number persons using contraception and the number of persons at increased risk for unintended pregancy due to contraceptive nonuse in the denominator.
 
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(used_last_3m_status),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    used_last_3m_status %in% c(
-      'Used at least one contraceptive method during last intercourse',
-      'Otherwise did not use contraception during last intercourse'
-    )
-  )
-) |> style_totals_and_percentages()
-```
-
+Generally, the contraceptive use rate is high, though this still leaves several million persons at increased risk for unintended pregnancy due to contraceptive nonuse. (Table \@ref(tab:contraception-use-rate))
 
 #### Reported Ignorance of Contraceptive Use
 
-Domain: Males who had intercourse with a female in the past 3 months
+The contraceptive use rate is greater for females than males. (Table \@ref(tab:contraception-use-rate)) However, one factor that might decrease the rate at which males report contraceptive use is that some males do not know that their partners are using contraception.
 
-```{r, dependson='process-male-data'}
+```{r not-aware, dependson='process-male-data'}
+male1719dt[,
+  not_aware := factor(fifelse(
+    CWPLUSE2 == "Don't know" |
+      CWPLMET201 == "Don't know" |
+      PXLPUSE == "Don't know" |
+      PXLPMETH01 == "Don't know" |
+      PXLSXPRB == 'Yes' |
+      PXLSXPRB == "Don't know",
+    "Ignorant of partner's contraceptive use",
+    "Does not report ignorance of partner's contraceptive use"
+  ))
+]
+
+this <- list()
+this$asked <- male1719dt[
+  SEX3MO == 'YES, HAD INTERCOURSE' & (
+    PXLSXPRB == "Don't know" | PXLSXPRB == 'Yes'
+  ),
+  .N
+]
+this$volunteered <- male1719dt[
+  SEX3MO == 'YES, HAD INTERCOURSE' & (
+    CWPLUSE2 == "Don't know" |
+    CWPLMET201 == "Don't know" |
+    PXLPUSE == "Don't know" |
+    PXLPMETH01 == "Don't know"
+  ),
+  .N
+]
+
 estimate_totals_and_percentages(
   ~not_aware,
   subset(
     get_NSFG_survey_design_for_sex('male'),
     SEX3MO == 'YES, HAD INTERCOURSE'
   )
-) |> style_totals_and_percentages()
+) |>
+  style_totals_and_percentages() |>
+  set_caption("Males who report ignorance of partner's contraceptive use during their last intercourse, among males who have had sexual intercourse with a female in the past 3 months.")
 ```
 
-Domain: Males who had intercourse with a female in the past 3 months
+A small proportion of sexually active males report not knowing if their partner used contraception during their last intercourse. However, the estimates of Table \@ref(tab:not-aware) are based on two types of responses:
 
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~not_aware,
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    used_last_3m_status %in% c(
-      'Otherwise did not use contraception during last intercourse'
-    )
-  )
-) |> style_totals_and_percentages()
-```
+* answers of "Don't know" chosen in response to questions about partners' use of contraception, or
+* answers of "Yes" or "Don't know" to questions specifically asking respondents whether their partners could have used contraception without their knowledge.
+
+Respondents who give either of these kind of answers are counted in the "Ignorant of partner's contraceptive use" category for the estimates of Table \@ref(tab:not-aware). However, the questions specifically asking respondents if their partners could have used contraception without their knowledge are only asked of respondents who are neither married nor cohabitating, and answers to these questions account for the majority of respondents categorized as ignorant of their partners contraceptive use (`r this$asked` respondents vs. `r this$volunteered` respondents).
+
+Therefore, these results should be interpreted with care. This is discussed further in Section \@ref(less-reported-contraceptive-use-among-males).
 
 
 ### Sexual Inactivity (with Opposite Sex)
@@ -2572,6 +2585,12 @@ estimate_NSFG_mentions(
   format = 'STOPIUDFMT'
 )[order(-total)] |> style_totals_and_percentages()
 ```
+
+
+
+# Discussion
+
+## Less Reported Contraceptive Use Among Males
 
 
 
