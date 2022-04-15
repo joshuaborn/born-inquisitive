@@ -1359,23 +1359,6 @@ male1719dt[,
   ))
 ]
 
-this <- list()
-this$asked <- male1719dt[
-  SEX3MO == 'YES, HAD INTERCOURSE' & (
-    PXLSXPRB == "Don't know" | PXLSXPRB == 'Yes'
-  ),
-  .N
-]
-this$volunteered <- male1719dt[
-  SEX3MO == 'YES, HAD INTERCOURSE' & (
-    CWPLUSE2 == "Don't know" |
-    CWPLMET201 == "Don't know" |
-    PXLPUSE == "Don't know" |
-    PXLPMETH01 == "Don't know"
-  ),
-  .N
-]
-
 estimate_totals_and_percentages(
   ~not_aware,
   subset(
@@ -1387,12 +1370,12 @@ estimate_totals_and_percentages(
   set_caption("Males who report ignorance of partner's contraceptive use during their last intercourse, among males who have had sexual intercourse with a female in the past 3 months.")
 ```
 
-A small proportion of sexually active males report not knowing if their partner used contraception during their last intercourse. However, the estimates of Table \@ref(tab:not-aware) are based on two types of responses:
+A small proportion of sexually active males report not knowing if their partner used contraception during their last intercourse. However, the estimates of Table \@ref(tab:not-aware) are based on two types of questions:
 
-* answers of "Don't know" chosen in response to questions about partners' use of contraception, or
-* answers of "Yes" or "Don't know" to questions specifically asking respondents whether their partners could have used contraception without their knowledge.
+1. questions about partners' use of contraception, or
+2. questions specifically asking respondents whether their partners could have used contraception without their knowledge.
 
-Respondents who give either of these kind of answers are counted in the "Ignorant of partner's contraceptive use" category for the estimates of Table \@ref(tab:not-aware). However, the questions specifically asking respondents if their partners could have used contraception without their knowledge are only asked of respondents who are neither married nor cohabitating, and answers to these questions account for the majority of respondents categorized as ignorant of their partners contraceptive use (`r this$asked` respondents vs. `r this$volunteered` respondents).
+Respondents are counted in the "Ignorant of partner's contraceptive use" category for the estimates of Table \@ref(tab:not-aware) if they respond "Don't know" to the first type of question or if they respond "Yes" or "Don't know" to the second type of question. However, the second type of questions are only asked of respondents who are neither married nor cohabitating.
 
 Therefore, these results should be interpreted with care. This is discussed further in Section \@ref(less-reported-contraceptive-use-among-males).
 
