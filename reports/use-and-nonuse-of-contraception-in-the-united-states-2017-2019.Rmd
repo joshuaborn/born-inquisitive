@@ -1205,7 +1205,7 @@ Sections \@ref(use-of-contraception-during-most-recent-intercourse) and \@ref(us
 
 ## Population Size
 
-```{r, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
+```{r population-size, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
 fem1719dt[, person := 1]
 male1719dt[, person := 1]
 
@@ -1214,11 +1214,12 @@ this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~person, digits = 1)
 this$df <- as.data.frame(this$ht)
 this$fem <- this$df[3, 3]
 this$femCI <-  this$df[3, 4]
-this$male <- this$df[4, 3]
-this$maleCI <- this$df[4, 4]
+this$ht[, 1:4] |>
+  set_caption('Number persons aged 15-49 living in households in the United States estimated by the NSFG.') |>
+  set_position('wrapright')
 ```
 
-Based on the NSFG, there is an estimated `r this$fem` [95\% C.I.[^ci] `r this$femCI`] females and `r this$male` [95\% C.I. `r this$maleCI`] males living in households in the United States.  According census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size include the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.[^consistent]
+Based on the NSFG, there is an estimated `r this$fem` females and `r this$male` males living in households in the United States. (Table \@ref(tab:population-size)) According census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals[^ci] of the NSFG-based estimates of population size include the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.[^consistent]
 
 [^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals), and the syntax of stating a point estimate followed by its corresponding 95\% confidence interval in parentheses is used throughout this report. The "M" in the figures refers to "millions," such that "72.6M persons" describes approximately seventy two million, six hundred thousand persons.
 
