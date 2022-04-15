@@ -190,12 +190,12 @@ fem1719dt[,
       (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
         'Currently trying to conceive',
       POSIBLPG == 'No',
-        'Physically unable to conceive',
+        'Physically infertile not due to sterilization procedure',
       POSIBLMN == 'No' & (
         P1YRELP == 'Current cohabiting partner' |
         P1YRELP == 'Current husband or (current husband from whom she is separated)'
       ),
-        'Last intercourse was with partner who is physically unable to conceive',
+        'Last intercourse was with partner who is physically infertile not due to sterilization procedure',
       default = 'Otherwise did not use contraception during last intercourse'
     ),
     ordered = TRUE,
@@ -205,8 +205,8 @@ fem1719dt[,
       'Pregnant in month of last intercourse',
       'Postpartum',
       'Currently trying to conceive',
-      'Physically unable to conceive',
-      'Last intercourse was with partner who is physically unable to conceive',
+      'Physically infertile not due to sterilization procedure',
+      'Last intercourse was with partner who is physically infertile not due to sterilization procedure',
       'Otherwise did not use contraception during last intercourse'
     )
   )
@@ -783,7 +783,7 @@ male1719dt[,
       PXTRYING == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPTRYPG == 'Yes'),
         'Last intercourse was with partner who is trying to conceive',
       FATHPOSS == 'No',
-        'Physically unable to conceive',
+        'Physically infertile not due to sterilization procedure',
       (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPOSS == 'No',
         'Last intercourse was with partner who is physically unable to concieve',
       default = 'Otherwise did not use contraception during last intercourse'
@@ -794,7 +794,7 @@ male1719dt[,
       'Did not have sexual intercourse with female in past 3 months',
       'Last intercourse was with partner who is pregnant',
       'Last intercourse was with partner who is trying to conceive',
-      'Physically unable to conceive',
+      'Physically infertile not due to sterilization procedure',
       'Last intercourse was with partner who is physically unable to concieve',
       'Otherwise did not use contraception during last intercourse'
     )
@@ -1317,6 +1317,8 @@ The "Otherwise did not use contraception during last intercourse" category in Ta
 
 "Postpartum" is categorized separately in Table \@ref(tab:reason-for-nonuse) for females, but not for males because this information is not available in the public use data files for males due to disclosure risk reduction. "Otherwise did not use contraception during last intercourse" for males therefore includes some persons who last had intercourse with a postpartum female. However, as can be gleaned from the estimates for females, this is a small number of persons.
 
+The "Physically infertile not due to sterilization procedure" category is explored in Section \@ref(reason-for-physical-infertility-not-due-to-sterilization-procedure).
+
 
 ### Contraception Use Rate
 
@@ -1492,7 +1494,7 @@ style_and_combine_totals_and_percentages_horizontally(
 ```
 
 
-### Reason for Physical Inability to Conceive
+### Reason for Physical Infertility Not Due to Sterilization Procedure
 
 Domain: Females who report being physically unable to get pregnant
 
