@@ -1219,9 +1219,11 @@ this$ht[, 1:4] |>
   set_position('wrapright')
 ```
 
-Based on the NSFG, there is an estimated `r this$fem` females and `r this$male` males living in households in the United States. (Table \@ref(tab:population-size)) According census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals[^ci] of the NSFG-based estimates of population size include the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.[^consistent]
+Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r this$male` males living in households in the United States. (Table \@ref(tab:population-size))[^ci] According to census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size include the census-based counts. Thus, the NSFG survey estimates of population size are consistent with known population sizes.[^consistent]
 
-[^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals), and the syntax of stating a point estimate followed by its corresponding 95\% confidence interval in parentheses is used throughout this report. The "M" in the figures refers to "millions," such that "72.6M persons" describes approximately seventy two million, six hundred thousand persons.
+[^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals).
+
+[^millions]:The "M" in the figures refers to "millions," such that "15.2M persons" describes approximately fifteen million, two hundred thousand persons.
 
 [^census]: As of the writing of this report, the full results of the 2020 U.S. Census have not been released. Therefore, the 2010 Census is used. Census counts from 2010 can be expected to be lesser than what would have been the census counts from the 2017-2019 time frame, if there was any population growth between 2010 and 2017.
 
@@ -1233,14 +1235,14 @@ Based on the NSFG, there is an estimated `r this$fem` females and `r this$male` 
 
 ```{r sexually-active, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
 this <- list()
-this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m)
+this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m, digits = 1)
 this$df <- as.data.frame(this$ht)
 this$ht |> set_caption('Persons who have had sexual intercourse with someone of the opposite sex in the past 3 months, among persons aged 15-49 living in households in the United States.')
 this$fem <- this$df[4, 3]
 this$male <- this$df[6, 3]
 ```
 
-This section analyzes respondents who have had sexual intercourse with a member of the opposite sex within 3 months prior to being interviewed. This implies that estimates in this section pertain to a subdomain of persons in the United States who had intercourse with someone of the opposite sex in the past 3 months. There are approximately `r this$fem` females and `r this$male` males in this subdomain. (Table \@ref(tab:sexually-active))
+The estimates in this section pertain to a subdomain of persons in the United States who had intercourse with someone of the opposite sex in the past 3 months. There are approximately `r this$fem` females and `r this$male` males in this subdomain. (Table \@ref(tab:sexually-active))
 
 ```{r used-last-3m-at-all, dependson=c('process-fem-data', 'process-male-data')}
 fem1719dt[,
@@ -1280,7 +1282,7 @@ style_and_combine_totals_and_percentages_vertically(
   set_caption('Persons who used any method of contraception during their last sexual intercourse with the opposite sex, among those who have had intercourse in the past 3 months.')
 ```
 
-Table \@ref(tab:used-last-3m-at-all) contains estimates of the number of persons who used at least one method of contraception during their last intercourse. For both females and males, over three quarters of persons sexually active with the opposite sex used at least one method of contraception during their most recent intercourse. A slightly greater proportion of females report using contraception than males.
+Over three quarters of persons sexually active with the opposite sex used at least one method of contraception during their most recent intercourse, and a slightly greater proportion of females report using contraception than males. (Table \@ref(tab:used-last-3m-at-all))
 
 
 ### Reason for Nonuse
