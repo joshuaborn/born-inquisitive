@@ -138,7 +138,7 @@ fem1719dt[,
 ]
 
 
-## Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
+## Create boolean variables for whether each contraceptive method was used during last intercourse within the past 3 months.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'used_last_3m_method',
   in_prefix = 'METH3M',
@@ -148,7 +148,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-## If last intercourse within the past 3 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
+## If last intercourse within the past 3 months was with husband or cohabitating partner who has an active vasectomy, then set boolean variable of vasectomy use during last intercourse within the past 3 months to true.
 fem1719dt[,
   used_last_3m_method3 := fifelse(
     SEX3MO == 'YES' & PSURGSTR == 'YES' & (
@@ -161,7 +161,7 @@ fem1719dt[,
 ]
 
 
-## If respondent has had intercourse in the past 3 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
+## If respondent has had intercourse in the past 3 months and has an active tubal ligation (or essure), then set boolean variable of tubal ligation use during last intercourse within the past 3 months to true.
 fem1719dt[,
   used_last_3m_method4 := fifelse(
     SEX3MO == 'YES' & TUBS == 'YES',
@@ -171,7 +171,7 @@ fem1719dt[,
 ]
 
 
-## Reset count of methods used at last intercourse within the past 3 months to include overrides of vasectomy and tubal ligation boolean variables.
+## Reset count of methods used during last intercourse within the past 3 months to include overrides of vasectomy and tubal ligation boolean variables.
 set_count_variable_for_mentions(fem1719dt, 'used_last_3m_method')
 
 
@@ -180,7 +180,7 @@ fem1719dt[,
   used_last_3m_status := factor(
     fcase(
       used_last_3m_method_count > 0,
-        'Used at least one contraceptive method at last intercourse',
+        'Used at least one contraceptive method during last intercourse',
       SEX3MO != 'YES',
         'Did not have sexual intercourse with male in past 3 months',
       LSEXPREG == 'YES',
@@ -196,18 +196,18 @@ fem1719dt[,
         P1YRELP == 'Current husband or (current husband from whom she is separated)'
       ),
         'Last intercourse was with partner who is physically unable to conceive',
-      default = 'Otherwise did not use contraception at last intercourse'
+      default = 'Otherwise did not use contraception during last intercourse'
     ),
     ordered = TRUE,
     levels = c(
-      'Used at least one contraceptive method at last intercourse',
+      'Used at least one contraceptive method during last intercourse',
       'Did not have sexual intercourse with male in past 3 months',
       'Pregnant in month of last intercourse',
       'Postpartum',
       'Currently trying to conceive',
       'Physically unable to conceive',
       'Last intercourse was with partner who is physically unable to conceive',
-      'Otherwise did not use contraception at last intercourse'
+      'Otherwise did not use contraception during last intercourse'
     )
   )
 ]
@@ -733,7 +733,7 @@ male1719dt[,
 ]
 
 
-## Create boolean variables for whether each contraceptive method was used at last intercourse within the past 3 months.
+## Create boolean variables for whether each contraceptive method was used during last intercourse within the past 3 months.
 set_NSFG_mentions_to_booleans(
   sex = 'male',
   out_prefix = 'used_last_3m_method',
@@ -744,7 +744,7 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-## If last intercourse within the past 3 months was with wife or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use at last intercourse within the past 3 months to true.
+## If last intercourse within the past 3 months was with wife or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set boolean variable of tubal ligation use during last intercourse within the past 3 months to true.
 male1719dt[,
   used_last_3m_method5 := fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE' &
@@ -756,7 +756,7 @@ male1719dt[,
 ]
 
 
-## If respondent has had intercourse in the past 3 months and has an active vasectomy, then set boolean variable of vasectomy use at last intercourse within the past 3 months to true.
+## If respondent has had intercourse in the past 3 months and has an active vasectomy, then set boolean variable of vasectomy use during last intercourse within the past 3 months to true.
 male1719dt[,
   used_last_3m_method3 := fifelse(
     SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
@@ -766,7 +766,7 @@ male1719dt[,
 ]
 
 
-## Reset count of methods used at last intercourse within the past 3 months to include overrides of tubal ligation and vasectomy boolean variables.
+## Reset count of methods used during last intercourse within the past 3 months to include overrides of tubal ligation and vasectomy boolean variables.
 set_count_variable_for_mentions(male1719dt, 'used_last_3m_method')
 
 
@@ -775,7 +775,7 @@ male1719dt[,
   used_last_3m_status := factor(
     fcase(
       used_last_3m_method_count > 0,
-        'Used at least one contraceptive method at last intercourse',
+        'Used at least one contraceptive method during last intercourse',
       SEX3MO != 'YES, HAD INTERCOURSE',
         'Did not have sexual intercourse with female in past 3 months',
       PXCPREG == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPRGNW == 'Yes'),
@@ -786,17 +786,17 @@ male1719dt[,
         'Physically unable to conceive',
       (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPOSS == 'No',
         'Last intercourse was with partner who is physically unable to concieve',
-      default = 'Otherwise did not use contraception at last intercourse'
+      default = 'Otherwise did not use contraception during last intercourse'
     ),
     ordered = TRUE,
     levels = c(
-      'Used at least one contraceptive method at last intercourse',
+      'Used at least one contraceptive method during last intercourse',
       'Did not have sexual intercourse with female in past 3 months',
       'Last intercourse was with partner who is pregnant',
       'Last intercourse was with partner who is trying to conceive',
       'Physically unable to conceive',
       'Last intercourse was with partner who is physically unable to concieve',
-      'Otherwise did not use contraception at last intercourse'
+      'Otherwise did not use contraception during last intercourse'
     )
   )
 ]
@@ -811,8 +811,8 @@ male1719dt[,
       PXLPMETH01 == "Don't know" |
       PXLSXPRB == 'Yes' |
       PXLSXPRB == "Don't know",
-    'Reports not knowing if partner used contraceptive method at last intercourse',
-    'Does not report not knowing if partner used contraceptive method at last intercourse'
+    'Reports not knowing if partner used contraceptive method during last intercourse',
+    'Does not report not knowing if partner used contraceptive method during last intercourse'
   ))
 ]
 
@@ -1171,20 +1171,20 @@ The target population of the NSFG are persons aged 15-49 living in households in
 
 In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males. Therefore, separate estimates for females and males are given throughout this report.
 
-Use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception. Therefore, the NSFG and this report focus extensively on sexual intercourse between individuals of opposite sex. All mentions of intercourse in this report that are not further qualified should be interpreted to refer to sexual intercourse with the opposite sex.
+Use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception. Therefore, the NSFG and this report focus extensively on sexual intercourse between individuals of opposite sex. All mentions of sexual activity in this report should be interpreted to refer to sexual intercourse with the opposite sex unless stated otherwise.
 
-## Use at Last Intercourse versus Use over Period of Time
+## Use during last intercourse versus Use over Period of Time
 
-The NSFG asks respondents about their use of contraception in two ways. In the first way, questions pertain to use of contraception during a specific sexual encounter. For instance, male respondents are asked what contraceptive method(s) were used at their first intercourse with their 3 most recent partners. In the second way, questions pertain to the use of contraception over some period of time. For instance, female respondents fill out a calendar indicating their use of contraception for the 3 years prior to their interview.
+The NSFG asks respondents about their use of contraception in two ways. In the first way, questions pertain to use of contraception during a specific sexual encounter. For instance, male respondents are asked what contraceptive method(s) were used during their first intercourse with their 3 most recent partners. In the second way, questions pertain to the use of contraception over some period of time. For instance, female respondents fill out a calendar indicating their use of contraception for the 3 years prior to their interview.
 
-There are at least two advantages to analysis of the use of contraception at the most recent intercourse:
+There are at least two advantages to analysis of the use of contraception during the most recent intercourse:
 
-* There is some measurement error in the reporting of contraceptive use over specific time periods. As seen in Section \@ref(any-method-during-past-12-months), some respondents who report using a method of contraception during a specific time frame, when asked about how consistently they used a method of contraception during the same time frame, report a frequency of "never," and as seen in Section \@ref(reasons-for-nonuse-when-not-intending-to-conceive), some respondents who report not using a method of contraception during the month of the interview, when asked why not, volunteer that they are using a method of contraception during the month of the interview. Analysis of contraceptive use at last intercourse rather than over a time period is intended to minimize this kind of measurement error.
-* More detailed information is available on contraceptive use over periods of time for female respondents than for male respondents in the NSFG. In particular, whereas female respondents are asked whether multiple contraceptive methods used in the same month were used simultaneously or alternatively when completing their contraceptive history calendars, no such information is available for male respondents. However, analysis of contraceptive use at last intercourse can report equivalent statistics for both females and males.
+* There is some measurement error in the reporting of contraceptive use over specific time periods. As seen in Section \@ref(any-method-during-past-12-months), some respondents who report using a method of contraception during a specific time frame, when asked about how consistently they used a method of contraception during the same time frame, report a frequency of "never," and as seen in Section \@ref(reasons-for-nonuse-when-not-intending-to-conceive), some respondents who report not using a method of contraception during the month of the interview, when asked why not, volunteer that they are using a method of contraception during the month of the interview. Analysis of contraceptive use during last intercourse rather than over a time period is intended to minimize this kind of measurement error.
+* More detailed information is available on contraceptive use over periods of time for female respondents than for male respondents in the NSFG. In particular, whereas female respondents are asked whether multiple contraceptive methods used in the same month were used simultaneously or alternatively when completing their contraceptive history calendars, no such information is available for male respondents. However, analysis of contraceptive use during last intercourse can report equivalent statistics for both females and males.
 
-One major disadvantage of analysis of contraceptive use at last intercourse is that there is variation among respondents in how long it has been, at the time of the interview, since their last intercourse.
+One major disadvantage of analysis of contraceptive use during last intercourse is that there is variation among respondents in how long it has been, at the time of the interview, since their last intercourse.
 
-Therefore, Section \@ref(use-of-contraception-at-most-recent-intercourse), which contains the most extensive analysis in this report, focuses on contraceptive use at the last intercourse within the 3 months prior to the interview.
+Therefore, Section \@ref(use-of-contraception-during-most-recent-intercourse), which contains the most extensive analysis in this report, focuses on contraceptive use during the last intercourse within the 3 months prior to the interview.
 
 ## Failure to Report Sterilizing Operations as Contraceptive Methods
 
@@ -1194,14 +1194,14 @@ This is may be due to confusion on the part of respondents with questions referr
 
 Therefore, all those who reported having an active sterilizing operation or having intercourse with a spouse or cohabitating partner with an active sterilizing operation are counted as using said sterilizing operation as a method of contraception for the appropriate encounters or time frames, even if the respondents did not themselves mention the sterilizing operation when asked about methods of contraception.
 
-Thus, even if a respondent does not mention using a partner's vasectomy when asked what methods were used during the last intercourse, if the respondent reports her last intercourse was with her husband and reports her husband has an active vasectomy, then the respondent is counted as using a partner's vasectomy as a contraceptive method at last intercourse.
+Thus, even if a respondent does not mention using a partner's vasectomy when asked what methods were used during the last intercourse, if the respondent reports her last intercourse was with her husband and reports her husband has an active vasectomy, then the respondent is counted as using a partner's vasectomy as a contraceptive method during last intercourse.
 
 Similarly, even if a respondent did not mention using tubal ligation during any of the 12 months preceding the interview, if the respondent had sexual intercourse during the 12 months preceding the interview and has an active tubal ligation, then the respondent is counted as using tubal ligation as a contraceptive method during the 12 months preceding the interview.
 
 
 # Results
 
-Sections \@ref(use-of-contraception-at-most-recent-intercourse) and \@ref(use-of-contraceptive-methods-for-other-reasons) pertain to what contraceptive method(s) were used at the sexual intercourse that occurred most recently before the respondents' interviews. Sections \@ref(use-of-contraception-during-past-12-months) and \@ref(consistency-of-use-of-contraception) focus on contraceptive use over the 12 months preceding the interview. Section \@ref(reasons-for-not-currently-using-contraception) pertains to contraceptive use reported in the month of the interview. Sections \@ref(use-of-contraception-ever-during-lifetime) and \@ref(discontinuation-due-to-dissatisfaction) pertain to contraceptive use ever during the lifetime of respondents.
+Sections \@ref(use-of-contraception-during-most-recent-intercourse) and \@ref(use-of-contraceptive-methods-for-other-reasons) pertain to what contraceptive method(s) were used during the sexual intercourse that occurred most recently before the respondents' interviews. Sections \@ref(use-of-contraception-during-past-12-months) and \@ref(consistency-of-use-of-contraception) focus on contraceptive use over the 12 months preceding the interview. Section \@ref(reasons-for-not-currently-using-contraception) pertains to contraceptive use reported in the month of the interview. Sections \@ref(use-of-contraception-ever-during-lifetime) and \@ref(discontinuation-due-to-dissatisfaction) pertain to contraceptive use ever during the lifetime of respondents.
 
 ## Population Size
 
@@ -1246,7 +1246,7 @@ Based on the NSFG, there is an estimated `r this$fem` 95\% C.I.[^ci] females and
 
 
 
-## Use of Contraception at Most Recent Intercourse
+## Use of Contraception during Most Recent Intercourse
 
 ```{r sexually-active, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
 this <- list()
@@ -1294,10 +1294,10 @@ style_and_combine_totals_and_percentages_vertically(
     )
   )
 ) |>
-  set_caption('Persons who used any method of contraception at their last sexual intercourse, among those who have had intercourse with the opposite sex in the past 3 months.')
+  set_caption('Persons who used any method of contraception during their last sexual intercourse with the opposite sex, among those who have had intercourse in the past 3 months.')
 ```
 
-Table \@ref(tab:used-last-3m-at-all) contains estimates of the number of persons who used at least one method of contraception at their last intercourse. For both females and males, over three quarters of persons sexually active with the opposite sex used at least one method of contraception at their most recent intercourse. A slightly greater proportion of females report using contraception than males.
+Table \@ref(tab:used-last-3m-at-all) contains estimates of the number of persons who used at least one method of contraception during their last intercourse. For both females and males, over three quarters of persons sexually active with the opposite sex used at least one method of contraception during their most recent intercourse. A slightly greater proportion of females report using contraception than males.
 
 
 ### Reason for Nonuse
@@ -1345,8 +1345,8 @@ estimate_totals_and_percentages(
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_status %in% c(
-      'Used at least one contraceptive method at last intercourse',
-      'Otherwise did not use contraception at last intercourse'
+      'Used at least one contraceptive method during last intercourse',
+      'Otherwise did not use contraception during last intercourse'
     )
   )
 ) |> style_totals_and_percentages()
@@ -1360,8 +1360,8 @@ estimate_totals_and_percentages(
   subset(
     get_NSFG_survey_design_for_sex('male'),
     used_last_3m_status %in% c(
-      'Used at least one contraceptive method at last intercourse',
-      'Otherwise did not use contraception at last intercourse'
+      'Used at least one contraceptive method during last intercourse',
+      'Otherwise did not use contraception during last intercourse'
     )
   )
 ) |> style_totals_and_percentages()
@@ -1390,7 +1390,7 @@ estimate_totals_and_percentages(
   subset(
     get_NSFG_survey_design_for_sex('male'),
     used_last_3m_status %in% c(
-      'Otherwise did not use contraception at last intercourse'
+      'Otherwise did not use contraception during last intercourse'
     )
   )
 ) |> style_totals_and_percentages()
@@ -1538,7 +1538,7 @@ estimate_totals_and_percentages(
 
 Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
 
-Description: By number of methods used at last intercourse
+Description: By number of methods used during last intercourse
 
 **Females**
 
@@ -1947,9 +1947,9 @@ estimate_NSFG_mentions(
 
 ## Consistency of Use of Contraception
 
-### Use of Contraception Prior to Nonuse at Last Intercourse
+### Use of Contraception Prior to Nonuse during last intercourse
 
-Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
+Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception during last intercourse
 
 Description: By whether used a method of contraception in past 12 months
 
@@ -1958,12 +1958,12 @@ estimate_totals_and_percentages(
   ~I(any_use_12m_method_count > 0),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
+    used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
   )
 ) |> style_totals_and_percentages()
 ```
 
-Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
+Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception during last intercourse
 
 Description: By whether reported using a method in the month of last intercourse
 
@@ -1972,12 +1972,12 @@ estimate_totals_and_percentages(
   ~factor(used_in_month_last_sex),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
+    used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
   )
 ) |> style_totals_and_percentages()
 ```
 
-Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception at last intercourse
+Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception during last intercourse
 
 Description: By whether used a method of contraception ever
 
@@ -1986,12 +1986,12 @@ estimate_totals_and_percentages(
   ~factor(EVERUSED),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
+    used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
   )
 ) |> style_totals_and_percentages()
 ```
 
-Domain: Males who have had intercourse with a female in the past 3 months and did not use a method of contraception at last intercourse
+Domain: Males who have had intercourse with a female in the past 3 months and did not use a method of contraception during last intercourse
 
 Description: By whether used a method of contraception in past 12 months
 
@@ -2000,7 +2000,7 @@ estimate_totals_and_percentages(
   ~I(any_use_12m_method_count > 0),
   subset(
     get_NSFG_survey_design_for_sex('male'),
-    used_last_3m_status == 'Otherwise did not use contraception at last intercourse'
+    used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
   )
 ) |> style_totals_and_percentages()
 ```
@@ -2151,7 +2151,7 @@ estimate_totals_and_percentages(
 
 Domain: Females who have had vaginal intercourse with a male
 
-Description: By whether used condom at last intercourse with a male
+Description: By whether used condom during last intercourse with a male
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2168,7 +2168,7 @@ estimate_totals_and_percentages(
 
 Domain: Males who have had vaginal intercourse with a female
 
-Description: By whether used condom at last intercourse with a female
+Description: By whether used condom during last intercourse with a female
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -2183,7 +2183,7 @@ estimate_totals_and_percentages(
 ) |> style_totals_and_percentages()
 ```
 
-Domain: Females who used condom at last intercourse with a male
+Domain: Females who used condom during last intercourse with a male
 
 ```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2195,7 +2195,7 @@ estimate_totals_and_percentages(
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
-Domain: Males who used condom at last intercourse with a female
+Domain: Males who used condom during last intercourse with a female
 
 ```{r, dependson='process-male-data'}
 estimate_totals_and_percentages(
@@ -2590,6 +2590,7 @@ estimate_NSFG_mentions(
 
 # Things to Do
 
+* Use only 3 significant figures for totals estimates
 * Write results and discussion section of report
 * Add license to GitHub repository
 * Compare own report with published reports
