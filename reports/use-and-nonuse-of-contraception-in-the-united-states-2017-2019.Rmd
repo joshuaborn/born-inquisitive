@@ -15,8 +15,8 @@ link-citations: true
 
 ```{r setup, include=FALSE}
 library(data.table)
+library(ggplot2)
 library(here)
-library(tidyfst)
 
 i_am('reports/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.Rmd')
 
@@ -27,6 +27,7 @@ source(here('R/general_plots.R'))
 knitr::opts_chunk$set(
   cache = TRUE,
   echo = FALSE,
+  fig.align = 'center',
   fig.height = 8,
   fig.width = 12,
   warning = FALSE
@@ -87,6 +88,7 @@ fem1719formats[,
 
 ## Start working female respondents data table.
 fem1719dt <- copy(fem1719$Data[, .(
+  AGE_R,
   CASEID,
   SECU,
   SEST,
@@ -675,6 +677,7 @@ male1719formats[
 
 ## Start working male respondents data table.
 male1719dt <- copy(male1719$Data[, .(
+  AGE_R,
   CASEID,
   CMLSTYR,
   CMLSXCWP,
@@ -1380,72 +1383,122 @@ Respondents are counted in the "Ignorant of partner's contraceptive use" categor
 Therefore, these results should be interpreted with care. This is discussed further in Section \@ref(less-reported-contraceptive-use-among-males).
 
 
-### Sexual Inactivity (with Opposite Sex)
+### Sexual Inactivity
 
-Domain: Persons who have not had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview
-
-**Females**
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
+```{r sexual-inactivity, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
+this$fem <- estimate_totals_and_percentages(
   ~factor(HADSEX),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     SEX3MO != 'YES'
   )
-) |> style_totals_and_percentages()
-```
-
-**Males**
-
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
+)
+this$male <- estimate_totals_and_percentages(
   ~factor(HADSEX),
   subset(
     get_NSFG_survey_design_for_sex('male'),
     SEX3MO != 'YES, HAD INTERCOURSE'
   )
-) |> style_totals_and_percentages()
+)
+
+for (dt in this) {
+  dt[,
+    description := fcase(
+      description == 'YES, R EVER HAD INTERCOURSE',
+      'Had intercourse',
+      description == 'NO, R NEVER HAD INTERCOURSE',
+      'Never have had intercourse'
+    )
+  ]
+}
+
+style_and_combine_totals_and_percentages_vertically(
+  'Females', this$fem, 'Males', this$male
+) |>
+  set_caption('Persons who have ever had intercourse with someone of the opposite sex, among persons who have not had intercourse with someone of the opposite sex in the past 3 months.')
 ```
+
+Among persons who have not had intercourse with someone of the opposite sex in the past 3 months, a sizable minority have never had intercourse with someone of the opposite sex. (Table \@ref(tab:sexual-inactivity))
+
+```{r never-had-sex, dependson=c('fem-process-data', 'male-process-data'), fig.cap='Persons who have never had sexual intercoruse with the opposite sex by age group.', fig.height=4, fig.width=5}
+rbindlist(list(
+  fem1719dt[
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE',
+    .(
+      WGT2017_2019,
+      age = cut(AGE_R, breaks = seq(15, 50, 5), right = FALSE),
+      sex = 'female'
+    )
+  ],
+  male1719dt[
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE',
+    .(
+      WGT2017_2019,
+      age = cut(AGE_R, breaks = seq(15, 50, 5), right = FALSE),
+      sex = 'male'
+    )
+  ]
+)) |>
+  ggplot(
+    mapping = aes(
+      y = ..count.. / 10e5,
+      x = age,
+      weight = WGT2017_2019
+    )
+  ) +
+  geom_bar(stat = 'count') +
+  scale_y_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    expand = expansion(mult = c(0, 0.05)),
+    minor_breaks = seq(0, 12, 1),
+    breaks = seq(0, 12, 2)
+  ) +
+  scale_x_discrete() +
+  labs(
+    x = 'Age',
+    y = 'Total Persons'
+  ) +
+  theme_bw() +
+  theme(
+    axis.ticks = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+```
+
+Most persons who have never had sexual intercourse with someone of the opposite sex are in younger age groups, and totals of persons who have never had sexual intercourse decrease with increasing age. (Figure \@ref(fig:never-had-sex))
+
 
 #### Reason for Never Having Intercourse
 
-Domain: Persons who have never had sexual intercourse with someone of the opposite sex
-
-**Females**
-
-```{r, dependson='process-fem-data'}
+```{r fem-reason-no-sex, dependson='process-fem-data', fig.height=4, fig.width=7, fig.cap='Females by reason for not having had sexual intercourse with the opposite sex, among those who have not. Dots represent point estimates and brackets represent 95% confidence intervals.'}
 estimate_totals_and_percentages(
   ~factor(YNOSEX),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
-)[order(-total)] |> style_totals_and_percentages()
+) |> plot_totals_with_CIs()
 ```
 
-**Males**
-
-```{r, dependson='process-male-data'}
+```{r male-reason-no-sex, dependson='process-male-data', fig.height=3, fig.width=7, fig.cap='Males by reason for not having had sexual intercourse with the opposite sex, among those who have not. Dots represent point estimates and brackets represent 95% confidence intervals.'}
 estimate_totals_and_percentages(
   ~factor(YNOSEX),
   subset(
     get_NSFG_survey_design_for_sex('male'),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
-)[order(-total)] |> style_totals_and_percentages()
+) |> plot_totals_with_CIs()
 ```
+
+Many persons who have not had intercourse with someone of the opposite sex report "Haven't found the right person yet" as a reason, though this appears to be more common for males than for females. "Against religion or morals" is another commonly cited reason. It is notable that "Other" is also a popular reason chosen reported for not having had sex. (Figures \@ref(fig:fem-reason-no-sex) and \@ref(fig:male-reason-no-sex)) This is indirectly explored in the subsequent Section \@ref(attraction-by-sex).
 
 
 #### Attraction by Sex
 
-Domain: Females who have not had sexual intercourse with a male in the past 3 months
-
-Domain: Females who had sexual intercourse with a male in the past 3 months
-
-```{r, dependson='process-fem-data'}
+```{r fem-sex-attraction, dependson='process-fem-data'}
 style_and_combine_totals_and_percentages_horizontally(
-  'Sexually active with opposite sex',
+  'Had intercourse with male in past 3 months',
   estimate_totals_and_percentages(
     ~factor(ATTRACT),
     subset(
@@ -1453,7 +1506,7 @@ style_and_combine_totals_and_percentages_horizontally(
       SEX3MO == 'YES'
     )
   ),
-  'Not sexually active with opposite sex',
+  'Did not have intercourse with male in past 3 months',
   estimate_totals_and_percentages(
     ~factor(ATTRACT),
     subset(
@@ -1461,16 +1514,12 @@ style_and_combine_totals_and_percentages_horizontally(
       SEX3MO != 'YES'
     )
   )
-)
+) |> set_caption('Females by attraction to males versus females.')
 ```
 
-Domain: Males who have not had sexual intercourse with a female in the past 3 months
-
-Domain: Males who had sexual intercourse with a female in the past 3 months
-
-```{r, dependson='process-male-data'}
+```{r male-sex-attraction, dependson='process-male-data'}
 style_and_combine_totals_and_percentages_horizontally(
-  'Sexually active with opposite sex',
+  'Had intercourse with female in past 3 months',
   estimate_totals_and_percentages(
     ~factor(ATTRACT),
     subset(
@@ -1478,7 +1527,7 @@ style_and_combine_totals_and_percentages_horizontally(
       SEX3MO == 'YES, HAD INTERCOURSE'
     )
   ),
-  'Not sexually active with opposite sex',
+  'Did not have intercourse with female in past 3 months',
   estimate_totals_and_percentages(
     ~ATTRACT,
     subset(
@@ -1486,8 +1535,14 @@ style_and_combine_totals_and_percentages_horizontally(
       SEX3MO != 'YES, HAD INTERCOURSE'
     )
   )[1:9, ]
-)
+) |> set_caption('Males by attraction to females versus males.')
 ```
+
+The proportion of males who are "Only attracted to females" is approximately 92.4\% among those who have had intercourse with a female in the past 3 months, but only 79.5\% among those who have not, and the proportion "Only attracted to males" is approximately 0.1\% among those who had intercourse with a female in the past 3 months, but is 6.4\% among those who have not. (Table \@ref(tab:male-sex-attraction))
+
+Similarly, among females who have had sexual intercourse with a male in the past 3 months, approximately 0.5\% describe themselves as "Mostly attracted to females" and 0.2\% as "Only attracted to females." However, among those that have not had intercourse with a male in the past 3 months, 4.9\% describe themselves as "Mostly attracted to females" and 4.4\% as "Only attracted to females." (Table \@ref(tab:fem-sex-attraction))
+
+The proportions categorized by attraction to the sexes between those who have had intercourse with a male in the past 3 months and those who have not is statistically significant by a Chi-squared test with a second-order Rao-Scott correction. **_interpret this better here_** Thus, it is likely that some number of persons are not sexually active currently with the opposite sex due to attraction primarily to the same sex.
 
 
 ### Reason for Physical Infertility Not Due to Sterilization Procedure
