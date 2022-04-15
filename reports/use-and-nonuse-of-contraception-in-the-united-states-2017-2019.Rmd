@@ -1287,35 +1287,35 @@ Over three quarters of persons sexually active with the opposite sex used at lea
 
 ### Reason for Nonuse
 
-Domain: Persons who had sexual intercourse with someone of the opposite sex in the 3 months preceding the interview and did not use a method of contraception during most recent intercourse
-
-Description: Categorized into exclusive hierarchy, such that individuals categorized earlier in the hierarchy are not counted in later categories
-
-**Females**
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(used_last_3m_status),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_method_count == 0 &
-      SEX3MO == 'YES'
+```{r reason-for-nonuse, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_status),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      used_last_3m_method_count == 0 &
+        SEX3MO == 'YES'
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_status),
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      used_last_3m_method_count == 0 &
+        SEX3MO == 'YES, HAD INTERCOURSE'
+    )
   )
-) |> style_totals_and_percentages()
+) |>
+  set_caption('Persons categorized by reason for not using contraception, among persons who had sexual intercourse with someone of the opposite sex in the past 3 months.')
 ```
 
-**Males**
+Some persons intentionally refrain from using contraception for various reasons. The most common reason for intentional nonuse of contraception is a desire to conceive a pregnancy, followed by the female partner being currently pregnant. (Table \@ref(tab:reason-for-nonuse))
 
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(used_last_3m_status),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    used_last_3m_method_count == 0 &
-      SEX3MO == 'YES, HAD INTERCOURSE'
-  )
-) |> style_totals_and_percentages()
-```
+The "Otherwise did not use contraception during last intercourse" category in Table \@ref(tab:reason-for-nonuse) estimates contain those who are at increased risk for unintended pregnancy due contraceptive nonuse.
+
+"Postpartum" is categorized separately in Table \@ref(tab:reason-for-nonuse) for females, but not for males because this information is not available in the public use data files for males due to disclosure risk reduction. "Otherwise did not use contraception during last intercourse" for males therefore includes some persons who last had intercourse with a postpartum female. However, as can be gleaned from the estimates for females, this is a small number of persons.
 
 
 ### Contraception Use Rate
