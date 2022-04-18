@@ -17,6 +17,7 @@ link-citations: true
 library(data.table)
 library(ggplot2)
 library(here)
+library(huxtable)
 
 i_am('reports/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.Rmd')
 
@@ -1497,6 +1498,34 @@ Many persons who have not had intercourse with someone of the opposite sex repor
 #### Attraction by Sex
 
 ```{r fem-sex-attraction, dependson='process-fem-data'}
+this <- list()
+
+this$totals <- estimate_totals_and_percentages(
+  ~sexually_active_3m,
+  get_NSFG_survey_design_for_sex('fem')
+) |> style_totals_and_percentages()
+
+this$total_row <- cbind(
+  this$totals[4, ],
+  this$totals[3, 2:5]
+) |>
+  set_contents(
+    1, 1, 'Total'
+  ) |>
+  set_contents(
+    1, c(4:5, 8:9), ''
+  ) |>
+  set_bottom_border(final(1), everywhere, 1) |>
+  set_top_border(final(1), everywhere, 1) |>
+  set_left_border(everywhere, c(2, 6), 1) |>
+  set_left_padding(everywhere, c(2, 6), 4)
+
+this$chisq <- svychisq(
+  ~ ATTRACT + sexually_active_3m,
+  get_NSFG_survey_design_for_sex('fem'),
+  statistic = 'adjWald'
+)
+
 style_and_combine_totals_and_percentages_horizontally(
   'Had intercourse with male in past 3 months',
   estimate_totals_and_percentages(
@@ -1514,10 +1543,42 @@ style_and_combine_totals_and_percentages_horizontally(
       SEX3MO != 'YES'
     )
   )
-) |> set_caption('Females by attraction to males versus females.')
+) |>
+  rbind(this$total_row) |>
+  set_caption('Females by attraction to males versus females.')
 ```
 
+Among females who have had sexual intercourse with a male in the past 3 months, approximately 0.5\% describe themselves as "Mostly attracted to females" and 0.2\% as "Only attracted to females." However, among those that have not had intercourse with a male in the past 3 months, 4.9\% describe themselves as "Mostly attracted to females" and 4.4\% as "Only attracted to females." An adjusted Wald-Koch chi-squared test of homogeneity of proportions is statistically significant ($p = `r signif(this$chisq$p.value, 2)`$). Therefore, the differences in proportions of persons categorized by attraction in Table \@ref(tab:fem-sex-attraction) are not attributable to sampling error.
+
 ```{r male-sex-attraction, dependson='process-male-data'}
+this <- list()
+
+this$totals <- estimate_totals_and_percentages(
+  ~I(SEX3MO == 'YES, HAD INTERCOURSE'),
+  get_NSFG_survey_design_for_sex('male')
+) |> style_totals_and_percentages()
+
+this$total_row <- cbind(
+  this$totals[4, ],
+  this$totals[3, 2:5]
+) |>
+  set_contents(
+    1, 1, 'Total'
+  ) |>
+  set_contents(
+    1, c(4:5, 8:9), ''
+  ) |>
+  set_bottom_border(final(1), everywhere, 1) |>
+  set_top_border(final(1), everywhere, 1) |>
+  set_left_border(everywhere, c(2, 6), 1) |>
+  set_left_padding(everywhere, c(2, 6), 4)
+
+this$chisq <- svychisq(
+  ~ ATTRACT + sexually_active_3m,
+  get_NSFG_survey_design_for_sex('male'),
+  statistic = 'adjWald'
+)
+
 style_and_combine_totals_and_percentages_horizontally(
   'Had intercourse with female in past 3 months',
   estimate_totals_and_percentages(
@@ -1535,14 +1596,14 @@ style_and_combine_totals_and_percentages_horizontally(
       SEX3MO != 'YES, HAD INTERCOURSE'
     )
   )[1:9, ]
-) |> set_caption('Males by attraction to females versus males.')
+) |>
+  rbind(this$total_row) |>
+  set_caption('Males by attraction to females versus males.')
 ```
 
-The proportion of males who are "Only attracted to females" is approximately 92.4\% among those who have had intercourse with a female in the past 3 months, but only 79.5\% among those who have not, and the proportion "Only attracted to males" is approximately 0.1\% among those who had intercourse with a female in the past 3 months, but is 6.4\% among those who have not. (Table \@ref(tab:male-sex-attraction))
+Similarly, the proportion of males who are "Only attracted to females" is approximately 92.4\% among those who have had intercourse with a female in the past 3 months, but only 79.5\% among those who have not, and the proportion "Only attracted to males" is approximately 0.1\% among those who had intercourse with a female in the past 3 months, but is 6.4\% among those who have not. An adjusted Wald-Koch chi-squared test of homogeneity of proportions is again statistically significant ($p = `r signif(this$chisq$p.value, 2)`$), and the differences in proportions of persons categorized by attraction in Table \@ref(tab:male-sex-attraction) are not due to sampling error.
 
-Similarly, among females who have had sexual intercourse with a male in the past 3 months, approximately 0.5\% describe themselves as "Mostly attracted to females" and 0.2\% as "Only attracted to females." However, among those that have not had intercourse with a male in the past 3 months, 4.9\% describe themselves as "Mostly attracted to females" and 4.4\% as "Only attracted to females." (Table \@ref(tab:fem-sex-attraction))
-
-The proportions categorized by attraction to the sexes between those who have had intercourse with a male in the past 3 months and those who have not is statistically significant by a Chi-squared test with a second-order Rao-Scott correction. **_interpret this better here_** Thus, it is likely that some number of persons are not sexually active currently with the opposite sex due to attraction primarily to the same sex.
+Thus, some persons who are not sexually active with the opposite sex are simply not attracted to opposite sex, such as the approximately 1.5M males only attracted to males in Table \@ref(tab:male-sex-attraction).
 
 
 ### Reason for Physical Infertility Not Due to Sterilization Procedure
