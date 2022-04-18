@@ -1452,7 +1452,7 @@ rbindlist(list(
   ) +
   geom_bar(stat = 'count') +
   scale_y_continuous(
-    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
     expand = expansion(mult = c(0, 0.05)),
     minor_breaks = seq(0, 12, 1),
     breaks = seq(0, 12, 2)
@@ -1679,12 +1679,12 @@ estimate_NSFG_mentions(
   prefix = 'used_last_3m_method',
   skip = 20:21,
   format = 'METH3MF'
-)[total > 0] |>
+)[total > 0][order(-total)] |>
   plot_totals_with_CIs() +
   scale_x_continuous(
     labels = scales::label_number(suffix = 'M', accuracy = 1),
     breaks = \(x) seq(0, ceiling(x[2]), 2),
-    limits = c(0, NA)
+    limits = c(0, 14)
   )
 ```
 
@@ -1698,14 +1698,20 @@ estimate_NSFG_mentions(
   prefix = 'used_last_3m_method',
   skip = 95:96,
   format = 'METH3MF'
-)[order(-total)] |>
+)[total > 0][order(-total)] |>
   plot_totals_with_CIs() +
   scale_x_continuous(
     labels = scales::label_number(suffix = 'M', accuracy = 1),
     breaks = \(x) seq(0, ceiling(x[2]), 2),
-    limits = c(0, NA)
+    limits = c(0, 14)
   )
 ```
+
+Overall, there are similar distributions between females and males in reported contraceptive method use during last intercourse. (Figures \@ref(fig:fem-methods-used) and \@ref(fig:male-methods-used)) For instance, condom and pill are the most commonly reported methods by males, and they are the second and third most common methods reported by females. Indeed, female sterilizing operation, condom, and pill are in the top three most common methods reported both by females and males. However, the most salient difference between females and males is that approximately 10.5M females report a female sterilizing operation being used during their last intercourse, whereas only approximately 6.7M males report a female sterilizing operation being used.
+
+Other differences include a greater number of males reporting use of condom, pill, patch, and "other" methods than females, and a greater number of females reporting use of intrauterine device (IUD), calendar-based, and temperature or cervical mucus test methods. Possible reasons for these and other differences are discussed in Section \@ref(differences-in-methods-reported-used-between-females-and-males).
+
+Estimates of the number of female and male persons using withdrawal, vasectomy, implant, injectable, and ring methods are similar between females and males. Methods such as suppository, female condom, diaphragm, film, foam, jelly, and cream are rarely reported used by either females or males. Withdrawal is the fourth most commonly reported method both by females and males.
 
 
 ### Method Used Exclusively
@@ -2698,6 +2704,8 @@ estimate_NSFG_mentions(
 # Discussion
 
 ## Less Reported Contraceptive Use Among Males
+
+## Differences in Methods Reported Used Between Females and Males
 
 
 
