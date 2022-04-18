@@ -55,7 +55,9 @@ plot_totals_with_CIs <- function(data, reordering = TRUE) {
 plot_percentages_with_CIs <- function(data, reordering = TRUE) {
   plot_with_CIs(data, 'percentage', reordering) +
     scale_x_continuous(
-      labels = scales::label_percent(1)
+      labels = scales::label_percent(1),
+      limits = c(0, 1),
+      expand = expansion(mult = c(0, 0.025))
     ) +
     scale_y_discrete(
       labels = scales::wrap_format(50)

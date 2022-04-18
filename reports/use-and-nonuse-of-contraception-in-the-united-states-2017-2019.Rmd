@@ -1753,18 +1753,12 @@ estimate_NSFG_mentions(
   )
 ```
 
-Restricting analysis to persons who used only one method of contraception during their last intercourse, there is a similar overall pattern of contraceptive method use as seen in Section \@ref(methods-used). However, in this subdomain, the number of females and number of males reporting pill use is roughly the same. Another salient difference in this subdomain is that there are relatively fewer persons who report using withdrawal, indicating a substantial number of withdrawal users do not rely on withdrawal as a their primary method of contraception. (Figures \@ref(fig:fem-exclusive-method-used) and \@ref(fig:male-exclusive-method-used))
+Restricting analysis to persons who used only one method of contraception during their last intercourse,  (Figures \@ref(fig:fem-exclusive-method-used) and \@ref(fig:male-exclusive-method-used)) there is a similar overall pattern of contraceptive method use as seen in Section \@ref(methods-used). However, in this subdomain, the number of females and number of males reporting pill use is roughly the same. Another salient difference in this subdomain is that there are relatively fewer persons who report using withdrawal, indicating a substantial number of withdrawal users do not rely on withdrawal as a their primary method of contraception, investigated further in Section \@ref(proportion-of-method-users-who-also-used-other-methods).
 
 
 ### Proportion of Method Users Who Also Used Other Method(s)
 
-Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used each specific method of contraception during last intercourse
-
-Description: Proportion who also used other method(s)
-
-**Females**
-
-```{r, dependson='process-fem-data'}
+```{r fem-proportion-another, dependson='process-fem-data', fig.cap='Proportion using another method of contraception among females using each method of contraception during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions_in_subdomains(
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
@@ -1777,12 +1771,11 @@ estimate_NSFG_mentions_in_subdomains(
   },
   format = 'METH3MF',
   skip = c(20:22)
-)[!is.nan(percentage_CI_low)] |> plot_percentages_with_CIs()
+)[!is.nan(percentage_CI_high)][order(-percentage)] |>
+  plot_percentages_with_CIs()
 ```
 
-**Males**
-
-```{r, dependson='process-male-data'}
+```{r male-proportion-another, dependson='process-fem-data', fig.cap='Proportion using another method of contraception among males using each method of contraception during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions_in_subdomains(
   sex = 'male',
   row_estimation_function = function(x) {
@@ -1796,8 +1789,15 @@ estimate_NSFG_mentions_in_subdomains(
   },
   format = 'METH3MF',
   skip = 95:96
-)[order(-total)] |> style_totals_and_percentages()
+)[!is.nan(percentage_CI_high)][order(-percentage)] |>
+  plot_percentages_with_CIs()
 ```
+
+A direct way to measure the extent to which specific contraceptive methods are used exclusively or in combination with other methods is to estimate the proportion of users of each method that used it with another method. (Figures \@ref(fig:fem-proportion-another) and \@ref(fig:male-proportion-another).) The number of persons using safe period by temperature or cervical mucus test method, contraceptive patch method, emergency contraception, and "other" method are relatively few, constituting small effective sample sizes with large sampling errors. Indeed, estimates for contraceptive patch are contradictory between female and male respondents.
+
+Ignoring those, calendar-based methods have the greatest proportion of users who also used another method during their last intercourse, particularly among females. As alluded to in Section \@ref(method-used-exclusively), about half of withdrawal users used another method during their last intercourse. Thus, withdrawal use is split between those using withdrawal as a primary method of contraception and those using withdrawal in addition to another method.
+
+While a simple majority of users of pill and condom methods used them exclusively during their last intercourse, a sizable minority of pill and condom users also used another method. At the other end of the scale, female sterilizing operation and IUD are the methods most often used exclusively.
 
 
 ### Other Method(s) Used with Calendar Method
