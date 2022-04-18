@@ -193,12 +193,12 @@ fem1719dt[,
       (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
         'Currently trying to conceive',
       POSIBLPG == 'No',
-        'Physically infertile not due to sterilization procedure',
+        'Physically infertile not due to sterilizing procedure',
       POSIBLMN == 'No' & (
         P1YRELP == 'Current cohabiting partner' |
         P1YRELP == 'Current husband or (current husband from whom she is separated)'
       ),
-        'Last intercourse was with partner who is physically infertile not due to sterilization procedure',
+        'Last intercourse was with partner who is physically infertile not due to sterilizing procedure',
       default = 'Otherwise did not use contraception during last intercourse'
     ),
     ordered = TRUE,
@@ -208,8 +208,8 @@ fem1719dt[,
       'Pregnant in month of last intercourse',
       'Postpartum',
       'Currently trying to conceive',
-      'Physically infertile not due to sterilization procedure',
-      'Last intercourse was with partner who is physically infertile not due to sterilization procedure',
+      'Physically infertile not due to sterilizing procedure',
+      'Last intercourse was with partner who is physically infertile not due to sterilizing procedure',
       'Otherwise did not use contraception during last intercourse'
     )
   )
@@ -787,7 +787,7 @@ male1719dt[,
       PXTRYING == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPTRYPG == 'Yes'),
         'Last intercourse was with partner who is trying to conceive',
       FATHPOSS == 'No',
-        'Physically infertile not due to sterilization procedure',
+        'Physically infertile not due to sterilizing procedure',
       (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPOSS == 'No',
         'Last intercourse was with partner who is physically unable to concieve',
       default = 'Otherwise did not use contraception during last intercourse'
@@ -798,7 +798,7 @@ male1719dt[,
       'Did not have sexual intercourse with female in past 3 months',
       'Last intercourse was with partner who is pregnant',
       'Last intercourse was with partner who is trying to conceive',
-      'Physically infertile not due to sterilization procedure',
+      'Physically infertile not due to sterilizing procedure',
       'Last intercourse was with partner who is physically unable to concieve',
       'Otherwise did not use contraception during last intercourse'
     )
@@ -1308,7 +1308,7 @@ The "Otherwise did not use contraception during last intercourse" category in Ta
 
 "Postpartum" is categorized separately in Table \@ref(tab:reason-for-nonuse) for females, but not for males because this information is not available in the public use data files for males due to disclosure risk reduction. "Otherwise did not use contraception during last intercourse" for males therefore includes some persons who last had intercourse with a postpartum female. However, as can be gleaned from the estimates for females, this is a small number of persons.
 
-The "Physically infertile not due to sterilization procedure" category is explored in Section \@ref(reason-for-physical-infertility-not-due-to-sterilization-procedure).
+The "Physically infertile not due to sterilizing procedure" category is explored in Section \@ref(reason-for-physical-infertility-not-due-to-sterilizing-procedure).
 
 
 ### Contraception Use Rate
@@ -1606,31 +1606,29 @@ Similarly, the proportion of males who are "Only attracted to females" is approx
 Thus, some persons who are not sexually active with the opposite sex are simply not attracted to opposite sex, such as the approximately 1.5M males only attracted to males in Table \@ref(tab:male-sex-attraction).
 
 
-### Reason for Physical Infertility Not Due to Sterilization Procedure
+### Reason for Physical Infertility Not Due to Sterilizing Procedure
 
-Domain: Females who report being physically unable to get pregnant
-
-```{r, dependson='process-fem-data'}
+```{r fem-infertility, dependson='process-fem-data', fig.height=4, fig.cap="Females by reason reported for their inability to become pregant, among those who report being physically infertile not due to a sterilizing procedure."}
 estimate_totals_and_percentages(
   ~factor(REASIMPR),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     POSIBLPG == 'No'
   )
-)[order(-total)] |> style_totals_and_percentages()
+) |> plot_totals_with_CIs()
 ```
 
-Domain: Females who report their partner is unable to father a child
-
-```{r, dependson='process-fem-data'}
+```{r fem-partner-infertility, dependson='process-fem-data', fig.height=3.5, fig.cap="Females by reason reported for their partners' inability to father a child, among those who report having a partner who is physically infertile not due to a sterilizing procedure."}
 estimate_totals_and_percentages(
   ~factor(REASIMPP),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     POSIBLMN == 'No'
   )
-)[order(-total)] |> style_totals_and_percentages()
+) |> plot_totals_with_CIs()
 ```
+
+The reason for physical infertility not due to a sterilizing procedure is part of the female respondent questionnaire of the NSFG, but not he male. As Figures \@ref(fig:fem-infertility) and \@ref(fig:fem-partner-infertility) illustrate, because these conditions are relatively rare, the effective sample sizes of the relevant subdomains from a two-year sequence of the NSFG are small, and the sampling error is quite large relative to the estimates.
 
 
 ### Number of Methods
