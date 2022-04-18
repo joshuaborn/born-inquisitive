@@ -1799,41 +1799,41 @@ Ignoring those, calendar-based methods have the greatest proportion of users who
 
 While a simple majority of users of pill and condom methods used them exclusively during their last intercourse, a sizable minority of pill and condom users also used another method. At the other end of the scale, female sterilizing operation and IUD are the methods most often used exclusively.
 
+The remaining subsections of Section \@ref(use-of-contraception-during-most-recent-intercourse) explore what other contraceptive methods are used in conjunction with the methods commonly used with others, i.e., calendar, withdrawal, condom, and pill methods.
+
 
 ### Other Method(s) Used with Calendar Method
 
-Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a calendar method during last intercourse
-
-Description: By method(s), with those using multiple methods counted multiple times
-
-**Females**
-
-```{r, dependson='process-fem-data'}
-estimate_NSFG_mentions(
-  survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_method8
-  ),
-  prefix = 'used_last_3m_method',
-  skip = c(8, 20:21),
-  format = 'METH3MF'
-)[total > 0][order(-total)] |> style_totals_and_percentages()
+```{r other-with-calendar, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_NSFG_mentions(
+    survey_design = subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      used_last_3m_method8
+    ),
+    prefix = 'used_last_3m_method',
+    skip = c(8, 20:21),
+    format = 'METH3MF'
+  )[total > 0][order(-total)],
+  'Males',
+  estimate_NSFG_mentions(
+    sex = 'male',
+    survey_design = subset(
+      get_NSFG_survey_design_for_sex('male'),
+      used_last_3m_method9
+    ),
+    prefix = 'used_last_3m_method',
+    skip = c(9, 95:96),
+    format = 'METH3MF'
+  )[total > 0][order(-total)]
+) |>
+  set_caption('Persons other contraceptive method(s) used during last intercourse, among persons who used a calendar-based method of contraception during sexual intercourse with someone of the opposite sex in the past 3 months.') |>
+  set_width(0.75) |>
+  set_col_width(2, 2)
 ```
 
-**Males**
-
-```{r, dependson='process-male-data'}
-estimate_NSFG_mentions(
-  sex = 'male',
-  survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
-    used_last_3m_method9
-  ),
-  prefix = 'used_last_3m_method',
-  skip = c(9, 95:96),
-  format = 'METH3MF'
-)[total > 0][order(-total)] |> style_totals_and_percentages()
-```
+When used in conjunction with other methods, calendar-based methods are most commonly used with withdrawal or to a lesser extent condom. (Table \@ref(tab:other-with-calendar))
 
 
 ### Other Method(s) Used with Withdrawal
