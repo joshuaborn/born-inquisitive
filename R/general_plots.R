@@ -40,7 +40,7 @@ plot_with_CIs <- function(
 plot_totals_with_CIs <- function(data, reordering = TRUE) {
   plot_with_CIs(data, 'total', reordering, scale_factor = 10e-7) +
     scale_x_continuous(
-      labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
     ) +
     scale_y_discrete(
       labels = scales::wrap_format(50)

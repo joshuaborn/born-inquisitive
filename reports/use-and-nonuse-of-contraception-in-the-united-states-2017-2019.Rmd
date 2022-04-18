@@ -31,6 +31,7 @@ knitr::opts_chunk$set(
   fig.align = 'center',
   fig.height = 8,
   fig.width = 12,
+  message = FALSE,
   warning = FALSE
 )
 ```
@@ -669,6 +670,7 @@ METH3MF1719_replacements <- rbindlist(list(
   )
 ))
 METH3MF1719_replacements[, format_name := 'METH3MF']
+male1719formats <- copy(male1719$Formats)
 male1719formats[
   METH3MF1719_replacements,
   factor_label := i.factor_label,
@@ -1479,7 +1481,11 @@ estimate_totals_and_percentages(
     get_NSFG_survey_design_for_sex('fem'),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
-) |> plot_totals_with_CIs()
+) |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1)
+  )
 ```
 
 ```{r male-reason-no-sex, dependson='process-male-data', fig.height=3, fig.width=7, fig.cap='Males by reason for not having had sexual intercourse with the opposite sex, among those who have not. Dots represent point estimates and brackets represent 95% confidence intervals.'}
@@ -1489,7 +1495,11 @@ estimate_totals_and_percentages(
     get_NSFG_survey_design_for_sex('male'),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
-) |> plot_totals_with_CIs()
+) |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1)
+  )
 ```
 
 Many persons who have not had intercourse with someone of the opposite sex report "Haven't found the right person yet" as a reason, though this appears to be more common for males than for females. "Against religion or morals" is another commonly cited reason. It is notable that "Other" is also a popular reason chosen reported for not having had sex. (Figures \@ref(fig:fem-reason-no-sex) and \@ref(fig:male-reason-no-sex)) This is indirectly explored in the subsequent Section \@ref(attraction-by-sex).
@@ -1660,13 +1670,7 @@ While the vast majority of both females and males used only one method of contra
 
 ### Method(s) Used
 
-Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
-
-Description: By method(s), with those using multiple methods counted multiple times
-
-**Females**
-
-```{r, dependson='process-fem-data'}
+```{r fem-methods-used, dependson='process-fem-data', fig.cap='Females categorized by whether or not each contraceptive method was used during last intercourse with a male in the past 3 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -1675,12 +1679,16 @@ estimate_NSFG_mentions(
   prefix = 'used_last_3m_method',
   skip = 20:21,
   format = 'METH3MF'
-)[total > 0] |> plot_totals_with_CIs()
+)[total > 0] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 2),
+    limits = c(0, NA)
+  )
 ```
 
-**Males**
-
-```{r, dependson='process-male-data'}
+```{r male-methods-used, dependson='process-male-data', fig.cap='Males categorized by whether or not each contraceptive method was used during last intercourse with a female in the past 3 months, with persons using multiple methods counted multiple times.', fig.height=6}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -1690,7 +1698,13 @@ estimate_NSFG_mentions(
   prefix = 'used_last_3m_method',
   skip = 95:96,
   format = 'METH3MF'
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 2),
+    limits = c(0, NA)
+  )
 ```
 
 
