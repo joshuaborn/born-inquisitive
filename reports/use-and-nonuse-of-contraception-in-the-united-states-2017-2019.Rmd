@@ -1628,38 +1628,34 @@ estimate_totals_and_percentages(
 ) |> plot_totals_with_CIs()
 ```
 
-The reason for physical infertility not due to a sterilizing procedure is part of the female respondent questionnaire of the NSFG, but not he male. As Figures \@ref(fig:fem-infertility) and \@ref(fig:fem-partner-infertility) illustrate, because these conditions are relatively rare, the effective sample sizes of the relevant subdomains from a two-year sequence of the NSFG are small, and the sampling error is quite large relative to the estimates.
+The reason for physical infertility not due to a sterilizing procedure is part of the questionnaire for female respondents of the NSFG, but not the questionnaire for male respondents. As Figures \@ref(fig:fem-infertility) and \@ref(fig:fem-partner-infertility) illustrate, because these conditions are relatively rare, the effective sample sizes of the relevant subdomains from a two-year sequence of the NSFG are small, and the sampling error is quite large relative to the estimates.
 
 
 ### Number of Methods
 
-Domain: Persons who had intercourse with opposite sex during the 3 months prior to interview and used a method of contraception during last intercourse
-
-Description: By number of methods used during last intercourse
-
-**Females**
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(used_last_3m_method_count),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_method_count > 0
+```{r number-of-methods, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_method_count),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      used_last_3m_method_count > 0
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_method_count),
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      used_last_3m_method_count > 0
+    )
   )
-) |> style_totals_and_percentages()
+) |>
+  set_caption('Persons categorized by number of contraceptive methods used during last intercourse, among persons who used contraception during sexual intercourse with someone of the opposite sex in the past 3 months.')
 ```
 
-**Males**
-
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(used_last_3m_method_count),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    used_last_3m_method_count > 0
-  )
-) |> style_totals_and_percentages()
-```
+While the vast majority of both females and males used only one method of contraception during their last intercourse, a substantial minority of persons used multiple methods. (Table \@ref(tab:number-of-methods))
 
 
 ### Method(s) Used
