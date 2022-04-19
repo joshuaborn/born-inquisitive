@@ -2126,63 +2126,91 @@ When restricting analysis to those who reported using only one method of contrac
 
 ## Consistency of Use of Contraception
 
-### Use of Contraception Prior to Nonuse during last intercourse
+```{r used-12-months-but-not-last, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[,
+  any_use_12m_at_all := factor(fifelse(
+    any_use_12m_method_count > 0,
+    'Used contraception in past 12 months',
+    'Did not use contraception in past 12 months'
+  ))
+]
 
-Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception during last intercourse
+male1719dt[,
+  any_use_12m_at_all := factor(fifelse(
+    any_use_12m_method_count > 0,
+    'Used contraception in past 12 months',
+    'Did not use contraception in past 12 months'
+  ))
+]
 
-Description: By whether used a method of contraception in past 12 months
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~any_use_12m_at_all,
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~any_use_12m_at_all,
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
+    )
+  )
+) |>
+  set_caption('Persons who used any method of contraception in the past 12 months, among those who have had intercourse in the past 3 months and did not use contraception during their most recent intercourse without a reason, placing them at increased risk of unintended pregnancy.')
+```
 
-```{r, dependson='process-fem-data'}
+```{r used-in-month-but-not-last, dependson='process-fem-data'}
+fem1719dt[,
+  used_in_month_last_sex_factor := factor(fifelse(
+    used_in_month_last_sex,
+    'Used contraception in month of last intercourse',
+    'Did not use contraception in month of last intercourse'
+  ))
+]
+
 estimate_totals_and_percentages(
-  ~I(any_use_12m_method_count > 0),
+  ~used_in_month_last_sex_factor,
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
   )
-) |> style_totals_and_percentages()
+) |> style_totals_and_percentages() |>
+  set_caption('Females who reported using at least one method of contraception in month of last intercourse, among those who have had intercourse in the past 3 months and did not use contraception during their most recent intercourse without a reason, placing them at increased risk of unintended pregnancy.')
 ```
 
-Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception during last intercourse
+```{r used-ever-but-not-last, dependson='process-fem-data'}
+fem1719dt[,
+  used_ever := factor(fifelse(
+    EVERUSED == 'Yes',
+    'Used contraception ever in lifetime',
+    'Has not use contraception ever in lifetime'
+  ))
+]
 
-Description: By whether reported using a method in the month of last intercourse
-
-```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
-  ~factor(used_in_month_last_sex),
+  ~used_ever,
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
   )
-) |> style_totals_and_percentages()
+) |> style_totals_and_percentages() |>
+  set_caption('Females who reported using at least one method of contraception ever in their lifetimes, among those who have had intercourse in the past 3 months and did not use contraception during their most recent intercourse without a reason, placing them at increased risk of unintended pregnancy.')
 ```
 
-Domain: Females who have had intercourse with a male in the past 3 months and did not use a method of contraception during last intercourse
+Some of those who did not use contraception during their most recent intercourse with the opposite sex in the past 3 months, without any reason for refraining from using contraception identified in Section \@ref(reason-for-nonuse), might use contraception typically, only failing to do so during their most recent intercourse because of inconsistency. Respondents to the NSFG were not directly asked whether this was the case, but this can be inferred in other ways.
 
-Description: By whether used a method of contraception ever
+The subdomain of those at increased risk of unintended pregnancy due to contraceptive nonuse constitutes a relatively small sample, as seen in the relatively great sampling error in Table \@ref(tab:used-12-months-but-not-last). Nonetheless, slightly less than half of those who did not use contraception at their most recent intercourse without reason used contraception at least once the past 12 months, and slightly more than half did not use contraception at all in the past 12 months. This implies that those at increased risk for unintended pregnancy due to lack of contraception use are split between those who are using contraception inconsistently and those who are not using contraception at all.
 
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(EVERUSED),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
-  )
-) |> style_totals_and_percentages()
-```
+A substantial minority of females who did not use contraception during their most recent intercourse without reason reported using at least one method of contraception during the month of their most recent intercourse, providing further evidence that some of this contraceptive nonuse is due to inconsistency. (Table \@ref(tab:used-in-month-but-not-last))
 
-Domain: Males who have had intercourse with a female in the past 3 months and did not use a method of contraception during last intercourse
+The vast supermajority of females who did not use contraception during their most recent intercourse without reason have used contraception at some point in their lifetime, indicating that contraceptive nonuse in these cases is rarely if ever a matter of principle. (Table \@ref(tab:used-ever-but-not-last))
 
-Description: By whether used a method of contraception in past 12 months
-
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~I(any_use_12m_method_count > 0),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
-  )
-) |> style_totals_and_percentages()
-```
+Male respondents to the NSFG are not asked if they have ever used the various contraceptive methods, nor do they fill out the contraceptive use calendar that female respondents do, so estimates for males such as those in Tables \@ref(tab:used-in-month-but-not-last) and \@ref(tab:used-ever-but-not-last) are not available.
 
 
 ### Any Method During Past 12 Months
