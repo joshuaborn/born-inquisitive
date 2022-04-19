@@ -1963,65 +1963,84 @@ One exception to this general trend is that calendar-based methods are unusually
 
 ## Use of Contraception during Past 12 Months
 
-### Domain Size
+```{r at-risk, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
 
-Description: Persons who have had intercourse with opposite in the past 12 months
+this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
+  ~I(used_last_3m_status == 'Otherwise did not use contraception during last intercourse')
+)
 
-**Females**
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(sex12mo),
-  get_NSFG_survey_design_for_sex('fem')
-) |> style_totals_and_percentages()
+this$fem <- as.data.frame(this$ht)[4, 3]
+this$male <- as.data.frame(this$ht)[6, 3]
 ```
 
-**Males**
+Section \@ref(reason-for-nonuse) identified approximately `r this$fem` females and `r this$male` males at increased risk for unintended pregnancy due to not using contraception during their last intercourse. In order to investigate whether this is due to habitual nonuse of contraception or due to inconsistency of use, this section examines use of contraception over the preceding 12 months.
 
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(SEX12MO == 'YES, HAD INTERCOURSE'),
-  get_NSFG_survey_design_for_sex('male')
-) |> style_totals_and_percentages()
+```{r sexually-active-12-months, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[,
+  had_sex_12m := factor(fifelse(
+    sex12mo,
+    'Had intercourse',
+    'Did not have intercourse'
+  ))
+]
+
+male1719dt[,
+  had_sex_12m := factor(fifelse(
+    SEX12MO == 'YES, HAD INTERCOURSE',
+    'Had intercourse',
+    'Did not have intercourse'
+  ))
+]
+
+this <- list()
+
+this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~had_sex_12m, digits = 1)
+
+this$fem <- as.data.frame(this$ht)[4, 3]
+this$male <- as.data.frame(this$ht)[6, 3]
+
+this$ht |>
+  set_caption('Persons who have had sexual intercourse with someone of the opposite sex in the past 12 months, among persons aged 15-49 living in househoulds in the United States.')
 ```
+
+The size of the relevant subdomain for this section is approximately `r this$fem` females and `r this$male` males. (Table \@ref(tab:sexually-active-12-months))
 
 
 ### Number of Methods
 
-Domain: Females who have had intercourse with a male in the past 12 months
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(any_use_12m_method_count),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    sex12mo
+```{r number-of-methods-12-months, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(any_use_12m_method_count),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      sex12mo
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(any_use_12m_method_count),
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      SEX12MO == 'YES, HAD INTERCOURSE'
+    )
   )
-) |> style_totals_and_percentages()
+) |>
+  set_caption('Persons by number of contraceptive methods ever used in past 12 months, among those who have had intercourse with someone of the opposite sex in the past 12 months.')
 ```
 
-Domain: Males who have had intercourse with a female in the past 12 months
+A majority of persons sexually active in the past 12 months used at least one method of contraception at least once in the past 12 months, and a sizable minority used more than one method of contraception in the past 12 months. (Table \@ref(tab:number-of-methods-12-months))
 
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(any_use_12m_method_count),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    SEX12MO == 'YES, HAD INTERCOURSE'
-  )
-) |> style_totals_and_percentages()
-```
+The estimates of those who have not used any method of contraception in the past 12 months despite being sexual active in Table \@ref(tab:number-of-methods-12-months) should not be interpreted as an estimate of those at risk for unintended pregnancy due to not using contraception, since it includes sexual partners trying to conceive, partners with a pregnant or postpartum female, and partners with one or more physically infertile persons.[^no-pregnancy-months]
+
+[^no-pregnancy-months]: Separating out estimates of those who are pregnant or postpartum is not possible over extended periods of time such as 12 months using the NSFG's public use data files, since the months that pregnancies begin and end are not released due to disclosure risk reduction.
 
 
 ### Method(s) Used
 
-Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview and used a method of contraception at least once
-
-Description: By method(s), with those using multiple methods counted multiple times
-
-**Females**
-
-```{r, dependson='process-fem-data'}
+```{r fem-methods-used-12-months, dependson='process-fem-data', fig.cap='Females categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2030,12 +2049,16 @@ estimate_NSFG_mentions(
   prefix = 'any_use_12m_method',
   skip = c(1:2, 22:23, 55, 98:99),
   format = 'METHHXF'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, 28, 4),
+    limits = c(-0.05, 28)
+  )
 ```
 
-**Males**
-
-```{r, dependson='process-male-data'}
+```{r male-methods-used-12-months, dependson='process-male-data', fig.cap='Males categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -2045,17 +2068,23 @@ estimate_NSFG_mentions(
   prefix = 'any_use_12m_method',
   skip = 98:99,
   format = 'MTHDSV1F'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, 28, 4),
+    limits = c(-0.05, 28)
+  )
 ```
 
+The distribution of method(s) used by females in the past 12 months in Table \@ref(fig:fem-methods-used-12-months) parallels the distribution of method(s) used during last intercourse in Figure \@ref(fig:fem-methods-used), with the counts of persons using each method increased. The major exception is the number of females using a sterilizing operation, which is barely greater in Figure \@ref(fig:fem-methods-used-12-months), causing it to be the third most rather than most prevalent method of contraception among females when examining the past 12 months.
 
-### Method Used Exclusively in Past 12 Months
+Similarly, the distribution of method(s) used in the past 12 months in Table \@ref(fig:male-methods-used-12-months) parallels the distribution of method(s) used during last intercourse in Figure \@ref(fig:male-methods-used), but with counts of those using female sterilizing operations not increasing as much as other methods, causing it to decrease from the third most to the fourth most prevalent method among males when examining the past 12 months. A salient feature of \@ref(fig:male-methods-used-12-months) is the extent to which the number of males who have used condoms at least once in the past 12 months is greater than other methods.
 
-Domain: Persons who had intercourse with opposite sex during the 12 months prior to interview and reporting using only one method of contraception during the 12 months prior to interview
 
-**Females**
+### Method Used Exclusively
 
-```{r, dependson='process-fem-data'}
+```{r fem-exclusive-method-used-12-months, dependson='process-fem-data', fig.cap='Females categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2064,12 +2093,16 @@ estimate_NSFG_mentions(
   prefix = 'any_use_12m_method',
   skip = c(1:2, 22:23, 55, 98:99),
   format = 'METHHXF'
-)[total > 0][order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = seq(0, 12, 2),
+    limits = c(-0.1, 12)
+  )
 ```
 
-**Males**
-
-```{r, dependson='process-male-data'}
+```{r male-exclusive-method-used-12-months, dependson='process-male-data', fig.cap='Males categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -2079,8 +2112,16 @@ estimate_NSFG_mentions(
   prefix = 'any_use_12m_method',
   skip = 98:99,
   format = 'MTHDSV1F'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = seq(0, 12, 2),
+    limits = c(-0.1, 12)
+  )
 ```
+
+When restricting analysis to those who reported using only one method of contraception, the distributions of method used during the past 12 months (Figures \@ref(fig:fem-exclusive-method-used-12-months) and \@ref(fig:male-exclusive-method-used-12-months)) parallels the distributions of method used during last intercourse (Figures \@ref(fig:fem-exclusive-method-used) and \@ref(fig:male-exclusive-method-used)) very closely, with female sterilizing operation being the most commonly method reported by females and condoms then female sterilizing operation being the most commonly methods reported by males.
 
 
 ## Consistency of Use of Contraception
