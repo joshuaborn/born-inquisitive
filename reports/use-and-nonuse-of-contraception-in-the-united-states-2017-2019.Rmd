@@ -369,31 +369,6 @@ fem1719dt[,
 set_count_variable_for_mentions(fem1719dt, 'any_use_12m_method')
 
 
-## Create categorical variable specifying consistency of any contraceptive method use over previous 12 months that combines P12MOCON and PXNOFREQ.
-fem1719dt[,
-  any_use_12m_consistency := factor(
-    fcase(
-      P12MOCON == 'Every time',
-        'Every time',
-      PXNOFREQ != 'No answer provided',
-        as.character(PXNOFREQ),
-      default = 'No answer provided'
-    ),
-    ordered = TRUE,
-    levels = c(
-      'Every time',
-      'Most of the time',
-      'About half of the time',
-      'Some of the time',
-      'None of the time',
-      'Refused',
-      "Don't know",
-      'No answer provided'
-    )
-  )
-]
-
-
 ## Create boolean variables for whether each method was used in the month preceding the interview.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'last_month_method',
@@ -1076,56 +1051,6 @@ male1719dt[,
 
 ## Count number of contraceptive methods used in past 12 months.
 set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
-
-
-## Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with wife or cohabitating partner that combines CONDFREQ and CWPNOFRQ.
-male1719dt[,
-  any_use_12m_wcp_consistency := factor(
-    fcase(
-      CONDFREQ == 100,
-        'Every time',
-      CWPNOFRQ != 'No answer provided',
-        as.character(CWPNOFRQ),
-      default = 'No answer provided'
-    ),
-    ordered = TRUE,
-    levels = c(
-      'Every time',
-      'Most of the time',
-      'About half of the time',
-      'Some of the time',
-      'None of the time',
-      'Refused',
-      "Don't know",
-      'No answer provided'
-    )
-  )
-]
-
-
-## Create categorical variable specifying consistency of any contraceptive method use over previous 12 months with last partner, who is not wife or cohabitating partner, that combines PXCONFRQ and PXNOFREQ.
-male1719dt[,
-  any_use_12m_p1_consistency := factor(
-    fcase(
-      PXCONFRQ == 100,
-        'Every time',
-      PXNOFREQ != 'No answer provided',
-        as.character(PXNOFREQ),
-      default = 'No answer provided'
-    ),
-    ordered = TRUE,
-    levels = c(
-      'Every time',
-      'Most of the time',
-      'About half of the time',
-      'Some of the time',
-      'None of the time',
-      'Refused',
-      "Don't know",
-      'No answer provided'
-    )
-  )
-]
 
 ## Create categorical variable specifying consistency of condom use over previous 12 months that combines P12MOCONO and P12MOCON.
 male1719dt[,
@@ -2215,46 +2140,98 @@ Male respondents to the NSFG are not asked if they have ever used the various co
 
 ### Any Method During Past 12 Months
 
-Domain: Females who had intercourse with a male during the 12 months prior to interview, who used a method of contraception at least once, and who do not have active sterilizing operations such as tubal ligations
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(any_use_12m_consistency),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    sex12mo &
-      any_use_12m_method_count > 0 &
-      TUBS != 'YES'
+```{r consistency-12-months-any, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[,
+  any_use_12m_consistency := factor(
+    fcase(
+      P12MOCON == 'Every time',
+        'Every time',
+      PXNOFREQ != 'No answer provided',
+        as.character(PXNOFREQ),
+      default = 'No answer provided'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided'
+    )
   )
-) |> style_totals_and_percentages()
+]
+
+male1719dt[,
+  any_use_12m_consistency := factor(
+    fifelse(
+      !is.na(PXCONFRQ),
+      fcase(
+        PXCONFRQ == 100,
+          'Every time',
+        PXNOFREQ != 'No answer provided',
+          as.character(PXNOFREQ),
+        default = 'No answer provided'
+      ),
+      fcase(
+        CONDFREQ == 100,
+          'Every time',
+        CWPNOFRQ != 'No answer provided',
+          as.character(CWPNOFRQ),
+        default = 'No answer provided'
+      )
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided'
+    )
+  )
+]
+
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(any_use_12m_consistency),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      sex12mo &
+        any_use_12m_method_count > 0 &
+        TUBS != 'YES'
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(any_use_12m_consistency),
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      (
+        !is.na(PXMETHOD01) &
+          RSURGSTR != 'YES'
+      ) | (
+        !is.na(CWPALLBC01) &
+          RSURGSTR != 'YES' &
+          PSURGSTR != 'YES'
+      )
+    )
+  )
+) |>
+  set_caption('Persons by their reported frequency of using any contraceptive method with their most recent partner, among those who used a method of contraception in the past 12 months and who do not themselves have a sterilizing operation or are males who are married or cohabitating with a female partner with a sterilizing operation.')
 ```
 
-Domain: Males who had used at least one method of contraception during intercourse with wife or cohabitating partner during the 12 months prior to interview, who do not have active sterilizing operations such as vasectomies, and whose partners do not have active sterilizing operations such as tubal ligations
+Among those who have used a method of contraception in the past 12 months, the majority of persons report using a method of contraception every time, though a substantial minority report more inconsistency in their contraceptive use. Some respondents to the NSFG report their frequency of using any method of contraception to be "None of the time." This is contradictory with their answers to other questions that indicate that they used at least one method of contraception in the past 12 months. These self-contradictory answers represent several million persons in the population. (Table \@ref(tab:consistency-12-months-any))
 
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(any_use_12m_wcp_consistency),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    !is.na(CWPALLBC01) &
-      RSURGSTR != 'YES' &
-      PSURGSTR != 'YES'
-  )
-) |> style_totals_and_percentages()
-```
+In the NSFG, different series of questions about consistency of contraceptive use are asked of males who are married or cohabitating than of those who are not, whereas the same series of questions pertaining to consistency are asked of all females. This is why the subdomains for the estimates in Table \@ref(tab:consistency-12-months-any) differ slightly for females and for males. The estimates for females exclude all persons who have active sterilizing operations. The estimates for males exclude such persons and also exclude persons who are married or cohabitating with a female partner who has an active sterilizing operation.
 
-Domain: Males who had used at least one method of contraception during intercourse with last partner, who is not wife or cohabitating partner, during the 12 months prior to interview, and who do not have active sterilizing operations such as vasectomies
-
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(any_use_12m_p1_consistency),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    !is.na(PXMETHOD01) &
-      RSURGSTR != 'YES'
-  )
-) |> style_totals_and_percentages()
-```
+In cases of males who have answers for both series of questions because they have had intercourse both with a wife or cohabitating partner and with a more recent female partner in the past 12 months, the answers pertaining to contraceptive use with the more recent partner are used for the estimates of Table \@ref(tab:consistency-12-months-any).
 
 
 ### Condom Use During Past 12 Months
