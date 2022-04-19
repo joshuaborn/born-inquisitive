@@ -1383,7 +1383,7 @@ A small proportion of sexually active males report not knowing if their partner 
 
 Respondents are counted in the "Ignorant of partner's contraceptive use" category for the estimates of Table \@ref(tab:not-aware) if they respond "Don't know" to the first type of question or if they respond "Yes" or "Don't know" to the second type of question. However, the second type of questions are only asked of respondents who are neither married nor cohabitating.
 
-Therefore, these results should be interpreted with care. This is discussed further in Section \@ref(less-reported-contraceptive-use-among-males).
+Therefore, these results should be interpreted with care. This is discussed further in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males).
 
 
 ### Sexual Inactivity
@@ -1709,7 +1709,7 @@ estimate_NSFG_mentions(
 
 Overall, there are similar distributions between females and males in reported contraceptive method use during last intercourse. (Figures \@ref(fig:fem-methods-used) and \@ref(fig:male-methods-used)) For instance, condoms and pills are the most commonly reported methods by males, and they are the second and third most common methods reported by females. Indeed, female sterilizing operations, condoms, and pills are in the top three most common methods reported both by females and males. However, the most salient difference between females and males is that approximately 10.5M females report a female sterilizing operation being used during their last intercourse, whereas only approximately 6.7M males report a female sterilizing operation being used.
 
-Other differences include a greater number of males reporting use of condom, pill, contraceptive patch, and "other" methods than females, and a greater number of females reporting use of intrauterine device (IUD), calendar-based, and temperature or cervical mucus test methods. Possible reasons for these and other differences are discussed in Section \@ref(differences-in-methods-reported-used-between-females-and-males).
+Other differences include a greater number of males reporting use of condom, pill, contraceptive patch, and "other" methods than females, and a greater number of females reporting use of intrauterine device (IUD), calendar-based, and temperature or cervical mucus test methods. Possible reasons for these and other differences are discussed in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males).
 
 Estimates of the number of female and male persons using withdrawal, vasectomy, implant, injectable, and ring methods are similar between females and males. Methods such as suppository, female condom, diaphragm, film, foam, jelly, and cream are rarely reported used by either females or males. Withdrawal is the fourth most commonly reported method both by females and males.
 
@@ -2725,12 +2725,13 @@ estimate_NSFG_mentions(
 ```
 
 
+## Age of Female Sterilizing Operations
+
+
 
 # Discussion
 
-## Less Reported Contraceptive Use Among Males
-
-## Differences in Methods Reported Used Between Females and Males
+## Differences in Reported Contraceptive Use Between Females and Males
 
 
 
