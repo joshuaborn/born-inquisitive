@@ -1707,9 +1707,9 @@ estimate_NSFG_mentions(
   )
 ```
 
-Overall, there are similar distributions between females and males in reported contraceptive method use during last intercourse. (Figures \@ref(fig:fem-methods-used) and \@ref(fig:male-methods-used)) For instance, condom and pill are the most commonly reported methods by males, and they are the second and third most common methods reported by females. Indeed, female sterilizing operation, condom, and pill are in the top three most common methods reported both by females and males. However, the most salient difference between females and males is that approximately 10.5M females report a female sterilizing operation being used during their last intercourse, whereas only approximately 6.7M males report a female sterilizing operation being used.
+Overall, there are similar distributions between females and males in reported contraceptive method use during last intercourse. (Figures \@ref(fig:fem-methods-used) and \@ref(fig:male-methods-used)) For instance, condoms and pills are the most commonly reported methods by males, and they are the second and third most common methods reported by females. Indeed, female sterilizing operations, condoms, and pills are in the top three most common methods reported both by females and males. However, the most salient difference between females and males is that approximately 10.5M females report a female sterilizing operation being used during their last intercourse, whereas only approximately 6.7M males report a female sterilizing operation being used.
 
-Other differences include a greater number of males reporting use of condom, pill, patch, and "other" methods than females, and a greater number of females reporting use of intrauterine device (IUD), calendar-based, and temperature or cervical mucus test methods. Possible reasons for these and other differences are discussed in Section \@ref(differences-in-methods-reported-used-between-females-and-males).
+Other differences include a greater number of males reporting use of condom, pill, contraceptive patch, and "other" methods than females, and a greater number of females reporting use of intrauterine device (IUD), calendar-based, and temperature or cervical mucus test methods. Possible reasons for these and other differences are discussed in Section \@ref(differences-in-methods-reported-used-between-females-and-males).
 
 Estimates of the number of female and male persons using withdrawal, vasectomy, implant, injectable, and ring methods are similar between females and males. Methods such as suppository, female condom, diaphragm, film, foam, jelly, and cream are rarely reported used by either females or males. Withdrawal is the fourth most commonly reported method both by females and males.
 
@@ -1877,7 +1877,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-When used in conjunction with other methods, withdrawal is used with many other methods. (Figures \@ref(fig:fem-other-with-withdrawal) and \@ref(fig:male-other-with-withdrawal)) Pill and condom are used in conjunction with withdrawal more than the other methods, but pill and condom are more common methods generally. (Section \@ref(methods-used)) Calendar is unusually common among methods used in conjunction with withdrawal reported by females. (Figure \@ref(fig:fem-other-with-withdrawal))
+When used in conjunction with other methods, withdrawal is used with many other methods. (Figures \@ref(fig:fem-other-with-withdrawal) and \@ref(fig:male-other-with-withdrawal)) Pills and condoms are used in conjunction with withdrawal more than the other methods, but pills and condoms are more common methods generally. (Section \@ref(methods-used)) Calendar-based methods are unusually common among methods used in conjunction with withdrawal reported by females. (Figure \@ref(fig:fem-other-with-withdrawal))
 
 
 
@@ -1922,7 +1922,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-Those who use condom in conjunction with another method do so with a variety of other methods, though pill and to a lesser extent withdrawal are used in conjunction with condoms more than other methods, especially among males. (Figures \@ref(fig:fem-other-with-condom) and \@ref(fig:male-other-with-condom))
+Those who use condoms in conjunction with another method do so with a variety of other methods, though pills and to a lesser extent withdrawal are used in conjunction with condoms more than other methods, especially among males. (Figures \@ref(fig:fem-other-with-condom) and \@ref(fig:male-other-with-condom))
 
 
 ### Other Method(s) Used with Pill
