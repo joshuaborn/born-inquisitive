@@ -1836,7 +1836,7 @@ style_and_combine_totals_and_percentages_vertically(
 When used in conjunction with other methods, calendar-based methods are most commonly used with withdrawal or to a lesser extent condoms. (Table \@ref(tab:other-with-calendar))
 
 
-### Other Method(s) Used with Withdrawal
+### Other Method(s) Used with Withdrawal, Condom, and Pill
 
 ```{r fem-other-with-withdrawal, dependson='process-fem-data', fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
@@ -1877,11 +1877,6 @@ estimate_NSFG_mentions(
   )
 ```
 
-When used in conjunction with other methods, withdrawal is used with many other methods. (Figures \@ref(fig:fem-other-with-withdrawal) and \@ref(fig:male-other-with-withdrawal)) Pills and condoms are used in conjunction with withdrawal more than the other methods, but pills and condoms are more common methods generally. (Section \@ref(methods-used)) Calendar-based methods are unusually common among methods used in conjunction with withdrawal reported by females. (Figure \@ref(fig:fem-other-with-withdrawal))
-
-
-### Other Method(s) Used with Condom
-
 ```{r fem-other-with-condom, dependson='process-fem-data', fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
   survey_design = subset(
@@ -1921,10 +1916,6 @@ estimate_NSFG_mentions(
   )
 ```
 
-Those who use condoms in conjunction with another method do so with a variety of other methods, though pills and to a lesser extent withdrawal are used in conjunction with condoms more than other methods, especially among males. (Figures \@ref(fig:fem-other-with-condom) and \@ref(fig:male-other-with-condom))
-
-
-### Other Method(s) Used with Pill
 
 ```{r fem-other-with-pill, dependson='process-fem-data', fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
@@ -1965,7 +1956,9 @@ estimate_NSFG_mentions(
   )
 ```
 
-The methods most commonly used in conjunction with pills are condoms and withdrawal, though several other methods are occassionally used with pills, as well. (Figures \@ref(fig:fem-other-with-pill) and \@ref(fig:male-other-with-pill))
+When used in conjunction with other methods, withdrawal, condom, and pill methods are used with a variety other methods, though the most commonly used other methods with any one of these three are the other two methods. (Figures \@ref(fig:fem-other-with-withdrawal),  \@ref(fig:male-other-with-withdrawal), \@ref(fig:fem-other-with-condom), \@ref(fig:male-other-with-condom), \@ref(fig:fem-other-with-pill) and \@ref(fig:male-other-with-pill)) However, these three methods are more common generally. (Section \@ref(methods-used))
+
+One exception to this general trend is that calendar-based methods are unusually common among methods used in conjunction with withdrawal reported by females who used withdrawal in conjunction with another method. (Figure \@ref(fig:fem-other-with-withdrawal))
 
 
 ## Use of Contraception during Past 12 Months
