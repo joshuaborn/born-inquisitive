@@ -2555,12 +2555,9 @@ There are approximately `r this$size` females who have ever had intercourse with
 
 ## Discontinuation Due to Dissatisfaction
 
-Domain: For each method, females who have ever used the method
-
-Description: For each method, females who have stopped using the method due to dissatisfaction
-
-```{r discontinuation-of-methods, dependson='process-fem-data'}
-estimate_NSFG_mentions_in_subdomains(
+```{r discontinuation, dependson='process-fem-data', fig.cap='Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing mulitple methods counted multiple times.'}
+this <- list()
+this$dt <- estimate_NSFG_mentions_in_subdomains(
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       as.formula(sprintf('~ever_quit_method%d', x)),
@@ -2572,17 +2569,29 @@ estimate_NSFG_mentions_in_subdomains(
   },
   format = 'ever_used_method',
   skip = c(20)
-)[order(-total)] |> style_totals_and_percentages()
+)[!is.nan(percentage_CI_high)][order(-total)]
+
+this$dt |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 5)
+  )
 ```
+
+```{r discontinuation-by-percentage, dependson='process-fem-data', fig.cap='Proportion of females who have discontinued using each contraceptive method due to dissatisfaction, among those who have ever used each method of contraception.'}
+this$dt |> plot_percentages_with_CIs()
+```
+
+The NSFG asks female respondents whether they have ever discontinued use of contraceptive methods due to dissatisfaction. While birth control pills have a discontinuation rate that is near the median of discontinuation rates, (Figure \@ref(fig:discontinuation-by-percentage)) the popularity of pills leads to pills being the most discontinued method of contraception. (Figure \@ref(fig:discontinuation)) Similarly, condoms have one of the lowest discontinuation rates, but still are the third most discontinued method of contraception. On the other hand, injectables have a relatively high discontinuation rate and are the second most discontinued method of contraception.
+
+Some methods, such as Lunelle, are so rarely used by respondents to the NSFG that the sampling error associated with estimating their discontinuation rate is too large for the estimates to be useful.
+
+The following subsections examine reasons for dissatisfaction leading to discontinuation of condoms, pills, hormonal IUDs, and copper IUDs. Reasons for dissatiscation were asked of NSFG respondents in two steps. In the first, respondents were asked to select one or more reasons from a prefabricated list of possible reasons. The second step occurs if the a respondent selects any of the reasons "Too difficult to use," "Side effects," or "Other" and gives the respondent an opportunity to describe reasons in their own words.
 
 
 ### Condom
 
-Domain: Females who have ever discontinued using condom due to dissatisfaction
-
-Description: Reason(s) for dissatisfaction selected from list provided in survey
-
-```{r condom-quit-reasons, dependson='process-fem-data'}
+```{r condom-quit-reasons, dependson='process-fem-data', fig.cap='Females categorized by reason for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2590,14 +2599,13 @@ estimate_NSFG_mentions(
   ),
   prefix = 'condom_quit_reason',
   format = 'REASMFMT'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |> plot_totals_with_CIs() + 
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1)
+  )
 ```
 
-Domain: Females who have discontinued using condom because "too difficult to use," "side effects," or "other" reason
-
-Description: Reason(s) for dissatisfaction volunteered by respondents
-
-```{r condom-quit-specific-reasons, dependson='process-fem-data'}
+```{r condom-quit-specific-reasons, dependson='process-fem-data', fig.cap='Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "Too difficult to use," "Side effects," or "Other."'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2605,17 +2613,15 @@ estimate_NSFG_mentions(
   ),
   prefix = 'specific_condom_quit_reason',
   format = 'STOPCONDFMT'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |> plot_totals_with_CIs()
 ```
+
+When condoms are discontinued due to dissatisfaction, the most common reasons are due to decrease in sexual pleasure or the dislike of male partners, though a nontrival number of persons report experiencing side effects. (Figure \@ref(fig:condom-quit-reasons)) The most common side effects are allergy or discomfort generally. (Figure \@ref(fig:condom-quit-specific-reasons))
 
 
 ### Pill
 
-Domain: Females who have ever discontinued using pill due to dissatisfaction
-
-Description: Reason(s) for dissatisfaction selected from list provided in survey
-
-```{r pill-quit-reasons, dependson='process-fem-data'}
+```{r pill-quit-reasons, dependson='process-fem-data', fig.cap='Females categorized by reason for dissatisfaction with contraceptive pills, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using pills due to dissatisfaction.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2623,14 +2629,14 @@ estimate_NSFG_mentions(
   ),
   prefix = 'pill_quit_reason',
   format = 'REASMFMT'
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 2)
+  )
 ```
 
-Domain: Females who have discontinued using pill because "too difficult to use," "side effects," or "other" reason
-
-Description: Reason(s) for dissatisfaction volunteered by respondents
-
-```{r pill-quit-specific-reasons, dependson='process-fem-data'}
+```{r pill-quit-specific-reasons, dependson='process-fem-data', fig.cap='Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "Too difficult to use," "Side effects," or "Other."'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2638,8 +2644,14 @@ estimate_NSFG_mentions(
   ),
   prefix = 'specific_pill_quit_reason',
   format = 'STOPPILLFMT'
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 1)
+  )
 ```
+
+Side effects are by far the most commonly reported reason for discontinuation of contraceptive pills. (Figure \@ref(fig:pill-quit-reasons)) Side effects are varied, but mood, weight gain, or nausea issues are commonly reported. (Figure \@ref(fig:pill-quit-specific-reasons)) It is also commonly reported that pills are too difficult to use or that persons cannot remember to take pills regularly.
 
 
 ### Hormonal IUDs
