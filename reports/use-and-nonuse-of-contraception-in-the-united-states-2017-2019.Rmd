@@ -2479,7 +2479,7 @@ this$percentage <- paste0(round(this$dt[1, percentage] * 100, 1), '%')
 this$ht |> set_caption('Females by whether they ever have used any method of contraception, among those aged 15-49 living in households in the United States.')
 ```
 
-```{r methods-used-ever, dependson='process-fem-data'}
+```{r methods-used-ever, dependson='process-fem-data', fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
   survey_design = get_NSFG_survey_design_for_sex('fem'),
   prefix = 'ever_used_method',
@@ -2495,32 +2495,47 @@ Approximately `r this$percentage` of females have used at least one method of co
 
 ### Among Those Who Have Ever Had Intercourse
 
-Description: Females who have ever had intercourse with a male
-
 ```{r fem-had-sex, dependson='process-fem-data'}
-estimate_totals_and_percentages(
+this <- list()
+
+this$dt <- estimate_totals_and_percentages(
   ~factor(HADSEX),
   get_NSFG_survey_design_for_sex('fem')
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)]
+
+this$dt[, description := c('Has had intercourse', 'Never had intercourse')]
+
+this$ht <- this$dt |> style_totals_and_percentages(digits = 1)
+
+this$size <- as.data.frame(this$ht)[3, 2]
+
+this$ht |>
+  set_caption('Females by whether they have ever had intercourse with someone of the opposite sex, among females aged 15-49 living in households in the United States.')
 ```
 
-Domain: Females who have ever had intercourse with a male
-
-Description: By whether ever used any method of contraception
-
 ```{r used-ever-had-sex, dependson='process-fem-data'}
-estimate_totals_and_percentages(
+this$dt2 <- estimate_totals_and_percentages(
   ~I(ever_used_method_count > 0),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     HADSEX == 'YES, R EVER HAD INTERCOURSE'
   )
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)]
+
+this$dt2[,
+  description := c(
+    'Used a method of contraception',
+    'Never have used a method  of contraception'
+  )
+]
+
+this$percentage <- paste0(round(this$dt2[1, percentage] * 100, 1), '%')
+
+this$dt2 |> style_totals_and_percentages() |>
+  set_caption('Females by whether they ever have used any method of contraception, among those who have ever had intercourse with someone of the opposite sex.')
 ```
 
-Description: By whether ever used specific methods of contraception
-
-```{r methods-used-ever-had-sex, dependson='process-fem-data'}
+```{r methods-used-ever-had-sex, dependson='process-fem-data', fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times, among those who have ever had intercourse with someone of the opposite sex.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2528,9 +2543,14 @@ estimate_NSFG_mentions(
   ),
   prefix = 'ever_used_method',
   format = 'ever_used_method'
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 5)
+  )
 ```
 
+There are approximately `r this$size` females who have ever had intercourse with someone of the opposite sex. (Table \@ref(tab:fem-had-sex)) Of these, approximately `r this$percentage` have used a method of contraception at least once in their lives. (Table \@ref(tab:used-ever-had-sex)) The major difference between the totals estimated in Figure \@ref(fig:methods-used-ever-had-sex) and Figure \@ref(fig:methods-used-ever) is that the estimates in \@ref(fig:methods-used-ever-had-sex) are slightly lower for some methods, such as birth control pills, owing to persons using these methods for reasons other than contraception who have never had sexual intercourse.
 
 
 ## Discontinuation Due to Dissatisfaction
