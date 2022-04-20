@@ -2460,23 +2460,38 @@ It appears that the most commonly mentioned reason for use of IUD is again birth
 
 ## Use of Contraception Ever During Lifetime
 
-Domain: Females aged 15-49 living in households in the United States
+Female respondents to the NSFG are asked whether they have ever used specific methods of contraception ever in their lifetimes. As was seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), sometimes contraceptive methods are used for reasons other than contraception. The total counts of persons who have ever used certain methods are thus greater when considering the general population than when considering those who have had sexual intercourse with the opposite sex. Therefore, this section estimates persons who have ever used contraceptives twice, once among all females in the NSFG population and once among those who have had sexual intercourse with the opposite sex.
 
 ```{r used-ever, dependson='process-fem-data'}
-estimate_totals_and_percentages(
+this <- list()
+
+this$dt <- estimate_totals_and_percentages(
   ~I(ever_used_method_count > 0),
   get_NSFG_survey_design_for_sex('fem')
-)[order(-total)] |> style_totals_and_percentages()
-```
+)[order(-total)]
 
+this$dt[, description := c('Used a method of contraception', 'Never have used a method  of contraception')]
+
+this$ht <- this$dt |> style_totals_and_percentages()
+
+this$percentage <- paste0(round(this$dt[1, percentage] * 100, 1), '%')
+
+this$ht |> set_caption('Females by whether they ever have used any method of contraception, among those aged 15-49 living in households in the United States.')
+```
 
 ```{r methods-used-ever, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = get_NSFG_survey_design_for_sex('fem'),
   prefix = 'ever_used_method',
   format = 'ever_used_method'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 5)
+  )
 ```
+
+Approximately `r this$percentage` of females have used at least one method of contraception at some time in their lives. (Table \@ref(tab:used-ever)) Condom, pill, and withdrawal methods are the most common methods ever used by females. (Figure \@ref(fig:methods-used-ever))
 
 ### Among Those Who Have Ever Had Intercourse
 
