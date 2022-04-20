@@ -2294,65 +2294,68 @@ While at least a simple majority of pill users report never missing a pill, ther
 
 ## Use of Contraceptive Methods for Other Reasons
 
+Some users of methods of contraception are actually motivated by reasons other than contraception. The NSFG asks respondents about these other motives regarding condoms, and asks females respondents about these other motives regarding pills and IUDs.
+
 ### Condom
 
-Domain: Females who have had vaginal intercourse with a male
+```{r condom-during-last-intercourse, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
 
-Description: By whether used condom during last intercourse with a male
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(CONDVAG),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    VAGSEX %in% c(
-      'Yes',
-      'No answer provided'
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(CONDVAG),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      VAGSEX %in% c(
+        'Yes',
+        'No answer provided'
+      )
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(CONDVAG),
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      VAGSEX %in% c(
+        'Yes',
+        'No answer provided'
+      )
     )
   )
-) |> style_totals_and_percentages()
+)
+
+this$fem <- as.data.frame(this$ht)[3, 3]
+this$male <- as.data.frame(this$ht)[7, 3]
+
+this$ht |> set_caption('Persons by whether they used a condom during last vaginal intercourse with someone of the opposite sex, among those who have had vaginal intercourse with someone of the opposite sex regardless of when the intercourse occurred.')
 ```
 
-Domain: Males who have had vaginal intercourse with a female
+The size of the subdomain of condom users who are asked about their motives for condom use by the NSFG is `r this$fem` females and `r this$male` males. However, it should be noted this subdomain specifically contains users of condoms for vaginal intercourse with the opposite sex, for which contraception is a possible motive, and does not address non-vaginal or same-sex condom use.
 
-Description: By whether used condom during last intercourse with a female
-
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(CONDVAG),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    VAGSEX %in% c(
-      'Yes',
-      'No answer provided'
+```{r motive-for-condom, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(WHYCONDL),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      CONDVAG == 'Yes'
     )
-  )
-) |> style_totals_and_percentages()
+  )[order(-total)],
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(WHYCONDL),
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      CONDVAG == 'Yes'
+    )
+  )[order(-total)]
+) |> set_caption('Persons by reason for using condoms during last vaginal intercourse with someone of the opposite sex.')
 ```
 
-Domain: Females who used condom during last intercourse with a male
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(WHYCONDL),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    CONDVAG == 'Yes'
-  )
-)[order(-total)] |> style_totals_and_percentages()
-```
-
-Domain: Males who used condom during last intercourse with a female
-
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(WHYCONDL),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    CONDVAG == 'Yes'
-  )
-)[order(-total)] |> style_totals_and_percentages()
-```
+The vast majority of persons who use condoms during vaginal intercourse do so motivated by contraception, at least in part, though these persons are split approximately equally between those who are exclusively motivated by contraception and those motivated by both contraception and prevention of sexually transmitted diseases. (Table \@ref(tab:motive-for-condom))
 
 
 ### Pill
