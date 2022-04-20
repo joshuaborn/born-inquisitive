@@ -2462,18 +2462,15 @@ It appears that the most commonly mentioned reason for use of IUD is again birth
 
 Domain: Females aged 15-49 living in households in the United States
 
-Description: By whether ever used any method of contraception
-
-```{r, dependson='process-fem-data'}
+```{r used-ever, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~I(ever_used_method_count > 0),
   get_NSFG_survey_design_for_sex('fem')
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
-Description: By whether ever used specific methods of contraception
 
-```{r, dependson='process-fem-data'}
+```{r methods-used-ever, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = get_NSFG_survey_design_for_sex('fem'),
   prefix = 'ever_used_method',
@@ -2485,7 +2482,7 @@ estimate_NSFG_mentions(
 
 Description: Females who have ever had intercourse with a male
 
-```{r, dependson='process-fem-data'}
+```{r fem-had-sex, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(HADSEX),
   get_NSFG_survey_design_for_sex('fem')
@@ -2496,7 +2493,7 @@ Domain: Females who have ever had intercourse with a male
 
 Description: By whether ever used any method of contraception
 
-```{r, dependson='process-fem-data'}
+```{r used-ever-had-sex, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~I(ever_used_method_count > 0),
   subset(
@@ -2508,7 +2505,7 @@ estimate_totals_and_percentages(
 
 Description: By whether ever used specific methods of contraception
 
-```{r, dependson='process-fem-data'}
+```{r methods-used-ever-had-sex, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2527,7 +2524,7 @@ Domain: For each method, females who have ever used the method
 
 Description: For each method, females who have stopped using the method due to dissatisfaction
 
-```{r, dependson='process-fem-data'}
+```{r discontinuation-of-methods, dependson='process-fem-data'}
 estimate_NSFG_mentions_in_subdomains(
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
@@ -2550,7 +2547,7 @@ Domain: Females who have ever discontinued using condom due to dissatisfaction
 
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
-```{r, dependson='process-fem-data'}
+```{r condom-quit-reasons, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2565,7 +2562,7 @@ Domain: Females who have discontinued using condom because "too difficult to use
 
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
-```{r, dependson='process-fem-data'}
+```{r condom-quit-specific-reasons, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2583,7 +2580,7 @@ Domain: Females who have ever discontinued using pill due to dissatisfaction
 
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
-```{r, dependson='process-fem-data'}
+```{r pill-quit-reasons, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2598,7 +2595,7 @@ Domain: Females who have discontinued using pill because "too difficult to use,"
 
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
-```{r, dependson='process-fem-data'}
+```{r pill-quit-specific-reasons, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2616,7 +2613,7 @@ Domain: Females who have ever discontinued using an hormonal IUD due to dissatis
 
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
-```{r, dependson='process-pill-quit'}
+```{r hormonal-iud-quit-reasons, dependson='process-pill-quit'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2631,7 +2628,7 @@ Domain: Females who have discontinued using an hormonal IUD because "too difficu
 
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
-```{r, dependson='process-fem-data'}
+```{r hormonal-iud-specific-quit-reasons, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2653,7 +2650,7 @@ Domain: Females who have ever discontinued using a copper IUD due to dissatisfac
 
 Description: Reason(s) for dissatisfaction selected from list provided in survey
 
-```{r, dependson='process-pill-quit'}
+```{r copper-iud-quit-reasons, dependson='process-pill-quit'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2668,7 +2665,7 @@ Domain: Females who have discontinued using copper IUD because "too difficult to
 
 Description: Reason(s) for dissatisfaction volunteered by respondents
 
-```{r, dependson='process-fem-data'}
+```{r copper-iud-specific-quit-reasons, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2690,7 +2687,7 @@ estimate_NSFG_mentions(
 
 Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
 
-```{r, dependson='process-fem-data'}
+```{r not-currently-using-size, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~I(
     CURRPREG == 'NO' &
@@ -2702,14 +2699,14 @@ estimate_totals_and_percentages(
       CURRMETH1 == 'No method used'
   ),
   get_NSFG_survey_design_for_sex('fem')
-)[description == TRUE] |> style_totals_and_percentages()
+) |> style_totals_and_percentages()
 ```
 
 ### Intent to Conceive
 
 Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive*
 
-```{r, dependson='process-fem-data'}
+```{r pregnancy-intent-status, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(pregnancy_intent_status),
   subset(
@@ -2729,7 +2726,7 @@ estimate_totals_and_percentages(
 
 Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
 
-```{r, dependson='process-fem-data'}
+```{r nonuse-reason, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2744,7 +2741,7 @@ estimate_NSFG_mentions(
 
 Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
 
-```{r, dependson='process-fem-data'}
+```{r pregnancy-impossible-reason, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
