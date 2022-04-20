@@ -2654,32 +2654,34 @@ estimate_NSFG_mentions(
 Side effects are by far the most commonly reported reason for discontinuation of contraceptive pills. (Figure \@ref(fig:pill-quit-reasons)) Side effects are varied, but mood, weight gain, or nausea issues are commonly reported. (Figure \@ref(fig:pill-quit-specific-reasons)) It is also commonly reported that pills are too difficult to use or that persons cannot remember to take pills regularly.
 
 
-### Hormonal IUDs
+### IUD
 
-Domain: Females who have ever discontinued using an hormonal IUD due to dissatisfaction
-
-Description: Reason(s) for dissatisfaction selected from list provided in survey
-
-```{r hormonal-iud-quit-reasons, dependson='process-pill-quit'}
+```{r iud-quit-reasons, dependson='process-fem-data', fig.cap='Females categorized by reason for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using an IUD due to dissatisfaction.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
-    ever_quit_method32
+    ever_quit_method31 |
+      ever_quit_method32 |
+      ever_quit_method33
   ),
   prefix = 'iud_quit_reason',
   format = 'REASMFMT'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 1)
+  )
 ```
 
-Domain: Females who have discontinued using an hormonal IUD because "too difficult to use," "side effects," or "other" reason
-
-Description: Reason(s) for dissatisfaction volunteered by respondents
-
-```{r hormonal-iud-specific-quit-reasons, dependson='process-fem-data'}
+```{r iud-specific-quit-reasons, dependson='process-fem-data', fig.cap='Females categorized by reason described for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using a IUD due to dissatisfaction for reasons "Too difficult to use," "Side effects," or "Other."'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
-    ever_quit_method32 & (
+    (
+      ever_quit_method31 |
+        ever_quit_method32 |
+        ever_quit_method33
+    ) & (
       iud_quit_reason3 |
         iud_quit_reason6 |
         iud_quit_reason15
@@ -2687,45 +2689,10 @@ estimate_NSFG_mentions(
   ),
   prefix = 'specific_iud_quit_reason',
   format = 'STOPIUDFMT'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |> plot_totals_with_CIs()
 ```
 
-
-### Copper IUDs
-
-Domain: Females who have ever discontinued using a copper IUD due to dissatisfaction
-
-Description: Reason(s) for dissatisfaction selected from list provided in survey
-
-```{r copper-iud-quit-reasons, dependson='process-pill-quit'}
-estimate_NSFG_mentions(
-  survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    ever_quit_method31
-  ),
-  prefix = 'iud_quit_reason',
-  format = 'REASMFMT'
-)[order(-total)] |> style_totals_and_percentages()
-```
-
-Domain: Females who have discontinued using copper IUD because "too difficult to use," "side effects," or "other" reason
-
-Description: Reason(s) for dissatisfaction volunteered by respondents
-
-```{r copper-iud-specific-quit-reasons, dependson='process-fem-data'}
-estimate_NSFG_mentions(
-  survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    ever_quit_method31 & (
-      iud_quit_reason3 |
-        iud_quit_reason6 |
-        iud_quit_reason15
-    )
-  ),
-  prefix = 'specific_iud_quit_reason',
-  format = 'STOPIUDFMT'
-)[order(-total)] |> style_totals_and_percentages()
-```
+Like with contraceptive pills, side effects are by far the most commonly reported reason for discontinuation of IUDs. (Figure \@ref(fig:iud-quit-reasons)) For IUDs, commonly reported side effects onvolve abdominal pain or bleeding. (Figure \@ref(fig:iud-specific-quit-reasons))
 
 
 ## Reason(s) for Not Currently Using Contraception
