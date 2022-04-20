@@ -2697,12 +2697,10 @@ Like with contraceptive pills, side effects are by far the most commonly reporte
 
 ## Reason(s) for Not Currently Using Contraception
 
-### Domain Size
-
-Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
-
 ```{r not-currently-using-size, dependson='process-fem-data'}
-estimate_totals_and_percentages(
+this <- list()
+
+this$ht <- estimate_totals_and_percentages(
   ~I(
     CURRPREG == 'NO' &
       sex_this_month &
@@ -2714,11 +2712,16 @@ estimate_totals_and_percentages(
   ),
   get_NSFG_survey_design_for_sex('fem')
 ) |> style_totals_and_percentages()
+
+this$est <- as.data.frame(this$ht)[4, 2]
+this$ci <- as.data.frame(this$ht)[4, 3]
 ```
 
-### Intent to Conceive
+The respondents who were identified as being at increased risk for unintended pregnancy due to lack of use of contraception during their last intercourse in Section \@ref(reason-for-nonuse) were not specifically asked as part of the NSFG about their reasons for not using contraception. However, a series of questions were asked of female respondents who did not report pregnancy, physical infertility, or use of any method of contraception in the month of the interview, but did report having sexual intercourse with someone of the opposite sex in the month of the interview. There are approximately `r this$est` females in this subdomain, with a 95\% confidence interval for this estimate of `r this$ci`.
 
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive*
+Unfortunately, the results of this line of questioning on the NSFG are uninformative due to both sampling error and measurement error.
+
+### Intent to Conceive
 
 ```{r pregnancy-intent-status, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2733,14 +2736,15 @@ estimate_totals_and_percentages(
       ) &
       CURRMETH1 == 'No method used'
   )
-) |> style_totals_and_percentages()
+) |> style_totals_and_percentages() |>
+  set_caption('Females categorized by intent to conceive, among those who had intercourse in the current month, are not currently pregnant, are neither sterilized nor sterile, and did not use a contraceptive in the current month interview.')
 ```
+
+Among those in this subdomain, a substantial minority do not have any intent to become pregnant and so are at increased risk for unintended pregnancy due to lack of contraception use. (Table \@ref(tab:pregnancy-intent-status))
 
 ### Reason(s) for Nonuse When Not Intending to Conceive
 
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
-
-```{r nonuse-reason, dependson='process-fem-data'}
+```{r nonuse-reason, dependson='process-fem-data', fig.height=4, fig.width=9, fig.cap='Females categorized by reason(s) for not using contraception, with persons using reporting multiple reasons counted multiple times, among those at increased risk for unintended pregnancy due to contraceptive nonuse.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2748,14 +2752,16 @@ estimate_NSFG_mentions(
   ),
   prefix = 'nonuse_reason',
   format = 'WHYNOUSNG'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |> plot_totals_with_CIs()
 ```
+
+A nontrivial number of up to half a million persons are falsely included in this subdomain, because some respondents to the NSFG spontaneously respond that they actually are using a method of contraception when asked why they are not. (Figure \@ref(fig:nonuse-reason)) This is evidence of an opposite type of measurement error to that found in Section \@ref(any-method-during-past-12-months).
+
+Because there are a relatively few number of persons estimated in Figure \@ref(fig:nonuse-reason), the effective sample size is small, leading to large sampling errors. Nonetheless, a person's belief she cannot get pregnant is either the most common or one of the most common reasons for not using contraception. This itself is another form of measurement error, because respondents are elsewhere asked whether they are physically unable to conceive, and if so, are not asked this series of questions.
 
 ### Reason(s) Respondent Believes She Cannot Become Pregnant
 
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
-
-```{r pregnancy-impossible-reason, dependson='process-fem-data'}
+```{r pregnancy-impossible-reason, dependson='process-fem-data', fig.height=5, fig.width=9, fig.cap='Females categorized by reason(s) they believe they cannot become pregnant, with persons using reporting multiple reasons counted multiple times, among those who select "You do not think you can get pregnant" as a reason for contraceptive nonuse.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2763,8 +2769,10 @@ estimate_NSFG_mentions(
   ),
   prefix = 'pregnancy_impossible_reason',
   format = 'WHYNOTPGF'
-)[order(-total)] |> style_totals_and_percentages()
+)[total > 0][order(-total)] |> plot_totals_with_CIs()
 ```
+
+Among the approximately million females who select "You do not think you can get pregnant" as a reason for not using contraception, there is no clearly most common reason for belief that becoming pregnant is impossible. (Figure \@ref(fig:pregnancy-impossible-reason)) Some answers, such as having prior unprotected sexual intercourse without a pregnancy, are likely spurious reasons to believe pregnancy is impossible, while others, such as medical diagnosis of a reproductive condition, should have led to respondents reporting their physical infertility earlier in the NSFG questioning.
 
 
 ## Age of Female Sterilizing Operations
