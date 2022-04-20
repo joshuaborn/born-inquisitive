@@ -2458,79 +2458,6 @@ estimate_totals_and_percentages(
 It appears that the most commonly mentioned reason for use of IUD is again birth control. (Figure \@ref(fig:iud-reason-mentions)) However, whether this represents a majority of IUD users cannot be determined because there are a substantial lack of answers to the question of reason for IUD use in the NSFG data files for respondents who were supposed to be asked the question. (Table \@ref(tab:iud-motivation))
 
 
-## Reason(s) for Not Currently Using Contraception
-
-### Domain Size
-
-Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~I(
-    CURRPREG == 'NO' &
-      sex_this_month &
-      !is.element(
-        RSTRSTAT,
-        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
-      ) &
-      CURRMETH1 == 'No method used'
-  ),
-  get_NSFG_survey_design_for_sex('fem')
-)[description == TRUE] |> style_totals_and_percentages()
-```
-
-### Intent to Conceive
-
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive*
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(pregnancy_intent_status),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    CURRPREG == 'NO' &
-      sex_this_month &
-      !is.element(
-        RSTRSTAT,
-        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
-      ) &
-      CURRMETH1 == 'No method used'
-  )
-) |> style_totals_and_percentages()
-```
-
-### Reason(s) for Nonuse When Not Intending to Conceive
-
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
-
-```{r, dependson='process-fem-data'}
-estimate_NSFG_mentions(
-  survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    pregnancy_intent_status == 'Not intending to conceive'
-  ),
-  prefix = 'nonuse_reason',
-  format = 'WHYNOUSNG'
-)[order(-total)] |> style_totals_and_percentages()
-```
-
-### Reason(s) Respondent Believes She Cannot Become Pregnant
-
-Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
-
-```{r, dependson='process-fem-data'}
-estimate_NSFG_mentions(
-  survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    nonuse_reason2
-  ),
-  prefix = 'pregnancy_impossible_reason',
-  format = 'WHYNOTPGF'
-)[order(-total)] |> style_totals_and_percentages()
-```
-
-
-
 ## Use of Contraception Ever During Lifetime
 
 Domain: Females aged 15-49 living in households in the United States
@@ -2753,6 +2680,78 @@ estimate_NSFG_mentions(
   ),
   prefix = 'specific_iud_quit_reason',
   format = 'STOPIUDFMT'
+)[order(-total)] |> style_totals_and_percentages()
+```
+
+
+## Reason(s) for Not Currently Using Contraception
+
+### Domain Size
+
+Description: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview*
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~I(
+    CURRPREG == 'NO' &
+      sex_this_month &
+      !is.element(
+        RSTRSTAT,
+        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
+      ) &
+      CURRMETH1 == 'No method used'
+  ),
+  get_NSFG_survey_design_for_sex('fem')
+)[description == TRUE] |> style_totals_and_percentages()
+```
+
+### Intent to Conceive
+
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, did not use a contraceptive in month of interview, and are not intending to conceive*
+
+```{r, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(pregnancy_intent_status),
+  subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    CURRPREG == 'NO' &
+      sex_this_month &
+      !is.element(
+        RSTRSTAT,
+        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
+      ) &
+      CURRMETH1 == 'No method used'
+  )
+) |> style_totals_and_percentages()
+```
+
+### Reason(s) for Nonuse When Not Intending to Conceive
+
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
+
+```{r, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    pregnancy_intent_status == 'Not intending to conceive'
+  ),
+  prefix = 'nonuse_reason',
+  format = 'WHYNOUSNG'
+)[order(-total)] |> style_totals_and_percentages()
+```
+
+### Reason(s) Respondent Believes She Cannot Become Pregnant
+
+Domain: Females who are not currently pregnant, had intercourse in the month of interview, are neither sterilized nor sterile, and did not use a contraceptive in month of interview
+
+```{r, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    nonuse_reason2
+  ),
+  prefix = 'pregnancy_impossible_reason',
+  format = 'WHYNOTPGF'
 )[order(-total)] |> style_totals_and_percentages()
 ```
 
