@@ -398,34 +398,6 @@ set_NSFG_mentions_to_booleans(
 )
 
 
-## Create categorical variable reflecting overall motivation for pill use.
-fem1719dt[,
-  pill_motivation := factor(
-    fcase(
-      why_use_pill_reason1 & !(
-        why_use_pill_reason2 |
-        why_use_pill_reason3 |
-        why_use_pill_reason4 |
-        why_use_pill_reason5 |
-        why_use_pill_reason6 |
-        why_use_pill_reason7 |
-        why_use_pill_reason8
-      ), 'Only for birth control',
-      !why_use_pill_reason1 & (
-        why_use_pill_reason2 |
-        why_use_pill_reason3 |
-        why_use_pill_reason4 |
-        why_use_pill_reason5 |
-        why_use_pill_reason6 |
-        why_use_pill_reason7 |
-        why_use_pill_reason8
-      ), 'Only for reasons other than contraception',
-      default = 'For both reasons'
-    )
-  )
-]
-
-
 ## Create boolean variables for each reason for using an IUD.
 set_NSFG_mentions_to_booleans(
   out_prefix = 'why_use_iud_reason',
@@ -2289,7 +2261,7 @@ estimate_totals_and_percentages(
   set_caption('Females by their reported number of pills missed, among those who reported using pills as a method fo contraception in this or the previous month.')
 ```
 
-While at least a simple majority of pill users report never missing a pill, there is substantial amount of inconsistency of pill use. However, quantification of the extent of this inconsistency is undermined by the lack of answers to the pill consistency in the NSFG data files for respondents who were supposed to be asked the question. (Table \@ref(tab:consistency-pill))
+While at least a simple majority of pill users report never missing a pill, there is substantial amount of inconsistency of pill use. However, quantification of the extent of this inconsistency is undermined by the lack of answers to the pill consistency question in the NSFG data files for respondents who were supposed to be asked the question. (Table \@ref(tab:consistency-pill))
 
 
 ## Use of Contraceptive Methods for Other Reasons
@@ -2332,7 +2304,7 @@ this$male <- as.data.frame(this$ht)[7, 3]
 this$ht |> set_caption('Persons by whether they used a condom during last vaginal intercourse with someone of the opposite sex, among those who have had vaginal intercourse with someone of the opposite sex regardless of when the intercourse occurred.')
 ```
 
-The size of the subdomain of condom users who are asked about their motives for condom use by the NSFG is `r this$fem` females and `r this$male` males. However, it should be noted this subdomain specifically contains users of condoms for vaginal intercourse with the opposite sex, for which contraception is a possible motive, and does not address non-vaginal or same-sex condom use.
+The size of the subdomain of condom users who are asked about their motives for condom use by the NSFG is `r this$fem` females and `r this$male` males. (Table \@ref(tab:condom-during-last-intercourse)) However, it should be noted this subdomain specifically contains users of condoms for vaginal intercourse with the opposite sex and does not address non-vaginal or same-sex condom use.
 
 ```{r motive-for-condom, dependson=c('process-fem-data', 'process-male-data')}
 style_and_combine_totals_and_percentages_vertically(
@@ -2355,25 +2327,35 @@ style_and_combine_totals_and_percentages_vertically(
 ) |> set_caption('Persons by reason for using condoms during last vaginal intercourse with someone of the opposite sex.')
 ```
 
-The vast majority of persons who use condoms during vaginal intercourse do so motivated by contraception, at least in part, though these persons are split approximately equally between those who are exclusively motivated by contraception and those motivated by both contraception and prevention of sexually transmitted diseases. (Table \@ref(tab:motive-for-condom))
+The vast majority of persons who use condoms during vaginal intercourse are motivated by contraception at least in part, though these persons are split approximately equally between those who are exclusively motivated by contraception and those motivated by both contraception and prevention of sexually transmitted diseases. (Table \@ref(tab:motive-for-condom))
 
 
 ### Pill
 
-Description: By whether used pill either during the month of interview or the month preceding the interview
+```{r pill-during-month-or-previous, dependson='process-fem-data'}
+this <- list()
 
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
+this$dt <- estimate_totals_and_percentages(
   ~I(this_month_method3 | last_month_method3),
   get_NSFG_survey_design_for_sex('fem')
-) |> style_totals_and_percentages()
+)
+
+this$dt[, description := c(
+  'Did not use pill',
+  'Used pill'
+)]
+
+this$ht <- this$dt |> style_totals_and_percentages(digits = 1)
+
+this$size <- as.data.frame(this$ht)[4, 2]
+
+this$ht |>
+  set_caption('Females by whether they report using contraceptive pills either this or the previous month.')
 ```
 
-Domain: Females who used pill either during the month of interview or the month preceding the interview
+The subdomain of pill users who are asked about their motives for pill use by the NSFG is approximately `r this$size` females. (Table \@ref(tab:pill-during-month-or-previous))
 
-Description: By reason(s), with those mentioning multiple reasons counted multiple times
-
-```{r, dependson='process-fem-data'}
+```{r pill-reason-mentions, dependson='process-fem-data', fig.width=8, fig.height=4, fig.cap='Females by reason(s) mentioned for using contraceptive pills with persons mentioning multiple reasons counted multiple times, among those who used pills either this or the previous month.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2382,38 +2364,75 @@ estimate_NSFG_mentions(
   prefix = 'why_use_pill_reason',
   format = 'YUSEMTHF',
   skip = 98:99
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)] |> plot_totals_with_CIs()
 ```
 
-Domain: Females who used pill either during the month of interview or the month preceding the interview
+```{r pill-motivation, dependson='process-fem-data'}
+fem1719dt[,
+  pill_motivation := factor(
+    fcase(
+      why_use_pill_reason1 & !(
+        why_use_pill_reason2 |
+        why_use_pill_reason3 |
+        why_use_pill_reason4 |
+        why_use_pill_reason5 |
+        why_use_pill_reason6 |
+        why_use_pill_reason7 |
+        why_use_pill_reason8
+      ), 'Only for birth control',
+      !why_use_pill_reason1 & (
+        why_use_pill_reason2 |
+        why_use_pill_reason3 |
+        why_use_pill_reason4 |
+        why_use_pill_reason5 |
+        why_use_pill_reason6 |
+        why_use_pill_reason7 |
+        why_use_pill_reason8
+      ), 'Only for reasons other than contraception',
+      default = 'For both reasons'
+    )
+  )
+]
 
-```{r, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~pill_motivation,
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     this_month_method3 | last_month_method3
   )
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)] |> style_totals_and_percentages() |>
+  set_caption('Females by whether contraceptive or other reasons were mentioned for using pills, among those who used pills either this or the previous month.')
 ```
+
+The most commonly mentioned reason for use of contraceptive pills is indeed birth control. (Figure \@ref(fig:pill-reason-mentions)) However, a minority of pill users mention birth control exclusively as a reason for their use. About half of all pill users are motivated both by birth control and other health reasons, and a substantial minority of pill users are motivated exclusively by reasons other than contraception. (Table \@ref(tab:pill-motivation))
 
 
 ### IUD
 
-Description: By whether used an IUD either during the month of interview or the month preceding the interview*
+```{r iud-use-during-month-or-previous, dependson='process-fem-data'}
+this <- list()
 
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
+this$dt <- estimate_totals_and_percentages(
   ~I(this_month_method19 | last_month_method19),
   get_NSFG_survey_design_for_sex('fem')
-) |> style_totals_and_percentages()
+)
+
+this$dt[, description := c(
+  'Did not use IUD',
+  'Used IUD'
+)]
+
+this$ht <- this$dt |> style_totals_and_percentages(digits = 1)
+
+this$size <- as.data.frame(this$ht)[4, 2]
+
+this$ht |>
+  set_caption('Females by whether they report using an IUD either this or the previous month.')
 ```
 
-Domain: Females who used an IUD either during the month of interview or the month preceding the interview
+The subdomain of IUD users who are asked about their motives for IUD use by the NSFG is approximately `r this$size` females. (Table \@ref(tab:iud-use-during-month-or-previous))
 
-Description: By reason(s), with those mentioning multiple reasons counted multiple times*
-
-```{r, dependson='process-fem-data'}
+```{r iud-reason-mentions, dependson='process-fem-data', fig.width=8, fig.height=4, fig.cap='Females by reason(s) mentioned for using IUD with persons mentioning multiple reasons counted multiple times, among those who used an IUD either this or the previous month.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2422,20 +2441,21 @@ estimate_NSFG_mentions(
   prefix = 'why_use_iud_reason',
   format = 'YUSEMTHF',
   skip = 98:99
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)] |> plot_totals_with_CIs()
 ```
 
-Domain: Females who used an IUD either during the month of interview or the month preceding the interview*
-
-```{r, dependson='process-fem-data'}
+```{r iud-motivation, dependson='process-fem-data'}
 estimate_totals_and_percentages(
   ~factor(iud_motivation),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     this_month_method19 | last_month_method19
   )
-)[order(-total)] |> style_totals_and_percentages()
+)[order(-total)] |> style_totals_and_percentages() |>
+  set_caption('Females by whether contraceptive or other reasons were mentioned for using IUD, among those who used an IUD either this or the previous month.')
 ```
+
+It appears that the most commonly mentioned reason for use of IUD is again birth control. (Figure \@ref(fig:iud-reason-mentions)) However, whether this represents a majority of IUD users cannot be determined because there are a substantial lack of answers to the question of reason for IUD use in the NSFG data files for respondents who were supposed to be asked the question. (Table \@ref(tab:iud-motivation))
 
 
 ## Reason(s) for Not Currently Using Contraception
