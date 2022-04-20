@@ -1051,32 +1051,6 @@ male1719dt[,
 
 ## Count number of contraceptive methods used in past 12 months.
 set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
-
-## Create categorical variable specifying consistency of condom use over previous 12 months that combines P12MOCONO and P12MOCON.
-male1719dt[,
-  condom_12m_consistency := factor(
-    fcase(
-      P12MOCONO == 'Yes',
-        'Every time',
-      P12MOCONO == 'No',
-        'None of the time',
-      P12MOCON != 'No answer provided',
-        as.character(P12MOCON),
-      default = 'No answer provided'
-    ),
-    ordered = TRUE,
-    levels = c(
-      'Every time',
-      'Most of the time',
-      'About half of the time',
-      'Some of the time',
-      'None of the time',
-      'Refused',
-      "Don't know",
-      'No answer provided'
-    )
-  )
-]
 ```
 
 
@@ -2236,12 +2210,19 @@ In cases of males who have answers for both series of questions because they hav
 
 ### Condom Use During Past 12 Months
 
-Domain: Females who had intercourse with a male during the 12 months prior to interview, who used condom at least once in the past 12 months
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(
-    P12MOCON,
+```{r consistency-condom, dependson=c('process-fem-data', 'process-male-data')}
+male1719dt[,
+  condom_12m_consistency := factor(
+    fcase(
+      P12MOCONO == 'Yes',
+        'Every time',
+      P12MOCONO == 'No',
+        'None of the time',
+      P12MOCON != 'No answer provided',
+        as.character(P12MOCON),
+      default = 'No answer provided'
+    ),
+    ordered = TRUE,
     levels = c(
       'Every time',
       'Most of the time',
@@ -2249,68 +2230,48 @@ estimate_totals_and_percentages(
       'Some of the time',
       'None of the time',
       'Refused',
+      "Don't know",
       'No answer provided'
     )
-  ),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    sex12mo &
-      any_use_12m_method4
   )
-) |> style_totals_and_percentages()
-```
+]
 
-Domain: Males who had intercourse with a female during the 12 months prior to interview, who used condom at least once in the past 12 months
-
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(condom_12m_consistency),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    SEX12MO == 'YES, HAD INTERCOURSE' &
-        any_use_12m_method1
-  )
-) |> style_totals_and_percentages()
-```
-
-Domain: Females who had intercourse with a male during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condom
-
-```{r, dependson='process-fem-data'}
-estimate_totals_and_percentages(
-  ~factor(
-    P12MOCON,
-    levels = c(
-      'Every time',
-      'Most of the time',
-      'About half of the time',
-      'Some of the time',
-      'None of the time',
-      'Refused',
-      'No answer provided'
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(
+      P12MOCON,
+      levels = c(
+        'Every time',
+        'Most of the time',
+        'About half of the time',
+        'Some of the time',
+        'None of the time',
+        'Refused',
+        'No answer provided'
+      )
+    ),
+    subset(
+      get_NSFG_survey_design_for_sex('fem'),
+      sex12mo &
+        any_use_12m_method4 &
+        any_use_12m_method_count == 1
     )
   ),
-  subset(
-    get_NSFG_survey_design_for_sex('fem'),
-    sex12mo &
-      any_use_12m_method4 &
-      any_use_12m_method_count == 1
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(condom_12m_consistency),
+    subset(
+      get_NSFG_survey_design_for_sex('male'),
+      SEX12MO == 'YES, HAD INTERCOURSE' &
+        any_use_12m_method1 &
+        any_use_12m_method_count == 1
+    )
   )
-) |> style_totals_and_percentages()
+) |> set_caption('Persons by their reported frequency of using condoms during the past 12 months, among those whose only reported method of contraception for the past 12 months is condoms.')
 ```
 
-Domain: Males who had intercourse with a female during the 12 months prior to interview and whose only method of contraception used in the past 12 months is condom
-
-```{r, dependson='process-male-data'}
-estimate_totals_and_percentages(
-  ~factor(condom_12m_consistency),
-  subset(
-    get_NSFG_survey_design_for_sex('male'),
-    SEX12MO == 'YES, HAD INTERCOURSE' &
-      any_use_12m_method1 &
-      any_use_12m_method_count == 1
-  )
-) |> style_totals_and_percentages()
-```
+Consistency of condom use is slightly worse than consistency of the use of any method of contraception described in Section \@ref(any-method-during-past-12-months), though a simple majority of those relying on condoms as their exclusive method of contraception report using condoms every time. (Table \@ref(tab:consistency-condom))
 
 
 ### Pill Use During Past 4 Weeks
