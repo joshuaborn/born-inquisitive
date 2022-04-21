@@ -149,6 +149,20 @@ estimate_totals_and_percentages <- function(f, svy) {
   )
 }
 
+estimate_mean <- function(f, svy) {
+  y <- svymean(f, svy)
+  y_ci <- as.data.frame(confint(y, df = degf(svy)))
+  names(y_ci) <- c('CI_low', 'CI_high')
+
+  cbind(
+    data.table(
+      description = names(y),
+      mean = as.vector(y)
+    ),
+    y_ci
+  )
+}
+
 estimate_row_total_and_percentage <- function(f, svy) {
   totals <- svytotal(f, svy)
   totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
