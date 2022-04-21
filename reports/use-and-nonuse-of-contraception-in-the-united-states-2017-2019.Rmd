@@ -2990,9 +2990,9 @@ As noted in Section \@ref(consistency-of-use-of-contraception), failure to use c
 
 # Things to Do
 
-* Add license to GitHub repository
 * Compare own report with published reports
 * Write introduction section of report
+    * Explain "Not ascertained" vs "No answer provided" vs "Refused"
 * Publish report on blog
 
 
