@@ -2835,7 +2835,7 @@ fem1719dt[
   ) +
   scale_x_discrete() +
   labs(
-    x = 'Age',
+    x = 'Age (years)',
     y = 'Total Persons'
   ) +
   theme_bw() +
@@ -2869,7 +2869,7 @@ as.data.table(svyby(
     expand = expansion(mult = c(0, 0.05))
   ) +
   labs(
-    x = 'Age',
+    x = 'Age (years)',
     y = 'Proportion of Persons'
   ) +
   theme_bw() +
@@ -2886,11 +2886,45 @@ as.data.table(svyby(
 
 ## Differences in Reported Contraceptive Use Between Females and Males
 
+Sexual intercourse with someone of the opposite sex involves both females and males, so estimates based on female respondents to the NSFG and those based on male respondents should be similar. For the most part, the results discussed in this report do reflect similar patterns. However, there are a few noticeable differences that cannot be fully attributed to sampling error.
+
+One difference is that the reported contraception use rate, i.e., the ratio between the number of persons using contraception during their most recent intercourse to the total number of persons at risk for unintended pregnancy during their most recent intercourse, is greater for females than for males. (Section \@ref(contraception-use-rate))
+
+A second, even more salient difference is in the reported prevalence of female sterilizing operations being used as a method of contraception is much higher for females than for males. (Sections \@ref(methods-used) and \@ref(methods-used-1))
+
+There at least three hypotheses that might explain these differences. All of them stem from the fact that those who are surveyed about sexual intercourse are surveyed not just about their own traits, but also about their partners' traits:
+
+* Some males might not be aware of their female partners' contraceptive use.
+* Female partners of male respondents are on average younger than male partners of female respondents.
+* Those with multiple recent partners are effectively sampled more than those who do not have multiple recent partners.
+
+### Ignorance of Partners' Contraceptive Use
+
+While few males report ignorance of their partners' contraceptive use, (Section \@ref(reported-ignorance-of-contraceptive-use)) direct questions about this are only asked of some male respondents to the NSFG, and thus some respondents may not think to give such an answer, even if such an answer would be the most accurate description. Further, some males may not know that they do not know that their partners are using contraception. This is particularly the case for methods of contraception, such as tubal ligation, IUDs, injectables, implants, etc., that are largely not visible to male sexual partners. The effect of this would be for males to under-report contraception use, which might explain some of the lower contraception use rate and reported prevalence of female sterilizing operations such as tubal ligation.
+
+### Younger Female Partners of Males and Older Male Partners of Females
+
+The 2017-2019 edition of the NSFG (as well as the 2015-2017 edition) does not release age of most recent sexual partners in its public use data files as part of disclosure risk reduction. However, prior research based on previous editions of the NSFG has found that male sexual partners of females are more likely to be older, and female sexual partners of males are more likely to be younger. [@darroch_age_1999] The effect of the age asymmetry of sexual partners is that, while the age ranges of female respondents and of male respondents surveyed by the NSFG are both 15-49 years, the average age of the partners of male respondents is effectively younger than the average age of the female respondents.
+
+As seen in Section \@ref(age-for-female-sterilizing-operations), the probability that a female has a sterilizing operation apparently increases with increasing age. Thus, the effectively older sample of females in the female respondents sample are more likely to have had sterilizing operations than the effectively younger partners of respondents in the male respondents sample. This might explain some of the difference in reported prevalence of female sterilizing operations between females and males.
+
+### Oversampling of Those with Multiple Recent Partners
+
+The last sexual partner of the opposite sex within the past 3 months for one person might also be the last sexual partner of the opposite sex within the past 3 months for another person. Thus, the behavior of persons who have many recent sexual partners are effectively over-sampled in any analysis examining behavior during most recent sexual intercourse.
+
+If the contraceptive use of those who have multiple recent sexual partners differ from the more general population and between females and males, this might explain some of the reported differences in contraceptive use between females and males. For instance, if males, but not females, who have multiple recent partners are more likely to use contraception than the general population, this would cause the reported contraception use rate to be greater for females than for males. Similarly, if females who have multiple recent partners are less likely to have had sterilizing operations, this would cause the reported prevalence of female sterilizing operations to be lesser for males than for females.
+
+
+## Further Research
+
 
 
 # Things to Do
 
 * Write discussion section of report
+    * Go over results and note what to discuss
+* Add section examining contraception use rate by age
+* Chi-squared test for contraception use rate
 * Add license to GitHub repository
 * Compare own report with published reports
 * Write introduction section of report
