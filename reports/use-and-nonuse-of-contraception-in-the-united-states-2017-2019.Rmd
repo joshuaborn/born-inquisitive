@@ -1189,6 +1189,51 @@ The "Physically infertile not due to sterilizing procedure" category is explored
 ### Contraception Use Rate
 
 ```{r contraception-use-rate, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
+
+this$data <- rbindlist(list(
+  fem1719dt[,
+    .(
+      SECU,
+      SEST,
+      WGT2017_2019,
+      at_risk = used_last_3m_status %in% c(
+        'Used at least one contraceptive method during last intercourse',
+        'Otherwise did not use contraception during last intercourse'
+      ),
+      sex = 'female',
+      used_contraception = used_last_3m_status ==
+        'Used at least one contraceptive method during last intercourse'
+    )
+  ],
+  male1719dt[,
+    .(
+      SECU,
+      SEST,
+      WGT2017_2019,
+      at_risk = used_last_3m_status %in% c(
+        'Used at least one contraceptive method during last intercourse',
+        'Otherwise did not use contraception during last intercourse'
+      ),
+      sex = 'male',
+      used_contraception = used_last_3m_status ==
+        'Used at least one contraceptive method during last intercourse'
+    )
+  ]
+))
+
+this$data[, sex := factor(sex)]
+
+this$svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = this$data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+
+this$chisq <- svychisq(~ used_contraception + sex, this$svy)
+
 style_and_combine_totals_and_percentages_vertically(
   'Females',
   estimate_totals_and_percentages(
@@ -1216,9 +1261,11 @@ style_and_combine_totals_and_percentages_vertically(
   set_caption('Contraceptive use among persons who had sexual intercourse with someone of the opposite sex in past 3 months and are not themselves nor had intercourse with a partner who is intending to become pregnant, pregnant, postpartum, or physically infertile.')
 ```
 
-Combining the estimates from Table \@ref(tab:used-last-3m-at-all) and Table \@ref(tab:reason-for-nonuse), an overall contraceptive use rate can be be calculated with the number of persons using contraception in the numerator and the sum of the number persons using contraception and the number of persons at increased risk for unintended pregancy due to contraceptive nonuse in the denominator.
+Combining the estimates from Table \@ref(tab:used-last-3m-at-all) and Table \@ref(tab:reason-for-nonuse), an overall contraceptive use rate can be be calculated with the number of persons using contraception in the numerator and the number persons at risk for unintended pregnancy in the denominator.
 
 Generally, the contraceptive use rate is high, though this still leaves several million persons at increased risk for unintended pregnancy due to contraceptive nonuse. (Table \@ref(tab:contraception-use-rate))
+
+The reported contraceptive use rate is higher for females than for males. A chi-squared test of independence with second-order Rao-Scott adjustment is statistically significant ($p = `r signif(this$chisq$p.value, 2)`$). Therefore, there is sufficient evidence to conclude that sex and contraception use rate are dependent, and the difference in contraception use rates in Table \@ref(tab:contraception-use-rate) are not attributable to sampling error.
 
 #### Reported Ignorance of Contraceptive Use
 
@@ -2931,8 +2978,6 @@ The discussion in Section \@ref(differences-in-reported-contraceptive-use-betwee
 
 # Things to Do
 
-* Add section examining contraception use rate by age
-* Chi-squared test for contraception use rate
 * Write discussion section of report
     * Go over results and note what to discuss
 * Add license to GitHub repository
