@@ -2917,15 +2917,29 @@ If the contraceptive use of those who have multiple recent sexual partners diffe
 
 ## Further Research
 
+While this report consists mostly of descriptive statistics, it informs further research using model-based or covariate-adjusted analyses.
+
+The most obvious direction for further research beyond determining what contraceptive methods are being used is the analysis of how effective the various contraceptive methods are at preventing unintended pregnancy. Knowledge that a substantial minority of somewhere between 6 and 10 million persons use multiple methods of contraception simultaneously (Section \@ref(number-of-methods)) implies that such analysis should take into account simultaneous contraception use. It might be the case, for instance, that condoms and pills used together are more effective than either method used separately.
+
+Another opportunity for further research, once the efficacies of the various methods of contraception or combinations thereof area established, is the analysis of covariates that explain tendency to use less effective methods of contraception instead of more effective methods.
+
+At any given point in time, several million persons at risk for unintended pregnancy do not use contraception during sexual intercourse with someone of the opposite sex. (Section \@ref(reason-for-nonuse)) This appears to be in part due to inconsistent use and in part due to long-term nonuse. (Section \@ref(consistency-of-use-of-contraception)) One opportunity for further research is the analysis of covariates that explain increased probability to engage in sexual intercourse without contraception when at risk for unintended pregnancy.
+
+The discussion in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males) highlights the need for analysis adjusted for, at least, age as covariate in order to drawn conclusions about differences in contraceptive use between females and males in the United States, which is yet another opportunity for further research.
+
 
 
 # Things to Do
 
-* Write discussion section of report
-    * Go over results and note what to discuss
 * Add section examining contraception use rate by age
 * Chi-squared test for contraception use rate
+* Write discussion section of report
+    * Go over results and note what to discuss
 * Add license to GitHub repository
 * Compare own report with published reports
 * Write introduction section of report
 * Publish report on blog
+
+
+
+# Citations
