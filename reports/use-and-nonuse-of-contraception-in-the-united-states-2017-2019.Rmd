@@ -18,6 +18,8 @@ library(data.table)
 library(ggplot2)
 library(here)
 library(huxtable)
+library(survey)
+library(tidyfst)
 
 i_am('reports/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.Rmd')
 
