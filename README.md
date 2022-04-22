@@ -22,7 +22,7 @@ The `R/` subdirectory contains scripts written in the R statistical programming 
 
 ### data/
 
-The `data/` subdirectory is the expected location of data files. The NSFG distributes its data in ASCII-encoded text files suffixed with ".dat", which are not checked into this repository, but can be [downloaded directly](https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NSFG/). The comma-separated CSV files checked into this directory are the result of exports from a SAS programming environment using scripts contained in the `SAS/` subdirectory.
+The `data/` subdirectory is the expected location of data files. The NSFG distributes its data in ASCII-encoded text files suffixed with ".dat", which are not checked into this repository, but can be [downloaded directly](https://www.cdc.gov/nchs/data_access/ftp_dua.htm?url_redirect=ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NSFG). The comma-separated CSV files checked into this directory are the result of exports from a SAS programming environment using scripts contained in the `SAS/` subdirectory.
 
 ### eda/
 
