@@ -1033,6 +1033,16 @@ set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
 
 # Introduction
 
+Differences with prior works
+
+* Latest 2017-2019 data
+* Males in addition to females
+* Multiple methods
+* Last intercourse instead of month of interview
+* Minimal covariate analysis
+* No trend analysis
+* Confidence intervals
+
 The target population of the NSFG are persons aged 15-49 living in households in the United States. As a consequence of sampling design, the population does not include those without a current residential address nor does it include those living in group housing, such military bases, prisons, etc. However, the population does include college students living in dormitories by way of their parents' households.
 
 In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males. Therefore, separate estimates for females and males are given throughout this report.
