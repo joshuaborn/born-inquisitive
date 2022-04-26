@@ -1033,25 +1033,52 @@ set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
 
 # Introduction
 
-Differences with prior works
+Understanding how contraception is used is necessary for understanding the phenomenon of contraceptive failure and the related phenomenon of unintended pregnancy. The purpose of this report is to describe the current state of contraception use in the United States, such as the number of people using and not using contraception, the contraceptive methods being used, and motives for using or discontinuing the various contraceptive methods. This is intended to be a preliminary report to inform subsequent analyses that pose and answer more specific questions and, as such, is designed for breadth rather than depth.
 
-* Latest 2017-2019 data
-* Males in addition to females
-* Multiple methods
+## Data Source
+
+This report is based on the 2017-2019 National Survey of Family Growth (NSFG). The NSFG is a survey of a nationally representative sample of persons living in households in the United States that is designed to produce estimates of factors related to reproduction, such as sexual activity, contraceptive use, pregnancy, infertility, and childcare. It uses a probability-based, multi-stage sampling design based on geographic areas, housing units in selected geographic areas, and persons in selected housing units. The NSFG is administered by the National Center for Health Statistics (NCHS), but is funded and planned by several agencies within the United States Department of Health and Human Services.
+
+Respondents who are selected for sampling and who consent to be interviewed are visited in their households by female interviewers trained specifically for the NSFG. Interviewers use laptop computers programmed with survey questionnaires and enter respondents' answers into the laptops, using an approach known as computer-assisted personal interviewing (CAPI). Additionally, some questions of a sensitive nature are asked after the CAPI portion of the interview using audio computer-assisted self-interviews (ACASI). During the ACASI portion of the interview, respondents wear headsets to listen to prerecorded questions and enter their responses directly into the laptops.
+
+### Sample Characteristics
+
+The first NSFG was done in 1973 and sampled only female persons aged 15-44 years who had ever been married. The 1982 edition of the NSFG expanded the sample to all females regardless of marital status, and the 2002 edition of the NSFG was the first to sample males in addition to females. More recently, the 2015-2017 edition of the NSFG was the first to sample persons aged 15-49 years instead of those aged 15-44 years.
+
+In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males with survey design information specific to the data table. Therefore, separate estimates for females and males are given throughout this report. They are only combined in descriptive statistics where no attempt is made to quantify sampling error.
+
+The 2017-2019 edition of the NSFG has a sample size of 6,141 females and 5,206 males. The overall response rate is 63.4%, with response rates of 65.2% for females and 61.4% for males. Results are weighted to approximate the population at July 2018, the midpoint of sampling. The sampled population are persons aged 15-49 living in households in the United States and does not include those without a current residential address nor does it include those living in group housing, such as military bases, correctional facilities, etc. However, the population does include college students living in dormitories by way of their parents' households.
+
+### Sexes of Sexual Partners
+
+Use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception. Therefore, the NSFG and this report focus extensively on sexual intercourse between individuals of opposite sex. All mentions of sexual activity in this report should be interpreted to refer to sexual intercourse with someone of the opposite sex unless stated otherwise.
+
+### Disclosure Risk Reduction
+
+Before the NSFG public use data files are released, actions are taken in order to reduce the risk that a specific respondent can be personally identified based on the information to be contained therein. This disclosure risk reduction can be as severe as suppressing certain variables from the public use data files entirely, though many variables are merely modified to be less specific. For instance, while respondents are asked about the the month and year that pregnancies begin and end in the NSFG, only the year that pregnancies begin and end are available in the public use data files.
+
+Many variables suppressed or modified in the public use data files are available through an application process via a NCHS Research Data Center. However, this report is based entirely on the NSFG public use data files. Whenever analysis has constrained in some way by the disclosure risk reduction of the public use data files, this is noted in the report.
+
+### Documentation
+
+More information about the NSFG is available in its official User's Guide and appendices [@nsfg-users-guide], the Summary of Design and Data Collection [@nsfg-summary], and its more detailed design documentation [@nsfg-1; @nsfg-2; @nsfg-3].
+
+## Differences with Prior Works
+
+Prior works based on the NSFG have reported on the same subject matter of this report. [@kavanaugh_contraceptive_2018] Indeed, personnel associated with the NCHS themselves published reports based on the NSFG in journals [@piccinino_trends_1998], National Health Statistics Reports [@jones_current_2012; @daniels_contraceptive_2013; @copen_condom_2017], and NCHS Data Briefs [@daniels_current_2020]. This report differs from prior works in several ways.
+
+Unlike many prior works, this report is based on the latest 2017-2019 edition of the NSFG. While several academic papers on more specific topics based on the 2017-2019 data have already been published in the literature, only a single NCHS Data Brief currently covers contraceptive use as reported in the 2017-2019 NSFG more generally. [@daniels_current_2020]
+
+Many prior works based on the NSFG focus exclusively on contraceptive use among females living in the United States. [@piccinino_trends_1998; @jones_current_2012; @daniels_contraceptive_2013; @daniels_current_2020] This report examines contraceptive use of both females and males and analyzes female and male contraceptive use alongside each other, wherever data is available in both NSFG data files.
+
 * Last intercourse instead of month of interview
+* Multiple methods
 * Minimal covariate analysis
 * No trend analysis
-* Confidence intervals
+* Topics reported upon separately, e.g., current method choice vs. contraceptive methods ever used, combined in this report
 
-The target population of the NSFG are persons aged 15-49 living in households in the United States. As a consequence of sampling design, the population does not include those without a current residential address nor does it include those living in group housing, such military bases, prisons, etc. However, the population does include college students living in dormitories by way of their parents' households.
 
-In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males. Therefore, separate estimates for females and males are given throughout this report.
-
-Use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception. Therefore, the NSFG and this report focus extensively on sexual intercourse between individuals of opposite sex. All mentions of sexual activity in this report should be interpreted to refer to sexual intercourse with the opposite sex unless stated otherwise.
-
-## Disclosure Risk Reduction
-
-## Use during last intercourse versus Use over Period of Time
+## Use During Last Intercourse versus Use over Period of Time
 
 The NSFG asks respondents about their use of contraception in two ways. In the first way, questions pertain to use of contraception during a specific sexual encounter. For instance, male respondents are asked what contraceptive method(s) were used during their first intercourse with their 3 most recent partners. In the second way, questions pertain to the use of contraception over some period of time. For instance, female respondents fill out a calendar indicating their use of contraception for the 3 years prior to their interview.
 
@@ -1068,7 +1095,7 @@ Therefore, Section \@ref(use-of-contraception-during-most-recent-intercourse), w
 
 Some NSFG respondents reported having an active sterilizing operation, such as a tubal ligation or vasectomy, or having last had intercourse with a spouse or cohabitating partner with an active sterilizing operation, but in response to other questions do not report using said sterilizing operation as a method of contraception.
 
-This is may be due to confusion on the part of respondents with questions referring to a specific sexual encounter or to a specific period of time, since the sterilizing operations in question are likely performed well in advance of the specific encounter or time frame.
+This may be due to confusion on the part of respondents with questions referring to a specific sexual encounter or to a specific period of time, since the sterilizing operations in question are likely performed well in advance of the specific encounter or time frame.
 
 Therefore, all those who reported having an active sterilizing operation or having intercourse with a spouse or cohabitating partner with an active sterilizing operation are counted as using said sterilizing operation as a method of contraception for the appropriate encounters or time frames, even if the respondents did not themselves mention the sterilizing operation when asked about methods of contraception.
 
@@ -1076,10 +1103,17 @@ Thus, even if a respondent does not mention using a partner's vasectomy when ask
 
 Similarly, even if a respondent did not mention using tubal ligation during any of the 12 months preceding the interview, if the respondent had sexual intercourse during the 12 months preceding the interview and has an active tubal ligation, then the respondent is counted as using tubal ligation as a contraceptive method during the 12 months preceding the interview.
 
+## Source Code and License
+
+Analysis for this report is done using the R statistical programming language. [@rlang] Estimates handling the NSFG's sampling weights and complex sampling design pseudo-structure are made using the `survey` package. [@lumley_survey_2021]
+
+The [source code for this report](https://github.com/joshuaborn/NSFG/blob/master/reports/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.Rmd) and all supporting source code are available in [a public GitHub repository](https://github.com/joshuaborn/NSFG). This report and supporting source code are licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license. Anyone is free to share and adapt the material contained here as long as appropriate credit is given, a link to the license is provided, and any changes made are indicated.
+
 
 # Results
 
 Sections \@ref(use-of-contraception-during-most-recent-intercourse) and \@ref(use-of-contraceptive-methods-for-other-reasons) pertain to what contraceptive method(s) were used during the sexual intercourse that occurred most recently before the respondents' interviews. Sections \@ref(use-of-contraception-during-past-12-months) and \@ref(consistency-of-use-of-contraception) focus on contraceptive use over the 12 months preceding the interview. Sections \@ref(use-of-contraception-ever-during-lifetime) and \@ref(discontinuation-due-to-dissatisfaction) pertain to contraceptive use ever during the lifetime of respondents. Section \@ref(reasons-for-not-currently-using-contraception) pertains to contraceptive use reported in the month of the interview.
+
 
 ## Population Size
 
@@ -1106,7 +1140,6 @@ Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r 
 [^census]: As of the writing of this report, the full results of the 2020 U.S. Census have not been released. Therefore, the 2010 Census is used. Census counts from 2010 can be expected to be lesser than what would have been the census counts from the 2017-2019 time frame, if there was any population growth between 2010 and 2017.
 
 [^consistent]: Furthermore, the point estimates of population size based on the NSFG are quite close to the census counts, though the census counts are more than a million persons greater for both females and males. Unlike the NSFG estimates, the U.S. Census does count those without a current residential address and those living in group housing, which might account for these differences.
-
 
 
 ## Use of Contraception during Most Recent Intercourse
@@ -1967,7 +2000,7 @@ A majority of persons sexually active in the past 12 months used at least one me
 
 The estimates of those who have not used any method of contraception in the past 12 months despite being sexually active in Table \@ref(tab:number-of-methods-12-months) should not be interpreted as an estimate of those at risk for unintended pregnancy due to not using contraception, since it includes sexual partners trying to conceive, partners with a pregnant or postpartum female, and partners with one or more physically infertile persons.[^no-pregnancy-months]
 
-[^no-pregnancy-months]: Separating out estimates of those who are pregnant or postpartum is not possible over extended periods of time such as 12 months using the NSFG's public use data files, since the months that pregnancies begin and end are not released due to disclosure risk reduction.
+[^no-pregnancy-months]: Separating out estimates of those who are pregnant or postpartum is not possible over extended periods of time such as 12 months using the NSFG's public use data files, since the months that pregnancies begin and end are not released for disclosure risk reduction.
 
 
 ### Method(s) Used
@@ -2999,14 +3032,10 @@ The most obvious direction for further research after determining what contracep
 As noted in Section \@ref(consistency-of-use-of-contraception), failure to use contraception despite being at risk of unintended pregnancy appears to be in part due to inconsistent use and in part due to long-term nonuse. One opportunity for further research is the investigation of covariates that explain increased probability to engage in sexual intercourse without contraception despite being at risk for unintended pregnancy. Finally, the discussion in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males) highlights the need for analyses adjusted for, at least, age as covariate in order to drawn conclusions about differences in contraceptive use between females and males in the United States, which is yet another opportunity for further research.
 
 
-
-# Things to Do
-
-* Compare own report with published reports
-* Write introduction section of report
-    * Explain "Not ascertained" vs "No answer provided" vs "Refused"
-* Publish report on blog
-
-
-
 # Citations
+
+::: {#refs}
+:::
+
+
+# Footnotes
