@@ -1033,7 +1033,7 @@ set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
 
 # Introduction
 
-Understanding how contraception is used is necessary for understanding the phenomenon of contraceptive failure and the related phenomenon of unintended pregnancy. The purpose of this report is to describe the current state of contraception use in the United States, such as the number of people using and not using contraception, the contraceptive methods being used, and motives for using or discontinuing the various contraceptive methods. This is intended to be a preliminary report to inform subsequent analyses that pose and answer more specific questions and, as such, is designed for breadth rather than depth.
+Understanding how contraception is used is necessary for understanding the phenomenon of contraceptive failure and the related phenomenon of unintended pregnancy. The purpose of this report is to describe the current state of the use of contraception in the United States, such as the number of people using and not using contraception, the contraceptive methods being used, and motives for using or discontinuing the various contraceptive methods. This is intended to be a preliminary report to inform subsequent analyses that pose and answer more specific questions and is therefore intended for breadth rather than depth.
 
 ## Data Source
 
@@ -1043,9 +1043,9 @@ Respondents who are selected for sampling and who consent to be interviewed are 
 
 ### Sample Characteristics
 
-The first NSFG was done in 1973 and sampled only female persons aged 15-44 years who had ever been married. The 1982 edition of the NSFG expanded the sample to all females regardless of marital status, and the 2002 edition of the NSFG was the first to sample males in addition to females. More recently, the 2015-2017 edition of the NSFG was the first to sample persons aged 15-49 years instead of those aged 15-44 years.
+The first NSFG was done in 1973 and sampled only female persons aged 15-44 years who had ever been married. The 1982 edition of the NSFG expanded the sample to all females regardless of marital status, and the 2002 edition of the NSFG was the first to sample males in addition to females. More recently, the 2015-2017 edition of the NSFG expanded the age range for sampling to 15-49 years from 15-44 years.
 
-In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males with survey design information specific to the data table. Therefore, separate estimates for females and males are given throughout this report. They are only combined in descriptive statistics where no attempt is made to quantify sampling error.
+In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males with survey design information specific to the data table. Therefore, separate estimates for females and males are given throughout this report. Estimates for both females and males are only combined when no attempt is made to quantify sampling error.
 
 The 2017-2019 edition of the NSFG has a sample size of 6,141 females and 5,206 males. The overall response rate is 63.4%, with response rates of 65.2% for females and 61.4% for males. Results are weighted to approximate the population at July 2018, the midpoint of sampling. The sampled population are persons aged 15-49 living in households in the United States and does not include those without a current residential address nor does it include those living in group housing, such as military bases, correctional facilities, etc. However, the population does include college students living in dormitories by way of their parents' households.
 
@@ -1057,7 +1057,7 @@ Use of contraceptive methods for the purpose of contraception _per se_ is only r
 
 Before the NSFG public use data files are released, actions are taken in order to reduce the risk that a specific respondent can be personally identified based on the information to be contained therein. This disclosure risk reduction can be as severe as suppressing certain variables from the public use data files entirely, though many variables are merely modified to be less specific. For instance, while respondents are asked about the the month and year that pregnancies begin and end in the NSFG, only the year that pregnancies begin and end are available in the public use data files.
 
-Many variables suppressed or modified in the public use data files are available through an application process via a NCHS Research Data Center. However, this report is based entirely on the NSFG public use data files. Whenever analysis has constrained in some way by the disclosure risk reduction of the public use data files, this is noted in the report.
+This report is based entirely on the NSFG public use data files. Whenever analysis is constrained in some way by the disclosure risk reduction, this is noted in the report.
 
 ### Documentation
 
@@ -1065,43 +1065,17 @@ More information about the NSFG is available in its official User's Guide and ap
 
 ## Differences with Prior Works
 
-Prior works based on the NSFG have reported on the same subject matter of this report. [@kavanaugh_contraceptive_2018] Indeed, personnel associated with the NCHS themselves published reports based on the NSFG in journals [@piccinino_trends_1998], National Health Statistics Reports [@jones_current_2012; @daniels_contraceptive_2013; @copen_condom_2017], and NCHS Data Briefs [@daniels_current_2020]. This report differs from prior works in several ways.
+Prior works based on the NSFG report on the same subject as this report. [@kavanaugh_contraceptive_2018] Indeed, personnel associated with the NCHS themselves publish reports based on the NSFG in journals [@piccinino_trends_1998], National Health Statistics Reports [@jones_current_2012; @daniels_contraceptive_2013; @copen_condom_2017], and NCHS Data Briefs [@daniels_current_2020]. This report differs from prior works in several ways:
 
-Unlike many prior works, this report is based on the latest 2017-2019 edition of the NSFG. While several academic papers on more specific topics based on the 2017-2019 data have already been published in the literature, only a single NCHS Data Brief currently covers contraceptive use as reported in the 2017-2019 NSFG more generally. [@daniels_current_2020]
+* Most notably, many prior works based on the NSFG focus exclusively on contraceptive use among females living in the United States. [@piccinino_trends_1998; @jones_current_2012; @daniels_contraceptive_2013; @kavanaugh_contraceptive_2018; @daniels_current_2020] This report examines contraceptive use of both females and males and reports results for males alongside results for females, wherever data is available in both NSFG data files.[^males-too]
+* Unlike many prior works based on past editions of the NSFG, this report is based on the latest 2017-2019 edition of the NSFG. While several academic papers on more specific topics based on the 2017-2019 data are published in the literature at the time of the writing of this report, only a single NCHS Data Brief covers contraceptive use in a similarly broad way using the 2017-2019 NSFG. [@daniels_current_2020]
+* Much analysis of contraceptive use based on the NSFG is based on contraceptive status as encoded in the `CONSTAT` series of variables in the public use data files. [@jones_current_2012; @kavanaugh_contraceptive_2018; @daniels_current_2020] Contraceptive status is based on respondents' answer to the question of what contraceptive method(s) they are using in the month they are interviewed. This report differs from this trend by focusing analysis on method(s) of contraception reported used during respondents' most recent sexual intercourse. The reasons for this are discussed further in Section \@ref(contraceptive-methods-used-during-last-intercourse-versus-contraceptive-status).
+* Prior analysis using contraceptive status often categorizes respondents only by the most effective contraceptive method they mention using. [@piccinino_trends_1998; @jones_current_2012; @kavanaugh_contraceptive_2018; @daniels_current_2020] This report differs from this practice by exploring the simultaneous use of multiple methods of contraception.
+* Prior works often focus on analysis in terms of demographic or background covariates -- such as age, education, income, racial categorization, or ethnic background -- and in terms of more proximal reproductive covariates -- such as parity (number of existing children) or intentions for future children. [@piccinino_trends_1998; @jones_current_2012; @kavanaugh_contraceptive_2018; @daniels_current_2020] This report leaves such covariate-based analysis to further research, with the exception that it contains some descriptive statistics using age as a covariate in order to facilitate discussion of observed differences in contraceptive use reporting between females and males. (Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males))
+* Similarly, while many prior works focus on discussing trends in how contraceptive use changes over time [@piccinino_trends_1998; @jones_current_2012; @kavanaugh_contraceptive_2018], this report leaves trend analysis to further research.
+* Finally, this report broadly covers in one report several topics that are discussed in individual prior works, such as methods of contraception ever used [@daniels_contraceptive_2013] or consistency of condom use [@copen_condom_2017].
 
-Many prior works based on the NSFG focus exclusively on contraceptive use among females living in the United States. [@piccinino_trends_1998; @jones_current_2012; @daniels_contraceptive_2013; @daniels_current_2020] This report examines contraceptive use of both females and males and analyzes female and male contraceptive use alongside each other, wherever data is available in both NSFG data files.
-
-* Last intercourse instead of month of interview
-* Multiple methods
-* Minimal covariate analysis
-* No trend analysis
-* Topics reported upon separately, e.g., current method choice vs. contraceptive methods ever used, combined in this report
-
-
-## Use During Last Intercourse versus Use over Period of Time
-
-The NSFG asks respondents about their use of contraception in two ways. In the first way, questions pertain to use of contraception during a specific sexual encounter. For instance, male respondents are asked what contraceptive method(s) were used during their first intercourse with their 3 most recent partners. In the second way, questions pertain to the use of contraception over some period of time. For instance, female respondents fill out a calendar indicating their use of contraception for the 3 years prior to their interview.
-
-There are at least two advantages to analysis of the use of contraception during the most recent intercourse:
-
-* There is some measurement error in the reporting of contraceptive use over specific time periods. As seen in Section \@ref(any-method-during-past-12-months), some respondents who report using a method of contraception during a specific time frame, when asked about how consistently they used a method of contraception during the same time frame, report a frequency of "never," and as seen in Section \@ref(reasons-for-nonuse-when-not-intending-to-conceive), some respondents who report not using a method of contraception during the month of the interview, when asked why not, volunteer that they are using a method of contraception during the month of the interview. Analysis of contraceptive use during last intercourse rather than over a time period is intended to minimize this kind of measurement error.
-* More detailed information is available on contraceptive use over periods of time for female respondents than for male respondents in the NSFG. In particular, whereas female respondents are asked whether multiple contraceptive methods used in the same month were used simultaneously or alternatively when completing their contraceptive history calendars, no such information is available for male respondents. However, analysis of contraceptive use during last intercourse can report equivalent statistics for both females and males.
-
-One major disadvantage of analysis of contraceptive use during last intercourse is that there is variation among respondents in how long it has been, at the time of the interview, since their last intercourse.
-
-Therefore, Section \@ref(use-of-contraception-during-most-recent-intercourse), which contains the most extensive analysis in this report, focuses on contraceptive use during the last intercourse within the 3 months prior to the interview.
-
-## Failure to Report Sterilizing Operations as Contraceptive Methods
-
-Some NSFG respondents reported having an active sterilizing operation, such as a tubal ligation or vasectomy, or having last had intercourse with a spouse or cohabitating partner with an active sterilizing operation, but in response to other questions do not report using said sterilizing operation as a method of contraception.
-
-This may be due to confusion on the part of respondents with questions referring to a specific sexual encounter or to a specific period of time, since the sterilizing operations in question are likely performed well in advance of the specific encounter or time frame.
-
-Therefore, all those who reported having an active sterilizing operation or having intercourse with a spouse or cohabitating partner with an active sterilizing operation are counted as using said sterilizing operation as a method of contraception for the appropriate encounters or time frames, even if the respondents did not themselves mention the sterilizing operation when asked about methods of contraception.
-
-Thus, even if a respondent does not mention using a partner's vasectomy when asked what methods were used during the last intercourse, if the respondent reports her last intercourse was with her husband and reports her husband has an active vasectomy, then the respondent is counted as using a partner's vasectomy as a contraceptive method during last intercourse.
-
-Similarly, even if a respondent did not mention using tubal ligation during any of the 12 months preceding the interview, if the respondent had sexual intercourse during the 12 months preceding the interview and has an active tubal ligation, then the respondent is counted as using tubal ligation as a contraceptive method during the 12 months preceding the interview.
+[^males-too]: While this is a new approach for the topic of contraceptive use generally based on the NSFG, this approach has been used for other data sources [@bensyl_contraceptive_2005] and for more specific contraceptive methods such as condoms [@copen_condom_2017].
 
 ## Source Code and License
 
@@ -3032,10 +3006,45 @@ The most obvious direction for further research after determining what contracep
 As noted in Section \@ref(consistency-of-use-of-contraception), failure to use contraception despite being at risk of unintended pregnancy appears to be in part due to inconsistent use and in part due to long-term nonuse. One opportunity for further research is the investigation of covariates that explain increased probability to engage in sexual intercourse without contraception despite being at risk for unintended pregnancy. Finally, the discussion in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males) highlights the need for analyses adjusted for, at least, age as covariate in order to drawn conclusions about differences in contraceptive use between females and males in the United States, which is yet another opportunity for further research.
 
 
+
 # Citations
 
 ::: {#refs}
 :::
+
+
+
+# Appendix: Technical Notes
+
+## Contraceptive Method(s) Used During Last Intercourse versus Contraceptive Status
+
+It categorizes responses to this question into an exclusive hierarchy based on the most effective method that respondents report. For instance, respondents who report using both tubal ligation and condoms in the month of the interview are classified as using tubal ligation for the purpose of contraceptive status.
+
+Furthermore, respondents who are not sexually active but who use long-acting contraceptive methods -- such as sterilizing operations, implants, injectables, intrauterine devices -- are counted as using those contraceptive methods for the purpose of contraceptive status. Thus, estimates of the number of persons who are sexually active with the opposite sex based on `CONSTAT`-encoded contraceptive status are underestimates.
+
+The NSFG asks respondents about their use of contraception in two ways. In the first way, questions pertain to use of contraception during a specific sexual encounter. For instance, male respondents are asked what contraceptive method(s) were used during their first intercourse with their 3 most recent partners. In the second way, questions pertain to the use of contraception over some period of time. For instance, female respondents fill out a calendar indicating their use of contraception for the 3 years prior to their interview.
+
+There are at least two advantages to analysis of the use of contraception during the most recent intercourse:
+
+* There is some measurement error in the reporting of contraceptive use over specific time periods. As seen in Section \@ref(any-method-during-past-12-months), some respondents who report using a method of contraception during a specific time frame, when asked about how consistently they used a method of contraception during the same time frame, report a frequency of "never," and as seen in Section \@ref(reasons-for-nonuse-when-not-intending-to-conceive), some respondents who report not using a method of contraception during the month of the interview, when asked why not, volunteer that they are using a method of contraception during the month of the interview. Analysis of contraceptive use during last intercourse rather than over a time period is intended to minimize this kind of measurement error.
+* More detailed information is available on contraceptive use over periods of time for female respondents than for male respondents in the NSFG. In particular, whereas female respondents are asked whether multiple contraceptive methods used in the same month were used simultaneously or alternatively when completing their contraceptive history calendars, no such information is available for male respondents. However, analysis of contraceptive use during last intercourse can report equivalent statistics for both females and males.
+
+One major disadvantage of analysis of contraceptive use during last intercourse is that there is variation among respondents in how long it has been, at the time of the interview, since their last intercourse.
+
+Therefore, Section \@ref(use-of-contraception-during-most-recent-intercourse), which contains the most extensive analysis in this report, focuses on contraceptive use during the last intercourse within the 3 months prior to the interview.
+
+## Failure to Report Sterilizing Operations as Contraceptive Methods
+
+Some NSFG respondents reported having an active sterilizing operation, such as a tubal ligation or vasectomy, or having last had intercourse with a spouse or cohabitating partner with an active sterilizing operation, but in response to other questions do not report using said sterilizing operation as a method of contraception.
+
+This may be due to confusion on the part of respondents with questions referring to a specific sexual encounter or to a specific period of time, since the sterilizing operations in question are likely performed well in advance of the specific encounter or time frame.
+
+Therefore, all those who reported having an active sterilizing operation or having intercourse with a spouse or cohabitating partner with an active sterilizing operation are counted as using said sterilizing operation as a method of contraception for the appropriate encounters or time frames, even if the respondents did not themselves mention the sterilizing operation when asked about methods of contraception.
+
+Thus, even if a respondent does not mention using a partner's vasectomy when asked what methods were used during the last intercourse, if the respondent reports her last intercourse was with her husband and reports her husband has an active vasectomy, then the respondent is counted as using a partner's vasectomy as a contraceptive method during last intercourse.
+
+Similarly, even if a respondent did not mention using tubal ligation during any of the 12 months preceding the interview, if the respondent had sexual intercourse during the 12 months preceding the interview and has an active tubal ligation, then the respondent is counted as using tubal ligation as a contraceptive method during the 12 months preceding the interview.
+
 
 
 # Footnotes
