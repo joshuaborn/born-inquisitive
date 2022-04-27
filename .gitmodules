@@ -1,0 +1,3 @@
+[submodule "content/NSFG"]
+	path = content/NSFG
+	url = git@github.com:joshuaborn/NSFG.git

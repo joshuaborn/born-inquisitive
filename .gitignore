@@ -9,5 +9,6 @@
 /public
 /resources/_gen
 /static/*_files
+/static/NSFG
 /static/rmarkdown-libs
 Thumbs.db
