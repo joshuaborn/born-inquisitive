@@ -45,7 +45,6 @@ plot_totals_with_CIs <- function(data, reordering = TRUE) {
     scale_y_discrete(
       labels = scales::wrap_format(50)
     ) +
-    theme_bw() +
     theme(
       axis.title.y = element_blank()
     ) +
@@ -62,7 +61,6 @@ plot_percentages_with_CIs <- function(data, reordering = TRUE) {
     scale_y_discrete(
       labels = scales::wrap_format(50)
     ) +
-    theme_bw() +
     theme(
       axis.title = element_blank(),
       legend.position = 'none'
