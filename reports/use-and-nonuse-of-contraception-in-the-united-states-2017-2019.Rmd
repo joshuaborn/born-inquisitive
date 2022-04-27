@@ -113,6 +113,7 @@ set_NSFG_variables_as_factors(
     EVERUSED = 'YESNONAF',
     HADSEX = 'HADSEX',
     HPPREGQ = 'HPPREGQ',
+    IUDTYPE = 'IUDTYPE',
     LSEXPREG = 'Y1N2RECF',
     MISSPILL = 'MISSPILL',
     P12MOCON = 'P12MOCON',
@@ -2476,19 +2477,22 @@ estimate_totals_and_percentages(
 The most commonly mentioned reason for use of contraceptive pills is indeed birth control. (Figure \@ref(fig:pill-reason-mentions)) However, a minority of pill users mention birth control exclusively as a reason for their use. About half of all pill users are motivated both by birth control and other health reasons, and a substantial minority of pill users are motivated exclusively by reasons other than contraception. (Table \@ref(tab:pill-motivation))
 
 
-### IUD
+### Hormonal IUD
 
 ```{r iud-use-during-month-or-previous, dependson='process-fem-data'}
 this <- list()
 
 this$dt <- estimate_totals_and_percentages(
-  ~I(this_month_method19 | last_month_method19),
+  ~I(
+    IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
+      (this_month_method19 | last_month_method19)
+  ),
   get_NSFG_survey_design_for_sex('fem')
 )
 
 this$dt[, description := c(
-  'Did not use IUD',
-  'Used IUD'
+  'Did not use hormonal IUD',
+  'Used hormonal IUD'
 )]
 
 this$ht <- this$dt |> style_totals_and_percentages(digits = 1)
@@ -2496,16 +2500,17 @@ this$ht <- this$dt |> style_totals_and_percentages(digits = 1)
 this$size <- as.data.frame(this$ht)[4, 2]
 
 this$ht |>
-  set_caption('Females by whether they report using an IUD either this or the previous month.')
+  set_caption('Females by whether they report using an hormonal IUD either this or the previous month.')
 ```
 
-The size of the subdomain of IUD users who are surveyed about their motives for IUD use by the NSFG is approximately `r this$size` females. (Table \@ref(tab:iud-use-during-month-or-previous))
+The size of the subdomain of hormonal IUD users who are surveyed about their motives for hormonal IUD use by the NSFG is approximately `r this$size` females. (Table \@ref(tab:iud-use-during-month-or-previous))
 
-```{r iud-reason-mentions, dependson='process-fem-data', fig.width=8, fig.height=4, fig.cap='Females by reason(s) mentioned for using IUD with persons mentioning multiple reasons counted multiple times, among those who used an IUD either this or the previous month.'}
+```{r iud-reason-mentions, dependson='process-fem-data', fig.width=8, fig.height=4, fig.cap='Females by reason(s) mentioned for using hormonal IUD with persons mentioning multiple reasons counted multiple times, among those who used an hormonal IUD either this or the previous month.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
-    this_month_method19 | last_month_method19
+    IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
+      (this_month_method19 | last_month_method19)
   ),
   prefix = 'why_use_iud_reason',
   format = 'YUSEMTHF',
@@ -2518,13 +2523,14 @@ estimate_totals_and_percentages(
   ~factor(iud_motivation),
   subset(
     get_NSFG_survey_design_for_sex('fem'),
-    this_month_method19 | last_month_method19
+    IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
+      (this_month_method19 | last_month_method19)
   )
 )[order(-total)] |> style_totals_and_percentages() |>
-  set_caption('Females by whether contraceptive or other reasons were mentioned for using IUD, among those who used an IUD either this or the previous month.')
+  set_caption('Females by whether contraceptive or other reasons were mentioned for using an hormonal IUD, among those who used an hormonal IUD either this or the previous month.')
 ```
 
-It appears that the most commonly mentioned reason for use of IUD is again birth control. (Figure \@ref(fig:iud-reason-mentions)) However, whether this represents a majority of IUD users cannot be determined because there is a substantial lack of answers to the question of reason for IUD use in the NSFG data files for respondents who were supposed to be asked the question. (Table \@ref(tab:iud-motivation))
+The most commonly mentioned reason for use of hormonal IUD is birth control. (Figure \@ref(fig:iud-reason-mentions)) For approximately half of hormonal IUD users, contraception is the sole motivation for use of an hormonal IUD, but approximately a third of hormonal IUD users are motivated by other health reasons in addition to birth control, and a minority of hormonal IUD users are motivated exclusively by reasons other than contraception. (Table \@ref(tab:iud-motivation))
 
 
 ## Use of Contraception Ever During Lifetime
