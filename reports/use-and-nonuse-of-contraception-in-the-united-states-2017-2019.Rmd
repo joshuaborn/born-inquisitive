@@ -1,16 +1,15 @@
 ---
-title: "Use and Nonuse of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
 author: "Joshua Born"
-output:
-  bookdown::html_document2:
-    code_folding: hide
-    toc: true
-    toc_depth: 5
-  number_sections: TRUE
-  fig_caption: TRUE
 bibliography: "bibliographies/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.bib"
 csl: "bibliographies/chicago-author-date.csl"
-link-citations: true
+date: 2022-04-27
+tags: ["original research", "birth control", "contraception", "third-person"]
+title: "Use and Nonuse of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
+output:
+  blogdown::html_page:
+    number_sections: true
+    toc: true
+    toc_depth: 5
 ---
 
 ```{r setup, include=FALSE}
@@ -1101,7 +1100,7 @@ Sections \@ref(use-of-contraception-during-most-recent-intercourse) and \@ref(us
 
 ## Population Size
 
-```{r population-size, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
+```{r population-size, dependson=c('process-fem-data', 'process-male-data')}
 fem1719dt[, person := 1]
 male1719dt[, person := 1]
 
@@ -1127,13 +1126,14 @@ Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r 
 
 ## Use of Contraception during Most Recent Intercourse
 
-```{r sexually-active, dependson=c('process-fem-data', 'process-male-data'), cache=FALSE}
+```{r sexually-active, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
 this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m, digits = 1)
 this$df <- as.data.frame(this$ht)
-this$ht |> set_caption('Persons who have had sexual intercourse with someone of the opposite sex in the past 3 months, among persons aged 15-49 living in households in the United States.')
 this$fem <- this$df[4, 3]
 this$male <- this$df[6, 3]
+
+this$ht |> set_caption('Persons who have had sexual intercourse with someone of the opposite sex in the past 3 months, among persons aged 15-49 living in households in the United States.')
 ```
 
 The estimates in this section pertain to a subdomain of persons in the United States who had intercourse with someone of the opposite sex in the past 3 months. There are approximately `r this$fem` females and `r this$male` males in this subdomain. (Table \@ref(tab:sexually-active))
