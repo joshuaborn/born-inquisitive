@@ -1,25 +1,55 @@
-submodule_path <- file.path('content', 'NSFG')
-submodule_inclusion_path <- file.path(submodule_path, 'reports')
+external_path <- file.path('external', 'NSFG', 'reports')
 
+
+# Build external articles
+blogdown::build_dir(external_path)
+
+
+# Copy YAML front matter to HTML files
+external_html_files <- list.files(external_path, "\\.html$", full.names = TRUE)
+for (html_filename in external_html_files) {
+  Rmd_filename <- gsub('\\.html$', '.Rmd', html_filename)
+  html_contents <- readLines(html_filename)
+  Rmd_contents <- readLines(Rmd_filename)
+  yaml_header <- Rmd_contents[
+    seq(
+      grep('---', Rmd_contents)[1],
+      grep('---', Rmd_contents)[2]
+    )
+  ]
+  writeLines(c(yaml_header, "\n", html_contents), html_filename)
+}
+
+
+# Copy HTML from external articles to content/
+file.copy(
+  external_html_files,
+  'content/',
+  overwrite = TRUE
+)
+
+
+# Copy supporting files from external articles to static/
+file.copy(
+  list.files(external_path, "_files$", full.names = TRUE),
+  'static/',
+  recursive = TRUE
+)
+
+
+# Build internal Rmd files
 blogdown::build_site(
-  run_hugo = FALSE,
-  build_rmd = function(x) {
-    not_NSFG <- x[grep(submodule_path, x, invert = TRUE)]
-    NSFG_reports <- x[grep(submodule_inclusion_path, x)]
-    c(not_NSFG, NSFG_reports)
-  }
+  build_rmd = TRUE,
+  run_hugo = FALSE
 )
 
-filepaths <- list.files(submodule_inclusion_path, "\\.html$", full.names = TRUE)
 
-blogdown::build_dir(submodule_inclusion_path, force = TRUE)
-
-file.rename(
-  filepaths,
-  gsub(submodule_inclusion_path, 'content', filepaths)
-)
-
+# Run Hugo
 blogdown::build_site(
-  run_hugo = TRUE,
-  build_rmd = FALSE
+  build_rmd = FALSE,
+  run_hugo = TRUE
 )
+
+
+# Preview in web browser
+blogdown::serve_site()
