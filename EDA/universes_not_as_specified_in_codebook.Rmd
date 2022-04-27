@@ -304,7 +304,8 @@ fem1719$Data[
     LSTMONMETH1,
     LSTMONMETH2,
     LSTMONMETH3,
-    LSTMONMETH4
+    LSTMONMETH4,
+    IUDTYPE
   )
 ] |> kable()
 ```
@@ -350,6 +351,25 @@ fem1719$Data[
       equals(LSTMONMETH3, 19) |
       equals(LSTMONMETH4, 19)
     )
+] |> kable()
+```
+
+### Fix
+
+```{r, dependson='load-data'}
+fem1719$Data[
+  equals(IUDTYPE, 2) &
+    (
+      equals(CURRMETH1, 19) |
+      equals(CURRMETH2, 19) |
+      equals(CURRMETH3, 19) |
+      equals(CURRMETH4, 19) |
+      equals(LSTMONMETH1, 19) |
+      equals(LSTMONMETH2, 19) |
+      equals(LSTMONMETH3, 19) |
+      equals(LSTMONMETH4, 19)
+    ),
+  tablena(YUSEIUD1)
 ] |> kable()
 ```
 
@@ -431,6 +451,75 @@ fem1719$Data[
 ] |> kable()
 ```
 
+### Fix
+
+```{r, dependson='load-data'}
+fem1719dt <- copy(fem1719$Data)
+
+fem1719MONSX <- create_NSFG_pivot_table(
+  'CMMONSX',
+  2:48,
+  c('CASEID', 'CMINTVW', 'CMLSTYR')
+)[
+  create_NSFG_pivot_table('MONSX', 2:48),
+  on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
+]
+
+fem1719dt <- fem1719MONSX[
+  !is.na(MONSX) & MONSX == 1 &
+    CMMONSX > CMLSTYR &
+    CMMONSX <= CMINTVW,
+  .(sex12mo = TRUE),
+  by = CASEID
+][fem1719dt]
+fem1719dt[, sex12mo := na_to_false(sex12mo)]
+
+fem1719dt[
+  is.na(MISSPILL) &
+    sex12mo &
+    (
+      equals(CURRMETH1, 3) |
+      equals(CURRMETH2, 3) |
+      equals(CURRMETH3, 3) |
+      equals(CURRMETH4, 3) |
+      equals(LSTMONMETH1, 3) |
+      equals(LSTMONMETH2, 3) |
+      equals(LSTMONMETH3, 3) |
+      equals(LSTMONMETH4, 3)
+    ),
+  .(
+    CASEID,
+    sex12mo,
+    MISSPILL,
+    CURRMETH1,
+    CURRMETH2,
+    CURRMETH3,
+    CURRMETH4,
+    LSTMONMETH1,
+    LSTMONMETH2,
+    LSTMONMETH3,
+    LSTMONMETH4
+  )
+] |> kable()
+
+fem1719MONSX[CASEID %in%
+  fem1719dt[
+    is.na(MISSPILL) &
+      sex12mo &
+      (
+        equals(CURRMETH1, 3) |
+        equals(CURRMETH2, 3) |
+        equals(CURRMETH3, 3) |
+        equals(CURRMETH4, 3) |
+        equals(LSTMONMETH1, 3) |
+        equals(LSTMONMETH2, 3) |
+        equals(LSTMONMETH3, 3) |
+        equals(LSTMONMETH4, 3)
+      ),
+    CASEID
+  ]
+] |> kable()
+```
 
 
 # Missing Answers, But Only for Cases Outside Domain of Interest
