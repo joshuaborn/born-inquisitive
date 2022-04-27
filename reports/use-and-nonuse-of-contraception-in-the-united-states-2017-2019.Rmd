@@ -118,6 +118,7 @@ set_NSFG_variables_as_factors(
     MISSPILL = 'MISSPILL',
     P12MOCON = 'P12MOCON',
     P1YRELP = 'P1YRELP',
+    PCURRNT = 'Y1N5C',
     POSIBLMN = 'Y1N5RDF',
     POSIBLPG = 'Y1N5RDF',
     PSURGSTR = 'Y1N5C',
@@ -2778,11 +2779,14 @@ this <- list()
 this$ht <- estimate_totals_and_percentages(
   ~I(
     CURRPREG == 'NO' &
-      sex_this_month &
+      (
+        sex_this_month & PCURRNT != 'NO'
+      ) &
       !is.element(
         RSTRSTAT,
-        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
+        c('SURGICALLY STERILE')
       ) &
+      !this_month_method6 &
       CURRMETH1 == 'No method used'
   ),
   get_NSFG_survey_design_for_sex('fem')
@@ -2792,7 +2796,7 @@ this$est <- as.data.frame(this$ht)[4, 2]
 this$ci <- as.data.frame(this$ht)[4, 3]
 ```
 
-The respondents who did use contraception during their last intercourse despite being at risk of unintended pregnancy that were identified in Section \@ref(reason-for-nonuse) were not specifically asked as part of the NSFG about their reasons for not using contraception. However, a series of questions were asked of female respondents who did not report pregnancy, physical infertility, or use of any method of contraception in the month of the interview, but did report having sexual intercourse with someone of the opposite sex in the month of the interview. There are approximately `r this$est` females in this subdomain, with a 95\% confidence interval for this estimate of `r this$ci`.
+The respondents who did use contraception during their last intercourse despite being at risk of unintended pregnancy that were identified in Section \@ref(reason-for-nonuse) were not specifically asked as part of the NSFG about their reasons for not using contraception. However, a series of questions were asked of female respondents who did not report pregnancy, or use of any method of contraception in the month of the interview, but did report having a current partner and having sexual intercourse with someone of the opposite sex in the month of the interview. There are approximately `r this$est` females in this subdomain, with a 95\% confidence interval for this estimate of `r this$ci`.
 
 Unfortunately, the results of this line of questioning on the NSFG are uninformative due to both sampling error and measurement error.
 
@@ -2804,11 +2808,15 @@ estimate_totals_and_percentages(
   subset(
     get_NSFG_survey_design_for_sex('fem'),
     CURRPREG == 'NO' &
-      sex_this_month &
+      (
+        sex_this_month & PCURRNT != 'NO'
+      ) &
       !is.element(
         RSTRSTAT,
-        c('SURGICALLY STERILE', 'NONSURGICALLY STERILE')
+        c('SURGICALLY STERILE')
       ) &
+      !this_month_method6 &
+      PCURRNT != 'NO' &
       CURRMETH1 == 'No method used'
   )
 ) |> style_totals_and_percentages() |>
@@ -2961,7 +2969,7 @@ Contraception is a nearly ubiquitous part of the reproductive behavior of person
 
 Despite the overall prevalence of contraception, at any given time, millions of persons neglect to use contraception during their most recent sexual intercourse despite being at risk for unintended pregnancy. (Section \@ref(reason-for-nonuse)) This is the case, at least in part, because there is much inconsistency in contraceptive use. (Section \@ref(consistency-of-use-of-contraception))
 
-This inconsistency occurs even though persons living in the United States compose a population that has abundant access to contraceptive methods. Among the approximately 5.7 million females not using a method of contraception despite being at risk for unintended pregnancy, less than 250 thousand are not using a method of contraception because they could not get a method. (Section \@ref(reasons-for-not-currently-using-contraception))
+This inconsistency occurs even though persons living in the United States compose a population that has abundant access to contraceptive methods. Among the over 5 million females not currently using contraception despite being at risk for unintended pregnancy, less than 250 thousand are not using a method of contraception because they could not get a method. (Section \@ref(reasons-for-not-currently-using-contraception))
 
 Furthermore, there is much dissatisfaction with contraceptive methods currently available. For instance, birth control pills are one of the most common methods of contraception in the United States and near the median in discontinuation rate among methods, but approximately a third of females who have ever used birth control pills have discontinued use due to dissatisfaction. (Section \@ref(discontinuation-due-to-dissatisfaction))
 

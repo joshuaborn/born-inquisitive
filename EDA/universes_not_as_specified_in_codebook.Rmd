@@ -82,7 +82,8 @@ fem1719_sex_this_month[
     sex_this_month,
     RSTRSTAT,
     CURRMETH1,
-    WYNOTUSE
+    WYNOTUSE,
+    PCURRNT
   )
 ] |> kable()
 ```
@@ -153,6 +154,28 @@ fem1719_sex_this_month[
 ] |> fwrite(here('output', 'WYNOTUSE-extra-fem_2017-19.csv'))
 ```
 
+### Partial Fix
+
+```{r, dependson='create-pivot-tables'}
+fem1719_sex_this_month[
+  fem1719$Data
+][
+  equals(CURRPREG, 5) &
+    (sex_this_month & !equals(PCURRNT, 5)) &
+    !is.element(RSTRSTAT, 1) &
+    equals(CURRMETH1, 1) &
+    is.na(WYNOTUSE),
+  .(
+    CASEID,
+    CURRPREG,
+    sex_this_month,
+    RSTRSTAT,
+    CURRMETH1,
+    WYNOTUSE
+  )
+] |> kable()
+```
+
 
 
 # Missing Answers and No Extra Answers
@@ -162,8 +185,7 @@ fem1719_sex_this_month[
 
 There cases that are in the universe for `P12MOCON` as specified in the codebook, but do not have answers for `P12MOCON`. However, all of the cases with answers to `P12MOCON` are in the universe for `P12MOCON` specified in the codebook.
 
-All the cases that are in the universe for `PXNOFREQ` as specified in the codebook have answers for `PXNOFREQ`, and all of the cases with answers to `PXNOFREQ` are in the universe for `PXNOFREQ` specified in the codebook.
-
+All the cases that are in the universe for `PXNOFREQ` as specified in the codebook have answers for `PXNOFREQ`, and all of the cases with answers to `PXNOFREQ` are in the universe for `PXNOFREQ` specified in the codebook. 
 
 ```{r, dependson='create-pivot-tables'}
 fem1719_sex12mo[
@@ -451,7 +473,7 @@ fem1719$Data[
 ] |> kable()
 ```
 
-### Fix
+### Partial Fix
 
 ```{r, dependson='load-data'}
 fem1719dt <- copy(fem1719$Data)
