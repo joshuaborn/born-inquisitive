@@ -1,6 +1,6 @@
 ---
 author: "Joshua Born"
-bibliography: "bibliographies/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.bib"
+bibliography: "bibliographies/use-of-contraception-in-the-united-states-2017-2019.bib"
 csl: "bibliographies/chicago-author-date.csl"
 date: 2022-04-28
 tags: ["original research", "birth control", "contraception", "NSFG", "third-person"]
