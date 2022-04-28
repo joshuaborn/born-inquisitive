@@ -159,6 +159,10 @@ strong, b {
   @include bold();
 }
 
+code {
+  font-family: monospace;
+}
+
 em, i {
   font-style: italic;
 }
@@ -250,12 +254,12 @@ main {
     }
 
     table {
-      @include non-body-font();
       caption-side: top;
       font-size: 0.8rem;
       margin: 0.5rem auto 1.25rem;
 
       thead {
+        @include non-body-font();
         border-bottom: 1px solid #333;
         border-top: 1px solid #333;
 
@@ -265,6 +269,7 @@ main {
       }
 
       tbody {
+        @include non-body-font();
         border-bottom: 1px solid #333;
 
         td {
@@ -346,7 +351,7 @@ main {
     figure, .figure {
       @include smaller();
       max-width: 100%;
-      margin: 1rem 0;
+      margin: 1rem 0 2rem;
       text-align: center;
 
       img {
