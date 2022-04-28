@@ -559,3 +559,10 @@ main {
     }
   }
 }
+
+
+/* Content hacks */
+
+/*.toc-section-number::after, */.header-section-number::after {
+  content: ".";
+}
