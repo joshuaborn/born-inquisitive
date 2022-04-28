@@ -4,7 +4,7 @@ bibliography: "bibliographies/use-and-nonuse-of-contraception-in-the-united-stat
 csl: "bibliographies/chicago-author-date.csl"
 date: 2022-04-27
 tags: ["original research", "birth control", "contraception", "NSFG", "third-person"]
-title: "Use and Nonuse of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
+title: "Use of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
 output:
   blogdown::html_page:
     number_sections: true
@@ -24,7 +24,7 @@ library(huxtable)
 library(survey)
 library(tidyfst)
 
-i_am('reports/use-and-nonuse-of-contraception-in-the-united-states-2017-2019.Rmd')
+i_am('reports/use-of-contraception-in-the-united-states-2017-2019.Rmd')
 
 theme_set(
   theme_bw() + theme(
