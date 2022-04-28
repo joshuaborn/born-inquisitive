@@ -6,6 +6,7 @@ date: 2022-04-28
 tags: ["original research", "birth control", "contraception", "NSFG", "third-person"]
 title: "Use of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
 output:
+  #bookdown::html_document2:
   blogdown::html_page:
     number_sections: true
     toc: true
@@ -28,7 +29,7 @@ i_am('reports/use-of-contraception-in-the-united-states-2017-2019.Rmd')
 
 theme_set(
   theme_bw() + theme(
-    text = element_text(family = 'sans', size = 14)
+    text = element_text(family = 'sans', size = 17)
   )
 )
 
@@ -41,7 +42,7 @@ knitr::opts_chunk$set(
   dpi = 72,
   echo = FALSE,
   fig.align = 'center',
-  fig.asp = 0.4,
+  fig.asp = 0.5,
   fig.retina = 2,
   fig.width = 10,
   message = FALSE,
@@ -1579,7 +1580,7 @@ estimate_totals_and_percentages(
 ) |> plot_totals_with_CIs()
 ```
 
-```{r fem-partner-infertility, dependson='process-fem-data', fig.asp=0.3, fig.cap="Females by reason reported for their partners' inability to father a child, among those who report having a partner who is physically infertile not due to a sterilizing procedure."}
+```{r fem-partner-infertility, dependson='process-fem-data', fig.asp=0.4, fig.cap="Females by reason reported for their partners' inability to father a child, among those who report having a partner who is physically infertile not due to a sterilizing procedure."}
 estimate_totals_and_percentages(
   ~factor(REASIMPP),
   subset(
@@ -1621,7 +1622,7 @@ While the vast majority of both females and males used only one method of contra
 
 ### Method(s) Used
 
-```{r fem-methods-used, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females categorized by whether or not each contraceptive method was used during last intercourse with a male in the past 3 months, with persons using multiple methods counted multiple times.'}
+```{r fem-methods-used, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by whether or not each contraceptive method was used during last intercourse with a male in the past 3 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -1639,7 +1640,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r male-methods-used, dependson='process-male-data', fig.asp=0.5, fig.cap='Males categorized by whether or not each contraceptive method was used during last intercourse with a female in the past 3 months, with persons using multiple methods counted multiple times.', }
+```{r male-methods-used, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by whether or not each contraceptive method was used during last intercourse with a female in the past 3 months, with persons using multiple methods counted multiple times.', }
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -1667,7 +1668,7 @@ Estimates of the number of female and male persons using withdrawal, vasectomy, 
 
 ### Method Used Exclusively
 
-```{r fem-exclusive-method-used, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females categorized by which contraceptive method was used during last intercourse with a male in the past 3 months, among those who used exactly one method during last intercourse.'}
+```{r fem-exclusive-method-used, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by which contraceptive method was used during last intercourse with a male in the past 3 months, among those who used exactly one method during last intercourse.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -1685,7 +1686,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r male-exclusive-method-used, dependson='process-male-data', fig.asp=0.5, fig.cap='Males categorized by which contraceptive method was used during last intercourse with a female in the past 3 months, among those who used exactly one method during last intercourse.'}
+```{r male-exclusive-method-used, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by which contraceptive method was used during last intercourse with a female in the past 3 months, among those who used exactly one method during last intercourse.'}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -1709,7 +1710,7 @@ Restricting analysis to persons who used only one method of contraception during
 
 ### Proportion of Method Users Who Also Used Other Method(s)
 
-```{r fem-proportion-another, dependson='process-fem-data', fig.asp=0.7, fig.cap='Proportion using another method of contraception among females using each method of contraception during last intercourse with a male in the past 3 months.'}
+```{r fem-proportion-another, dependson='process-fem-data', fig.asp=0.8, fig.cap='Proportion using another method of contraception among females using each method of contraception during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions_in_subdomains(
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
@@ -1726,7 +1727,7 @@ estimate_NSFG_mentions_in_subdomains(
   plot_percentages_with_CIs()
 ```
 
-```{r male-proportion-another, dependson='process-fem-data', fig.asp=0.5, fig.cap='Proportion using another method of contraception among males using each method of contraception during last intercourse with a female in the past 3 months.'}
+```{r male-proportion-another, dependson='process-fem-data', fig.asp=0.6, fig.cap='Proportion using another method of contraception among males using each method of contraception during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions_in_subdomains(
   sex = 'male',
   row_estimation_function = function(x) {
@@ -1789,7 +1790,7 @@ When used in conjunction with other methods, calendar-based methods are most com
 
 ### Other Method(s) Used with Withdrawal, Condom, and Pill
 
-```{r fem-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.7, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a male in the past 3 months.'}
+```{r fem-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -1808,7 +1809,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r male-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.5, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a female in the past 3 months.'}
+```{r male-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -1828,7 +1829,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r fem-other-with-condom, dependson='process-fem-data', fig.asp=0.7, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a male in the past 3 months.'}
+```{r fem-other-with-condom, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -1847,7 +1848,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r male-other-with-condom, dependson='process-male-data', fig.asp=0.5, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a female in the past 3 months.'}
+```{r male-other-with-condom, dependson='process-male-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -1887,7 +1888,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r male-other-with-pill, dependson='process-male-data', fig.asp=0.5, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a female in the past 3 months.'}
+```{r male-other-with-pill, dependson='process-male-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -1991,7 +1992,7 @@ The estimates of those who have not used any method of contraception in the past
 
 ### Method(s) Used
 
-```{r fem-methods-used-12-months, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
+```{r fem-methods-used-12-months, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2009,7 +2010,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r male-methods-used-12-months, dependson='process-male-data', fig.asp=0.5, fig.cap='Males categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
+```{r male-methods-used-12-months, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -2035,7 +2036,7 @@ Similarly, the distribution of method(s) used in the past 12 months in Table \@r
 
 ### Method Used Exclusively
 
-```{r fem-exclusive-method-used-12-months, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
+```{r fem-exclusive-method-used-12-months, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2053,7 +2054,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r male-exclusive-method-used-12-months, dependson='process-male-data', fig.asp=0.5, fig.cap='Males categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
+```{r male-exclusive-method-used-12-months, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
 estimate_NSFG_mentions(
   sex = 'male',
   survey_design = subset(
@@ -2565,7 +2566,7 @@ this$percentage <- paste0(round(this$dt[1, percentage] * 100, 1), '%')
 this$ht |> set_caption('Females by whether they ever have used any method of contraception, among those aged 15-49 living in households in the United States.')
 ```
 
-```{r methods-used-ever, dependson='process-fem-data', fig.asp=1.0, fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times.'}
+```{r methods-used-ever, dependson='process-fem-data', fig.asp=1.1, fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
   survey_design = get_NSFG_survey_design_for_sex('fem'),
   prefix = 'ever_used_method',
@@ -2621,7 +2622,7 @@ this$dt2 |> style_totals_and_percentages(digits = 1) |>
   set_caption('Females by whether they ever have used any method of contraception, among those who have ever had intercourse with someone of the opposite sex.')
 ```
 
-```{r methods-used-ever-had-sex, dependson='process-fem-data', fig.asp=1.1, fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times, among those who have ever had intercourse with someone of the opposite sex.'}
+```{r methods-used-ever-had-sex, dependson='process-fem-data', fig.asp=1.2, fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times, among those who have ever had intercourse with someone of the opposite sex.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2641,7 +2642,7 @@ There are approximately `r this$size` females who have ever had intercourse with
 
 ## Discontinuation Due to Dissatisfaction
 
-```{r discontinuation, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing multiple methods counted multiple times.'}
+```{r discontinuation, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing multiple methods counted multiple times.'}
 this <- list()
 this$dt <- estimate_NSFG_mentions_in_subdomains(
   row_estimation_function = function(x) {
@@ -2664,7 +2665,7 @@ this$dt |> plot_totals_with_CIs() +
   )
 ```
 
-```{r discontinuation-by-percentage, dependson='process-fem-data', fig.asp=0.8, fig.cap='Proportion of females who have discontinued using each contraceptive method due to dissatisfaction, among those who have ever used each method of contraception.'}
+```{r discontinuation-by-percentage, dependson='process-fem-data', fig.asp=0.9, fig.cap='Proportion of females who have discontinued using each contraceptive method due to dissatisfaction, among those who have ever used each method of contraception.'}
 this$dt |> plot_percentages_with_CIs()
 ```
 
@@ -2677,7 +2678,7 @@ The following subsections examine reasons for dissatisfaction leading to discont
 
 ### Condom
 
-```{r condom-quit-reasons, dependson='process-fem-data', fig.asp=0.5, fig.cap='Females categorized by reason for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction.'}
+```{r condom-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2707,7 +2708,7 @@ When condoms are discontinued due to dissatisfaction, the most common reasons ar
 
 ### Pill
 
-```{r pill-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with contraceptive pills, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using pills due to dissatisfaction.'}
+```{r pill-quit-reasons, dependson='process-fem-data', fig.asp=0.7, fig.cap='Females categorized by reason for dissatisfaction with contraceptive pills, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using pills due to dissatisfaction.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2722,7 +2723,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r pill-quit-specific-reasons, dependson='process-fem-data', fig.asp=0.7, fig.cap='Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "Too difficult to use," "Side effects," or "Other."'}
+```{r pill-quit-specific-reasons, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "Too difficult to use," "Side effects," or "Other."'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2742,7 +2743,7 @@ Side effects are by far the most commonly reported reason for discontinuation of
 
 ### IUD
 
-```{r iud-quit-reasons, dependson='process-fem-data', fig.asp=0.5, fig.cap='Females categorized by reason for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using an IUD due to dissatisfaction.'}
+```{r iud-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using an IUD due to dissatisfaction.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2759,7 +2760,7 @@ estimate_NSFG_mentions(
   )
 ```
 
-```{r iud-specific-quit-reasons, dependson='process-fem-data', fig.asp=0.45, fig.cap='Females categorized by reason described for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using a IUD due to dissatisfaction for reasons "Too difficult to use," "Side effects," or "Other."'}
+```{r iud-specific-quit-reasons, dependson='process-fem-data', fig.asp=0.55, fig.cap='Females categorized by reason described for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using a IUD due to dissatisfaction for reasons "Too difficult to use," "Side effects," or "Other."'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -2854,7 +2855,7 @@ Because there are a relatively few number of persons estimated in Figure \@ref(f
 
 ### Reason(s) Respondent Believes She Cannot Become Pregnant
 
-```{r pregnancy-impossible-reason, dependson='process-fem-data', fig.asp=0.5, fig.cap='Females categorized by reason(s) they believe they cannot become pregnant, with persons using reporting multiple reasons counted multiple times, among those who select "You do not think you can get pregnant" as a reason for contraceptive nonuse.'}
+```{r pregnancy-impossible-reason, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason(s) they believe they cannot become pregnant, with persons using reporting multiple reasons counted multiple times, among those who select "You do not think you can get pregnant" as a reason for contraceptive nonuse.'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
