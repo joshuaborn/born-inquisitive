@@ -1588,7 +1588,10 @@ estimate_totals_and_percentages(
     get_NSFG_survey_design_for_sex('fem'),
     POSIBLMN == 'No'
   )
-) |> plot_totals_with_CIs()
+) |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
 ```
 
 The reason for physical infertility not due to a sterilizing procedure is part of the questionnaire for female respondents of the NSFG, but not the questionnaire for male respondents. As Figures \@ref(fig:fem-infertility) and \@ref(fig:fem-partner-infertility) illustrate, because these conditions are relatively rare, the effective sample sizes of the relevant subdomains from a two-year sequence of the NSFG are small, and the sampling error is quite large relative to the estimates.
@@ -2445,7 +2448,10 @@ estimate_NSFG_mentions(
   prefix = 'why_use_pill_reason',
   format = 'YUSEMTHF',
   skip = 98:99
-)[order(-total)] |> plot_totals_with_CIs()
+)[order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
 ```
 
 ```{r pill-motivation, dependson='process-fem-data'}
@@ -2526,7 +2532,10 @@ estimate_NSFG_mentions(
   prefix = 'why_use_iud_reason',
   format = 'YUSEMTHF',
   skip = 98:99
-)[order(-total)] |> plot_totals_with_CIs()
+)[order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
 ```
 
 ```{r iud-motivation, dependson='process-fem-data'}
@@ -2699,7 +2708,10 @@ estimate_NSFG_mentions(
   ),
   prefix = 'specific_condom_quit_reason',
   format = 'STOPCONDFMT'
-)[total > 0][order(-total)] |> plot_totals_with_CIs()
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
 ```
 
 When condoms are discontinued due to dissatisfaction, the most common reasons are due to decrease in sexual pleasure or dislike from male partners, though a nontrivial number of persons report experiencing side effects. (Figure \@ref(fig:condom-quit-reasons)) The most common side effects are allergy or discomfort. (Figure \@ref(fig:condom-quit-specific-reasons))
@@ -2775,7 +2787,10 @@ estimate_NSFG_mentions(
   ),
   prefix = 'specific_iud_quit_reason',
   format = 'STOPIUDFMT'
-)[total > 0][order(-total)] |> plot_totals_with_CIs()
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
 ```
 
 Like with contraceptive pills, side effects are by far the most commonly reported reason for discontinuation of IUDs. (Figure \@ref(fig:iud-quit-reasons)) For IUDs, commonly reported side effects involve abdominal pain or bleeding. (Figure \@ref(fig:iud-specific-quit-reasons))
@@ -2845,7 +2860,10 @@ estimate_NSFG_mentions(
   ),
   prefix = 'nonuse_reason',
   format = 'WHYNOUSNG'
-)[total > 0][order(-total)] |> plot_totals_with_CIs()
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
 ```
 
 A nontrivial number of up to half a million persons are falsely included in this subdomain, because some respondents to the NSFG spontaneously respond that they actually are using a method of contraception when asked why they are not. (Figure \@ref(fig:nonuse-reason)) This is evidence of an opposite type of measurement error to that found in Section \@ref(any-method-during-past-12-months).
@@ -2862,7 +2880,10 @@ estimate_NSFG_mentions(
   ),
   prefix = 'pregnancy_impossible_reason',
   format = 'WHYNOTPGF'
-)[total > 0][order(-total)] |> plot_totals_with_CIs()
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
 ```
 
 Among the approximately million females who select "you do not think you can get pregnant" as a reason for not using contraception, there is no clearly most common reason for the belief that becoming pregnant is impossible. (Figure \@ref(fig:pregnancy-impossible-reason)) Some answers, such as having prior unprotected sexual intercourse without a pregnancy, are likely spurious reasons to believe pregnancy is impossible, while others, such as medical diagnosis of a reproductive condition, should have led to respondents reporting their physical infertility earlier in the NSFG questioning.
