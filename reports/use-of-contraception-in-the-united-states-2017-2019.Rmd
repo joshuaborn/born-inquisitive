@@ -6,7 +6,6 @@ date: 2022-04-28
 tags: ["original research", "birth control", "contraception", "NSFG", "third-person"]
 title: "Use of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
 output:
-  #bookdown::html_document2:
   blogdown::html_page:
     number_sections: true
     toc: true
