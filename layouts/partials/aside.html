@@ -15,7 +15,7 @@
   </section>
   <section id="archive">
     <h2>Archive</h2>
-    {{ range (.Site.RegularPages.GroupByDate "January 2006") }}
+    {{ range $index, $value := (where .Site.RegularPages "Section" "!=" "noindex").GroupByDate "January 2006" }}
       <h3>{{ .Key }}</h3>
       <ul class="archive-list">
         {{ range .Pages }}

@@ -5,7 +5,7 @@
 .Ruserdata
 .hugo_build.lock
 /blogdown
-/content/**.html
+/content/**/*.html
 /public
 /resources/_gen
 /static/*_files

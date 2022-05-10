@@ -8,7 +8,7 @@
 
 {{ define "main" }}
   <nav>
-    {{ range .Pages }}
+    {{ range .RegularPages }}
       <article>
         <h2><a href="{{.Permalink}}">{{.Title}}</a></h2>
         {{ partial "meta" . }}
