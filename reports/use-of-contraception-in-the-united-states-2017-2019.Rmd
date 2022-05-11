@@ -3238,7 +3238,7 @@ estimate_NSFG_mentions_in_subdomains(
   set_caption('Males using another method of contraception among persons using each method of contraception during last intercourse with a female in the past 3 months.')
 ```
 
-### Other Method(s) Used with Withdrawal, Condom, and Pill during Most Recent Intercourse
+## Other Method(s) Used with Withdrawal, Condom, and Pill during Most Recent Intercourse
 
 ```{r fem-other-with-withdrawal-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3437,7 +3437,7 @@ estimate_NSFG_mentions(
 
 ### Among Those Who Have Ever Had Intercourse
 
-```{r methods-used-ever-had-sex, dependson='process-fem-data'}
+```{r methods-used-ever-had-sex-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
   survey_design = subset(
     get_NSFG_survey_design_for_sex('fem'),
@@ -3448,6 +3448,150 @@ estimate_NSFG_mentions(
 )[order(-total)] |>
   style_totals_and_percentages() |>
   set_caption('Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times, among those who have ever had intercourse with someone of the opposite sex.')
+```
+
+## Discontinuation Due to Dissatisfaction
+
+```{r discontinuation-table}
+estimate_NSFG_mentions_in_subdomains(
+  row_estimation_function = function(x) {
+    estimate_row_total_and_percentage(
+      as.formula(sprintf('~ever_quit_method%d', x)),
+      subset(
+        get_NSFG_survey_design_for_sex('fem'),
+        fem1719dt[, get(sprintf('ever_used_method%d', x))]
+      )
+    )
+  },
+  format = 'ever_used_method',
+  skip = c(20)
+)[!is.nan(percentage_CI_high)][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing multiple methods counted multiple times.')
+```
+
+## Reason(s) for Discontinuation of Condom
+
+```{r condom-quit-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    ever_quit_method4
+  ),
+  prefix = 'condom_quit_reason',
+  format = 'REASMFMT'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction.')
+```
+
+```{r condom-quit-specific-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    condom_quit_reason3 | condom_quit_reason6 | condom_quit_reason15
+  ),
+  prefix = 'specific_condom_quit_reason',
+  format = 'STOPCONDFMT'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
+```
+
+## Reason(s) for Discontinuation of Pill
+
+```{r pill-quit-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    ever_quit_method3
+  ),
+  prefix = 'pill_quit_reason',
+  format = 'REASMFMT'
+)[order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason for dissatisfaction with contraceptive pills, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using pills due to dissatisfaction.')
+```
+
+```{r pill-quit-specific-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    pill_quit_reason3 | pill_quit_reason6 | pill_quit_reason15
+  ),
+  prefix = 'specific_pill_quit_reason',
+  format = 'STOPPILLFMT'
+)[order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
+```
+
+## Reason(s) for Discontinuation of IUD
+
+```{r iud-quit-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    ever_quit_method31 |
+      ever_quit_method32 |
+      ever_quit_method33
+  ),
+  prefix = 'iud_quit_reason',
+  format = 'REASMFMT'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using an IUD due to dissatisfaction.')
+```
+
+```{r iud-specific-quit-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    (
+      ever_quit_method31 |
+        ever_quit_method32 |
+        ever_quit_method33
+    ) & (
+      iud_quit_reason3 |
+        iud_quit_reason6 |
+        iud_quit_reason15
+    )
+  ),
+  prefix = 'specific_iud_quit_reason',
+  format = 'STOPIUDFMT'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason described for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using a IUD due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
+```
+
+## Reason(s) for Nonuse When Not Intending to Conceive
+
+```{r nonuse-reason-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    pregnancy_intent_status == 'Not intending to conceive'
+  ),
+  prefix = 'nonuse_reason',
+  format = 'WHYNOUSNG'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason(s) for not using contraception, with persons reporting multiple reasons counted multiple times, among those at increased risk for unintended pregnancy due to contraceptive nonuse.')
+```
+
+## Reason(s) Respondent Believes She Cannot Become Pregnant
+
+```{r pregnancy-impossible-reason-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  survey_design = subset(
+    get_NSFG_survey_design_for_sex('fem'),
+    nonuse_reason2
+  ),
+  prefix = 'pregnancy_impossible_reason',
+  format = 'WHYNOTPGF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason(s) they believe they cannot become pregnant, with persons using reporting multiple reasons counted multiple times, among those who select "you do not think you can get pregnant" as a reason for contraceptive nonuse.')
 ```
 
 
