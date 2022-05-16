@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Writing about the topic of induced abortion of pregnancy, I encounter a lot of comments that are, to put it politely, uninformative. Indeed, if you are a person inclined to nuanced critical thinking, you might encounter a lot of these comments going about your everyday life and notice that the standards of discourse around abortion are quite poor. Rather than respond to the same sorts of comments over and over again, this page is intended to be a summary of all of my responses to all of these comments.
+Writing about the topic of induced abortion of pregnancy -- henceforth just "abortion" -- I encounter a lot of comments that are, to put it politely, uninformative. Indeed, if you are a person inclined to nuanced critical thinking, you might encounter a lot of these comments even just going about your everyday life and notice that the standards of discourse around abortion are quite poor. Rather than respond to the same sorts of comments over and over again, this page is intended to be a summary of all of my responses to all of these comments.
 
 ## Reasons for Poor Standards of Discourse
 
@@ -35,32 +35,34 @@ Before getting into the specific responses, I would like to provide a rough outl
 
 1. Many if not most people are very poor at articulating their own feelings and therefore lack self-awareness about their own value judgments. A pure moral disagreement _per se_ occurs when two or more people have the same understanding of the facts of the matter, but have different value judgments. Therefore, those with poor self-awareness about their own value judgments are poor at understanding and discussing moral conflicts. This is not unique to abortion, but is true for all kinds of moral disagreement. I have written about this at length in my article on [moral skepticism](/moral-skepticism.html).
 1. Moral psychology is an area rife for motivated reasoning. As such, there is much _post hoc_ rationalization invented to ornament moral sentiments. However, since these _post hoc_ rationalizations are invented after the fact, they are not the real reasons why any given person acquired a moral sentiment. They therefore are quite literally self-delusional stories that people tell themselves, with no informational content. Again, this is not unique to abortion, but is true for thinking about morality with regard to many different topics. The phenomenon of _post hoc_ rationalization in moral psychology has been popularly discussed by Jonathan Haidt and colleagues. [@haidt_emotional_2001; @haidt_righteous_2012]
-1. Because there are several factions who have established orthodoxies on abortion, and there are many people whose viewpoints are informed by conformity to a faction, oftentimes discourse about abortion is used as an opportunity to proclaim slogans and rhetoric designed to express affiliation with a political or religious group, instead of an opportunity for genuine discourse. This is true for any factional issue, not just abortion. I have previously written about how [slogans and political rhetoric are bad for critical thinking](/political-rhetoric-as-shibboleths.html).
+1. Because there are several factions who have established orthodoxies on abortion, and there are many people whose viewpoints are informed by allegiance to a faction, oftentimes discourse about abortion is used as an opportunity to proclaim slogans and rhetoric designed to express affiliation with a political or religious group, instead of an opportunity for genuine discourse. This is true for any factional issue, not just abortion. I have previously written about how [slogans and political rhetoric are bad for critical thinking](/political-rhetoric-as-shibboleths.html).
 
-While many issues similarly have aspects of moral disagreement, and many issues similarly have factional aspects, in the United States, abortion may be the issue with the greatest intersection of these phenomena and hence the greatest poverty in standards of discourse.
+While many issues similarly have aspects of moral disagreement, and many issues similarly have factional aspects, in the United States, abortion might very well be the issue with the greatest intersection of these phenomena and hence the greatest poverty in standards of discourse.
 
 
 ## Responses to Comments
 
-### Partisan Politics
+### Partisan Politics and "Progressive" versus "Conservative"
 
-There is a genre of comments that take as their premise the binary factionalism between left-wing and right-wing that is a feature of partisan politics in the United States. The political right is interpreted as being opposed to abortion as a method of fertility control, the political left is interpreted as being in favor of abortion as a method of fertility control, and the political right is called "conservative."
+There is a genre of comments that take as their premise the binary factionalism between left-wing and right-wing that is a feature of partisan politics in the United States. The political right is interpreted as being opposed to abortion as a method of fertility control and is called "conservative," the political left is interpreted as being in favor of abortion as a method of fertility control and is called "progressive."
 
-For those whose thinking is heavily influenced by this false dichotomy, it is a natural leap to think that moral compunction about abortion is a "conservative" position. Indeed, I have seen glib comments to the effect of "abort the backwardness of your ways!"
+First of all, calling your own faction "progressive" is one of the most facile pieces of self-righteous labeling one can imagine.
+
+Nonetheless, for those whose thinking is heavily influenced by this false dichotomy, it is a natural leap to think that moral compunction about abortion is a "conservative" position. Indeed, I have seen glib comments to the effect of "abort the backwardness of your conservative views on abortion!"
 
 The issue I take with these comments is threefold:
 
 1. If you strip away the stupidity of partisanship, you fill find a diversity of opinions about abortion -- or indeed anything else -- among populations large enough to consist of millions people, even among populations categorized as left-wing or right-wing. Therefore, framing disagreement about abortion in a partisan way is simpleminded.
 1. Whether or not one viewpoint is relatively "newer" than another -- however you would measure that -- is not necessarily tantamount to that viewpoint being _better_ than another.
-1. That being said, **defense of abortion as a method of fertility control is the _literally_ conservative viewpoint on the matter.**
+1. That being said, **defense of abortion as a method of fertility control is the conservative, in the literal sense, viewpoint on the matter.**
 
-Elaborating on point #3, the only way you can construe advocacy of abortion as fertility control as a "newer" viewpoint is to ignore most of human existence and to think that the history of politics in the United States from the 1950s to present is the history of all time, everywhere. This is an extremely short-sighted framing that is ignorant of the big picture.
+Elaborating on point #3, the only way you can construe advocacy of abortion as fertility control as a "newer" viewpoint is to ignore most of human existence and to think that the history of politics in the United States from the 1950s to present is the history of all time, everywhere. This is an extremely short-sighted.
 
-People have been killing fetuses and indeed infants as a method of fertility control for most of human existence back to prehistory. This has been true in large societies, in small societies, and places all over the Earth. Indeed, for most of human history, this has been a legal and mainstream practice. The Roman Catholic Church, which has been prominent in moral condemnation of abortion, did not start doing so until the 17th or 18th centuries. European countries did not even start attempting to make _infanticide_ illegal until the late medieval, early modern periods, and countries like Great Britain were still grappling with anti-infanticide laws into the 20th century. [@kilday_history_2013]
+People have been killing fetuses -- and indeed infants -- as a method of fertility control for most of human existence back to prehistory. This has been true in large societies, in small societies, and places all over the Earth. Indeed, for most of human history, this has been a legal and mainstream practice. The Roman Catholic Church, which has been prominent in moral condemnation of abortion, did not start doing so until the 17th or 18th centuries. European countries did not even start attempting to make _infanticide_ illegal until the late medieval, early modern periods, let alone abortion. Countries like Great Britain were still grappling with anti-infanticide laws into the 20th century. [@kilday_history_2013]
 
-It is up to you whether you have the value judgement that killing fetuses as a method of fertility control is fine, but you do not get to rewrite history. Moral compunction about killing fetuses -- or even infants, for that matter -- as a method of fertility control has been a minority position throughout human existence and has only come to any prominence in the past few centuries. Those are the facts of the matter. If any position is "conservative," it is that killing fetuses as a method of fertility is acceptable.
+It is up to you whether you have the value judgement that killing fetuses as a method of fertility control is fine, but you do not get to rewrite history. Moral compunction about killing fetuses -- or even infants, for that matter -- as a method of fertility control has been a minority position throughout human existence and has only come to any prominence in the past few centuries. Those are the facts of the matter. If any position is conservative, it is that killing fetuses as a method of fertility control is acceptable.
 
-For my part, I _do_ have moral compunction about killing fetuses as a method of fertility control, and so I have the value judgment that defense of abortion is a backwards viewpoint that maintains the status quo of our primitive and barbaric ancestors. I am not the first to have this attitude; this is something that [Margaret Sanger spoke about at length](/margaret-sanger-on-abortion-in-her-own-words.html) when she founded the birth control movement in the United States.
+This is something that [Margaret Sanger spoke about at length](/margaret-sanger-on-abortion-in-her-own-words.html) discussed at length when she founded the birth control movement in the United States.
 
 
 ## Citations
