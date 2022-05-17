@@ -1056,7 +1056,7 @@ Respondents who are selected for sampling and who consent to be interviewed are 
 
 ### Sample Characteristics
 
-The first NSFG was done in 1973 and sampled only female persons aged 15-44 years who had ever been married. The 1982 edition of the NSFG expanded the sample to all females regardless of marital status, and the 2002 edition of the NSFG was the first to sample males in addition to females. More recently, the 2015-2017 edition of the NSFG expanded the age range for sampling to 15-49 years from 15-44 years.
+The first NSFG was done in 1973 and sampled only female persons aged 15-44 years who had ever been married. The 1982 edition of the NSFG expanded the sample to all females regardless of marital status, and the 2002 edition of the NSFG was the first to sample males in addition to females. More recently, the 2015-2017 edition of the NSFG expanded the age range for sampling from 15-44 years to 15-49 years.
 
 In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males with survey design information specific to the data table. Therefore, separate estimates for females and males are given throughout this report. Estimates for both females and males are only combined when no attempt is made to quantify [sampling error](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals).
 
@@ -1078,7 +1078,7 @@ More information about the NSFG is available in its official User's Guide and ap
 
 ## Differences with Prior Works
 
-Prior works based on the NSFG report on the same subject as this report. [@kavanaugh_contraceptive_2018] Indeed, personnel associated with the NCHS themselves publish reports based on the NSFG in journals [@piccinino_trends_1998], National Health Statistics Reports [@jones_current_2012; @daniels_contraceptive_2013; @copen_condom_2017], and NCHS Data Briefs [@daniels_current_2020]. This report differs from prior works in several ways:
+There are prior works based on the NSFG about the same subject as this report. [@kavanaugh_contraceptive_2018] Indeed, personnel associated with the NCHS themselves publish reports based on the NSFG in journals [@piccinino_trends_1998], National Health Statistics Reports [@jones_current_2012; @daniels_contraceptive_2013; @copen_condom_2017], and NCHS Data Briefs [@daniels_current_2020]. This report differs from prior works in several ways:
 
 * Most notably, many prior works based on the NSFG focus exclusively on contraceptive use among females living in the United States. [@piccinino_trends_1998; @jones_current_2012; @daniels_contraceptive_2013; @kavanaugh_contraceptive_2018; @daniels_current_2020] This report examines contraceptive use reported by both females and males and includes results for males alongside results for females, wherever data is available in both NSFG data files.[^males-too]
 * Unlike many prior works based on past editions of the NSFG, this report is based on the latest 2017-2019 edition of the NSFG. While several academic papers on more specific topics based on the 2017-2019 data are published in the literature at the time of the writing of this report, only a single NCHS Data Brief covers contraceptive use in a similarly broad way using the 2017-2019 NSFG. [@daniels_current_2020]
@@ -1117,7 +1117,7 @@ this$ht[, 1:4] |>
   set_caption('Number persons aged 15-49 living in households in the United States estimated by the NSFG.')
 ```
 
-Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r this$male` males living in households in the United States. (Table \@ref(tab:population-size))[^ci] According to census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size include the census-based counts. Thus, the NSFG estimates of population size are consistent with known population sizes.[^consistent]
+Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r this$male` males living in households in the United States. (Table \@ref(tab:population-size))[^ci] According to census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size cover the census-based counts. Thus, the NSFG estimates of population size are consistent with known population sizes.[^consistent]
 
 [^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals).
 
@@ -1209,9 +1209,9 @@ style_and_combine_totals_and_percentages_vertically(
   set_caption('Persons categorized by reason for not using contraception, among persons who had sexual intercourse with someone of the opposite sex in the past 3 months.')
 ```
 
-Some persons intentionally refrain from using contraception for various reasons. The most common reason for intentional nonuse of contraception is a desire to conceive a pregnancy, followed by the female partner being currently pregnant. (Table \@ref(tab:reason-for-nonuse))
+Some persons intentionally refrain from using contraception for various reasons. The most common reason for intentional nonuse of contraception is a desire to conceive a pregnancy, followed by the female partner currently being pregnant. (Table \@ref(tab:reason-for-nonuse))
 
-The "otherwise did not use contraception during last intercourse" category in Table \@ref(tab:reason-for-nonuse) estimates contain those who are at increased risk for unintended pregnancy due contraceptive nonuse.
+The "otherwise did not use contraception during last intercourse" category in Table \@ref(tab:reason-for-nonuse) estimates those who are at increased risk for unintended pregnancy due contraceptive nonuse.
 
 "Postpartum" is categorized separately in Table \@ref(tab:reason-for-nonuse) for females, but not for males because this information is not available in the public use data files for males due to disclosure risk reduction. "Otherwise did not use contraception during last intercourse" for males therefore includes some persons who last had intercourse with a postpartum female. However, as can be gleaned from the estimates for females, this is a small number of persons.
 
@@ -1451,7 +1451,7 @@ estimate_totals_and_percentages(
   )
 ```
 
-Many persons who have not had intercourse with someone of the opposite sex report "haven't found the right person yet" as a reason, though this appears to be more common for males than for females. "Against religion or morals" is another commonly cited reason. It is notable that "other" is also a popular reason chosen reported for not having had intercourse with someone of the opposite sex. (Figures \@ref(fig:fem-reason-no-sex) and \@ref(fig:male-reason-no-sex)) This is indirectly explored in the subsequent Section \@ref(attraction-by-sex).
+Many persons who have not had intercourse with someone of the opposite sex report "haven't found the right person yet" as a reason, though this appears to be more common for males than for females. "Against religion or morals" is another commonly cited reason. It is notable that "other" is also a popular reason chosen for not having had intercourse with someone of the opposite sex. (Figures \@ref(fig:fem-reason-no-sex) and \@ref(fig:male-reason-no-sex)) This is indirectly explored in the subsequent Section \@ref(attraction-by-sex).
 
 
 #### Attraction by Sex
@@ -1560,7 +1560,7 @@ style_and_combine_totals_and_percentages_horizontally(
   set_caption('Males by attraction to females versus males.')
 ```
 
-Similarly, the proportion of males who are "only attracted to females" is approximately 92.4\% among those who have had intercourse with a female in the past 3 months, but only 79.5\% among those who have not, and the proportion "only attracted to males" is approximately 0.1\% among those who had intercourse with a female in the past 3 months, but is 6.4\% among those who have not. An adjusted Wald-Koch chi-squared test of homogeneity of proportions is again statistically significant $(p = `r signif(this$chisq$p.value, 2)`)$, and the differences in proportions of persons categorized by attraction between those sexually active with males in the past 3 months and those not in Table \@ref(tab:male-sex-attraction) are not due to sampling error.
+Similarly, the proportion of males who are "only attracted to females" is approximately 92.4\% among those who have had intercourse with a female in the past 3 months, but only 79.5\% among those who have not, and the proportion "only attracted to males" is approximately 0.1\% among those who had intercourse with a female in the past 3 months, but is 6.4\% among those who have not. An adjusted Wald-Koch chi-squared test of homogeneity of proportions is again statistically significant $(p = `r signif(this$chisq$p.value, 2)`)$, and the differences in Table \@ref(tab:male-sex-attraction) in proportions of persons categorized by attraction between those sexually active with males in the past 3 months and those not sexually active with a male in the past 3 months are not due to sampling error.
 
 Thus, some persons who are not sexually active with the opposite sex are simply not attracted to the opposite sex, such as the approximately 1.5M males only attracted to males who did not have intercourse with a female in the past 3 months in Table \@ref(tab:male-sex-attraction).
 
@@ -2680,7 +2680,7 @@ The NSFG asks female respondents whether they have ever discontinued use of cont
 
 Some methods, such as Lunelle, are so rarely used by respondents to the NSFG that the sampling error associated with estimating their discontinuation rate is too large for useful estimates.
 
-The following subsections examine reasons for dissatisfaction leading to discontinuation of condoms, pills, IUDs. Reasons for dissatisfaction were asked of NSFG respondents in two steps. In the first, respondents were asked to select one or more reasons from a prefabricated list of possible reasons. The second step gave the respondent an opportunity to describe reasons in their own words and occurred if the respondent selected any of the reasons "too difficult to use," "side effects," or "other."
+The following subsections examine reasons for dissatisfaction leading to discontinuation of condoms, pills, and IUDs. Reasons for dissatisfaction were asked of NSFG respondents in two steps. In the first, respondents were asked to select one or more reasons from a prefabricated list of possible reasons. The second step gave the respondent an opportunity to describe reasons in their own words and occurred if the respondent selected any of the reasons "too difficult to use," "side effects," or "other."
 
 
 ### Condom
@@ -2919,7 +2919,7 @@ this$ci <- paste0(
 )
 ```
 
-The average[^mean] age at which females living in households in the United States have sterilizing operations performed is approximately `r this$mean` years, with a 95\% confidence interval of `r this$ci` years.
+The average[^mean] age at which females living in households in the United States have sterilizing operations is approximately `r this$mean` years, with a 95\% confidence interval of `r this$ci` years.
 
 [^mean]: Here "average" refers to the arithmetic mean.
 
