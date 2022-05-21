@@ -1,8 +1,12 @@
-external_path <- file.path('external', 'NSFG', 'reports')
+library(here)
+
+i_am('build_external.R')
+
+external_path <- here('external', 'NSFG', 'reports')
 
 
 # Build external articles
-blogdown::build_dir(external_path)
+blogdown::build_dir(external_path, force = TRUE)
 
 
 # Copy YAML front matter to HTML files
@@ -35,21 +39,3 @@ file.copy(
   'static/',
   recursive = TRUE
 )
-
-
-# Build internal Rmd files
-blogdown::build_site(
-  build_rmd = TRUE,
-  run_hugo = FALSE
-)
-
-
-# Run Hugo
-blogdown::build_site(
-  build_rmd = FALSE,
-  run_hugo = TRUE
-)
-
-
-# Preview in web browser
-blogdown::serve_site()
