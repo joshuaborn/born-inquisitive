@@ -1,0 +1,50 @@
+---
+author: "Joshua Born"
+#bibliography: "../bibliographies/low-resolution-ideation-and-discussion-about-disagreement-on-the-rationally-speaking-podcast.bib"
+#csl: "../bibliographies/chicago-author-date.csl"
+date: 2022-05-23
+draft: true
+tags: ["book, article, or podcast review", "first-person"]
+title: "Low Resolution Ideation and Discussion about Disagreement on the Rationally Speaking Podcast"
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+include-before: |
+  <!--more-->
+  ## Table of Contents
+---
+
+```{r setup, include=FALSE}
+library(here)
+
+i_am('content/low-resolution-ideation-and-discussion-about-disagreement-on-the-rationally-speaking-podcast.Rmd')
+
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+## Introduction
+
+I stumbled on the Rationally Speaking Podcast with Julia Galef in 2020, and it was a ray of sunshine in what was then a dark time for me intellectually.
+
+For the first time in the longest time since I can remember, I was consuming a media source in which someone -- in this case, host Julia Galef -- was asking the sort of questions I would ask, making similar comments and criticisms to those I would make, and framing discussion in ways that I would frame. It would be fair to say that it has become my favorite podcast.
+
+It seems like the podcast is either on break or finished,[^break] so I have been going through some of the back catalog. Recently, I listened to two episodes back-to-back that were on a similar subject: [Episode 229](http://rationallyspeakingpodcast.org/229-erisology-the-study-of-disagreement-john-nerst/) "Erisology, the study of disagreement (John Nerst)" and [Episode 244](http://rationallyspeakingpodcast.org/244-seeing-other-perspectives-with-compassion-stephanie-lepp-buster-benson/) "Seeing other perspectives, with compassion Stephanie Lepp & Buster Benson)".
+
+[^break]: Apparently, the podcast has taken extended breaks in the past, for instance, when host Julia Galef focused on working on her book.
+
+Listening to these episodes back-to-back was a bit self-referential because they were about a topic &ndash; disagreement &ndash; that the podcast itself does unusually well.
+
+For instance, host Julia Galef is a proponent of "steel manning" ...
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
