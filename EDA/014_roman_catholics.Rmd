@@ -1,0 +1,182 @@
+---
+title: "Contraception Use among Roman Catholics"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+library(survey)
+
+i_am('EDA/014_roman_catholics.Rmd')
+
+source(here('R/NSFG_helpers.R'))
+source(here('R/general_helpers.R'))
+
+opts_chunk$set(
+  cache = TRUE,
+  dpi = 72,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.asp = 0.5,
+  fig.retina = 2,
+  fig.width = 10
+)
+```
+
+```{r load-data}
+set_NSFG_2017_2019_data()
+```
+
+```{r process-data, dependson='load-data'}
+fem1719dt <- copy(fem1719$Data[, .(
+  AGE_R,
+  CASEID,
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
+
+male1719dt <- copy(male1719$Data[, .(
+  AGE_R,
+  CASEID,
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
+```
+
+
+# Effective Sample Size
+
+```{r effective-sample-size, dependson='process-data'}
+fem1719formats <- copy(fem1719$Formats)
+
+set_NSFG_variables_as_factors(
+  sex = 'fem',
+  variables = c(
+    HADSEX = 'HADSEX',
+    RELIGION = 'RELIGION',
+    SEX3MO = 'Y1N2RECF'
+  )
+)
+
+male1719formats <- copy(male1719$Formats)
+
+set_NSFG_variables_as_factors(
+  sex = 'male',
+  variables = c(
+    HADSEX = 'HADSEX',
+    RELIGION = 'RELIGION',
+    SEX3MO = 'SEX3MO'
+  )
+)
+
+fem1719dt[, .N, by = RELIGION]
+
+male1719dt[, .N, by = RELIGION]
+
+fem1719dt[, `:=`(
+  catholic1 = factor(fifelse(
+    RELIGION == 'CATHOLIC',
+    'Catholic',
+    'Not Catholic'
+  )),
+  catholic2 = factor(fcase(
+    RELIGION == 'CATHOLIC', 'Catholic',
+    RELIGION == 'NO RELIGION', 'No Religion',
+    default = 'Other Religion'
+  ))
+)]
+
+male1719dt[, `:=`(
+  catholic1 = factor(fifelse(
+    RELIGION == 'Catholic',
+    'Catholic',
+    'Not Catholic'
+  )),
+  catholic2 = factor(fcase(
+    RELIGION == 'Catholic', 'Catholic',
+    RELIGION == 'No religion', 'No Religion',
+    default = 'Other Religion'
+  ))
+)]
+
+fem1719dt[, .N, by = catholic1]
+
+fem1719dt[, .N, by = catholic2]
+
+male1719dt[, .N, by = catholic1]
+
+male1719dt[, .N, by = catholic2]
+
+fem1719dt[, .N, by = .(catholic2, AGE_R)][order(AGE_R, catholic2)] |>
+  dcast(AGE_R ~ catholic2, value.var = 'N') |>
+  kable()
+
+male1719dt[, .N, by = .(catholic2, AGE_R)][order(AGE_R, catholic2)] |>
+  dcast(AGE_R ~ catholic2, value.var = 'N') |>
+  kable()
+
+fem1719dt[, .N, by = HADSEX]
+
+male1719dt[, .N, by = HADSEX]
+
+fem1719dt[HADSEX == 'YES, R EVER HAD INTERCOURSE', .N, by = SEX3MO]
+
+male1719dt[HADSEX == 'YES, R EVER HAD INTERCOURSE', .N, by = SEX3MO]
+
+fem1719dt[
+  SEX3MO == 'YES',
+  .N,
+  by = .(catholic2, AGE_R)
+][order(AGE_R, catholic2)] |>
+  dcast(AGE_R ~ catholic2, value.var = 'N') |>
+  kable()
+
+male1719dt[
+  SEX3MO == 'YES, HAD INTERCOURSE',
+  .N,
+  by = .(catholic2, AGE_R)
+][order(AGE_R, catholic2)] |>
+  dcast(AGE_R ~ catholic2, value.var = 'N') |>
+  kable()
+
+fem1719dt[,
+  age_range := cut(
+    AGE_R,
+    breaks = c(seq(15, 21, 2), seq(25, 45, 5), 51),
+    right = FALSE
+  )
+]
+
+fem1719dt[
+  SEX3MO == 'YES',
+  .N,
+  by = .(catholic2, age_range)
+][order(age_range, catholic2)] |>
+  dcast(age_range ~ catholic2, value.var = 'N') |>
+  kable()
+
+male1719dt[,
+  age_range := cut(
+    AGE_R,
+    breaks = c(seq(15, 21, 2), seq(25, 45, 5), 51),
+    right = FALSE
+  )
+]
+
+male1719dt[
+  SEX3MO == 'YES, HAD INTERCOURSE',
+  .N,
+  by = .(catholic2, age_range)
+][order(age_range, catholic2)] |>
+  dcast(age_range ~ catholic2, value.var = 'N') |>
+  kable()
+```
