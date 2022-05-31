@@ -1,11 +1,11 @@
 ---
 author: "Joshua Born"
-#bibliography: "../bibliographies/low-resolution-ideation-and-discussion-about-disagreement-on-the-rationally-speaking-podcast.bib"
+#bibliography: "../bibliographies/discussion-about-disagreement-on-the-rationally-speaking-podcast.bib"
 #csl: "../bibliographies/chicago-author-date.csl"
-date: 2022-05-23
+date: 2022-06-02
 draft: true
 tags: ["book, article, or podcast review", "first-person"]
-title: "Low Resolution Ideation and Discussion about Disagreement on the Rationally Speaking Podcast"
+title: "Discussion about Disagreement on the Rationally Speaking Podcast"
 output:
   blogdown::html_page:
     number_sections: false
@@ -19,7 +19,7 @@ include-before: |
 ```{r setup, include=FALSE}
 library(here)
 
-i_am('content/low-resolution-ideation-and-discussion-about-disagreement-on-the-rationally-speaking-podcast.Rmd')
+i_am('content/discussion-about-disagreement-on-the-rationally-speaking-podcast.Rmd')
 
 knitr::opts_chunk$set(
   echo = FALSE
@@ -43,7 +43,7 @@ These days, it seems like the podcast is either on break or finished,[^break] so
 [^break]: Apparently, the podcast has taken extended breaks in the past, for instance, when host Julia Galef focused on working on her book.
 
 
-## Low Resolution Ideation
+## Low Resolution Abstraction
 
 Episode 229 of Rationally Speaking consists of an interview with John Nerst, who has coined the neologism of "erisology" to label his studies of disagreement. John has an engineering degree, but his school's curriculum was unusual in that it had a strong humanities component, which is how he got his interests in broader topics outside of engineering.
 
@@ -59,22 +59,22 @@ The thing that really stuck out for me from this interview is the concept of "lo
 kind of true, or kind of valid. True or false doesn't even apply to them
 exactly. ...
 
-This does appear to explain many types of disagreement. I would hesitate to call these kinds of things "beliefs," however, because calling them "beliefs" is giving them too much credit. Indeed, John Nerst himself says that these low resolution ideas are "more stories than they are beliefs." Therefore, I have taken to calling this kind of thing "low resolution ideation."
+This does appear to explain many types of disagreement. I would hesitate to call these kinds of things "beliefs," however, because calling them "beliefs" is giving them too much credit. Indeed, John Nerst himself says that these low resolution ideas are "more stories than they are beliefs." Therefore, I have taken to calling this kind of thing "low resolution abstraction."
 
-John Nerst's description of low resolution ideation sounds like my description of the [fallacy of generic thinking](/fallacy-of-generic-thinking.html). Indeed, the observation that this low resolution ideation defies truth conditions, i.e., "true or false doesn't even apply to them exactly," is one of my main criticisms of generic thinking.
+John Nerst's description of low resolution abstraction sounds like my description of the [fallacy of generic thinking](/fallacy-of-generic-thinking.html). Indeed, the observation that this low resolution abstraction defies truth conditions, i.e., "true or false doesn't even apply to them exactly," is one of my main criticisms of generic thinking.
 
-However, I consider low resolution ideation to be a superset of generic thinking. Yes, the parts of low resolution ideation that claim to describe the world are probably generic thinking. For instance, "the capitalist class" is a label that describes millions of people, and the sentence "the capitalist class is exploiting the workers" is basically a generic generalization: it does not quantify how many of the people denoted by "capitalist class" it is applying its predicate to. It therefore comes with all the flaws of generic thinking that make generic thinking worthless to me.
+However, I consider low resolution abstraction to be a superset of generic thinking. Yes, the parts of low resolution abstraction that claim to describe the world are probably generic thinking. For instance, "the capitalist class" is a label that describes millions of people, and the sentence "the capitalist class is exploiting the workers" is basically a generic generalization: it does not quantify how many of the people denoted by "capitalist class" it is applying its predicate to. It therefore comes with all the flaws of generic thinking that make generic thinking worthless to me.
 
-That being said, there is another issue with low resolution ideation beyond generic thinking: low resolution ideation mixes descriptive and normative ideas to the point where the person doing the ideating probably is not clear about which parts are descriptive and which parts are normative. When someone says "we must let entrepreneurs create wealth," there is a component that is descriptive, i.e., that entrepreneurship has a certain economic effect described as "creating wealth," and there is a component that is normative, i.e., that "we must let" this happen because it is good.
+That being said, there is another issue with low resolution abstraction beyond generic thinking: low resolution abstraction mixes descriptive and normative ideas to the point where the person doing the ideating probably is not clear about which parts are descriptive and which parts are normative. When someone says "we must let entrepreneurs create wealth," there is a component that is descriptive, i.e., that entrepreneurship has a certain economic effect described as "creating wealth," and there is a component that is normative, i.e., that "we must let" this happen because it is good.
 
 Similarly, saying "the capitalist class is exploiting the workers" is not just a description of an economic relationship between "the capitalist class" and "the workers." It is as much a normative judgment that any such relationship is _bad,_ as the connotations of "exploiting" in this context allude to.
 
-Thus, when there is disagreement due to conflicts in low resolution ideation, there is probably mixing of descriptive beliefs and normative sentiments. This should not be surprising because we must do work to separate the two kinds of sentiments ourselves since natural language tends to mix the two, as I described in my article on [moral skepticism](/moral-skepticism.html).
+Thus, when there is disagreement due to conflicts in low resolution abstraction, there is probably mixing of descriptive beliefs and normative sentiments. This should not be surprising because we must do work to separate the two kinds of sentiments ourselves since natural language tends to mix the two, as I described in my article on [moral skepticism](/moral-skepticism.html).
 
-Therefore, there are (at least) two ways in which "true or false doesn't even apply to" low resolution ideation:
+Therefore, there are (at least) two ways in which "true or false doesn't even apply to" low resolution abstraction:
 
-* low resolution ideation lacks truth conditions when the part of it that is descriptive consists of generic thinking, and
-* low resolution ideation lacks truth conditions for the part of it that is normative when it mixes normative sentiments with descriptive beliefs, since normative sentiments themselves lack truth conditions.
+* low resolution abstraction lacks truth conditions when the part of it that is descriptive consists of generic thinking, and
+* low resolution abstraction lacks truth conditions for the part of it that is normative when it mixes normative sentiments with descriptive beliefs, since normative sentiments themselves lack truth conditions.
 
 
 ### In Poor Survey Questions
@@ -104,7 +104,7 @@ However, if someone were to ask me whether I agree with either "many people nowa
 
 John Nerst and I would agree that in low resolution disagreements, people appear to be disagreeing not about the facts of any given matter, but about what ideologies and narratives to which they subscribe. However, we would disagree on how we deal with this.
 
-John Nerst takes a more conciliatory attitude. At the end of his introduction of low resolution ideation using the "exploits workers" versus "creates wealth" example, he says:
+John Nerst takes a more conciliatory attitude. At the end of his introduction of low resolution abstraction using the "exploits workers" versus "creates wealth" example, he says:
 
 > ... So we need to understand that proving that you yourself are correct, doesn't mean that the other person is wrong, and vice versa.
 
@@ -114,7 +114,7 @@ Later, he explains further:
 > 
 > There are many kinds of different belief systems that capture different parts of reality or the human experience, not as well. Some belief systems, they capture some things well and not others, and for other belief systems it's the other way around. So that's why you need to collect so many of them. You really should not have just one.
 
-Thus, John Nerst looks as these low resolution disagreements as two different mental models interacting in a way that is incompatible, and his solution is to accumulate more low resolution ideation so that he can use whichever mental model is best for the specific job at hand.
+Thus, John Nerst looks as these low resolution disagreements as two different mental models interacting in a way that is incompatible, and his solution is to accumulate more low resolution abstraction so that he can use whichever mental model is best for the specific job at hand.
 
 Therefore, if both sides took the John Nerst approach to the "exploits workers" versus "creates wealth" disagreement, they would simply absorb each other's mental models as alternatives to the one they are using, then explore what the new mental model is good for.
 
@@ -124,13 +124,13 @@ This also informs John Nerst's approach to survey questions:
 > 
 > I miss an option that says, "This question does not make sense to me."
 
-Thus, the main issue John Nerst takes with low resolution survey questions is that they might not fit a particular respondent's low resolution ideation.
+Thus, the main issue John Nerst takes with low resolution survey questions is that they might not fit a particular respondent's low resolution abstraction.
 
-I take a decidedly different attitude toward low resolution ideation. As might be guessed from my attitude toward generic thinking, to me, it is not that having different low resolution abstractions creates a problem, it is that low resolution ideation is _itself_ the problem.
+I take a decidedly different attitude toward low resolution abstraction. As might be guessed from my attitude toward generic thinking, to me, it is not that having different low resolution abstractions creates a problem, it is that low resolution abstraction is _itself_ the problem.
 
 I think it is possible to police your own mind to check against generic thinking, and it is possible to be cognizant of when you are making a factual claim versus when you are expressing a normative sentiment. Perhaps this cannot be done with 100\% perfection, but imperfection should be an excuse to avoid better.
 
-Furthermore, when I encounter people who do not practice such self-skepticism and instead have debates such as "the capitalist class is exploiting the workers" versus "we must let entrepreneurs create wealth for all of use," I just want them to stop such a facile debate and start thinking more rigorously. There is nothing about this way of thinking that makes me want to internalize it. My honest assessment is that I simply do not have anything to learn from such low resolution ideation.
+Furthermore, when I encounter people who do not practice such self-skepticism and instead have debates such as "the capitalist class is exploiting the workers" versus "we must let entrepreneurs create wealth for all of use," I just want them to stop such a facile debate and start thinking more rigorously. There is nothing about this way of thinking that makes me want to internalize it. My honest assessment is that I simply do not have anything to learn from such low resolution abstraction.
 
 
 ## Redirection to Winnable Debate and Anger That You're Not Angry
