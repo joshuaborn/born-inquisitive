@@ -28,17 +28,112 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-I stumbled on the Rationally Speaking Podcast with Julia Galef in 2020, and it was a ray of sunshine in what was then a dark time for me intellectually.
+I stumbled on the [Rationally Speaking Podcast](http://rationallyspeakingpodcast.org/) with Julia Galef in 2020, and it has become my favorite podcast. I discovered it while I was in graduate school, shortly after my mother had died unexpectedly and around the same time that most of us in the United States became shut-ins because of the COVID-19 pandemic. Of course, later throughout this shut-in period, much of the news was dominated by riots and protests.
 
-For the first time in the longest time since I can remember, I was consuming a media source in which someone -- in this case, host Julia Galef -- was asking the sort of questions I would ask, making similar comments and criticisms to those I would make, and framing discussion in ways that I would frame. It would be fair to say that it has become my favorite podcast.
+Ultimately, I disabled all my social media accounts because I had found that the state of discourse on social media was so terrible that all I was doing by even having social media accounts was providing a platform for the most facile social commentary imaginable. By enabling the worst of us, social media de-platforms the kind of discourse I actually value, drowning it out with the din of [slogans](/political-rhetoric-as-shibboleths.html), ideology, and snark.
 
-It seems like the podcast is either on break or finished,[^break] so I have been going through some of the back catalog. Recently, I listened to two episodes back-to-back that were on a similar subject: [Episode 229](http://rationallyspeakingpodcast.org/229-erisology-the-study-of-disagreement-john-nerst/) "Erisology, the study of disagreement (John Nerst)" and [Episode 244](http://rationallyspeakingpodcast.org/244-seeing-other-perspectives-with-compassion-stephanie-lepp-buster-benson/) "Seeing other perspectives, with compassion Stephanie Lepp & Buster Benson)".
+Rationally Speaking was a ray of sunshine in what was then a dark time for me intellectually. It sounds corny now when reflecting upon it, but I realize I had tacitly stopped believing that there was _any_ thoughtful, nuanced, self-critical discourse out there. Rationally Speaking reminded me that the best parts of the human intellect -- though rarely -- do still show themselves from time to time.
+
+Though I am sure I disagree with host Julia Galef on issues I am passionate about, I still respect her intellectually. Granted, this is because much of the framework of _how_ she thinks and the framework of _how_ I think overlap. She has put into words the sort of questions I would ask and comments and criticisms similar to those I would make. I have enjoyed her framing of discussion in ways that I would frame. But more than this, I respect her intellectually despite what disagreement we might have _because she disagrees well._
+
+Indeed, I have said a few times that if I lived in a world of people who disagree as well as Julia Galef, I would be much more open about my views, mostly because I would walk away from a disagreement having become a better thinker, not a worse one.
+
+These days, it seems like the podcast is either on break or finished,[^break] so I have been going through some of the back catalog. Recently, I listened to two episodes back-to-back that were about the very subject of disagreement: [Episode 229](http://rationallyspeakingpodcast.org/229-erisology-the-study-of-disagreement-john-nerst/) "Erisology, the study of disagreement (John Nerst)" and [Episode 244](http://rationallyspeakingpodcast.org/244-seeing-other-perspectives-with-compassion-stephanie-lepp-buster-benson/) "Seeing other perspectives, with compassion (Stephanie Lepp & Buster Benson)".
 
 [^break]: Apparently, the podcast has taken extended breaks in the past, for instance, when host Julia Galef focused on working on her book.
 
-Listening to these episodes back-to-back was a bit self-referential because they were about a topic &ndash; disagreement &ndash; that the podcast itself does unusually well.
 
-For instance, host Julia Galef is a proponent of "steel manning" ...
+## Low Resolution Ideation
+
+Episode 229 of Rationally Speaking consists of an interview with John Nerst, who has coined the neologism of "erisology" to label his studies of disagreement. John has an engineering degree, but his school's curriculum was unusual in that it had a strong humanities component, which is how he got his interests in broader topics outside of engineering.
+
+The thing that really stuck out for me from this interview is the concept of "low resolution" in disagreement:
+
+> I mean, of course, people disagree about things that have right and wrong answers like math theorems or what's the capital of Spain, which have these ... these questions have real answers. But those aren't really interesting disagreements. They don't cause any sort of chaos, they don't erode the public's fear or damages the public debate or anything like that. They’re very simple. We don't need an elaborate theoretical construction to deal with those.
+> 
+> In most cases what we're dealing with when we're dealing with a disagreement, people are disagreeing because they each have adopted a very low resolution belief, like something very abstract and general. If somebody believes “the capitalist class is exploiting the workers” and the other person thinks “we must let entrepreneurs create wealth for all of us,” or something like that. Those are very, very abstract beliefs. They don't really get proved or disproved, because none of them map onto reality in any simple way, in a straightforward way. They're more stories than they are beliefs.
+> 
+> And I think many of the things that people disagree about in the most complicated ways, they are beliefs more of this kind. Very low resolution, very abstracted, more story-like than fact-like. So that's a big misunderstanding, I think.
+> 
+> When you get beliefs like that, they’re not true or false -- they are typically
+kind of true, or kind of valid. True or false doesn't even apply to them
+exactly. ...
+
+This does appear to explain many types of disagreement. I would hesitate to call these kinds of things "beliefs," however, because calling them "beliefs" is giving them too much credit. Indeed, John Nerst himself says that these low resolution ideas are "more stories than they are beliefs." Therefore, I have taken to calling this kind of thing "low resolution ideation."
+
+John Nerst's description of low resolution ideation sounds like my description of the [fallacy of generic thinking](/fallacy-of-generic-thinking.html). Indeed, the observation that this low resolution ideation defies truth conditions, i.e., "true or false doesn't even apply to them exactly," is one of my main criticisms of generic thinking.
+
+However, I consider low resolution ideation to be a superset of generic thinking. Yes, the parts of low resolution ideation that claim to describe the world are probably generic thinking. For instance, "the capitalist class" is a label that describes millions of people, and the sentence "the capitalist class is exploiting the workers" is basically a generic generalization: it does not quantify how many of the people denoted by "capitalist class" it is applying its predicate to. It therefore comes with all the flaws of generic thinking that make generic thinking worthless to me.
+
+That being said, there is another issue with low resolution ideation beyond generic thinking: low resolution ideation mixes descriptive and normative ideas to the point where the person doing the ideating probably is not clear about which parts are descriptive and which parts are normative. When someone says "we must let entrepreneurs create wealth," there is a component that is descriptive, i.e., that entrepreneurship has a certain economic effect described as "creating wealth," and there is a component that is normative, i.e., that "we must let" this happen because it is good.
+
+Similarly, saying "the capitalist class is exploiting the workers" is not just a description of an economic relationship between "the capitalist class" and "the workers." It is as much a normative judgment that any such relationship is _bad,_ as the connotations of "exploiting" in this context allude to.
+
+Thus, when there is disagreement due to conflicts in low resolution ideation, there is probably mixing of descriptive beliefs and normative sentiments. This should not be surprising because we must do work to separate the two kinds of sentiments ourselves since natural language tends to mix the two, as I described in my article on [moral skepticism](/moral-skepticism.html).
+
+Therefore, there are (at least) two ways in which "true or false doesn't even apply to" low resolution ideation:
+
+* low resolution ideation lacks truth conditions when the part of it that is descriptive consists of generic thinking, and
+* low resolution ideation lacks truth conditions for the part of it that is normative when it mixes normative sentiments with descriptive beliefs, since normative sentiments themselves lack truth conditions.
+
+
+### In Poor Survey Questions
+
+In the interview, John Nerst expressed a frustration, which I have as well, at survey questions that are too low resolution:
+
+> I'm often very disappointed in how surveys are done, and the sort of questions that they have. Because as I said before, our beliefs are often very low-res, and survey questions are often extremely low-res. It's often the fact that I'm thinking, "What does this even mean?"
+
+This is something I experienced when reading _[The Hidden Tribes of America](https://hiddentribes.us/),_ a report on a survey which attempts to explore the phenomenon of binary partisan polarization. This is a subject that is very near and dear to my heart. For instance, the (not so subtle) subtext of my article on [Margaret Sanger's views on abortion](/margaret-sanger-on-abortion-in-her-own-words.html) is a prolonged criticism of binary polarization.
+
+However, while I liked the intent and many of the broader conclusions of _Hidden Tribes,_ I was frustrated that most of the questions were so low resolution that they were basically meaningless to me.[^other] For instance, the report makes much of that both "82 percent of Americans agree that hate speech is a problem in America today, but 80 percent also believe that political correctness has gone too far." _Hidden Tribes_ likes to contrast these results, but both of these propositions are so low resolution that it is anyone's guess what the people who agreed with either proposition were thinking when they agreed.
+
+When _Hidden Tribes_ does formulate a question well, the question is high resolution enough to have actual policy ramifications. For instance,
+
+> ... a full 85 percent also believe that race should not be considered in decisions on college admissions. By contrast, only 40 percent of Progressive Activists believe race should not be considered in college admissions decisions.
+
+In contrast to lower resolution questions, this is perhaps indicative of a genuine split between those categorized as "Progressive Activists" and the rest of the country.
+
+[^other]: I have other criticisms as well. One is just a general (and rightful) skepticism of surveys of [non-probability samples](/how-to-scrutinize-a-statistic.html#sampling). Other criticisms include the amount of junk ornamenting the actual results, such as "profiles" (i.e., stereotypes) of the various categories, quotes from respondents scattered throughout the text of the report, etc.
+
+However, if someone were to ask me whether I agree with either "many people nowadays don't take racism seriously enough" or "many people nowadays are too sensitive about things to do with race," I would not answer the question, responding instead with my criticisms of the question itself.[^criticisms] Indeed, such a question might actually make me angry at how the dumb the question is.
+
+[^criticisms]: The criticisms are exactly what I have articulated here viz a viz generic thinking and mixing of descriptive and normative sentiments.
+
+
+### Differing Attitudes Toward
+
+John Nerst and I would agree that in low resolution disagreements, people appear to be disagreeing not about the facts of any given matter, but about what ideologies and narratives to which they subscribe. However, we would disagree on how we deal with this.
+
+John Nerst takes a more conciliatory attitude. At the end of his introduction of low resolution ideation using the "exploits workers" versus "creates wealth" example, he says:
+
+> ... So we need to understand that proving that you yourself are correct, doesn't mean that the other person is wrong, and vice versa.
+
+Later, he explains further:
+
+> What I think one should do, and what I try to do, is to learn how to look at things in different ways. There is this model here, and it generalizes reality in this way, or compresses reality in this way; and there's this other model that focuses on getting these very different features right. And when you're trying to get different features and describe them accurately, you're going to use a different set of rules, and abstract them in a different way.
+> 
+> There are many kinds of different belief systems that capture different parts of reality or the human experience, not as well. Some belief systems, they capture some things well and not others, and for other belief systems it's the other way around. So that's why you need to collect so many of them. You really should not have just one.
+
+Thus, John Nerst looks as these low resolution disagreements as two different mental models interacting in a way that is incompatible, and his solution is to accumulate more low resolution ideation so that he can use whichever mental model is best for the specific job at hand.
+
+Therefore, if both sides took the John Nerst approach to the "exploits workers" versus "creates wealth" disagreement, they would simply absorb each other's mental models as alternatives to the one they are using, then explore what the new mental model is good for.
+
+This also informs John Nerst's approach to survey questions:
+
+> I would like to work on ways to improve how surveys work. Write questions in such a way that you will make it possible for people with different sort of internal abstractions to answer them. And maybe write, "Oh this question does not match the structure of my head, it doesn't fit into anything where I can produce a yes or no answer." Because yeah, you can say if you agree or disagree with an issue, and with a question or a statement, or anything like that -- and sometimes when you do political quizzes, you can also answer, "I think this is very important, or this is not important." That's also a big dimension that people have been ignoring.
+> 
+> I miss an option that says, "This question does not make sense to me."
+
+Thus, the main issue John Nerst takes with low resolution survey questions is that they might not fit a particular respondent's low resolution ideation.
+
+I take a decidedly different attitude toward low resolution ideation. As might be guessed from my attitude toward generic thinking, to me, it is not that having different low resolution abstractions creates a problem, it is that low resolution ideation is _itself_ the problem.
+
+I think it is possible to police your own mind to check against generic thinking, and it is possible to be cognizant of when you are making a factual claim versus when you are expressing a normative sentiment. Perhaps this cannot be done with 100\% perfection, but imperfection should be an excuse to avoid better.
+
+Furthermore, when I encounter people who do not practice such self-skepticism and instead have debates such as "the capitalist class is exploiting the workers" versus "we must let entrepreneurs create wealth for all of use," I just want them to stop such a facile debate and start thinking more rigorously. There is nothing about this way of thinking that makes me want to internalize it. My honest assessment is that I simply do not have anything to learn from such low resolution ideation.
+
+
+## Redirection to Winnable Debate and Anger That You're Not Angry
 
 
 ## Citations
