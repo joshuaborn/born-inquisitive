@@ -136,7 +136,63 @@ I think it is possible to police your own mind to check against generic thinking
 Furthermore, when I encounter people who do not practice such self-skepticism and instead have debates such as "the capitalist class is exploiting the workers" versus "we must let entrepreneurs create wealth for all of use," I just want them to stop having such a facile debate and start thinking more rigorously. There is nothing about this way of thinking that makes me want to internalize it. My honest assessment is that I simply do not have anything to learn from such low resolution abstraction.
 
 
-## Redirection to Winnable Debate and Anger That You're Not Angry
+## Productive Disagreement
+
+Episode 244 of Rationally Speaking actually consists of two interviews. I frankly did not find the first one with Stephanie Lepp, host of the Reckonings Podcast, to be very enlightening. The Reckonings Podcast focuses on particular human-interest type stories, such as a former Neo-Nazi or a reformed sex offender. I also had the suspicion that the podcast was biased in recognizing "reckonings" that were in accord with viewpoints associated with left-wing partisanship, something that Stephanie Lepp herself admitted. For instance, she has had episodes about people who switched from being opposed to induced abortion of pregnancy to being in favor of it, but not the other way around.
+
+On the other hand, the second interview of Episode 244 with Buster Benson, author of _Why Are We Yelling? The Art of Productive Disagreement,_ I did find to be enlightening.
+
+
+### Redirection to "Win" a Disagreement
+
+In particular, I found Buster Benson's self-criticism over an incident in which he argued with his wife to be insightful. The high-level summary of the incident is that Buster Benson's wife wanted him to contribute more to the parenting of their son. The disagreement began because Buster Benson's wife felt like he was not "willing to pick up the slack" of parenting. However, in the process of arguing over this, the discussion diverged into an argument over whether it was illegal or not to leave their son at home when school was closed.
+
+At first, Julia Galef expressed sympathy for this latter argument, saying:
+
+> But in another sense... it does seem not great to me if someone is arguing something that's literally false, and they don't care that it's literally false. Your wife was wrong about the legal fact of the matter, right? It seems not great for someone to be saying, "It's illegal," when what they really mean is, "I wish you would pick up more of the slack."[^legal]
+
+[^legal]: As an aside, I actually do not consider legal questions to be factual questions. Law itself is a social fiction. It is something made up by legislatures, judges, and juries. Laws are open to a lot of interpretation, and the actual results of any given case can be different based on the lawyers involved and the tactics used. This is in contrast to scientific theories which, while in some sense are also made up by humans, seek to model an external reality and so are bounded by their ability to model the empirical phenomena, rather than the whims of lawyers' maneuvers.
+
+Buster Benson's explanation was refreshingly self-aware:
+
+> ... I forced her into that corner. I brought up the legal aspect, because in my attempt to win, or my attempt to resolve the argument, I introduced this new argument that I could win.
+> 
+> Then she fell for it, and then I won, but by winning I only proved more so that I was not a good husband.
+> 
+> So, I think it's my responsibility as well to not necessarily force people to have arguments that I'm advantaged at winning. After the fact we can resolve that, because it wasn't really critical to our lives. Even if it was legal or not legal, it wouldn't really change whether or not we should leave him at home.
+> 
+> But I have to take responsibility for the fact that I collapsed into something that I was better at winning. I think that's what was hard for me to see until I saw it -- and then I saw it everywhere, that we do this all the time.
+
+If we are motivated to "win" an argument, we might try to redirect discussion into a true-or-false question that we have more knowledge about. However, doing so completely ignores the original disagreement and thus dodges whatever concerns led to the original disagreement.
+
+There are many issues with this practice. I am skeptical of the motives of anyone who goes into a disagreement with a desire to "win" as if the disagreement were a high school debate competition. I am not sure what anyone "wins" in these kind of encounters, but whatever is won is not something that I value.
+
+But beyond this, there is the issue that a lot of disagreement is not due to disagreement over true-or-false questions. Indeed, Buster Benson's wife just wanted him to contribute more as a parent. This is not a descriptive, true-or-false question, but a normative sentiment. Thus, the original disagreement was over a value judgment, and value judgments are subjective evaluations of goodness or badness of a state of affairs.
+
+In disagreements over value judgments, it is not the case that one person is "right" and the other one is "wrong" like when two people have contradictory descriptive beliefs, but it is the case that two people feel differently about the same state of affairs. Before their discussion, Buster Benson was content with the level of parenting he was contributing to the family, and his wife was not content with his contribution.
+
+This is a relatively minor difference in value judgments, but a similar phenomenon occurs with much more contentious issues, such as induced abortion of pregnancy, capital punishment, or slaughtering of animals for human consumption.
+
+I occasionally encounter such comments. Sometimes other people respond to my moral compunction at the killing of human fetuses as a method of fertility control with whatever developmental biology information they have picked up. Such individuals are the sort who start talking about the viability of fetuses outside a womb or the neurological capacity to sense pain or perceive the outside world, etc.
+
+These are not genuine attempts to provide me with information. As it so happens, I took developmental biology in university, too, and got an "A" in the class, so facts about gastrulation or notochords or whatever are not news to me. Implicit in most of these comments is the proposition that moral sentiments about killing fetuses should _hinge_ or _turn_ on the facts being shared, and unsurprisingly, the way this is framed is such that the information being volunteered leads to the conclusion that killing fetuses is fine.
+
+These are attempts to redirect a disagreement that is over value judgments into a disagreement over true-or-false, descriptive beliefs so that person doing the redirection can "win." As it turns out, my moral sentiments are not contingent on whatever information these other people volunteer to me. Indeed, if my moral sentiments were, I would have long ago investigated the relevant information, so these comments are predicated an the assumption that I cannot myself find out information relevant to me.
+
+Perhaps, though, that is the point of this tactic. Perhaps those who would volunteer information have the condescension that those who disagree with them in moral sentiments are ignorant, and if everyone would just learn the facts they know, then everyone would agree with their moral sentiments. I suppose this is easier to live with than to face the reality of moral disagreements occurring when different people have the same information.
+
+This attitude, though, is self-delusional, arrogant stupidity. I am self-aware enough to realize that my moral sentiments, like all value judgments, are just how I feel about matters, and others might feel differently about the same matters, even in light of the same information.
+
+The only thing I really learn from encountering people with such an arrogant attitude that their reaction to a moral disagreement is to start volunteering information is that they are not self-aware enough for discourse on moral disagreement. Thus, I find it prudent to confine such discourse to individuals of the caliber of Julia Galef, et al.
+
+
+### Anger Loves Company
+
+
+## Conclusion
+
+
+
 
 
 ## Citations
