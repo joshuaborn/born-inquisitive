@@ -34,18 +34,21 @@ Ultimately, I disabled all my social media accounts because I had found that the
 
 Rationally Speaking was a ray of sunshine in what was then a dark time for me intellectually. It sounds corny now when reflecting upon it, but I realize I had tacitly stopped believing that there was _any_ thoughtful, nuanced, self-critical discourse out there. Rationally Speaking reminded me that the best parts of the human intellect -- though rarely -- do still show themselves from time to time.
 
-Though I am sure I disagree with host Julia Galef on issues I am passionate about, I still respect her intellectually. Granted, this is because much of the framework of _how_ she thinks and the framework of _how_ I think overlap. She has put into words the sort of questions I would ask and comments and criticisms similar to those I would make. I have enjoyed her framing of discussion in ways that I would frame. But more than this, I respect her intellectually despite what disagreement we might have _because she disagrees well._
+Though I am sure I disagree with host Julia Galef on issues I am passionate about, I still respect her intellectually. Granted, this is because much of the framework of _how_ she thinks and the framework of _how_ I think overlap. She puts into words the sort of questions I would ask, she makes comments and criticisms similar to those I would make, and she frames discussion in ways that I would frame. But more than this, I respect her intellectually despite what disagreement we might have _because she disagrees well._
 
 Indeed, I have said a few times that if I lived in a world of people who disagree as well as Julia Galef, I would be much more open about my views, mostly because I would walk away from a disagreement having become a better thinker, not a worse one.
 
-These days, it seems like the podcast is either on break or finished,[^break] so I have been going through some of the back catalog. Recently, I listened to two episodes back-to-back that were about the very subject of disagreement: [Episode 229](http://rationallyspeakingpodcast.org/229-erisology-the-study-of-disagreement-john-nerst/) "Erisology, the study of disagreement (John Nerst)" and [Episode 244](http://rationallyspeakingpodcast.org/244-seeing-other-perspectives-with-compassion-stephanie-lepp-buster-benson/) "Seeing other perspectives, with compassion (Stephanie Lepp & Buster Benson)".
+These days, it seems like the Rationally Speaking Podcast is either on break or finished,[^break] so I have been going through some of the back catalog. Recently, I listened to two episodes back-to-back that were about the very thing that the podcast itself handles so well, i.e., disagreement:
+
+* [Episode 229](http://rationallyspeakingpodcast.org/229-erisology-the-study-of-disagreement-john-nerst/) "Erisology, the study of disagreement (John Nerst)" and
+* [Episode 244](http://rationallyspeakingpodcast.org/244-seeing-other-perspectives-with-compassion-stephanie-lepp-buster-benson/) "Seeing other perspectives, with compassion (Stephanie Lepp & Buster Benson)".
 
 [^break]: Apparently, the podcast has taken extended breaks in the past, for instance, when host Julia Galef focused on working on her book.
 
 
 ## Low Resolution Abstraction
 
-Episode 229 of Rationally Speaking consists of an interview with John Nerst, who has coined the neologism of "erisology" to label his studies of disagreement. John has an engineering degree, but his school's curriculum was unusual in that it had a strong humanities component, which is how he got his interests in broader topics outside of engineering.
+Episode 229 of Rationally Speaking consists of an interview with John Nerst, who has coined the neologism of "erisology" to label his studies of disagreement. John Nerst has an engineering degree, but his school's curriculum was unusual in that it had a strong humanities component, which is how he got his interests in broader topics outside of engineering.
 
 The thing that really stuck out for me from this interview is the concept of "low resolution" in disagreement:
 
@@ -74,7 +77,7 @@ Thus, when there is disagreement due to conflicts in low resolution abstraction,
 Therefore, there are (at least) two ways in which "true or false doesn't even apply to" low resolution abstraction:
 
 * low resolution abstraction lacks truth conditions when the part of it that is descriptive consists of generic thinking, and
-* low resolution abstraction lacks truth conditions for the part of it that is normative when it mixes normative sentiments with descriptive beliefs, since normative sentiments themselves lack truth conditions.
+* low resolution abstraction lacks truth conditions when it mixes normative sentiments with descriptive beliefs for the part of it that is normative, since normative sentiments themselves lack truth conditions.
 
 
 ### In Poor Survey Questions
@@ -85,7 +88,7 @@ In the interview, John Nerst expressed a frustration, which I have as well, at s
 
 This is something I experienced when reading _[The Hidden Tribes of America](https://hiddentribes.us/),_ a report on a survey which attempts to explore the phenomenon of binary partisan polarization. This is a subject that is very near and dear to my heart. For instance, the (not so subtle) subtext of my article on [Margaret Sanger's views on abortion](/margaret-sanger-on-abortion-in-her-own-words.html) is a prolonged criticism of binary polarization.
 
-However, while I liked the intent and many of the broader conclusions of _Hidden Tribes,_ I was frustrated that most of the questions were so low resolution that they were basically meaningless to me.[^other] For instance, the report makes much of that both "82 percent of Americans agree that hate speech is a problem in America today, but 80 percent also believe that political correctness has gone too far." _Hidden Tribes_ likes to contrast these results, but both of these propositions are so low resolution that it is anyone's guess what the people who agreed with either proposition were thinking when they agreed.
+However, while I liked the intent and some of the broader conclusions of _Hidden Tribes,_ I was frustrated that most of the survey questions were so low resolution that they were basically meaningless to me.[^other] For instance, the report makes much of that both "82 percent of Americans agree that hate speech is a problem in America today, but 80 percent also believe that political correctness has gone too far." _Hidden Tribes_ likes to contrast these results, but both of these propositions are so low resolution that it is anyone's guess what the people who agreed with either proposition were thinking when they agreed.
 
 When _Hidden Tribes_ does formulate a question well, the question is high resolution enough to have actual policy ramifications. For instance,
 
@@ -104,7 +107,7 @@ However, if someone were to ask me whether I agree with either "many people nowa
 
 John Nerst and I would agree that in low resolution disagreements, people appear to be disagreeing not about the facts of any given matter, but about what ideologies and narratives to which they subscribe. However, we would disagree on how we deal with this.
 
-John Nerst takes a more conciliatory attitude. At the end of his introduction of low resolution abstraction using the "exploits workers" versus "creates wealth" example, he says:
+John Nerst takes a more conciliatory attitude. At the end of his "exploits workers" versus "creates wealth" example, he says:
 
 > ... So we need to understand that proving that you yourself are correct, doesn't mean that the other person is wrong, and vice versa.
 
@@ -126,11 +129,11 @@ This also informs John Nerst's approach to survey questions:
 
 Thus, the main issue John Nerst takes with low resolution survey questions is that they might not fit a particular respondent's low resolution abstraction.
 
-I take a decidedly different attitude toward low resolution abstraction. As might be guessed from my attitude toward generic thinking, to me, it is not that having different low resolution abstractions creates a problem, it is that low resolution abstraction is _itself_ the problem.
+I take a decidedly different attitude toward low resolution abstraction. As might be guessed from my attitude toward generic thinking, to me, it is not that having _different_ low resolution abstractions creates a problem, it is that low resolution abstraction is _itself_ the problem. I think we should simply do away with low resolution abstraction, especially when it comes to social issues.
 
-I think it is possible to police your own mind to check against generic thinking, and it is possible to be cognizant of when you are making a factual claim versus when you are expressing a normative sentiment. Perhaps this cannot be done with 100\% perfection, but the impossibility of perfection should not be an excuse to be content with worse.
+I think it is possible to police your own mind to check against generic thinking, and it is possible to be cognizant of when you are making a descriptive claim versus when you are expressing a normative sentiment. Perhaps this cannot be done with 100\% perfection, but the impossibility of perfection should not be an excuse for contentment with something that is worse.
 
-Furthermore, when I encounter people who do not practice such self-skepticism and instead have debates such as "the capitalist class is exploiting the workers" versus "we must let entrepreneurs create wealth for all of use," I just want them to stop such a facile debate and start thinking more rigorously. There is nothing about this way of thinking that makes me want to internalize it. My honest assessment is that I simply do not have anything to learn from such low resolution abstraction.
+Furthermore, when I encounter people who do not practice such self-skepticism and instead have debates such as "the capitalist class is exploiting the workers" versus "we must let entrepreneurs create wealth for all of use," I just want them to stop having such a facile debate and start thinking more rigorously. There is nothing about this way of thinking that makes me want to internalize it. My honest assessment is that I simply do not have anything to learn from such low resolution abstraction.
 
 
 ## Redirection to Winnable Debate and Anger That You're Not Angry
