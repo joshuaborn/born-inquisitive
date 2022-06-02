@@ -35,3 +35,19 @@ fem2002 <- load_NSFG_data('2002', 'FemResp')
 preg2002 <- load_NSFG_data('2002', 'FemPreg')
 ```
 
+## Contraceptive Calendar Variables
+
+* CMSTRTMC
+* CMENDMC
+* CMDATBGN
+* MONSX series
+* NUMMULT series
+* METHHIST series
+* MTHUSIMX series
+* SIMSEQ series
+
+
+```{r process-data, dependson='load-data'}
+fem2002dt <- copy(fem2002$Data)
+```
+
