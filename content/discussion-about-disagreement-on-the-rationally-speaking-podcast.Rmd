@@ -1,7 +1,5 @@
 ---
 author: "Joshua Born"
-#bibliography: "../bibliographies/discussion-about-disagreement-on-the-rationally-speaking-podcast.bib"
-#csl: "../bibliographies/chicago-author-date.csl"
 date: 2022-06-02
 draft: true
 tags: ["book, article, or podcast review", "first-person"]
@@ -173,7 +171,7 @@ In disagreements over value judgments, it is not the case that one person is "ri
 
 This is a relatively minor disagreement in value judgments, but a similar phenomenon occurs with much more contentious issues, such as induced abortion of pregnancy, capital punishment, or slaughtering of animals for human consumption.
 
-I occasionally encounter such comments. Sometimes other people respond to moral compunction at the killing of human fetuses as a method of fertility control with whatever developmental biology information they have picked up. Such individuals are the sort who start talking about the viability of fetuses outside a womb or the neurological capacity to sense pain or perceive the outside world, etc.
+I occasionally encounter such comments. Sometimes other people respond to moral compunction at the killing of human fetuses as a method of fertility control with whatever developmental biology information they have picked up. Such individuals are the sort who start talking about the neurological capacity to sense pain or perceive the outside world or the viability of fetuses outside a womb, etc.
 
 These are not genuine attempts to provide others with information. Implicit in most of these comments is the proposition that moral sentiments about killing fetuses should _hinge_ or _turn_ on the facts being shared, and unsurprisingly, the way this is framed is such that the information being volunteered leads to the conclusion that killing fetuses is fine. These are attempts to redirect a disagreement that is over value judgments into a disagreement over true-or-false, descriptive beliefs so that person doing the redirection can "win."
 
@@ -194,17 +192,44 @@ The only thing I really learn from encountering people with such an arrogant att
 
 ### Anger Loves Company
 
+Another interesting point that came up in the conversation between Julia Galef and Buster Benson had to do with the emotional experience of disagreement. In particular, Buster Benson noted that he realizes sometimes his friends get angry at him for not getting angry when they get angry.
+
+> ... I can come across as smug, I think. Because if I don't get angry at the right times, then it can be like, "Oh, you don't have to get angry? You think you're better than me?" You know, that kind of thing.
+
+Julia Galef found this curious, asking:
+
+> Oh, interesting. Do you mean like, in an argument where the person's angry at you, or they're angry about an issue in the world, they want you to be angry about too?
+
+To this question, Buster Benson answered, "Both." This was surprising to Julia Galef, who said:
+
+> Oh man. That seems really difficult, if a person interprets lack of anger as a sign that you think they're better than them...
+
+When asked by Buster Benson if she has never experienced this, Julia Galef replied:
+
+> I think I just choose people for my life that... I just have various picky, idiosyncratic criteria for the kind of people who I would be close enough to, to get in an argument with.
+
+This struck me as insightful because I had a similar reaction to Julia Galef: this behavior where someone gets angry at you for not getting angry along with them is frustrating to me to the point where I find it not worth engaging with such people. While this point came up in the context of interpersonal relationships, I found it helpful for understanding why I found all the protesting, both of the left-wing and right-wing varieties, so distasteful.
+
+Indeed, I remember in my youth having my first substantial encounter with a protester. I was going to a local shopping mall, and apparently the Macy's department store employees were on strike and picketing the store. In shopping malls in the United States, department stores are often considered the "anchor stores" of the mall and placed toward the exterior of the shopping mall. I was not going to shop at Macy's, but I was going to stores or restaurants in the interior of the shopping mall. To do so, I had to walk _through_ Macy's to get to the inside of the shopping mall.
+
+Most people just ignored the protesters and walked by without acknowledging the protesters in any way. In my naivety, I thought I might have a rational interaction with them. As I walked by, one yelled at me something to the effect of "boycott Macy's!" I remember stopping, turning toward the protester, and saying calmly, "I'm not going to Macy's. I'm just going to the mall through Macy's." The protester just sneered back at me and turned away, preparing to yell at the next person walking by.
+
+I remember very distinctly standing there for a moment really taken by the stupidity of this person. In retrospect, the protester was not interested in -- and perhaps even capable of having -- a rational conversation. This protester was just angry at me at for not being along angry with him and, indeed, had this second-order anger to share with all those who happened to walk by.
+
+This complete inability to communicate or behave like an intelligent life-form is a huge part of why protests are such a non-starter for me.[^riots] In retrospect, I think it is a big part of why I have disconnected from social media, as well: the standards of discourse on social media are around the same impoverished levels of discourse I had with that Macy's protester so many years ago.
+
+[^riots]: Obviously, when protests escalate to riots and people are actually being murdered, harmed in their person, or harmed by having their property destroyed, there are larger issues than this more intellectual concern.
+
+I suppose I am more like Julia Galef and less like Buster Benson. Buster Benson believes that he is "definitely surrounded by people that are not, would not identify as being rational, logical people" and wants to maintain relationships with his friends. Whereas I, like Julia Galef, have "criteria for the kind of people who I would be close enough to, to get in an argument with."
+
 
 ## Conclusion
 
+* Conclusion
+* Photos
+* Opening paragraph
 
 
-
-
-## Citations
-
-::: {#refs}
-:::
 
 
 ## Footnotes
