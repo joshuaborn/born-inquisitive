@@ -1,0 +1,37 @@
+---
+title: "Contraceptive Use Intervals in 2002 NSFG (Cycle 6)"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+library(survey)
+
+i_am('EDA/015_contraceptive_use_intervals_2002.Rmd')
+
+source(here('R/NSFG_helpers.R'))
+source(here('R/general_helpers.R'))
+
+opts_chunk$set(
+  cache = TRUE,
+  dpi = 72,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.asp = 0.5,
+  fig.retina = 2,
+  fig.width = 10
+)
+```
+
+```{r load-data}
+fem2002 <- load_NSFG_data('2002', 'FemResp')
+preg2002 <- load_NSFG_data('2002', 'FemPreg')
+```
+
