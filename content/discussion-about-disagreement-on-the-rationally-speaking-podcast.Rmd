@@ -1,6 +1,6 @@
 ---
 author: "Joshua Born"
-date: 2022-06-02
+date: 2022-06-03
 draft: true
 tags: ["book, article, or podcast review", "first-person"]
 title: "Discussion about Disagreement on the Rationally Speaking Podcast"
@@ -23,6 +23,9 @@ knitr::opts_chunk$set(
   echo = FALSE
 )
 ```
+
+* Photos
+* Opening paragraph
 
 ## Introduction
 
@@ -225,11 +228,21 @@ I suppose I am more like Julia Galef and less like Buster Benson. Buster Benson 
 
 ## Conclusion
 
-* Conclusion
-* Photos
-* Opening paragraph
+Both Julia Galef's interviews of John Nerst and of Buster Benson were insightful for me with regard to my attitudes toward disagreement.
 
+John Nerst identified a problem -- low resolution abstraction -- that I also grapple with, but his idea of a solution to the problem is quite different from mine: he would add different kinds of low resolution abstractions to his thinking in order to try viewing things through different paradigms, whereas I try to do away with low resolution abstraction from my thinking as much as possible.
 
+Buster Benson discussed two phenomena that at first might seem opposite. On the one hand, he noted his own redirection of a disagreement toward a different question -- one that was descriptive rather than a value judgment -- in order to "win" the disagreement. This could be viewed as a fallacy of making a disagreement more intellectual and less emotional. On the other hand, he noted his friends' anger at his lack of anger. This could be viewed as a fallacy of making a disagreement less intellectual and more emotional.
+
+However, it is not the case that there is a "correct" amount of intellectual or emotional components of a disagreement and that Buster Benson is striving to find a sweet spot. Disagreement can involve disagreement in value judgments or disagreement in descriptive beliefs, and it is important to recognize when there is disagreement in one or the other or both and to handle them appropriately. Both of Buster Benson's anecdotes illustrate such a failure. Furthermore, they are both indicative of an even more fundamental failing. In both cases, people are operating from a position of naive solipsism, i.e., acting if their own selves were the only things that existed.
+
+When Buster Benson redirected the disagreement about his parental contribution to another disagreement he could "win," he acted as if only his knowledge and, implicitly, only his values were relevant to the disagreement. When the Macy's protester yelled and sneered at all those walking by without stopping to wonder who they were or where they were going, he acted as if only his knowledge and only his values were relevant.
+
+This gets at a fundamental issue that makes disagreement unproductive. Just as it takes two to disagree, it takes two people to disagree _well._ In these kinds of unproductive disagreements, at least one person is not actually cognizant of the other's value judgments or descriptive beliefs. Thus, they are talking past each other. This, compounded by the desire to "win" or to express anger, leads to an inability to communicate.
+
+Perhaps this is what John Nerst is getting at when he tries to internalize additional low resolution abstractions; he is trying to see things from the perspective of the person with whom he is disagreeing. However, I would contend, you do not need the low resolution abstraction to do this. The low resolution abstraction, in my view, is a crutch that people use to avoid discussing their value judgments and descriptive beliefs directly. Oftentimes this crutch comes with it the added expense of fallacies like generic thinking. You can have productive disagreement with someone by skipping the low resolution abstraction and learning about their value judgments and descriptive beliefs.
+
+Hearing others discuss how they have grappled with disagreement on the Rationally Speaking Podcast, interviewed by a host who herself is adept at disagreeing well, has aided me in understanding our tendencies when we disagree badly. Of course, you might disagree.
 
 
 ## Footnotes
