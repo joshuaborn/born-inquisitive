@@ -10,6 +10,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
+  <p>In this article, I review two interviews from different episodes of the Rationally Speaking Podcast that were both themed on the subject of disagreement. In particular, I review John Nerst's discussion of low resolution abstraction, and I review two realizations that came up during an interview with Buster Benson: that he had redirected an argument with his wife so that he could "win" it, and that his friends were getting angry at him for not getting angry.</p>
   <!--more-->
   ## Table of Contents
 ---
@@ -24,9 +25,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-* Photos
-* Opening paragraph
-
 ## Introduction
 
 I stumbled on the [Rationally Speaking Podcast](http://rationallyspeakingpodcast.org/) with Julia Galef in 2020, and it has become my favorite podcast. I discovered it while I was in graduate school, shortly after my mother had died unexpectedly and around the same time that most of us in the United States became shut-ins because of the COVID-19 pandemic. Of course, later throughout this shut-in period, much of the news was dominated by riots and protests.
@@ -34,6 +32,8 @@ I stumbled on the [Rationally Speaking Podcast](http://rationallyspeakingpodcast
 Ultimately, I disabled all my social media accounts because I had found that the state of discourse on social media was so terrible that all I was doing by even having social media accounts was providing a platform for the most facile social commentary imaginable. By enabling the worst of us, social media de-platforms the kind of discourse I actually value, drowning it out with the din of [slogans](/political-rhetoric-as-shibboleths.html), ideology, and snark.
 
 Rationally Speaking was a ray of sunshine in what was then a dark time for me intellectually. It sounds corny now when reflecting upon it, but I realize I had tacitly stopped believing that there was _any_ thoughtful, nuanced, self-critical discourse out there. Rationally Speaking reminded me that the best parts of the human intellect -- though rarely -- do still show themselves from time to time.
+
+_**A light in the dark goes here.**_
 
 Though I am sure I disagree with host Julia Galef on issues I am passionate about, I still respect her intellectually. Granted, this is because much of the framework of _how_ she thinks and the framework of _how_ I think overlap. She puts into words the sort of questions I would ask, she makes comments and criticisms similar to those I would make, and she frames discussion in ways that I would frame. But more than this, I respect her intellectually despite what disagreement we might have _because she disagrees well._
 
@@ -49,7 +49,7 @@ These days, it seems like the Rationally Speaking Podcast is either on break or 
 
 ## Low Resolution Abstraction
 
-Episode 229 of Rationally Speaking consists of an interview with John Nerst, who has coined the neologism of "erisology" to label his studies of disagreement. John Nerst has an engineering degree, but his school's curriculum was unusual in that it had a strong humanities component, which is how he got his interests in broader topics outside of engineering.
+Episode 229 of Rationally Speaking consists of an interview with John Nerst, who coined the neologism of "erisology" to label his studies of disagreement. John Nerst got degree in engineering, but his school's curriculum was unusual in that it had a strong humanities component, which is how he got his interests in broader topics outside of engineering.
 
 The thing that really stuck out for me from this interview is the concept of "low resolution" in disagreement:
 
@@ -63,13 +63,15 @@ The thing that really stuck out for me from this interview is the concept of "lo
 kind of true, or kind of valid. True or false doesn't even apply to them
 exactly. ...
 
-This does appear to explain many types of disagreement. I would hesitate to call these kinds of things "beliefs," however, because calling them "beliefs" is giving them too much credit. Indeed, John Nerst himself says that these low resolution ideas are "more stories than they are beliefs." Therefore, I have taken to calling this kind of thing "low resolution abstraction."
+This was salient point for me because it did seem to explain many types of disagreement. I would hesitate to call these kinds of things "beliefs," however, because calling them "beliefs." Indeed, John Nerst himself said during the interview that these low resolution ideas are "more stories than they are beliefs." Therefore, I have taken to calling this kind of thing "low resolution abstraction."
 
-John Nerst's description of low resolution abstraction sounds like my description of the [fallacy of generic thinking](/fallacy-of-generic-thinking.html). Indeed, the observation that this low resolution abstraction defies truth conditions, i.e., "true or false doesn't even apply to them exactly," is one of my main criticisms of generic thinking.
+_**Image of rich and poor goes here**_
 
-However, I consider low resolution abstraction to be a superset of generic thinking. Yes, the parts of low resolution abstraction that claim to describe the world are probably generic thinking. For instance, "the capitalist class" is a label that describes millions of people, and the sentence "the capitalist class is exploiting the workers" is basically a generic generalization: it does not quantify how many of the people denoted by "capitalist class" it is applying its predicate to. It therefore comes with all the flaws of generic thinking that make generic thinking worthless to me.
+John Nerst's description of low resolution abstraction sounded like my description of the [fallacy of generic thinking](/fallacy-of-generic-thinking.html). Indeed, the observation that this low resolution abstraction defies truth conditions, i.e., "true or false doesn't even apply to them exactly," was one of my main criticisms of generic thinking.
 
-That being said, there is another issue with low resolution abstraction beyond generic thinking: low resolution abstraction mixes descriptive and normative ideas to the point where the person doing the ideating probably is not clear about which parts are descriptive and which parts are normative. When someone says "we must let entrepreneurs create wealth," there is a component that is descriptive, i.e., that entrepreneurship has a certain economic effect described as "creating wealth," and there is a component that is normative, i.e., that "we must let" this happen because it is good.
+However, while low resolution abstraction contains generic thinking, it contains other things, as well. Yes, the parts of low resolution abstraction that claim to describe the world are probably generic thinking. For instance, "the capitalist class" is a label that describes millions of people, and the sentence "the capitalist class is exploiting the workers" is basically a generic generalization: it does not quantify how many of the people denoted by "capitalist class" it is applying its predicate to. It therefore comes with all the flaws of generic thinking that make generic thinking worthless to me.
+
+That being said, there is another issue with low resolution abstraction beyond generic thinking: low resolution abstraction mixes descriptive and normative ideas to the point where the person doing the abstraction probably is not clear about which parts are descriptive and which parts are normative. When someone says "we must let entrepreneurs create wealth," there is a component that is descriptive, i.e., that entrepreneurship has a certain economic effect described as "creating wealth," and there is a component that is normative, i.e., that "we must let" this happen because it is good.
 
 Similarly, saying "the capitalist class is exploiting the workers" is not just a description of an economic relationship between "the capitalist class" and "the workers." It is as much a normative judgment that any such relationship is _bad,_ as the connotations of "exploiting" in this context allude to.
 
@@ -89,7 +91,7 @@ In the interview, John Nerst expressed a frustration, which I have as well, at s
 
 This is something I experienced when reading _[The Hidden Tribes of America](https://hiddentribes.us/),_ a report on a survey which attempts to explore the phenomenon of binary partisan polarization. This is a subject that is very near and dear to my heart. For instance, the (not so subtle) subtext of my article on [Margaret Sanger's views on abortion](/margaret-sanger-on-abortion-in-her-own-words.html) is a prolonged criticism of binary polarization.
 
-However, while I liked the intent and some of the broader conclusions of _Hidden Tribes,_ I was frustrated that most of the survey questions were so low resolution that they were basically meaningless to me.[^other] For instance, the report makes much of that both "82 percent of Americans agree that hate speech is a problem in America today, but 80 percent also believe that political correctness has gone too far." _Hidden Tribes_ likes to contrast these results, but both of these propositions are so low resolution that it is anyone's guess what the people who agreed with either proposition were thinking when they agreed.
+However, while I liked the intent and some of the broader conclusions of _Hidden Tribes,_ I was frustrated that most of the survey questions were so low resolution that they were basically meaningless to me.[^other] For instance, the report makes much of the fact that both "82 percent of Americans agree that hate speech is a problem in America today, but 80 percent also believe that political correctness has gone too far." _Hidden Tribes_ likes to contrast these results, but both of these propositions are so low resolution that it is anyone's guess what the people who agreed with either proposition were thinking when they agreed.
 
 When _Hidden Tribes_ does formulate a question well, the question is high resolution enough to have actual policy ramifications. For instance,
 
@@ -106,29 +108,29 @@ However, if someone were to ask me whether I agree with either "many people nowa
 
 ### Differing Attitudes Toward
 
-John Nerst and I would agree that in low resolution disagreements, people appear to be disagreeing not about the facts of any given matter, but about what ideologies and narratives to which they subscribe. However, we would disagree on how we deal with this.
+John Nerst and I would have agreed that in low resolution disagreements, people appear to be disagreeing not about the facts of any given matter, but about what ideologies and narratives to which they subscribe. However, we would have disagreed on how we deal with this.
 
-John Nerst takes a more conciliatory attitude. At the end of his "exploits workers" versus "creates wealth" example, he says:
+In the interview, John Nerst took a conciliatory attitude. At the end of his "exploits workers" versus "creates wealth" example, he said:
 
 > ... So we need to understand that proving that you yourself are correct, doesn't mean that the other person is wrong, and vice versa.
 
-Later, he explains further:
+Later, he explained further:
 
 > What I think one should do, and what I try to do, is to learn how to look at things in different ways. There is this model here, and it generalizes reality in this way, or compresses reality in this way; and there's this other model that focuses on getting these very different features right. And when you're trying to get different features and describe them accurately, you're going to use a different set of rules, and abstract them in a different way.
 > 
 > There are many kinds of different belief systems that capture different parts of reality or the human experience, not as well. Some belief systems, they capture some things well and not others, and for other belief systems it's the other way around. So that's why you need to collect so many of them. You really should not have just one.
 
-Thus, John Nerst looks as these low resolution disagreements as two different mental models interacting in a way that is incompatible, and his solution is to accumulate more low resolution abstraction so that he can use whichever mental model is best for the specific job at hand.
+Thus, John Nerst looked at these low resolution disagreements as two different mental models interacting in a way that is incompatible, and his solution was to accumulate more low resolution abstraction so that he could use whichever mental model was best for the specific job at hand.
 
-Therefore, if both sides took the John Nerst approach to the "exploits workers" versus "creates wealth" disagreement, they would simply absorb each other's mental models as alternatives to the one they are using, then explore what the new mental model is good for.
+Therefore, if both sides took the John Nerst approach to the "exploits workers" versus "creates wealth" disagreement, they would have absorbed each other's mental models as alternatives to the one they were using, then explored what the new mental model was good for.
 
-This also informs John Nerst's approach to survey questions:
+This also informed John Nerst's approach to survey questions:
 
 > I would like to work on ways to improve how surveys work. Write questions in such a way that you will make it possible for people with different sort of internal abstractions to answer them. And maybe write, "Oh this question does not match the structure of my head, it doesn't fit into anything where I can produce a yes or no answer." Because yeah, you can say if you agree or disagree with an issue, and with a question or a statement, or anything like that -- and sometimes when you do political quizzes, you can also answer, "I think this is very important, or this is not important." That's also a big dimension that people have been ignoring.
 > 
 > I miss an option that says, "This question does not make sense to me."
 
-Thus, the main issue John Nerst takes with low resolution survey questions is that they might not fit a particular respondent's low resolution abstraction.
+Thus, the main issue John Nerst took with low resolution survey questions is that they might not fit a particular respondent's low resolution abstraction. I would guess he would be happy with the questions of _Hidden Tribes_ since the questions seem to be created more as a test for alternative low resolution abstractions than anything else.
 
 I take a decidedly different attitude toward low resolution abstraction. As might be guessed from my attitude toward generic thinking, to me, it is not that having _different_ low resolution abstractions creates a problem, it is that low resolution abstraction is _itself_ the problem. I think we should simply do away with low resolution abstraction, especially when it comes to social issues.
 
@@ -178,7 +180,7 @@ I occasionally encounter such comments. Sometimes other people respond to moral 
 
 These are not genuine attempts to provide others with information. Implicit in most of these comments is the proposition that moral sentiments about killing fetuses should _hinge_ or _turn_ on the facts being shared, and unsurprisingly, the way this is framed is such that the information being volunteered leads to the conclusion that killing fetuses is fine. These are attempts to redirect a disagreement that is over value judgments into a disagreement over true-or-false, descriptive beliefs so that person doing the redirection can "win."
 
-As it turns out, my moral sentiments are not contingent on whatever information these other people volunteer to me. (As it so happens, I too took developmental biology in university and got an "A" in the class, so facts about gastrulation or notochords or whatever are things I have heard before.) Indeed, if my moral sentiments were contingent on such things, I would have long ago investigated the relevant information, so these comments are predicated an the assumption that I cannot myself find out information relevant to me.
+As it turns out, my moral sentiments are not contingent on whatever information these other people volunteer to me. (As it so happens, I, too, took developmental biology in university, so facts about gastrulation or notochords or whatever are things I have heard before.) Indeed, if my moral sentiments were contingent on such things, I would have long ago investigated the relevant information, so these comments are predicated an the assumption that I cannot myself find out information relevant to me.
 
 Perhaps, though, that is the point of this tactic. Those who would volunteer information have the condescension that those who disagree with them in moral sentiments are ignorant, and if everyone would just learn the facts they know, then everyone would agree with their moral sentiments. I suppose this is easier to live with than to face the reality of moral disagreements occurring when different people have the same information.
 
@@ -207,30 +209,32 @@ To this question, Buster Benson answered, "Both." This was surprising to Julia G
 
 > Oh man. That seems really difficult, if a person interprets lack of anger as a sign that you think they're better than them...
 
-When asked by Buster Benson if she has never experienced this, Julia Galef replied:
+When asked by Buster Benson if she has never experienced this, Julia Galef replied in the negative, saying:
 
 > I think I just choose people for my life that... I just have various picky, idiosyncratic criteria for the kind of people who I would be close enough to, to get in an argument with.
 
-This struck me as insightful because I had a similar reaction to Julia Galef: this behavior in which someone gets angry at you for not getting angry is frustrating to me to the point where I find it not worth engaging with such people. While this point came up in the context of interpersonal relationships, I found it helpful for understanding why I found all the protesting, both of the left-wing and right-wing varieties, so distasteful.
+This struck me as insightful because I had a similar reaction to Julia Galef: this behavior in which someone gets angry at you for not getting angry is frustrating to me to the point where I find it not worth engaging with such people. While this point came up in the context of interpersonal relationships, I found it helpful for understanding why I found protesting, both of the left-wing and right-wing varieties, so distasteful.
 
 Indeed, I remember in my youth having my first substantial encounter with a protester. I was going to a local shopping mall, and apparently the Macy's department store employees were on strike and picketing the store. In shopping malls in the United States, department stores are often considered the "anchor stores" of the mall and placed toward the exterior of the shopping mall. I was not going to shop at Macy's, but I was going to stores or restaurants in the interior of the shopping mall. To do so, I had to walk _through_ Macy's to get to the inside of the shopping mall.
 
+_**Picture of Stonestown Macy's goes here**_
+
 Most people just ignored the protesters and walked by without acknowledging the protesters in any way. In my naivety, I thought I might have an intelligent conversation with them. As I walked by, one yelled at me something to the effect of "boycott Macy's!" I remember stopping, turning toward the protester, and saying calmly, "I'm not going to Macy's. I'm just going to the mall on the other side of Macy's." The protester just sneered back at me and turned away, preparing to yell at the next person walking by.
 
-I remember very distinctly standing there for a moment really taken by the stupidity of this person. In retrospect, the protester was not interested in -- and perhaps even capable of having -- an intelligent conversation. This protester was just angry at me at for not sharing in their anger and, indeed, wanted to express this anger to all those who happened to walk by.
+I remember very distinctly standing there for a moment really taken by the stupidity of this person. In retrospect, the protester was not interested in -- and perhaps even capable of having -- an intelligent conversation. This protester was just angry at me at for being someone who happened to walk by who was not part of the anger party.
 
 This complete inability to communicate or behave like an intelligent life-form is a huge part of why protests are such a non-starter for me.[^riots] In retrospect, I think it is a big part of why I have disconnected from social media, as well: the standards of discourse on social media are around the same impoverished levels of discourse I had with that Macy's protester so many years ago.
 
 [^riots]: Obviously, when protests escalate to riots and people are actually being murdered, harmed in their person, or harmed by having their property destroyed, there are larger issues than this more intellectual concern.
 
-I suppose I am more like Julia Galef and less like Buster Benson. Buster Benson believes that he is "definitely surrounded by people that are not, would not identify as being rational, logical people" and wants to maintain relationships with his friends. Whereas I, like Julia Galef, have "criteria for the kind of people who I would be close enough to, to get in an argument with."
+I suppose I am more like Julia Galef and less like Buster Benson. Buster Benson believes that he is "definitely surrounded by people that are not, would not identify as being rational, logical people" and wants to maintain relationships with his friends. Whereas I, like Julia Galef, have "criteria for the kind of people who I would be close enough to, to get in an argument with" the ability to engage in an intelligent conversation.
 
 
 ## Conclusion
 
 Both Julia Galef's interviews of John Nerst and of Buster Benson were insightful for me with regard to my attitudes toward disagreement.
 
-John Nerst identified a problem -- low resolution abstraction -- that I also grapple with, but his idea of a solution to the problem is quite different from mine: he would add different kinds of low resolution abstractions to his thinking in order to try viewing things through different paradigms, whereas I try to do away with low resolution abstraction from my thinking as much as possible.
+John Nerst identified a problem -- low resolution abstraction -- that I also grapple with, but his idea of a solution to the problem is quite different from mine: he would add different kinds of low resolution abstractions to his thinking in order to try viewing things through different paradigms, whereas I try to do away with low resolution abstraction from my thinking.
 
 Buster Benson discussed two phenomena that at first might seem opposite. On the one hand, he noted his own redirection of a disagreement toward a different question -- one that was descriptive rather than a value judgment -- in order to "win" the disagreement. This could be viewed as a fallacy of making a disagreement more intellectual and less emotional. On the other hand, he noted his friends' anger at his lack of anger. This could be viewed as a fallacy of making a disagreement less intellectual and more emotional.
 
@@ -240,9 +244,9 @@ When Buster Benson redirected the disagreement about his parental contribution t
 
 This gets at a fundamental issue that makes disagreement unproductive. Just as it takes two to disagree, it takes two people to disagree _well._ In these kinds of unproductive disagreements, at least one person is not actually cognizant of the other's value judgments or descriptive beliefs. Thus, they are talking past each other. This, compounded by the desire to "win" or to express anger, leads to an inability to communicate.
 
-Perhaps this is what John Nerst is getting at when he tries to internalize additional low resolution abstractions; he is trying to see things from the perspective of the person with whom he is disagreeing. However, I would contend, you do not need the low resolution abstraction to do this. The low resolution abstraction, in my view, is a crutch that people use to avoid discussing their value judgments and descriptive beliefs directly. Oftentimes this crutch comes with it the added expense of fallacies like generic thinking. You can have productive disagreement with someone by skipping the low resolution abstraction and learning about their value judgments and descriptive beliefs.
+Perhaps this is what John Nerst is getting at when he tries to internalize others' low resolution abstractions; he is trying to see things from the perspective of the person with whom he is disagreeing. However, I would contend, you do not need the low resolution abstraction to do this. The low resolution abstraction, in my view, is a crutch that people use to avoid discussing their value judgments and descriptive beliefs directly. Oftentimes this crutch comes with it the added expense of fallacies like generic thinking. You can have productive disagreement with someone by skipping the low resolution abstraction and learning about their value judgments and descriptive beliefs.
 
-Hearing others discuss how they have grappled with disagreement on the Rationally Speaking Podcast, interviewed by a host who herself is adept at disagreeing well, has aided me in understanding our tendencies when we disagree badly. Of course, you might disagree.
+Hearing others on the Rationally Speaking Podcast discuss how they have grappled with disagreement while interviewed by a host who herself is adept at disagreeing well has aided me in understanding the tendencies we have when we disagree badly. Of course, the reader might disagree.
 
 
 ## Footnotes
