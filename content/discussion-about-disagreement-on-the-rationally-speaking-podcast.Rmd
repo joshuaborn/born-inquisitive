@@ -1,7 +1,6 @@
 ---
 author: "Joshua Born"
 date: 2022-06-03
-draft: true
 tags: ["book, article, or podcast review", "first-person"]
 title: "Discussion about Disagreement on the Rationally Speaking Podcast"
 output:
