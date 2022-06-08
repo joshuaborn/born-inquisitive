@@ -41,7 +41,7 @@ is licensed under
 and is not modified.
 ](/images/light-in-the-dark.jpg)
 
-Though I am sure I disagree with host Julia Galef on issues I am passionate about, I still respect her intellectually. Granted, this is because much of the framework of _how_ she thinks and the framework of _how_ I think overlap. She puts into words the sort of questions I would ask, she makes comments and criticisms similar to those I would make, and she frames discussion in ways that I would frame. But more than this, I respect her intellectually despite what disagreement we might have _because she disagrees well._
+Though I am sure I disagree with host Julia Galef on issues I am passionate about, I still respect her intellectually. Granted, this is because much of the framework of _how_ she thinks and the framework of _how_ I think overlap. She puts into words the sort of questions I would ask; she makes comments and criticisms similar to those I would make; and she frames discussion in ways that I would frame. But more than this, I respect her intellectually despite what disagreement we might have _because she disagrees well._
 
 Indeed, I have said a few times that if I lived in a world of people who disagree as well as Julia Galef, I would be much more open about my views, mostly because I would walk away from a disagreement having become a better thinker, not a worse one.
 
@@ -84,7 +84,7 @@ John Nerst's description of low resolution abstraction sounded like my descripti
 
 However, while low resolution abstraction contains generic thinking, it contains other things, as well. Yes, the parts of low resolution abstraction that claim to describe the world are probably generic thinking. For instance, "the capitalist class" is a label that describes millions of people, and the sentence "the capitalist class is exploiting the workers" is basically a generic generalization: it does not quantify how many of the people denoted by "capitalist class" it is applying its predicate to. It therefore comes with all the flaws of generic thinking that make generic thinking worthless to me.
 
-That being said, there is another issue with low resolution abstraction beyond generic thinking: low resolution abstraction mixes descriptive and normative ideas to the point where the person doing the abstraction probably is not clear about which parts are descriptive and which parts are normative. When someone says "we must let entrepreneurs create wealth," there is a component that is descriptive, i.e., that entrepreneurship has a certain economic effect described as "creating wealth," and there is a component that is normative, i.e., that "we must let" this happen because it is good.
+That being said, there is another issue with low resolution abstraction beyond generic thinking: low resolution abstraction mixes descriptive and normative ideas to the point where the person doing the abstraction probably is not clear about which parts are descriptive and which parts are normative. When someone says, "we must let entrepreneurs create wealth," there is a component that is descriptive, i.e., that entrepreneurship has a certain economic effect described as "creating wealth," and there is a component that is normative, i.e., that "we must let" this happen because it is good.
 
 Similarly, saying "the capitalist class is exploiting the workers" is not just a description of an economic relationship between "the capitalist class" and "the workers." It is as much a normative judgment that any such relationship is _bad,_ as the connotations of "exploiting" in this context allude to.
 
@@ -149,7 +149,7 @@ I take a decidedly different attitude toward low resolution abstraction. As migh
 
 I think it is possible to police your own mind to check against generic thinking, and it is possible to be cognizant of when you are making a descriptive claim versus when you are expressing a normative sentiment. Perhaps this cannot be done with 100\% perfection, but the impossibility of perfection should not be an excuse for contentment with something that is worse.
 
-Furthermore, when I encounter people who do not practice such self-skepticism and instead have debates such as "the capitalist class is exploiting the workers" versus "we must let entrepreneurs create wealth for all of use," I just want them to stop having such a facile debate and start thinking more rigorously. There is nothing about this way of thinking that makes me want to internalize it. My honest assessment is that I simply do not have anything to learn from such low resolution abstraction.
+Furthermore, when I encounter people who do not practice such self-skepticism and instead have debates such as "the capitalist class is exploiting the workers" versus "we must let entrepreneurs create wealth for all of us," I just want them to stop having such a facile debate and start thinking more rigorously. There is nothing about this way of thinking that makes me want to internalize it. My honest assessment is that I simply do not have anything to learn from such low resolution abstraction.
 
 
 ## Productive Disagreement
@@ -181,7 +181,7 @@ Buster Benson's explanation was refreshingly self-aware:
 
 If we are motivated to "win" an argument, we might try to redirect discussion into a true-or-false question that we have more knowledge about. However, doing so completely ignores the original disagreement and thus dodges whatever concerns led to the original disagreement.
 
-There are many issues with this practice. I am skeptical of the motives of anyone who goes into a disagreement with a desire to "win" as if the disagreement were a high school debate competition. I am not sure what anyone "wins" in these kind of encounters, but whatever is won is not something that I value.
+There are many issues with this practice. I am skeptical of the motives of anyone who goes into a disagreement with a desire to "win" as if the disagreement were a high school debate competition. I am not sure what anyone "wins" in these kinds of encounters, but whatever is won is not something that I value.
 
 But beyond this, there is the issue that a lot of disagreement is not due to disagreement over true-or-false questions. Indeed, Buster Benson's wife just wanted him to contribute more as a parent. This is not a descriptive, true-or-false question, but a normative sentiment. Thus, the original disagreement was over a value judgment, and value judgments are subjective evaluations of goodness or badness of a state of affairs.
 
@@ -193,7 +193,7 @@ I occasionally encounter such comments. Sometimes other people respond to moral 
 
 These are not genuine attempts to provide others with information. Implicit in most of these comments is the proposition that moral sentiments about killing fetuses should _hinge_ or _turn_ on the facts being shared, and unsurprisingly, the way this is framed is such that the information being volunteered leads to the conclusion that killing fetuses is fine. These are attempts to redirect a disagreement that is over value judgments into a disagreement over true-or-false, descriptive beliefs so that the person doing the redirection can "win."
 
-As it turns out, my moral sentiments are not contingent on whatever information these other people volunteer to me. (As it so happens, I, too, took developmental biology in university, so facts about gastrulation or notochords or whatever are things I have heard before.) Indeed, if my moral sentiments were contingent on such things, I would have long ago investigated the relevant information, so these comments are predicated an the assumption that I cannot myself find out information relevant to me.
+As it turns out, my moral sentiments are not contingent on whatever information these other people volunteer to me. (As it so happens, I, too, took developmental biology in university, so facts about gastrulation or notochords or whatever are things I have heard before.) Indeed, if my moral sentiments were contingent on such things, I would have long ago investigated the relevant information, so these comments are predicated on the assumption that I cannot myself find out information relevant to me.
 
 Perhaps, though, that is the point of this tactic. Those who would volunteer information have the condescension that those who disagree with them in moral sentiments are ignorant, and if everyone would just learn the facts they know, then everyone would agree with their moral sentiments. I suppose this is easier to live with than to face the reality of moral disagreements occurring when different people have the same information.
 
