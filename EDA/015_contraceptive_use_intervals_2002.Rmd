@@ -76,7 +76,7 @@ fem2002dt[EVERUSED == 1, table(CMDATBGN)] |>
 
 ### MONSX series
 
-These variables indicate whether or not the respondent had intercourse in the specified month.
+These variables indicate whether or not the respondent had intercourse in the specified month. (computed)
 
 ```{r explore-MONSX-1, dependson='process-data'}
 fem2002$Formats[format_name == 'MONSX']
@@ -120,7 +120,60 @@ fem2002calendar[, tablena(MONSX_f)] |> kable()
 ```
 
 
-* NUMMULT series
+### NUMMULT series
+
+These variables indicate the number of methods reported in a given month. (computed)
+
+```{r explore-NUMMULT-1, dependson='process-data'}
+grep('^NUMMULT[[:digit:]]*', names(fem2002dt), value = TRUE)
+```
+
+Unlike `MONSX`, these variable names do not use the century-month encoding.
+
+```{r explore-NUMMULT-2, dependson='explore-MONSX'}
+NUMMULT_pivot <- melt(
+  fem2002dt,
+  id.vars = c('CASEID'),
+  measure.vars = patterns('^NUMMULT[[:digit:]]*'),
+  value.name = 'NUMMULT'
+)[, .(
+  CASEID,
+  NUMMULT,
+  month_offset = as.integer(sub(
+    '^NUMMULT([[:digit:]]*)',
+    '\\1',
+    variable
+  ))
+)][, .(
+  CASEID,
+  NUMMULT,
+  cm_value = fifelse(
+    is.na(month_offset),
+    1189L, # This is January 1999.
+    1188L + month_offset
+  )
+)]
+
+fem2002calendar[
+  NUMMULT_pivot,
+  NUMMULT := i.NUMMULT,
+  on = c('CASEID', 'cm_value')
+]
+
+fem2002calendar |> head(30) |> kable()
+
+fem2002calendar[, tablena(NUMMULT)] |> kable()
+
+NUMMULT_pivot[, max(cm_value)]
+fem2002calendar[, max(cm_value)]
+
+NUMMULT_pivot[, min(cm_value)]
+fem2002calendar[, min(cm_value)]
+```
+
+It appears that the NUMMULT series begins in January 1999 (century-month 1189), but the MONSX series begins a year earlier in January 1998 (century-month 1177).
+
+
 * METHHIST series
 * MTHUSIMX series
 * SIMSEQ series
