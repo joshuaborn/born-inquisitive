@@ -35,19 +35,92 @@ fem2002 <- load_NSFG_data('2002', 'FemResp')
 preg2002 <- load_NSFG_data('2002', 'FemPreg')
 ```
 
-## Contraceptive Calendar Variables
-
-* CMSTRTMC
-* CMENDMC
-* CMDATBGN
-* MONSX series
-* NUMMULT series
-* METHHIST series
-* MTHUSIMX series
-* SIMSEQ series
-
-
 ```{r process-data, dependson='load-data'}
 fem2002dt <- copy(fem2002$Data)
 ```
 
+
+## Contraceptive Calendar Variables
+
+```{r explore-variables, dependson='process-data'}
+tablena(fem2002dt$EVERUSED)
+```
+
+### CMSTRTMC
+
+Century month for date of starting month of method calendar (computed)
+
+```{r explore-CMSTRTMC, dependson='process-data'}
+fem2002dt[EVERUSED == 1, tablena(CMSTRTMC)] |>
+  names_to_century_month() |> kable()
+```
+
+### CMENDMC
+
+Century month for date of ending month of method calendar (computed)
+
+```{r explore-CMENDMC, dependson='process-data'}
+fem2002dt[EVERUSED == 1, table(CMENDMC)] |>
+  names_to_century_month() |>
+  kable()
+```
+
+### CMDATBGN
+
+Date (century month) began using method/method combination (computed)
+
+```{r explore-CMDATBGN, dependson='process-data'}
+fem2002dt[EVERUSED == 1, table(CMDATBGN)] |>
+  names_to_century_month()
+```
+
+### MONSX series
+
+These variables indicate whether or not the respondent had intercourse in the specified month.
+
+```{r explore-MONSX-1, dependson='process-data'}
+fem2002$Formats[format_name == 'MONSX']
+```
+
+For some reason, the format in the provided SAS statements is incomplete, so I will just set the factor labels manually.
+
+```{r explore-MONSX, dependson='process-data'}
+fem2002calendar <- melt(
+  fem2002dt,
+  id.vars = c('CASEID'),
+  measure.vars = patterns('^MONSX[[:digit:]]+'),
+  value.name = 'MONSX'
+)
+
+fem2002calendar[,
+  cm_value := as.integer(sub(
+    '^MONSX([[:digit:]]+)',
+    '\\1',
+    variable
+  ))
+]
+
+fem2002calendar[, `:=`(
+  cm_label = to_century_month(cm_value),
+  variable = NULL,
+  MONSX_f = factor(
+    MONSX,
+    levels = c(1, 5, 7, 8, 9),
+    labels = c('YES', 'NO', 'NOT ASCERTAINED', 'REFUSED', "DON'T KNOW")
+  )
+)]
+
+setkeyv(fem2002calendar, c('CASEID', 'cm_value'))
+
+setcolorder(fem2002calendar, c('CASEID', 'cm_value', 'cm_label'))
+
+fem2002calendar |> head(30) |> kable()
+
+fem2002calendar[, tablena(MONSX_f)] |> kable()
+```
+
+
+* NUMMULT series
+* METHHIST series
+* MTHUSIMX series
+* SIMSEQ series
