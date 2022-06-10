@@ -139,19 +139,18 @@ NUMMULT_pivot <- melt(
 )[, .(
   CASEID,
   NUMMULT,
-  month_offset = as.integer(sub(
-    '^NUMMULT([[:digit:]]*)',
-    '\\1',
-    variable
-  ))
+  month_offset = nafill(
+    as.integer(sub(
+      '^NUMMULT([[:digit:]]*)',
+      '\\1',
+      variable
+    )),
+    fill = 1
+  )
 )][, .(
   CASEID,
   NUMMULT,
-  cm_value = fifelse(
-    is.na(month_offset),
-    1189L, # This is January 1999.
-    1188L + month_offset
-  )
+  cm_value = 1188L + month_offset
 )]
 
 fem2002calendar[
@@ -172,6 +171,58 @@ fem2002calendar[, min(cm_value)]
 ```
 
 It appears that the NUMMULT series begins in January 1999 (century-month 1189), but the MONSX series begins a year earlier in January 1998 (century-month 1177).
+
+
+### SIMSEQ series
+
+This series encodes whether the contraceptive methods mentioned by the respondent were used at the same time or at different times during the month.
+
+```{r explore-SIMSEQ-1, dependson='process-data'}
+grep('^SIMSEQ[[:digit:]]*', names(fem2002dt), value = TRUE)
+```
+
+The suffix encoding for `SIMSEQ` is exactly like that of `NUMMULT`.
+
+```{r explore-SIMSEQ-2, dependson='explore-NUMMULT-2'}
+SIMSEQ_pivot <- melt(
+  fem2002dt,
+  id.vars = c('CASEID'),
+  measure.vars = patterns('^SIMSEQ[[:digit:]]*'),
+  value.name = 'SIMSEQ'
+)[, .(
+  CASEID,
+  SIMSEQ,
+  month_offset = nafill(
+    as.integer(sub(
+      '^SIMSEQ([[:digit:]]*)',
+      '\\1',
+      variable
+    )),
+    fill = 1
+  )
+)][, .(
+  CASEID,
+  SIMSEQ,
+  SIMSEQ_f = factorize_NSFG_variable(
+    SIMSEQ,
+    'TE_158F',
+    formats_table = fem2002$Formats,
+    fill_na = FALSE
+  ),
+  cm_value = 1188L + month_offset
+)]
+
+fem2002calendar[
+  SIMSEQ_pivot,
+  `:=`(
+    SIMSEQ = i.SIMSEQ,
+    SIMSEQ_f = i.SIMSEQ_f
+  ),
+  on = c('CASEID', 'cm_value')
+]
+
+fem2002calendar[CASEID == 51] |> kable()
+```
 
 
 ### METHHIST series
@@ -248,7 +299,23 @@ fem2002calendar[
   on = c('CASEID', 'cm_value')
 ]
 
-fem2002calendar[CASEID == 15, 1:8] |> kable()
+fem2002calendar[
+  CASEID == 51,
+  .(
+    cm_value,
+    cm_label,
+    MONSX_f,
+    NUMMULT,
+    METHHIST_1,
+    METHHIST_f_1,
+    METHHIST_2,
+    METHHIST_f_2,
+    METHHIST_3,
+    METHHIST_f_3,
+    METHHIST_4,
+    METHHIST_f_4
+  )
+] |> kable()
 ```
 
 ```{r explore-METHHIST-4, dependson='explore-METHHIST-3'}
@@ -380,11 +447,6 @@ fem2002calendar[
   )
 ] |> kable()
 ```
-
-
-### Remaining
-
-* SIMSEQ series
 
 
 ## Notes
