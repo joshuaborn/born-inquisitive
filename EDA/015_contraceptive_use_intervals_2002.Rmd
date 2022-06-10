@@ -174,6 +174,100 @@ fem2002calendar[, min(cm_value)]
 It appears that the NUMMULT series begins in January 1999 (century-month 1189), but the MONSX series begins a year earlier in January 1998 (century-month 1177).
 
 
-* METHHIST series
+### METHHIST series
+
+This series of variables encode up to 4 methods of contraception mentioned by respondents as used in a given month.
+
+```{r explore-METHHIST-1, dependson='process-data'}
+METHHIST_colnames <- grep('^METHHIST[[:digit:]]*', names(fem2002dt), value = TRUE)
+METHHIST_colnames
+```
+
+The first two digits in the numerical suffix refer to the month, and the last digit of the numerical suffix numbers the mentions.
+
+```{r explore-METHHIST-2, dependson= 'explore-METHHIST-1'}
+sapply(fem2002dt[, ..METHHIST_colnames], class)
+
+fem2002dt[, tablena(METHHIST514)]
+```
+
+`METHHIST514` is being loaded into R as a boolean variable because it is all `NA` values. It needs to be casted into an integer variable for pivoting.
+
+```{r explore-METHHIST-3, dependson='explore-NUMMULT-2'}
+fem2002dt[, METHHIST514 := as.integer(METHHIST514)]
+
+METHHIST_long <- melt(
+  fem2002dt,
+  id.vars = c('CASEID'),
+  measure.vars = patterns('^METHHIST[[:digit:]]*'),
+  value.name = 'METHHIST'
+)[, .(
+  CASEID,
+  METHHIST,
+  month_offset = as.integer(sub(
+    '^METHHIST([[:digit:]]{2,2})[[:digit:]]',
+    '\\1',
+    variable
+  )),
+  mention_num = as.integer(sub(
+    '^METHHIST[[:digit:]]{2,2}([[:digit:]])',
+    '\\1',
+    variable
+  ))
+)][, .(
+  CASEID,
+  cm_value =  1188L + month_offset,
+  METHHIST,
+  METHHIST_f = factorize_NSFG_variable(
+    METHHIST,
+    'TE_157F',
+    formats_table = fem2002$Formats,
+    fill_na = FALSE
+  ),
+  mention_num
+)]
+
+METHHIST_wide <- dcast(
+  METHHIST_long,
+  CASEID + cm_value ~ mention_num,
+  value.var = c('METHHIST', 'METHHIST_f')
+)
+
+fem2002calendar[
+  METHHIST_wide,
+  `:=`(
+    METHHIST_1 = i.METHHIST_1,
+    METHHIST_f_1 = i.METHHIST_f_1,
+    METHHIST_2 = i.METHHIST_2,
+    METHHIST_f_2 = i.METHHIST_f_2,
+    METHHIST_3 = i.METHHIST_3,
+    METHHIST_f_3 = i.METHHIST_f_3,
+    METHHIST_4 = i.METHHIST_4,
+    METHHIST_f_4 = i.METHHIST_f_4
+  ),
+  on = c('CASEID', 'cm_value')
+]
+
+fem2002calendar[CASEID == 15, 1:8] |> kable()
+```
+
+```{r explore-METHHIST-4, dependson='explore-METHHIST-3'}
+METHHIST_long[, tablena(METHHIST_f)]
+```
+
+Fortunately, the "SAME METHOD USED THRU END OF YEAR" and "SAME AS PREVIOUS MONTH" levels of `METHHIST` are not used.
+
+
+### Remaining
+
 * MTHUSIMX series
 * SIMSEQ series
+
+
+## Notes
+
+* Look at the dates for sterilizing operations and override contraceptive use calendars with this information.
+* Handle non-contraceptive sterility for both
+    * respondent and
+    * respondent's partner.
+* Going forward doing analysis on different years of the NSFG, having the NSFG helper functions set and get variables is going to be unwieldy. I should remove that and just pass in the relevant tables as function parameters.
