@@ -258,9 +258,132 @@ METHHIST_long[, tablena(METHHIST_f)]
 Fortunately, the "SAME METHOD USED THRU END OF YEAR" and "SAME AS PREVIOUS MONTH" levels of `METHHIST` are not used.
 
 
+### MTHUSIMX series
+
+This series of variables encodes which contraceptive methods were used in which combinations.
+
+```{r explore-MTHUSIMX-1, dependson='process-data'}
+MTHUSIMX_colnames <- grep('^MTHUSIMX[[:digit:]]*', names(fem2002dt), value = TRUE)
+MTHUSIMX_colnames
+```
+
+There can be up to 4 methods used per combination, and up to 2 combinations. The mentions for first combination for each month are encoded with numeric suffix `01` through `04`, and the mentions for the second combination as `51` through `54`. To this is added a month offset multiple of a 100. January 1999 has a month offset value of 0, February 1999 has a month offset value of 100, March 1999 has month offset value of 200, etc.
+
+```{r explore-MTHUSIMX-2, dependson='explore-MTHUSIMX-1'}
+MTHUSIMX_logicals <- MTHUSIMX_colnames[
+  sapply(fem2002dt[, ..MTHUSIMX_colnames], class) == 'logical'
+]
+
+fem2002dt[, lapply(.SD, \(x) all(is.na(x))), .SDcols = MTHUSIMX_logicals] |>
+  t() |>
+  kable()
+```
+
+Several `MTHUSIMX` columns were loaded into R as `logical` vectors because they consist of all `NA` values. They need to be converted to `integer` vectors.
+
+```{r explore-MTHUSIMX-3, dependson=c('explore-METHHIST-3', 'explore-MTHUSIMX-2')}
+fem2002dt[, (MTHUSIMX_logicals) := lapply(.SD, as.integer), .SDcols = MTHUSIMX_logicals]
+
+MTHUSIMX_long <- melt(
+  fem2002dt,
+  id.vars = c('CASEID'),
+  measure.vars = patterns('^MTHUSIMX[[:digit:]]*'),
+  value.name = 'MTHUSIMX'
+)[, .(
+  CASEID,
+  MTHUSIMX,
+  month_offset = nafill(
+    as.integer(sub(
+      '^MTHUSIMX([[:digit:]]{0,2})[[:digit:]]{2}$',
+      '\\1',
+      variable
+    )),
+    fill = 0
+  ),
+  mention_num = as.integer(sub(
+    '^MTHUSIMX[[:digit:]]{0,2}([[:digit:]]{2})$',
+    '\\1',
+    variable
+  ))
+)][, .(
+  CASEID,
+  cm_value =  1189L + month_offset,
+  MTHUSIMX,
+  MTHUSIMX_f = factorize_NSFG_variable(
+    MTHUSIMX,
+    'TE_159F',
+    formats_table = fem2002$Formats,
+    fill_na = FALSE
+  ),
+  mention_num
+)]
+
+MTHUSIMX_long[, tablena(MTHUSIMX_f)]
+
+MTHUSIMX_long[!is.na(MTHUSIMX_f)][sample(10)]
+```
+
+```{r explore-MTHUSIMX-4, dependson='explore-MTHUSIMX-3'}
+MTHUSIMX_wide <- dcast(
+  MTHUSIMX_long,
+  CASEID + cm_value ~ mention_num,
+  value.var = c('MTHUSIMX', 'MTHUSIMX_f')
+)
+
+fem2002calendar[
+  MTHUSIMX_wide,
+  `:=`(
+    MTHUSIMX_1 = i.MTHUSIMX_1,
+    MTHUSIMX_f_1 = i.MTHUSIMX_f_1,
+    MTHUSIMX_2 = i.MTHUSIMX_2,
+    MTHUSIMX_f_2 = i.MTHUSIMX_f_2,
+    MTHUSIMX_3 = i.MTHUSIMX_3,
+    MTHUSIMX_f_3 = i.MTHUSIMX_f_3,
+    MTHUSIMX_4 = i.MTHUSIMX_4,
+    MTHUSIMX_f_4 = i.MTHUSIMX_f_4,
+    MTHUSIMX_26 = i.MTHUSIMX_26,
+    MTHUSIMX_f_26 = i.MTHUSIMX_f_26,
+    MTHUSIMX_27 = i.MTHUSIMX_27,
+    MTHUSIMX_f_27 = i.MTHUSIMX_f_27,
+    MTHUSIMX_28 = i.MTHUSIMX_28,
+    MTHUSIMX_f_28 = i.MTHUSIMX_f_28,
+    MTHUSIMX_29 = i.MTHUSIMX_29,
+    MTHUSIMX_f_29 = i.MTHUSIMX_f_29,
+    MTHUSIMX_51 = i.MTHUSIMX_51,
+    MTHUSIMX_f_51 = i.MTHUSIMX_f_51,
+    MTHUSIMX_52 = i.MTHUSIMX_52,
+    MTHUSIMX_f_52 = i.MTHUSIMX_f_52,
+    MTHUSIMX_53 = i.MTHUSIMX_53,
+    MTHUSIMX_f_53 = i.MTHUSIMX_f_53,
+    MTHUSIMX_54 = i.MTHUSIMX_54,
+    MTHUSIMX_f_54 = i.MTHUSIMX_f_54
+  ),
+  on = c('CASEID', 'cm_value')
+]
+
+fem2002calendar[
+  CASEID == 2684,
+  .(
+    cm_value,
+    cm_label,
+    MONSX_f,
+    NUMMULT,
+    METHHIST_f_1,
+    METHHIST_f_2,
+    METHHIST_f_3,
+    MTHUSIMX_1,
+    MTHUSIMX_f_1,
+    MTHUSIMX_2,
+    MTHUSIMX_f_2,
+    MTHUSIMX_26,
+    MTHUSIMX_f_26
+  )
+] |> kable()
+```
+
+
 ### Remaining
 
-* MTHUSIMX series
 * SIMSEQ series
 
 
