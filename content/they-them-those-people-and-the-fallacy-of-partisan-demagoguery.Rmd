@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-In the past, I have written about [fallacies](/tags/fallacies.html) in social criticism that I have largely overcome. For instance, once I became aware of the practice of [listing confirmatory examples](/selection-bias-and-the-fallacy-of-listing-examples.html) of some phenomenon and how this proves nothing about the prevalence of the phenomenon, I have largely stopped doing it. Similarly, [generic thinking](/fallacy-of-generic-thinking.html) is something that I used to consciously do, but once I read about it and reflected upon it, I have mostly purged it from my thinking -- with one major exception. The exception is the description of a "they," "them," or "those people,"  which is the topic of this article. I write this article in the first-person because even though I am aware of the fallacies I am describing herein, I still -- much to my chagrin -- catch myself characterizing "them" fallaciously.
+In the past, I have written about [fallacies](/tags/fallacies.html) in social criticism that I have largely overcome. For instance, once I became aware of the practice of [listing confirmatory examples](/selection-bias-and-the-fallacy-of-listing-examples.html) of some phenomenon and how this proves nothing about the prevalence of the phenomenon, I have largely stopped doing it. Similarly, [generic thinking](/fallacy-of-generic-thinking.html) is something that I used to consciously do, but once I read about it and reflected upon it, I have mostly purged it from my thinking -- with one major exception. The exception is the description of a "they," "them," or "those people,"  which is the topic of this article. I write this article in the first-person because even though I am aware of the fallacies I am describing herein, I still -- much to my chagrin -- catch myself characterizing "those people" fallaciously.
 
 In the United States, conservatives spend a lot of time and energy talking about leftists,[^leftist] and leftists spend a lot of time and energy talking about conservatives. Unsurprisingly, most of this time and energy is spent describing the other group as bad. A similar sort of phenomenon can be seen in various times and places across the Earth whenever there is an opportunity for binary sorting into an "us" and a "them." This is the most obvious context in which the fallacies discussed in this article occur.
 
@@ -114,6 +114,18 @@ Thus, the reverse no true Scotsman fallacy in the context of partisan demagoguer
 
 
 ### Empowering Partisan Polarization
+
+The previous two sections discussed reasons for avoiding partisan demagoguery pertaining to the disingenuous aspects of the practice, and intellectual honesty _per se_ is a good reason to reform your thinking. However, there is another concern that convinced me to purge specious characterizations of "they," "them," or "those people" from my thinking: the more you think in terms of partisan factions -- even to criticize them -- the more you empower them. Indeed, I noticed that the more I complained about various factions of "they," "them," or "those people," the more ubiquitous, threatening, and oppressive "they" seemed to me.
+
+One of the important lessons to learn from studies such as _[The Hidden Tribes of America](https://hiddentribes.us/)_ is that polarization has led to relatively small clusters of people in the United States who are more engaged with politics and with social media than the rest of the "exhausted majority" who feel less represented by politics and are less engaged with social media.
+
+It is important to remember, then, that your anecdotal experience with media -- both social media and conventional media -- is _not_ a representative sample of viewpoints in the general population. There is _more_ diversity of viewpoints in the real world than engagement with media would lead you to believe. Even direct conversations with other people might be misleading, if people in the polarized clusters feel more empowered to share their viewpoints than the "exhausted majority." Despite how it seems, "those people" are _not_ ubiquitous.
+
+The realization I had which convinced me to rid myself of partisan characterizations is that in complaining about "they," "them," or "those people," I was implicitly accepting the framing of binary polarization, even when I was trying to denigrate it. I was giving even more representation to those in the polarized clusters -- who are already over-represented -- and less of a platform to the diversity of viewpoints in the "exhausted majority" -- who are already under-represented.
+
+This is a phenomenon that is important for my thinking because, as I described in the introduction, polarization around induced abortion of pregnancy has ruined my ability to find a constituency. Despite birth control being extremely popular in the United States and despite there being numerous people who, regardless of political affiliation, have moral compunction about killing fetuses as a method of fertility control, polarization that frames discourse as a battle between religious conservativism and ideology of abortion as women's liberation has crowded out all the other viewpoints, including the ones that might point the way toward progress in reproductive responsibility.
+
+... ... ...
 
 
 ## Conclusion
