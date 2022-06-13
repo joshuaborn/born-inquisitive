@@ -158,6 +158,54 @@ setcolorder(cal2002, c('CASEID', 'cm_value', 'cm_label'))
 ```
 
 
+## Encodings
+
+### SIMSEQ
+
+```{r encodings-1, dependson='load-data'}
+fem2002$Formats[format_name == 'TE_158F', .(
+  factor_value = as.integer(factor_value),
+  factor_label
+)][order(factor_value)] |> kable()
+```
+
+### METHHIST
+
+```{r encodings-2, dependson='load-data'}
+fem2002$Formats[format_name == 'TE_157F', .(
+  factor_value = as.integer(factor_value),
+  factor_label
+)][order(factor_value)] |> kable()
+```
+
+### METHUSIMX
+
+```{r encodings-3, dependson='load-data'}
+fem2002$Formats[format_name == 'TE_159F', .(
+  factor_value = as.integer(factor_value),
+  factor_label
+)][order(factor_value)] |> kable()
+```
+
+## Plan
+
+```{r NUMULT-counts, dependson='process-data'}
+cal2002[, .N, by = NUMMULT]
+```
+
+Some issues with the data:
+
+* "None" values are encoded as a kind of method, sometimes.
+    * When there is no method used in a month, this can be encoded either with `NUMMULT` of 1 and `METHHIST_1` of 1 or with a `NUMMULT` of 0.
+    * When all methods are used in together and there are 3 or more methods, either `METHUSIMX_51` has a value of 1 or the entire second cluster variables are blank, i.e., `NA` values.
+* The order in which different methods are mentioned shouldn't matter, e.g., a row with `METHHIST_1` of "CONDOM" and `METHHIST_2` with "BIRTH CONTROL PILLS" is equivalent to a row with `METHHIST_1` of "BIRTH CONTROL PILLS" and `METHHIST_2` of "CONDOM," all other things being equal.
+* The way that simultaneous versus alternating use of 3 or more methods is encoded is a hot mess. It is pretty clear from reviewing the `MTHUSIMX` variables that a lot of respondents didn't understand the cluster question. Looking over them, it can be inferred that if there is one cluster of all the methods in `METHHIST`, or if there are multiple clusters with the exact same methods mentioned (possibly in a different order), then the methods were used simultaneously. Otherwise, if there are multiple clusters with any differences, the safest conclusion is methods were used alternatively.
+
+How to handle this:
+
+As I did for the earlier contraceptive use report, I'll create a new table with one row for each `CASEID` and century-month and set booleans for whether each possible method is mentioned in each given month. This allows me to easily ignore "none" and non-contraceptive sterility values values and set my own count of actual contraceptive methods. In addition, I'll set a boolean for whether methods are simultaneously or alternatively used, which will be easy in the 0, 1, or 2 methods cases (the latter is basically just `SIMSEQ`), but more challenging for the 3 or 4 method cases. Once this is set up, it will be easy to identify the base contraceptive intervals.
+
+
 ## Notes
 
 * Look at the dates for sterilizing operations and override contraceptive use calendars with this information.
