@@ -1,6 +1,6 @@
 ---
 author: "Joshua Born"
-date: 2022-06-13
+date: 2022-06-14
 draft: true
 tags: ["fallacies", "first-person"]
 title: '"They," "Them," "Those People," and the Fallacy of Partisan Demagoguery'
