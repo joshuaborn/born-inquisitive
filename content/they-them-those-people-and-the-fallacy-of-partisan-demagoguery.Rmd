@@ -1,6 +1,6 @@
 ---
 author: "Joshua Born"
-date: 2022-06-11
+date: 2022-06-13
 draft: true
 tags: ["fallacies", "first-person"]
 title: '"They," "Them," "Those People," and the Fallacy of Partisan Demagoguery'
@@ -27,9 +27,9 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-In the past, I have written about [fallacies](/tags/fallacies.html) in social criticism that I have largely overcome. For instance, once I became aware of the practice of [listing confirmatory examples](/selection-bias-and-the-fallacy-of-listing-examples.html) of some phenomenon and how this proves nothing about the prevalence of the phenomenon, I have largely stopped doing it. Similarly, [generic thinking](/fallacy-of-generic-thinking.html) is something that I used to consciously do, but once I read about it and reflected upon it, I have mostly purged it from my thinking -- with one major exception. The exception is the description of a "they," "them," or "those people,"  which is the topic of this article. I write this article in the first-person because even though I am aware of the fallacies I am describing herein, I still -- much to my chagrin -- catch myself characterizing "those people" fallaciously.
+In the past, I have written about [fallacies](/tags/fallacies.html) in social criticism that I have largely overcome. For instance, once I became aware of the practice of [listing confirmatory examples](/selection-bias-and-the-fallacy-of-listing-examples.html) of some phenomenon and how this proves nothing about the prevalence of the phenomenon, I have largely stopped doing it. Similarly, [generic thinking](/fallacy-of-generic-thinking.html) is something that I used to consciously do, but once I read about it and reflected upon it, I have mostly purged it from my thinking -- with one major exception. The exception is the description of a "they," "them," or "those people,"  which is the topic of this article. I write this article in the first-person because even though I am aware of the fallacies I am describing herein, I still -- much to my chagrin -- catch myself characterizing "those people."
 
-In the United States, conservatives spend a lot of time and energy talking about leftists,[^leftist] and leftists spend a lot of time and energy talking about conservatives. Unsurprisingly, most of this time and energy is spent describing the other group as bad. A similar sort of phenomenon can be seen in various times and places across the Earth whenever there is an opportunity for binary sorting into an "us" and a "them." This is the most obvious context in which the fallacies discussed in this article occur.
+In the United States, conservatives spend a lot of time and energy talking about leftists,[^leftist] and leftists spend a lot of time and energy talking about conservatives. Unsurprisingly, most of this time and energy is spent describing the other group as bad. A similar sort of phenomenon can be seen in many different times and places across the Earth whenever there is an opportunity for binary sorting into an "us" and a "them." This is the most obvious context in which the fallacies discussed in this article occur.
 
 [^leftist]: The use of the word "liberal" is avoided in this article because the term "liberal" is heavily confounded. While it is often used to refer to leftist politics in the United States, "liberal" parties in many other countries are right-wing or center-right parties. Furthermore, even in the United States, "neo-liberal" economic policies and "classical liberal" political philosophies are often associated with right-wing or libertarian positions.
 
@@ -37,7 +37,7 @@ However, mine is a strange case in that I have become quite habituated to being 
 
 [^closest]: The closest I have found are small, niche organizations such as [Secular Pro-Life](https://secularprolife.org/) or [Pro-Life Humanists](https://www.prolifehumanists.org/). The latter consists of one woman who blogs, goes to gatherings, makes speeches, and participates in debates; the former consists of three women who blog, go to gatherings, and make speeches. While my worldview has a lot of overlap with the worldviews of these individuals, they focus far more on politics and [moral arguments](/moral-skepticism.html) than I care to, and as the preceding description alludes to, these organizations are quite small.
 
-Sure, there are those organizations opposed to abortion as a method of fertility control, but those that frame themselves in religions terms or focus on politics do not represent what I do. On the other hand, there are organizations which study contraception, but all of those I have encountered explicitly advocate for abortion as method of fertility control.[^guttmacher] Thus, while I occasionally write about the [early birth control movement](/margaret-sanger-on-abortion-in-her-own-words.html) and yearn for such a community today, I mostly just do my work by myself.
+Sure, there are those organizations opposed to abortion as a method of fertility control, but those that frame themselves in religions terms or focus on politics do not represent what I do. On the other hand, there are organizations which study contraception, but all of those I have encountered explicitly advocate for abortion as method of fertility control.[^guttmacher] Thus, while I occasionally write about the [early birth control movement](/margaret-sanger-on-abortion-in-her-own-words.html) and wish I had such a community today, I mostly just do my work by myself.
 
 [^guttmacher]: To be fair, this basically just the Alan Guttmacher Institute, which is the only organization I have encountered that does substantial social science research on contraception.
 
@@ -45,9 +45,9 @@ In short, I do not feel like I have an "us." I therefore find it even more perpl
 
 Upon reflection, I have realized that these kind of thoughts are worthless and should be purged from my thinking. Instead, I should stay centered on my own activities and being productive with them, and consider the thoughts of the specific other individuals I actually encounter in my life, rather than populate my mind with the fallacies I describe in the sequel.
 
-By extension, it is also prudent for me not to waste my time engaging with those preoccupied with the act of characterizing "them" -- e.g., a conservative complaining about the "liberals" again or a leftist complaining about conservatives for the five thousandth time.
+By extension, it is also prudent for me not to waste my time engaging with other people preoccupied with the act of characterizing "them" -- e.g., a conservative complaining about the "liberals" again or a leftist complaining about conservatives for the five thousandth time.
 
-A good way to construe my realization is that, going forward, sentiments expressed about "they," "them," or "those people" constitute signals to me. Whenever I encounter such signals, whether in my own thinking or the thinking of someone else, I stop to scrutinize whether the fallacies I describe in the sequel are being committed. If so, I excise the sentiments as worthless. If I have discovered such fallacies in my own thinking, I stop that line of thought. If I have discovered such fallacies in the thinking of someone else, I stop giving such sentiments further consideration.
+Not _every_ description of "them" is fallacious. However, for me, sentiments expressed about "they," "them," or "those people" now constitute signals for further scrutiny. Whenever I encounter such signals, whether in my own thinking or the thinking of someone else, I stop to scrutinize whether the fallacies I describe in the sequel are being committed. If so, I excise the sentiments as worthless. If I have discovered such fallacies in my own thinking, I stop that line of thought. If I have discovered such fallacies in the thinking of someone else, I stop giving such sentiments further consideration.
 
 
 ## Fallacies
@@ -61,7 +61,8 @@ The "straw man fallacy" refers to the act of refuting a position that has been i
 
 _**Put photograph of straw man here.**_
 
-Firstly, the straw man fallacy comes up in cases when we are talking about "they," "them," or "those people," but "they" are not present. Thus, we are referring to some characterization of "them" that we are inventing ourselves. This occurs when someone complains that "those evil socialists want to steal the hard-earned fruits of our labor because they are too lazy to work" or "the evil capitalist class wants to crush our revolution so that they can exploit the workers." When these statements are made when no "evil socialists" or "evil capitalists" are present to hear them, the fallacy allows us to characterize the motives and intent of the referent of "they," even if that is not actually what "they" want.
+Firstly, the straw man fallacy comes up in cases in which we are talking about "they," "them," or "those people," but "they" are not present. Thus, we are referring to some characterization of "them" that we are inventing ourselves. This occurs when someone complains that "those evil socialists want to steal the hard-earned fruits of our labor because they are too lazy to work" or "the evil capitalist class wants to crush our revolution so that they can exploit the workers." When these statements are made when no "evil socialists" or "evil capitalists" are present to hear them, the fallacy allows us to characterize the motives and intent of the referent of "they," even if that is not actually what "they" want.
+
 
 Secondly, a more subtle version of the straw man fallacy occurs when we refute not a concern that someone has, but some other argument, and hope that no one notices.
 
@@ -71,7 +72,7 @@ Someone else might reply, "This tariff _is_ a good idea because the new tariff w
 
 This is another instance of the straw man fallacy. The criticism of the tariff was with regard to its possible effects on import and export trade, but the response completely ignored that concern, invented a different concern with regard to income taxation, and refuted this newly invented argument.
 
-Thus, when we are engaged in talking to ourselves or our own echo chamber about "they," "them," or "those people," this kind of straw man fallacy easily enters into our characterizations, even when we appear to be responding to statements made by whoever "they" are.
+Thus, when we are engaged in talking to ourselves or to our own echo chamber about "they," "them," or "those people," this kind of straw man fallacy easily enters into our characterizations, even when we appear to be responding to statements made by whoever "they" are.
 
 
 ### Reverse No True Scotsman
@@ -94,13 +95,13 @@ One of the more conspicuously facile examples of this is what has been called _"
 
 [^reductio]: This would only be a case of _reductio ad Hitlerum_ if this was shared as part of an attempt to _discredit_ vegetarians by associating them with Hitler. It is not in and of itself fallacious to share this bit of information as historical trivia.
 
-Whether or not Hitler was a vegetarian has no relevance for the evaluation of a someone else who is a vegetarian. However, picking Hitler as an example of what "those people" who are vegetarians are like is a rather fatuous attempt to discredit the character of "them," i.e., vegetarians.[^converse]
+Whether or not Hitler was a vegetarian has no relevance for the evaluation of someone else who is a vegetarian. However, picking Hitler as an example of what "those people" who are vegetarians are like is a rather fatuous attempt to discredit the character of "them," i.e., vegetarians.[^converse]
 
 [^converse]: Note that the _reductio ad Hitlerum_ fallacy is not applicable to criticisms of warmongering or racial bigotry. These are things that most of us judge to be bad and therefore judge Hitler to be bad _because_ he did these things. Indeed, warmongering and racial bigotry would still be judged to be bad regardless of whether Hitler did them. The _reductio ad Hitlerum_ fallacy reverses this implication by attempting to infer that somethings are bad because Hitler did them.
 
 The reverse no true Scotsman fallacy is slightly more connected to reality than the straw man fallacy. In the straw man fallacy, we ourselves invent the viewpoint that we wish to refute. In the reverse no true Scotsman fallacy, we go looking for someone who has a viewpoint that we wish to refute.
 
-There is a lot of gray area between these fallacies. For instance, we could be talking with someone who is making one point, but then go and find a different point being made by someone else and refute that other point. This is a combination of the straw man fallacy and the reverse no true Scotsman fallacy. From the standpoint of the person with whom we are actually having a conversation, this is a straw man fallacy, though operationally from our perspective, it is a reverse no true Scotsman fallacy.
+There is a lot of gray area between these fallacies. For instance, we could be talking with someone who is making one point, but then go and find a different point being made by someone else and refute that other point. This is a combination of the straw man fallacy and the reverse no true Scotsman fallacy. From the standpoint of the person with whom we are actually having a conversation, this is a straw man fallacy, though from our perspective, it is a reverse no true Scotsman fallacy.
 
 To continue the example of vegetarianism, you might encounter someone who practices vegetarianism because of the desire to avoid the slaughtering and mistreatment of animals for the harvesting of meat. If you encountered such a person and brought up a historical figure who practiced vegetarianism for the alleged health benefits of avoiding the consumption of meat, and you proceeded to discuss studies that found no health benefits from a vegetarian diet, then this would be such a combination of the two fallacies.
 
@@ -108,9 +109,9 @@ _**Put photograph of vegetarian here.**_
 
 Indeed, because there are over 7 billion people on the Earth, the reverse no true Scotsman fallacy could, in theory, always be used to support the straw man fallacy, because with so many people out there, it is probable that you could find at least one person who has any viewpoint you could possibly imagine and want to discredit. Thus, in practice, there is overlap between the two fallacies.
 
-The major difference between the two fallacies, however, is in _how_ they are fallacious. In a purely straw man fallacy, you are refuting a position you yourself are inventing, and the act of _inventing the viewpoint_ is itself disingenuous. In the reverse no true Scotsman fallacy, someone out there actually does have the viewpoint you want to refute, so the act of refuting it is not itself disingenuous _per se._ In this latter case, it is only disingenuous for you to attempt to characterize someone else who does not have the viewpoint -- such as the person with whom you are actually having a conversation --  as having the viewpoint by associating the viewpoint with what "they" think.
+The major difference between the two fallacies, however, is in _how_ they are fallacious. In a purely straw man fallacy, you are refuting a position you yourself are inventing, and the act of _inventing the viewpoint_ is itself disingenuous. In the reverse no true Scotsman fallacy, someone in the world actually does have the viewpoint you want to refute, so the act of refuting it is not itself disingenuous _per se._ In this latter case, it is only disingenuous for you to attempt to characterize someone else who does not have the viewpoint -- such as the person with whom you are actually having a conversation --  as having the viewpoint by associating the viewpoint with what "they" think.
 
-Thus, the reverse no true Scotsman fallacy in the context of partisan demagoguery is particular kind of generic thinking, and as this case illustrates and as I discussed in my article on generic thinking, one of the reasons generic thinking is fallacious is that it is useful for prejudice. This is precisely what occurs when a viewpoint is selected in an attempt to characterize what "they" think.
+Thus, the reverse no true Scotsman fallacy in the context of partisan demagoguery is a particular kind of [generic thinking](/fallacy-of-generic-thinking.html), and as this case illustrates and as I discussed in my article on generic thinking, one of the reasons generic thinking is fallacious is that it is useful for little other than [prejudice](/category-based-prejudice.html). This is precisely what occurs when a viewpoint is selected in an attempt to characterize what "they" think.
 
 
 ### Empowering Partisan Polarization
@@ -121,11 +122,9 @@ One of the important lessons to learn from studies such as _[The Hidden Tribes o
 
 It is important to remember, then, that your anecdotal experience with media -- both social media and conventional media -- is _not_ a representative sample of viewpoints in the general population. There is _more_ diversity of viewpoints in the real world than engagement with media would lead you to believe. Even direct conversations with other people might be misleading, if people in the polarized clusters feel more empowered to share their viewpoints than the "exhausted majority." Despite how it seems, "those people" are _not_ ubiquitous.
 
-The realization I had which convinced me to rid myself of partisan characterizations is that in complaining about "they," "them," or "those people," I was implicitly accepting the framing of binary polarization, even when I was trying to denigrate it. I was giving even more representation to those in the polarized clusters -- who are already over-represented -- and less of a platform to the diversity of viewpoints in the "exhausted majority" -- who are already under-represented.
+The realization I had which convinced me to rid myself of partisan characterizations is that in complaining about "they," "them," or "those people," I was inadvertently accepting the framing of binary polarization, even when I was trying to criticize it. I was giving even more representation to those in the polarized clusters -- who are already over-represented -- and less of a platform to the diversity of viewpoints in the "exhausted majority" -- who are already under-represented.
 
-This is a phenomenon that is important for my thinking because, as I described in the introduction, polarization around induced abortion of pregnancy has ruined my ability to find a constituency. Despite birth control being extremely popular in the United States and despite there being numerous people who, regardless of political affiliation, have moral compunction about killing fetuses as a method of fertility control, polarization that frames discourse as a battle between religious conservativism and ideology of abortion as women's liberation has crowded out all the other viewpoints, including the ones that might point the way toward progress in reproductive responsibility.
-
-... ... ...
+This is a phenomenon that is important for my thinking because, as I described in the introduction, binary political polarization around induced abortion of pregnancy has ruined my ability to find a constituency. This is a topic worthy of a fuller treatment in its own article, but suffice it to say that the two polarized viewpoints -- that of religious conservatism and that of the ideology of abortion as women's liberation -- are not the only two viewpoints available to the human mind. Framing discourse in this way, even when attempting to criticize the polarization, aids the polarized clusters in their efforts to crowd out alternative viewpoints.
 
 
 ## Conclusion
