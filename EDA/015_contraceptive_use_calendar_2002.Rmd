@@ -1,5 +1,5 @@
 ---
-title: "Contraceptive Use Intervals in 2002 NSFG (Cycle 6)"
+title: "Contraceptive Use Calendar in 2002 NSFG (Cycle 6)"
 author: "Joshua Born"
 output:
   html_document:
@@ -14,7 +14,7 @@ library(here)
 library(knitr)
 library(survey)
 
-i_am('EDA/015_contraceptive_use_intervals_2002.Rmd')
+i_am('EDA/015_contraceptive_use_calendar_2002.Rmd')
 
 source(here('R/NSFG_helpers.R'))
 source(here('R/general_helpers.R'))
