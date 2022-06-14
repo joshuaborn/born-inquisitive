@@ -3,7 +3,6 @@ author: "Joshua Born"
 bibliography: "../bibliographies/they-them-those-people-and-the-fallacy-of-partisan-demagoguery.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2022-06-14
-draft: true
 tags: ["fallacies", "first-person"]
 title: '"They," "Them," "Those People," and the Fallacy of Partisan Demagoguery'
 output:
