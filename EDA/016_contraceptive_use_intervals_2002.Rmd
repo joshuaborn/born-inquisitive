@@ -201,7 +201,7 @@ Some issues with the data:
 
 * "None" values are encoded as a kind of method, sometimes.
     * When there is no method used in a month, this can be encoded either with `NUMMULT` of 1 and `METHHIST_1` of 1 or with a `NUMMULT` of 0.
-    * When all methods are used in together and there are 3 or more methods, either `METHUSIMX_51` has a value of 1 or the entire second cluster variables are blank, i.e., `NA` values.
+    * When all methods are used together and there are 3 or more methods, either `METHUSIMX_51` has a value of 1 or the entire second cluster variables are blank, i.e., `NA` values.
 * The order in which different methods are mentioned shouldn't matter, e.g., a row with `METHHIST_1` of "CONDOM" and `METHHIST_2` with "BIRTH CONTROL PILLS" is equivalent to a row with `METHHIST_1` of "BIRTH CONTROL PILLS" and `METHHIST_2` of "CONDOM," all other things being equal.
 * The way that simultaneous versus alternating use of 3 or more methods is encoded is a hot mess. It is pretty clear from reviewing the `MTHUSIMX` variables that a lot of respondents didn't understand the cluster question. Looking over them, it can be inferred that if there is one cluster of all the methods in `METHHIST`, or if there are multiple clusters with the exact same methods mentioned (possibly in a different order), then the methods were used simultaneously. Otherwise, if there are multiple clusters with any differences, the safest conclusion is methods were used alternatively.
 
@@ -233,7 +233,7 @@ cal2002[
 The "SAME AS PREVIOUS MONTH" and "SAME METHOD USED THRU END OF YEAR" are unused and can be safely ignored. However, "NO METHOD USED", "RESPONDENT WAS STERILE", and "RESPONDENT'S PARTNER WAS STERILE" are special cases that need to be handled.
 
 ```{r boolean-table, dependson='process-data'}
-cal2002bool <- copy(cal2002[, .(CASEID, cm_value, cm_label, NUMMULT)])
+cal2002bool <- copy(cal2002[, .(CASEID, cm_value, cm_label, MONSX, NUMMULT, SIMSEQ)])
 
 set_mentions_to_booleans(
   cal2002,
@@ -284,12 +284,25 @@ cal2002bool[, `:=`(
 )]
 ```
 
+```{r explore-boolean-table, dependson='boolean-table'}
+cal2002bool[NUMMULT < 3, .N] / cal2002bool[!is.na(NUMMULT), .N]
+```
+
+Women-months in which there are 0, 1, or 2 contraceptive methods used account for over 99\% of woman-months in the contraceptive use calendar, and handling these cases are much simpler than the cases in which there are 3 or more methods mentioned. Therefore, I'll proceed by breaking up just the woman-months with less than 3 methods first and count the number of contraceptive use intervals by method before looping back.
+
+* Reread "Appendix: Segment Data" and similar sections in previous papers, as needed
+* Make initial pass at counting segments
+* Include pregnancy information in counting segments
+* Include 3 or more method woman-months in counting segments
+* Include marital status change in counting segments
+
 
 ## Notes
 
 * Look at the dates for sterilizing operations and override contraceptive use calendars with this information.
     * There appear to be mistakes in the contraceptive use calendar in which "STERILIZING OPERATION/TUBAL LIGATION" appears as a method mentioned used in one month and then disappears again. These are almost certainly mistakes.
     * Sometimes respondents appear to be confused, interchanging between "STERILIZING OPERATION/TUBAL LIGATION" and "RESPONDENT WAS STERILE". This is best handled by looking up century-month dates of sterilizing operations and overriding the contraceptive use calendar. In cases when no sterilizing operation is reported and there are months in which "STERILIZING OPERATION/TUBAL LIGATION" are mentioned, but then not mentioned afterward, these are probably spurious.
+* One or two respondents have `NUMMULT` of 2 with one of the methods being "NO METHOD USED". This appears to be a way to indicate the condoms were used inconsistently, because `SIMSEQ` is set to "DIFFERENT TIMES".
 * Handle non-contraceptive sterility for both
     * respondent and
     * respondent's partner.
