@@ -16,9 +16,9 @@ load_NSFG_data <- function(years, data_name) {
       key = 'name'
     ),
     fread(
-     here(sprintf('data/%sFormats_%s.csv', data_name, years)),
-     select = c('FMTNAME', 'START', 'LABEL'),
-     key = c('FMTNAME', 'START')
+      here(sprintf('data/%sFormats_%s.csv', data_name, years)),
+      select = c( 'FMTNAME', 'START', 'LABEL'),
+      key = c('FMTNAME', 'START')
    )
   )
 

@@ -35,6 +35,10 @@ fem2002 <- load_NSFG_data('2002', 'FemResp')
 ```
 
 ```{r process-data, dependson='load-data'}
+fem2002$Formats[factor_value == 'LOW', factor_value := '0']
+fem2002$Formats[, factor_value := as.integer(factor_value)]
+setkeyv(fem2002$Formats, c('format_name', 'factor_value'))
+
 fem2002dt <- copy(
   fem2002$Data[, lapply(.SD, function(x) {
     if (class(x) == 'logical') {
@@ -206,9 +210,86 @@ How to handle this:
 As I did for the earlier contraceptive use report, I'll create a new table with one row for each `CASEID` and century-month and set booleans for whether each possible method is mentioned in each given month. This allows me to easily ignore "none" and non-contraceptive sterility values values and set my own count of actual contraceptive methods. In addition, I'll set a boolean for whether methods are simultaneously or alternatively used, which will be easy in the 0, 1, or 2 methods cases (the latter is basically just `SIMSEQ`), but more challenging for the 3 or 4 method cases. Once this is set up, it will be easy to identify the base contraceptive intervals.
 
 
+## Boolean Table
+
+```{r same-method, dependson='process-data'}
+levels(cal2002$METHHIST_1)
+
+cal2002[
+  as.integer(METHHIST_1) == 2 |
+    as.integer(METHHIST_2) == 2 |
+    as.integer(METHHIST_3) == 2 |
+    as.integer(METHHIST_4) == 2
+]
+
+cal2002[
+  as.integer(METHHIST_1) == 26 |
+    as.integer(METHHIST_2) == 26 |
+    as.integer(METHHIST_3) == 26 |
+    as.integer(METHHIST_4) == 26
+]
+```
+
+The "SAME AS PREVIOUS MONTH" and "SAME METHOD USED THRU END OF YEAR" are unused and can be safely ignored. However, "NO METHOD USED", "RESPONDENT WAS STERILE", and "RESPONDENT'S PARTNER WAS STERILE" are special cases that need to be handled.
+
+```{r boolean-table, dependson='process-data'}
+cal2002bool <- copy(cal2002[, .(CASEID, cm_value, cm_label, NUMMULT)])
+
+set_mentions_to_booleans(
+  cal2002,
+  cal2002bool,
+  out_prefix = 'meth',
+  in_prefix = 'METHHIST',
+  in_series = paste0('_', 1:4),
+  indices = c(3:21, 24:25)
+)
+
+cal2002bool[, `:=`(
+  no_method = cal2002[,
+    lapply(.SD, \(col) has_level(col, 1)),
+    .SDcols = paste('METHHIST', 1:4, sep = '_')
+  ] |> apply(1, any),
+  sterile_respondent = cal2002[,
+    lapply(.SD, \(col) has_level(col, 22)),
+    .SDcols = paste('METHHIST', 1:4, sep = '_')
+  ] |> apply(1, any),
+  sterile_partner = cal2002[,
+    lapply(.SD, \(col) has_level(col, 23)),
+    .SDcols = paste('METHHIST', 1:4, sep = '_')
+  ] |> apply(1, any)
+)]
+
+cal2002bool[, `:=`(
+  pills = meth3,
+  condom = meth4,
+  vasectomy = meth5,
+  tubal = meth6,
+  withdrawal = meth7,
+  depo = meth8,
+  norplant = meth9,
+  rhythm = meth10,
+  safe_period = meth11,
+  diaphragm = meth12,
+  female_condom = meth13,
+  foam = meth14,
+  jelly_cream = meth15,
+  cervical_cap = meth16,
+  suppository = meth17,
+  sponge = meth18,
+  iud = meth19,
+  emergency = meth20,
+  other = meth21,
+  lunelle = meth24,
+  patch = meth25
+)]
+```
+
+
 ## Notes
 
 * Look at the dates for sterilizing operations and override contraceptive use calendars with this information.
+    * There appear to be mistakes in the contraceptive use calendar in which "STERILIZING OPERATION/TUBAL LIGATION" appears as a method mentioned used in one month and then disappears again. These are almost certainly mistakes.
+    * Sometimes respondents appear to be confused, interchanging between "STERILIZING OPERATION/TUBAL LIGATION" and "RESPONDENT WAS STERILE". This is best handled by looking up century-month dates of sterilizing operations and overriding the contraceptive use calendar. In cases when no sterilizing operation is reported and there are months in which "STERILIZING OPERATION/TUBAL LIGATION" are mentioned, but then not mentioned afterward, these are probably spurious.
 * Handle non-contraceptive sterility for both
     * respondent and
     * respondent's partner.
