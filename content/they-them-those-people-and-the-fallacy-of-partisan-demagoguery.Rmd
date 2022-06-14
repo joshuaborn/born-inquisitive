@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 include-before: |
-  <p>In this article, I reflect how partisan demagoguery has afflicted my thinking in the past, despite being alienated from the partisan factions around me. I note how characterizations of "they," "them," or "those people" lead to the straw man fallacy and a kind of no true Scotsman fallacy, but perhaps more importantly, how such characterizations further empower polarized factions at the expense of independent thinkers. Therefore, I resolve to avoid partisan demagoguery in the future.</p>
+  <p>In this article, I reflect on how partisan demagoguery has afflicted my thinking in the past, despite being alienated from the partisan factions around me. I note how characterizations of "they," "them," or "those people" lead to the straw man fallacy and a kind of no true Scotsman fallacy, but perhaps more importantly, how such characterizations further empower polarized factions at the expense of independent thinkers. Therefore, I resolve to avoid partisan demagoguery in the future.</p>
   <!--more-->
   ## Table of Contents
 ---
@@ -41,15 +41,15 @@ However, mine is a strange case in that I have become quite habituated to being 
 
 Sure, there are those organizations opposed to abortion as a method of fertility control, but those that frame themselves in religions terms or focus on politics do not represent what I do. On the other hand, there are organizations which study contraception, but all of those I have encountered explicitly advocate for abortion as method of fertility control.[^guttmacher] Thus, while I occasionally write about the [early birth control movement](/margaret-sanger-on-abortion-in-her-own-words.html) and wish I had such a community today, I mostly just do my work by myself.
 
-[^guttmacher]: To be fair, this basically just the Alan Guttmacher Institute, which is the only organization I have encountered that does substantial social science research on contraception.
+[^guttmacher]: To be fair, the Alan Guttmacher Institute is the only organization I have encountered that does substantial social science research on contraception.
 
 In short, I do not feel like I have an "us." I therefore find it even more perplexing that I still find myself committing the fallacy of characterizing what "they" do that bothers me, what I think of "them," or my differences with "those people."
 
-Upon reflection, I have realized that these kind of thoughts are worthless and should be purged from my thinking. Instead, I should stay centered on my own activities and on being productive in them, and consider the thoughts of the specific other individuals I actually encounter in my life, rather than populate my mind with the fallacies I describe in the sequel.
+Upon reflection, I have realized that these kinds of thoughts are worthless and should be purged from my thinking. Instead, I should stay centered on my own activities and on being productive in them, and consider the thoughts of the specific other individuals I actually encounter in my life, rather than populate my mind with the fallacies I describe in the sequel.
 
 By extension, it is also prudent for me not to waste my time engaging with other people preoccupied with the act of characterizing "them" -- e.g., a conservative complaining about the "liberals" again or a leftist complaining about conservatives for the five thousandth time.
 
-Not _every_ description of "them" is fallacious. However, for me, sentiments expressed about "they," "them," or "those people" now constitute signals for further scrutiny. Whenever I encounter such signals, whether in my own thinking or the thinking of someone else, I stop to scrutinize whether the fallacies I describe in the sequel are being committed. If so, I excise the sentiments as worthless. If I have discovered such fallacies in my own thinking, I stop that line of thought. If I have discovered such fallacies in the thinking of someone else, I stop giving such sentiments further consideration.
+Of course, not _every_ description of "them" is fallacious. However, for me, sentiments expressed about "they," "them," or "those people" now constitute signals for further scrutiny. Whenever I encounter such signals, whether in my own thinking or the thinking of someone else, I stop to scrutinize whether the fallacies I describe in the sequel are being committed. If so, I excise the sentiments as worthless. If I have discovered such fallacies in my own thinking, I stop that line of thought. If I have discovered such fallacies in the thinking of someone else, I stop giving such sentiments further consideration.
 
 
 ## Fallacies
@@ -108,19 +108,19 @@ In the no true Scotsman fallacy, the fact that [categorization is arbitrary](/ca
 
 In the context of partisan demagoguery, the opposite of this is typically done. When we pick and choose undesirable individuals for inclusion in "them," we exploit the fact that categorization is arbitrary to associate individuals who exemplify a vice to associate with "they," "them," or "those people." This might be called a "reverse no true Scotsman fallacy."
 
-One of the more conspicuously facile examples of this is what has been called _"reductio ad Hitlerum"_ after the Latin name for the fallacy _reductio ad absurdum._ This occurs when someone attempts to discredit a position because Adolf Hitler, the archetypal evil person of the 20th century, also did something or also held a similar viewpoint. For instance, if it is learned that someone is a vegetarian, and someone else criticizes vegetarians saying, "you know, Hitler was a vegetarian," then this would be a case of _reductio ad Hitlerum._[^reductio]
+One of the more conspicuously facile examples of this is what has been called _"reductio ad Hitlerum"_ after the Latin name for the fallacy _reductio ad absurdum._ This occurs when someone attempts to discredit a position because Adolf Hitler, the archetypal evil person of the 20th century, also did something or also held a similar viewpoint. For instance, if you learn that someone is a vegetarian, and you criticizes this saying, "you know, Hitler was a vegetarian," then this would be a case of _reductio ad Hitlerum._[^reductio]
 
-[^reductio]: This would only be a case of _reductio ad Hitlerum_ if this was shared as part of an attempt to _discredit_ vegetarians by associating them with Hitler. It is not in and of itself fallacious to share this bit of information as historical trivia.
+[^reductio]: This would only be a case of _reductio ad Hitlerum_ if this were shared as part of an attempt to _discredit_ vegetarians by associating them with Hitler. It is not in and of itself fallacious to share this bit of information as historical trivia.
 
 Whether or not Hitler was a vegetarian has no relevance for the evaluation of someone else who is a vegetarian. However, picking Hitler as an example of what "those people" who are vegetarians are like is a rather fatuous attempt to discredit the character of "them," i.e., vegetarians.[^converse]
 
-[^converse]: Note that the _reductio ad Hitlerum_ fallacy is not applicable to criticisms of warmongering or racial bigotry. These are things that most of us judge to be bad and therefore judge Hitler to be bad _because_ he did these things. Indeed, warmongering and racial bigotry would still be judged to be bad regardless of whether Hitler did them. The _reductio ad Hitlerum_ fallacy reverses this implication by attempting to infer that some things are bad because Hitler did them.
+[^converse]: Note that the _reductio ad Hitlerum_ fallacy is not applicable to criticisms of warmongering or racial bigotry. We judge Hitler to be bad _because_ he did these things, not the other way around. Indeed, we would still judge warmongering and racial bigotry to be bad regardless of whether Hitler did or did not do them. The _reductio ad Hitlerum_ fallacy reverses this by attempting to infer not that Hitler is bad because of _X,_ but that _X_ is bad because Hitler did it.
 
 The reverse no true Scotsman fallacy is slightly more connected to reality than the straw man fallacy. In the straw man fallacy, we ourselves invent the viewpoint that we wish to refute. In the reverse no true Scotsman fallacy, we go looking for someone who has a viewpoint that we wish to refute.
 
 There is a lot of gray area between these fallacies. For instance, we could be talking with someone who is making one point, but then go and find a different point being made by someone else and refute that other point. This is a combination of the straw man fallacy and the reverse no true Scotsman fallacy. From the standpoint of the person with whom we are actually having a conversation, this is a straw man fallacy, though from our perspective, it is a reverse no true Scotsman fallacy.
 
-To continue the example of vegetarianism, you might encounter someone who practices vegetarianism because of the desire to avoid the slaughtering and mistreatment of animals for the harvesting of meat. If you encountered such a person and brought up a historical figure who practiced vegetarianism for the alleged health benefits of avoiding the consumption of meat, and you proceeded to discuss studies that found no health benefits from a vegetarian diet, then this would be such a combination of the two fallacies.
+To continue the example of vegetarianism, you might encounter someone who practices vegetarianism because of the desire to avoid the slaughtering and mistreatment of animals for the harvesting of meat. If you encountered such a person and brought up an historical figure who practiced vegetarianism for the alleged health benefits of avoiding the consumption of meat, and you proceeded to discuss studies that found no health benefits from a vegetarian diet, then this would be such a combination of the two fallacies.
 
 ![
 ["Vegetarian Meal"](https://www.flickr.com/photos/79721788@N00/13913960918)
@@ -148,7 +148,7 @@ It is important to remember, then, that your anecdotal experience with media -- 
 
 The realization I had which convinced me to rid myself of partisan characterizations is that in complaining about "they," "them," or "those people," I was inadvertently accepting the framing of binary polarization, even when I was trying to criticize it. I was giving even more representation to those in the polarized clusters -- who are already over-represented -- and less of a platform to the diversity of viewpoints in the "exhausted majority" -- who are already under-represented.
 
-This is a phenomenon that is important for my thinking because, as I described in the introduction, binary political polarization around induced abortion of pregnancy has ruined my ability to find a constituency. This is a topic worthy of a fuller treatment in its own article, but suffice it to say that the two polarized viewpoints -- that of religious conservatism and that of the ideology of abortion as women's liberation -- are not the only two viewpoints available to the human mind. Framing discourse in this way, even when attempting to criticize the polarization, aids the polarized clusters in their efforts to crowd out alternative viewpoints.
+This is a phenomenon that is important for my thinking because, as I described in the introduction, binary political polarization around induced abortion of pregnancy has ruined my ability to find a constituency. This is a topic worthy of a fuller treatment in its own article, but suffice it to say that the two polarized viewpoints -- that of religious conservatism and that of the ideology of abortion as women's liberation -- are not the only two viewpoints available to the human mind. Framing discourse in this way, even when attempting to criticize the polarization, aids the polarized factions in their efforts to crowd out alternative viewpoints.
 
 
 ## Conclusion
@@ -161,7 +161,7 @@ There is a folk story attributed to Cherokee tradition about a lazy rabbit who a
 
 [^rabbit]: It is not relevant for the analogy used here, but in most stories the rabbit eventually does get away by fast talking after the other animals come and release the rabbit from its tar trap.
 
-Partisan demagoguery is like that tar wolf. The more you let it anger you and the more you lash out at it, the more caught by it you become. Such is polarization. Had the rabbit simply walked past the tar wolf, it could have had its fill of water from the well and gone on with its life unmolested. The only way to avoid the trap of fallacies created by partisan polarization is to be a better person and metaphorically walk past it.
+Partisan demagoguery is like that tar wolf. The more you let it anger you and the more you lash out at it, the more caught by it you become. Such is polarization. Had the rabbit simply walked past the tar wolf, it could have had its fill of water from the well and gone on with its life unmolested. Likewise, the only way to avoid the trap of fallacies created by partisan polarization is to be a better person and metaphorically walk past it.
 
 
 ## Citation
