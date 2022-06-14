@@ -286,15 +286,20 @@ cal2002bool[, `:=`(
 
 ```{r explore-boolean-table, dependson='boolean-table'}
 cal2002bool[NUMMULT < 3, .N] / cal2002bool[!is.na(NUMMULT), .N]
+cal2002bool[, tablena(NUMMULT)]
 ```
 
-Women-months in which there are 0, 1, or 2 contraceptive methods used account for over 99\% of woman-months in the contraceptive use calendar, and handling these cases are much simpler than the cases in which there are 3 or more methods mentioned. Therefore, I'll proceed by breaking up just the woman-months with less than 3 methods first and count the number of contraceptive use intervals by method before looping back.
 
-* Reread "Appendix: Segment Data" and similar sections in previous papers, as needed
-* Make initial pass at counting segments
-* Include pregnancy information in counting segments
-* Include 3 or more method woman-months in counting segments
-* Include marital status change in counting segments
+## Next Steps
+
+* Set master variable that indicates whether methods were used simultaneously or sequentially, including woman-months with 3 or more methods mentioned
+* Make initial pass at breaking up segments by method(s)
+* Find priority ranking for methods from _Contraceptive Technology_ (might have also appeared in other papers)
+* Assign segments to categorization used in Kost et al (2008)
+* Include pregnancy information in segments
+* Include master segment termination variable
+* Include marital\cohabitation status change in counting segments
+* Count number of months of exposure in a segment and assign ordinal month
 
 
 ## Notes
