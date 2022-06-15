@@ -357,9 +357,9 @@ Upon looking at the use calendar rows with `NUMMULT` greater than 2, the sequent
 * `FALSE` if the `priority_method` appears in every cluster, and
 * `TRUE` otherwise.
 
-```{r number-of-clusters, dependson='prioritization', eval=FALSE}
-cal2002[,
-  count_clusters := fcase(
+```{r number-of-clusters, dependson='prioritization'}
+cal2002[, `:=`(
+  count_clusters = fcase(
     MTHUSIMX_1 %in% c(NA, 'NONE') &
       MTHUSIMX_2 %in% c(NA, 'NONE') &
       MTHUSIMX_3 %in% c(NA, 'NONE') &
@@ -376,10 +376,28 @@ cal2002[,
       MTHUSIMX_53 %in% c(NA, 'NONE'),
     2,
     default = 3
-  )
-]
+  ),
+  priority_in_cluster1 = (
+    as.integer(MTHUSIMX_1) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_2) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_3) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_4) == as.integer(priority_method)
+  ) %in% TRUE,
+  priority_in_cluster2 = (
+    as.integer(MTHUSIMX_26) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_27) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_28) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_29) == as.integer(priority_method)
+  ) %in% TRUE,
+  priority_in_cluster3 = (
+    as.integer(MTHUSIMX_51) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_52) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_53) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_54) == as.integer(priority_method)
+  ) %in% TRUE
+)]
 
-cal2002[, tablena(count_clusters)]
+cal2002[, tablena(count_clusters)] |> kable()
 ```
 
 ```{r sequential, dependson='number-of-clusters'}
@@ -388,9 +406,17 @@ cal2002[,
     count_meths %in% 0:1 |
       (NUMMULT < 2 & count_meths > 1) |
       (NUMMULT == 2 & (SIMSEQ == 'SAME TIME' | is.na(SIMSEQ))) |
-      (NUMMULT > 2 & TRUE) # This is where to handle the cluster specifications.
+      (
+        NUMMULT > 2 & count_clusters > 0 & (
+          (count_clusters == 3 & priority_in_cluster1 & priority_in_cluster2 & priority_in_cluster3) |
+            (count_clusters == 2 & priority_in_cluster1 & priority_in_cluster2) |
+            (count_clusters == 1 & priority_in_cluster1)
+        )
+      )
   )
 ]
+
+cal2002[, tablena(sequential)] |> kable()
 ```
 
 Look into these edge cases to verify:
@@ -402,7 +428,7 @@ cal2002[count_meths != NUMMULT, table(count_meths, NUMMULT)]
 
 ## Next Steps
 
-* Set master variable that indicates whether methods were used simultaneously or sequentially, including woman-months with 3 or more methods mentioned
+* Check edge cases for `sequential` variable
 * Make initial pass at breaking up segments by method(s)
 * Assign segments to categorization used in Kost et al (2008)
 * Include pregnancy information in segments
