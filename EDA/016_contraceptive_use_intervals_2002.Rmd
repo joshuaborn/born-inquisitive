@@ -290,11 +290,39 @@ cal2002bool[, tablena(NUMMULT)]
 ```
 
 
+## Sequential Use Flag
+
+Default the sequential flag to `FALSE` when answers are missing.
+
+In the case of of 2 methods mentioned and the `SIMSEQ` answer missing, which occurs for `CASEID`s 1745 and 5032, assume simultaneous use, since that is what occurs elsewhere in the respondents' contraceptive use calendars.
+
+```{r clusters-exploration, dependson='boolean-table', eval=FALSE}
+cal2002[NUMMULT > 2] |> View()
+```
+
+Upon looking at the use calendar rows with `NUMMULT` greater than 2, I will set the sequential flag to `FALSE` if any of the following conditions apply:
+
+* There is no cluster information in `MTHUSIMX`. This is similar to defaulting to `FALSE` when answers are missing for `MONSX` or `NUMMULT`.
+* There is only one cluster specified, because `MTHUSIMX` 26 and above are all either `NA` or "NONE".
+* The most effective method mentioned is present in all specified clusters. This requires the prioritization list.
+
+```{r sequential, dependson='boolean-table'}
+cal2002bool[,
+  sequential := !(
+    is.na(MONSX) |
+      is.na(NUMMULT) |
+      NUMMULT %in% 0:1 |
+      (NUMMULT == 2 & (SIMSEQ == 'SAME TIME' | is.na(SIMSEQ)))
+  )
+]
+```
+
+
 ## Next Steps
 
+* Find priority ranking for methods from _Contraceptive Technology_ (might have also appeared in other papers)
 * Set master variable that indicates whether methods were used simultaneously or sequentially, including woman-months with 3 or more methods mentioned
 * Make initial pass at breaking up segments by method(s)
-* Find priority ranking for methods from _Contraceptive Technology_ (might have also appeared in other papers)
 * Assign segments to categorization used in Kost et al (2008)
 * Include pregnancy information in segments
 * Include master segment termination variable
