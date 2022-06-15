@@ -212,7 +212,7 @@ As I did for the earlier contraceptive use report, I'll create a new table with 
 
 ## Boolean Table
 
-```{r same-method, dependson='process-data'}
+```{r boolean-table-exploration, dependson='process-data'}
 levels(cal2002$METHHIST_1)
 
 cal2002[
@@ -233,60 +233,50 @@ cal2002[
 The "SAME AS PREVIOUS MONTH" and "SAME METHOD USED THRU END OF YEAR" are unused and can be safely ignored. However, "NO METHOD USED", "RESPONDENT WAS STERILE", and "RESPONDENT'S PARTNER WAS STERILE" are special cases that need to be handled.
 
 ```{r boolean-table, dependson='process-data'}
-cal2002bool <- copy(cal2002[, .(CASEID, cm_value, cm_label, MONSX, NUMMULT, SIMSEQ)])
+mentions_to_boolean <- function(cols, level) {
+  Reduce(\(acc, col) acc | has_level(col, level), cols, FALSE)
+}
 
-set_mentions_to_booleans(
-  cal2002,
-  cal2002bool,
-  out_prefix = 'meth',
-  in_prefix = 'METHHIST',
-  in_series = paste0('_', 1:4),
-  indices = c(3:21, 24:25)
-)
+cal2002[,
+  `:=`(
+    meth_pills = mentions_to_boolean(.SD, 3),
+    meth_condom = mentions_to_boolean(.SD, 4),
+    meth_vasectomy = mentions_to_boolean(.SD, 5),
+    meth_tubal = mentions_to_boolean(.SD, 6),
+    meth_withdrawal = mentions_to_boolean(.SD, 7),
+    meth_depo = mentions_to_boolean(.SD, 8),
+    meth_norplant = mentions_to_boolean(.SD, 9),
+    meth_rhythm = mentions_to_boolean(.SD, 10),
+    meth_safe_period = mentions_to_boolean(.SD, 11),
+    meth_diaphragm = mentions_to_boolean(.SD, 12),
+    meth_female_condom = mentions_to_boolean(.SD, 13),
+    meth_foam = mentions_to_boolean(.SD, 14),
+    meth_jelly_cream = mentions_to_boolean(.SD, 15),
+    meth_cervical_cap = mentions_to_boolean(.SD, 16),
+    meth_suppository = mentions_to_boolean(.SD, 17),
+    meth_sponge = mentions_to_boolean(.SD, 18),
+    meth_iud = mentions_to_boolean(.SD, 19),
+    meth_emergency = mentions_to_boolean(.SD, 20),
+    meth_other = mentions_to_boolean(.SD, 21),
+    meth_lunelle = mentions_to_boolean(.SD, 24),
+    meth_patch = mentions_to_boolean(.SD, 25),
+    no_method = Reduce(\(acc, col) acc | has_level(col, 1), .SD, FALSE),
+    sterile_respondent = Reduce(\(acc, col) acc | has_level(col, 22), .SD, FALSE),
+    sterile_partner = Reduce(\(acc, col) acc | has_level(col, 23), .SD, FALSE)
+  ),
+  .SDcols = paste('METHHIST', 1:4, sep = '_')
+]
 
-cal2002bool[, `:=`(
-  no_method = cal2002[,
-    lapply(.SD, \(col) has_level(col, 1)),
-    .SDcols = paste('METHHIST', 1:4, sep = '_')
-  ] |> apply(1, any),
-  sterile_respondent = cal2002[,
-    lapply(.SD, \(col) has_level(col, 22)),
-    .SDcols = paste('METHHIST', 1:4, sep = '_')
-  ] |> apply(1, any),
-  sterile_partner = cal2002[,
-    lapply(.SD, \(col) has_level(col, 23)),
-    .SDcols = paste('METHHIST', 1:4, sep = '_')
-  ] |> apply(1, any)
-)]
-
-cal2002bool[, `:=`(
-  pills = meth3,
-  condom = meth4,
-  vasectomy = meth5,
-  tubal = meth6,
-  withdrawal = meth7,
-  depo = meth8,
-  norplant = meth9,
-  rhythm = meth10,
-  safe_period = meth11,
-  diaphragm = meth12,
-  female_condom = meth13,
-  foam = meth14,
-  jelly_cream = meth15,
-  cervical_cap = meth16,
-  suppository = meth17,
-  sponge = meth18,
-  iud = meth19,
-  emergency = meth20,
-  other = meth21,
-  lunelle = meth24,
-  patch = meth25
-)]
+cal2002[,
+  count_meths := rowSums(.SD),
+  .SDcols = patterns('^meth')
+]
 ```
 
-```{r explore-boolean-table, dependson='boolean-table'}
-cal2002bool[NUMMULT < 3, .N] / cal2002bool[!is.na(NUMMULT), .N]
-cal2002bool[, tablena(NUMMULT)]
+
+## Method Prioritization
+
+```{r prioritization-exploration, dependson='boolean-table'}
 ```
 
 
@@ -294,9 +284,13 @@ cal2002bool[, tablena(NUMMULT)]
 
 Default the sequential flag to `FALSE` when answers are missing.
 
+```{r sequential-exploration-1, dependson='boolean-table', eval=FALSE}
+cal2002[CASEID %in% cal2002[is.na(SIMSEQ) & NUMMULT == 2, CASEID]] |> kable()
+```
+
 In the case of of 2 methods mentioned and the `SIMSEQ` answer missing, which occurs for `CASEID`s 1745 and 5032, assume simultaneous use, since that is what occurs elsewhere in the respondents' contraceptive use calendars.
 
-```{r clusters-exploration, dependson='boolean-table', eval=FALSE}
+```{r sequential-exploration-2, dependson='boolean-table', eval=FALSE}
 cal2002[NUMMULT > 2] |> View()
 ```
 
@@ -306,13 +300,19 @@ Upon looking at the use calendar rows with `NUMMULT` greater than 2, I will set 
 * There is only one cluster specified, because `MTHUSIMX` 26 and above are all either `NA` or "NONE".
 * The most effective method mentioned is present in all specified clusters. This requires the prioritization list.
 
+Look into these edge cages to verify:
+
+```{r sequential-exploration-3, dependson='boolean-table'}
+cal2002[count_meths != NUMMULT, table(count_meths, NUMMULT)]
+```
+
 ```{r sequential, dependson='boolean-table'}
-cal2002bool[,
+cal2002[,
   sequential := !(
-    is.na(MONSX) |
-      is.na(NUMMULT) |
-      NUMMULT %in% 0:1 |
-      (NUMMULT == 2 & (SIMSEQ == 'SAME TIME' | is.na(SIMSEQ)))
+    count_meths %in% 0:1 |
+      (NUMMULT < 2 & count_meths > 1) |
+      (NUMMULT == 2 & (SIMSEQ == 'SAME TIME' | is.na(SIMSEQ))) |
+      (NUMMULT > 2 & TRUE) # This is where to handle the cluster specifications.
   )
 ]
 ```
