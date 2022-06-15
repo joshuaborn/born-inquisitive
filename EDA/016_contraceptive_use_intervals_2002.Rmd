@@ -276,7 +276,64 @@ cal2002[,
 
 ## Method Prioritization
 
-```{r prioritization-exploration, dependson='boolean-table'}
+```{r prioritization, dependson='boolean-table'}
+cal2002[,
+  priority_method := factorize_NSFG_variable(
+    fcase(
+      # Sterility, either non-contraceptive or contraceptive
+      mentions_to_boolean(.SD, 22), 22,
+      mentions_to_boolean(.SD, 23), 23,
+      mentions_to_boolean(.SD, 5), 5,
+      mentions_to_boolean(.SD, 6), 6,
+      # Implants, which in this year is just Norplant
+      mentions_to_boolean(.SD, 9), 9,
+      # IUDs
+      mentions_to_boolean(.SD, 19), 19,
+      # Depo-Provera
+      mentions_to_boolean(.SD, 8), 8,
+      # Lunelle
+      mentions_to_boolean(.SD, 24), 24,
+      # Pill
+      mentions_to_boolean(.SD, 3), 3,
+      # Patch
+      mentions_to_boolean(.SD, 25), 25,
+      # Male Condom 15
+      mentions_to_boolean(.SD, 4), 4,
+      # Diaphragm 16
+      mentions_to_boolean(.SD, 12), 12,
+      # Female Condom 21
+      mentions_to_boolean(.SD, 13), 13,
+      # Sponge 32/16
+      mentions_to_boolean(.SD, 18), 18,
+      # Cervical Cap 32/16
+      mentions_to_boolean(.SD, 16), 16,
+      # Periodic Abstinence 25
+        # Temperature or Cervical Mucus Test
+        mentions_to_boolean(.SD, 11), 11,
+        # Calendar
+        mentions_to_boolean(.SD, 10), 10,
+      # Withdrawal 27
+      mentions_to_boolean(.SD, 7), 7,
+      # Spermicides 29
+        # Foam
+        mentions_to_boolean(.SD, 14), 14,
+        # Jelly or Cream
+        mentions_to_boolean(.SD, 15), 15,
+        # Suppository
+        mentions_to_boolean(.SD, 17), 17,
+      # Emergency Contraception
+      mentions_to_boolean(.SD, 20), 20,
+      # Other
+      mentions_to_boolean(.SD, 21), 21
+    ),
+    name = 'TE_157F',
+    formats_table = fem2002$Formats,
+    fill_na = FALSE
+  ),
+  .SDcols = paste('METHHIST', 1:4, sep = '_')
+]
+
+cal2002[, tablena(priority_method)] |> kable()
 ```
 
 
@@ -284,13 +341,13 @@ cal2002[,
 
 Default the sequential flag to `FALSE` when answers are missing.
 
-```{r sequential-exploration-1, dependson='boolean-table', eval=FALSE}
-cal2002[CASEID %in% cal2002[is.na(SIMSEQ) & NUMMULT == 2, CASEID]] |> kable()
+```{r sequential-exploration-1, dependson='prioritization', eval=FALSE}
+cal2002[CASEID %in% cal2002[is.na(SIMSEQ) & NUMMULT == 2, CASEID]] |> View()
 ```
 
 In the case of of 2 methods mentioned and the `SIMSEQ` answer missing, which occurs for `CASEID`s 1745 and 5032, assume simultaneous use, since that is what occurs elsewhere in the respondents' contraceptive use calendars.
 
-```{r sequential-exploration-2, dependson='boolean-table', eval=FALSE}
+```{r sequential-exploration-2, dependson='prioritization', eval=FALSE}
 cal2002[NUMMULT > 2] |> View()
 ```
 
@@ -302,11 +359,11 @@ Upon looking at the use calendar rows with `NUMMULT` greater than 2, I will set 
 
 Look into these edge cages to verify:
 
-```{r sequential-exploration-3, dependson='boolean-table'}
+```{r sequential-exploration-3, dependson='prioritization'}
 cal2002[count_meths != NUMMULT, table(count_meths, NUMMULT)]
 ```
 
-```{r sequential, dependson='boolean-table'}
+```{r sequential, dependson='prioritization'}
 cal2002[,
   sequential := !(
     count_meths %in% 0:1 |
@@ -320,13 +377,12 @@ cal2002[,
 
 ## Next Steps
 
-* Find priority ranking for methods from _Contraceptive Technology_ (might have also appeared in other papers)
 * Set master variable that indicates whether methods were used simultaneously or sequentially, including woman-months with 3 or more methods mentioned
 * Make initial pass at breaking up segments by method(s)
 * Assign segments to categorization used in Kost et al (2008)
 * Include pregnancy information in segments
 * Include master segment termination variable
-* Include marital\cohabitation status change in counting segments
+* Include marital/cohabitation status change in counting segments
 * Count number of months of exposure in a segment and assign ordinal month
 
 
