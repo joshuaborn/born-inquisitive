@@ -351,19 +351,38 @@ In the case of of 2 methods mentioned and the `SIMSEQ` answer missing, which occ
 cal2002[NUMMULT > 2] |> View()
 ```
 
-Upon looking at the use calendar rows with `NUMMULT` greater than 2, I will set the sequential flag to `FALSE` if any of the following conditions apply:
+Upon looking at the use calendar rows with `NUMMULT` greater than 2, the sequential flag should be set to
 
-* There is no cluster information in `MTHUSIMX`. This is similar to defaulting to `FALSE` when answers are missing for `MONSX` or `NUMMULT`.
-* There is only one cluster specified, because `MTHUSIMX` 26 and above are all either `NA` or "NONE".
-* The most effective method mentioned is present in all specified clusters. This requires the prioritization list.
+* `TRUE` if there is no clusters specified in `MTHUSIMX`. The way the questions are worded, this indicates that no methods were used simultaneously.
+* `FALSE` if the `priority_method` appears in every cluster, and
+* `TRUE` otherwise.
 
-Look into these edge cages to verify:
+```{r number-of-clusters, dependson='prioritization', eval=FALSE}
+cal2002[,
+  count_clusters := fcase(
+    MTHUSIMX_1 %in% c(NA, 'NONE') &
+      MTHUSIMX_2 %in% c(NA, 'NONE') &
+      MTHUSIMX_3 %in% c(NA, 'NONE') &
+      MTHUSIMX_4 %in% c(NA, 'NONE'),
+    0,
+    MTHUSIMX_26 %in% c(NA, 'NONE') &
+      MTHUSIMX_27 %in% c(NA, 'NONE') &
+      MTHUSIMX_28 %in% c(NA, 'NONE') &
+      MTHUSIMX_29 %in% c(NA, 'NONE'),
+    1,
+    MTHUSIMX_51 %in% c(NA, 'NONE') &
+      MTHUSIMX_52 %in% c(NA, 'NONE') &
+      MTHUSIMX_53 %in% c(NA, 'NONE') &
+      MTHUSIMX_53 %in% c(NA, 'NONE'),
+    2,
+    default = 3
+  )
+]
 
-```{r sequential-exploration-3, dependson='prioritization'}
-cal2002[count_meths != NUMMULT, table(count_meths, NUMMULT)]
+cal2002[, tablena(count_clusters)]
 ```
 
-```{r sequential, dependson='prioritization'}
+```{r sequential, dependson='number-of-clusters'}
 cal2002[,
   sequential := !(
     count_meths %in% 0:1 |
@@ -372,6 +391,12 @@ cal2002[,
       (NUMMULT > 2 & TRUE) # This is where to handle the cluster specifications.
   )
 ]
+```
+
+Look into these edge cases to verify:
+
+```{r sequential-exploration-3, dependson='prioritization'}
+cal2002[count_meths != NUMMULT, table(count_meths, NUMMULT)]
 ```
 
 
