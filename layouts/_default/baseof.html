@@ -26,8 +26,8 @@
 
   <body>
     <header>
-      <h1><a href="/">{{ .Site.Title }}</a></h1>
-      <span class="description">{{ .Site.Params.Subtitle }}</span>
+      <div class="title"><a href="/">{{ .Site.Title }}</a></div>
+      <div class="subtitle">{{ .Site.Params.Subtitle }}</div>
     </header>
     <main>
       {{ block "main" . }}

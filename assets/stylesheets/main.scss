@@ -186,7 +186,8 @@ sub {
 header {
   text-align: center;
 
-  h1 {
+  .title {
+    @include non-body-font();
     @include bold();
     font-size: 1.3rem;
     text-transform: uppercase;
@@ -201,7 +202,7 @@ header {
     }
   }
 
-  .description {
+  .subtitle {
     @include deemphasize();
     @include smaller();
   }
@@ -487,11 +488,11 @@ main {
 
 @media (min-width: 768px) {
   header {
-    h1 {
+    .title {
       font-size: 2.5rem;
     }
 
-    .description {
+    .subtitle {
       @include deemphasize();
       font-size: 1rem;
     }
