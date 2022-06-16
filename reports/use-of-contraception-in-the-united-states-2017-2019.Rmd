@@ -3,17 +3,16 @@ author: "Joshua Born"
 bibliography: "bibliographies/use-of-contraception-in-the-united-states-2017-2019.bib"
 csl: "bibliographies/chicago-author-date.csl"
 date: 2022-04-28
-tags: ["original research", "birth control", "contraception", "NSFG", "third-person"]
-title: "Use of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
+include-before: |
+  ## Table of Contents
 output:
   blogdown::html_page:
     number_sections: true
     toc: true
     toc_depth: 5
-include-before: |
-  <p>This original research article reports on statistical analysis of the public use data files of the 2017-2019 National Survey of Family Growth about such topics as the number of persons using and not using contraception in the United States, the contraceptive methods being used, and motives for using or discontinuing various contraceptive methods. Unlike prior works, it reports results for male persons in addition to and alongside results for female persons.</p>
-  <!--more-->
-  ## Table of Contents
+summary: "This original research article reports on statistical analysis of the public use data files of the 2017-2019 National Survey of Family Growth about such topics as the number of persons using and not using contraception in the United States, the contraceptive methods being used, and motives for using or discontinuing various contraceptive methods. Unlike prior works, it reports results for male persons in addition to and alongside results for female persons."
+tags: ["original research", "birth control", "contraception", "NSFG", "third-person"]
+title: "Use of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
 ---
 
 ```{r setup, include=FALSE}
