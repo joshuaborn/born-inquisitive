@@ -2,7 +2,7 @@
 
 <aside>
   <section id="tags">
-    <h2>Tags</h2>
+    <p class="heading">Tags</p>
     <ul>
       {{ range .Site.Taxonomies.tags }}
         {{ if eq .Page $this }}
@@ -14,9 +14,9 @@
     </ul>
   </section>
   <section id="archive">
-    <h2>Archive</h2>
+    <p class="heading">Archive</hp>
     {{ range $index, $value := (where .Site.RegularPages "Section" "!=" "noindex").GroupByDate "January 2006" }}
-      <h3>{{ .Key }}</h3>
+      <p class="subheading">{{ .Key }}</p>
       <ul class="archive-list">
         {{ range .Pages }}
           {{ if eq . $this }}
@@ -29,7 +29,7 @@
     {{ end }}
   </section>
   <section id="about">
-    <h2>About</h2>
+    <p class="heading">About</p>
     <p>
       <img class="avatar" src="/images/joshua-born.jpg" alt="A headshot of Joshua Born" />My name is Joshua Born. I am a professional survey statistician and amateur social scientist. I would have liked to have been a professional scientist, but for many years I worked a previous career as a software developer, tried out different things, etc. etc., and life passed me by.
     </p>

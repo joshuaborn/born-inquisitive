@@ -434,18 +434,22 @@ main {
     @include non-body-font();
     background-color: #eaeaea;
 
-    h2, h3, ul {
+    .heading, .subheading, ul {
       text-align: center;
     }
 
-    h2 {
+    .heading {
       @include bold();
+      font-size: 1.0rem;
       text-transform: uppercase;
+      margin: 0;
     }
 
-    h3 {
-      margin-top: 0.5rem;
+    .subheading {
+      @include bold();
       @include smaller();
+      font-size: 0.85rem;
+      margin: 0.5rem 0 0;
     }
 
     p {
@@ -531,7 +535,7 @@ main {
       }
     }
     > aside {
-      ul, h3 {
+      ul, .subheading {
         text-align: left;
 
         li {
