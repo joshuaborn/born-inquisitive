@@ -3,17 +3,16 @@ author: "Joshua Born"
 bibliography: "../bibliographies/they-them-those-people-and-the-fallacy-of-partisan-demagoguery.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2022-06-14
-tags: ["fallacies", "first-person"]
-title: '"They," "Them," "Those People," and the Fallacy of Partisan Demagoguery'
+include-before: |
+  ## Table of Contents
 output:
   blogdown::html_page:
     number_sections: false
     toc: true
     toc_depth: 5
-include-before: |
-  <p>In this article, I reflect on how partisan demagoguery has afflicted my thinking in the past, despite being alienated from the partisan factions around me. I note how characterizations of "they," "them," or "those people" lead to the straw man fallacy and a kind of no true Scotsman fallacy, but perhaps more importantly, how such characterizations further empower polarized factions at the expense of independent thinkers. Therefore, I resolve to avoid partisan demagoguery in the future.</p>
-  <!--more-->
-  ## Table of Contents
+summary: 'In this article, I reflect on how partisan demagoguery has afflicted my thinking in the past, despite being alienated from the partisan factions around me. I note how characterizations of "they," "them," or "those people" lead to the straw man fallacy and a kind of no true Scotsman fallacy, but perhaps more importantly, how such characterizations further empower polarized factions at the expense of independent thinkers. Therefore, I resolve to avoid partisan demagoguery in the future.'
+tags: ["fallacies", "first-person"]
+title: '"They," "Them," "Those People," and the Fallacy of Partisan Demagoguery'
 ---
 
 ```{r setup, include=FALSE}

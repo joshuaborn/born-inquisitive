@@ -1,21 +1,19 @@
 ---
-title: "Anecdotes Are Not Evidence"
-draft: false
-date: 2021-01-31
-tags: ["fallacies", "statistics", "psychology", "third-person"]
 bibliography: "../bibliographies/anecdotes-are-not-evidence.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-link-citations: true
+date: 2021-01-31
 implicit-figures: true
+include-before: |
+  ## Table of Contents
+link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-include-before: |
-  <p>While alluding to valuable criticism, the maxim "anecdotes are not evidence" is insufficient to describe the evidentiary uses and misuses of anecdotes. This article elucidates the flaws of anecdotal evidence that preclude anecdotes from being informative regarding inferences about larger populations or about cause and effect. It goes on to explore valid uses of anecdotal evidence, such as in investigation of specific incidents, while advising &ndash; in light of the findings of psychology regarding the fallibility of memory &ndash; scrutiny of anecdotes even in cases in which they are useful.</p>
-  <!--more-->
-  ## Table of Contents
+summary: 'While alluding to valuable criticism, the maxim "anecdotes are not evidence" is insufficient to describe the evidentiary uses and misuses of anecdotes. This article elucidates the flaws of anecdotal evidence that preclude anecdotes from being informative regarding inferences about larger populations or about cause and effect. It goes on to explore valid uses of anecdotal evidence, such as in investigation of specific incidents, while advising &ndash; in light of the findings of psychology regarding the fallibility of memory &ndash; scrutiny of anecdotes even in cases in which they are useful.'
+tags: ["fallacies", "statistics", "psychology", "third-person"]
+title: "Anecdotes Are Not Evidence"
 ---
 
 ## Introduction

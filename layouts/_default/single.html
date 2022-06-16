@@ -6,7 +6,7 @@
   <article>
     <h1>{{ .Title }}</h1>
     {{ partial "meta" . }}
-    {{ .Summary }}
+    <p>{{ .Summary }}</p>
     {{ .Content }}
   </article>
   {{ partial "aside" . }}

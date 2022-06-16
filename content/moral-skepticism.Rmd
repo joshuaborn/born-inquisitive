@@ -1,21 +1,19 @@
 ---
-title: "Moral Skepticism"
-draft: false
-date: 2020-12-28
-tags: ["philosophy", "third-person"]
 bibliography: "../bibliographies/moral-skepticism.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-link-citations: true
+date: 2020-12-28
 implicit-figures: true
+include-before: |
+  ## Table of Contents
+link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-include-before: |
-  <p>Much of moral philosophy construes morality as a search for truths and moral knowledge, and much of everyday moralizing consists of handwringing over "justice," "human rights," etc. This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to the implication that truth and falsity apply to the former, but not the latter. This in turn implies practices for dealing with moral sentiments, including the rejection of moral constructs as fictitious.</p>
-  <!--more-->
-  ## Table of Contents
+summary: 'Much of moral philosophy construes morality as a search for truths and moral knowledge, and much of everyday moralizing consists of handwringing over "justice," "human rights," etc. This article disabuses morality of these delusions by examining differences between descriptive and normative mental models, leading to the implication that truth and falsity apply to the former, but not the latter. This in turn implies practices for dealing with moral sentiments, including the rejection of moral constructs as fictitious.'
+tags: ["philosophy", "third-person"]
+title: "Moral Skepticism"
 ---
 
 ## Descriptive versus Normative Mental Models

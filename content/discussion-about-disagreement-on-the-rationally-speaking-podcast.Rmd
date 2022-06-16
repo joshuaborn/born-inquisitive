@@ -1,17 +1,16 @@
 ---
 author: "Joshua Born"
 date: 2022-06-03
-tags: ["book, article, or podcast review", "first-person"]
-title: "Discussion about Disagreement on the Rationally Speaking Podcast"
+include-before: |
+  ## Table of Contents
+summary: "In this article, I review two interviews from different episodes of the Rationally Speaking Podcast that were both themed on the subject of disagreement. In particular, I review John Nerst's discussion of low resolution abstraction, and I review two realizations that came up during an interview with Buster Benson: that he had redirected an argument with his wife so that he could \"win\" it, and that his friends were getting angry at him for not getting angry."
 output:
   blogdown::html_page:
     number_sections: false
     toc: true
     toc_depth: 5
-include-before: |
-  <p>In this article, I review two interviews from different episodes of the Rationally Speaking Podcast that were both themed on the subject of disagreement. In particular, I review John Nerst's discussion of low resolution abstraction, and I review two realizations that came up during an interview with Buster Benson: that he had redirected an argument with his wife so that he could "win" it, and that his friends were getting angry at him for not getting angry.</p>
-  <!--more-->
-  ## Table of Contents
+tags: ["book, article, or podcast review", "first-person"]
+title: "Discussion about Disagreement on the Rationally Speaking Podcast"
 ---
 
 ```{r setup, include=FALSE}

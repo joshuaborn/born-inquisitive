@@ -1,21 +1,18 @@
 ---
-title: "Political Rhetoric as Shibboleths"
-date: 2020-07-04
-tags: ["opinion", "third-person"]
-csl: "../bibliographies/chicago-author-date.csl"
 bibliography: "../bibliographies/political-rhetoric-as-shibboleths.bib"
-link-citations: true
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2020-07-04
 implicit-figures: true
+link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: false
     toc_depth: 5
+summary: "Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, is used to explain a function of slogans in the context of political rhetoric, and the characteristics of shibboleths that make them inimical to independent, critical thinking &ndash; namely conformity, superficiality, and exclusion of non-binary viewpoints &ndash; are examined."
+tags: ["opinion", "third-person"]
+title: "Political Rhetoric as Shibboleths"
 ---
-
-Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, is used to explain a function of slogans in the context of political rhetoric, and the characteristics of shibboleths that make them inimical to independent, critical thinking &ndash; namely conformity, superficiality, and exclusion of non-binary viewpoints &ndash; are examined.
-
-<!--more-->
 
 ## Introduction
 

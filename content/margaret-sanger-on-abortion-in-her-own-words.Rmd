@@ -1,20 +1,19 @@
 ---
-title: "Margaret Sanger on Abortion in Her Own Words"
-date: 2018-11-11
-tags: ["history", "birth control", "contraception", "abortion", "third-person"]
 bibliography: "../bibliographies/margaret-sanger-on-abortion-in-her-own-words.json"
 csl: "../bibliographies/chicago-author-date.csl"
-link-citations: true
+date: 2018-11-11
 implicit-figures: true
+include-before: |
+  ## Table of Contents
+link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-include-before: |
-  <p>Margaret Sanger, pioneer of birth control in the United States and founder of the organizations that became Planned Parenthood, felt that abortion is "taking life," excluded abortion from her birth control movement, and had the explicit goal of ending the use of abortion as a method of family limitation. This causes her legacy to conflict with the false dichotomy surrounding abortion today, both with the so-called "pro-life" movement that vilifies her and with the so-called "pro-choice" movement that exalts her.</p>
-  <!--more-->
-  ## Table of Contents
+summary: 'Margaret Sanger, pioneer of birth control in the United States and founder of the organizations that became Planned Parenthood, felt that abortion is "taking life," excluded abortion from her birth control movement, and had the explicit goal of ending the use of abortion as a method of family limitation. This causes her legacy to conflict with the false dichotomy surrounding abortion today, both with the so-called "pro-life" movement that vilifies her and with the so-called "pro-choice" movement that exalts her.'
+tags: ["history", "birth control", "contraception", "abortion", "third-person"]
+title: "Margaret Sanger on Abortion in Her Own Words"
 ---
 
 ![

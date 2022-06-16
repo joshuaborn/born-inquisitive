@@ -1,20 +1,19 @@
 ---
-title: "Category-Based Prejudice"
-date: 2021-11-26
-tags: ["fallacies", "third-person"]
 bibliography: "../bibliographies/category-based-prejudice.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-link-citations: true
+date: 2021-11-26
 implicit-figures: true
+include-before: |
+  ## Table of Contents
+link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-include-before: |
-  <p>While prejudice can be criticized on moral grounds, this article criticizes prejudice as a form of reasoning. It begins by illustrating general principles of categorization by way of a visual and abstract example using geometric figures. These principles are that properties of a population are not properties of individuals and that categorization is arbitrary. The article goes on to criticize prejudice in the context of more concrete examples involving gender prejudice in hiring. Such criticism includes that prejudice is more costly, less accurate, and more ambiguous than direct measurement.</p>
-  <!--more-->
-  ## Table of Contents
+summary: 'While prejudice can be criticized on moral grounds, this article criticizes prejudice as a form of reasoning. It begins by illustrating general principles of categorization by way of a visual and abstract example using geometric figures. These principles are that properties of a population are not properties of individuals and that categorization is arbitrary. The article goes on to criticize prejudice in the context of more concrete examples involving gender prejudice in hiring. Such criticism includes that prejudice is more costly, less accurate, and more ambiguous than direct measurement.'
+tags: ["fallacies", "third-person"]
+title: "Category-Based Prejudice"
 ---
 
 ```{r setup, echo=FALSE, message=FALSE}

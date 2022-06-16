@@ -1,20 +1,18 @@
 ---
-title: "Kwame Anthony Appiah's Criticism of “Cultural Appropriation” Criticism"
-date: 2022-01-26
-tags: ["book, article, or podcast review", "philosophy", "third-person"]
 bibliography: "../bibliographies/kwame-anthony-appiahs-criticism-of-cultural-appropriation-criticism.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-link-citations: true
+date: 2022-01-26
 implicit-figures: true
+include-before: | ## Table of Contents
+link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-include-before: |
-  <p>In his book _The Lies That Bind: Rethinking Identity,_ philosopher Kwame Anthony Appiah argues that "cultural appropriation" is based on a mistaken mental model of what "culture" denotes. This article reviews his argument, which has the premise that culture is shared practices and which observes that most of these shared practices have already spread across the world, that culture is not a birthright, and that there are other, better criticisms than "cultural appropriation."</p>
-  <!--more-->
-  ## Table of Contents
+summary: 'In his book _The Lies That Bind: Rethinking Identity,_ philosopher Kwame Anthony Appiah argues that "cultural appropriation" is based on a mistaken mental model of what "culture" denotes. This article reviews his argument, which has the premise that culture is shared practices and which observes that most of these shared practices have already spread across the world, that culture is not a birthright, and that there are other, better criticisms than "cultural appropriation."'
+tags: ["book, article, or podcast review", "philosophy", "third-person"]
+title: "Kwame Anthony Appiah's Criticism of “Cultural Appropriation” Criticism"
 ---
 
 ```{r setup, echo=FALSE, message=FALSE}

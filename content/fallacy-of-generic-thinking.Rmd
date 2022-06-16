@@ -1,20 +1,19 @@
 ---
-title: "The Fallacy of Generic Thinking"
-date: 2022-03-04
-tags: ["fallacies", "statistics", "psychology", "philosophy", "third-person"]
 bibliography: "../bibliographies/fallacy-of-generic-thinking.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-link-citations: true
+date: 2022-03-04
 implicit-figures: true
+include-before: |
+  ## Table of Contents
+link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-include-before: |
-  <p>Generic thinking is unquantified belief about large populations of individuals, a profound and terribly mistaken fallacy that has little use other than prejudice. This article discusses two kinds of generic thinking: generic generalizations and generic comparisons. The former is explored by way of prior academic research, and the latter is explored by way of numerical examples. A straightforward solution is proposed for both: beliefs about large numbers of individuals should be quantified.</p>
-  <!--more-->
-  ## Table of Contents
+summary: "Generic thinking is unquantified belief about large populations of individuals, a profound and terribly mistaken fallacy that has little use other than prejudice. This article discusses two kinds of generic thinking: generic generalizations and generic comparisons. The former is explored by way of prior academic research, and the latter is explored by way of numerical examples. A straightforward solution is proposed for both: beliefs about large numbers of individuals should be quantified."
+tags: ["fallacies", "statistics", "psychology", "philosophy", "third-person"]
+title: "The Fallacy of Generic Thinking"
 ---
 
 ```{r setup, echo=FALSE, message=FALSE}

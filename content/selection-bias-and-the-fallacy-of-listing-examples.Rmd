@@ -1,20 +1,19 @@
 ---
-title: "Selection Bias and the Fallacy of Listing Examples"
-draft: false
-date: 2020-12-07
-tags: ["fallacies", "statistics", "third-person"]
 bibliography: "../bibliographies/fallacy-of-listing-examples.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-link-citations: true
+date: 2020-12-07
+draft: false
 implicit-figures: true
+include-before: |
+  ## Table of Contents
+link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
-include-before: |
-  <p>Advocating a belief by finding some number of supporting examples and listing them is fallacious. The reason this practice is a fallacy is that the examples are selected _because_ they illustrate the belief and contradictory cases are ignored. In this article, this fallacy is explored by way of contingency tables used in a thought experiment in which two variables are claimed to be associated, illustrating the lack of information gleaned from such a practice in a straightforward and quantitative way.</p>
-  <!--more-->
-  ## Table of Contents
+summary: "Advocating a belief by finding some number of supporting examples and listing them is fallacious. The reason this practice is a fallacy is that the examples are selected _because_ they illustrate the belief and contradictory cases are ignored. In this article, this fallacy is explored by way of contingency tables used in a thought experiment in which two variables are claimed to be associated, illustrating the lack of information gleaned from such a practice in a straightforward and quantitative way."
+tags: ["fallacies", "statistics", "third-person"]
+title: "Selection Bias and the Fallacy of Listing Examples"
 ---
 
 ## Thought Experiment
