@@ -13,7 +13,7 @@ disableKinds = ["taxonomyTerm"]
 
 [params]
   subtitle = "Independent, evidence-based inquiry"
-  description = "A blog containing independent thinking, criticism of fallacies, and evidenced-based inquiry into contraception, alloparenting, and abortion, ."
+  description = "A blog containing independent thinking, criticism of fallacies, and evidenced-based inquiry into contraception, alloparenting, and abortion."
 
 [mediaTypes]
 [mediaTypes."application/atom+xml"]
