@@ -2,6 +2,11 @@
   {{ .Title }} | {{ .Site.Title }}
 {{ end }}
 
+{{ define "header" }}
+  <div class="title"><a href="/">{{ .Site.Title }}</a></div>
+  <div class="subtitle">{{ .Site.Params.Subtitle }}</div>
+{{ end }}
+
 {{ define "main" }}
   <article>
     <h1>{{ .Title }}</h1>

@@ -186,7 +186,7 @@ sub {
 header {
   text-align: center;
 
-  .title {
+  .title, h1 {
     @include non-body-font();
     @include bold();
     font-size: 1.3rem;
@@ -488,7 +488,7 @@ main {
 
 @media (min-width: 768px) {
   header {
-    .title {
+    .title, h1 {
       font-size: 2.5rem;
     }
 

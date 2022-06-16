@@ -6,6 +6,11 @@
   {{ end }}
 {{ end }}
 
+{{ define "header" }}
+  <h1><a href="/">{{ .Site.Title }}</a></h1>
+  <div class="subtitle">{{ .Site.Params.Subtitle }}</div>
+{{ end }}
+
 {{ define "main" }}
   <nav>
     {{ range .RegularPages }}
