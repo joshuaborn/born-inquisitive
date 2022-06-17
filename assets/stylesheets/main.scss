@@ -187,10 +187,9 @@ header {
   text-align: center;
 
   .title, h1 {
-    @include non-body-font();
     @include bold();
+    font-family: inherit;
     font-size: 1.3rem;
-    text-transform: uppercase;
 
     a {
       color: inherit;
