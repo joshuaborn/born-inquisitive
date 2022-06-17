@@ -3,13 +3,15 @@ bibliography: "../bibliographies/political-rhetoric-as-shibboleths.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2020-07-04
 implicit-figures: true
+include-before: |
+  ## Table of Contents
 link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
-    toc: false
+    toc: true
     toc_depth: 5
-summary: "Political rhetoric comprises some of the worst excuses for dialogue known to human civilization. In this article, the concept of a shibboleth, which comes from an example of sectarian conflict in the Hebrew Bible, is used to explain a function of slogans in the context of political rhetoric, and the characteristics of shibboleths that make them inimical to independent, critical thinking &ndash; namely conformity, superficiality, and exclusion of non-binary viewpoints &ndash; are examined."
+summary: "Slogans of political rhetoric function as shibboleths -- markers of tribal allegiance devoid of content -- and so promote conformity, superficiality, and exclusion of non-binary viewpoints."
 tags: ["opinion", "third-person"]
 title: "Political Rhetoric as Shibboleths"
 ---
@@ -41,7 +43,7 @@ by
 is licensed under
 [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
 and is not modified.
-](/images/jordan-river.jpg)
+](/images/jordan-river.jpg){alt="A bend in the Jordan River with green, gently rippling water surrounded by much vegetation."}
 
 This led to a problem for the Gileadites blockading the river. How would a Gileadite know if any given person caught crossing the Jordan River were a fleeing Ephraimite or just a Gileadite going about one's business? The solution told by the passage is that the Gileadites blockading the river challenged the river crossers to say a specific word, which was pronounced one way in the Gileadite dialect and another way in the Ephraimite dialect. If a river crosser pronounced it the Gileadite way, the individual would be spared, but if a river crosser pronounced it the Ephraimite way, the individual would be killed.
 
@@ -60,7 +62,7 @@ The modern shibboleths of political rhetoric are slogans used to identify to wha
 
 ![
 _A sign consisting of nothing but leftist shibboleths, found in front of a house in the author's neighborhood._^[A right-wing version of such a sign would have been included in this article, but the author does not live in an area where these are easily found.]
-](/images/left-wing-shibboleths.jpg)
+](/images/left-wing-shibboleths.jpg){alt="A lawn sign that contains a United States flag, but with various slogans superimposed upon it."}
 
 
 ### Conformity
@@ -96,7 +98,7 @@ Identification of enemies can also occur indirectly by construing a kind of sin 
 Much as the ancient use of _"shibboleth"_ assumed all who attempted to cross the Jordan River were either Gileadite or Ephraimite, the use of shibboleths today reinforces the exclusion of all but a few viewpoints from political discourse.
 
 
-## Implications for Worldview
+## Conclusion
 
 These traits of shibboleths make them useful for simple-minded, tribal worldviews that construe the intellectual landscape as a battle between "us" and "them." They serve no use for worldviews that value independent thinking instead of conformity and critical thinking instead of superficiality. Indeed, independent, critically thinking worldviews are the very sort of viewpoints that the use of shibboleths attempts to exclude.
 

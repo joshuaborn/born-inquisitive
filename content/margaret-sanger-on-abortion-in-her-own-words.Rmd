@@ -11,16 +11,16 @@ output:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-summary: 'Margaret Sanger, pioneer of birth control in the United States and founder of the organizations that became Planned Parenthood, felt that abortion is "taking life," excluded abortion from her birth control movement, and had the explicit goal of ending the use of abortion as a method of family limitation. This causes her legacy to conflict with the false dichotomy surrounding abortion today, both with the so-called "pro-life" movement that vilifies her and with the so-called "pro-choice" movement that exalts her.'
+summary: 'Birth control pioneer and Planned Parenthood founder Margaret Sanger felt that abortion was "taking life" and had the explicit goal of ending the use of abortion for family limitation.'
 tags: ["history", "birth control", "contraception", "abortion", "third-person"]
 title: "Margaret Sanger on Abortion in Her Own Words"
 ---
 
 ![
-_Margaret Sanger seated holding an open book in 1916._<br/>
+_Margaret Sanger in 1916._<br/>
 Library of Congress, Prints & Photographs Division,
 [[LC-DIG-ggbain-20859]](http://www.loc.gov/pictures/item/2014700793/)
-](/images/margaret-sanger.jpeg)
+](/images/margaret-sanger.jpeg){alt="Margaret Sanger seated at a table and holding an open book."}
 
 
 ## Who Was Margaret Sanger?
@@ -57,7 +57,7 @@ Following these events, Margaret Sanger went on a three-month speaking tour of t
 _Margaret Sanger and Fania Mindell surrounded by a crowd after appearing in court in 1917. Margaret Sanger, Fania Mindell, and Ethel Byrne (not pictured) were put on trial for operating a birth control clinic._<br/>
 From _The history of the birth control movement_ [Public domain], via
 [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SangerCourthouse.tiff)
-](/images/margaret-sanger-fania-mindell-courthouse.png)
+](/images/margaret-sanger-fania-mindell-courthouse.png){alt="Numerous men, women, and children in overcoats and formal attire surround Margaret Sanger and Fania Mindell as they stand on the steps to a building."}
 
 Ethel Byrne was tried first on January 7, 1917, found guilty of distributing contraceptives, and sentenced to thirty days in jail, where she staged a hunger strike that provoked much attention in the press. Fania Mindell was next tried, convicted, and given a fine. Finally, Margaret Sanger was tried and also convicted. During sentencing the possibility of "extreme clemency" was raised if she would promise not to violate the law again. Ultimately, she stated she could not make such a promise or respect the law as it currently stood, and she was also sentenced to thirty days in jail. [@sanger_1938, 226-237]
 
@@ -108,10 +108,10 @@ When Margaret Sanger opened her first birth control clinic, she advertised it by
 > A registration fee of 10 cents entitles any mother to this information. [@sanger_1936;  @sanger_1938, 216]
 
 ![
-_Women with strollers sit outside of Margaret Sanger's first birth control clinic, which was opened in the Brownsville neighborhood of Brooklyn on October 16, 1916 and closed by the authorities after only nine days._<br/>
+_The outside of Margaret Sanger's first birth control clinic, which was opened in the Brownsville neighborhood of Brooklyn on October 16, 1916 and closed by the authorities after only nine days._<br/>
 Library of Congress, Prints & Photographs Division, NYWT&S Collection, 
 [[LC-USZ62-138888]](https://www.loc.gov/item/2010645731/)
-](/images/brownsville-clinic.jpeg)
+](/images/brownsville-clinic.jpeg){alt="Numerous strollers are parked on a sidewalk outside of a building. A few women sit on a bench. A child plays in the street."}
 
 In her autobiography, Margaret Sanger describes what she told those who answered these advertisements:
 
@@ -127,7 +127,7 @@ In her autobiography, Margaret Sanger describes what she told those who answered
 _Fania Mindell and Margaret Sanger inside of the birth control clinic in Brownsville, Brooklyn._<br/>
 Library of Congress, Prints & Photographs Division,
 [[LC-DIG-ggbain-23218]](http://www.loc.gov/pictures/item/2014703168/)
-](/images/brownsville-clinic-inside.jpeg)
+](/images/brownsville-clinic-inside.jpeg){alt="Fania Mindell sits in a chair facing to the side. Margaret Sanger stands next to a side table containing jars of towels, holding a bowl and facing the camera."}
 
 While it is true that Margaret Sanger often spoke and wrote critically of abortion because of its potential to do harm to the woman involved, we see here that she had the [moral](/moral-skepticism.html) sentiment that abortion is "taking life," as well.
 
@@ -340,7 +340,7 @@ by
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/margaret-sanger-bust.jpg)
+](/images/margaret-sanger-bust.jpg){alt="A bronze bust of Margaret Sanger under museum lighting."}
 
 Long before Senator Cruz, et al, would demand Margaret Sanger's bust be removed from the Smithsonian out of concern for "destruction of unborn human life," she herself wrote:
 
@@ -389,7 +389,7 @@ To Margaret Sanger, abortion is killing, and contraception is harmless. Therefor
 _A photograph of Patrick J. Hayes in 1931, who declared contraception a worse sin than abortion in his Christmas pastoral of 1921 while Archbishop of New York._<br/>
 Library of Congress, Prints & Photographs Division,
 [[LC-USZ62-123860]](http://www.loc.gov/pictures/item/99471529/)
-](/images/patrick-joseph-hayes.jpeg)
+](/images/patrick-joseph-hayes.jpeg){alt="Patrick J. Hayes sits in a chair, wearing clergical robes and a cape."}
 
 While the assessment that contraception is worse than abortion may not be common among Catholics today, the official Catholic Church stance is still that of Pope Paul VI's _Humanae Vitae_ of July 25, 1968, which affirmed that "artificial" contraception is a sin _per se._ "Artificial" contraception in this context includes nearly every form of contraception, allowing only methods based on restriction of sexual intercourse to the infertile periods of a woman's reproductive cycle.
 
@@ -502,10 +502,9 @@ One of Margaret Sanger's anecdotes from her travels embodies the very spirit of 
 > The most painful experience I had in Japan was in addressing the Tokyo medical association. The volunteer interpreter was a young doctor who had been on a three weeks’ tour of America, and his command of English was correspondingly slight. From the attitude of the audience I could tell whenever he was not conveying my meaning as I had intended it, though I did not always know what specifically was wrong. The Baroness [Ishimoto], unable to bear his mis-translation of “prevention of conception” as abortion, which she knew would distress me intensely, finally rose and attempted to correct the erroneous impression he was giving. But the meeting was over before she could make it clear. [@sanger_1938, 328]
 
 ![
-_A photograph of Ishimoto Shizuko, Margaret Sanger, and her son Grant Sanger in 1922._<br/>
 "Margaret Sanger and Ishimoto Shizuko, 1922" (『アサヒグラフ』 1951 年新年号) [Public domain], via
 [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Margaret_Sanger_and_Ishimoto_Shizuko_1922.jpg)
-](/images/margaret-sanger-and-ishimoto-shizuko.jpg)
+](/images/margaret-sanger-and-ishimoto-shizuko.jpg){alt="Ishimoto Shizuko holds a parasol that she shares with Margaret Sanger, who stands next her. On the other side of Margaret Sanger is her son Grant, who has his hands in his pockets."}
 
 This article is trying to do what the Baroness Ishimoto tried to do so many decades ago, i.e., correct public perception of Margaret Sanger's work. Much as the young doctor mistranslated what Margaret Sanger was advocating for as abortion instead of contraception, so too is use of her legacy as advocacy for abortion a misappropriation. Indeed, this misappropriation would, if Margaret Sanger were alive today, "distress her intensely." 
 

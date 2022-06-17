@@ -11,7 +11,7 @@ output:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-summary: 'While alluding to valuable criticism, the maxim "anecdotes are not evidence" is insufficient to describe the evidentiary uses and misuses of anecdotes. This article elucidates the flaws of anecdotal evidence that preclude anecdotes from being informative regarding inferences about larger populations or about cause and effect. It goes on to explore valid uses of anecdotal evidence, such as in investigation of specific incidents, while advising &ndash; in light of the findings of psychology regarding the fallibility of memory &ndash; scrutiny of anecdotes even in cases in which they are useful.'
+summary: "Anecdotal evidence has flaws that make it useless for inferences about populations or about cause and effect. Valid uses of anecdotes exist, but anecdotes should be scrutinized even in such cases."
 tags: ["fallacies", "statistics", "psychology", "third-person"]
 title: "Anecdotes Are Not Evidence"
 ---
@@ -36,7 +36,7 @@ by
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/rush-hour.jpg)
+](/images/rush-hour.jpg){alt="Bumper-to-bumper cars on a highway with brake lights visible."}
 
 Surely, because of these implications, this overly literal interpretation does not capture whatever utility the maxim "anecdotes are not evidence" has. This is a flaw not just with this particular maxim, but with slogans in general, which threaten to become [shibboleths](political-rhetoric-as-shibboleths.html) when used incognizantly in this way.
 
@@ -63,7 +63,7 @@ by
 is licensed under
 [CC BY-NC 2.0](https://creativecommons.org/licenses/by-nc/2.0/)
 and is not modified.
-](/images/clinical-trial.jpg)
+](/images/clinical-trial.jpg){alt="An African man wearing a lab coat and looking through a microscope."}
 
 
 ## Flaws of Anecdotes as Evidence
@@ -135,7 +135,7 @@ While shark attacks on humans can result in a personal tragedy of injury or deat
 
 ![
 _The July 30, 2001 cover of_ Time _magazine, which labeled the summer of 2001 the "Summer of the Shark," labeling an incident which has since become a case study in bad journalism._
-](/images/summer-of-the-shark.jpg)
+](/images/summer-of-the-shark.jpg){alt="Time magazine cover prominently displaying a shark in turbulent water with its head peeking above the surface and its mouth open."}
 
 This created an impression that shark attacks were increasing at an alarming rate during 2001 and that shark attacks were a particularly prevalent risk. However, it was soon discovered that 2001 had only an average number of shark attacks; indeed, the number of shark attacks and number of fatalities from shark attacks was actually less in 2001 than in 2000. [@noauthor_summer_2002]  
 
@@ -156,7 +156,7 @@ Contrary to popular belief, human memory does not "work like a video camera, acc
 
 ![
 _A video camera, which 63% of respondents in a recent poll incorrectly believed represents how memory works._
-](/images/video-camera.jpg)
+](/images/video-camera.jpg){alt="A close-up of a video camera at an event, with camera in focus and the background blurred."}
 
 #### Flaws of Memory
 
@@ -176,7 +176,7 @@ This effect of an increased probability of incorrectly remembering broken glass 
 
 ![
 _Broken glass, which was a falsely remembered detail measured in an experiment by Loftus and Palmer [-@loftus_reconstruction_1974]._
-](/images/broken-glass.jpg)
+](/images/broken-glass.jpg){alt="Shards of glass of various sizes lying on a sidewalk."}
 
 This phenomenon in which subjects' subsequent recall could be modified was further investigated with several experiments that focused on the effect of leading questions. [@loftus_leading_1975] In one experiment, 150 students at the University of Washington were shown another video of an automobile accident. The test subjects were given a questionnaire immediately following watching the video, in which half were given the question "How fast was the white sports car going when it passed the barn while traveling down the country road?" while half were given a similar question that did not mention a barn. There was, in fact, no barn in the video.
 
@@ -184,7 +184,7 @@ A week later, the test subjects were given another questionnaire that included t
 
 ![
 _A barn next to a road, which was a falsely remembered detail measured in an experiment by Loftus [-@loftus_leading_1975]._
-](/images/barn.jpg)
+](/images/barn.jpg){alt="A wood barn with a red roof in the countryside next to a small gravel and dirt road."}
 
 It is one thing to recall false details such as broken glass or a barn that was not originally there, but this research would go on to show that false memories of an entire experience that did not happen could be inculcated in test subjects.
 
@@ -225,7 +225,7 @@ Anecdotes are not just recalled from memory and told to one other person. Someti
 ![
 _A group of children sitting in a row playing the "telephone" game._<br/>
 Pressmaster/[Shutterstock.com](https://www.shutterstock.com/image-photo/primary-school-kids-whispering-words-each-1075413188)
-](/images/telephone-game.jpg)
+](/images/telephone-game.jpg){alt="Four children in a classroom, with one child whispering into the ear of another."}
 
 In this game, one child is told a story. This child is then tasked with repeating it exclusively to a second child, often by whispering. The second child repeats it only to a third child, and so on, until a final child is told the story. At the end, the story that the final child tells is compared with the original story. The amusement of the game comes in discovering how the final version of the story has been mangled and altered from its original version.
 
@@ -268,7 +268,7 @@ For instance, if one were interested in how frequently theft occurs in the count
 
 ![
 _The wheel that was left behind from a bicycle that has been stolen._
-](/images/bicycle-theft.jpg)
+](/images/bicycle-theft.jpg){alt="A bike rack attached to a brick wall, with a bicycle wheel fastened to the bike rack with a chain lock."}
 
 While anecdotal evidence is, out of necessity, relevant for investigation of a specific incident, anecdotes still come with all the psychological flaws of memory and of serial reproduction examined above. Therefore, it is important that the anecdotes be scrutinized. An example of a human activity that grapples with these issues is the court system.
 
@@ -294,7 +294,7 @@ Like in investigation of a specific, singular incident, even though anecdotal ev
 
 ![
 _A black swan, the existence of which contradicts the universal assertion "all swans are white."_
-](/images/black-swan.jpg)
+](/images/black-swan.jpg){alt="A swan with a red beak and black weathers floating water."}
 
 ### Precipitation of Further Investigation
 

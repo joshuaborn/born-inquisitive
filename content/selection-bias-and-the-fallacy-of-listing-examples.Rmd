@@ -11,7 +11,7 @@ output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
-summary: "Advocating a belief by finding some number of supporting examples and listing them is fallacious. The reason this practice is a fallacy is that the examples are selected _because_ they illustrate the belief and contradictory cases are ignored. In this article, this fallacy is explored by way of contingency tables used in a thought experiment in which two variables are claimed to be associated, illustrating the lack of information gleaned from such a practice in a straightforward and quantitative way."
+summary: "Advocating a belief by finding supporting examples and listing them is fallacious because of selection bias; examples are selected _because_ they illustrate the belief and contradictory cases are ignored."
 tags: ["fallacies", "statistics", "third-person"]
 title: "Selection Bias and the Fallacy of Listing Examples"
 ---
@@ -21,14 +21,13 @@ title: "Selection Bias and the Fallacy of Listing Examples"
 Suppose there is a fear that a popular cooking appliance, the Acme Electric Grill, is a fire hazard. Perhaps suspicion of the Acme Electric Grill stems from reports in which it was found at the scene of residential fires.
 
 ![
-_Firefighters at the scene of a house fire._<br/>
 ["House fire"](https://www.flickr.com/photos/39195806@N04/5044281763)
 by
 [Ada Be](https://www.flickr.com/photos/adambelles/)
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/house-fire.jpg)
+](/images/house-fire.jpg){alt="A house is consumed with fire and several firefighters are at the front door with a hose and other equipment."}
 
 It might seem an obvious course of action to find and make a list of examples in which there was a fire in a home that had an Acme Electric Grill. Suppose that such an investigation results in a list of 100 such examples. Unfortunately, such a list proves absolutely nothing. 
 
