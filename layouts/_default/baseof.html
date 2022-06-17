@@ -14,7 +14,7 @@
     </title>
     <link rel="stylesheet" href="/stylesheets/reset.css" />
     {{ $style := resources.Get "stylesheets/main.scss" | toCSS | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}" />
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
     <link href="https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400i,600%7COpen+Sans:400,600" rel="stylesheet" />
     {{ range .AlternativeOutputFormats -}}
       {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
