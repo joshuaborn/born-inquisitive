@@ -479,7 +479,7 @@ main {
     }
   }
 
-  .meta, .read-more {
+  .meta {
     @include non-body-font();
     @include deemphasize();
     @include smaller();
