@@ -11,7 +11,7 @@ output:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-summary: "If you inquire into any issue you care about, you encounter statistics. This article is a primer for the practice of scrutinizing these statistics. It describes what sort of questions you should ask of a statistic, such as those pertaining to its provenance, its scope of inference, its practical significance, and when applicable, the estimation error associated with the statistic. Common fallacies in the presentation or interpretation of statistics are identified throughout the article, and no prerequisites are expected beyond mathematics at the secondary school level."
+summary: "When encountering a statistic, you should inquire about its provenance, its scope of inference, its practical significance, and the estimation error associated with it."
 tags: ["fallacies", "statistics", "second-person"]
 title: "How to Scrutinize a Statistic"
 ---
@@ -34,14 +34,13 @@ There is a cautionary saying to the effect of, "be wary of those who use statist
 [^saying]: This saying was popularized in 1937, when it was commonly attributed to Scottish folklorist Andrew Lang. Andrew Lang died in 1912 and may or may not have originated it, as it does not appear in any of his extant writings. Regardless of the origin of this specific version of the saying, it was likely inspired by similar figures of speech which came before it. See [this article](https://quoteinvestigator.com/2014/01/15/stats-drunk/) at the Quote Investigator blog for more information about the origin of the saying.
 
 ![
-A man literally using a lamppost for support, which is a metaphor used in a popular saying describing the misuse of statistics.<br/>
 ["Lamppost Man"](https://www.flickr.com/photos/78019868@N05/741397893)
 by
 [David Hodgson](https://www.flickr.com/photos/publicplaces/)
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/lamppost-man.jpg)
+](/images/lamppost-man.jpg){alt="A man on a busy public sidewalk leaning on a lamppost for support."}
 
 The point of this saying is to warn about those who start with a preconceived idea of a conclusion that they want to reach and then search for statistics that appear to validate that preconceived conclusion.
 
@@ -52,13 +51,13 @@ First, statistics have some persuasive ability. They bring with them an atmosphe
 Second, given enough time and effort, statistics can be manufactured that appear to support any arbitrary position. This can be out of intentional deception by intentional actors. It can also be done accidentally by those who do not know how to do empirical inquiry well, by those afflicted by the psychology of motivated reasoning, or by researchers who out of desperation to further their academic careers in a "publish or perish" world, publish whatever they can.
 
 ![
-A stressed young woman hunched over a laptop computer. Aspiring academicians are judged by the number of publications they have and the prestige of the journals in which the publications appear, while often competing for very few openings, a phenomenon called "publish or perish" colloquially.<br/>
+Aspiring academicians are judged by the number of publications they have and the prestige of the journals in which the publications appear, while often competing for very few openings, a phenomenon called "publish or perish" colloquially.<br/>
 [Image](https://pixabay.com/photos/laptop-woman-education-study-young-3087585/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3087585)
 by
 [Jan Vašek](https://pixabay.com/users/jeshoots-com-264599/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3087585)
 from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3087585).
-](/images/stressed-student.jpg)
+](/images/stressed-student.jpg){alt="A stressed young woman hunched over a laptop computer."}
 
 Third, interpreting and scrutinizing statistics requires knowledge and skills that many laypeople do not possess. Indeed, those who have had education in statistics are sometimes prone to mistakes in using and interpreting statistical methods. Thus, misuses of statistics can go unnoticed, by the general public or by academic peer review. Indeed, as this article discusses, some misuses of statistics can actually become entrenched in academic practice.
 
@@ -84,14 +83,14 @@ This article, however, instead of discussing any one specific statistical techni
 The first thing to scrutinize with regard to a statistic is its _provenance._ The word "provenance" is borrowed from historians of art who use it to refer to the chronology of place and custody of a work of art traced back to its origin, though the word is now used by a variety of fields.
 
 ![
-Three paintings on display in the National Gallery of Art in the United States. The practice of investigating the provenance of works of art has led to the word "provenance" being used in other contexts.<br/>
+ The practice of investigating the provenance of works of art has led to the word "provenance" being used in other contexts.<br/>
 ["Art Gallery"](https://www.flickr.com/photos/55267995@N04/14288414720)
 by
 [cjt71081](https://www.flickr.com/photos/55267995@N04/)
 is licensed under
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
 and is not modified.
-](/images/national-gallery-of-art.jpg)
+](/images/national-gallery-of-art.jpg){alt="Three paintings on display in the National Gallery of Art in the United States."}
 
 In the context of scrutinizing a statistic, determining its provenance consists of asking questions such as _"Where does this statistic come from?" "Who made the observations from which this statistic was derived?"_ and _"How were those observations made?"_
 
@@ -107,14 +106,13 @@ This task is phrased as "establishing provenance" and not simply "looking it up"
 The most obvious situation that makes establishing provenance challenging is when a statistic is stated, but no source is referenced.
 
 ![
-A sign that reads "citation needed" at a rally in Washington, DC, alluding to the tag used in Wikipedia for assertions made without any source given.<br/>
 ["Citation needed"](https://www.flickr.com/photos/87913776@N00/5129607997)
 by
 [futureatlas.com](https://www.flickr.com/photos/87913776@N00/)
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/citation-needed.jpg)
+](/images/citation-needed.jpg){alt="A sign that reads \"citation needed\" held up at a rally in Washington, DC."}
 
 This can occur in a variety of settings, such as when reading an article or when engaging in face-to-face conversation. If the medium allows for two-way communication, it might be prudent to ask the person stating the statistic where that person encountered the statistic.
 
@@ -185,14 +183,14 @@ Sometimes a statistic is intended to summarize information about the state of af
 For large populations, it is usually practically infeasible to examine every single individual in the population of interest, which is the practice of taking a census. In these cases, the main approach used to infer information about a large population is to take a representative sample from the population and use measurements of the sample to infer estimates about the population. This necessarily introduces some sampling error into the estimates.
 
 ![
-A worker drilling a hole to use for sampling the ice in Lake Michigan. Attempting to take a census of all the ice in Lake Michigan would be practically impossible.<br/>
+Attempting to take a census of all the ice in Lake Michigan would be practically impossible.<br/>
 ["Green Bay Ice sampling"](https://www.flickr.com/photos/43788330@N05/8741610624)
 by
 [NOAA Great Lakes Environmental Research Laboratory](https://www.flickr.com/photos/noaa_glerl/)
 is licensed under
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
 and is not modified.
-](/images/ice-sampling.jpg)
+](/images/ice-sampling.jpg){alt="A worker drilling a hole to use for sampling the ice in Lake Michigan."}
 
 Even in cases in which taking a census is practically possible, it might not be the best way to proceed. While taking a census does eliminate sampling error, it does not eliminate other forms of error. Thus, the resources that might be spent on taking a census might be better spent on other things, because sampling error can be quantified and kept within necessary tolerances, whereas non-sampling error is often more elusive.
 
@@ -220,14 +218,14 @@ For instance, nearly all of the surveys leading up to the the 2015 British Gener
 [^quota]: Most of these unrepresentative surveys did not using probability sampling, which is the form of sampling described in this article in which every possible sample taken from the population has a defined probability of selection. Instead, the surveys, as many market research and political research surveys do, used quota sampling. Quota sampling is a form of sampling that tries to intentionally match certain demographic variables in the sample to the known distributions of the demographic variables in the population. Quota sampling is a lot cheaper because samples can be constructed opportunistically based on individuals who are readily available. However, as the 2015 British General Election illustrates, quota sampling is not very reliable.
 
 ![
-A map depicting the results of the 2015 General Election in the United Kingdom. Blue represents a victory fot the Conservative Party, and red, a victory for the Labour Party.<br/>
+ Blue represents a victory for the Conservative Party, and red, a victory for the Labour Party.<br/>
 ["2015UKElectionMap.svg"](https://commons.wikimedia.org/wiki/File:2015UKElectionMap.svg)
 by
 Brythones, recolored by Crytographic,
 is licensed under
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en)
 and is not modified.
-](/images/uk-election-map-2015.png)
+](/images/uk-election-map-2015.png){alt="A map depicting the results of the 2015 General Election in the United Kingdom."}
 
 When scrutinizing statistics, you are concerned with identifying the actual population that was sampled. The statistic can only be generalized to this sampled population. You should not be distracted by the target population that should have been sampled or even the population the researchers portray their results as generalizing to. The way to determine this sampled population is by paying close attention to how the sampling was done. The sampled population consists of those individuals that were eligible to be selected for the sample.
 
@@ -269,10 +267,10 @@ You should verify, therefore, that experiments include a _control group_ of indi
 If you encounter a statistic from an experiment without a control that is claimed to shed light on the effect caused by an intervention, you should reject it immediately as misleading. Even if 68\% of individuals given snake oil recover from some disease in 10 days, it does not indicate that the snake oil is an effective intervention. For all that is known, 68\% or more of the general population recovers from the disease in 10 days, anyway. Experiments without controls might be useful as exclusively exploratory exercises, but no conclusions about cause and effect can be drawn from them.
 
 ![
-The cover for Clark Stanley's Snake Oil Liniment, circa 1905. Snake oils were once sold a panaceas despite not having any therapeutic effects, leading to "snake oil" becoming a figure of speech for fradulent products.<br/>
+Snake oils were once sold a panaceas despite not having any therapeutic effects, leading to "snake oil" becoming a figure of speech for fradulent products.<br/>
 Image was acquired via
 [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Clark_Stanley's_Snake_Oil_Liniment.png) and is in the public domain.
-](/images/snake-oil.png)
+](/images/snake-oil.png){alt="The label for Clark Stanley's Snake Oil Liniment, circa 1905."}
 
 
 #### Randomized Assignment
@@ -298,7 +296,7 @@ by
 [Tyler Vigen](https://tylervigen.com/)
 is licensed under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-](/images/margarine-and-divorce.svg)
+](/images/margarine-and-divorce.svg){alt="A time series plot with years from 2000 to 2009 on the x-axis and both divorce rate in Maine and per capita consumption of margarine on the y-axis."}
 
 Invalidly drawing causal conclusions from associations is such a common fallacy that old-fashioned statistics classes sometimes assert that no causal conclusion can be drawn from observational studies and that conclusions about cause and effect can only be made from randomized, controlled trials. For a variety of reasons, this is now largely seen as overly restrictive, and the field of causal inference from observational studies is an emerging field in statistical methodology research.
 
@@ -357,13 +355,12 @@ Whether a statistic is practically significant is less a matter of statistical t
 For instance, suppose you are developing a new drug intended to be used as an alternative to insulin therapy for those with diabetes mellitus. Those with insulin-dependent diabetes mellitus (IDDM) would, without medical intervention, have levels of daily blood glucose higher than what is typical. However, medical research has found that IDDM patients have long-term health benefits if they keep their daily blood glucose levels lowered to within typical ranges. [@diabetes_effect_1993] This new drug you are developing could therefore be of some use.
 
 ![
-A blood glucose test, such as those used by diabetes patients to manage their daily blood glocuse levels, being administered.<br/>
 [Image](https://pixabay.com/photos/diabetes-blood-finger-glucose-777002/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=777002)
 by
 [Tesa Robbins](https://pixabay.com/users/tesaphotography-947707/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=777002)
 from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=777002).
-](/images/diabetes.jpg)
+](/images/diabetes.jpg){alt="A blood glucose test strip attached to a device is held near a droplet of blood on a fingertip."}
 
 However, if you discover the drug decreases daily mean blood glucose by only 5 milligrams per decaliter (mg/dl) on average, its effects are not practically significant, because prior research observed long-term health benefits occurred when IDDM patients lowered their daily mean blood glucose from levels around 230 mg/dl to levels around 130 mg/dl.
 
@@ -431,24 +428,22 @@ When comparing between two or more populations, proportions or means are usually
 This is why statistics per capita are preferable to raw counts or totals for social data. For example, the statistician Thomas Lumley has a series of articles in which he expounds on the fallacy of using raw counts or totals when comparing statistics about Auckland, New Zealand, where he lives, to Wellington, New Zealand, all humorously titled something to the effect of "Auckland is larger than Wellington."
 
 ![
-A photograph of Auckland, New Zealand.<br/>
 [Image](https://pixabay.com/photos/auckland-skytower-new-zealand-2160551/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2160551)
 by
 [Bernd Hildebrandt](https://pixabay.com/users/barni1-773830/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2160551)
 from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2160551)
-](/images/auckland.jpg)
+](/images/auckland.jpg){alt="The skyline of Auckland, New Zealand, with a tower and several tall buildings in the foreground."}
 
 In one article, he comments on a news story that reported Auckland had 1,553 convictions of teenagers for drunk driving while Wellington only had 728. [@lumley_auckland_2012] In another article, he comments on news stories that reported about three times as many burglaries had occurred in Auckland as in Wellington. [@lumley_newsflash_2012] These counts are misleading because the population of Auckland is about three times that of Wellington.
 
 ![
-A photograph of Wellington, New Zealand.<br/>
 [Image](https://pixabay.com/photos/new-zealand-wellington-capital-city-4875972/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4875972)
 by
 [Makalu](https://pixabay.com/users/makalu-680451/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4875972)
 from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4875972)
-](/images/wellington.jpg)
+](/images/wellington.jpg){alt="Wellington, New Zealand in the background with a red Wellington Cable Car in the foreground."}
 
 What are more relevant for comparison between the two places are rate of teenage drunk driving convictions and rate of burglary _per capita._[^rate] As it turns out, after dividing by the missing denominator of population size, the rate of teenage drunk driving convictions was much lower in Auckland than in Wellington, but the rate of burglary was still slightly higher in Auckland than in Wellington.
 
@@ -502,7 +497,7 @@ by
 is licensed under
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
 and is not modified.
-](/images/jetblue.jpg)
+](/images/jetblue.jpg){alt="A passenger jet in JetBlue livery with its landing gear extended about to land on a runway."}
 
 However, for effect sizes such as this that compare two different rates, there are two other summary statistics that are quite common: _relative risk_ and _odds ratio._
 
@@ -653,14 +648,13 @@ For instance, Glenn Kessler of the "Fact Checker" column of the _Washington Post
 Gender-based prejudice in wages is a serious issue, but the 77-cents-for-every-dollar statistic was derived simply by taking the median annual income for women in the United States and dividing it by the median annual income for men in the United States. Thus, it compares those just beginning their careers with those who are multiple decades into a career, it compares those working in petroleum engineering with those working in early childhood education, etc.
 
 ![
-U.S. President Barack Obama delivering the State of the Union speech in 2015, the first year he did not assert women make 77 cents for every dollar a man does in the United States, after doing so in both 2014 and 2013.<br/>
 ["State Of The Union (201501200002HQ)"](https://www.flickr.com/photos/nasahqphoto/15711481744/in/album-72157650396153482/)
 by
 [NASA HQ PHOTO](https://www.flickr.com/photos/nasahqphoto/)
 is licensed under
 [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
 and is not modified.
-](/images/state-of-the-union.jpg)
+](/images/state-of-the-union.jpg){alt="U.S. President Barack Obama delivering the State of the Union speech in 2015."}
 
 Thus, even at just first blush, there are two potentially confounding variables: how far along people are in their careers and what type of job they work. In short, the use of this statistic as a summary of effect size of gender differences &ndash; let alone gender prejudice &ndash; in wages is so heavily confounded as to be entirely uninformative. Using this statistic as a metric by which to measure progress in eliminating gender prejudice in wages would be entirely misguided.
 
@@ -867,7 +861,7 @@ by
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/inuit-children.jpg)
+](/images/inuit-children.jpg){alt="Three children wearing winter furs and riding a sled."}
 
 The authors, in the otherwise excellent paper, did slip into the fallacy of using inferential statistics in a non-inferential context once.
 
@@ -884,7 +878,7 @@ by
 is licensed under
 [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
 and is not modified.
-](/images/masai-children.jpg)
+](/images/masai-children.jpg){alt="Several young children seated on the ground while laughing and smiling."}
 
 The authors reviewed 20 studies of hunter-gather societies, 22 studies of agriculturalist societies, and 43 historical studies. Considering the countless pre-industrial societies that have existed, this is the epitome of an unrepresentative, entirely opportunistic sample. Thus, there is no random sampling, there is no sampling error to quantify, and these _p_-values are meaningless.
 

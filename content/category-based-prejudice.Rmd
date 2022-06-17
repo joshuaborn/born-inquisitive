@@ -11,7 +11,7 @@ output:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-summary: 'While prejudice can be criticized on moral grounds, this article criticizes prejudice as a form of reasoning. It begins by illustrating general principles of categorization by way of a visual and abstract example using geometric figures. These principles are that properties of a population are not properties of individuals and that categorization is arbitrary. The article goes on to criticize prejudice in the context of more concrete examples involving gender prejudice in hiring. Such criticism includes that prejudice is more costly, less accurate, and more ambiguous than direct measurement.'
+summary: 'Properties of a population are not properties of individuals, and categorization is arbitrary. Therefore, category-based prejudice is more costly, less accurate, and more ambiguous than direct measurement.'
 tags: ["fallacies", "third-person"]
 title: "Category-Based Prejudice"
 ---
@@ -56,13 +56,12 @@ The second definition for "prejudice" in the _American Heritage Dictionary of th
 This second definition is more narrow than how "prejudice" is used in this article in at least two ways. First, this definition applies specifically to judgments about human beings, whereas the criticisms discussed here apply equally well when reasoning about rocks, single-celled organisms, music, countries, or anything else that can be categorized. Second, this definition construes "prejudice" as referring to judgments that are undesirable, whereas the way "prejudice" is used in this article can refer to judgments about desirable traits, as well.
 
 ![
-A dictionary of the English language, which lacks an exact term for the kind of prejudice discussed in this article.<br/>
 [Image](https://pixabay.com/photos/dictionary-reference-book-learning-1619740/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1619740)
 by
 [Steve Buissinne](https://pixabay.com/users/stevepb-282134/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1619740)
 from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1619740).
-](/images/dictionary.jpg)
+](/images/dictionary.jpg){alt="Close-up of an entry in an English dictionary."}
 
 Because the English language lacks a word with the precise scope used by this article, the phrase "category-based prejudice" is used.
 
@@ -258,14 +257,13 @@ This illustrates the principle that _properties of a population are not properti
 While this may seem obvious when applied to a very visual example such as geometric figures, it is important to remember this principle whenever thinking about populations of anything. There is no entity named by "the average person." The average person does not exist.
 
 ![
-A message on the side of the Lord Warden pub in Liverpool, England referring to "the average person."<br/>
 ["The average person"](https://www.flickr.com/photos/49058298@N00/4845470773)
 by
 [Dario-Jacopo Lagana'](https://www.flickr.com/photos/norte_it/)
 is licensed under
 [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
 and is not modified.
-](/images/average-person.jpg)
+](/images/average-person.jpg){alt="The Lord Warden pub in Liverpool, England with the message \"The average person thinks they're more intelligent than average. Do you think you are more intelligent than the average person?\" stenciled on the side."}
 
 ```{r}
 proportions <- dt[, .(proportion = .N / dt[, .N]), by = 'color']
@@ -357,24 +355,22 @@ Even though the same exact underlying population is used to calculate both sets 
 In order to illustrate the main flaws with category-based prejudice, this article turns from the abstract to more concrete examples. Suppose that a hiring manager at a company is considering what to look for in the next employee to be hired and is told the next hire should be a woman because the team needs more empathy and women are more empathic. Alternatively, the manager is told to hire a man because the team needs more math ability and men are good at math.
 
 ![
-A woman being interviewed for a job.<br/>
 ["Woman on a Job Interview"](https://www.flickr.com/photos/141761303@N08/23992122197/)
 by
 [Amtec Photos](http://www.amtec.us.com/)
 is licensed under
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
 and is not modified.
-](/images/interview-woman.jpg)
+](/images/interview-woman.jpg){alt="A woman being interviewed for a job from a perspective over the shoulder of the interviewer."}
 
 ![
-A man being interviewed for a job.<br/>
 ["Young Man on a Job Interview"](https://www.flickr.com/photos/141761303@N08/24835249968/)
 by
 [Amtec Photos](http://www.amtec.us.com/)
 is licensed under
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
 and is not modified.
-](/images/interview-man.jpg)
+](/images/interview-man.jpg){alt="A man being interviewed for a job by the same interviewer as in the previous image."}
 
 Further suppose in either scenario, the hiring manager has narrowed the search for a new employee to two people, one a woman and one a man. These two prospects seem equally qualified in other respects besides math ability or empathy, and all that remains is to choose between the two prospective employees.
 
@@ -386,13 +382,12 @@ How could propositions such as whether someone is "good at math" or "more empath
 Math is a broad subject, and the skill sets for doing arithmetic quickly by hand, for doing university physics problems, or for proving mathematical theorems are all quite different. Those who want more math proficiency are best served to identify exactly what kind of math skills are needed. In so doing, the appropriate test for these math skills might be identified. 
 
 ![
-A page from a math test.<br/>
 [Image](https://pixabay.com/photos/math-study-pencil-sharp-practice-3999637/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3999637)
 by
 [준원 서](https://pixabay.com/users/joshua_seajw92-6153261/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3999637)
 from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3999637).
-](/images/math-test.jpg)
+](/images/math-test.jpg){alt="A close-up of a answer sheet from a math test, with several sketches and equations written in pencil."}
 
 With regard to traits such as empathy, psychologists often spend large amounts of time and effort attempting to devise a test that is reliable (i.e., self-consistent and consistent across various contexts) and valid (i.e., actually measuring what it is supposed to measure). There are various schools of thought and approaches to development of such tests, but overall the goals of these approaches are similar: to devise a method for measuring a psychological property.
 
@@ -441,14 +436,13 @@ It might sometimes be the case that the cost of arriving at a more general propo
 Furthermore, care must be taken to discern whether the previously established results are indeed applicable. Behavioral and social science experiments [do not generalize](/how-to-scrutinize-a-statistic.html#unrepresentative-samples) to a larger population when they are based on self-selected samples, such as the samples of 20 or 40 undergraduate student volunteers at the researchers' university, so often discussed in the academic literature. Opinion polls done by magazines or web sites that are based on a sample of volunteers also do not generalize.
 
 ![
-A group of university students. University students are often used to compose self-selected samples for social or behavioral science experiments, samples which do not generalize.<br/>
 ["Students in the Quadrangle, the University of Sydney"](https://www.flickr.com/photos/8264482@N08/6953908263)
 by
 [Sydney Uni](https://www.flickr.com/photos/sydneyuni/)
 is licensed under
 [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/)
 and is not modified.
-](/images/university-students.jpg)
+](/images/university-students.jpg){alt="Four university students sitting and chatting while on campus."}
 
 In studies that do generalize to a larger population, the sampled population of the study might not be the population of interest for the judgment being made. For instance, the hiring manager in the example scenarios is concerned with empathy or math skills in the population of job applicants to a specific company. Results discovered about the math skills of fifth graders in Idaho or the empathy skills of therapists in Massachusetts are likely not relevant for judging job applicants to the company.[^unless] If the sampled population of a study does not contain the population of interest, attempting to apply the study's results to the population of interest is an extrapolation outside the scope of inference of the study, which is fallacious.
 
@@ -528,14 +522,13 @@ Even if prior work has established a more general proposition such as "women are
 An example comes from an experiment in social psychology regarding susceptibility to stereotyping. In order to frame their experiment, Shih, Pittinsky, and Ambady [-@shih_stereotype_1999] claimed that Asian women are the object of two contradictory stereotypes prevalent in the United States: that those categorized as "Asian" are good at math, and that those categorized as "women" are bad at math. 
 
 ![
-An Asian woman being interviewed for a job.<br/>
 ["Job Interview"](https://www.flickr.com/photos/141761303@N08/38630953066/)
 by
 [Amtec Photos](http://www.amtec.us.com/)
 is licensed under
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
 and is not modified.
-](/images/interview-woman-2.jpg)
+](/images/interview-woman-2.jpg){alt="An Asian woman sitting at a table being interviewed for a job."}
 
 Suppose for the scenario in which the hiring manager is looking for math ability that both these stereotypes are prevalent,[^stereotypes] and that the woman among the two final prospective employees that the hiring manager is considering is categorized as "Asian," while the man that the hiring manager is considered is not categorized as "Asian." If the category-based prejudice approach were based on categorization by gender, it would lead to a greater probability of superiority in math skills for the man, but if it were based on categorization by Asian-ness, it would lead to a greater probability of superiority in math skills for the woman.
 
@@ -555,14 +548,13 @@ As was seen in the abstract example, categorization is arbitrary not just in the
 This arbitrariness could be at play with regard to the rules for categorization as "Asian" in the scenario of hiring for math skills. For instance, the woman in the final two prospective employees could have a father with an Asian origin and a mother with origin outside of Asia. Indeed, because someone has 2<sup>_n_</sup> ancestors when considering _n_ generations, it is conceivable that the woman could have an arbitrary percentage of ancestors of Asian origin and of non-Asian origin. This leads to the arbitrary choice of a cut point as discussed earlier, but in this case, with regard to how much Asian ancestry a particular person is required to have before the prejudice of "Asians are good at math" is to be applied.
 
 ![
-A screenshot of a pedigree being assembled in a genealogy computer program, illustrating how the number of one's ancestors increases per generation.<br/>
 ["Fogelsonger ancestors"](https://flickr.com/photos/22738816@N07/7561374512/)
 by
 [Doug Caldwell](https://flickr.com/photos/22738816@N07/)
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/pedigree.jpg)
+](/images/pedigree.jpg){alt="A screenshot of a pedigree being assembled in a genealogy computer program."}
 
 Furthermore, there are individuals who defy the levels of a categorical variable that are chosen to be used for category-based prejudice. For instance, suppose in the hiring scenarios instead of deciding between a man and a woman, the hiring manager is considering someone who has developed biologically intersexed and has not adopted any gender categorization. In such cases, it is not obvious how to apply the more general propositions such as "women are more empathic" or "men are better at math" for category-based prejudice, and the hiring manager would be left once more with an arbitrary choice of how to categorize the individual in order to use category-based prejudice.
 

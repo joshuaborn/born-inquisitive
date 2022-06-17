@@ -3,14 +3,15 @@ bibliography: "../bibliographies/kwame-anthony-appiahs-criticism-of-cultural-app
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2022-01-26
 implicit-figures: true
-include-before: | ## Table of Contents
+include-before: |
+  ## Table of Contents
 link-citations: true
 output:
   blogdown::html_page:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-summary: 'In his book _The Lies That Bind: Rethinking Identity,_ philosopher Kwame Anthony Appiah argues that "cultural appropriation" is based on a mistaken mental model of what "culture" denotes. This article reviews his argument, which has the premise that culture is shared practices and which observes that most of these shared practices have already spread across the world, that culture is not a birthright, and that there are other, better criticisms than "cultural appropriation."'
+summary: 'Philosopher Kwame Anthony Appiah argues that "cultural appropriation" is based on a mistaken mental model of what "culture" denotes and that there are other, better criticisms.'
 tags: ["book, article, or podcast review", "philosophy", "third-person"]
 title: "Kwame Anthony Appiah's Criticism of “Cultural Appropriation” Criticism"
 ---
@@ -72,7 +73,7 @@ by
 is licensed under
 [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/)
 and is not modified.
-](/images/kente.jpg)
+](/images/kente.jpg){alt="A colorful robe is worn by a seated dummy while a similarly colorful tapestry hangs on the wall behind it."}
 
 This kind of analysis can continue _ad absurdum_ for cultural practices such as writing. Was the Cherokee polymath and statesman Sequoyah sinful when he noticed the utility of the alphabets that came from Europe and so invented a writing system for his own language? Were the Europeans outside of Imperial Rome sinful when they had similar encounters with the Roman alphabet? For fear of appropriating culture that is not "yours," should all writing be buried with the ancient Sumerians and therefore written language itself declared dead?
 
@@ -84,7 +85,7 @@ by
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/sequoyah.jpg)
+](/images/sequoyah.jpg){alt="Sequoyah depicted holding a tablet with his syllabary and pointing at it."}
 
 Kwame Anthony Appiah answers these questions in the negative. "The real problem isn’t that it’s difficult to decide who owns culture; it’s that the very idea of ownership is the wrong model." [@appiah_lies_2018, 208]
 
@@ -102,7 +103,7 @@ by
 is licensed under
 [CC BY-ND 2.0](https://creativecommons.org/licenses/by-nd/2.0/)
 and is not modified.
-](/images/murano-glass.jpg)
+](/images/murano-glass.jpg){alt="A man sits at a workbench and uses a metal tool to shape the molten glass at the end of a rod."}
 
 Unsurprisingly, Kwame Anthony Appiah answers this question in the negative, as well.
 
@@ -118,7 +119,7 @@ by
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/odumase-krobo-woman.jpg)
+](/images/odumase-krobo-woman.jpg){alt="Several people play musical instruments and sing while sitting in the background while a woman adorned with numerous glass beads stands in the foreground."}
 
 
 ## Culture Is Work, Not Birthright
@@ -154,14 +155,13 @@ Indeed, there may be many kinds of other, better criticisms that can be made whe
 > I begrudge nobody the things I also love, because, like Arnold, I can love what is best in anyone’s traditions while sharing it gladly with others. [@appiah_lies_2018, 207]
 
 ![
-Kwame Anthony Appiah speaking at Central European University.<br/>
 ["Central European University Reasons for Hope – Kwame Anthony Appiah – Beyond Identity"](https://www.flickr.com/photos/30781935@N05/32404950977)
 by
 [Central European University](https://www.flickr.com/photos/weareceu/)
 is licensed under
 [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
 and is not modified.
-](/images/kwame-anthony-appiah.jpg)
+](/images/kwame-anthony-appiah.jpg){alt="Kwame Anthony Appiah gesticulates with his hands while speaking."}
 
 It should not be surprising Kwame Anthony Appiah is critical of the idea of "cultural appropriation." He has been a proponent of cosmopolitanism for some time, and cultural ownership is predicated on a sectarian understanding of culture that is inimical to cosmopolitanism.
 

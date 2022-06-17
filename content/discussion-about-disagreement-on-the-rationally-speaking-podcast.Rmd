@@ -3,7 +3,7 @@ author: "Joshua Born"
 date: 2022-06-03
 include-before: |
   ## Table of Contents
-summary: "In this article, I review two interviews from different episodes of the Rationally Speaking Podcast that were both themed on the subject of disagreement. In particular, I review John Nerst's discussion of low resolution abstraction, and I review two realizations that came up during an interview with Buster Benson: that he had redirected an argument with his wife so that he could \"win\" it, and that his friends were getting angry at him for not getting angry."
+summary: "Two interviews from Rationally Speaking about disagreement are reviewed: John Nerst's discussion of low resolution abstraction, and Buster Benson's learnings from arguments with friends and family."
 output:
   blogdown::html_page:
     number_sections: false
@@ -38,7 +38,7 @@ by
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/light-in-the-dark.jpg)
+](/images/light-in-the-dark.jpg){alt="A lightbulb attached to a tree illuminates the foreground while a dimly lit house in the background is barely visible behind the trees."}
 
 Though I am sure I disagree with host Julia Galef on issues I am passionate about, I still respect her intellectually. Granted, this is because much of the framework of _how_ she thinks and the framework of _how_ I think overlap. She puts into words the sort of questions I would ask; she makes comments and criticisms similar to those I would make; and she frames discussion in ways that I would frame. But more than this, I respect her intellectually despite what disagreement we might have _because she disagrees well._
 
@@ -77,7 +77,7 @@ by
 is licensed under
 [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
 and is not modified.
-](/images/rich-and-poor.jpg)
+](/images/rich-and-poor.jpg){alt="A woman in nice clothes and carrying a designer handbag talks on a mobile phone while a homeless man pushes a plastic covered dolly along the same sidewalk."}
 
 John Nerst's description of low resolution abstraction sounded like my description of the [fallacy of generic thinking](/fallacy-of-generic-thinking.html). Indeed, the observation that this low resolution abstraction defies truth conditions, i.e., "true or false doesn't even apply to them exactly," was one of my main criticisms of generic thinking.
 
@@ -236,7 +236,7 @@ by
 is licensed under
 [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/)
 and is not modified.
-](/images/macys.jpg)
+](/images/macys.jpg){alt="The run-down facade of a Macy's department store."}
 
 Most people just ignored the protesters and walked by without acknowledging the protesters in any way. In my naivety, I thought I might have an intelligent conversation with them. As I walked by, one yelled at me something to the effect of "boycott Macy's!" I remember stopping, turning toward the protester, and saying calmly, "I'm not going to Macy's. I'm just going to the mall on the other side of Macy's." The protester just sneered back at me and turned away, preparing to yell at the next person walking by.
 

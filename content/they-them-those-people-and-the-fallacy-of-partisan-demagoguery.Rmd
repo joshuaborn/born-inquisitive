@@ -10,7 +10,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: 'In this article, I reflect on how partisan demagoguery has afflicted my thinking in the past, despite being alienated from the partisan factions around me. I note how characterizations of "they," "them," or "those people" lead to the straw man fallacy and a kind of no true Scotsman fallacy, but perhaps more importantly, how such characterizations further empower polarized factions at the expense of independent thinkers. Therefore, I resolve to avoid partisan demagoguery in the future.'
+summary: 'Characterizations of partisan factions lead to the straw man fallacy and to a kind of no true Scotsman fallacy, and they empower polarized viewpoints at the expense of independent thinkers.'
 tags: ["fallacies", "first-person"]
 title: '"They," "Them," "Those People," and the Fallacy of Partisan Demagoguery'
 ---
@@ -67,7 +67,7 @@ by
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/effigy.jpg)
+](/images/effigy.jpg){alt="A banner-waving crowd is gathered around a man who is kicking an effigy burning on the ground."}
 
 Firstly, the straw man fallacy comes up in cases in which we are talking about "they," "them," or "those people," but "they" are not present. Thus, we are referring to some characterization of "them" that we are inventing ourselves. This occurs when someone complains that "those evil socialists want to steal the hard-earned fruits of our labor because they are too lazy to work" or "the evil capitalist class wants to crush our revolution so that they can exploit the workers." When these statements are made when no "evil socialists" or "evil capitalists" are present to hear them, the fallacy allows us to characterize the motives and intent of the referent of "they," even if that is not actually what "they" want.
 
@@ -100,7 +100,7 @@ by
 is licensed under
 [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
 and is not modified.
-](/images/scottish-soldiers.jpg)
+](/images/scottish-soldiers.jpg){alt="Four men in kilts and military uniforms run while carrying machine guns."}
 
 In the no true Scotsman fallacy, the fact that [categorization is arbitrary](/category-based-prejudice.html#categorization-is-arbitrary) is being exploited to include in a category only those individuals who are exemplars of a virtue you wish to associate with the category.
 
@@ -127,7 +127,7 @@ by
 is licensed under
 [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
 and is not modified.
-](/images/vegetarian-meal.jpg)
+](/images/vegetarian-meal.jpg){alt="A top-down view of a round plate that contains a colorful assortment of food."}
 
 Indeed, because there are over 7 billion people on the Earth, the reverse no true Scotsman fallacy could, in theory, always be used to support the straw man fallacy, because with so many people out there, it is probable that you could find at least one person who has any viewpoint you could possibly imagine and want to discredit. Thus, in practice, there is overlap between the two fallacies.
 

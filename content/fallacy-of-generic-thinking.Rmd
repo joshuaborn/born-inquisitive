@@ -11,7 +11,7 @@ output:
     md_extensions: ["+footnotes"]
     toc: true
     toc_depth: 5
-summary: "Generic thinking is unquantified belief about large populations of individuals, a profound and terribly mistaken fallacy that has little use other than prejudice. This article discusses two kinds of generic thinking: generic generalizations and generic comparisons. The former is explored by way of prior academic research, and the latter is explored by way of numerical examples. A straightforward solution is proposed for both: beliefs about large numbers of individuals should be quantified."
+summary: "Generic thinking is unquantified belief about large populations of individuals, a profound and terribly mistaken fallacy that has little use other than prejudice."
 tags: ["fallacies", "statistics", "psychology", "philosophy", "third-person"]
 title: "The Fallacy of Generic Thinking"
 ---
@@ -48,14 +48,13 @@ A body of scholarship pertaining to generic generalizations exists in both acade
 While it is true that _most_ dogs have four legs, there are some dogs happily scampering around on three legs. Only female ducks who have reached sexual maturity even have the ability to lay eggs, so "ducks lay eggs" is only true for less than half the population it describes. Mercifully, a very small proportion of mosquitoes actually carry the West Nile virus.
 
 ![
-A three-legged dog, the existence of which is a false case of the generic generalization "dogs have four legs."<br/>
 ["Three Legged Dog"](https://www.flickr.com/photos/23743320@N03/7230816680)
 by
 [Sangudo](https://www.flickr.com/photos/sangudo/)
 is licensed under
 [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/)
 and is not modified.
-](/images/three-legged-dog.jpg)
+](/images/three-legged-dog.jpg){alt="A three-legged dog walks on a grass lawn on a sunny day."}
 
 
 ### Resistance to Falsification
@@ -144,13 +143,12 @@ Once one accepts that natural languages function with such elision, then whether
 When someone says "ducks lay eggs," there is typically social context surrounding this statement from which a more complicated thought can be inferred, such as "the system of reproduction used by ducks is oviparous."
 
 ![
-A child with an adult encountering ducks swimming around a pond.<br/>
 [Image](https://pixabay.com/photos/people-adult-autumn-back-boy-2942837/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2942837)
 by
 [freestocks-photos](https://pixabay.com/users/freestocks-photos-7014431/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2942837)
 from
 [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2942837).
-](/images/duck-pond.jpg)
+](/images/duck-pond.jpg){alt="A child holds the hand of an adult while looking at a pond filled with ducks."}
 
 For instance, a child might ask if a duck found in a pond will give birth to little chicks that can swim about, to which an adult might reply, "no, ducks lay eggs." Given context, the longer statement about reproductive systems is implied, but rarely do English speakers talk in this way, and instead this is shortened to "ducks lay eggs."
 
