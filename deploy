@@ -1,1 +1,1 @@
-rsync -v -r --delete --exclude=".*" public/ blogger@fecundity.blog:/var/www/fecundity.blog/html
+rsync -v -r --delete --exclude=".*" public/ blogger@borninquisitive.com:/var/www/borninquisitive.com/html
