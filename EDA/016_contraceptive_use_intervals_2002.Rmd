@@ -429,8 +429,8 @@ cal2002[count_meths != NUMMULT, table(count_meths, NUMMULT)]
 ## Next Steps
 
 * Check edge cases for `sequential` variable
-* Make initial pass at breaking up segments by method(s)
-* Assign segments to categorization used in Kost et al (2008)
+* Assign months to categorization used in Kost et al (2008)
+* Make initial pass at breaking up months into segments
 * Include pregnancy information in segments
 * Include master segment termination variable
 * Include marital/cohabitation status change in counting segments
