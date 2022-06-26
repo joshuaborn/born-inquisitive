@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r font-setup, cache=TRUE}
+```{r font-setup, cache=FALSE}
 font_add_google('Open Sans', 'open')
 #font_add_google('Sorts Mill Goudy', 'sortsmill')
 
@@ -77,7 +77,7 @@ Thus, the criticisms articulated here are independent of the moral dimensions of
 
 Before the particular flaws of category-based prejudice are examined, two general principles of categorization are discussed by way of an abstract example.
 
-```{r shapes-figure, cache=TRUE, dependson="font-setup", fig.height=7, fig.width=7, fig.cap="Geometric figures of various colors, sizes, and shapes, laid out on a two-dimensional plane."}
+```{r shapes-figure, cache=FALSE, dependson="font-setup", fig.height=7, fig.width=7, fig.cap="Geometric figures of various colors, sizes, and shapes, laid out on a two-dimensional plane."}
 y_limit <- 10
 x_limit <- 10
 side_max <- 1
@@ -459,7 +459,7 @@ Even if it is the case that the mean empathy score of women is higher than that 
 
 What is relevant for the hiring manager's decision is what has come to be called the "probability of superiority." The probability of superiority for the empathy question is the probability that a randomly selected woman from the population of job applicants would have a higher empathy score than a randomly selected man from the population of job applicants. This requires knowledge of the probability density of the two distributions, which the supposition at the beginning of this section assumes is available.[^density]
 
-```{r example-of-probability-density-histogram, cache=TRUE, dependson="font-setup", warning=FALSE, fig.cap="A histogram with an estimate of a probability density superimposed upon it. Probability densities are often represented by such plots. The _x_ axis represents possible values of a random variable, and the _y_ axis represents the probability of getting the values on the _x_ axis. This random variable appears to range from 0 to about 8, to be skewed right, and to have a mode around 1.5."}
+```{r example-of-probability-density-histogram, cache=FALSE, dependson="font-setup", warning=FALSE, fig.cap="A histogram with an estimate of a probability density superimposed upon it. Probability densities are often represented by such plots. The _x_ axis represents possible values of a random variable, and the _y_ axis represents the probability of getting the values on the _x_ axis. This random variable appears to range from 0 to about 8, to be skewed right, and to have a mode around 1.5."}
 generate_sample <- function(n) {
   side <- runif(n, side_min, side_max)
   x <- rbeta(n, 2, 6) * (10 - side)
