@@ -6,6 +6,10 @@
   {{ end }}
 {{ end }}
 
+{{ define "head-extra" }}
+  <link rel="canonical" href="https://borninquisitive.com/" />
+{{ end }}
+
 {{ define "header" }}
   <h1><a href="/">{{ .Site.Title }}</a></h1>
   <div class="subtitle">{{ .Site.Params.Subtitle }}</div>

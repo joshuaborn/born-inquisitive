@@ -12,6 +12,7 @@
     <title>
       {{ block "title" . }}{{ end }}
     </title>
+    {{ block "head-extra" . }}{{ end }}
     <link rel="stylesheet" href="/stylesheets/reset.css" />
     {{ $style := resources.Get "stylesheets/main.scss" | toCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
