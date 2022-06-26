@@ -13,7 +13,7 @@
     <published>{{- .Date.Format "2006-01-02T15:04:05Z" | safeHTML -}}</published>
     <updated>{{- .Date.Format "2006-01-02T15:04:05Z" | safeHTML -}}</updated>
     <author>
-      <name>Joshua Born</name>
+      <name>{{- .Site.Params.author -}}</name>
       <uri>{{- .Site.BaseURL -}}</uri>
     </author>
     <summary type="html">{{- .Summary | html -}}</summary>

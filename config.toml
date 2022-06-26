@@ -5,6 +5,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", ".md$"]
 uglyURLS = true
 disableKinds = ["taxonomyTerm"]
 
+
 [permalinks]
   post = "/:slug/"
 
@@ -14,6 +15,7 @@ disableKinds = ["taxonomyTerm"]
 [params]
   subtitle = "A blog of independent thinking and evidence-based inquiry"
   description = "A blog containing independent thinking, criticism of fallacies, and evidence-based inquiry into contraception, alloparenting, and abortion."
+  author = "Joshua Born"
 
 [mediaTypes]
 [mediaTypes."application/atom+xml"]
