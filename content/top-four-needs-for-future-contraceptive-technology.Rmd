@@ -1,0 +1,64 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/top-four-needs-for-future-contraceptive-technology.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2022-06-26
+draft: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: '[Put summary sentence here.]'
+tags: ["opinion", "contraception", "birth control", "third-person"]
+title: 'Top Four Needs for Future Contraceptive Technology'
+---
+
+```{r setup, include=FALSE}
+library(here)
+
+i_am('content/top-four-needs-for-future-contraceptive-technology.Rmd')
+
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+## Introduction
+
+With over 80 million unintended pregnancies and over 40 million induced abortions every year worldwide, [@sedgh_intended_2014] it is abundantly clear that the current state of contraception in human civilization is inadequate. 
+
+This should not be surprising because human civilization is still in a very primitive stage of contraceptive practice. Despite the relative affluence and technological development of the United States, many of the [most popular contraceptive methods in the United States](/use-of-contraception-in-the-united-states-2017-2019.html#methods-used) today -- such as the male condom and the practice of _coitus interruptus_ a.k.a. withdrawal -- are so ancient that their origins are forever lost to history or perhaps prehistory. Indeed, contraception itself in the United States [has only been legal for about a century](/margaret-sanger-on-abortion-in-her-own-words.html#who-was-margaret-sanger).
+
+Furthermore, development of contraceptive technology has been mostly stagnant since the development of a female-specific hormonal method based on doses of progestin and estrogen, which was originally developed in the 1950s. [@eig_birth_2016] Since then, different modalities for administration of such hormones have been developed in addition to the original oral pill modality, such as injectables, implants, or inclusion in intrauterine devices (IUDs). However, aside from the path for delivery of the hormones and the exact chemical analog of the hormones used, all of these modalities work in basically the same way.
+
+Thus, there has not been a truly new method of contraception developed in approximately 60 years.
+
+It would therefore be apt to attribute the aforementioned 80 million unintended pregnancies annually to this deficiency of progress in contraceptive technology. This attribution would likely be accurate, but only partly so. Somewhere between approximately [7.5 to 11.5 million persons in the United States](http://localhost:4321/use-of-contraception-in-the-united-states-2017-2019.html#use-of-contraception-during-most-recent-intercourse) were at risk for unintended pregnancy when they engaged in sexual intercourse most recently, but did not use _any_ method of contraception whatsoever. These 7.5 to 11.5 million persons include both those who are _not_ using contraception in the long term and those who _are_ using one or more methods, but are [using contraception inconsistently](/use-of-contraception-in-the-united-states-2017-2019.html#consistency-of-use-of-contraception).
+
+Thus, there are both technological and behavioral origins of the annual 80 million unintended pregnancies. Indeed, there is interplay between the technological and behavioral issues such that it is sometimes not clear where one sort of issue ends and another begins. This is further complicated by the fact that human civilization sometimes solves what appear to be its behavioral problems with technological solutions.
+
+Despite this overlap, for the sake of brevity this article focuses on the technological issues, and discussion of behavioral issues is saved for a subsequent article.
+
+
+## More Effective Methods
+
+
+## Long-Acting Reversible Methods
+
+
+## Non-Hormonal Methods
+
+
+## Methods for Male Persons
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
