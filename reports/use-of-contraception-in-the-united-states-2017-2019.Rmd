@@ -1043,17 +1043,17 @@ set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
 
 
 
-# Introduction
+## Introduction
 
 The purpose of this report is to describe the current state of the use of contraception in the United States. It is intended to be a preliminary report to inform subsequent analyses that pose and answer more specific questions and is therefore designed for breadth rather than depth.
 
-## Data Source
+### Data Source
 
 This report is based on the 2017-2019 National Survey of Family Growth (NSFG). The NSFG is a survey of a nationally representative sample of persons living in households in the United States that is designed to produce estimates of factors related to reproduction, such as sexual activity, contraceptive use, pregnancy, infertility, and childcare. It uses a probability-based, multistage sampling design based on geographic areas, housing units in selected geographic areas, and persons in selected housing units. The NSFG is administered by the National Center for Health Statistics (NCHS), but is funded and planned by several agencies within the United States Department of Health and Human Services.
 
 Respondents who are selected for sampling and who consent to be interviewed are visited in their households by female interviewers trained specifically for the NSFG. Interviewers use laptop computers programmed with survey questionnaires and enter respondents' answers into the laptops, using an approach known as computer-assisted personal interviewing (CAPI). Additionally, some questions of a sensitive nature are asked after the CAPI portion of the interview using audio computer-assisted self-interviews (ACASI). During the ACASI portion of the interview, respondents wear headsets to listen to prerecorded questions and enter their responses directly into the laptops.
 
-### Sample Characteristics
+#### Sample Characteristics
 
 The first NSFG was done in 1973 and sampled only female persons aged 15-44 years who had ever been married. The 1982 edition of the NSFG expanded the sample to all females regardless of marital status, and the 2002 edition of the NSFG was the first to sample males in addition to females. More recently, the 2015-2017 edition of the NSFG expanded the age range for sampling from 15-44 years to 15-49 years.
 
@@ -1061,21 +1061,21 @@ In the NSFG, female respondents and male respondents are given different questio
 
 The 2017-2019 edition of the NSFG has a sample size of 6,141 females and 5,206 males. The overall response rate is 63.4%, with response rates of 65.2% for females and 61.4% for males. Results are weighted to approximate the population at July 2018, the midpoint of sampling. The sampled population is persons aged 15-49 living in households in the United States and includes neither those without a current residential address nor those living in group housing, such as military bases, correctional facilities, etc. However, the population does include college students living in dormitories by way of their parents' households.
 
-### Sexes of Sexual Partners
+#### Sexes of Sexual Partners
 
 Use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception. Therefore, the NSFG and this report focus extensively on sexual intercourse between individuals of opposite sex. All mentions of sexual activity in this report should be interpreted to refer to sexual intercourse with someone of the opposite sex unless stated otherwise.
 
-### Disclosure Risk Reduction
+#### Disclosure Risk Reduction
 
 Before the NSFG public use data files are released, actions are taken in order to reduce the risk that a specific respondent can be personally identified based on the information to be contained therein. This disclosure risk reduction can be as severe as suppressing certain variables from the public use data files entirely, though many variables are merely modified to be less specific. For instance, while respondents are asked about the month and year that pregnancies begin and end in the NSFG, only the year that pregnancies begin and end are available in the public use data files.
 
 This report is based entirely on the NSFG public use data files. Whenever analysis is constrained in some way by the disclosure risk reduction, this is noted in the report.
 
-### Documentation
+#### Documentation
 
 More information about the NSFG is available in its official User's Guide and appendices [@nsfg-users-guide], the Summary of Design and Data Collection [@nsfg-summary], and its more detailed design documentation [@nsfg-1; @nsfg-2; @nsfg-3].
 
-## Differences with Prior Works
+### Differences with Prior Works
 
 There are prior works based on the NSFG about the same subject as this report. [@kavanaugh_contraceptive_2018] Indeed, personnel associated with the NCHS themselves publish reports based on the NSFG in journals [@piccinino_trends_1998], National Health Statistics Reports [@jones_current_2012; @daniels_contraceptive_2013; @copen_condom_2017], and NCHS Data Briefs [@daniels_current_2020]. This report differs from prior works in several ways:
 
@@ -1089,19 +1089,19 @@ There are prior works based on the NSFG about the same subject as this report. [
 
 [^males-too]: While this is a novel approach for the topic of contraceptive use generally based on the NSFG, this approach has been used for other data sources [@bensyl_contraceptive_2005] and for more specific contraceptive methods such as condoms [@copen_condom_2017].
 
-## Source Code and License
+### Source Code and License
 
 Analysis for this report is done using the R statistical programming language. [@rlang] Estimates handling the NSFG's sampling weights and complex sampling design pseudo-structure are made using the `survey` package. [@lumley_survey_2021]
 
 The [source code for this report](https://github.com/joshuaborn/NSFG/blob/master/reports/use-of-contraception-in-the-united-states-2017-2019.Rmd) and all supporting source code are available in [a public GitHub repository](https://github.com/joshuaborn/NSFG). This report and supporting source code are licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license. Anyone is free to share and adapt the material contained here as long as appropriate credit is given, a link to the license is provided, and any changes made are indicated.
 
 
-# Results
+## Results
 
 Sections \@ref(use-of-contraception-during-most-recent-intercourse) and \@ref(use-of-contraceptive-methods-for-other-reasons) pertain to what contraceptive method(s) were used during the sexual intercourse that occurred most recently before the respondents' interviews. Sections \@ref(use-of-contraception-during-past-12-months) and \@ref(consistency-of-use-of-contraception) focus on contraceptive use over the 12 months preceding the interview. Sections \@ref(use-of-contraception-ever-during-lifetime) and \@ref(discontinuation-due-to-dissatisfaction) pertain to contraceptive use ever during the lifetime of respondents. Section \@ref(reasons-for-not-currently-using-contraception) pertains to contraceptive use reported in the month of the interview.
 
 
-## Population Size
+### Population Size
 
 ```{r population-size, dependson=c('process-fem-data', 'process-male-data')}
 fem1719dt[, person := 1]
@@ -1127,7 +1127,7 @@ Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r 
 [^consistent]: Furthermore, the point estimates of population size based on the NSFG are quite close to the census counts, though the census counts are more than a million persons greater for both females and males. Unlike the NSFG estimates, the U.S. Census does count those without a current residential address and those living in group housing, which might account for these differences.
 
 
-## Use of Contraception during Most Recent Intercourse
+### Use of Contraception during Most Recent Intercourse
 
 ```{r sexually-active, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
@@ -1182,7 +1182,7 @@ style_and_combine_totals_and_percentages_vertically(
 Over three quarters of persons sexually active with the opposite sex used at least one method of contraception during their most recent intercourse, and a slightly greater proportion of females report using contraception than males. (Table \@ref(tab:used-last-3m-at-all))
 
 
-### Reason for Nonuse
+#### Reason for Nonuse
 
 ```{r reason-for-nonuse, dependson=c('process-fem-data', 'process-male-data')}
 style_and_combine_totals_and_percentages_vertically(
@@ -1217,7 +1217,7 @@ The "otherwise did not use contraception during last intercourse" category in Ta
 The "physically infertile not due to sterilizing procedure" category is explored in Section \@ref(reason-for-physical-infertility-not-due-to-sterilizing-procedure).
 
 
-### Contraception Use Rate
+#### Contraception Use Rate
 
 ```{r contraception-use-rate, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
@@ -1298,7 +1298,7 @@ Generally, the contraceptive use rate is high, though this still leaves several 
 
 The reported contraceptive use rate is higher for females than for males. A chi-squared test of independence with second-order Rao-Scott adjustment is statistically significant $(p = `r signif(this$chisq$p.value, 2)`)$. Therefore, there is sufficient evidence to conclude that a person's sex and reported contraception use during last intercourse are dependent, and the difference in contraception use rates between females and males in Table \@ref(tab:contraception-use-rate) is not attributable to sampling error.
 
-#### Reported Ignorance of Contraceptive Use
+##### Reported Ignorance of Contraceptive Use
 
 The contraceptive use rate is greater for females than males. (Table \@ref(tab:contraception-use-rate)) However, one factor that might decrease the rate at which males report contraceptive use is that some males do not know that their partners are using contraception.
 
@@ -1335,7 +1335,7 @@ A small proportion of sexually active males report not knowing if their partner 
 Respondents are counted in the "ignorant of partner's contraceptive use" category for the estimates of Table \@ref(tab:not-aware) if they respond "don't know" to the first type of question or if they respond "yes" or "don't know" to the second type of question. However, the second type of question is only asked of NSFG respondents who are neither married nor cohabitating. Therefore, these results should be interpreted with care. This is discussed further in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males).
 
 
-### Sexual Inactivity
+#### Sexual Inactivity
 
 ```{r sexual-inactivity, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
@@ -1420,7 +1420,7 @@ rbindlist(list(
 Most persons who have never had sexual intercourse with someone of the opposite sex are in younger age groups, and totals of persons who have never had sexual intercourse decrease with increasing age. (Figure \@ref(fig:never-had-sex))
 
 
-#### Reason for Never Having Intercourse
+##### Reason for Never Having Intercourse
 
 ```{r fem-reason-no-sex, dependson='process-fem-data', fig.cap='Females by reason for not having had sexual intercourse with the opposite sex, among those who have not. Dots represent point estimates and brackets represent 95% confidence intervals.'}
 estimate_totals_and_percentages(
@@ -1453,7 +1453,7 @@ estimate_totals_and_percentages(
 Many persons who have not had intercourse with someone of the opposite sex report "haven't found the right person yet" as a reason, though this appears to be more common for males than for females. "Against religion or morals" is another commonly cited reason. It is notable that "other" is also a popular reason chosen for not having had intercourse with someone of the opposite sex. (Figures \@ref(fig:fem-reason-no-sex) and \@ref(fig:male-reason-no-sex)) This is indirectly explored in the subsequent Section \@ref(attraction-by-sex).
 
 
-#### Attraction by Sex
+##### Attraction by Sex
 
 ```{r fem-sex-attraction, dependson='process-fem-data'}
 this <- list()
@@ -1564,7 +1564,7 @@ Similarly, the proportion of males who are "only attracted to females" is approx
 Thus, some persons who are not sexually active with the opposite sex are simply not attracted to the opposite sex, such as the approximately 1.5M males only attracted to males who did not have intercourse with a female in the past 3 months in Table \@ref(tab:male-sex-attraction).
 
 
-### Reason for Physical Infertility Not Due to Sterilizing Procedure
+#### Reason for Physical Infertility Not Due to Sterilizing Procedure
 
 ```{r fem-infertility, dependson='process-fem-data', fig.cap="Females by reason reported for their inability to become pregnant, among those who report being physically infertile not due to a sterilizing procedure."}
 estimate_totals_and_percentages(
@@ -1595,7 +1595,7 @@ estimate_totals_and_percentages(
 The reason for physical infertility not due to a sterilizing procedure is part of the questionnaire for female respondents of the NSFG, but not the questionnaire for male respondents. As Figures \@ref(fig:fem-infertility) and \@ref(fig:fem-partner-infertility) illustrate, because these conditions are relatively rare, the effective sample sizes of the relevant subdomains from a two-year sequence of the NSFG are small, and the sampling error is quite large relative to the estimates.
 
 
-### Number of Methods
+#### Number of Methods
 
 ```{r number-of-methods, dependson=c('process-fem-data', 'process-male-data')}
 style_and_combine_totals_and_percentages_vertically(
@@ -1622,7 +1622,7 @@ style_and_combine_totals_and_percentages_vertically(
 While the vast majority of both females and males used only one method of contraception during their last intercourse, a substantial minority of persons used multiple methods. (Table \@ref(tab:number-of-methods))
 
 
-### Method(s) Used
+#### Method(s) Used
 
 ```{r fem-methods-used, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by whether or not each contraceptive method was used during last intercourse with a male in the past 3 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
@@ -1668,7 +1668,7 @@ Other differences include a greater number of males reporting use of condom, pil
 Estimates of the number of female and male persons using withdrawal, vasectomy, implant, injectable, and ring methods are similar between females and males. Methods such as suppository, female condom, diaphragm, film, foam, jelly, and cream are rarely reported used by either females or males. Withdrawal is the fourth most commonly reported method both by females and males.
 
 
-### Method Used Exclusively
+#### Method Used Exclusively
 
 ```{r fem-exclusive-method-used, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by which contraceptive method was used during last intercourse with a male in the past 3 months, among those who used exactly one method during last intercourse.'}
 estimate_NSFG_mentions(
@@ -1710,7 +1710,7 @@ estimate_NSFG_mentions(
 Restricting analysis to persons who used only one method of contraception during their last intercourse, there is a similar overall pattern of contraceptive method use as seen in Section \@ref(methods-used). (Figures \@ref(fig:fem-exclusive-method-used) and \@ref(fig:male-exclusive-method-used)) However, in this subdomain, the number of females and number of males reporting pill use is roughly the same. Another salient difference in this subdomain is that there are relatively fewer persons who report using withdrawal, indicating a substantial number of withdrawal users do not rely on withdrawal as their only method of contraception, which is investigated further in Section \@ref(proportion-of-method-users-who-also-used-other-methods).
 
 
-### Proportion of Method Users Who Also Used Other Method(s)
+#### Proportion of Method Users Who Also Used Other Method(s)
 
 ```{r fem-proportion-another, dependson='process-fem-data', fig.asp=0.8, fig.cap='Proportion using another method of contraception among females using each method of contraception during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions_in_subdomains(
@@ -1756,7 +1756,7 @@ While a simple majority of users of pill and condom methods used them exclusivel
 The remaining subsections of Section \@ref(use-of-contraception-during-most-recent-intercourse) explore what other contraceptive methods are used in conjunction with the methods commonly used with others, i.e., calendar, withdrawal, condom, and pill methods.
 
 
-### Other Method(s) Used with Calendar Method
+#### Other Method(s) Used with Calendar Method
 
 ```{r other-with-calendar, dependson=c('process-fem-data', 'process-male-data')}
 style_and_combine_totals_and_percentages_vertically(
@@ -1790,7 +1790,7 @@ style_and_combine_totals_and_percentages_vertically(
 When used in conjunction with other methods, calendar-based methods are most commonly used with withdrawal or to a lesser extent condoms. (Table \@ref(tab:other-with-calendar))
 
 
-### Other Method(s) Used with Withdrawal, Condom, and Pill
+#### Other Method(s) Used with Withdrawal, Condom, and Pill
 
 ```{r fem-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
@@ -1913,7 +1913,7 @@ estimate_NSFG_mentions(
 When used in conjunction with other methods, withdrawal, condom, and pill methods are used with a variety of other methods, though the most commonly used other methods with any one of these three are the other two methods. (Figures \@ref(fig:fem-other-with-withdrawal),  \@ref(fig:male-other-with-withdrawal), \@ref(fig:fem-other-with-condom), \@ref(fig:male-other-with-condom), \@ref(fig:fem-other-with-pill) and \@ref(fig:male-other-with-pill)) However, this is to be expected, since these three methods are more common generally. (Section \@ref(methods-used)) One exception to this general trend is that calendar-based methods are unusually common among methods used in conjunction with withdrawal as reported by females. (Figure \@ref(fig:fem-other-with-withdrawal))
 
 
-## Use of Contraception during Past 12 Months
+### Use of Contraception during Past 12 Months
 
 ```{r at-risk, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
@@ -1959,7 +1959,7 @@ this$ht |>
 The size of the relevant subdomain for this section is approximately `r this$fem` females and `r this$male` males. (Table \@ref(tab:sexually-active-12-months))
 
 
-### Number of Methods
+#### Number of Methods
 
 ```{r number-of-methods-12-months, dependson=c('process-fem-data', 'process-male-data')}
 style_and_combine_totals_and_percentages_vertically(
@@ -1990,7 +1990,7 @@ The estimates of those who have not used any method of contraception in the past
 [^no-pregnancy-months]: Separating out estimates of those who are pregnant or postpartum is not possible over extended periods of time such as 12 months when using the NSFG's public use data files, since the months that pregnancies begin and end are not released for disclosure risk reduction.
 
 
-### Method(s) Used
+#### Method(s) Used
 
 ```{r fem-methods-used-12-months, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
@@ -2034,7 +2034,7 @@ The distribution of method(s) used by females in the past 12 months in Table \@r
 Similarly, the distribution of method(s) used in the past 12 months in Table \@ref(fig:male-methods-used-12-months) parallels the distribution of method(s) used during last intercourse in Figure \@ref(fig:male-methods-used), but with counts of those using female sterilizing operations not increasing as much as other methods, causing it to decrease from the third most to the fourth most prevalent method among males when examining the past 12 months. A salient feature of Figure \@ref(fig:male-methods-used-12-months) is the extent to which the number of males who have used condoms at least once in the past 12 months is greater than other methods.
 
 
-### Method Used Exclusively
+#### Method Used Exclusively
 
 ```{r fem-exclusive-method-used-12-months, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
 estimate_NSFG_mentions(
@@ -2076,7 +2076,7 @@ estimate_NSFG_mentions(
 When restricting analysis to those who reported using only one method of contraception, the distributions of method used during the past 12 months (Figures \@ref(fig:fem-exclusive-method-used-12-months) and \@ref(fig:male-exclusive-method-used-12-months)) parallels the distributions of method used during last intercourse (Figures \@ref(fig:fem-exclusive-method-used) and \@ref(fig:male-exclusive-method-used)) very closely, with female sterilizing operation being the most commonly method reported by females, and condoms then female sterilizing operation being the most commonly methods reported by males.
 
 
-## Consistency of Use of Contraception
+### Consistency of Use of Contraception
 
 ```{r used-12-months-but-not-last, dependson=c('process-fem-data', 'process-male-data')}
 fem1719dt[,
@@ -2165,7 +2165,7 @@ Nearly all females who did not use contraception during their most recent interc
 Male respondents to the NSFG are not asked if they have ever used the various contraceptive methods, nor do they fill out the contraceptive use calendar that female respondents do, so estimates for males such as those in Tables \@ref(tab:used-in-month-but-not-last) and \@ref(tab:used-ever-but-not-last) are not available.
 
 
-### Any Method During Past 12 Months
+#### Any Method During Past 12 Months
 
 ```{r consistency-12-months-any, dependson=c('process-fem-data', 'process-male-data')}
 fem1719dt[,
@@ -2263,7 +2263,7 @@ In cases of males who have answers for both series of questions because they hav
 Two methods of contraception, condoms and pills, are both popular and require user interventions either during each intercourse or daily, respectively. They are explored further in Sections \@ref(condom-use-during-past-12-months) and \@ref(pill-use-during-past-4-weeks).
 
 
-### Condom Use During Past 12 Months
+#### Condom Use During Past 12 Months
 
 ```{r consistency-condom, dependson=c('process-fem-data', 'process-male-data')}
 male1719dt[,
@@ -2329,7 +2329,7 @@ style_and_combine_totals_and_percentages_vertically(
 Consistency of condom use is slightly worse than consistency of the use of any method of contraception described in Section \@ref(any-method-during-past-12-months), though a simple majority of those relying on condoms as their exclusive method of contraception report using condoms every time. (Table \@ref(tab:consistency-condom))
 
 
-### Pill Use During Past 4 Weeks
+#### Pill Use During Past 4 Weeks
 
 ```{r consistency-pill, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2345,11 +2345,11 @@ estimate_totals_and_percentages(
 A majority of pill users report never missing a pill, though there is substantial amount of inconsistency of pill use among a minority of pill users. (Table \@ref(tab:consistency-pill))
 
 
-## Use of Contraceptive Methods for Other Reasons
+### Use of Contraceptive Methods for Other Reasons
 
 Some users of methods of contraception are actually motivated by reasons other than contraception. The NSFG asks respondents about these other motives regarding condoms, and asks female respondents about these other motives regarding pills and IUDs.
 
-### Condom
+#### Condom
 
 ```{r condom-during-last-intercourse, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
@@ -2412,7 +2412,7 @@ style_and_combine_totals_and_percentages_vertically(
 The vast majority of persons who use condoms during vaginal intercourse are motivated by contraception at least in part, though these persons are split approximately equally between those who are exclusively motivated by contraception and those motivated by both contraception and prevention of sexually transmitted diseases. (Table \@ref(tab:motive-for-condom))
 
 
-### Pill
+#### Pill
 
 ```{r pill-during-month-or-previous, dependson='process-fem-data'}
 this <- list()
@@ -2492,7 +2492,7 @@ estimate_totals_and_percentages(
 The most commonly mentioned reason for use of contraceptive pills is indeed birth control. (Figure \@ref(fig:pill-reason-mentions)) However, a minority of pill users mention birth control exclusively as a reason for their use. About half of all pill users are motivated both by birth control and other health reasons, and a substantial minority of pill users are motivated exclusively by reasons other than contraception. (Table \@ref(tab:pill-motivation))
 
 
-### Hormonal IUD
+#### Hormonal IUD
 
 ```{r iud-use-during-month-or-previous, dependson='process-fem-data'}
 this <- list()
@@ -2551,7 +2551,7 @@ estimate_totals_and_percentages(
 The most commonly mentioned reason for use of hormonal IUD is birth control. (Figure \@ref(fig:iud-reason-mentions)) For approximately half of hormonal IUD users, contraception is the sole motivation for use of an hormonal IUD, but approximately a third of hormonal IUD users are motivated by other health reasons in addition to birth control, and a minority of hormonal IUD users are motivated exclusively by reasons other than contraception. (Table \@ref(tab:iud-motivation))
 
 
-## Use of Contraception Ever During Lifetime
+### Use of Contraception Ever During Lifetime
 
 Female respondents to the NSFG are asked whether they have ever used specific methods of contraception ever in their lifetimes. As was seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), sometimes contraceptive methods are used for reasons other than contraception. The total counts of persons who have ever used certain methods are thus greater when considering the general population than when considering those who have had sexual intercourse with the opposite sex. Therefore, this section twice estimates persons who have ever used contraceptives, once among all females in the NSFG population and once among those who have had sexual intercourse with the opposite sex.
 
@@ -2586,7 +2586,7 @@ estimate_NSFG_mentions(
 
 Approximately `r this$percentage` of females have used at least one method of contraception at some time in their lives. (Table \@ref(tab:used-ever)) Condom, pill, and withdrawal methods are the most common methods ever used by females. (Figure \@ref(fig:methods-used-ever))
 
-### Among Those Who Have Ever Had Intercourse
+#### Among Those Who Have Ever Had Intercourse
 
 ```{r fem-had-sex, dependson='process-fem-data'}
 this <- list()
@@ -2646,7 +2646,7 @@ estimate_NSFG_mentions(
 There are approximately `r this$size` females who have ever had intercourse with someone of the opposite sex. (Table \@ref(tab:fem-had-sex)) Of these, approximately `r this$percentage` have used a method of contraception at least once in their lives. (Table \@ref(tab:used-ever-had-sex)) The major difference between the totals estimated in Figure \@ref(fig:methods-used-ever-had-sex) and Figure \@ref(fig:methods-used-ever) is that the estimates in \@ref(fig:methods-used-ever-had-sex) are slightly lower for some methods, such as birth control pills, owing to persons who have never had sexual intercourse with someone of the opposite sex using these methods for reasons other than contraception.
 
 
-## Discontinuation Due to Dissatisfaction
+### Discontinuation Due to Dissatisfaction
 
 ```{r discontinuation, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing multiple methods counted multiple times.'}
 this <- list()
@@ -2682,7 +2682,7 @@ Some methods, such as Lunelle, are so rarely used by respondents to the NSFG tha
 The following subsections examine reasons for dissatisfaction leading to discontinuation of condoms, pills, and IUDs. Reasons for dissatisfaction were asked of NSFG respondents in two steps. In the first, respondents were asked to select one or more reasons from a prefabricated list of possible reasons. The second step gave the respondent an opportunity to describe reasons in their own words and occurred if the respondent selected any of the reasons "too difficult to use," "side effects," or "other."
 
 
-### Condom
+#### Condom
 
 ```{r condom-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction.'}
 estimate_NSFG_mentions(
@@ -2715,7 +2715,7 @@ estimate_NSFG_mentions(
 When condoms are discontinued due to dissatisfaction, the most common reasons are due to decrease in sexual pleasure or dislike from male partners, though a nontrivial number of persons report experiencing side effects. (Figure \@ref(fig:condom-quit-reasons)) The most common side effects are allergy or discomfort. (Figure \@ref(fig:condom-quit-specific-reasons))
 
 
-### Pill
+#### Pill
 
 ```{r pill-quit-reasons, dependson='process-fem-data', fig.asp=0.7, fig.cap='Females categorized by reason for dissatisfaction with contraceptive pills, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using pills due to dissatisfaction.'}
 estimate_NSFG_mentions(
@@ -2750,7 +2750,7 @@ estimate_NSFG_mentions(
 Side effects are by far the most commonly reported reason for discontinuation of contraceptive pills. (Figure \@ref(fig:pill-quit-reasons)) Side effects are varied, but mood, weight gain, or nausea issues are commonly reported. (Figure \@ref(fig:pill-quit-specific-reasons)) It is also commonly reported that pills are too difficult to use or that persons cannot remember to take pills regularly.
 
 
-### IUD
+#### IUD
 
 ```{r iud-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using an IUD due to dissatisfaction.'}
 estimate_NSFG_mentions(
@@ -2794,7 +2794,7 @@ estimate_NSFG_mentions(
 Like with contraceptive pills, side effects are by far the most commonly reported reason for discontinuation of IUDs. (Figure \@ref(fig:iud-quit-reasons)) For IUDs, commonly reported side effects involve abdominal pain or bleeding. (Figure \@ref(fig:iud-specific-quit-reasons))
 
 
-## Reason(s) for Not Currently Using Contraception
+### Reason(s) for Not Currently Using Contraception
 
 ```{r not-currently-using-size, dependson='process-fem-data'}
 this <- list()
@@ -2823,7 +2823,7 @@ The respondents who did use contraception during their last intercourse despite 
 
 Unfortunately, the results of this line of questioning on the NSFG are uninformative due to both sampling error and measurement error.
 
-### Intent to Conceive
+#### Intent to Conceive
 
 ```{r pregnancy-intent-status, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -2848,7 +2848,7 @@ estimate_totals_and_percentages(
 
 Among those in this subdomain, a substantial minority do not have any intent to become pregnant and so are at risk for unintended pregnancy. (Table \@ref(tab:pregnancy-intent-status))
 
-### Reason(s) for Nonuse When Not Intending to Conceive
+#### Reason(s) for Nonuse When Not Intending to Conceive
 
 ```{r nonuse-reason, dependson='process-fem-data', fig.cap='Females categorized by reason(s) for not using contraception, with persons reporting multiple reasons counted multiple times, among those at increased risk for unintended pregnancy due to contraceptive nonuse.'}
 estimate_NSFG_mentions(
@@ -2868,7 +2868,7 @@ A nontrivial number of up to half a million persons are falsely included in this
 
 Because there are a relatively few number of persons estimated in Figure \@ref(fig:nonuse-reason), the effective sample size is small, leading to large sampling errors. Nonetheless, a person's belief she cannot get pregnant is either the most common or one of the most common reasons for not using contraception. This itself is another form of measurement error because respondents are elsewhere asked whether they are physically unable to conceive, and if so, are not asked this series of questions.
 
-### Reason(s) Respondent Believes She Cannot Become Pregnant
+#### Reason(s) Respondent Believes She Cannot Become Pregnant
 
 ```{r pregnancy-impossible-reason, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason(s) they believe they cannot become pregnant, with persons using reporting multiple reasons counted multiple times, among those who select "you do not think you can get pregnant" as a reason for contraceptive nonuse.'}
 estimate_NSFG_mentions(
@@ -2887,7 +2887,7 @@ estimate_NSFG_mentions(
 Among the approximately million females who select "you do not think you can get pregnant" as a reason for not using contraception, there is no clearly most common reason for the belief that becoming pregnant is impossible. (Figure \@ref(fig:pregnancy-impossible-reason)) Some answers, such as having prior unprotected sexual intercourse without a pregnancy, are likely spurious reasons to believe pregnancy is impossible, while others, such as medical diagnosis of a reproductive condition, should have led to respondents reporting their physical infertility earlier in the NSFG questioning.
 
 
-## Age for Female Sterilizing Operations
+### Age for Female Sterilizing Operations
 
 One of the more salient differences in reporting of contraceptive use between females and males is in reporting of female sterilizing operations such as tubal ligation. As Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males) discusses, one confounding variable in this may be the age at which females undergo sterilizing operations.
 
@@ -2990,7 +2990,7 @@ as.data.table(svyby(
 The number of females who have had sterilizing operations such as tubal ligation increases with age group until the early forties, then declines slightly. (Figure \@ref(fig:histogram-ages-sterilizing-operation)) The proportion of females in each group that have had sterilizing operations increases with age, with the exception of an aberration in the (44, 47] years age group.  (Figure \@ref(fig:proportion-ages-sterilizing-operation)) Thus, older females are more likely to have had a sterilizing operation than younger persons.
 
 
-# Discussion
+## Discussion
 
 Contraception is a nearly ubiquitous part of the reproductive behavior of persons living in the United States. More than three quarters of those sexually active with someone of the opposite sex used contraception during their most recent intercourse. (Section \@ref(use-of-contraception-during-most-recent-intercourse)) Among females who have ever had sexual intercourse with a male, approximately 99\% have used a method of contraception at least once in their lives. (Section \@ref(among-those-who-have-ever-had-intercourse))
 
@@ -3003,7 +3003,7 @@ Furthermore, there is much dissatisfaction with contraceptive methods currently 
 Condoms, pills, and female sterilizing operations are the most prevalent methods of contraception in the United States, and withdrawal, vasectomy, and IUDs are the next most prevalent methods. The exact ordering of prevalence of these methods depends on whether females or males are asked and on the handling of the use of multiple methods of contraception. (Sections \@ref(use-of-contraception-during-most-recent-intercourse) and \@ref(use-of-contraception-during-past-12-months))
 
 
-## Differences in Reported Contraceptive Use Between Females and Males
+### Differences in Reported Contraceptive Use Between Females and Males
 
 Sexual intercourse with someone of the opposite sex involves both females and males, so estimates based on female respondents to the NSFG  and those based on male respondents to the NSFG  should be similar. For the most part, the results discussed in this report do reflect similar patterns. However, there are a few noticeable differences that cannot be fully attributed to sampling error.
 
@@ -3019,24 +3019,24 @@ There at least three hypotheses that might explain these differences, at least i
 
 Investigation of these hypothesis is left to further research, but they are summarized in the following subsections.
 
-### Ignorance of Partners' Contraceptive Use
+#### Ignorance of Partners' Contraceptive Use
 
 Few males report ignorance of their partners' contraceptive use in the NSFG. (Section \@ref(reported-ignorance-of-contraceptive-use)) However, direct questions about this are only asked of some male respondents to the NSFG, and thus some respondents may not think to give such an answer, even if such an answer would be the most accurate description. Further, some males may not know that they do not know that their partners are using contraception. This is particularly the case for methods of contraception -- such as tubal ligation, IUDs, injectables, implants, etc. -- that are largely not visible to male sexual partners. The effect of this would be for males to under-report contraception use, which might explain some of the variation in both the lower contraception use rate reported by males and the lower prevalence of female sterilizing operations reported by males.
 
-### Younger Female Partners of Males and Older Male Partners of Females
+#### Younger Female Partners of Males and Older Male Partners of Females
 
 As part of disclosure risk reduction efforts, the 2017-2019 edition of the NSFG (as well as the 2015-2017 edition) does not release age of most recent sexual partners in its public use data files. However, prior research based on previous editions of the NSFG has found that male sexual partners of females are more likely to be older, and female sexual partners of males are more likely to be younger. [@darroch_age_1999] The effect of the age asymmetry of sexual partners is that, while the age ranges of female respondents and of male respondents surveyed by the NSFG are both 15-49 years, the average age of the partners of male respondents is likely younger than the average age of the female respondents.
 
 As seen in Section \@ref(age-for-female-sterilizing-operations), the probability that a female has a sterilizing operation apparently increases with increasing age. Thus, the effectively older sample of females in the female respondents sample are more likely to have had sterilizing operations than the effectively younger partners of respondents in the male respondents sample. This might explain some of the difference in reported prevalence of female sterilizing operations between females and males.
 
-### Oversampling of Those with Multiple Recent Partners
+#### Oversampling of Those with Multiple Recent Partners
 
 The last sexual partner of the opposite sex within the past 3 months for one person might also be the last sexual partner of the opposite sex within the past 3 months for another person. Thus, the behavior of persons who have many recent sexual partners are effectively over-sampled in any analysis examining behavior during most recent sexual intercourse.
 
 If the contraceptive use of those who have multiple recent sexual partners differs from the more general population and between females and males, this might explain some of the reported differences in contraceptive use between females and males. For instance, if males, but not females, who have multiple recent partners are more likely to use contraception than the general population, this would cause the contraception use rate reported by females to be greater for females than that reported by males. Similarly, if females who have multiple recent partners are less likely to have had sterilizing operations, this would cause the prevalence of female sterilizing operations reported by males to be lesser than that reported by females.
 
 
-## Further Research
+### Further Research
 
 While this report is a preliminary analysis consisting mostly of descriptive statistics, it informs further research using model-based or covariate-adjusted analyses.
 
@@ -3046,16 +3046,16 @@ As noted in Section \@ref(consistency-of-use-of-contraception), failure to use c
 
 
 
-# Citations
+## Citations
 
 ::: {#refs}
 :::
 
 
 
-# Appendix A: Technical Notes
+## Appendix A: Technical Notes
 
-## Contraceptive Method(s) Used During Last Intercourse versus Contraceptive Status
+### Contraceptive Method(s) Used During Last Intercourse versus Contraceptive Status
 
 As mentioned in Section \@ref(differences-with-prior-works), many similar prior works examine contraceptive use by way of current contraceptive status, which is based on respondents' answers to the question of what contraceptive method(s) they are using during the month of the interview. These responses are encoded in variables `CONSTAT1`, `CONSTAT2`, `CONSTAT3`, and `CONSTAT4` in the public use data files of the NSFG.
 
@@ -3067,7 +3067,7 @@ Instead of using such an approach, Section \@ref(use-of-contraception-during-mos
 
 On the other hand, one major disadvantage of analysis of contraceptive use during last intercourse is that there is variation among respondents in how long it has been, at the time of the interview, since their last intercourse. Therefore, Section \@ref(use-of-contraception-during-most-recent-intercourse) focuses on contraceptive use during the last intercourse within the 3 months prior to the interview.
 
-## Failure to Report Sterilizing Operations as Contraceptive Methods
+### Failure to Report Sterilizing Operations as Contraceptive Methods
 
 Some NSFG respondents reported having an active sterilizing operation, such as a tubal ligation or vasectomy, or having last had intercourse with a spouse or cohabitating partner with an active sterilizing operation, but in response to other questions do not report using said sterilizing operation as a method of contraception.
 
@@ -3080,11 +3080,11 @@ Thus, even if a respondent does not mention using a partner's vasectomy when ask
 Similarly, even if a respondent did not mention using tubal ligation during any of the 12 months preceding the interview, if the respondent had sexual intercourse during the 12 months preceding the interview and has an active tubal ligation, then the respondent is counted as using tubal ligation as a contraceptive method during the 12 months preceding the interview.
 
 
-# Appendix B: Supplementary Tables
+## Appendix B: Supplementary Tables
 
 This appendix contains table versions of estimates that are rendered as plots in the preceding report.
 
-## Reason for Never Having Intercourse
+### Reason for Never Having Intercourse
 
 ```{r fem-reason-no-sex-table, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -3110,7 +3110,7 @@ estimate_totals_and_percentages(
   set_caption('Males by reason for not having had sexual intercourse with the opposite sex, among those who have not.')
 ```
 
-## Reason for Physical Infertility Not Due to Sterilizing Procedure
+### Reason for Physical Infertility Not Due to Sterilizing Procedure
 
 ```{r fem-infertility-table, dependson='process-fem-data'}
 estimate_totals_and_percentages(
@@ -3136,7 +3136,7 @@ estimate_totals_and_percentages(
   set_caption("Females by reason reported for their partners' inability to father a child, among those who report having a partner who is physically infertile not due to a sterilizing procedure.")
 ```
 
-## Method(s) Used during Most Recent Intercourse
+### Method(s) Used during Most Recent Intercourse
 
 ```{r fem-methods-used-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3167,7 +3167,7 @@ estimate_NSFG_mentions(
   set_caption('Males categorized by whether or not each contraceptive method was used during last intercourse with a female in the past 3 months, with persons using multiple methods counted multiple times.')
 ```
 
-## Method Used Exclusively during Most Recent Intercourse
+### Method Used Exclusively during Most Recent Intercourse
 
 ```{r fem-exclusive-method-used-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3198,7 +3198,7 @@ estimate_NSFG_mentions(
   set_caption('Males categorized by which contraceptive method was used during last intercourse with a female in the past 3 months, among those who used exactly one method during last intercourse.')
 ```
 
-## Proportion of Method Users Who Also Used Other Method(s) during Most Recent Intercourse
+### Proportion of Method Users Who Also Used Other Method(s) during Most Recent Intercourse
 
 ```{r fem-proportion-another-table, dependson='process-fem-data'}
 estimate_NSFG_mentions_in_subdomains(
@@ -3237,7 +3237,7 @@ estimate_NSFG_mentions_in_subdomains(
   set_caption('Males using another method of contraception among persons using each method of contraception during last intercourse with a female in the past 3 months.')
 ```
 
-## Other Method(s) Used with Withdrawal, Condom, and Pill during Most Recent Intercourse
+### Other Method(s) Used with Withdrawal, Condom, and Pill during Most Recent Intercourse
 
 ```{r fem-other-with-withdrawal-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3327,7 +3327,7 @@ estimate_NSFG_mentions(
   set_caption('Males by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a female in the past 3 months.')
 ```
 
-## Method(s) Used during Past 12 Months
+### Method(s) Used during Past 12 Months
 
 ```{r fem-methods-used-12-months-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3358,7 +3358,7 @@ estimate_NSFG_mentions(
   set_caption('Males categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.')
 ```
 
-## Method Used Exclusively during Past 12 Months
+### Method Used Exclusively during Past 12 Months
 
 ```{r fem-exclusive-method-used-12-months-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3389,7 +3389,7 @@ estimate_NSFG_mentions(
   set_caption('Males categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.')
 ```
 
-## Reasons for Using Pill
+### Reasons for Using Pill
 
 ```{r pill-reason-mentions-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3405,7 +3405,7 @@ estimate_NSFG_mentions(
   set_caption('Females by reason(s) mentioned for using contraceptive pills with persons mentioning multiple reasons counted multiple times, among those who used pills either this or the previous month.')
 ```
 
-## Reasons for Using Hormonal IUD
+### Reasons for Using Hormonal IUD
 
 ```{r iud-reason-mentions-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3422,7 +3422,7 @@ estimate_NSFG_mentions(
   set_caption('Females by reason(s) mentioned for using hormonal IUD with persons mentioning multiple reasons counted multiple times, among those who used an hormonal IUD either this or the previous month.')
 ```
 
-## Use of Contraception Ever During Lifetime
+### Use of Contraception Ever During Lifetime
 
 ```{r methods-used-ever-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3434,7 +3434,7 @@ estimate_NSFG_mentions(
   set_caption('Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times.')
 ```
 
-### Among Those Who Have Ever Had Intercourse
+#### Among Those Who Have Ever Had Intercourse
 
 ```{r methods-used-ever-had-sex-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3449,7 +3449,7 @@ estimate_NSFG_mentions(
   set_caption('Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times, among those who have ever had intercourse with someone of the opposite sex.')
 ```
 
-## Discontinuation Due to Dissatisfaction
+### Discontinuation Due to Dissatisfaction
 
 ```{r discontinuation-table}
 estimate_NSFG_mentions_in_subdomains(
@@ -3469,7 +3469,7 @@ estimate_NSFG_mentions_in_subdomains(
   set_caption('Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing multiple methods counted multiple times.')
 ```
 
-## Reason(s) for Discontinuation of Condom
+### Reason(s) for Discontinuation of Condom
 
 ```{r condom-quit-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3497,7 +3497,7 @@ estimate_NSFG_mentions(
   set_caption('Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
 ```
 
-## Reason(s) for Discontinuation of Pill
+### Reason(s) for Discontinuation of Pill
 
 ```{r pill-quit-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3525,7 +3525,7 @@ estimate_NSFG_mentions(
   set_caption('Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
 ```
 
-## Reason(s) for Discontinuation of IUD
+### Reason(s) for Discontinuation of IUD
 
 ```{r iud-quit-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3563,7 +3563,7 @@ estimate_NSFG_mentions(
   set_caption('Females categorized by reason described for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using a IUD due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
 ```
 
-## Reason(s) for Nonuse When Not Intending to Conceive
+### Reason(s) for Nonuse When Not Intending to Conceive
 
 ```{r nonuse-reason-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3578,7 +3578,7 @@ estimate_NSFG_mentions(
   set_caption('Females categorized by reason(s) for not using contraception, with persons reporting multiple reasons counted multiple times, among those at increased risk for unintended pregnancy due to contraceptive nonuse.')
 ```
 
-## Reason(s) Respondent Believes She Cannot Become Pregnant
+### Reason(s) Respondent Believes She Cannot Become Pregnant
 
 ```{r pregnancy-impossible-reason-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
@@ -3594,4 +3594,4 @@ estimate_NSFG_mentions(
 ```
 
 
-# Footnotes
+## Footnotes
