@@ -34,7 +34,7 @@ This should not be surprising because human civilization is still in a very prim
 
 Furthermore, innovation of contraceptive technology has been mostly stagnant since the development progestin and estrogen based methods, which were originally developed in the 1950s. [@eig_birth_2016] Since then, different modalities for administration of such hormones have been developed in addition to the original oral pill modality, such as injectables, implants, or inclusion in intrauterine devices (IUDs). However, aside from the path of delivery of the hormones and the exact chemical analog of the hormones used, all of these modalities work in basically the same way.
 
-Thus, there has not been a truly new method of contraception developed in approximately 60 years.
+Thus, there has not been a truly new method of contraception invented in approximately 60 years.
 
 It would therefore be tempting to attribute the aforementioned 80 million unintended pregnancies annually to this deficiency of innovation in contraceptive technology. This attribution would likely be accurate, but only partly so. Somewhere between approximately [7.5 to 11.5 million persons in the United States](http://localhost:4321/use-of-contraception-in-the-united-states-2017-2019.html#use-of-contraception-during-most-recent-intercourse) were at risk for unintended pregnancy when they last engaged in sexual intercourse, but did not use _any_ method of contraception whatsoever.[^inconsistently]
 
@@ -49,7 +49,9 @@ One area of potential improvement in contraceptive technology is long-acting, re
 
 The reason for the "long-acting" adjective in LARC is complicated. Two kinds of estimates have been produced for contraceptive failure rates: estimates for "typical use" and estimates for "perfect use," though this naming scheme is somewhat of a misnomer. "Typical use" refers to estimates calculated from surveys of representative samples of large populations. "Perfect use" estimates are ultimately derived from clinical trials of contraceptive methods.
 
-"Perfect use" estimates were created by James Trussell, a professor of population studies at Princeton University. He read more than a hundred and fifty different academic papers that reported on clinical trials of contraceptive methods, decided which were good and which were bad, and did some very back-of-the-envelope math to come up with a "best guess" of a failure rate for each method based on the clinical trials he deemed good. [@trussell_contraceptive_1987; @trussell_contraceptive_2004; @trussell_contraceptive_2011] Estimates of "perfect use" failure rates are thus believed to approximate hypothetical failure rates that could exist, but are never actually observed in the general population and are as much a product of speculation as observation.
+"Perfect use" estimates were created by James Trussell, a professor of population studies at Princeton University. He read more than a hundred and fifty different academic papers that reported on clinical trials of contraceptive methods, decided which trials were methodologically sound and which trials were questionable, and did some very back-of-the-envelope math to come up with a "best guess" of a failure rate for each method based on the clinical trials he deemed sound. [@trussell_contraceptive_1987; @trussell_contraceptive_2004; @trussell_contraceptive_2011]
+
+Estimates of "perfect use" failure rates are thus hypothetical failure rates that could exist, but are never actually observed in the general population. "Typical use" failure rates, on the other hand, are actually observed in populations, but come with a variety of other issues.
 
 Generally, "typical use" failure rates are much higher than "perfect use" failure rates. One hypothesis for this gap is that contraceptive users enrolled in clinical trials from which "perfect use" estimates are derived are better at and more consistent in using contraceptive methods than the general population.
 
@@ -65,13 +67,13 @@ Of course, sterilizing operations such as vasectomy or tubal ligation are very l
 
 LARCs are typically interpreted to include methods administered by injection, implant, or insertion of an IUD. If these methods are successfully administered, they may last months or years without any need for additional user intervention.
 
-Not all of the differences between "typical use" and "perfect use" failure rate estimates are due to increased user error in "typical use" contexts. In particular, "typical use" failure rate estimates are biased upwards by contraception overreporting, a phenomenon in which respondents to a survey report using contraception even when they are not.[^underreporting]
+Even if the working hypothesis behind the rationale for LARC is correct, not all of the differences between "typical use" and "perfect use" failure rate estimates are due to increased user error in "typical use" contexts. In particular, "typical use" failure rate estimates are biased upwards by contraception overreporting, a phenomenon in which respondents to a survey report using contraception even when they are not.[^underreporting]
 
 [^underreporting]: On the other hand, "typical use" failure rate estimates are biased downwards by induced abortion underreporting. Indeed, only about 38\% of pregnancies ending in induced abortion were reported on the 2017-2019 NSFG. [@national_center_for_health_statistics_2017-2019_2020, Appendix 2: Topic-Specific Notes] Not counting these unreported pregnancies would result in contraceptive failure rates that are lower than the true rates. However, analysis based on the NSFG has attempted to compensate for abortion underreporting since the 1980s. [@grady_contraceptive_1986; @jones_contraceptive_1992]
 
-Indeed, in the 2017-2019 National Survey of Family Growth (NSFG), respondents representing somewhere between [3 and 5 million](/use-of-contraception-in-the-united-states-2017-2019.html#any-method-during-past-12-months) people who previously indicated they were using contraception in the preceding year, when asked how often they used contraception, replied "none of the time." Thus, it is likely that some of the differences between "typical use" and "perfect use" failure rates are due to measurement error in which respondents are incorrectly counted as using a contraceptive method when they are not.
+Indeed, in the 2017-2019 National Survey of Family Growth (NSFG), respondents representing somewhere between [3 and 5 million](/use-of-contraception-in-the-united-states-2017-2019.html#any-method-during-past-12-months) people who had previously on the survey indicated they were using contraception in the preceding year, when asked how often they used contraception, replied "none of the time." Thus, it is likely that some of the differences between "typical use" and "perfect use" failure rates are due to measurement error in which respondents are incorrectly counted as using a contraceptive method when they are not.
 
-LARC methods are becoming increasingly popular, and as such users of LARCs will be increasingly sampled in surveys such as the NSFG. One of the more interesting questions to be answered by ongoing work estimating contraceptive failure rates -- including the research work done for this blog -- is whether LARC methods do indeed lead to "typical use" failure rates closer to "perfect use" failure rates than other reversible methods.
+LARC methods are becoming increasingly popular, and as such users of LARCs will be increasingly sampled in surveys such as the NSFG. One of the more interesting questions to be answered by ongoing work estimating contraceptive failure rates -- including the work done for this blog -- is whether LARC methods do indeed lead to "typical use" failure rates closer to "perfect use" failure rates than other reversible methods.
 
 
 ## Non-Hormonal Methods
@@ -99,10 +101,17 @@ Currently, there are some less effective methods that have low discontinuation r
 
 If one were to browse a list of the [most popular methods of contraception used in the United States](/use-of-contraception-in-the-united-states-2017-2019.html#methods-used) today, one will find only three methods in which the primary user is male: condom, withdrawal, and vasectomy. Indeed, all of the LARC methods currently available today are usable only by those with female physiology.
 
-There are obvious socio-cutural issues with this situation, as it perpetuates the old-fashioned, patriarcal view that reproduction is "women's work." However, even from a more limited, practical standpoint of contraceptive efficacy, there are at least two issues with this.
+There are obvious socio-cultural issues with this situation, as it perpetuates the old-fashioned viewpoint that reproduction is "women's work." However, even from the more limited standpoint of contraceptive practice, a consequence of this situation is that for many men, there are not good options available for contraceptive method.
 
-* Less effective if only one partner in sexual intercourse takes on the sole responsibility for contraception
-* Men, in a lot of circumstances, just do not have good options.
+The two male methods available today that are reversible -- i.e., condoms and withdrawal -- are not very effective when they are the sole method of contraception used.[^additional] [@sundaram_contraceptive_2017; @kost_estimates_2008] As mentioned previously, vasectomy, though highly effective as a contraceptive method, is not typically marketed as a reversible method.[^vasovasostomy]
+
+[^additional]: Condoms and withdrawal may still be valuable as _additional_ methods of contraception used _simultaneously_ with a more effective method, to make up for the overall poor effectiveness of contraceptive methods available today. Additionally, condoms may be valuable for reducing the risk for sexually transmitted infections.
+
+[^vasovasostomy]: Many vasectomies actually have been reversed by vasovasostomy procedures. See note about methods "considered reversible" above.
+
+Thus, those persons with male physiology who have not reached a point at which they have finished having children are left either to take on the cost and the risk that a vasectomy cannot later be reversed, should the need arise, or are left with just two relatively ineffective contraceptive methods.
+
+Risk for unintended pregnancy necessarily occurs during intercourse between two people, one with male and one with female physiology. As such, the best contraceptive practice occurs when _both_ individuals are full contributors to reproductive responsibility. Much as hormonal side-effects discourage some women from contraceptive use, the lack of male contraceptive options can discourage men from full participation in contraceptive practice. Therefore, innovations in contraceptive technology should include methods that can be used by men, in addition to those used by women.
 
 
 ## Methods That Are More Effective
