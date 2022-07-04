@@ -36,6 +36,15 @@ Furthermore, innovation of contraceptive technology has been mostly stagnant sin
 
 Thus, there has not been a truly new method of contraception invented in approximately 60 years.
 
+![
+["One item in the 1960's history of Oakland is a package of Ovral birth control pills"](https://www.flickr.com/photos/34464825@N00/6715866381)
+by
+[benjamin sTone](https://www.flickr.com/photos/34464825@N00/6715866381)
+is licensed under
+[CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/)
+and is not modified.
+](/images/pills.jpg){alt="A pack of birth control pills decorated with sketches of flowers and a butterfly is placed next to a label identifying it as from June 14, 1971 in a museum display."}
+
 It would therefore be tempting to attribute the aforementioned 80 million unintended pregnancies annually to this deficiency of innovation in contraceptive technology. This attribution would likely be accurate, but only partly so. Somewhere between approximately [7.5 to 11.5 million persons in the United States](http://localhost:4321/use-of-contraception-in-the-united-states-2017-2019.html#use-of-contraception-during-most-recent-intercourse) were at risk for unintended pregnancy when they last engaged in sexual intercourse, but did not use _any_ method of contraception whatsoever.[^inconsistently]
 
 [^inconsistently]: These 7.5 to 11.5 million persons include both those who are not using contraception in the long term and those who _are_ using one or more methods, but are [using contraception inconsistently](/use-of-contraception-in-the-united-states-2017-2019.html#consistency-of-use-of-contraception).
@@ -66,6 +75,15 @@ Of course, sterilizing operations such as vasectomy or tubal ligation are very l
       Sterilizing operations such as vasectomy or tubal ligation are orders of magnitude more effective than contraceptive methods considered reversible. Indeed, while estimating contraceptive failure rates based on the National Survey of Family Growth (NSFG) is an ongoing project of this blog, survey-based estimates for vasectomy or tubal ligation are oftentimes impossible, because samples for nationally representative surveys are prone to report not a single unintended pregnancy among those using sterilizing operations as a method of contraception. Instead, estimates of failure rates for sterilizing operations must necessarily come from larger samples in prospective studies that follow large numbers of individuals who have undergone vasectomies or tubal ligations.
 
 LARCs are typically interpreted to include methods administered by injection, implant, or insertion of an IUD. If these methods are successfully administered, they may last months or years without any need for additional user intervention.
+
+![
+["Packet of Norplant Contraceptive Implants, Middlesex, England, 1993"](https://collection.sciencemuseumgroup.org.uk/objects/co96805/packet-of-norplant-contraceptive-implants-middlesex-england-1993-contraceptive-implant)
+by
+[The Board of Trustees of the Science Museum ](https://collection.sciencemuseumgroup.org.uk/objects/co96805/packet-of-norplant-contraceptive-implants-middlesex-england-1993-contraceptive-implant)
+is licensed under
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+and is not modified.
+](/images/norplant.jpg){alt="A box of Norplant branded leveonogestrel implants, with a manual placed to its left, and A Guide for Patients and the actual implants placed to the right."}
 
 Even if the working hypothesis behind the rationale for LARC is correct, not all of the differences between "typical use" and "perfect use" failure rate estimates are due to increased user error in "typical use" contexts. In particular, "typical use" failure rate estimates are biased upwards by contraception overreporting, a phenomenon in which respondents to a survey report using contraception even when they are not.[^underreporting]
 
@@ -102,6 +120,15 @@ Currently, there are some less effective methods that have low discontinuation r
 If one were to browse a list of the [most popular methods of contraception used in the United States](/use-of-contraception-in-the-united-states-2017-2019.html#methods-used) today, one will find only three methods in which the primary user is male: condom, withdrawal, and vasectomy. Indeed, all of the LARC methods currently available today are usable only by those with female physiology.
 
 There are obvious socio-cultural issues with this situation, as it perpetuates the old-fashioned viewpoint that reproduction is "women's work." However, even from the more limited standpoint of contraceptive practice, a consequence of this situation is that for many men, there are not good options available for contraceptive method.
+
+![
+["Condom with latin manual from 1813 Lund University Historical Museum"](https://commons.wikimedia.org/wiki/File:Condom_with_manual_from_1813.jpg)
+by
+MatthiasKabel
+is licensed under the
+[GNU Free Documentation License](https://www.gnu.org/licenses/fdl-1.3.html)
+and is not modified.
+](/images/condom.jpg){alt="A condom from 1813 with a handwritten manual placed behind it."}
 
 The two male methods available today that are reversible -- i.e., condoms and withdrawal -- are not very effective when they are the sole method of contraception used.[^additional] [@sundaram_contraceptive_2017; @kost_estimates_2008] As mentioned previously, vasectomy, though highly effective as a contraceptive method, is not typically marketed as a reversible method.[^vasovasostomy]
 
