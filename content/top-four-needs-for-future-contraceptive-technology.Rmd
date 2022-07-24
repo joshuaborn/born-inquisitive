@@ -11,7 +11,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: '[Put summary sentence here.]'
+summary: 'Methods both long-acting and reversible, non-hormonal methods, methods for men, and intrinsically more effective methods are urgent needs for contraception.'
 tags: ["opinion", "contraception", "birth control", "third-person"]
 title: 'Top Four Needs for Future Contraceptive Technology'
 ---
