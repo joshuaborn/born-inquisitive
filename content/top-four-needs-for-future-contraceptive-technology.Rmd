@@ -3,7 +3,7 @@ author: "Joshua Born"
 bibliography: "../bibliographies/top-four-needs-for-future-contraceptive-technology.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2022-07-24
-draft: true
+draft: false
 include-before: |
   ## Table of Contents
 output:
