@@ -2,7 +2,7 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/top-four-needs-for-future-contraceptive-technology.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2022-06-26
+date: 2022-07-24
 draft: true
 include-before: |
   ## Table of Contents
@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-With over 80 million unintended pregnancies and over 40 million induced abortions every year worldwide [@sedgh_intended_2014], it is abundantly clear that the current state of contraception in human civilization is inadequate. 
+With over 80 million unintended pregnancies and over 40 million induced abortions every year worldwide [@sedgh_intended_2014], it is abundantly clear that the current state of contraception is inadequate.
 
 This should not be surprising because human civilization is still in a very primitive stage of its contraceptive practice. Despite the relative affluence and technological development of the United States, many of the [most popular contraceptive methods in the United States](/use-of-contraception-in-the-united-states-2017-2019.html#methods-used) today -- such as the male condom or the practice of _coitus interruptus_ a.k.a. withdrawal -- are so ancient that their origins are forever lost to history or perhaps prehistory. Indeed, contraception itself in the United States [has only been legal for about a century](/margaret-sanger-on-abortion-in-her-own-words.html#who-was-margaret-sanger).
 
@@ -45,7 +45,7 @@ is licensed under
 and is not modified.
 ](/images/pills.jpg){alt="A pack of birth control pills decorated with sketches of flowers and a butterfly is placed next to a label identifying it as from June 14, 1971 in a museum display."}
 
-It would therefore be tempting to attribute the aforementioned 80 million unintended pregnancies annually to this deficiency of innovation in contraceptive technology. This attribution would likely be accurate, but only partly so. Somewhere between approximately [7.5 to 11.5 million persons in the United States](http://localhost:4321/use-of-contraception-in-the-united-states-2017-2019.html#use-of-contraception-during-most-recent-intercourse) were at risk for unintended pregnancy when they last engaged in sexual intercourse, but did not use _any_ method of contraception whatsoever.[^inconsistently]
+It would therefore be tempting to attribute the aforementioned 80 million unintended pregnancies annually to this deficiency of innovation in contraceptive technology. This attribution is probably accurate, but only partly so. Somewhere between [7.5 to 11.5 million persons in the United States](http://localhost:4321/use-of-contraception-in-the-united-states-2017-2019.html#use-of-contraception-during-most-recent-intercourse) did not use _any_ method of contraception whatsoever when they last engaged in sexual intercourse, despite being at risk for unintended pregnancy.[^inconsistently]
 
 [^inconsistently]: These 7.5 to 11.5 million persons include both those who are not using contraception in the long term and those who _are_ using one or more methods, but are [using contraception inconsistently](/use-of-contraception-in-the-united-states-2017-2019.html#consistency-of-use-of-contraception).
 
@@ -62,13 +62,13 @@ The reason for the "long-acting" adjective in LARC is complicated. Two kinds of 
 
 Estimates of "perfect use" failure rates are thus hypothetical failure rates that could exist, but are never actually observed in the general population. "Typical use" failure rates, on the other hand, are actually observed in populations, but come with a variety of other issues.
 
-Generally, "typical use" failure rates are much higher than "perfect use" failure rates. One hypothesis for this gap is that contraceptive users enrolled in clinical trials from which "perfect use" estimates are derived are better at and more consistent in using contraceptive methods than the general population.
+Generally, "typical use" failure rates are much higher than "perfect use" failure rates. One hypothesis that might explain part of this gap is that contraceptive users enrolled in clinical trials from which "perfect use" estimates are derived are better at and more consistent in using contraceptive methods than the general population.
 
 Methods such as condoms require user intervention during every act of intercourse. Birth controls pills require users to take a pill each and every day. If such interventions are not done properly or consistently, the effectiveness of the contraceptive method is greatly decreased. Thus, short-acting contraceptives are very sensitive to user error.
 
 The goal of long-acting contraception is to remove the opportunity for such user error, which would cause "typical use" failure rates to be closer to "perfect use" failure rates, under the hypothesis that user error accounts for some of the gap in failure rates.
 
-Of course, sterilizing operations such as vasectomy or tubal ligation are very long-acting, typically lasting the remainder of a person's reproductive life. They are also orders of magnitude more effective than methods considered reversible.[^considered] However, they are only recommended for those who have reached a point in their lives where they have finished having children. Thus, the reason for the "reversible" adjective in LARC is straightforward: it refers to methods not including sterilizing operations.
+Of course, sterilizing operations such as vasectomy or tubal ligation are very long-acting, typically lasting the remainder of a person's reproductive life. They are also much more effective than methods considered reversible.[^considered] However, they are only recommended for those who have reached a point in their lives where they have finished having children. Thus, the reason for the "reversible" adjective in LARC is straightforward: it refers to methods not including sterilizing operations.
 
 [^considered]: The phrase "considered reversible" is used deliberately. Vasectomies, in particular, have been reversed numerous times by vasovasostomy procedures. It is therefore possible to use vasectomy as a kind of LARC, though doing so is "off label."
       
@@ -115,7 +115,7 @@ Hormonal contraception has been an innovation in contraceptive technology. If ho
 Currently, there are some less effective methods that have low discontinuation rates, and there are some more effective methods that have high discontinuation rates. Therefore, a novel method that is both highly effective and less prone to side effects has great potential to improve contraceptive practice. Due to the nature of hormones, such a method would most likely be non-hormonal.
 
 
-## Methods for Male Persons
+## Methods for Men
 
 If one were to browse a list of the [most popular methods of contraception used in the United States](/use-of-contraception-in-the-united-states-2017-2019.html#methods-used) today, one will find only three methods in which the primary user is male: condom, withdrawal, and vasectomy. Indeed, all of the LARC methods currently available today are usable only by those with female physiology.
 
@@ -141,7 +141,30 @@ Thus, those persons with male physiology who have not reached a point at which t
 Risk for unintended pregnancy necessarily occurs during intercourse between two people, one with male and one with female physiology. As such, the best contraceptive practice occurs when _both_ individuals are full contributors to reproductive responsibility. Much as hormonal side-effects discourage some women from contraceptive use, the lack of male contraceptive options can discourage men from full participation in contraceptive practice. Therefore, innovations in contraceptive technology should include methods that can be used by men, in addition to those used by women.
 
 
-## Methods That Are More Effective
+## More Effective Methods
+
+The previous three sections have gone over phenomena that make contraceptive methods less effective in practice: short-acting methods leave more opportunity for user error, hormonal methods are prone to side-effects discouraging their use, and there are few methods available for men. Even despite these details, there also remains the glaring issue that all the reversible methods today are intrinsically not effective enough.
+
+For instance, between [5.1 to 6.9 million women and between 6.8 to 9.2 million men](/use-of-contraception-in-the-united-states-2017-2019.html#method-used-exclusively-during-past-12-months) in the United States relied on condoms as their exclusive method of contraception during the preceding year. The most recently published estimates based on the NSFG report a first-year "typical use" failure rate for condoms of 12.6\%. [@sundaram_contraceptive_2017] While condoms are especially prone to user error, even the first-year "perfect use" failure rate estimated by back-of-the-envelope math is 2\%. [@trussell_contraceptive_2011]
+
+Thus, assuming that there were similar failure rates when all 5.1 to 6.9 million women relying exclusively on condoms began using condoms, it should be expected that there would be between 640,000 and 870,000 unintended pregnancies among exclusive condom users _just in the first year of their condom use alone._ Even if all of the exclusive condom users used condoms perfectly, there would still be 100,000 to 140,000 unintended pregnancies among exclusive condom users, again, just in the first year of their condom use. Subsequent years would lead to further unintended pregnancies.
+
+The point of this section is not to single out condoms. Use of condoms is better than no use of contraception while at risk for unintended pregnancy, which unfortunately also occurs quite frequently, and in the big picture of effective contraceptive practice, condoms may still have their use. They might be valuable as an additional method of contraception used _simultaneously_ with a more effective method, reducing the risk for sexually transmitted infections while providing a little extra contraceptive effectiveness.
+
+Instead, condoms are used as an example because condoms are the [most common method of contraception in the United States](/use-of-contraception-in-the-united-states-2017-2019.html#among-those-who-have-ever-had-intercourse) in the sense that more women have used condoms as a method of contraception than any other method, and yet this method is woefully inadequate. Similar numbers of unintended pregnancies could be estimated for all reversible methods currently used in the United States, though the numbers would be slightly less bad for hormonal methods.
+
+For instance, birth control pills compose another very popular method of contraception in the United States. Between [6 to 8.3 million women and between 3 to 5 million men](/use-of-contraception-in-the-united-states-2017-2019.html#method-used-exclusively-during-past-12-months) in the United States relied on birth control pills as their exclusive method of contraception during the preceding year. The most recently published estimates based on the NSFG report a first-year "typical use" failure rate for birth control pills of 7.2\%. [@sundaram_contraceptive_2017] The first-year "perfect use" failure rate for birth control pills is estimated to be 0.3\%. [@trussell_contraceptive_2011]
+
+Therefore, assuming no trend in failure rates, it should be expected that there would be between 430,000 and 600,000 unintended pregnancies among exclusive pill users just in the first year of their pill use. Even if all of the exclusive pill users used pills perfectly, there would still be 18,000 to 25,000 unintended pregnancies among exclusive pill users just in the first year of their pill use. Again, subsequent years would lead to further unintended pregnancies. While birth control pills, the most popular modality for hormonal methods, perform somewhat better than condoms, the effect is only marginal.
+
+Therefore, the point of this section is to illustrate that there is a pressing need for methods of contraception that, in addition to addressing issues that make contraceptive methods less effective in practice, are themselves intrinsically more effective.
+
+
+## Conclusion
+
+When the birth control movement in the United States began more than a century ago, it was conceived in the excitement of the [vision of a future world](/margaret-sanger-on-abortion-in-her-own-words.html) that would evolve beyond unintended pregnancy and abortion as a method of fertility control. At first, there may have been reason for such hope. Prohibitions of dissemination of information about contraception were removed, and the low-hanging fruit of hormonal contraception was finally brought to market.
+
+However, in the decades since then, excitement and innovation has been replaced by complacency and stagnation. As this article demonstrates, the information illustrating the failures of current contraceptive technology and the needs for future contraceptive technology are easily discerned. However, actual innovation in contraceptive technology seems to be much more difficult to achieve.  Subsequent articles will explore why contemporary times are an era of stagnation in contraceptive progress.
 
 
 ## Citations
