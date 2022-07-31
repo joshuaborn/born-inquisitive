@@ -309,10 +309,10 @@ set_mentions_to_booleans(
 ## Create Boolean variables for whether each method was used at all in the past 3 months.
 fem1719METHXidxs <- get_NSFG_format_indices(fem1719formats, 'METHHXF', skip = c(1:2, 22:23, 55, 98:99))
 names(fem1719METHXidxs) <- paste0('any_use_12m_method', fem1719METHXidxs)
-fem1719METHX <- create_NSFG_pivot_table(fem1719$Data, 'METHX', 1:192)
+fem1719METHX <- create_pivot_table(fem1719$Data, 'METHX', 1:192, 'CASEID')
 fem1719METHX[, CMMHCALXID := ceiling(METHXID / 4)]
 fem1719METHX <- fem1719METHX[
-  create_NSFG_pivot_table(
+  create_pivot_table(
     fem1719$Data,
     'CMMHCALX',
     1:48,
@@ -350,13 +350,13 @@ fem1719dt[, used_in_month_last_sex := na_to_false(used_in_month_last_sex)]
 
 
 ## Create pivot table of MONSX variables for creating the sex12mo and sex_this_month variables below.
-fem1719MONSX <- create_NSFG_pivot_table(
+fem1719MONSX <- create_pivot_table(
   fem1719$Data,
   'CMMONSX',
   2:48,
   c('CASEID', 'CMINTVW', 'CMLSTYR')
 )[
-  create_NSFG_pivot_table(fem1719$Data, 'MONSX', 2:48),
+  create_pivot_table(fem1719$Data, 'MONSX', 2:48, 'CASEID'),
   on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
 ]
 

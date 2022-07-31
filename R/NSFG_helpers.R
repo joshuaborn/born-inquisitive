@@ -117,11 +117,6 @@ estimate_NSFG_mentions_in_subdomains <- function(
   estimates
 }
 
-create_NSFG_pivot_table <- function(raw_data, prefix, series, id_vars = 'CASEID') {
-  pivot_table <- create_pivot_table(prefix, series, id_vars, raw_data)
-  setkeyv(pivot_table, id_vars)
-}
-
 century_month_comparison <- function(operator, x, y) {
   !is.na(x) &
     x != 9998 &

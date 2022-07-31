@@ -69,16 +69,16 @@ fem_2017_2019_data <- copy(fem_2017_2019$Data[, .(
 
 # create pivot table for MONSX series variables
 fem_2017_2019_MONSX <- create_pivot_table(
+  fem_2017_2019$Data,
   'CMMONSX',
   2:48,
-  c('CASEID', 'CMINTVW', 'CMLSTYR'),
-  fem_2017_2019$Data
+  c('CASEID', 'CMINTVW', 'CMLSTYR')
 )[
   create_pivot_table(
+    fem_2017_2019$Data,
     'MONSX',
     2:48,
-    'CASEID',
-    fem_2017_2019$Data
+    'CASEID'
   ),
   on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
 ]
@@ -101,10 +101,10 @@ fem_2017_2019_data <- fem_2017_2019_MONSX[
 
 # create pivot table for METHX series variables
 fem_2017_2019_METHX <- create_pivot_table(
+  fem_2017_2019$Data,
   'METHX',
   1:192,
-  'CASEID',
-  fem_2017_2019$Data
+  'CASEID'
 )
 
 fem_2017_2019_METHX[,
@@ -113,10 +113,10 @@ fem_2017_2019_METHX[,
 
 fem_2017_2019_METHX <- fem_2017_2019_METHX[
   create_pivot_table(
+    fem_2017_2019$Data,
     'CMMHCALX',
     1:48,
-    c('CASEID', 'CMINTVW', 'CMLSTYR'),
-    fem_2017_2019$Data
+    c('CASEID', 'CMINTVW', 'CMLSTYR')
   ),
   on = c('CASEID', 'CMMHCALXID')
 ]

@@ -136,43 +136,10 @@ for (x in fem_2017_2019_METHX_indices) {
 }
 
 
-# create pivot tables for contraceptive use in past 12 months
-create_pivot_table <- function(
-  column_prefix,
-  idxs,
-  source_dt,
-  id_vars
-) {
-  dt <- copy(
-    source_dt[
-      ,
-      c(id_vars, paste(column_prefix, idxs, sep = '')),
-      with = FALSE
-    ]
-  )
-
-  dt <- melt(
-    dt,
-    id.vars = id_vars,
-    variable.factor = FALSE,
-    value.name = column_prefix
-  )
-
-  dt[
-    ,
-    (paste(column_prefix, 'ID', sep = '')) :=
-      as.integer(sub(column_prefix, '', variable))
-  ]
-
-  dt[, variable := NULL]
-
-  dt
-}
-
 fem_2017_2019_METHX <- create_pivot_table(
+  fem_2017_2019$Data,
   'METHX',
   1:192,
-  fem_2017_2019$Data,
   'CASEID'
 )
 
@@ -182,9 +149,9 @@ fem_2017_2019_METHX[,
 
 fem_2017_2019_METHX <- fem_2017_2019_METHX[
   create_pivot_table(
+    fem_2017_2019$Data,
     'CMMHCALX',
     1:48,
-    fem_2017_2019$Data,
     c('CASEID', 'CMINTVW', 'CMLSTYR')
   ),
   on = c('CASEID', 'CMMHCALXID')
@@ -221,15 +188,15 @@ fem_2017_2019_data[
 
 # create pivot table and create SEX12MO variable
 fem_2017_2019_MONSX <- create_pivot_table(
+  fem_2017_2019$Data,
   'CMMONSX',
   2:48,
-  fem_2017_2019$Data,
   c('CASEID', 'CMINTVW', 'CMLSTYR')
 )[
   create_pivot_table(
+    fem_2017_2019$Data,
     'MONSX',
     2:48,
-    fem_2017_2019$Data,
     'CASEID'
   ),
   on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')

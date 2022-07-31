@@ -86,10 +86,10 @@ set_count_variable_for_mentions <- function(dt, prefix) {
 }
 
 create_pivot_table <- function(
+  source_dt,
   prefix,
   series,
-  id_vars,
-  source_dt
+  id_vars
 ) {
   dt <- copy(
     source_dt[
@@ -113,6 +113,10 @@ create_pivot_table <- function(
   ]
 
   dt[, variable := NULL]
+
+  if (!is.null(id_vars)) {
+    setkeyv(dt, id_vars)
+  }
 
   dt
 }
