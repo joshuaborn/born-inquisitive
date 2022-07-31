@@ -16,8 +16,12 @@ library(survey)
 
 i_am('EDA/014_roman_catholics.Rmd')
 
-source(here('R/NSFG_helpers.R'))
-source(here('R/general_helpers.R'))
+source(here('R/helpers/NSFG/formats.R'))
+source(here('R/helpers/NSFG/load.R'))
+source(here('R/helpers/NSFG/survey.R'))
+source(here('R/helpers/deprecated.R'))
+source(here('R/helpers/huxtable.R'))
+source(here('R/helpers/survey.R'))
 
 opts_chunk$set(
   cache = TRUE,

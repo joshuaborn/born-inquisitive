@@ -15,7 +15,7 @@ library(knitr)
 
 i_am('EDA/formats.Rmd')
 
-source(here('R/NSFG_helpers.R'))
+source(here('R/helpers/NSFG/load.R'))
 
 opts_chunk$set(
   cache = TRUE,

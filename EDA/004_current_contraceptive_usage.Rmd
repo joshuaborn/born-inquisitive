@@ -17,9 +17,10 @@ library(survey)
 
 i_am('EDA/004_current_contraceptive_usage.Rmd')
 
-source(here('R/NSFG_helpers.R'))
+source(here('R/helpers/NSFG/formats.R'))
+source(here('R/helpers/NSFG/load.R'))
 source(here('R/helpers/deprecated.R'))
-source(here('R/general_helpers.R'))
+source(here('R/helpers/general.R'))
 
 opts_chunk$set(
   cache = TRUE,

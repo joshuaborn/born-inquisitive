@@ -31,9 +31,15 @@ theme_set(
   )
 )
 
-source(here('R/NSFG_helpers.R'))
-source(here('R/general_helpers.R'))
+source(here('R/helpers/NSFG/century_month.R'))
+source(here('R/helpers/NSFG/formats.R'))
 source(here('R/helpers/NSFG/ggplot2.R'))
+source(here('R/helpers/NSFG/load.R'))
+source(here('R/helpers/NSFG/survey.R'))
+source(here('R/helpers/data_table.R'))
+source(here('R/helpers/general.R'))
+source(here('R/helpers/huxtable.R'))
+source(here('R/helpers/survey.R'))
 
 knitr::opts_chunk$set(
   cache = TRUE,

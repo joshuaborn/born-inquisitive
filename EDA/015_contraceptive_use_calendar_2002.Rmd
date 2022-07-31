@@ -16,8 +16,10 @@ library(survey)
 
 i_am('EDA/015_contraceptive_use_calendar_2002.Rmd')
 
-source(here('R/NSFG_helpers.R'))
-source(here('R/general_helpers.R'))
+source(here('R/helpers/NSFG/century_month.R'))
+source(here('R/helpers/NSFG/formats.R'))
+source(here('R/helpers/NSFG/load.R'))
+source(here('R/helpers/general.R'))
 
 opts_chunk$set(
   cache = TRUE,
