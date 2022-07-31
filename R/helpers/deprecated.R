@@ -1,8 +1,5 @@
 library(data.table)
-library(here)
 library(survey)
-
-i_am('R/deprecated_helpers.R')
 
 env <- new.env()
 

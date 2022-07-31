@@ -17,7 +17,7 @@ library(survey)
 i_am('EDA/011_why_not_use.Rmd')
 
 source(here('R/NSFG_helpers.R'))
-source(here('R/deprecated_helpers.R'))
+source(here('R/helpers/deprecated.R'))
 source(here('R/general_helpers.R'))
 
 opts_chunk$set(
