@@ -33,7 +33,7 @@ theme_set(
 
 source(here('R/NSFG_helpers.R'))
 source(here('R/general_helpers.R'))
-source(here('R/general_plots.R'))
+source(here('R/helpers/NSFG/ggplot2.R'))
 
 knitr::opts_chunk$set(
   cache = TRUE,
