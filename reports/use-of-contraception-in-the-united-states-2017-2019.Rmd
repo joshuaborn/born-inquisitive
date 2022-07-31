@@ -117,6 +117,9 @@ fem1719dt <- copy(fem1719$Data[, .(
 
 ## Copy variables to working data table and set them to factors.
 set_NSFG_variables_as_factors(
+  fem1719$Data,
+  fem1719dt,
+  fem1719formats,
   variables = c(
     ATTRACT = 'ATTRACT',
     CONDVAG = 'YESNONAF',
@@ -162,12 +165,17 @@ fem1719dt[,
 
 
 ## Create Boolean variables for whether each contraceptive method was used during last intercourse within the past 3 months.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'used_last_3m_method',
   in_prefix = 'METH3M',
   in_series = 1:3,
-  format = 'METH3MF',
-  skip = 20:21
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'METH3MF',
+    skip = 20:21
+  )
 )
 
 
@@ -271,30 +279,41 @@ fem1719dt[,
 
 
 ## Create Boolean variables for whether each reason for not using contraception was mentioned.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'nonuse_reason',
   in_prefix = 'WHYNOUSING',
   in_series = 1:5,
-  format = 'WHYNOUSNG'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'WHYNOUSNG'
+  )
 )
 
 
 ## Create Boolean variables for whether each reason for not being able to get pregnant was mentioned.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'pregnancy_impossible_reason',
   in_prefix = 'WHYNOTPG',
   in_series = 1:2,
-  format = 'WHYNOTPGF'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'WHYNOTPGF'
+  )
 )
 
 
 ## Create Boolean variables for whether each method was used at all in the past 3 months.
-fem1719METHXidxs <- get_NSFG_format_indices('METHHXF', skip = c(1:2, 22:23, 55, 98:99))
+fem1719METHXidxs <- get_NSFG_format_indices(fem1719formats, 'METHHXF', skip = c(1:2, 22:23, 55, 98:99))
 names(fem1719METHXidxs) <- paste0('any_use_12m_method', fem1719METHXidxs)
-fem1719METHX <- create_NSFG_pivot_table('METHX', 1:192)
+fem1719METHX <- create_NSFG_pivot_table(fem1719$Data, 'METHX', 1:192)
 fem1719METHX[, CMMHCALXID := ceiling(METHXID / 4)]
 fem1719METHX <- fem1719METHX[
   create_NSFG_pivot_table(
+    fem1719$Data,
     'CMMHCALX',
     1:48,
     c('CASEID', 'CMINTVW', 'CMLSTYR', 'LSEXDATE')
@@ -332,11 +351,12 @@ fem1719dt[, used_in_month_last_sex := na_to_false(used_in_month_last_sex)]
 
 ## Create pivot table of MONSX variables for creating the sex12mo and sex_this_month variables below.
 fem1719MONSX <- create_NSFG_pivot_table(
+  fem1719$Data,
   'CMMONSX',
   2:48,
   c('CASEID', 'CMINTVW', 'CMLSTYR')
 )[
-  create_NSFG_pivot_table('MONSX', 2:48),
+  create_NSFG_pivot_table(fem1719$Data, 'MONSX', 2:48),
   on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
 ]
 
@@ -389,40 +409,60 @@ set_count_variable_for_mentions(fem1719dt, 'any_use_12m_method')
 
 
 ## Create Boolean variables for whether each method was used in the month preceding the interview.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'last_month_method',
   in_prefix = 'LSTMONMETH',
   in_series = 1:4,
-  format = 'METHHXF',
-  skip = c(1:2, 22:23, 55, 98:99)
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'METHHXF',
+    skip = c(1:2, 22:23, 55, 98:99)
+  )
 )
 
 
 ## Create Boolean variables for whether each method was used in the month of the interview.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'this_month_method',
   in_prefix = 'CURRMETH',
   in_series = 1:4,
-  format = 'METHHXF',
-  skip = c(1:2, 22:23, 55, 98:99)
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'METHHXF',
+    skip = c(1:2, 22:23, 55, 98:99)
+  )
 )
 
 
 ## Create Boolean variables for each reason for using pill.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'why_use_pill_reason',
   in_prefix = 'YUSEPILL',
   in_series = 1:6,
-  format = 'YUSEMTHF'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'YUSEMTHF'
+  )
 )
 
 
 ## Create Boolean variables for each reason for using an IUD.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'why_use_iud_reason',
   in_prefix = 'YUSEIUD',
   in_series = 1:6,
-  format = 'YUSEMTHF'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'YUSEMTHF'
+  )
 )
 
 
@@ -500,21 +540,31 @@ for (x in c(1:2)) {
     )
   ]
 }
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'ever_used_method',
   in_prefix = 'OTHRMETH0',
   in_series = 1:7,
-  format = 'OTHRMETHF',
-  skip = c(19, 95)
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'OTHRMETHF',
+    skip = c(19, 95)
+  )
 )
 
 
 ## Create Boolean variables for whether each contraceptive method was ever discontinued due to dissatisfaction. Because IUD types have been split out, these cases must be handled individually.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'ever_quit_method',
   in_prefix = 'METHSTOP',
   in_series = sprintf('%02d', 1:10),
-  format = 'METHSTOPF'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'METHSTOPF'
+  )
 )
 for (x in c(1:2)) {
   fem1719dt[
@@ -537,47 +587,77 @@ fem1719dt[
 
 
 ## Create Boolean variables for reason(s) for dissatisfaction with condom.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'condom_quit_reason',
   in_prefix = 'REASCOND0',
   in_series = 1:7,
-  format = 'REASMFMT'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'REASMFMT'
+  )
 )
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'specific_condom_quit_reason',
   in_prefix = 'STOPCOND',
   in_series = 1:2,
-  format = 'STOPCONDFMT'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'STOPCONDFMT'
+  )
 )
 
 
 ## Create Boolean variables for reason(s) for dissatisfaction with pill.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'pill_quit_reason',
   in_prefix = 'REASPILL0',
   in_series = 1:9,
-  format = 'REASMFMT'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'REASMFMT'
+  )
 )
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'specific_pill_quit_reason',
   in_prefix = 'STOPPILL',
   in_series = 1:6,
-  format = 'STOPPILLFMT'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'STOPPILLFMT'
+  )
 )
 
 
 ## Create Boolean variables for reason(s) for dissatisfaction with IUDs.
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'iud_quit_reason',
   in_prefix = 'REASIUD0',
   in_series = 1:5,
-  format = 'REASMFMT'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'REASMFMT'
+  )
 )
-set_NSFG_mentions_to_booleans(
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
   out_prefix = 'specific_iud_quit_reason',
   in_prefix = 'STOPIUD',
   in_series = 1:5,
-  format = 'STOPIUDFMT'
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'STOPIUDFMT'
+  )
 )
 ```
 
@@ -662,7 +742,9 @@ male1719dt <- copy(male1719$Data[, .(
 
 ## Copy variables to working data table and set them to factors.
 set_NSFG_variables_as_factors(
-  sex = 'male',
+  male1719$Data,
+  male1719dt,
+  male1719formats,
   variables = c(
     ATTRACT = 'ATTRACT',
     CONDVAG = 'YESNONAF',
@@ -706,13 +788,17 @@ male1719dt[,
 
 
 ## Create Boolean variables for whether each contraceptive method was used during last intercourse within the past 3 months.
-set_NSFG_mentions_to_booleans(
-  sex = 'male',
+set_mentions_to_booleans(
+  male1719$Data,
+  male1719dt,
   out_prefix = 'used_last_3m_method',
   in_prefix = 'METH3M',
   in_series = 1:4,
-  format = 'METH3MF',
-  skip = 95:96
+  get_NSFG_format_indices(
+    male1719formats,
+    format = 'METH3MF',
+    skip = 95:96
+  )
 )
 
 
@@ -775,7 +861,7 @@ male1719dt[,
 
 
 ## Create Boolean variables for whether each specific method was used in past 12 months.
-for (x in get_NSFG_format_indices('MTHDSV1F', skip = c(10, 98:99), sex = 'male')) {
+for (x in get_NSFG_format_indices(male1719formats, 'MTHDSV1F', skip = c(10, 98:99))) {
   male1719dt[,
     (sprintf('any_use_12m_method%d', x)) := male1719$Data[,
       !is.na(
@@ -1111,7 +1197,12 @@ fem1719dt[, person := 1]
 male1719dt[, person := 1]
 
 this <- list()
-this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~person, digits = 1)
+this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
+  fem1719dt,
+  male1719dt,
+  ~person,
+  digits = 1
+)
 this$df <- as.data.frame(this$ht)
 this$fem <- this$df[3, 3]
 this$male <- this$df[4, 3]
@@ -1134,7 +1225,12 @@ Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r 
 
 ```{r sexually-active, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
-this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~sexually_active_3m, digits = 1)
+this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
+  fem1719dt,
+  male1719dt,
+  ~sexually_active_3m,
+  digits = 1
+)
 this$df <- as.data.frame(this$ht)
 this$fem <- this$df[4, 3]
 this$male <- this$df[6, 3]
@@ -1166,7 +1262,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~used_last_3m_at_all,
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       sexually_active_3m == 'Had intercourse'
     )
   ),
@@ -1174,7 +1270,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~used_last_3m_at_all,
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       sexually_active_3m == 'Had intercourse'
     )
   )
@@ -1193,7 +1289,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(used_last_3m_status),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       used_last_3m_method_count == 0 &
         SEX3MO == 'YES'
     )
@@ -1202,7 +1298,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(used_last_3m_status),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       used_last_3m_method_count == 0 &
         SEX3MO == 'YES, HAD INTERCOURSE'
     )
@@ -1273,7 +1369,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(used_last_3m_status),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       used_last_3m_status %in% c(
         'Used at least one contraceptive method during last intercourse',
         'Otherwise did not use contraception during last intercourse'
@@ -1284,7 +1380,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(used_last_3m_status),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       used_last_3m_status %in% c(
         'Used at least one contraceptive method during last intercourse',
         'Otherwise did not use contraception during last intercourse'
@@ -1322,7 +1418,7 @@ male1719dt[,
 estimate_totals_and_percentages(
   ~not_aware,
   subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     SEX3MO == 'YES, HAD INTERCOURSE'
   )
 ) |>
@@ -1345,14 +1441,14 @@ this <- list()
 this$fem <- estimate_totals_and_percentages(
   ~factor(HADSEX),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     SEX3MO != 'YES'
   )
 )
 this$male <- estimate_totals_and_percentages(
   ~factor(HADSEX),
   subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     SEX3MO != 'YES, HAD INTERCOURSE'
   )
 )
@@ -1429,7 +1525,7 @@ Most persons who have never had sexual intercourse with someone of the opposite 
 estimate_totals_and_percentages(
   ~factor(YNOSEX),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
 ) |>
@@ -1443,7 +1539,7 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(YNOSEX),
   subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
 ) |>
@@ -1463,7 +1559,7 @@ this <- list()
 
 this$totals <- estimate_totals_and_percentages(
   ~sexually_active_3m,
-  get_NSFG_survey_design_for_sex('fem')
+  get_NSFG_survey_design(fem1719dt)
 ) |> style_totals_and_percentages()
 
 this$total_row <- cbind(
@@ -1483,7 +1579,7 @@ this$total_row <- cbind(
 
 this$chisq <- svychisq(
   ~ ATTRACT + sexually_active_3m,
-  get_NSFG_survey_design_for_sex('fem'),
+  get_NSFG_survey_design(fem1719dt),
   statistic = 'adjWald'
 )
 
@@ -1492,7 +1588,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~factor(ATTRACT),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       SEX3MO == 'YES'
     )
   ),
@@ -1500,7 +1596,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~factor(ATTRACT),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       SEX3MO != 'YES'
     )
   )
@@ -1516,7 +1612,7 @@ this <- list()
 
 this$totals <- estimate_totals_and_percentages(
   ~I(SEX3MO == 'YES, HAD INTERCOURSE'),
-  get_NSFG_survey_design_for_sex('male')
+  get_NSFG_survey_design(male1719dt)
 ) |> style_totals_and_percentages()
 
 this$total_row <- cbind(
@@ -1536,7 +1632,7 @@ this$total_row <- cbind(
 
 this$chisq <- svychisq(
   ~ ATTRACT + sexually_active_3m,
-  get_NSFG_survey_design_for_sex('male'),
+  get_NSFG_survey_design(male1719dt),
   statistic = 'adjWald'
 )
 
@@ -1545,7 +1641,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~factor(ATTRACT),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       SEX3MO == 'YES, HAD INTERCOURSE'
     )
   ),
@@ -1553,7 +1649,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~ATTRACT,
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       SEX3MO != 'YES, HAD INTERCOURSE'
     )
   )[1:9, ]
@@ -1573,7 +1669,7 @@ Thus, some persons who are not sexually active with the opposite sex are simply 
 estimate_totals_and_percentages(
   ~factor(REASIMPR),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     POSIBLPG == 'No'
   )
 ) |> plot_totals_with_CIs() +
@@ -1586,7 +1682,7 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(REASIMPP),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     POSIBLMN == 'No'
   )
 ) |> plot_totals_with_CIs() +
@@ -1606,7 +1702,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(used_last_3m_method_count),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       used_last_3m_method_count > 0
     )
   ),
@@ -1614,7 +1710,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(used_last_3m_method_count),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       used_last_3m_method_count > 0
     )
   )
@@ -1629,8 +1725,9 @@ While the vast majority of both females and males used only one method of contra
 
 ```{r fem-methods-used, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by whether or not each contraceptive method was used during last intercourse with a male in the past 3 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method_count > 0
   ),
   prefix = 'used_last_3m_method',
@@ -1647,9 +1744,9 @@ estimate_NSFG_mentions(
 
 ```{r male-methods-used, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by whether or not each contraceptive method was used during last intercourse with a female in the past 3 months, with persons using multiple methods counted multiple times.', }
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method_count > 0
   ),
   prefix = 'used_last_3m_method',
@@ -1675,8 +1772,9 @@ Estimates of the number of female and male persons using withdrawal, vasectomy, 
 
 ```{r fem-exclusive-method-used, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by which contraceptive method was used during last intercourse with a male in the past 3 months, among those who used exactly one method during last intercourse.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method_count == 1
   ),
   prefix = 'used_last_3m_method',
@@ -1693,9 +1791,9 @@ estimate_NSFG_mentions(
 
 ```{r male-exclusive-method-used, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by which contraceptive method was used during last intercourse with a female in the past 3 months, among those who used exactly one method during last intercourse.'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method_count == 1
   ),
   prefix = 'used_last_3m_method',
@@ -1717,11 +1815,12 @@ Restricting analysis to persons who used only one method of contraception during
 
 ```{r fem-proportion-another, dependson='process-fem-data', fig.asp=0.8, fig.cap='Proportion using another method of contraception among females using each method of contraception during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions_in_subdomains(
+  fem1719formats,
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       ~I(used_last_3m_method_count > 1),
       subset(
-        get_NSFG_survey_design_for_sex('fem'),
+        get_NSFG_survey_design(fem1719dt),
         fem1719dt[, get(sprintf('used_last_3m_method%d', x))]
       )
     )
@@ -1734,12 +1833,12 @@ estimate_NSFG_mentions_in_subdomains(
 
 ```{r male-proportion-another, dependson='process-fem-data', fig.asp=0.6, fig.cap='Proportion using another method of contraception among males using each method of contraception during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions_in_subdomains(
-  sex = 'male',
+  male1719formats,
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       ~I(used_last_3m_method_count > 1),
       subset(
-        get_NSFG_survey_design_for_sex('male'),
+        get_NSFG_survey_design(male1719dt),
         male1719dt[, get(sprintf('used_last_3m_method%d', x))]
       )
     )
@@ -1765,8 +1864,9 @@ The remaining subsections of Section \@ref(use-of-contraception-during-most-rece
 style_and_combine_totals_and_percentages_vertically(
   'Females',
   estimate_NSFG_mentions(
+    fem1719formats,
     survey_design = subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       used_last_3m_method8
     ),
     prefix = 'used_last_3m_method',
@@ -1775,9 +1875,9 @@ style_and_combine_totals_and_percentages_vertically(
   )[total > 0][order(-total)],
   'Males',
   estimate_NSFG_mentions(
-    sex = 'male',
+    male1719formats,
     survey_design = subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       used_last_3m_method9
     ),
     prefix = 'used_last_3m_method',
@@ -1797,8 +1897,9 @@ When used in conjunction with other methods, calendar-based methods are most com
 
 ```{r fem-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method5
   ),
   prefix = 'used_last_3m_method',
@@ -1816,9 +1917,9 @@ estimate_NSFG_mentions(
 
 ```{r male-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method2
   ),
   prefix = 'used_last_3m_method',
@@ -1836,8 +1937,9 @@ estimate_NSFG_mentions(
 
 ```{r fem-other-with-condom, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method2
   ),
   prefix = 'used_last_3m_method',
@@ -1855,9 +1957,9 @@ estimate_NSFG_mentions(
 
 ```{r male-other-with-condom, dependson='process-male-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method1
   ),
   prefix = 'used_last_3m_method',
@@ -1876,8 +1978,9 @@ estimate_NSFG_mentions(
 
 ```{r fem-other-with-pill, dependson='process-fem-data', fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a male in the past 3 months.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method1
   ),
   prefix = 'used_last_3m_method',
@@ -1895,9 +1998,9 @@ estimate_NSFG_mentions(
 
 ```{r male-other-with-pill, dependson='process-male-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a female in the past 3 months.'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method4
   ),
   prefix = 'used_last_3m_method',
@@ -1922,6 +2025,8 @@ When used in conjunction with other methods, withdrawal, condom, and pill method
 this <- list()
 
 this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
+  fem1719dt,
+  male1719dt,
   ~I(used_last_3m_status == 'Otherwise did not use contraception during last intercourse')
 )
 
@@ -1950,7 +2055,12 @@ male1719dt[,
 
 this <- list()
 
-this$ht <- estimate_and_combine_NSFG_totals_and_percentages(~had_sex_12m, digits = 1)
+this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
+  fem1719dt,
+  male1719dt,
+  ~had_sex_12m,
+  digits = 1
+)
 
 this$fem <- as.data.frame(this$ht)[4, 3]
 this$male <- as.data.frame(this$ht)[6, 3]
@@ -1970,7 +2080,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(any_use_12m_method_count),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       sex12mo
     )
   ),
@@ -1978,7 +2088,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(any_use_12m_method_count),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       SEX12MO == 'YES, HAD INTERCOURSE'
     )
   )
@@ -1997,8 +2107,9 @@ The estimates of those who have not used any method of contraception in the past
 
 ```{r fem-methods-used-12-months, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     any_use_12m_method_count > 0
   ),
   prefix = 'any_use_12m_method',
@@ -2015,9 +2126,9 @@ estimate_NSFG_mentions(
 
 ```{r male-methods-used-12-months, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     any_use_12m_method_count > 0
   ),
   prefix = 'any_use_12m_method',
@@ -2041,8 +2152,9 @@ Similarly, the distribution of method(s) used in the past 12 months in Table \@r
 
 ```{r fem-exclusive-method-used-12-months, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     any_use_12m_method_count == 1
   ),
   prefix = 'any_use_12m_method',
@@ -2059,9 +2171,9 @@ estimate_NSFG_mentions(
 
 ```{r male-exclusive-method-used-12-months, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     any_use_12m_method_count == 1
   ),
   prefix = 'any_use_12m_method',
@@ -2103,7 +2215,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~any_use_12m_at_all,
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
     )
   ),
@@ -2111,7 +2223,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~any_use_12m_at_all,
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
     )
   )
@@ -2131,7 +2243,7 @@ fem1719dt[,
 estimate_totals_and_percentages(
   ~used_in_month_last_sex_factor,
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
   )
 ) |> style_totals_and_percentages() |>
@@ -2150,7 +2262,7 @@ fem1719dt[,
 estimate_totals_and_percentages(
   ~used_ever,
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
   )
 ) |> style_totals_and_percentages() |>
@@ -2232,7 +2344,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(any_use_12m_consistency),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       sex12mo &
         any_use_12m_method_count > 0 &
         TUBS != 'YES'
@@ -2242,7 +2354,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(any_use_12m_consistency),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       (
         !is.na(PXMETHOD01) &
           RSURGSTR != 'YES'
@@ -2310,7 +2422,7 @@ style_and_combine_totals_and_percentages_vertically(
       )
     ),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       sex12mo &
         any_use_12m_method4 &
         any_use_12m_method_count == 1
@@ -2320,7 +2432,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(condom_12m_consistency),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       SEX12MO == 'YES, HAD INTERCOURSE' &
         any_use_12m_method1 &
         any_use_12m_method_count == 1
@@ -2338,7 +2450,7 @@ Consistency of condom use is slightly worse than consistency of the use of any m
 estimate_totals_and_percentages(
   ~factor(MISSPILL),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     sex12mo & (last_month_method3 | this_month_method3)
   )
 ) |> style_totals_and_percentages() |>
@@ -2362,7 +2474,7 @@ this$ht <- style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(CONDVAG),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       VAGSEX %in% c(
         'Yes',
         'No answer provided'
@@ -2373,7 +2485,7 @@ this$ht <- style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(CONDVAG),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       VAGSEX %in% c(
         'Yes',
         'No answer provided'
@@ -2397,7 +2509,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(WHYCONDL),
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       CONDVAG == 'Yes'
     )
   )[order(-total)],
@@ -2405,7 +2517,7 @@ style_and_combine_totals_and_percentages_vertically(
   estimate_totals_and_percentages(
     ~factor(WHYCONDL),
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       CONDVAG == 'Yes'
     )
   )[order(-total)]
@@ -2422,7 +2534,7 @@ this <- list()
 
 this$dt <- estimate_totals_and_percentages(
   ~I(this_month_method3 | last_month_method3),
-  get_NSFG_survey_design_for_sex('fem')
+  get_NSFG_survey_design(fem1719dt)
 )
 
 this$dt[, description := c(
@@ -2442,8 +2554,9 @@ The size of the subdomain of pill users who are surveyed about their motives for
 
 ```{r pill-reason-mentions, dependson='process-fem-data', fig.cap='Females by reason(s) mentioned for using contraceptive pills with persons mentioning multiple reasons counted multiple times, among those who used pills either this or the previous month.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     this_month_method3 | last_month_method3
   ),
   prefix = 'why_use_pill_reason',
@@ -2485,7 +2598,7 @@ fem1719dt[,
 estimate_totals_and_percentages(
   ~pill_motivation,
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     this_month_method3 | last_month_method3
   )
 )[order(-total)] |> style_totals_and_percentages() |>
@@ -2505,7 +2618,7 @@ this$dt <- estimate_totals_and_percentages(
     IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
       (this_month_method19 | last_month_method19)
   ),
-  get_NSFG_survey_design_for_sex('fem')
+  get_NSFG_survey_design(fem1719dt)
 )
 
 this$dt[, description := c(
@@ -2525,8 +2638,9 @@ The size of the subdomain of hormonal IUD users who are surveyed about their mot
 
 ```{r iud-reason-mentions, dependson='process-fem-data', fig.cap='Females by reason(s) mentioned for using hormonal IUD with persons mentioning multiple reasons counted multiple times, among those who used an hormonal IUD either this or the previous month.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
       (this_month_method19 | last_month_method19)
   ),
@@ -2543,7 +2657,7 @@ estimate_NSFG_mentions(
 estimate_totals_and_percentages(
   ~factor(iud_motivation),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
       (this_month_method19 | last_month_method19)
   )
@@ -2563,7 +2677,7 @@ this <- list()
 
 this$dt <- estimate_totals_and_percentages(
   ~I(ever_used_method_count > 0),
-  get_NSFG_survey_design_for_sex('fem')
+  get_NSFG_survey_design(fem1719dt)
 )[order(-total)]
 
 this$dt[, description := c('Used a method of contraception', 'Never have used a method  of contraception')]
@@ -2577,7 +2691,8 @@ this$ht |> set_caption('Females by whether they ever have used any method of con
 
 ```{r methods-used-ever, dependson='process-fem-data', fig.asp=1.1, fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times.'}
 estimate_NSFG_mentions(
-  survey_design = get_NSFG_survey_design_for_sex('fem'),
+  fem1719formats,
+  survey_design = get_NSFG_survey_design(fem1719dt),
   prefix = 'ever_used_method',
   format = 'ever_used_method'
 )[total > 0] |> plot_totals_with_CIs() +
@@ -2596,7 +2711,7 @@ this <- list()
 
 this$dt <- estimate_totals_and_percentages(
   ~factor(HADSEX),
-  get_NSFG_survey_design_for_sex('fem')
+  get_NSFG_survey_design(fem1719dt)
 )[order(-total)]
 
 this$dt[, description := c('Has had intercourse', 'Never had intercourse')]
@@ -2613,7 +2728,7 @@ this$ht |>
 this$dt2 <- estimate_totals_and_percentages(
   ~I(ever_used_method_count > 0),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     HADSEX == 'YES, R EVER HAD INTERCOURSE'
   )
 )[order(-total)]
@@ -2633,8 +2748,9 @@ this$dt2 |> style_totals_and_percentages(digits = 1) |>
 
 ```{r methods-used-ever-had-sex, dependson='process-fem-data', fig.asp=1.2, fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times, among those who have ever had intercourse with someone of the opposite sex.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     HADSEX == 'YES, R EVER HAD INTERCOURSE'
   ),
   prefix = 'ever_used_method',
@@ -2654,11 +2770,12 @@ There are approximately `r this$size` females who have ever had intercourse with
 ```{r discontinuation, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing multiple methods counted multiple times.'}
 this <- list()
 this$dt <- estimate_NSFG_mentions_in_subdomains(
+  fem1719formats,
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       as.formula(sprintf('~ever_quit_method%d', x)),
       subset(
-        get_NSFG_survey_design_for_sex('fem'),
+        get_NSFG_survey_design(fem1719dt),
         fem1719dt[, get(sprintf('ever_used_method%d', x))]
       )
     )
@@ -2689,8 +2806,9 @@ The following subsections examine reasons for dissatisfaction leading to discont
 
 ```{r condom-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     ever_quit_method4
   ),
   prefix = 'condom_quit_reason',
@@ -2703,8 +2821,9 @@ estimate_NSFG_mentions(
 
 ```{r condom-quit-specific-reasons, dependson='process-fem-data', fig.cap='Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     condom_quit_reason3 | condom_quit_reason6 | condom_quit_reason15
   ),
   prefix = 'specific_condom_quit_reason',
@@ -2722,8 +2841,9 @@ When condoms are discontinued due to dissatisfaction, the most common reasons ar
 
 ```{r pill-quit-reasons, dependson='process-fem-data', fig.asp=0.7, fig.cap='Females categorized by reason for dissatisfaction with contraceptive pills, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using pills due to dissatisfaction.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     ever_quit_method3
   ),
   prefix = 'pill_quit_reason',
@@ -2737,8 +2857,9 @@ estimate_NSFG_mentions(
 
 ```{r pill-quit-specific-reasons, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     pill_quit_reason3 | pill_quit_reason6 | pill_quit_reason15
   ),
   prefix = 'specific_pill_quit_reason',
@@ -2757,8 +2878,9 @@ Side effects are by far the most commonly reported reason for discontinuation of
 
 ```{r iud-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using an IUD due to dissatisfaction.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     ever_quit_method31 |
       ever_quit_method32 |
       ever_quit_method33
@@ -2774,8 +2896,9 @@ estimate_NSFG_mentions(
 
 ```{r iud-specific-quit-reasons, dependson='process-fem-data', fig.asp=0.55, fig.cap='Females categorized by reason described for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using a IUD due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     (
       ever_quit_method31 |
         ever_quit_method32 |
@@ -2815,7 +2938,7 @@ this$ht <- estimate_totals_and_percentages(
       !this_month_method6 &
       CURRMETH1 == 'No method used'
   ),
-  get_NSFG_survey_design_for_sex('fem')
+  get_NSFG_survey_design(fem1719dt)
 ) |> style_totals_and_percentages()
 
 this$est <- as.data.frame(this$ht)[4, 2]
@@ -2832,7 +2955,7 @@ Unfortunately, the results of this line of questioning on the NSFG are uninforma
 estimate_totals_and_percentages(
   ~factor(pregnancy_intent_status),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     CURRPREG == 'NO' &
       (
         sex_this_month & PCURRNT != 'NO'
@@ -2855,8 +2978,9 @@ Among those in this subdomain, a substantial minority do not have any intent to 
 
 ```{r nonuse-reason, dependson='process-fem-data', fig.cap='Females categorized by reason(s) for not using contraception, with persons reporting multiple reasons counted multiple times, among those at increased risk for unintended pregnancy due to contraceptive nonuse.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     pregnancy_intent_status == 'Not intending to conceive'
   ),
   prefix = 'nonuse_reason',
@@ -2875,8 +2999,9 @@ Because there are a relatively few number of persons estimated in Figure \@ref(f
 
 ```{r pregnancy-impossible-reason, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason(s) they believe they cannot become pregnant, with persons using reporting multiple reasons counted multiple times, among those who select "you do not think you can get pregnant" as a reason for contraceptive nonuse.'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     nonuse_reason2
   ),
   prefix = 'pregnancy_impossible_reason',
@@ -2906,7 +3031,7 @@ this <- list()
 this$est <- estimate_mean(
   ~age_sterilizing_operation,
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     !is.na(age_sterilizing_operation) & age_sterilizing_operation < 9000
   )
 )
@@ -2966,7 +3091,7 @@ fem1719dt[, `:=`(
 as.data.table(svyby(
   ~sterilized_person,
   ~age_group,
-  get_NSFG_survey_design_for_sex('fem'),
+  get_NSFG_survey_design(fem1719dt),
   svymean
 ))[sterilized_person > 0] |>
   ggplot(
@@ -3093,7 +3218,7 @@ This appendix contains table versions of estimates that are rendered as plots in
 estimate_totals_and_percentages(
   ~factor(YNOSEX),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
 ) |>
@@ -3105,7 +3230,7 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(YNOSEX),
   subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     HADSEX == 'NO, R NEVER HAD INTERCOURSE'
   )
 ) |>
@@ -3119,7 +3244,7 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(REASIMPR),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     POSIBLPG == 'No'
   )
 ) |>
@@ -3131,7 +3256,7 @@ estimate_totals_and_percentages(
 estimate_totals_and_percentages(
   ~factor(REASIMPP),
   subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     POSIBLMN == 'No'
   )
 ) |>
@@ -3143,8 +3268,9 @@ estimate_totals_and_percentages(
 
 ```{r fem-methods-used-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method_count > 0
   ),
   prefix = 'used_last_3m_method',
@@ -3157,9 +3283,9 @@ estimate_NSFG_mentions(
 
 ```{r male-methods-used-table, dependson='process-male-data'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method_count > 0
   ),
   prefix = 'used_last_3m_method',
@@ -3174,8 +3300,9 @@ estimate_NSFG_mentions(
 
 ```{r fem-exclusive-method-used-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method_count == 1
   ),
   prefix = 'used_last_3m_method',
@@ -3188,9 +3315,9 @@ estimate_NSFG_mentions(
 
 ```{r male-exclusive-method-used-table, dependson='process-male-data'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method_count == 1
   ),
   prefix = 'used_last_3m_method',
@@ -3205,11 +3332,12 @@ estimate_NSFG_mentions(
 
 ```{r fem-proportion-another-table, dependson='process-fem-data'}
 estimate_NSFG_mentions_in_subdomains(
+  fem1719formats,
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       ~I(used_last_3m_method_count > 1),
       subset(
-        get_NSFG_survey_design_for_sex('fem'),
+        get_NSFG_survey_design(fem1719dt),
         fem1719dt[, get(sprintf('used_last_3m_method%d', x))]
       )
     )
@@ -3223,12 +3351,12 @@ estimate_NSFG_mentions_in_subdomains(
 
 ```{r male-proportion-another-table, dependson='process-fem-data'}
 estimate_NSFG_mentions_in_subdomains(
-  sex = 'male',
+  male1719formats,
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       ~I(used_last_3m_method_count > 1),
       subset(
-        get_NSFG_survey_design_for_sex('male'),
+        get_NSFG_survey_design(male1719dt),
         male1719dt[, get(sprintf('used_last_3m_method%d', x))]
       )
     )
@@ -3244,8 +3372,9 @@ estimate_NSFG_mentions_in_subdomains(
 
 ```{r fem-other-with-withdrawal-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method5
   ),
   prefix = 'used_last_3m_method',
@@ -3258,9 +3387,9 @@ estimate_NSFG_mentions(
 
 ```{r male-other-with-withdrawal-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method2
   ),
   prefix = 'used_last_3m_method',
@@ -3273,8 +3402,9 @@ estimate_NSFG_mentions(
 
 ```{r fem-other-with-condom-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method2
   ),
   prefix = 'used_last_3m_method',
@@ -3287,9 +3417,9 @@ estimate_NSFG_mentions(
 
 ```{r male-other-with-condom-table, dependson='process-male-data'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method1
   ),
   prefix = 'used_last_3m_method',
@@ -3303,8 +3433,9 @@ estimate_NSFG_mentions(
 
 ```{r fem-other-with-pill-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     used_last_3m_method1
   ),
   prefix = 'used_last_3m_method',
@@ -3317,9 +3448,9 @@ estimate_NSFG_mentions(
 
 ```{r male-other-with-pill-table, dependson='process-male-data'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     used_last_3m_method4
   ),
   prefix = 'used_last_3m_method',
@@ -3334,8 +3465,9 @@ estimate_NSFG_mentions(
 
 ```{r fem-methods-used-12-months-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     any_use_12m_method_count > 0
   ),
   prefix = 'any_use_12m_method',
@@ -3348,9 +3480,9 @@ estimate_NSFG_mentions(
 
 ```{r male-methods-used-12-months-table, dependson='process-male-data'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     any_use_12m_method_count > 0
   ),
   prefix = 'any_use_12m_method',
@@ -3365,8 +3497,9 @@ estimate_NSFG_mentions(
 
 ```{r fem-exclusive-method-used-12-months-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     any_use_12m_method_count == 1
   ),
   prefix = 'any_use_12m_method',
@@ -3379,9 +3512,9 @@ estimate_NSFG_mentions(
 
 ```{r male-exclusive-method-used-12-months-table, dependson='process-male-data'}
 estimate_NSFG_mentions(
-  sex = 'male',
+  male1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('male'),
+    get_NSFG_survey_design(male1719dt),
     any_use_12m_method_count == 1
   ),
   prefix = 'any_use_12m_method',
@@ -3396,8 +3529,9 @@ estimate_NSFG_mentions(
 
 ```{r pill-reason-mentions-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     this_month_method3 | last_month_method3
   ),
   prefix = 'why_use_pill_reason',
@@ -3412,8 +3546,9 @@ estimate_NSFG_mentions(
 
 ```{r iud-reason-mentions-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
       (this_month_method19 | last_month_method19)
   ),
@@ -3429,7 +3564,8 @@ estimate_NSFG_mentions(
 
 ```{r methods-used-ever-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
-  survey_design = get_NSFG_survey_design_for_sex('fem'),
+  fem1719formats,
+  survey_design = get_NSFG_survey_design(fem1719dt),
   prefix = 'ever_used_method',
   format = 'ever_used_method'
 )[total > 0] |>
@@ -3441,8 +3577,9 @@ estimate_NSFG_mentions(
 
 ```{r methods-used-ever-had-sex-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     HADSEX == 'YES, R EVER HAD INTERCOURSE'
   ),
   prefix = 'ever_used_method',
@@ -3456,11 +3593,12 @@ estimate_NSFG_mentions(
 
 ```{r discontinuation-table}
 estimate_NSFG_mentions_in_subdomains(
+  fem1719formats,
   row_estimation_function = function(x) {
     estimate_row_total_and_percentage(
       as.formula(sprintf('~ever_quit_method%d', x)),
       subset(
-        get_NSFG_survey_design_for_sex('fem'),
+        get_NSFG_survey_design(fem1719dt),
         fem1719dt[, get(sprintf('ever_used_method%d', x))]
       )
     )
@@ -3476,8 +3614,9 @@ estimate_NSFG_mentions_in_subdomains(
 
 ```{r condom-quit-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     ever_quit_method4
   ),
   prefix = 'condom_quit_reason',
@@ -3489,8 +3628,9 @@ estimate_NSFG_mentions(
 
 ```{r condom-quit-specific-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     condom_quit_reason3 | condom_quit_reason6 | condom_quit_reason15
   ),
   prefix = 'specific_condom_quit_reason',
@@ -3504,8 +3644,9 @@ estimate_NSFG_mentions(
 
 ```{r pill-quit-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     ever_quit_method3
   ),
   prefix = 'pill_quit_reason',
@@ -3517,8 +3658,9 @@ estimate_NSFG_mentions(
 
 ```{r pill-quit-specific-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     pill_quit_reason3 | pill_quit_reason6 | pill_quit_reason15
   ),
   prefix = 'specific_pill_quit_reason',
@@ -3532,8 +3674,9 @@ estimate_NSFG_mentions(
 
 ```{r iud-quit-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     ever_quit_method31 |
       ever_quit_method32 |
       ever_quit_method33
@@ -3547,8 +3690,9 @@ estimate_NSFG_mentions(
 
 ```{r iud-specific-quit-reasons-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     (
       ever_quit_method31 |
         ever_quit_method32 |
@@ -3570,8 +3714,9 @@ estimate_NSFG_mentions(
 
 ```{r nonuse-reason-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     pregnancy_intent_status == 'Not intending to conceive'
   ),
   prefix = 'nonuse_reason',
@@ -3585,8 +3730,9 @@ estimate_NSFG_mentions(
 
 ```{r pregnancy-impossible-reason-table, dependson='process-fem-data'}
 estimate_NSFG_mentions(
+  fem1719formats,
   survey_design = subset(
-    get_NSFG_survey_design_for_sex('fem'),
+    get_NSFG_survey_design(fem1719dt),
     nonuse_reason2
   ),
   prefix = 'pregnancy_impossible_reason',

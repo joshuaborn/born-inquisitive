@@ -35,11 +35,12 @@ male1719 <- load_NSFG_data('2017_2019', 'Male')
 
 ```{r create-pivot-tables, dependson='load-data'}
 fem1719_MONSX <- create_NSFG_pivot_table(
+  fem1719$Data,
   'CMMONSX',
   2:48,
   c('CASEID', 'CMINTVW', 'CMLSTYR')
 )[
-  create_NSFG_pivot_table('MONSX', 2:48),
+  create_NSFG_pivot_table(fem1719$Data, 'MONSX', 2:48),
   on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
 ]
 
@@ -479,11 +480,12 @@ fem1719$Data[
 fem1719dt <- copy(fem1719$Data)
 
 fem1719MONSX <- create_NSFG_pivot_table(
+  fem1719$Data,
   'CMMONSX',
   2:48,
   c('CASEID', 'CMINTVW', 'CMLSTYR')
 )[
-  create_NSFG_pivot_table('MONSX', 2:48),
+  create_NSFG_pivot_table(fem1719$Data, 'MONSX', 3:48),
   on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
 ]
 

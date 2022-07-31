@@ -30,43 +30,19 @@ load_NSFG_data <- function(years, data_name) {
   this_list
 }
 
-get_NSFG_raw_import_for_sex <- function(sex) {
-  if (startsWith(sex, 'f')) {
-    fem1719
-  } else {
-    male1719
-  }
-}
 
-get_NSFG_formats_for_sex <- function(sex) {
-  if (startsWith(sex, 'f')) {
-    setDT(fem1719formats)
-  } else {
-    setDT(male1719formats)
-  }
-}
-
-get_NSFG_data_table_for_sex <- function(sex) {
-  if (startsWith(sex, 'f')) {
-    setDT(fem1719dt)
-  } else {
-    setDT(male1719dt)
-  }
-}
-
-get_NSFG_survey_design_for_sex <- function(sex) {
+get_NSFG_survey_design <- function(dt) {
   svydesign(
     ids = ~SECU,
     strata = ~SEST,
-    data = get_NSFG_data_table_for_sex(sex),
+    data = dt,
     nest = TRUE,
     weights = ~WGT2017_2019
   )
 }
 
-get_NSFG_format_indices <- function(format, skip = NULL, sex = 'fem') {
-  formats <- get_NSFG_formats_for_sex(sex)
-  idxs <- formats[format_name == format, factor_value]
+get_NSFG_format_indices <- function(formats_table, format, skip = NULL) {
+  idxs <- formats_table[format_name == format, factor_value]
   if (!is.null(skip)) {
     idxs[!is.element(idxs, skip)]
   } else {
@@ -74,10 +50,7 @@ get_NSFG_format_indices <- function(format, skip = NULL, sex = 'fem') {
   }
 }
 
-factorize_NSFG_variable <- function(x, name, sex = 'fem', fill_na = TRUE, formats_table = NULL) {
-  if (is.null(formats_table)) {
-    formats_table <- get_NSFG_formats_for_sex(sex)
-  }
+factorize_NSFG_variable <- function(formats_table, x, name, fill_na = TRUE) {
   if (fill_na) {
     nafill_value <- max(formats_table[format_name == name, as.integer(factor_value)]) + 1
     factor(
@@ -100,74 +73,52 @@ factorize_NSFG_variable <- function(x, name, sex = 'fem', fill_na = TRUE, format
   }
 }
 
-set_NSFG_variables_as_factors <- function(variables, sex = 'fem') {
-  raw_import <- get_NSFG_raw_import_for_sex(sex)
-  dt <- get_NSFG_data_table_for_sex(sex)
-
+set_NSFG_variables_as_factors <- function(raw_data, dt, formats_table, variables) {
   for (x in seq(length(variables))) {
     variable_name <- names(variables)[x]
     format_name <- variables[x]
     values <- factorize_NSFG_variable(
-      raw_import$Data[, get(variable_name)],
-      format_name,
-      sex
+      formats_table,
+      raw_data[, get(variable_name)],
+      format_name
     )
 
     dt[, (variable_name) := ..values]
   }
 }
 
-set_NSFG_mentions_to_booleans <- function(
-  out_prefix,
-  in_prefix,
-  in_series,
-  format,
-  skip = NULL,
-  sex = 'fem'
-) {
-  set_mentions_to_booleans(
-    in_dt = get_NSFG_raw_import_for_sex(sex)$Data,
-    out_dt = get_NSFG_data_table_for_sex(sex),
-    out_prefix = out_prefix,
-    in_prefix = in_prefix,
-    in_series = in_series,
-    indices = get_NSFG_format_indices(format, skip, sex)
-  )
-}
-
 estimate_NSFG_mentions <- function(
+  formats_table,
   survey_design,
   prefix,
   format,
-  skip = NULL,
-  sex = 'fem'
+  skip = NULL
 ) {
   estimates <- estimate_mentions(
     survey_design,
     prefix, 
-    get_NSFG_format_indices(format, skip, sex)
+    get_NSFG_format_indices(formats_table, format, skip)
   )
-  estimates[, description := factorize_NSFG_variable(description, format, sex)]
+  estimates[, description := factorize_NSFG_variable(formats_table, description, format)]
   estimates
 }
 
 estimate_NSFG_mentions_in_subdomains <- function(
+  formats_table,
   row_estimation_function,
   format,
-  skip = NULL,
-  sex = 'fem'
+  skip = NULL
 ) {
   estimates <- estimate_mentions_in_subdomains(
     row_estimation_function,
-    get_NSFG_format_indices(format, skip, sex)
+    get_NSFG_format_indices(formats_table, format, skip)
   )
-  estimates[, description := factorize_NSFG_variable(description, format, sex)]
+  estimates[, description := factorize_NSFG_variable(formats_table, description, format)]
   estimates
 }
 
-create_NSFG_pivot_table <- function(prefix, series, id_vars = 'CASEID', sex = 'fem') {
-  raw_import <- get_NSFG_raw_import_for_sex(sex)
-  pivot_table <- create_pivot_table(prefix, series, id_vars, raw_import$Data)
+create_NSFG_pivot_table <- function(raw_data, prefix, series, id_vars = 'CASEID') {
+  pivot_table <- create_pivot_table(prefix, series, id_vars, raw_data)
   setkeyv(pivot_table, id_vars)
 }
 
@@ -181,17 +132,17 @@ century_month_comparison <- function(operator, x, y) {
     operator(x, y)
 }
 
-estimate_and_combine_NSFG_totals_and_percentages <- function(f, digits = 2) {
+estimate_and_combine_NSFG_totals_and_percentages <- function(fem_dt, male_dt, f, digits = 2) {
   style_and_combine_totals_and_percentages_vertically(
     'Females',
     estimate_totals_and_percentages(
       f,
-      get_NSFG_survey_design_for_sex('fem')
+      get_NSFG_survey_design(fem_dt)
     ),
     'Males',
     estimate_totals_and_percentages(
       f,
-      get_NSFG_survey_design_for_sex('male')
+      get_NSFG_survey_design(male_dt)
     ),
     digits = digits
   )

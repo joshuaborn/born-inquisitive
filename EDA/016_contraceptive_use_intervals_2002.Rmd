@@ -80,9 +80,9 @@ cal2002 <- melt(
     cm_value = 1188L + nafill(as.integer(month_offset), fill = 1),
     NUMMULT,
     SIMSEQ = factorize_NSFG_variable(
+      formats_table = fem2002$Formats,
       SIMSEQ,
       'TE_158F',
-      formats_table = fem2002$Formats,
       fill_na = FALSE
     )
   )],
@@ -107,9 +107,9 @@ cal2002 <- melt(
         variable
       )),
       METHHIST = factorize_NSFG_variable(
+        formats_table = fem2002$Formats,
         METHHIST,
         'TE_157F',
-        formats_table = fem2002$Formats,
         fill_na = FALSE
       ),
       varname = 'METHHIST'
@@ -141,9 +141,9 @@ cal2002 <- melt(
         variable
       )),
       MTHUSIMX = factorize_NSFG_variable(
+        formats_table = fem2002$Formats,
         MTHUSIMX,
         'TE_159F',
-        formats_table = fem2002$Formats,
         fill_na = FALSE
       ),
       varname = 'MTHUSIMX'
@@ -279,6 +279,7 @@ cal2002[,
 ```{r prioritization, dependson='boolean-table'}
 cal2002[,
   priority_method := factorize_NSFG_variable(
+    formats_table = fem2002$Formats,
     fcase(
       # Sterility, either non-contraceptive or contraceptive
       mentions_to_boolean(.SD, 22), 22,
@@ -327,7 +328,6 @@ cal2002[,
       mentions_to_boolean(.SD, 21), 21
     ),
     name = 'TE_157F',
-    formats_table = fem2002$Formats,
     fill_na = FALSE
   ),
   .SDcols = paste('METHHIST', 1:4, sep = '_')

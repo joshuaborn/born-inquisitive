@@ -204,9 +204,9 @@ SIMSEQ_pivot <- melt(
   CASEID,
   SIMSEQ,
   SIMSEQ_f = factorize_NSFG_variable(
+    formats_table = fem2002$Formats,
     SIMSEQ,
     'TE_158F',
-    formats_table = fem2002$Formats,
     fill_na = FALSE
   ),
   cm_value = 1188L + month_offset
@@ -270,9 +270,9 @@ METHHIST_long <- melt(
   cm_value =  1188L + month_offset,
   METHHIST,
   METHHIST_f = factorize_NSFG_variable(
+    formats_table = fem2002$Formats,
     METHHIST,
     'TE_157F',
-    formats_table = fem2002$Formats,
     fill_na = FALSE
   ),
   mention_num
@@ -377,9 +377,9 @@ MTHUSIMX_long <- melt(
   cm_value =  1189L + month_offset,
   MTHUSIMX,
   MTHUSIMX_f = factorize_NSFG_variable(
+    formats_table = fem2002$Formats,
     MTHUSIMX,
     'TE_159F',
-    formats_table = fem2002$Formats,
     fill_na = FALSE
   ),
   mention_num

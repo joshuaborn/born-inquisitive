@@ -62,7 +62,9 @@ male1719dt <- copy(male1719$Data[, .(
 fem1719formats <- copy(fem1719$Formats)
 
 set_NSFG_variables_as_factors(
-  sex = 'fem',
+  fem1719$Data,
+  fem1719dt,
+  fem1719formats,
   variables = c(
     HADSEX = 'HADSEX',
     RELIGION = 'RELIGION',
@@ -73,7 +75,9 @@ set_NSFG_variables_as_factors(
 male1719formats <- copy(male1719$Formats)
 
 set_NSFG_variables_as_factors(
-  sex = 'male',
+  male1719$Data,
+  male1719dt,
+  male1719formats,
   variables = c(
     HADSEX = 'HADSEX',
     RELIGION = 'RELIGION',
@@ -190,7 +194,7 @@ male1719dt[
 ```{r population-sizes, dependson='effective-sample-sizes'}
 estimate_totals_and_percentages(
   ~catholic2,
-  get_NSFG_survey_design_for_sex('fem')
+  get_NSFG_survey_design(fem1719dt)
 ) |> style_totals_and_percentages()
 
 fem1719dt[,
@@ -206,7 +210,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~sexually_active,
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       catholic2 == 'Catholic'
     )
   ),
@@ -214,7 +218,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~sexually_active,
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       catholic2 == 'Other Religion'
     )
   )
@@ -225,7 +229,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~sexually_active,
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       catholic2 == 'Catholic'
     )
   ),
@@ -233,7 +237,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~sexually_active,
     subset(
-      get_NSFG_survey_design_for_sex('fem'),
+      get_NSFG_survey_design(fem1719dt),
       catholic2 == 'No Religion'
     )
   )
@@ -252,7 +256,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~sexually_active,
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       catholic2 == 'Catholic'
     )
   ),
@@ -260,7 +264,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~sexually_active,
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       catholic2 == 'Other Religion'
     )
   )
@@ -271,7 +275,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~sexually_active,
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       catholic2 == 'Catholic'
     )
   ),
@@ -279,7 +283,7 @@ style_and_combine_totals_and_percentages_horizontally(
   estimate_totals_and_percentages(
     ~sexually_active,
     subset(
-      get_NSFG_survey_design_for_sex('male'),
+      get_NSFG_survey_design(male1719dt),
       catholic2 == 'No Religion'
     )
   )
@@ -290,7 +294,7 @@ fem1719dt[, person := 1]
 this <- confint(svyby(
   ~person,
   ~catholic2+age_range,
-  get_NSFG_survey_design_for_sex('fem'),
+  get_NSFG_survey_design(fem1719dt),
   svytotal
 )) |> as.data.table(keep.rownames = TRUE)
 
@@ -313,7 +317,7 @@ male1719dt[, person := 1]
 this <- confint(svyby(
   ~person,
   ~catholic2+age_range,
-  get_NSFG_survey_design_for_sex('male'),
+  get_NSFG_survey_design(male1719dt),
   svytotal
 )) |> as.data.table(keep.rownames = TRUE)
 
