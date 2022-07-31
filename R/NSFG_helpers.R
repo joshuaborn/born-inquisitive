@@ -50,7 +50,7 @@ get_NSFG_format_indices <- function(formats_table, format, skip = NULL) {
   }
 }
 
-factorize_NSFG_variable <- function(formats_table, x, name, fill_na = TRUE) {
+factorize <- function(x, name, formats_table, fill_na = TRUE) {
   if (fill_na) {
     nafill_value <- max(formats_table[format_name == name, as.integer(factor_value)]) + 1
     factor(
@@ -77,10 +77,10 @@ set_NSFG_variables_as_factors <- function(raw_data, dt, formats_table, variables
   for (x in seq(length(variables))) {
     variable_name <- names(variables)[x]
     format_name <- variables[x]
-    values <- factorize_NSFG_variable(
-      formats_table,
+    values <- factorize(
       raw_data[, get(variable_name)],
-      format_name
+      format_name,
+      formats_table
     )
 
     dt[, (variable_name) := ..values]
@@ -99,7 +99,7 @@ estimate_NSFG_mentions <- function(
     prefix, 
     get_NSFG_format_indices(formats_table, format, skip)
   )
-  estimates[, description := factorize_NSFG_variable(formats_table, description, format)]
+  estimates[, description := factorize(description, format, formats_table)]
   estimates
 }
 
@@ -113,7 +113,7 @@ estimate_NSFG_mentions_in_subdomains <- function(
     row_estimation_function,
     get_NSFG_format_indices(formats_table, format, skip)
   )
-  estimates[, description := factorize_NSFG_variable(formats_table, description, format)]
+  estimates[, description := factorize(description, format, formats_table)]
   estimates
 }
 

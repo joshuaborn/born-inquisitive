@@ -111,26 +111,3 @@ rounded <- function(dt, round_to = 3) {
   dt[, (cols) := sub_dt]
   dt
 }
-
-factorize <- function(x, name, formats_table, fill_na = TRUE) {
-  if (fill_na) {
-    nafill_value <- max(formats_table[format_name == name, factor_value]) + 1
-    factor(
-      nafill(x, fill = nafill_value),
-      levels = c(
-        formats_table[format_name == name, factor_value],
-        nafill_value
-      ),
-      labels = c(
-        formats_table[format_name == name, factor_label],
-        'No answer provided'
-      )
-    )
-  } else {
-    factor(
-      x,
-      levels = formats_table[format_name == name, factor_value],
-      labels = formats_table[format_name == name, factor_label]
-    )
-  }
-}
