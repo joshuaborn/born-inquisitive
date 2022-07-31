@@ -30,13 +30,6 @@ load_NSFG_data <- function(years, data_name) {
   this_list
 }
 
-set_NSFG_2017_2019_data <- function() {
-  assign('fem1719', load_NSFG_data('2017_2019', 'FemResp'), pos = 1)
-  assign('fem1719dt', copy(fem1719$Data), pos = 1)
-  assign('male1719', load_NSFG_data('2017_2019', 'Male'), pos = 1)
-  assign('male1719dt', copy(male1719$Data), pos = 1)
-}
-
 get_NSFG_raw_import_for_sex <- function(sex) {
   if (startsWith(sex, 'f')) {
     fem1719
