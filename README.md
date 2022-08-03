@@ -14,9 +14,7 @@ The strategy used to ingest NSFG data is to first load them using the provided [
 
 ### National Vital Statistics System
 
-All that is currently used from the NVSS are counts of live births. Currently, NVSS data on births is ingested by exporting counts via the [CDC WONDER](https://wonder.cdc.gov/) system into tab-separated values (TSV) files that are loaded in an R programming environment. Natality data is only available via CDC WONDER for 1995 and after.
-
-For natality data before 1995, the [public use birth data files](https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm) can be used, but these files contain row per birth and thus are quite large.
+NVSS data on births is ingested by several means. The easiest approach is to use statistics from tables or graphs published by the National Center for Health Statistics (NCHS). If already published statistics are not available, the [CDC WONDER](https://wonder.cdc.gov/) system can be used to retrieve certain statistics for years 1995 and after. Finally, the [public use data files](https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm) can be used to directly calculate statistics that are not already published, but these files are quite large.
 
 
 ## License
