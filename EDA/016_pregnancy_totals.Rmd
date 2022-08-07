@@ -17,7 +17,7 @@ library(knitr)
 
 ## Live Births
 
-Rather than using [CDC WONDER](https://wonder.cdc.gov/) or the [public use microdata files for births](https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm), I found a visualization on the NCHS website that reported total births per year and downloaded the data set for it. Once I get into subdomains, I will have to look for other ways to get counts, either via the microdata or be going through tables in published NCHS reports.
+Rather than using [CDC WONDER](https://wonder.cdc.gov/) or the [public use microdata files for births](https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm), [this visualization] had the total live birth counts from 1909 to 2020 downloadable as a CSV. Once I get into subdomains, I will have to look for other ways to get counts, either via the microdata or be going through tables in published NCHS reports.
 
 ```{r}
 vital_births <- fread(here('data/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'))
