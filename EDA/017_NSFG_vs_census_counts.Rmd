@@ -1,0 +1,86 @@
+---
+title: "NSFG Estimates Compared with Census Counts"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+
+source(here('R/helpers/NSFG/formats.R'))
+source(here('R/helpers/NSFG/load.R'))
+```
+
+```{r, load-data}
+vital_births <- fread(here('data/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'))
+guttmacher_pregnancies <- fread(here('data/guttmacher/NationalAndStatePregnancy_PublicUse.csv'))
+
+nsfg_preg2002 <- load_NSFG_data('2002', 'FemPreg')
+```
+
+```{r, process-data, dependson="load-data"}
+guttmacher_pregnancies[ ,
+  abortions_interpolated :=  year %in% c(
+      1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006, 2009, 2012, 2015
+  )
+]
+
+combined_census_counts <- guttmacher_pregnancies[
+  state == 'US' & !abortions_interpolated,
+  .(
+    Year = year,
+    Abortions = abortionstotal
+  )
+][
+  vital_births[,
+    .(
+      Year,
+      Births = as.integer(gsub(',', '', `Birth Number`))
+    )
+  ],
+  on = 'Year'
+]
+
+nsfg_2002_pregnancies <- copy(
+  nsfg_preg2002$Data[, .(
+    CASEID,
+    FINALWGT,
+    SECU_P,
+    SEST,
+    DATEND
+  )]
+)
+
+
+set_NSFG_variables_as_factors(
+  raw_data = nsfg_preg2002$Data,
+  dt = nsfg_2002_pregnancies,
+  formats_table = nsfg_preg2002$Formats,
+  variables = c(
+    OUTCOME = 'OUTCOME',
+    PREGEND1 = 'TE_45F',
+    PREGEND2 =  'TE_45F'
+  )
+)
+```
+
+```{r explore, dependson="process-data"}
+nsfg_2002_pregnancies[PREGEND1 == 'ECTOPIC OR TUBAL', .(
+  OUTCOME,
+  PREGEND1,
+  PREGEND2
+)]
+
+nsfg_2002_pregnancies[PREGEND2 == 'ECTOPIC OR TUBAL', .(
+  OUTCOME,
+  PREGEND1,
+  PREGEND2
+)]
+```
+
