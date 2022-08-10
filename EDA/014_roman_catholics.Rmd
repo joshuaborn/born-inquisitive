@@ -42,6 +42,16 @@ male1719dt <- copy(male1719$Data)
 ```
 
 ```{r process-data, dependson='load-data'}
+get_NSFG_survey_design <- function(dt) {
+  svydesign(
+    ids = ~SECU,
+    strata = ~SEST,
+    data = dt,
+    nest = TRUE,
+    weights = ~WGT2017_2019
+  )
+}
+
 fem1719dt <- copy(fem1719$Data[, .(
   AGE_R,
   CASEID,

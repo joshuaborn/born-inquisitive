@@ -62,6 +62,16 @@ male1719dt <- copy(male1719$Data)
 ```
 
 ```{r process-fem-data, dependson='load-data'}
+get_NSFG_survey_design <- function(dt) {
+  svydesign(
+    ids = ~SECU,
+    strata = ~SEST,
+    data = dt,
+    nest = TRUE,
+    weights = ~WGT2017_2019
+  )
+}
+
 fem1719formats <- rbindlist(list(
   fem1719$Formats,
   # Include missing level 13 for WHYNOTPGF format.
@@ -1203,11 +1213,17 @@ fem1719dt[, person := 1]
 male1719dt[, person := 1]
 
 this <- list()
-this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
-  fem1719dt,
-  male1719dt,
-  ~person,
-  digits = 1
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~person,
+    get_NSFG_survey_design(fem1719dt)
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~person,
+    get_NSFG_survey_design(male1719dt)
+  )
 )
 this$df <- as.data.frame(this$ht)
 this$fem <- this$df[3, 3]
@@ -1231,10 +1247,17 @@ Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r 
 
 ```{r sexually-active, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
-this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
-  fem1719dt,
-  male1719dt,
-  ~sexually_active_3m,
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~sexually_active_3m,
+    get_NSFG_survey_design(fem1719dt)
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~sexually_active_3m,
+    get_NSFG_survey_design(male1719dt)
+  ),
   digits = 1
 )
 this$df <- as.data.frame(this$ht)
@@ -2030,10 +2053,17 @@ When used in conjunction with other methods, withdrawal, condom, and pill method
 ```{r at-risk, dependson=c('process-fem-data', 'process-male-data')}
 this <- list()
 
-this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
-  fem1719dt,
-  male1719dt,
-  ~I(used_last_3m_status == 'Otherwise did not use contraception during last intercourse')
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~I(used_last_3m_status == 'Otherwise did not use contraception during last intercourse'),
+    get_NSFG_survey_design(fem1719dt)
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~I(used_last_3m_status == 'Otherwise did not use contraception during last intercourse'),
+    get_NSFG_survey_design(male1719dt)
+  )
 )
 
 this$fem <- as.data.frame(this$ht)[4, 3]
@@ -2061,10 +2091,17 @@ male1719dt[,
 
 this <- list()
 
-this$ht <- estimate_and_combine_NSFG_totals_and_percentages(
-  fem1719dt,
-  male1719dt,
-  ~had_sex_12m,
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~had_sex_12m,
+    get_NSFG_survey_design(fem1719dt)
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~had_sex_12m,
+    get_NSFG_survey_design(male1719dt)
+  ),
   digits = 1
 )
 
