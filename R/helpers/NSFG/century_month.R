@@ -31,3 +31,7 @@ names_to_century_month <- function(x) {
   names(x) <- to_century_month(names(x))
   x
 }
+
+year_from_century_month <- function(x) {
+  as.integer(sub('^.*([[:digit:]]{4})$', '\\1', x))
+}

@@ -12,7 +12,9 @@ output:
 library(data.table)
 library(here)
 library(knitr)
+library(survey)
 
+source(here('R/helpers/NSFG/century_month.R'))
 source(here('R/helpers/NSFG/formats.R'))
 source(here('R/helpers/NSFG/load.R'))
 ```
@@ -57,7 +59,6 @@ nsfg_2002_pregnancies <- copy(
   )]
 )
 
-
 set_NSFG_variables_as_factors(
   raw_data = nsfg_preg2002$Data,
   dt = nsfg_2002_pregnancies,
@@ -82,5 +83,104 @@ nsfg_2002_pregnancies[PREGEND2 == 'ECTOPIC OR TUBAL', .(
   PREGEND1,
   PREGEND2
 )]
+
+table(nsfg_2002_pregnancies$OUTCOME)
 ```
 
+It appears that ectopic pregnancy is coded as its own outcome, even though presumably many if not most of those pregnancies ended by induced abortion.
+
+```{r}
+nsfg_2002_pregnancies[, end := to_century_month(DATEND)]
+
+nsfg_2002_pregnancies[is.na(end), table(OUTCOME)]
+```
+
+All the missing `DATEND` values are for current pregnancies.
+
+```{r}
+nsfg_2002_pregnancies[, `:=`(
+  Year = year_from_century_month(end),
+  abortions = as.integer(fifelse(
+    OUTCOME == 'INDUCED ABORTION',
+    1,
+    0
+  )),
+  births = as.integer(fifelse(
+    OUTCOME == 'LIVE BIRTH',
+    1,
+    0
+  ))
+)]
+
+nsfg_2002_svy <- svydesign(
+  ids = ~SECU_P,
+  strata = ~SEST,
+  data = nsfg_2002_pregnancies,
+  nest = TRUE,
+  weights = ~FINALWGT
+)
+
+nsfg_2002_estimates <- svyby(
+  ~births + abortions,
+  ~Year,
+  nsfg_2002_svy,
+  svytotal,
+  vartype = c('se', 'ci')
+) |> as.data.table()
+
+nsfg_2002_estimates <- nsfg_2002_pregnancies[
+  ,
+  .(
+    births_n = sum(births),
+    abortions_n = .SD[OUTCOME == 'INDUCED ABORTION', .N],
+    ectopic_n = .SD[OUTCOME == 'ECTOPIC PREGNANCY', .N]
+  ),
+  by = Year
+][
+  nsfg_2002_estimates,
+  on = 'Year'
+]
+```
+
+For now, I'll leave the ectopic pregnancies aside, but might want to add these in later.
+
+```{r}
+nsfg_2002_estimates[
+  combined_census_counts,
+  on = 'Year'
+][
+  Year >= 1960 & Year < 2002,
+  .(
+    Year,
+    Births,
+    births = round(births),
+    births_n,
+    diff = Births - round(births),
+    ci_l.births = round(ci_l.births),
+    ci_u.births = round(ci_u.births),
+    width = round(ci_u.births - ci_l.births),
+    cover = Births > ci_l.births & Births < ci_u.births
+  )
+] |> kable()
+```
+
+```{r}
+nsfg_2002_estimates[
+  combined_census_counts,
+  on = 'Year'
+][
+  Year >= 1960 & Year < 2002,
+  .(
+    Year,
+    Abortions,
+    abortions = round(abortions),
+    abortions_n,
+    ectopic_n,
+    diff = Abortions - round(abortions),
+    ci_l.abortions = round(ci_l.abortions),
+    ci_u.abortions = round(ci_u.abortions),
+    cover = Abortions > ci_l.abortions & Abortions < ci_u.abortions,
+    width = round(ci_u.abortions - ci_l.abortions)
+  )
+] |> kable()
+```
