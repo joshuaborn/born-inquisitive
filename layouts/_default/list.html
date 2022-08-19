@@ -1,6 +1,6 @@
 {{ define "title" }}
-  {{ if eq .Page.Kind "taxonomy" }}
-    {{ .Title }} | {{ .Site.Title }}
+  {{ if eq .Page.Kind "term" }}
+    {{ .Page.Title }} | {{ .Site.Title }}
   {{ else }}
     {{ .Site.Title }}
   {{ end }}
