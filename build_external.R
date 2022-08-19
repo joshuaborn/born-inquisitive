@@ -2,7 +2,7 @@ library(here)
 
 i_am('build_external.R')
 
-external_path <- here('external', 'NSFG', 'reports')
+external_path <- here('external', 'reproductive-responsibility', 'reports')
 
 
 # Build external articles
