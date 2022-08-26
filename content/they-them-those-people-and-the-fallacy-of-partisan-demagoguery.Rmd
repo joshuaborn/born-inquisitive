@@ -10,7 +10,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: 'Characterizations of partisan factions lead to the straw man fallacy and to a kind of no true Scotsman fallacy, and they empower polarized viewpoints at the expense of independent thinkers.'
+summary: 'Characterizations of partisan factions lead to the Straw Man Fallacy and to a kind of No True Scotsman Fallacy, and they empower polarized viewpoints at the expense of independent thinkers.'
 tags: ["fallacies", "first-person"]
 title: '"They," "Them," "Those People," and the Fallacy of Partisan Demagoguery'
 ---
@@ -57,7 +57,7 @@ When we engage in demagoguery about "they," "them," or "those people," there is 
 
 ### Straw Man
 
-The "straw man fallacy" refers to the act of refuting a position that has been imagined by the person doing the refuting for the purposes of refuting it. The name "straw man" is many centuries old, and it is not clear what this originally referred to. We might speculate it originally referred to a dummy created for martial training or to an effigy of a person burned in public to express contempt with the person. Regardless of the origins of the name, the straw man fallacy is commonly involved in partisan demagoguery.
+The "Straw Man Fallacy" refers to the act of refuting a position that has been imagined by the person doing the refuting for the purposes of refuting it. The name "straw man" is many centuries old, and it is not clear what this originally referred to. We might speculate it originally referred to a dummy created for martial training or to an effigy of a person burned in public to express contempt with the person. Regardless of the origins of the name, the Straw Man Fallacy is commonly involved in partisan demagoguery.
 
 ![
 Anticommunist demonstrator kicks burning effigy of Viet Cong soldier during unruly protest outside Saigon headquarters of International Commission of Control and Supervision in Saigon, Jan. 6, 1975.<br>
@@ -69,25 +69,25 @@ is licensed under
 and is not modified.
 ](/images/effigy.jpg){alt="A banner-waving crowd is gathered around a man who is kicking an effigy burning on the ground."}
 
-Firstly, the straw man fallacy comes up in cases in which we are talking about "they," "them," or "those people," but "they" are not present. Thus, we are referring to some characterization of "them" that we are inventing ourselves. This occurs when someone complains that "those evil socialists want to steal the hard-earned fruits of our labor because they are too lazy to work" or "the evil capitalist class wants to crush our revolution so that they can exploit the workers." When these statements are made when no "evil socialists" or "evil capitalists" are present to hear them, the fallacy allows us to characterize the motives and intent of the referent of "they," even if that is not actually what "they" want.
+Firstly, the Straw Man Fallacy comes up in cases in which we are talking about "they," "them," or "those people," but "they" are not present. Thus, we are referring to some characterization of "them" that we are inventing ourselves. This occurs when someone complains that "those evil socialists want to steal the hard-earned fruits of our labor because they are too lazy to work" or "the evil capitalist class wants to crush our revolution so that they can exploit the workers." When these statements are made when no "evil socialists" or "evil capitalists" are present to hear them, the fallacy allows us to characterize the motives and intent of the referent of "they," even if that is not actually what "they" want.
 
 
-Secondly, a more subtle version of the straw man fallacy occurs when we refute not a concern that someone has, but some other argument, and hope that no one notices.
+Secondly, a more subtle version of the Straw Man Fallacy occurs when we refute not a concern that someone has, but some other argument, and hope that no one notices.
 
 For instance, suppose that we are advocating for a new tariff, and someone criticizes it, saying, "I do not think this tariff is a good idea because it will cause our imports and exports to decrease, and many elements of our economy depend on international trade."
 
 Someone else might reply, "This tariff _is_ a good idea because the new tariff will generate revenue for the government. With this new source of money, the government will not have to look for money elsewhere, such as in raising income taxes. Therefore, the new tariff will not lead to higher income taxes."
 
-This is another instance of the straw man fallacy. The criticism of the tariff was with regard to its possible effects on import and export trade, but the response completely ignored that concern, invented a different concern with regard to income taxation, and refuted this newly invented argument.
+This is another instance of the Straw Man Fallacy. The criticism of the tariff was with regard to its possible effects on import and export trade, but the response completely ignored that concern, invented a different concern with regard to income taxation, and refuted this newly invented argument.
 
-Thus, when we are engaged in talking to ourselves or to our own echo chamber about "they," "them," or "those people," this kind of straw man fallacy easily enters into our characterizations, even when we appear to be responding to statements made by whoever "they" are.
+Thus, when we are engaged in talking to ourselves or to our own echo chamber about "they," "them," or "those people," this kind of Straw Man Fallacy easily enters into our characterizations, even when we appear to be responding to statements made by whoever "they" are.
 
 
 ### Reverse No True Scotsman
 
-This segues into another fallacy that often occurs when we engage in partisan demagoguery: we _choose_ who "they" are. Therefore, our characterizations of "they," "them," or "those people" are arbitrary. If we want to characterize "them" as bad, we can exclude individuals whom we judge to be doing good things or having good motives and only include people whom we judge to be doing bad things or having bad motives. This is a version of what is typically called the "no true Scotsman fallacy."
+This segues into another fallacy that often occurs when we engage in partisan demagoguery: we _choose_ who "they" are. Therefore, our characterizations of "they," "them," or "those people" are arbitrary. If we want to characterize "them" as bad, we can exclude individuals whom we judge to be doing good things or having good motives and only include people whom we judge to be doing bad things or having bad motives. This is a version of what is typically called the "No True Scotsman Fallacy."
 
-In a prototype of the no true Scotsman fallacy, an enthusiast of Scottish culture might say, "Scotsmen are brave and never retreat in battle."
+In a prototype of the No True Scotsman Fallacy, an enthusiast of Scottish culture might say, "Scotsmen are brave and never retreat in battle."
 
 Someone else might say, "I was with Adair in the Great War during our retreat, and Adair is a Scotsman."
 
@@ -102,9 +102,9 @@ is licensed under
 and is not modified.
 ](/images/scottish-soldiers.jpg){alt="Four men in kilts and military uniforms run while carrying machine guns."}
 
-In the no true Scotsman fallacy, the fact that [categorization is arbitrary](/category-based-prejudice.html#categorization-is-arbitrary) is being exploited to include in a category only those individuals who are exemplars of a virtue you wish to associate with the category.
+In the No True Scotsman Fallacy, the fact that [categorization is arbitrary](/category-based-prejudice.html#categorization-is-arbitrary) is being exploited to include in a category only those individuals who are exemplars of a virtue you wish to associate with the category.
 
-In the context of partisan demagoguery, the opposite of this is typically done. When we pick and choose undesirable individuals for inclusion in "them," we exploit the fact that categorization is arbitrary to associate individuals who exemplify a vice to associate with "they," "them," or "those people." This might be called a "reverse no true Scotsman fallacy."
+In the context of partisan demagoguery, the opposite of this is typically done. When we pick and choose undesirable individuals for inclusion in "them," we exploit the fact that categorization is arbitrary to associate individuals who exemplify a vice to associate with "they," "them," or "those people." This might be called a "Reverse No True Scotsman Fallacy."
 
 One of the more conspicuously facile examples of this is what has been called _"reductio ad Hitlerum"_ after the Latin name for the fallacy _reductio ad absurdum._ This occurs when someone attempts to discredit a position because Adolf Hitler, the archetypal evil person of the 20th century, also did something or also held a similar viewpoint. For instance, if you learn that someone is a vegetarian, and you criticizes this saying, "you know, Hitler was a vegetarian," then this would be a case of _reductio ad Hitlerum._[^reductio]
 
@@ -114,9 +114,9 @@ Whether or not Hitler was a vegetarian has no relevance for the evaluation of so
 
 [^converse]: Note that the _reductio ad Hitlerum_ fallacy is not applicable to criticisms of warmongering or racial bigotry. We judge Hitler to be bad _because_ he did these things, not the other way around. Indeed, we would still judge warmongering and racial bigotry to be bad regardless of whether Hitler did or did not do them. The _reductio ad Hitlerum_ fallacy reverses this by attempting to infer not that Hitler is bad because of _X,_ but that _X_ is bad because Hitler did it.
 
-The reverse no true Scotsman fallacy is slightly more connected to reality than the straw man fallacy. In the straw man fallacy, we ourselves invent the viewpoint that we wish to refute. In the reverse no true Scotsman fallacy, we go looking for someone who has a viewpoint that we wish to refute.
+The Reverse No True Scotsman Fallacy is slightly more connected to reality than the Straw Man Fallacy. In the Straw Man Fallacy, we ourselves invent the viewpoint that we wish to refute. In the Reverse No True Scotsman Fallacy, we go looking for someone who has a viewpoint that we wish to refute.
 
-There is a lot of gray area between these fallacies. For instance, we could be talking with someone who is making one point, but then go and find a different point being made by someone else and refute that other point. This is a combination of the straw man fallacy and the reverse no true Scotsman fallacy. From the standpoint of the person with whom we are actually having a conversation, this is a straw man fallacy, though from our perspective, it is a reverse no true Scotsman fallacy.
+There is a lot of gray area between these fallacies. For instance, we could be talking with someone who is making one point, but then go and find a different point being made by someone else and refute that other point. This is a combination of the Straw Man Fallacy and the Reverse No True Scotsman Fallacy. From the standpoint of the person with whom we are actually having a conversation, this is a Straw Man Fallacy, though from our perspective, it is a Reverse No True Scotsman Fallacy.
 
 To continue the example of vegetarianism, you might encounter someone who practices vegetarianism because of the desire to avoid the slaughtering and mistreatment of animals for the harvesting of meat. If you encountered such a person and brought up an historical figure who practiced vegetarianism for the alleged health benefits of avoiding the consumption of meat, and you proceeded to discuss studies that found no health benefits from a vegetarian diet, then this would be such a combination of the two fallacies.
 
@@ -129,11 +129,11 @@ is licensed under
 and is not modified.
 ](/images/vegetarian-meal.jpg){alt="A top-down view of a round plate that contains a colorful assortment of food."}
 
-Indeed, because there are over 7 billion people on the Earth, the reverse no true Scotsman fallacy could, in theory, always be used to support the straw man fallacy, because with so many people out there, it is probable that you could find at least one person who has any viewpoint you could possibly imagine and want to discredit. Thus, in practice, there is overlap between the two fallacies.
+Indeed, because there are over 7 billion people on the Earth, the Reverse No True Scotsman Fallacy could, in theory, always be used to support the Straw Man Fallacy, because with so many people out there, it is probable that you could find at least one person who has any viewpoint you could possibly imagine and want to discredit. Thus, in practice, there is overlap between the two fallacies.
 
-The major difference between the two fallacies, however, is in _how_ they are fallacious. In a purely straw man fallacy, you are refuting a position you yourself are inventing, and the act of _inventing the viewpoint_ is itself disingenuous. In the reverse no true Scotsman fallacy, someone in the world actually does have the viewpoint you want to refute, so the act of refuting it is not itself disingenuous _per se._ In this latter case, it is only disingenuous for you to attempt to characterize someone else who does not have the viewpoint -- such as the person with whom you are actually having a conversation --  as having the viewpoint by associating the viewpoint with what "they" think.
+The major difference between the two fallacies, however, is in _how_ they are fallacious. In a purely Straw Man Fallacy, you are refuting a position you yourself are inventing, and the act of _inventing the viewpoint_ is itself disingenuous. In the Reverse No True Scotsman Fallacy, someone in the world actually does have the viewpoint you want to refute, so the act of refuting it is not itself disingenuous _per se._ In this latter case, it is only disingenuous for you to attempt to characterize someone else who does not have the viewpoint -- such as the person with whom you are actually having a conversation --  as having the viewpoint by associating the viewpoint with what "they" think.
 
-Thus, the reverse no true Scotsman fallacy in the context of partisan demagoguery is a particular kind of [generic thinking](/fallacy-of-generic-thinking.html), and as this case illustrates and as I discussed in my article on generic thinking, one of the reasons generic thinking is fallacious is that it is useful for little other than [prejudice](/category-based-prejudice.html). This is precisely what occurs when a viewpoint is selected in an attempt to characterize what "they" think.
+Thus, the Reverse No True Scotsman Fallacy in the context of partisan demagoguery is a particular kind of [generic thinking](/fallacy-of-generic-thinking.html), and as this case illustrates and as I discussed in my article on generic thinking, one of the reasons generic thinking is fallacious is that it is useful for little other than [prejudice](/category-based-prejudice.html). This is precisely what occurs when a viewpoint is selected in an attempt to characterize what "they" think.
 
 
 ### Empowering Partisan Polarization
@@ -151,7 +151,7 @@ This is a phenomenon that is important for my thinking because, as I described i
 
 ## Conclusion
 
-Sorting the world into an "us" and a "them" and denigrating "them" is one of the human mind's most base and primitive tendencies, which leads to intellectual flaws like the straw man fallacy and a fallacy of association called the "reverse no true Scotsman fallacy" in this article. It is possible, even if you do not feel like you have an "us," to still get caught up in the act of demagoguery about "them," in a misguided attempt to channel disgust about the simpleminded conformists who comprise the factions of partisan polarization.
+Sorting the world into an "us" and a "them" and denigrating "them" is one of the human mind's most base and primitive tendencies, which leads to intellectual flaws like the Straw Man Fallacy and a fallacy of association called the "Reverse No True Scotsman Fallacy" in this article. It is possible, even if you do not feel like you have an "us," to still get caught up in the act of demagoguery about "them," in a misguided attempt to channel disgust about the simpleminded conformists who comprise the factions of partisan polarization.
 
 However, denigrating "they," "them," or "those people" both invites the very same fallacies of the partisan mind into your own thinking and frames discourse in a way that further empowers polarized factions at the expense of independent thinkers.
 
