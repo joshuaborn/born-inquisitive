@@ -1,6 +1,6 @@
 # Reproductive Responsibility
 
-This repository contains scripts and documents for statistical analysis of what I've termed "reproductive responsibility," which includes topics pertaining to the phenomena of unintended pregnancy and induced abortion. This includes estimates of contraceptive use and nonuse, unintended pregnancy frequencies and rates, contraceptive failure rates, and alloparenting, parenting, and sexual behavior.
+This repository contains scripts and documents for statistical analysis of what I've termed "reproductive responsibility," which includes topics pertaining to the phenomena of unintended pregnancy and induced abortion. This includes analysis of contraceptive use, unintended pregnancy, contraceptive failure, alloparenting and parenting, and sexual behavior.
 
 
 ## Data Sources
