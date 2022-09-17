@@ -35,7 +35,7 @@ In the United States, conservatives spend a lot of time and energy talking about
 
 However, mine is a strange case in that I have become quite habituated to being a perpetual "other." I find myself not at home with conservatives, nor with leftists. I am equally alien among libertarians. While moral compunction about induced abortion of pregnancy as a method of fertility control has motivated my desire to work on contraception, this has left me feeling even less represented. Every now and again I search for organizations that might represent my views on reproductive responsibility, and fail to find any.[^closest]
 
-[^closest]: The closest I have found are small, niche organizations such as [Secular Pro-Life](https://secularprolife.org/) or [Pro-Life Humanists](https://www.prolifehumanists.org/). The latter consists of one woman who blogs, goes to gatherings, makes speeches, and participates in debates; the former consists of three women who blog, go to gatherings, and make speeches. While my worldview has a lot of overlap with the worldviews of these individuals, they focus far more on politics and [moral arguments](/moral-skepticism.html) than I care to, and as the preceding description alludes to, these organizations are quite small.
+[^closest]: The closest I have found are small, niche organizations such as [Secular Pro-Life](https://secularprolife.org/). While my worldview has a lot of overlap with the worldviews of such organizations, they are all far too small to fund a social science think tank.
 
 Sure, there are those organizations opposed to abortion as a method of fertility control, but those that frame themselves in religions terms or focus on politics do not represent what I do. On the other hand, there are organizations which study contraception, but all of those I have encountered explicitly advocate for abortion as method of fertility control.[^guttmacher] Thus, while I occasionally write about the [early birth control movement](/margaret-sanger-on-abortion-in-her-own-words.html) and wish I had such a community today, I mostly just do my work by myself.
 
@@ -52,7 +52,7 @@ Of course, not _every_ description of "them" is fallacious. However, for me, sen
 
 ## Fallacies
 
-When we engage in demagoguery about "they," "them," or "those people," there is not one specific fallacy we commit. Any particular instance of demagoguery might consist of one or more the fallacies described below and perhaps others.
+When we engage in demagoguery about "they," "them," or "those people," there is not one specific fallacy we commit. Any particular instance of demagoguery might consist of one or more of the fallacies described below, and perhaps others.
 
 
 ### Straw Man
@@ -69,8 +69,7 @@ is licensed under
 and is not modified.
 ](/images/effigy.jpg){alt="A banner-waving crowd is gathered around a man who is kicking an effigy burning on the ground."}
 
-Firstly, the Straw Man Fallacy comes up in cases in which we are talking about "they," "them," or "those people," but "they" are not present. Thus, we are referring to some characterization of "them" that we are inventing ourselves. This occurs when someone complains that "those evil socialists want to steal the hard-earned fruits of our labor because they are too lazy to work" or "the evil capitalist class wants to crush our revolution so that they can exploit the workers." When these statements are made when no "evil socialists" or "evil capitalists" are present to hear them, the fallacy allows us to characterize the motives and intent of the referent of "they," even if that is not actually what "they" want.
-
+Firstly, the Straw Man Fallacy comes up in cases in which we are talking about "they," "them," or "those people," but "they" are not present. Thus, we are referring to some characterization of "them" that we are inventing ourselves. This occurs when someone complains that "those evil socialists want to steal the hard-earned fruits of our labor because they are too lazy to work" or "the evil capitalist class wants to crush our revolution so that they can exploit the workers." When these statements are made when no "evil socialists" or "evil capitalists" are present to hear them, the fallacy allows us to characterize the motives and intent of the referent of "they," since "they" in this case refers to nothing more than an image we construct in our own minds.
 
 Secondly, a more subtle version of the Straw Man Fallacy occurs when we refute not a concern that someone has, but some other argument, and hope that no one notices.
 
@@ -106,7 +105,7 @@ In the No True Scotsman Fallacy, the fact that [categorization is arbitrary](/ca
 
 In the context of partisan demagoguery, the opposite of this is typically done. When we pick and choose undesirable individuals for inclusion in "them," we exploit the fact that categorization is arbitrary to associate individuals who exemplify a vice to associate with "they," "them," or "those people." This might be called a "Reverse No True Scotsman Fallacy."
 
-One of the more conspicuously facile examples of this is what has been called _"reductio ad Hitlerum"_ after the Latin name for the fallacy _reductio ad absurdum._ This occurs when someone attempts to discredit a position because Adolf Hitler, the archetypal evil person of the 20th century, also did something or also held a similar viewpoint. For instance, if you learn that someone is a vegetarian, and you criticizes this saying, "you know, Hitler was a vegetarian," then this would be a case of _reductio ad Hitlerum._[^reductio]
+One of the more conspicuously facile examples of this is what has been called _"reductio ad Hitlerum"_ after the Latin name for the fallacy _reductio ad absurdum._ This occurs when someone attempts to discredit a position because Adolf Hitler, the archetypal evil person of the 20th century, also did something or also held a similar viewpoint. For instance, if you learn that someone is a vegetarian, and you criticize this saying, "you know, Hitler was a vegetarian," then this would be a case of _reductio ad Hitlerum._[^reductio]
 
 [^reductio]: This would only be a case of _reductio ad Hitlerum_ if this were shared as part of an attempt to _discredit_ vegetarians by associating them with Hitler. It is not in and of itself fallacious to share this bit of information as historical trivia.
 
@@ -116,7 +115,7 @@ Whether or not Hitler was a vegetarian has no relevance for the evaluation of so
 
 The Reverse No True Scotsman Fallacy is slightly more connected to reality than the Straw Man Fallacy. In the Straw Man Fallacy, we ourselves invent the viewpoint that we wish to refute. In the Reverse No True Scotsman Fallacy, we go looking for someone who has a viewpoint that we wish to refute.
 
-There is a lot of gray area between these fallacies. For instance, we could be talking with someone who is making one point, but then go and find a different point being made by someone else and refute that other point. This is a combination of the Straw Man Fallacy and the Reverse No True Scotsman Fallacy. From the standpoint of the person with whom we are actually having a conversation, this is a Straw Man Fallacy, though from our perspective, it is a Reverse No True Scotsman Fallacy.
+There is a lot of gray area between these fallacies. For instance, we could be talking with someone who is making one point, but then find a different point being made by someone else and refute that other point. This is a combination of the Straw Man Fallacy and the Reverse No True Scotsman Fallacy. From the standpoint of the person with whom we are actually having a conversation, this is a Straw Man Fallacy, though from our perspective, it is a Reverse No True Scotsman Fallacy.
 
 To continue the example of vegetarianism, you might encounter someone who practices vegetarianism because of the desire to avoid the slaughtering and mistreatment of animals for the harvesting of meat. If you encountered such a person and brought up an historical figure who practiced vegetarianism for the alleged health benefits of avoiding the consumption of meat, and you proceeded to discuss studies that found no health benefits from a vegetarian diet, then this would be such a combination of the two fallacies.
 
