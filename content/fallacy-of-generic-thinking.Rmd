@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "Generic thinking is unquantified belief about large populations of individuals, a profound and terribly mistaken fallacy that has little use other than prejudice."
-tags: ["fallacies", "statistics", "psychology", "philosophy", "third-person"]
+tags: ["opinion", "fallacies", "statistics", "psychology", "philosophy", "third-person"]
 title: "The Fallacy of Generic Thinking"
 ---
 

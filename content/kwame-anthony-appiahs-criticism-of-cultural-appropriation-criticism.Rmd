@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: 'Philosopher Kwame Anthony Appiah argues that "cultural appropriation" is based on a mistaken mental model of what "culture" denotes and that there are other, better criticisms.'
-tags: ["book, article, or podcast review", "philosophy", "third-person"]
+tags: ["opinion", "book, article, or podcast review", "philosophy", "third-person"]
 title: "Kwame Anthony Appiah's Criticism of “Cultural Appropriation” Criticism"
 ---
 

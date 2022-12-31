@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "Anecdotal evidence has flaws that make it useless for inferences about populations or about cause and effect. Valid uses of anecdotes exist, but anecdotes should be scrutinized even in such cases."
-tags: ["fallacies", "statistics", "psychology", "third-person"]
+tags: ["opinion", "fallacies", "statistics", "psychology", "third-person"]
 title: "Anecdotes Are Not Evidence"
 ---
 

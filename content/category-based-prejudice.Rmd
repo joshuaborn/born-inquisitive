@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: 'Properties of a population are not properties of individuals, and categorization is arbitrary. Therefore, category-based prejudice is more costly, less accurate, and more ambiguous than direct measurement.'
-tags: ["fallacies", "third-person"]
+tags: ["opinion", "fallacies", "third-person"]
 title: "Category-Based Prejudice"
 ---
 

@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "When encountering a statistic, you should inquire about its provenance, its scope of inference, its practical significance, and the estimation error associated with it."
-tags: ["fallacies", "statistics", "second-person"]
+tags: ["opinion", "fallacies", "statistics", "second-person"]
 title: "How to Scrutinize a Statistic"
 ---
 
