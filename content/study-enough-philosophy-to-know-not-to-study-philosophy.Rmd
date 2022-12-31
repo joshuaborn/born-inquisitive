@@ -1,0 +1,66 @@
+---
+author: "Joshua Born"
+date: 2022-12-31
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: 'This is a preface to a series of articles entitled "Philosophical Positions That Make Viewpoints Insufferable" and explains the rationale for the series.'
+tags: ["opinion", "philosophy", "first-person"]
+title: 'Study Enough Philosophy to Know Not to Study Philosophy'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Introduction
+
+The maxim that you should study enough philosophy to know not to study philosophy includes two parts: the "study enough philosophy" positive part and the "know not to study philosophy" negative part.
+
+
+### Useful Part of Philosophy
+
+The rationale behind the "study enough philosophy" part of the maxim is that there are a finite number of ways to view or interpret the world, and given that there have been billions of people, most of the ways to view the world that you encounter in your life are not new. Indeed, the ways you yourself view the world are not entirely original. These ways to view the world are philosophical positions, and everyone has them, whether they are aware of them or not.
+
+The study of philosophy can benefit you by giving you the opportunity to explore and label many of these philosophical positions ahead of time, understand which are your positions, and understand the sticking points you will have with the other philosophical positions you encounter.
+
+
+### Useless Part of Philosophy
+
+The rationale behind the "know not to study philosophy" part of the maxim is that academic-style philosophy is infamous for comprising treatises that consist of hundreds upon hundreds of pages of wasting everyone's time. 
+
+Typically, such treatises consist of an author espousing a philosophical position and trying to justify something like "why _my_ philosophical position is the best," and a lot of the positions espoused in popular philosophical treatises are very, very flawed. Perhaps academic-style philosophy consists mostly of these very flawed positions precisely because they require hundreds of pages to defend. It would be difficult to have enough work to merit a department of philosophy at a university otherwise.
+
+![
+["Monument of Immanuel Kant"](https://commons.wikimedia.org/w/index.php?curid=53888475)
+by
+Valdis Pilskalns
+is licensed under
+[CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by/3.0/)
+and is not modified. Immanuel Kant was a German philosopher infamous for writing treatises that were more than eight hundred pages long.
+](/images/immanuel-kant.jpg){alt="A statute in a park in Konisberg of a man in 18th century clothing on a pedestal with 'KANT' on the front."}
+
+
+## Goal for Subsequent Series of Articles
+
+Fortunately, the useful part of philosophy can be accomplished by reading dozens, rather than hundreds of pages. Thus, once equipped with enough knowledge to identify your own philosophical positions and their differences with philosophical positions of those you encounter, you have gotten what there is of value from the study of philosophy. The rest can be skipped. 
+
+This article is a preface to an exercise in what the preceding has deemed the "useful" part of learning about philosophy. In subsequent articles, I identify philosophical positions I have found in the social commentary I encounter and how their differences with my own philosophical positions lead to more fundamental disagreements than the specific subject-matter of the disagreement. Several things are conspicuous about such disagreements.
+
+The first is that many people are not consciously aware that they even have philosophical positions. This is akin to people who have never traveled the world and encountered other languages besides their native tongue. Such people are easy to spot because they find it incomprehensible that anyone would have a different way of thinking than they.
+
+The second striking feature of disagreement across philosophical positions is that two people who disagree about something _and_ have underlying differences in philosophical positions often cannot understand the disagreement itself. Such situations are akin to two people who speak only different languages: they cannot even understand what the other person is saying. If they did have a common language, they would likely still disagree, but at least they would be able to understand _what_ they disagree about and _how_ they disagree with each other.
+
+The third striking feature is that the philosophical position someone has is independent of the specific opinion the individual has. A moral realist and a moral skeptic can wind up with the same view on capital punishment, or different views. Conversely, no matter someone's view on capital punishment, the person could be a moral realist or a moral skeptic or have some different metaethical position entirely. Thus, differences in philosophical position cut across the familiar and simple-minded partisan boundaries that are conspicuous in social commentary.
+
+
+## Conclusion
+
+Differences in philosophical positions can go unnoticed and underlie specific disagreement on a given subject. Such differences can make disagreement unintelligible to those who are not aware of them. Therefore, if we want to be enlightened in our understanding of disagreement, we should pay attention to the underpinnings of our own views and how they might differ from the philosophical positions of others.

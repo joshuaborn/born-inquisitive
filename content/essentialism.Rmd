@@ -2,7 +2,8 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/philosophical-positions-that-make-viewpoints-insufferable.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2022-11-13
+date: 2023-01-07
+draft: true
 include-before: |
   ## Table of Contents
 output:
@@ -12,7 +13,7 @@ output:
     toc_depth: 5
 summary: '[Summary sentence goes here.]'
 tags: ["opinion", "philosophy", "first-person"]
-title: 'Philosophical Positions that Make Viewpoints Insufferable'
+title: 'Essentialism'
 ---
 
 ```{r setup, include=FALSE}
@@ -21,41 +22,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction
-
-I am fond of the maxim that you should study enough philosophy to know not to study philosophy.
-
-
-### Useful Part of Philosophy
-
-The rationale behind the positive, "study enough philosophy" part of the maxim is that there are a finite number of ways to view or interpret the world, and given that there have been billions of people, most of the ways to view the world that you encounter in your life are not new. Indeed, the ways you yourself view the world are not entirely original. These ways to view the world are philosophical positions, and everyone has them, whether they are aware of them or not.
-
-The study of philosophy can benefit you by giving you the opportunity to explore and label many of these philosophical positions ahead of time, understand which are your positions, and understand the sticking points you will have with the other philosophical positions you encounter.
-
-
-### Useless Part of Philosophy
-
-The rationale behind the negative, "know not to study philosophy" part of the maxim is that, even though the exercise of understanding and labeling different positions takes only a few pages, formal philosophy is infamous for comprising treatises that consist of hundreds upon hundreds of pages. 
-
-Typically, such treatises consist of an author espousing a philosophical position and trying to justify something along the lines of "why _my_ philosophical position is the best," and a lot, if not most, of the positions espoused in popular philosophical treatises are very, very flawed. Indeed, perhaps formal philosophy consists mostly of these very flawed positions precisely because they require hundreds of pages to defend. It would be difficult to have enough work to merit a department of philosophy at a university without ponderous, interminable treatises to dissect and discuss.
-
-Thus, once equipped with enough knowledge to identify your own philosophical positions, the philosophical positions of those you encounter, and the differences between, you have gotten what there is of value from the study of philosophy. The rest can be skipped. 
-
-
-### Differences in Philosophical Positions
-
-This article is an exercise in the useful part of learning about philosophy. I identify four philosophical positions often found in the social commentary I encounter in my life and how differences with my own philosophical positions lead to more fundamental disagreements than the specific matters discussed.
-
-Three things are striking about such incompatibilities in philosophical positions.
-
-The first is that many people are not consciously aware that they even have philosophical positions. This is akin to people who have never traveled the world and encountered other languages besides their native tongue. Such people are easy to spot because they find it incomprehensible that anyone would have a different way of thinking than they.
-
-The second striking feature of disagreement across philosophical positions is that two people who disagree about something _and_ have underlying differences in philosophical positions often cannot understand the disagreement itself. Such situations are akin to two people who speak only different languages: they cannot even understand what the other person is saying. If they had a common language, they would likely still disagree about something, but at least they would be able to understand _how_ they disagree with each other.
-
-The third striking feature is that what philosophical position anyone has is largely independent of what specific opinion anyone has. A moral realist and a moral skeptic can wind up with the same view on capital punishment, or different views; no matter your view on capital punishment, you could be a moral realist or a moral skeptic or have some different metaethical position entirely. Thus, differences in philosophical position cut across the familiar -- and simple-minded -- partisan ideological boundaries that are conspicuous in social commentary.
-
-
-## Essentialism
 
 Essentialism is the position that behind the phenomena of the world that we observe are hidden essences that are not directly observable, and when categories of individuals exhibit similarities, this is because they share a common essence.
 
@@ -66,7 +32,7 @@ Essentialism is quite old in Western philosophy and versions nof it were espouse
 The major implication of essentialism is that the way we categorize is either correct or incorrect, and categorization is not arbitrary. A label is correct when all individuals who have the common essence are categorized together and no individuals who lack the essence are included in the category.
 
 
-### My Contradictory Position: Nominalism
+## My Contradictory Position: Nominalism
 
 I subscribe to a position that is the explicit rejection of essentialism and labeled "nominalism" by Karl Popper [-@popper_open_2020, Chapter 11]. According to this distinction, essentialism interprets the statement, "A puppy is a young dog," as an answer to the question, "What is the essence of a puppy?" However, nominalism interprets the statement, "A puppy is a young dog," as an answer to the question, "What shall we call a young dog?"
 
@@ -77,7 +43,7 @@ Of course, language is a social phenomenon, and in order to communicate you must
 The major implication of nominalism is that there are not correct categorizations and incorrect categorizations, but instead categorization is arbitrary, with some categorization schemes better than others for certain purposes and in certain contexts, but no one true way to categorize.
 
 
-### Why Essentialism is Insufferable to Me
+## Why Essentialism is Insufferable to Me
 
 Essentialists hold opinions that are insufferable to nominalists such as myself because an essentialist who has labeled an individual as a member of a category has done so with the belief that this reflects a great truth. To essentialists, such categorization constitutes knowledge, whereas to nominalists, it is merely a labeling convention.
 
@@ -92,7 +58,7 @@ How we categorize fellow human beings is probably the most contentious kind of l
 A particularly insufferable form of essentialism occurs when essentialists do not even realize that they are essentialists. These are the sort of individuals discussed in the introduction who are either not aware their views are contingent on a particular philosophical position or are not aware that others have philosophical positions that differ from their own. This naive essentialism is aggravating because it is prone to presume that nominalists do not "get it." Such naive essentialists are so ignorant that they mistake their own ignorance as the ignorance of others who have consciously considered and rejected essentialism. 
 
 
-### Independence to Specific Views
+## Independence to Specific Views
 
 The disagreement between essentialist and nominalist philosophical positions does not map one-to-one onto the partisan ideological divides that come and go in human society, but are orthogonal to them. For instance, there is rancor over transgender issues in the United States. Roughly summarized, one viewpoint exists that looks at people who identify as transgender as yet another long-oppressed group to champion and to whom to be an "ally."
 
@@ -103,7 +69,7 @@ Nominalists such as myself would easily interpret the former discussion as inten
 Even more curiously, viewpoints critical of the "ally" viewpoint can also manifest themselves both in ways that are nominalist and essentialist. Furthemore, essentialist viewpoints critical of the "ally" viewpoint are prone to use language almost exactly like that of the essentialist "ally" viewpoint, but with concepts switched. Such viewpoints might assert that someone who identifies as a transgender man "is really a woman" or someone who identifies as a transgender woman "is really a man" or that certain -- opposite -- pronouns are "the correct pronouns." Thus, what viewpoint someone has on a given issue is related to, but independent of the essentialism versus nominalism divide.
 
 
-### More Philosophical Positions Than Two
+## More Philosophical Positions Than Two
 
 Of course, trying to summarize all the different ways that a human being could interpret categorization and labeling with just the two positions of "essentialism" and of "nominalism" is an oversimplication, as is the case whenever we use a dichotomy. There are likely many ways to interpret categorization that might be similar or entirely different from the ways discussed here. Furthermore, the uses of "essentialism" and "nominalism" in this section are actually quite narrow definitions of the concepts. All of this is done in order to illustrate a very specific point, and this section should not be interpreted as an attempt to define the essence of "essentialism" or the essence of "nominalism."
 
