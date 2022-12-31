@@ -8,7 +8,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: 'This is a preface to a series of articles entitled "Philosophical Positions That Make Viewpoints Insufferable" and explains the rationale for the series.'
+summary: 'This is a preface to a series of articles on philosophical positions with which I disagree that explains the rationale for the series.'
 tags: ["opinion", "philosophy", "first-person"]
 title: 'Study Enough Philosophy to Know Not to Study Philosophy'
 ---
