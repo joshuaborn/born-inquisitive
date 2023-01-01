@@ -11,7 +11,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: '[Summary sentence goes here.]'
+summary: "The philosophical position of essentialism is contrasted with that of nominalism, and examples how essentialists' assertions are frustrating to nominalists are explored."
 tags: ["opinion", "philosophy", "first-person"]
 title: 'Essentialism'
 ---
@@ -23,64 +23,69 @@ knitr::opts_chunk$set(
 ```
 
 
+## Introduction to Essentialism
+
 Essentialism is the position that behind the phenomena of the world that we observe are hidden essences that are not directly observable, and when categories of individuals exhibit similarities, this is because they share a common essence.
 
-Essentialism is quite old in Western philosophy and versions nof it were espoused in various works by Plato and Aristotle. Ancient versions of essentialism tended toward the metaphysical. However, essentialism comes up again and again today in less metaphysical ways, particularly in social commentary.  Sometimes commentators actually use the word "essence" or its derivatives, as in "AP’s style is now to capitalize Black in a racial, ethnic or cultural sense, conveying an _essential_ and shared sense of history, identity and community..."[^italics] [@daniszewski_ap_2020] Other common language includes "culture," "spirit," or "nature" of a "people," "race," or "nation." Thus, modern essentialism can appeal to either cultural or biological explanations or both.
+Essentialism is quite old in Western philosophy and versions of it were espoused in various works by Plato and Aristotle. Ancient versions of essentialism tended toward the metaphysical. However, essentialism comes up repeatedly today in less metaphysical ways, particularly in social commentary.  Sometimes commentators actually use the word "essence" or its derivatives, as in "AP’s style is now to capitalize Black in a racial, ethnic or cultural sense, conveying an _essential_  and shared sense of history, identity and community..."  [@daniszewski_ap_2020] [Italics added for emphasis.] Other common language includes "culture," "spirit," or "nature" of a "people," "race," or "nation." Thus, modern essentialism can appeal to either cultural or biological explanations or both.
 
 [^italics]: Italics have been added for emphasis.
 
 The major implication of essentialism is that the way we categorize is either correct or incorrect, and categorization is not arbitrary. A label is correct when all individuals who have the common essence are categorized together and no individuals who lack the essence are included in the category.
 
 
-## My Contradictory Position: Nominalism
+## Introduction to Nominalism
 
-I subscribe to a position that is the explicit rejection of essentialism and labeled "nominalism" by Karl Popper [-@popper_open_2020, Chapter 11]. According to this distinction, essentialism interprets the statement, "A puppy is a young dog," as an answer to the question, "What is the essence of a puppy?" However, nominalism interprets the statement, "A puppy is a young dog," as an answer to the question, "What shall we call a young dog?"
+I subscribe to a position labeled "nominalism" by Karl Popper [-@popper_open_2020, Chapter 11] that is the explicit rejection of essentialism. Popper observed that essentialism interprets the statement, "A puppy is a young dog," as an answer to the question, "What is the essence of a puppy?" However, nominalism interprets the statement, "A puppy is a young dog," as an answer to the question, "What shall we call a young dog?"
 
 To nominalism, categorizing individuals is a language convention, and [categorization is arbitrary](/category-based-prejudice.html#categorization-is-arbitrary), in a sense.
 
-Of course, language is a social phenomenon, and in order to communicate you must adopt at least some established conventions, which is what the process of learning a language is to a nominalist. Furthermore, it might turn out that some conventions are generally more useful than others, and therefore, the labeling you use might change over time. If enough people do this, this leads to changes in the popular use of language. Similarly, some conventions might be more useful in certain contexts, causing specialized fields to invent their own jargon out of terms of art.
+Of course, language is a social phenomenon, and in order to communicate you must adopt at least some established conventions, which is what the process of learning a language is to a nominalist. Furthermore, it might turn out that some conventions are generally more useful than others, and therefore, the labeling you use might change over time. If enough people do this, this leads to changes in the popular use of language. Similarly, some conventions might be more useful in certain contexts, causing specialized fields to invent their own jargon.
 
-The major implication of nominalism is that there are not correct categorizations and incorrect categorizations, but instead categorization is arbitrary, with some categorization schemes better than others for certain purposes and in certain contexts, but no one true way to categorize.
+The major implication of nominalism is that there are not correct categorizations and incorrect categorizations, but instead categorization is arbitrary, with some categorization schemes better than others for certain purposes and in certain contexts, but there is no one true way to categorize.
 
 
-## Why Essentialism is Insufferable to Me
+## Essentialism vs. Nominalism
 
-Essentialists hold opinions that are insufferable to nominalists such as myself because an essentialist who has labeled an individual as a member of a category has done so with the belief that this reflects a great truth. To essentialists, such categorization constitutes knowledge, whereas to nominalists, it is merely a labeling convention.
+Essentialists hold opinions that are insufferable to nominalists such as I because an essentialist who has labeled an individual as a member of a category has done so with the belief that this reflects a great truth. To essentialists, such categorization constitutes knowledge, whereas to nominalists, it is merely a labeling convention.
 
-For nominalists, it is easy to spot essentialists in everyday life. Essentialists are prone to want to engage in such ruminations as whether or not someone is "really gay" or "really Black," whereas nominalists are prone to cringe at such questions. Essentialists are liable to interpret a nominalists' cringing as disagreement with the essentialists' answers to the question of whether someone is "really gay" or "really Black," but nomiminalists are not disagreeing with the validity of the essentialists' answers, but with the validity of the essentialists' question.
+It is easy to spot essentialists in everyday life. Essentialists like to debate whether or not someone is "really gay" or "Black enough" or "Republican only in name" or "really a liberal," whereas nominalists are prone to cringe at such questions.
 
-Sexual orientation is something that has been handled by the vast tapestry of human cultures that have ever existed in a variety of ways, whereas labeling someone "gay" or not is largely a phenomenon developed in twentieth century, Western, education, industrialized, rich, democratic societies and then exported to the rest of the world. Similarly, categorization of people by their phenotypical appearance such as skin color, etc, is a relatively modern phenomenon that has its origins in the colonialism of the Age of Sail. [@larsen_our_2014, Chapter 4]
+This can cause confusion if an essentialist interprets a nominalist's cringing as disagreement with the essentialist's answer to the question of whether someone is "really" something because the nominalist is not disagreeing with the validity of the essentialist's answer, but with the validity of the essentialist's question.
 
-Nominalists such as myself would note this as evidence that there is nothing eternal or essential about these labels. Dedicated essentialists might retort that labels are merely imperfect approximations of some underlying essence, such as "gay" genotypes, much like Plato and his Theory of Forms. This could continue _ad nauseum._ However, even to get to this realization, essentialists and nominalists would first have to realize that they are not disagreeing in the particulars of the essentialists' evaluation that someone is "really gay" or "really Black," but actually disagreeing at the more fundamental level of whether this is a valid question. To nominalists, no one is "really gay" or not or "really Black" or not, because no one is "really" anything.
+Sexual orientation is something that has been handled by the vast tapestry of human cultures that have ever existed in a variety of ways, whereas labeling someone "gay" or not is largely a phenomenon developed in twentieth century, Western, education, industrialized, rich, democratic societies and then exported to the rest of the world. Similarly, categorization of people by their phenotypical appearance such as skin color, etc., is a relatively modern phenomenon that has its origins in the colonialism of the Age of Sail. [@larsen_our_2014, Chapter 4] What constitutes the constituency for a political faction is constantly in flux. For instance, the United States in the twentieth century saw the transition from so-called "paleo-conservatives" to "neo-conservatives" as the dominant faction on the right and the reconstitution of the Democratic Party with the loss of the so-called "Dixiecrat" or "yellow-dog Democrat" voter base.
 
-How we categorize fellow human beings is probably the most contentious kind of labeling, which is why this genre of categorization is used as an example, but the essentialism versus nominalism divide extends to all kinds of categorization. Indeed, discussions about whether certain music is "really metal" or "really jazz" have gotten quite contentious.
+Nominalists such as I would note this as evidence that there is nothing essential about these labels. Dedicated essentialists might retort that labels are merely imperfect approximations of some underlying essence, such as "gay" genotypes, much like Plato and his Theory of Forms. This could continue _ad nauseum._ However, even to get to this realization, essentialists and nominalists would first have to realize that they are not disagreeing in the particulars of the essentialists' evaluation that someone is "really" something, but actually disagreeing at the more fundamental level of whether this is a valid question. To nominalists, no one "really" anything.
 
-A particularly insufferable form of essentialism occurs when essentialists do not even realize that they are essentialists. These are the sort of individuals discussed in the introduction who are either not aware their views are contingent on a particular philosophical position or are not aware that others have philosophical positions that differ from their own. This naive essentialism is aggravating because it is prone to presume that nominalists do not "get it." Such naive essentialists are so ignorant that they mistake their own ignorance as the ignorance of others who have consciously considered and rejected essentialism. 
+How we categorize fellow human beings is probably the most contentious kind of labeling, which is why this genre of categorization is used as an example, but the essentialism versus nominalism divide extends to all kinds of categorization. Indeed, discussions about whether certain music is "really metal" or "really jazz" can get quite contentious.
+
+A particularly insufferable form of essentialism occurs when essentialists do not even realize that they are essentialists. These are the sort of individuals discussed in the [preface](study-enough-philosophy-to-know-not-to-study-philosophy.html) who are either not aware their views are contingent on a particular philosophical position or are not aware that others have philosophical positions that differ from their own. This naive essentialism is aggravating because it is prone to presume that nominalists do not "get it." Such naive essentialists are so ignorant that they mistake their own ignorance for the ignorance of others, others who have consciously considered and rejected essentialism. 
 
 
 ## Independence to Specific Views
 
-The disagreement between essentialist and nominalist philosophical positions does not map one-to-one onto the partisan ideological divides that come and go in human society, but are orthogonal to them. For instance, there is rancor over transgender issues in the United States. Roughly summarized, one viewpoint exists that looks at people who identify as transgender as yet another long-oppressed group to champion and to whom to be an "ally."
+The disagreement between essentialist and nominalist philosophical positions does not map one-to-one onto the partisan ideological divides that come and go in human society, but are independent to them. For instance, there is some rancor over transgender issues in the United States. Roughly summarized, one viewpoint exists that looks at people who identify as transgender as yet another long-oppressed group to champion and to whom to be an "ally."
 
-Curiously, this "ally" viewpoint can manifest itself both in ways that are very nominalist and very essentialist. On the one hand, someone of this viewpoint might regard gender as something that is explicitly a conventional label, such as discussion of "gender assigned at birth," "gender someone identifies with," or "preferred pronouns." On the other hand, someone of this viewpoint might discuss gender as something that is overtly an essence, with assertions that someone who identifies as a transgender man "is really a man" or someone who identifies as a transgender woman "is really a woman" or that certain pronouns are "the correct pronouns."
+This "ally" viewpoint can manifest itself both in ways that are either very nominalist or very essentialist. On the one hand, someone of this viewpoint might regard gender as something that is explicitly a conventional label, such as discussion of "gender assigned at birth," "gender someone identifies with," or "preferred pronouns." On the other hand, someone of this viewpoint might discuss gender as something that is overtly an essence, with assertions that someone who identifies as a transgender man "is really a man" or someone who identifies as a transgender woman "is really a woman" or that certain pronouns are "the correct pronouns."
 
-Nominalists such as myself would easily interpret the former discussion as intended, and conversation could rapidly move on to more depth into the subject-matter itself. However, when nominalists such as myself encounter the latter sort of discussion, we are liable to reject the assertions, and the more fundamental difference in philosophical positions must be resolved one way or another before productive conversation on the subject-matter itself can ensue.
+Nominalists such as I can easily converse with "allies" who are nominalists, and such conversation can rapidly move on to more depth into the subject-matter itself. However, when nominalists such as I encounter the essentialist version of "allies," the more fundamental difference in philosophical positions must be resolved one way or another before productive conversation on the subject-matter itself can occur.
 
-Even more curiously, viewpoints critical of the "ally" viewpoint can also manifest themselves both in ways that are nominalist and essentialist. Furthemore, essentialist viewpoints critical of the "ally" viewpoint are prone to use language almost exactly like that of the essentialist "ally" viewpoint, but with concepts switched. Such viewpoints might assert that someone who identifies as a transgender man "is really a woman" or someone who identifies as a transgender woman "is really a man" or that certain -- opposite -- pronouns are "the correct pronouns." Thus, what viewpoint someone has on a given issue is related to, but independent of the essentialism versus nominalism divide.
+This phenomenon occurs with viewpoints contradictory to the "ally" viewpoint, as well. These viewpoints also manifest themselves either in ways that are nominalist or essentialist. Furthermore, essentialist viewpoints critical of the "ally" viewpoint are prone to use language and concepts almost exactly like that of the essentialist "ally" viewpoint, but with the direction of the assertions switched. Such viewpoints might assert that someone who identifies as a transgender man "is really a woman" or someone who identifies as a transgender woman "is really a man" or that certain -- opposite -- pronouns are "the correct pronouns." Thus, what specific viewpoint someone has on a given issue is independent of the essentialism versus nominalism divide.
 
 
 ## More Philosophical Positions Than Two
 
-Of course, trying to summarize all the different ways that a human being could interpret categorization and labeling with just the two positions of "essentialism" and of "nominalism" is an oversimplication, as is the case whenever we use a dichotomy. There are likely many ways to interpret categorization that might be similar or entirely different from the ways discussed here. Furthermore, the uses of "essentialism" and "nominalism" in this section are actually quite narrow definitions of the concepts. All of this is done in order to illustrate a very specific point, and this section should not be interpreted as an attempt to define the essence of "essentialism" or the essence of "nominalism."
+Of course, trying to summarize all the diverse ways that a human being could interpret categorization and labeling with just the two positions of "essentialism" and of "nominalism" is an oversimplification, as is the case whenever we use a dichotomy. There are likely many ways to interpret categorization that might be similar or entirely different from the ways discussed here. Furthermore, the uses of "essentialism" and "nominalism" in this section are actually quite narrow definitions of the concepts. All of this is done in order to illustrate a specific point, and this section should not be interpreted as an attempt to define the essence of "essentialism" or the essence of "nominalism."
 
 
-## Moral Realism
+## Conclusion
 
-## Epistemological Rationalism
-
-## Credulity
+If one person who tends more toward essentialism disagrees with another person who tends more toward nominalism, then a more fundamental disagreement in philosophical positions occurs in addition to the disagreement over a specific point. If the either of the two parties do not realize that they have such a disagreement in philosophical positions, this can make it difficult or impossible to communicate. It is therefore important for those who want to [disagree well](/discussion-about-disagreement-on-the-rationally-speaking-podcast.html) to understand that everyone has a philosophical position on what categorization actually is and to be conscious of these different positions when discussing how individuals are categorized.
 
 
+## Other Articles in This Series
+
+This article is part of a series of articles on philosophical positions with which I disagree. The rationale for this series is explained in the preface "[Study Enough Philosophy to Know Not to Study Philosophy](/study-enough-philosophy-to-know-not-to-study-philosophy.html)."
 
 
 ## Citations
@@ -88,5 +93,3 @@ Of course, trying to summarize all the different ways that a human being could i
 ::: {#refs}
 :::
 
-
-## Footnotes
