@@ -1,0 +1,37 @@
+---
+author: "Joshua Born"
+date: 2023-12-31
+draft: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: '[OPENING SENTENCE]'
+tags: ["opinion", "philosophy", "first-person"]
+title: 'Moral Realism'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Introduction to Moral Realism
+
+Moral realism is the position that moral statements such as, “Capital punishment is wrong,” or, “This war is a just war,” or, “Theft is immoral,” represent beliefs that are true or false in the same way that more obviously factual statements such as, “The acceleration due to gravity at the surface of the Earth is approximately 9.8 meters per second squared,” or “London is the capital of France,” or "Paris is the capital of France," are either true or false.
+
+The major implication of interpreting moral statements as true or false is that moral knowledge is possible. Knowledge is often construed in philosophy as justified, true belief. If some moral statements are true and some are false, and if you can come up with good reasons for believing the true statements, then you can be said to have moral knowledge.
+
+
+## Introduction to Moral Skepticism
+
+Moral skepticism is the denial that moral knowledge is practically obtainable or that moral knowledge is even possible. I subscribe to this latter position and believe that moral knowledge is impossible, precisely because truth and falsity do not apply to moral statements and so the very idea of moral knowlege is nonsensical. I have given my position a much fuller treatment in its [own article](/moral-skepticism.html).
+
+
+## Conclusion
+
