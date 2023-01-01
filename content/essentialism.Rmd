@@ -11,7 +11,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: "The philosophical position of essentialism is contrasted with that of nominalism, and examples how essentialists' assertions are frustrating to nominalists are explored."
+summary: "The philosophical position of essentialism is contrasted with that of nominalism, and examples of how essentialists' assertions are frustrating to nominalists are explored."
 tags: ["opinion", "philosophy", "first-person"]
 title: 'Essentialism'
 ---
@@ -88,7 +88,7 @@ Of course, trying to summarize all the diverse ways that a human being could int
 
 ## Conclusion
 
-If one person who tends more toward essentialism disagrees with another person who tends more toward nominalism, then a more fundamental disagreement in philosophical positions occurs in addition to the disagreement over a specific point. If the either of the two parties do not realize that they have such a disagreement in philosophical positions, this can make it difficult or impossible to communicate. It is therefore important for those who want to [disagree well](/discussion-about-disagreement-on-the-rationally-speaking-podcast.html) to understand that everyone has a philosophical position on what categorization actually is and to be conscious of these different positions when discussing how individuals are categorized.
+If one person who tends more toward essentialism disagrees with another person who tends more toward nominalism, then a more fundamental disagreement in philosophical positions occurs in addition to the disagreement over a specific point. If either of the two parties do not realize that they have such a disagreement in philosophical positions, this can make it difficult or impossible to communicate. It is therefore important for those who want to [disagree well](/discussion-about-disagreement-on-the-rationally-speaking-podcast.html) to understand that everyone has a philosophical position on what categorization actually is and to be conscious of these different positions when disagreeing.
 
 
 ## Other Articles in This Series
