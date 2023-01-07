@@ -3,7 +3,6 @@ author: "Joshua Born"
 bibliography: "../bibliographies/philosophical-positions-that-make-viewpoints-insufferable.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2023-01-07
-draft: true
 include-before: |
   ## Table of Contents
 output:
