@@ -20,17 +20,6 @@
     {{ range .AlternativeOutputFormats -}}
       {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
     {{ end -}}
-    {{ if not .Site.BuildDrafts }}
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-0FE2E7MEPE"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-0FE2E7MEPE');
-      </script>
-    {{ end }}
   </head>
 
   <body>
@@ -47,7 +36,6 @@
     {{ if not .Site.BuildDrafts }}
       <script async src="//static.getclicky.com/101370339.js"></script>
       <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101370339ns.gif" /></p></noscript>
-      <!-- Global site tag (gtag.js) - Google Analytics -->
     {{ end }}
     <script src="//yihui.org/js/math-code.js"></script>
     <script type="text/x-mathjax-config">
