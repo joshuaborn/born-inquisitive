@@ -1,0 +1,75 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/approval-of-abortion-is-a-conservative-position.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-01-14
+draft: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: "SUMMARY GOES HERE"
+tags: ["opinion", "reproductive responsibility", "first-person"]
+title: 'Approval of Abortion is a Conservative Position'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Introduction
+
+Different people have radically different judgments about the practice of killing human fetuses or embryos as a method of fertility control, which is euphemistically described in the medical literature as "induced abortion of pregnancy" and in the vernacular as just "abortion." Some have compunction about this practice. Others are agreeable to it. Among those agreeable to the practice, some judge it to be merely morally neutral, while some judge it to be morally good.
+
+For the latter, the particulars of this judged moral goodness varies considerably by social context. In the United States, those who judge killing fetuses and embryos for fertility control as a moral good typically subscribe to some version of abortion-as-women's-liberation ideology, which is unsurprising given the prominence of "freedom" in the political mythology of the United States. However, in China, the goodness of abortion for fertility control is more likely to be construed as part of the duty of a family to act for the greater benefit of society at large, rather than individual freedom. [@nie2005behind]
+
+Regardless of whether any specific person views abortion as a method of fertility control as morally neutral or morally good, and regardless of particular social context and ideology, this article contends that approval of abortion as a method of fertility control is fundamentally a conservative position.
+
+This is done not to defame or ridicule abortion advocates, but to highlight an important point for those such as I who _do_ have compunction about the killing of fetuses and embryos as method of fertility control.
+
+
+## Definition of "Conservative" Used
+
+First of all, it should be noted that by "conservative" is not meant the definitions of "conservative" used to refer to right-wing politics in contrast to left-wing politics, such as "of or constituting a political party professing the principles of conservatism." [-@noauthor_conservative_nodate, 1b] Rather, by "conservative" is meant such definitions as "tending or disposed to maintain existing views, conditions, or institutions." [@noauthor_conservative_nodate, 2a]
+
+It is this disposition to maintain existing conditions that this article refers to. Approval of abortion as a method of fertility control is a conservative viewpoint because it _needs only to preserve the status quo._
+
+
+## _Status Quo_ of Abortion
+
+### Abortion is Very Ancient
+
+* Start with citations from Wikipedia article discussion Hippocratic Oath
+
+
+### Abortion is Very Common
+
+* 40 million abortions per year today
+* Look up abortions per year in U.S.
+* Estimates are just as high during Margaret Sanger's time
+
+
+### Opposition to Abortion is Relatively New
+
+* Roman Catholic church didn’t start to care about fetuses until the 18th century (Maybe start looking for this by looking up quickening as in "quick and the dead")
+
+
+## Implications
+
+The main thesis of this article is that those of us who have compunction about abortion as a method of fertility control must frame our strategies with the awareness that we desire a version of human civilization that has not yet existed. In the context of human history, our position is new, tenuous, and radical.
+
+
+## Conclusion
+
+
+
+## Citations
+
+::: {#refs}
+:::
