@@ -7,5 +7,6 @@
 .Rhistory
 .Rproj.user
 .Ruserdata
+SAS/
 data/
 output/*
