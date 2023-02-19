@@ -16,6 +16,7 @@ library(gtExtras)
 library(haven)
 library(here)
 library(readr)
+library(srvyr)
 library(tidyr)
 
 knitr::opts_chunk$set(
@@ -33,17 +34,25 @@ vital_births <- read_csv(
   here('data/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'),
   name_repair = 'universal'
 )
-fempreg_2017_2019 <- read_sas(
-  here('data/fempreg2017_2019.sas7bdat'),
-  #catalog_file = here('data/fempreg2017_2019.sas7bcat')
+preg2017_2019 <- read_sas(
+  here('data/d2017_2019fempreg.sas7bdat'),
+  #catalog_file = here('data/d2017_2019fempreg.sas7bcat')
 )
-femresp_2017_2019 <- read_sas(
-  here('data/femresp2017_2019.sas7bdat'),
-  catalog_file = here('data/femresp2017_2019.sas7bcat')
+fem2017_2019 <- read_sas(
+  here('data/d2017_2019femresp.sas7bdat'),
+  catalog_file = here('data/d2017_2019femresp.sas7bcat')
 )
-male_2017_2019 <- read_sas(
-  here('data/male2017_2019.sas7bdat'),
-  #catalog_file = here('data/male2017_2019.sas7bcat')
+preg2015_2017 <- read_sas(
+  here('data/d2015_2017fempreg.sas7bdat'),
+  #catalog_file = here('data/d2015_2017fempreg.sas7bcat')
+)
+preg2013_2015 <- read_sas(
+  here('data/d2013_2015fempreg.sas7bdat'),
+  #catalog_file = here('data/d2013_2015fempreg.sas7bcat')
+)
+preg2011_2013 <- read_sas(
+  here('data/d2011_2013fempreg.sas7bdat'),
+  #catalog_file = here('data/d2011_2013fempreg.sas7bcat')
 )
 ```
 
@@ -118,3 +127,46 @@ gt(census_counts) |>
   )
 ```
 
+```{r estimate-based-on-2017-2019-NSFG, dependson="load-data"}
+preg2017_2019 |> 
+  mutate(
+    OUTCOME = labelled(OUTCOME, c(
+      "LIVE BIRTH" = 1, # 7199
+      "INDUCED ABORTION" = 2, # 941
+      "STILLBIRTH" = 3, # 105
+      "MISCARRIAGE" = 4,  #  1654
+      "ECTOPIC PREGNANCY" = 5, #  123
+      "CURRENT PREGNANCY" = 6 #  193
+    )),
+    Abortions = if_else(OUTCOME == 2, 1, 0),
+    Births = if_else(OUTCOME == 1, 1, 0)
+  ) |> 
+  as_survey_design(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2017_2019,
+    nest = TRUE
+  ) |> 
+  group_by(DATEND) |> 
+  summarize(
+    Abortions = survey_total(Abortions, vartype = 'ci'),
+    Births = survey_total(Births, vartype = 'ci')
+  ) |> 
+  mutate(
+    Abortions.CI.Width = Abortions_upp - Abortions_low,
+    Percent.CI.Abortions = Abortions.CI.Width / Abortions,
+    Births.CI.Width = Births_upp - Births_low,
+    Percent.CI.Births = Births.CI.Width / Births
+  ) |>
+  rename(Year = DATEND) |> 
+  select(Year, starts_with('Abortions'), starts_with('Births'), everything()) |>
+  gt() |>
+  gt_theme_538() |>
+  fmt_number(
+    starts_with(c('Abortions', 'Births')),
+    decimal = 0
+  ) |>
+  fmt_percent(
+    starts_with('Percent.CI')
+  )
+```
