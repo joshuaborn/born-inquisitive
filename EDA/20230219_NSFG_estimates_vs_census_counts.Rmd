@@ -9,178 +9,112 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-library(data.table)
+library(dplyr)
+library(ggplot2)
+library(gt)
+library(gtExtras)
+library(haven)
 library(here)
-library(knitr)
-library(survey)
+library(readr)
+library(tidyr)
 
-source(here('R/helpers/NSFG/century_month.R'))
-source(here('R/helpers/NSFG/formats.R'))
-source(here('R/helpers/NSFG/load.R'))
-```
-
-```{r, load-data}
-vital_births <- fread(here('data/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'))
-guttmacher_pregnancies <- fread(here('data/guttmacher/NationalAndStatePregnancy_PublicUse.csv'))
-
-nsfg_preg2002 <- load_NSFG_data('2002', 'FemPreg')
-```
-
-```{r, process-data, dependson="load-data"}
-guttmacher_pregnancies[ ,
-  abortions_interpolated :=  year %in% c(
-      1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006, 2009, 2012, 2015
-  )
-]
-
-combined_census_counts <- guttmacher_pregnancies[
-  state == 'US' & !abortions_interpolated,
-  .(
-    Year = year,
-    Abortions = abortionstotal
-  )
-][
-  vital_births[,
-    .(
-      Year,
-      Births = as.integer(gsub(',', '', `Birth Number`))
-    )
-  ],
-  on = 'Year'
-]
-
-nsfg_2002_pregnancies <- copy(
-  nsfg_preg2002$Data[, .(
-    CASEID,
-    FINALWGT,
-    SECU_P,
-    SEST,
-    DATEND
-  )]
-)
-
-set_NSFG_variables_as_factors(
-  raw_data = nsfg_preg2002$Data,
-  dt = nsfg_2002_pregnancies,
-  formats_table = nsfg_preg2002$Formats,
-  variables = c(
-    OUTCOME = 'OUTCOME',
-    PREGEND1 = 'TE_45F',
-    PREGEND2 =  'TE_45F'
-  )
+knitr::opts_chunk$set(
+  cache = TRUE,
+  echo = FALSE,
+  fig.align = 'center'
 )
 ```
 
-```{r explore, dependson="process-data"}
-nsfg_2002_pregnancies[PREGEND1 == 'ECTOPIC OR TUBAL', .(
-  OUTCOME,
-  PREGEND1,
-  PREGEND2
-)]
-
-nsfg_2002_pregnancies[PREGEND2 == 'ECTOPIC OR TUBAL', .(
-  OUTCOME,
-  PREGEND1,
-  PREGEND2
-)]
-
-table(nsfg_2002_pregnancies$OUTCOME)
-```
-
-It appears that ectopic pregnancy is coded as its own outcome, even though presumably many if not most of those pregnancies ended by induced abortion.
-
-```{r}
-nsfg_2002_pregnancies[, end := to_century_month(DATEND)]
-
-nsfg_2002_pregnancies[is.na(end), table(OUTCOME)]
-```
-
-All the missing `DATEND` values are for current pregnancies.
-
-```{r}
-nsfg_2002_pregnancies[, `:=`(
-  Year = year_from_century_month(end),
-  abortions = as.integer(fifelse(
-    OUTCOME == 'INDUCED ABORTION',
-    1,
-    0
-  )),
-  births = as.integer(fifelse(
-    OUTCOME == 'LIVE BIRTH',
-    1,
-    0
-  ))
-)]
-
-nsfg_2002_svy <- svydesign(
-  ids = ~SECU_P,
-  strata = ~SEST,
-  data = nsfg_2002_pregnancies,
-  nest = TRUE,
-  weights = ~FINALWGT
+```{r, load-data, message=FALSE}
+guttmacher_raw <- read_csv(
+  here('data/guttmacher/NationalAndStatePregnancy_PublicUse.csv')
 )
-
-nsfg_2002_estimates <- svyby(
-  ~births + abortions,
-  ~Year,
-  nsfg_2002_svy,
-  svytotal,
-  vartype = c('se', 'ci')
-) |> as.data.table()
-
-nsfg_2002_estimates <- nsfg_2002_pregnancies[
-  ,
-  .(
-    births_n = sum(births),
-    abortions_n = .SD[OUTCOME == 'INDUCED ABORTION', .N],
-    ectopic_n = .SD[OUTCOME == 'ECTOPIC PREGNANCY', .N]
-  ),
-  by = Year
-][
-  nsfg_2002_estimates,
-  on = 'Year'
-]
+vital_births <- read_csv(
+  here('data/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'),
+  name_repair = 'universal'
+)
+fempreg_2017_2019 <- read_sas(
+  here('data/fempreg2017_2019.sas7bdat'),
+  #catalog_file = here('data/fempreg2017_2019.sas7bcat')
+)
+femresp_2017_2019 <- read_sas(
+  here('data/femresp2017_2019.sas7bdat'),
+  catalog_file = here('data/femresp2017_2019.sas7bcat')
+)
+male_2017_2019 <- read_sas(
+  here('data/male2017_2019.sas7bdat'),
+  #catalog_file = here('data/male2017_2019.sas7bcat')
+)
 ```
 
-For now, I'll leave the ectopic pregnancies aside, but might want to add these in later.
-
-```{r}
-nsfg_2002_estimates[
-  combined_census_counts,
-  on = 'Year'
-][
-  Year >= 1960 & Year < 2002,
-  .(
-    Year,
-    Births,
-    births = round(births),
-    births_n,
-    diff = Births - round(births),
-    ci_l.births = round(ci_l.births),
-    ci_u.births = round(ci_u.births),
-    width = round(ci_u.births - ci_l.births),
-    cover = Births > ci_l.births & Births < ci_u.births
+```{r, calculate-census-counts-by-year, dependson="load-data"}
+guttmacher_national <- guttmacher_raw |> 
+  filter(state == 'US') |>
+  select(-state, -notes) |>
+  mutate(abortions_interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
   )
-] |> kable()
+
+census_counts <- full_join(
+  guttmacher_national |> 
+    rename(Year = year, Total.Abortions = abortionstotal) |> 
+    filter(!abortions_interpolated) |> 
+    select(Year, Total.Abortions),
+  vital_births |> 
+    rename(Total.Births = Birth.Number) |> 
+    filter(Year >= 1973) |> 
+    select(Year, Total.Births),
+  by = join_by(Year)
+) |> arrange(Year)
 ```
 
-```{r}
-nsfg_2002_estimates[
-  combined_census_counts,
-  on = 'Year'
-][
-  Year >= 1960 & Year < 2002,
-  .(
-    Year,
-    Abortions,
-    abortions = round(abortions),
-    abortions_n,
-    ectopic_n,
-    diff = Abortions - round(abortions),
-    ci_l.abortions = round(ci_l.abortions),
-    ci_u.abortions = round(ci_u.abortions),
-    cover = Abortions > ci_l.abortions & Abortions < ci_u.abortions,
-    width = round(ci_u.abortions - ci_l.abortions)
+```{r plot-census-counts-by-year, dependson="calculate-census-counts-by-year", dpi=200, fig.width=9.6, fig.height=9.6, fig.retina=1.5}
+ggplot(
+  data = census_counts |>
+    pivot_longer(
+      starts_with('Total'),
+      values_drop_na = TRUE,
+      values_to = 'Count'
+    ) |>
+    arrange(Year),
+  mapping = aes(
+    y = Count,
+    x = Year,
+    color = name,
+    shape = name
   )
-] |> kable()
+) +
+  geom_point() +
+  scale_y_continuous(
+    breaks = \(x) seq(x[1], x[2], 5e5),
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA),
+    minor_breaks = \(x) seq(x[1], x[2], 25e4)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1]+1, x[2], 4),
+    expand = expansion(add = 1),
+    minor_breaks = \(x) seq(x[1]+1, x[2], 2)
+  ) + 
+  theme_bw() +
+  theme(
+    legend.position = 'bottom',
+    legend.title = element_blank(),
+    axis.ticks.y = element_blank()
+  )
 ```
+
+```{r print-table-of-census-counts-by-year, dependson="calculate-census-counts-by-year"}
+gt(census_counts) |>
+  gt_theme_538() |> 
+  sub_missing(
+    missing_text = ''
+  ) |> 
+  fmt_number(
+    starts_with('Total'),
+    drop_trailing_zeros = TRUE
+  )
+```
+
