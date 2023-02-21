@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "SUMMARY GOES HERE"
-tags: ["opinion", "reproductive responsibility", "first-person"]
+tags: ["opinion", "reproductive responsibility", "abortion", "first-person"]
 title: 'Approval of Abortion is a Conservative Position'
 ---
 
@@ -25,47 +25,78 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Different people have radically different judgments about the practice of killing human fetuses or embryos as a method of fertility control, which is euphemistically described in the medical literature as "induced abortion of pregnancy" and in the vernacular as just "abortion." Some have compunction about this practice. Others are agreeable to it. Among those agreeable to the practice, some judge it to be merely morally neutral, while some judge it to be morally good.
+Different people have radically different judgments about the practice of killing human fetuses or embryos as a method of fertility control, which is euphemistically described in the medical literature as "induced abortion of pregnancy" and in the vernacular as just "abortion." For instance, [discuss Gallup poll here].
 
-For the latter, the particulars of this judged moral goodness varies considerably by social context. In the United States, those who judge killing fetuses and embryos for fertility control as a moral good typically subscribe to some version of abortion-as-women's-liberation ideology, which is unsurprising given the prominence of "freedom" in the political mythology of the United States. However, in China, the goodness of abortion for fertility control is more likely to be construed as part of the duty of a family to act for the greater benefit of society at large, rather than individual freedom. [@nie_behind_2005]
+Among those who approve of this practice, how the approval is framed varies considerably by social context. In the United States, those who judge killing fetuses and embryos for fertility control as a moral good typically subscribe to some version of abortion-as-women's-liberation ideology, which is unsurprising given the prominence of "freedom" in the political mythology of the United States. However, in China, approval of abortion for fertility control is more likely to be construed as part of the duty of a family to act for the greater benefit of society at large, rather than individual freedom. [@nie_behind_2005]
 
-Regardless of whether any specific person views abortion as a method of fertility control as morally neutral or morally good, and regardless of particular social context and ideology, this article contends that approval of abortion as a method of fertility control is fundamentally a conservative position.
-
-This is done not to defame or ridicule abortion advocates, but to highlight an important point for those such as I who _do_ have compunction about the killing of fetuses and embryos as method of fertility control.
+Regardless of particular social context and ideology for the approval, this article contends that approval of abortion as a method of fertility control is, in the grand scheme of things, a conservative position. This conservatism has important ramifications for those of us who do have moral compunction about the practice.
 
 
 ## Definition of "Conservative" Used
 
 First of all, it should be noted that by "conservative" is not meant the definitions of "conservative" used to refer to right-wing politics in contrast to left-wing politics, such as "of or constituting a political party professing the principles of conservatism." [-@noauthor_conservative_nodate, 1b] Rather, by "conservative" is meant such definitions as "tending or disposed to maintain existing views, conditions, or institutions." [@noauthor_conservative_nodate, 2a]
 
-It is this disposition to maintain existing conditions that this article refers to. Approval of abortion as a method of fertility control is a conservative viewpoint because it _needs only to preserve the status quo._
+It is such a disposition to maintain existing conditions to which this article refers. Approval of abortion as a method of fertility control is a conservative viewpoint because such a viewpoint desires to preserve the _status quo._
 
 
 ## _Status Quo_ of Abortion
 
+Over the past several millennia and until today, induced abortion of pregnancy as a method of fertility control has been both very ancient and very common.
+
+
 ### Abortion is Very Ancient
+
+The ancient Greek physician Hippocrates who lived during the classical period (5th to 4th centuries B.C.E.) wrote of an induced abortion in his treatise _Nature of the Child:_
 
 > A female relative of mine once owned a very valuable singing girl who had relations with men, but who was not to become pregnant lest she lose her value. The singing girl had heard what women say to one another, that when a woman is about to conceive, the seed does not run out of her, but remains inside. She understood what she heard and always paid attention, and when she one time noticed that the seed did not run out of her, she told her mistress, and the case came to me. When I heard (sc. what had happened), I told her to spring up and down so as to kick her heels against her buttocks, and when she had sprung for the seventh time, the seed ran out on to the ground with a noise, and the girl on seeing it gazed at it and was amazed.
 >
-> How it looked I will recount: it was as if someone had remove the external shell of a raw egg, and the fluid part inside was visible through the internal membrane. Its appearance was somewhat as follows, to say as much as is needed: it was red and roundish; broad, white strands were seen to be present inside the membrane, pressed together with thick, red serum, and around the membrane on the outside there was bloody material. Through the middle of the membrane something narrow came out, which appeared to me to be an umbilical cord, and through this the movement of breath in and out first took place. From this the membrane spread out and completely enclosed the seed. [@hippocrates_nature_2012, 36-37]
+> How it looked I will recount: it was as if someone had removed the external shell of a raw egg, and the fluid part inside was visible through the internal membrane. Its appearance was somewhat as follows, to say as much as is needed: it was red and roundish; broad, white strands were seen to be present inside the membrane, pressed together with thick, red serum, and around the membrane on the outside there was bloody material. Through the middle of the membrane something narrow came out, which appeared to me to be an umbilical cord, and through this the movement of breath in and out first took place. From this the membrane spread out and completely enclosed the seed. [@hippocrates_nature_2012, 36-37]
 
+The casual way in which this encounter was described and the apparent triviality of the motive for killing the embryo is telling.
 
-> Polydectes also died soon afterwards, and then, as was generally thought, the kingdom devolved upon Lycurgus; and until his brother’s wife was known to be with child, he was king. But as soon as he learned of this, he declared that the kingdom belonged to her offspring, if it should be male, and himself administered the government only as guardian. Now the guardians of fatherless kings are called “prodikoi” by the Lacedaemonians. Presently, however, the woman made secret overtures to him, proposing to destroy her unborn babe on condition that he would marry her when he was a king of Sparta; and although he detested her character, he did not reject her proposition, but pretended to approve and accept it. He told her, however, that she need not use drugs to produce a miscarriage, thereby injuring her health and endangering her life, for he would see to it himself that as soon as her child was born it should be put out of the way. In this manner he managed to bring the woman to her full time, and when he learned that she was in labour, he sent attendants and watchers for her delivery, with orders, if a girl should be born, to hand it over to the women, but if a boy, to bring it to him, no matter what he was doing. [@plutarch_lives_1914, 210-211]
+The seminal _De materia medica_ of 1st century C.E. pharmacologist-botanist Dioscorides, which was widely read for more than a millennium, notes 66 substances that can be used as an abortifacient.[^list] [@dioscorides_materia_2000]
+
+[^list]: They are , 6, 18-19, 23-24, 24-25, 193, 367, 368-371, 372, 375, 567, 102-103, 106, 109, 55-56, 82-83, 244, 255, 280, 312, 315, 316-319, 323, 323-324, 327-328, 328-331, 351-352, 212, 213, 222-223, 492, 496, 513-514, 517-518, 519, 523-524, 527-528, 532, 535, 404, 408, 412, 415, 420-423, 423-427, 428-431, 436, 443, 455, 460, 479, 480-483, 483-484, 696-699, 700-703, 707-708, 726-727, 728, 731, 733-734, 736, 739, 624, 806-807, 807, 778, 779-780]
+
+Soranus, who lived in either the 1st or 2nd century C.E. describes procedures for inducing abortion in his _Gynecology,_ including some procedures that use substances described by Dioscorides. [@soranus_gynecology_1991, 66-68]
+
+It is clear that the ancients knew of ways to kill embryos and fetuses _in utero._ Indeed, given its prevalence in widely promulgated texts of the Greco-Roman era, knowledge of how to induce abortion of pregnancy was relatively accessible. Gleaning what were the attitudes toward abortion specifically as method of fertility control, however, is more complicated, since there were no nationally representative opinion polls in antiquity.
+
+However, it is clear that at least one famous figure, the philosopher Aristotle, endorsed abortion specifically _as a method of fertility control._ Writing in the 4th century B.C.E., he recommends in his _Politics:_
+
+> For there should be a limit to the amount of child-getting, but if some couple together and get offspring contrary to this, abortion should be procured before perception and life appear (what is and is not holy will be defined by perception and life).
+
+While Aristotle specifically endorses induced abortion of pregnancy as a method of fertility control, this is only when abortion is induced before "perception and life" appear, a persistent theme throughout his writings.[cite others] This an early example of what might be called "threshold" attitudes toward abortion as fertility control, which posit that killing fetuses or embryos as a method family planning is acceptable before a certain point in their development, but not killing them after this threshold. Such threshold attitudes would include those that posit an inflection point such as "personhood," "viability," "sentience," etc., occurring _in utero._
+
+Mentioning Aristotle's views on abortion as fertility control is not to deny that there was a diversity of moral viewpoints on abortion in antiquity, much as the morality of abortion is a controversial subject in modern times. However, interpretation of ancient Greco-Roman attitudes toward induced abortion by modern sensibilities is made more complicated by the fact that infanticide and child abandonment as a form of family planning was not just common, but considered the legal right of male heads of households in ancient times.
+
+Thus, proposing that children should be protected from being killed arbitrarily according to the wishes of their _pater familias_ would have been considered a strange and foreign position in antiquity.[^extreme] Therefore, when the morality of induced abortion of pregnancy was debated in antiquity, it was typically not debated with regards to the morality of killing unwanted children, which was assumed to be acceptable, but with regard to other considerations. For instance, Soranus relates how there was much disagreement about induced abortion in his day in response to the apparent contradiction between Hippocrates' story about the singing girl and the proscription on pessaries used for abortion in the Hippocratic Oath:
+
+[^extreme]: Such positions might even have been considered "extremist" for their day.
 
 > A contraceptive differs from an abortive, for the first does not let conception take place, while the latter destroys what has been conceived. Let us, therefore, call the one "abortive" _(phthorion)_ and the other "contraceptive" _(atokion)._ And an "expulsive" _(ekbolion)_ some people say is synonymous with an abortive; others, however, say that there is a difference because an expulsive does not mean drugs but shaking and leaping, .... For this reason they say that Hippocrates, although prohibiting abortives, yet in his book "On the Nature of the Child" employs leaping with the heels to the buttocks for the sake of expulsion. But a controversy has arisen. For one party banishes abortives, citing the testimony of Hippocrates who says: "I will give to no one an abortive"; moreover, because it is the specific task of medicine to guard and preserve what has been engendered by nature. The other party prescribes abortives, but with discrimination, that is, they do not prescribe them when a person wishes to destroy the embryo because of adultery or out of consideration for youthful beauty; but only to prevent subsequent danger in parturition if the uterus is small and not capable of accommodating the complete development, or if the uterus at its orifice has knobby swellings and fissures, or if some similar difficulty is involved. And they say the same about contraceptives as well, and we too agree with them. And since it is safer to prevent conception from taking place than to destroy the fetus, we shall now first discourse upon such prevention. [@soranus_gynecology_1991, 62-63]
 
-> Yet if conception has taken place, one must first, for 30 days, do the opposite of what we said earlier. But in order that the embryo be separated, the won1an should have [more violent exercise], walking about energetically and being shaken by means of draught animals; she should also leap energetically and carry things which are heavy beyond her strength. She should use diuretic decoctions which also have the power to bring on menstruation, and empty and purge the abdomen 'with relatively pungent clysters; sometimes using warm and sweet olive oil as injections, sometimes anointing the whole body thoroughly therewith and rubbing it vigorously, especially around the pubes, the abdomen, and the loins, bathing daily in sweet water which is not too hot, lingering in the baths and drinking first a little wine and living on pungent food. If this is without effect, one must also treat locally by having her sit in a bath of a decoction of linseed, fenugreek, mallow, marsh mallow, and wormwood. She must also use poultices of the same substances and have injections of old oil, alone or together with rue juice or maybe with honey, or of iris oil, or of absinthium together with honey, or of panax balm or else of spelt together with rue and honey, or of Syrian unguent. And if the situation remains the same she must no longer apply the common poultices, but those made of meal of lupines together with ox bile and absinthium, [and she must use] plasters of a similar kind.
->
-> For a woman who intends to have an abortion, it is necessary for two or even three days beforehand to take protracted baths, little food and to use softening vaginal suppositories; also to abstain from wine; then to be bled and a relatively great quantity taken away. For the dictum of Hippocrates in the "aphorisms," even if not true in a case of constriction, is yet true of a healthy woman: "A pregnant woman if bled, miscarries." For just as sweat, urine or faeces are excreted if the parts containing these substances slacken very much, so the fetus falls out after the uterus dilates. Following the venesection one must shake her by means of draught animals (for now the shaking is more effective on the parts which previously have been relaxed) and one must use softening vaginal suppositories. But if a woman reacts
-unfavorably to venesection and is languid, one must first relax the parts by means of sitz baths, full baths, softening vaginal suppositories, by keeping her on water and limited food, and by means of aperients and the application of a softening clyster; afterwards one must apply an abortive vaginal suppository. Of the latter one should choose those which are not too pungent, that they may not cause too great a sympathetic reaction and heat. And of the more gentle ones there exist for instance: Of myrtle, wallflower seed, bitter lupines equal quantities, by means of water, mould troches the size of a bean. Or: Of rue leaves 3 drachms, of myrtle 2 drachms and the same of sweet bay, mix with wine in the same
-way, and give her a drink. Another vaginal suppository which produces abortion with relatively little danger: Of wallflower, cardamom, brimstone, absinthium, myrrh, equal quantities, mould with water. And she who intends to apply these things should be bathed beforehand or made to relax by sitz baths; and if after some time she brings forth nothing, she should again be relaxed by sitz baths and for the second time a suppository should be applied. In addition, many different things have been mentioned by others; one must, however, beware of things that are too powerful and of separating the embryo by means of something sharp-edged, for danger arises that some of the adjacent parts be wounded. After the abortion one must treat as for inflammation. [@soranus_gynecology_1991, 66-68]
+
+Child abandonment or infanticide may simply have been regarded as a safer alternative to induced abortion of pregnancy. For instance,
+
+> Polydectes also died soon afterwards, and then, as was generally thought, the kingdom devolved upon Lycurgus; and until his brother’s wife was known to be with child, he was king. But as soon as he learned of this, he declared that the kingdom belonged to her offspring, if it should be male, and himself administered the government only as guardian. Now the guardians of fatherless kings are called “prodikoi” by the Lacedaemonians. Presently, however, the woman made secret overtures to him, proposing to destroy her unborn babe on condition that he would marry her when he was a king of Sparta; and although he detested her character, he did not reject her proposition, but pretended to approve and accept it. He told her, however, that she need not use drugs to produce a miscarriage, thereby injuring her health and endangering her life, for he would see to it himself that as soon as her child was born it should be put out of the way. In this manner he managed to bring the woman to her full time, and when he learned that she was in labour, he sent attendants and watchers for her delivery, with orders, if a girl should be born, to hand it over to the women, but if a boy, to bring it to him, no matter what he was doing. [@plutarch_lives_1914, 210-211]
+
+
+Aristotle may very well have thought of his endorsement of abortion for fertility control as a kinder alternative to exposure.
+
+> As regards whether to expose or nourish what is born, let the law be to nourish nothing that is defective but not to expose anything born, where the arrangement of customs forbids [more than a certain number of children], merely because of numbers. 
+
+
+* More discussion of _patria potestas_
+* Infanticide banned by Valentinian, but common in Christian era
+* Infanticide an issue in 19th century Great Britain and 20th century China
 
 
 ### Abortion is Very Common
 
-* 40 million abortions per year today
-* Look up abortions per year in U.S.
-* Estimates are just as high during Margaret Sanger's time
+* 40 million abortions per year worldwide paper
+* Chart of abortions in U.S. based on Guttmacher APC numbers
+* Estimates from Margaret Sanger for early 20th century
 
 
 ## Implications
@@ -84,3 +115,6 @@ The main thesis of this article is that those of us who have compunction about a
 
 ::: {#refs}
 :::
+
+
+## Footnotes
