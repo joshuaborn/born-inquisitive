@@ -64,11 +64,7 @@ It is clear that at least one famous figure, the philosopher Aristotle, endorsed
 
 > As regards whether to expose or nourish what is born, let the law be to nourish nothing that is defective but not to expose anything born, where the arrangement of customs forbids [more than a certain number of children], merely because of numbers. For there should be a limit to the amount of child-getting, but if some couple together and get offspring contrary to this, abortion should be procured before perception and life appear (what is and is not holy will be defined by perception and life). [@simpson_politics_1997, 1335b19]
 
-While Aristotle specifically endorses induced abortion of pregnancy as a method of fertility control, this is only when abortion is induced before "perception and life" appear, a persistent theme throughout his writings.
-
-* Cite other references to threshold attitude of Aristotle
-
-This an early example of what might be called "threshold" attitudes toward abortion as a method of fertility control, which posit that killing fetuses or embryos as a method for family planning is acceptable before a certain point in their development, but killing them after this threshold is unacceptable. Such threshold attitudes would include those that posit an inflection point such as "personhood," "viability," "sentience," etc., occurring _in utero._
+While Aristotle specifically endorses induced abortion of pregnancy as a method of fertility control, this is only when abortion is induced before "perception and life" appear. This an early example of what might be called "threshold" attitudes toward abortion as a method of fertility control, which hold that killing fetuses or embryos as a method for family planning is acceptable before a certain point in their development, but killing them after this threshold is unacceptable. Such threshold attitudes include those that posit an inflection point such as "personhood," "viability," "sentience," etc., occurring _in utero._
 
 Description of Aristotle's views on abortion as a method of fertility control is not to deny that there were a diversity of moral viewpoints on abortion in antiquity, much as the morality of abortion is a controversial subject in modern times. However, interpretation of ancient Greco-Roman attitudes toward induced abortion by modern sensibilities is made more complicated by the fact that infanticide and child abandonment were not just common methods of fertility control, but considered the legal right of male heads of households in ancient times.
 
@@ -76,7 +72,7 @@ This right of the patriarch of a household, or _pater familias,_ was eventually 
 
 Sometimes decisions not to raise a child took the form of an overt act of killing, such as drowning a newborn in a bucket, but the practice of exposure, in which a neonate was abandoned in a public place, was also common. When exposure was done, the death of the child was likely, but there was always the possibility that someone else would take the child. This is known to have sometimes occurred, since in the later imperial period the legal status of children exposed by one _pater familias_ only to be raised by another became a political issue. [@grubbs_infant_2013]
 
-Regardless of how unwanted children were disposed of, it was a legal right according _patria potestas_ and similar laws. Proposing that children should be protected from aribtrary death would thus have been considered a strange opinion in antiquity.[^extreme] Therefore, when the morality of induced abortion of pregnancy was debated, it was typically not debated with regards to the morality of killing unwanted children, which was tacitly assumed by social context, but with regard to other considerations. For instance, Soranus relates how there was much disagreement about induced abortion in his day:
+Regardless of how unwanted children were disposed of, _patria potestas_ and similar laws enshrined the legality of the practice. Proposing that children should be protected from aribtrary death would thus have been considered a strange opinion in antiquity.[^extreme] Therefore, when the morality of induced abortion of pregnancy was debated, it was typically not debated with regards to the morality of killing unwanted children, which was tacitly assumed by social context, but with regard to other considerations. For instance, Soranus relates how there was much disagreement about induced abortion in his day:
 
 [^extreme]: Such positions might even have been considered "extremist" for their day.
 
@@ -84,7 +80,7 @@ Regardless of how unwanted children were disposed of, it was a legal right accor
 > 
 > But a controversy has arisen. For one party banishes abortives, citing the testimony of Hippocrates who says: "I will give to no one an abortive"; moreover, because it is the specific task of medicine to guard and preserve what has been engendered by nature. The other party prescribes abortives, but with discrimination, that is, they do not prescribe them when a person wishes to destroy the embryo because of adultery or out of consideration for youthful beauty; but only to prevent subsequent danger in parturition if the uterus is small and not capable of accommodating the complete development, or if the uterus at its orifice has knobby swellings and fissures, or if some similar difficulty is involved. And they say the same about contraceptives as well, and we too agree with them. And since it is safer to prevent conception from taking place than to destroy the fetus, we shall now first discourse upon such prevention. [@soranus_gynecology_1991, 62-63]
 
-Soranus relates a lot of information here about disagreement over the morality of killing embryos or fetuses, but this passage is notable because there is no consideration as to whether it is morally wrong to kill embryos or fetuses like it is morally wrong to kill a young child. This is likely absent because the idea that it was morally wrong to kill a young child was not yet widely accepted. 
+This passage is notable because there is no consideration as to whether it is morally wrong to kill embryos or fetuses _per se_, like it is morally wrong to kill a young child. This is likely absent because the idea that it was morally wrong to kill a young child was not yet widely accepted. 
 
 Soranus might appear to describe an attitude of using induced abortion only to protect the life of the mother when he describes those who prescribe abortives "with discrimination." However, he immediately judges this attitude about abortion to be similar to attitudes about contraception. He demonstrates that he knows the difference between contraception and abortion, so it is unlikely that the reservations he describes about inducing abortion stem from compunction about killing embryos or fetuses, at least in his own attitudes.
 
@@ -98,11 +94,14 @@ In addition to preventing moral reflection about induced abortion, infanticide a
 > 
 > In this manner he managed to bring the woman to her full time, and when he learned that she was in labour, he sent attendants and watchers for her delivery, with orders, if a girl should be born, to hand it over to the women, but if a boy, to bring it to him, no matter what he was doing. [@plutarch_lives_1914, 210-211]
 
-While stories about Lycurgus are semi-mythical and so do not tell us much about the 9th century B.C.E. when he is supposed to have lived, this story does reflect on the sensibilities of Plutarch's 1st or 2nd century C.E. audience, who would have been familiar with the attitude that infanticide or child abandonment were safer alternatives to killing embryos or fetuses.
+While stories about Lycurgus are semi-mythical and so do not tell us much about attitudes in the 9th century B.C.E. when he is supposed to have lived, this story does reflect on the sensibilities of Plutarch's 1st or 2nd century C.E. audience, who would have been familiar with the attitude that infanticide or child abandonment were safer alternatives to killing embryos or fetuses.
 
 * Infanticide banned by Valentinian, but common in Christian era
-* Infanticide an issue in 19th century Great Britain and 20th century China
-* Aristotle-style threshold attitudes prevalent in the Christian era and codified into law as quickening
+* Infanticide continued to be an issue in 19th century Great Britain and 20th century China
+* Understanding attitudes toward abortion in Christian era complicated by perception of contraception as a sin
+* Aristotle-style threshold attitudes toward abortion prevalent in the Christian era
+    * Example of Augustine _Questiones Exodi,_ 80.1439-1445
+    * Example of quickening in law
 
 
 ### Abortion is Common
