@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "SUMMARY GOES HERE"
-tags: ["opinion", "history", "reproductive responsibility", "abortion", "first-person"]
+tags: ["opinion", "history", "reproductive responsibility", "abortion", "third-person"]
 title: 'Approval of Abortion is Conservative'
 ---
 
@@ -31,12 +31,12 @@ Different people have radically different judgments about the practice of killin
 
 Among those who approve of this practice, how the approval is framed varies considerably by social context. In the United States, those who judge killing fetuses and embryos for fertility control as a moral good typically subscribe to some version of abortion-as-women's-liberation ideology, which is unsurprising given the prominence of "freedom" in the political mythology of the United States. However, in China, approval of abortion for fertility control is more likely to be construed as part of the duty of a family to act for the greater benefit of society at large, rather than individual freedom. [@nie_behind_2005]
 
-Regardless of particular social context and ideology for the approval, this article contends that approval of abortion as a method of fertility control is a conservative position. This conservatism has important ramifications for those of us who do have moral compunction about the practice.
+Regardless of particular social context and ideology for the approval, this article contends that approval of abortion as a method of fertility control is a conservative position. Those who oppose induced abortion as a method of fertility control must understand this conservatism in order to frame their social criticism in historical context.
 
 
 ## Definition of "Conservative" Used
 
-First of all, it should be noted that by "conservative" is not meant the definition of "conservative" used to refer to right-wing politics in contrast to left-wing politics, such as "of or constituting a political party professing the principles of conservatism." [-@noauthor_conservative_nodate, 1b] Rather, by "conservative" is meant such definitions as "tending or disposed to maintain existing views, conditions, or institutions." [@noauthor_conservative_nodate, 2a] Approval of abortion is conservative because it is the preservation of the _status quo._
+First of all, it should be noted that by "conservative" is not meant the definition of "conservative" used to refer to right-wing politics in contrast to left-wing politics, such as "of or constituting a political party professing the principles of conservatism." [-@noauthor_conservative_nodate, 1b] Rather, by "conservative" is meant such definitions as "tending or disposed to maintain existing views, conditions, or institutions." [@noauthor_conservative_nodate, 2a] Approval of abortion is conservative precisely because it is a viewpoint disposed to preserve the _status quo._
 
 
 ## _Status Quo_ of Abortion
@@ -97,7 +97,7 @@ In addition to preventing moral reflection about induced abortion, infanticide a
 
 While stories about Lycurgus are semi-mythical and so do not tell us much about attitudes in the 9th century B.C.E. when he is supposed to have lived, this story does reflect on the sensibilities of Plutarch's 1st or 2nd century C.E. audience, who would have been familiar with the attitude that infanticide or child abandonment were safer alternatives to induced abortion.
 
-Due to the rules of royal succession, Lycurgus is more interested in the child if a boy is born than a girl. This highlights the fact that the ancients could use infanticide and child abandonment for more purposes than they could use induced abortion. For instance, a popular use of induced abortion today is sex-selective abortion, which occurs when parents screen the sex of a fetus and have it killed if it is an unwanted sex, typically female. This practice results in unbalanced sex ratios in several countries. [@chao_systematic_2019]
+Due to the rules of royal succession, Lycurgus is more interested in the child if it is a boy than if it is a girl. This highlights the fact that the ancients could use infanticide and child abandonment for more purposes than they could use induced abortion. For instance, a popular use of induced abortion today is sex-selective abortion, which occurs when parents screen the sex of a fetus and have it killed if it is an unwanted sex, typically female. This practice results in unbalanced sex ratios in several countries. [@chao_systematic_2019]
 
 Sex-selective abortion could not be done in antiquity, since ultrasound or another method of reliably determining the sex of a fetus were not available. This could be done with infanticide or child abandonment, however. For instance, the Oxyrhynchus Papyri contains a letter written in Egypt during the Roman era by a gentleman by the name of Hilarion to his wife Alis:
 
@@ -111,7 +111,7 @@ Thus, there must have been some in antiquity who saw infanticide and child aband
 
 The enshrinement in _patria potestas_ of the legal right to dispose of unwanted children by infanticide and child abandonment was slowly eroded in the late Roman Empire until infanticide was finally outlawed in 374 C.E. during the overlapping reigns of emperors Valentinian, Valens, and Gratian. A few decades later, the Visigoths sacked Rome, and in time the (western) Roman Empire collapsed, but the _Lex Visigothorum_ also outlawed infanticide. [@obladen_right_2016] 
 
-Despite the proscription of infanticide and child abandonment by some legal codes, the practices persisted. Pope Innocent III, reigning in the 13th century C.E., was so disturbed by the number of infant corpses being retrieved from the Tiber River in Rome by fisherman that he commissioned a foundling home to take in unwanted infants. [@grubbs_infant_2013] This was a widely used strategy, but to very limited success, as oftentimes foundling homes themselves had such high infant mortality rates that they were perceived to be not much better than exposure, and authorities struggled to institute policies to deal with infanticide well into the 19th and 20th centuries C.E. [@kilday_history_2013]
+Despite the proscription of infanticide and child abandonment by some legal codes, the practices persisted. Pope Innocent III, reigning in the 13th century C.E., was so disturbed by the number of infant corpses being retrieved from the Tiber River in Rome by fishermen that he commissioned a foundling home to take in unwanted infants. [@grubbs_infant_2013] This was a widely used strategy, but to very limited success, as oftentimes foundling homes themselves had such high infant mortality rates that they were perceived to be not much better than exposure, and authorities struggled to institute policies to deal with infanticide well into the 19th and 20th centuries C.E. [@kilday_history_2013]
 
 This inability of the authorities to eliminate infanticide in Europe throughout the late medieval and early modern periods despite the practice being outlawed was paralleled in other parts of the world. Curiously, ameliorating infanticide became a _cause célèbre_ of European missionaries to China, leading to infanticide in East Asia being more well known for a time, despite infanticide being a social problem in Europe during the same time frame, as well. [@mungello_drowning_2008]
 
@@ -130,11 +130,11 @@ This inability of the authorities to eliminate infanticide in Europe throughout 
 
 ## Implications
 
-The main thesis of this article is that those of us who have compunction about abortion as a method of fertility control must frame our strategies with the awareness that we desire a version of human civilization that has not yet existed. In the context of human history, our position is new, tenuous, and radical.
+* The political framing of conservative vs. "progressive" is backwards with regard to abortion
 
 For those who have compunction about abortion,
 
-* There is no golden era state of affairs to return to. There are just millennia of infanticide, child abandonment, and feticide. Conservative attitudes are not helping.
+* There is no golden era state of affairs to return to. There are just millennia of infanticide, child abandonment, and abortion.
 * Deadlock perpetuates abortion. This is particularly relevant when it comes to how to engage with politics, if at all.
 
 
