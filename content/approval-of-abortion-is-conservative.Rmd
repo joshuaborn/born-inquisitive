@@ -39,13 +39,7 @@ Regardless of particular social context and ideology for the approval, this arti
 First of all, it should be noted that by "conservative" is not meant the definition of "conservative" used to refer to right-wing politics in contrast to left-wing politics, such as "of or constituting a political party professing the principles of conservatism." [-@noauthor_conservative_nodate, 1b] Rather, by "conservative" is meant such definitions as "tending or disposed to maintain existing views, conditions, or institutions." [@noauthor_conservative_nodate, 2a] Approval of abortion is conservative precisely because it is a viewpoint disposed to preserve the _status quo._
 
 
-## _Status Quo_ of Abortion
-
-Induced abortion of pregnancy as a method of fertility control is both very ancient and very common.
-
-
-### Abortion is Ancient
-
+## Brief History of Views on Induced Abortion of Pregnancy
 
 The ancient Greek[^eurocentric] physician Hippocrates who lived during the classical period (5th to 4th centuries B.C.E.) wrote of a story in his treatise _On the Nature of the Child:_
 
@@ -70,9 +64,6 @@ It is clear that at least one famous figure, the philosopher Aristotle, endorsed
 While Aristotle specifically endorses induced abortion of pregnancy as a method of fertility control, this is only when abortion is induced before "perception and life" appear. This an early example of what might be called "threshold" attitudes toward abortion as a method of fertility control, which hold that killing fetuses or embryos as a method for family planning is acceptable before a certain point in their development, but killing them after this threshold is unacceptable. Such threshold attitudes include those that posit an inflection point such as "personhood," "viability," "sentience," etc., occurring _in utero._
 
 Description of Aristotle's views on abortion as a method of fertility control is not to deny that there were a diversity of moral viewpoints on abortion in antiquity, much as the morality of abortion is a controversial subject in modern times. However, interpretation of ancient Greco-Roman attitudes toward induced abortion by modern sensibilities is made more complicated by the fact that infanticide and child abandonment were not just common methods of fertility control, but considered the legal right of male heads of households.
-
-
-#### Legal Right to Infanticide
 
 This right of the patriarch of a household, or _pater familias,_ was eventually codified in Roman law by the _patria potestas,_ which were mainly laws pertaining to inheritance. The _patria potestas_ recognized that the _pater familias_ wielded _jus vitae ac necis_ (literally "the right of life and death") over the children of the household, and could choose to raise, abandon, or outright kill whichever children he pleased. [@obladen_right_2016]
 
@@ -118,9 +109,6 @@ Despite the proscription of infanticide and child abandonment by some legal code
 
 This inability of the authorities to eliminate infanticide in Europe throughout the late medieval and early modern periods despite the practice being outlawed was paralleled in other parts of the world. Curiously, ameliorating infanticide became a _cause célèbre_ of European missionaries to China, leading to infanticide in East Asia being more well known for a time, despite infanticide being a social problem in Europe during the same time frame, as well. [@mungello_drowning_2008]
 
-
-#### Christian Proscription of Contraception
-
 Much as understanding pre-Christian civilization's views on induced abortion are complicated by the fact that the killing of infants was viewed as a legal right of patriarchs in the Greco-Roman era, understanding views on induced abortion in the Christian era is complicated by the fact that contraception was (and in some cases, still is) viewed as a sin by prominent interpretations of Christianity.
 
 Augustine, who lived during the 4th and 5th centuries C.E., is considered a saint in the Catholic Church, the Eastern Orthodox Church, and the Anglican Communion and was highly influential on early Christianity. Augustinian doctrine exalts chastity and considers any sexual intercourse except for the purpose of procreation to be sinful. This stems from a general attitude of avoiding excess or gluttony. In his treatise _The Good of Marriage,_ Augustine writes:
@@ -147,7 +135,36 @@ Furthermore, both kinds of judgement can be occurring in the commentary of Chris
 
 * Augustine on abortion (_Questiones Exodi,_ 80.1439-1445)
 
-With attitudes changing again and again throughout the centuries, trying to summarize views on infanticide, induced abortion, and contraception during throughout the Christian era would likely require a book-length treatment and is beyond the scope of this article. However, a basically Aristotlean-Augustinian viewpoint was popular enough to be codified into laws as late as the 18th century C.E. in the United States.
+With attitudes changing again and again throughout the centuries, trying to summarize views on infanticide, induced abortion, and contraception during throughout the Christian era would likely require a book-length treatment and is beyond the scope of this article. However, a basically Aristotlean-Augustinian threshold-type attitude was popular enough to be codified into laws of the United States.[^gump]
+
+[^gump]: This discussion of the history of United States laws pertaining to quickening owes considerably to [@gump].
+
+The threshold that developed in English common law for this purpose was called "quickening." When a pregnant woman first felt movement from the embryo or fetus inside of her, she was said to be "quick with child." This was taken to be the beginning of "perception and life" that Aristotle talked about so many centuries before, and the inflection point after which the child was entitled legal protections. 
+
+William Blackstone wrote in the seminal 18th century treatise on English common law _Commentaries on the Laws of England:_
+
+> Life is the immediate gift of God, a right inherent by nature in every individual; and it begins in contemplation of law as soon as an infant is able to stir in the mother's womb. For if a woman is quick with child, and by a potion, or otherwise, killeth it in her womb; or if any one beat her, whereby the child dieth in her body, and she is delivered of a dead child; this, though not murder, was by the ancient law homicide or manslaughter. [@blackstone_commentaries_1775, vol 1, ch 1, p 129]
+
+Because the several states lacked statute law on the matter, the United States of America after its creation inherited English common law regarding induced abortion of pregnancy. In 1821, Connecticut was the first of the states to enact its own statue regarding induced abortion of pregnancy, and quickening was stipulated as the Aristolean-Augustinian threshold for protection of a child.
+
+> Every person who shall, wilfully and maliciously, adminster to, or cause to be administered to, or taken by, any person or persons, any deadly poison, or other noxious and destructive substance, with an intention him, her, or them, thereby to murder, or there to cause or procure miscarriage of any woman, then being quick with child, and shall be thereof duly convicted, shall suffer imprisonment, in newgate prison, during his natural life, or for such other term as the court having cognizance of the offence, shall determine.
+
+Other states followed with similar statutes, also using quickening as an Aristotlean-Augustinian threshold. Virginia is notable for creating a two-tiered statute with separate levels of punishment for inducing abortion before or after quickening.
+
+> Any free person who shall administer to any pregnant woman, any medicine, drug or substance whatever, or use or employ any instrument or other means with intent to destroy the child with which such woman may be pregnant, or to produce abortion or miscarriage, and shall thereby destroy such child, or produce such abortion or miscarriage, unless the same shall have been done to preserve the life of such woman, shall be punished, if the death of a quick child be thereby produced, by confinement in the penitentiary, for not less than one nor more than five years, or if the death of a child, not quick, by thereby produced, by confinement in the jail for not less than one nor more than twelve months.
+
+The 18th century, however, was also a time of rapid scientific development. Karl Ernst von Baer published _Ovi Mammalium et Hominis Genesi_ in 1827 and _Über Entwickelungsgeschichte der Thiere_ in 1828. With greater awareness of the workings of mammalian development biology, concepts like quickening were increasingly seen as folk pseudo-knowledge.
+
+A select committee report in the Ohio state senate summed up this change in attitude:
+
+> The erroneous opinion has been entertained by the unthinking---and our law has favored the idea---that the life of the foetus commences only with quickening, and hence the conclusion that to destroy the embryo before that period is not child-murder, but only a venial offense. No opinion could be more erroneous. Quickening is generally purely mechanical. The uterus, in consequence of its enlargement, rises from the cavity of the pelvis to that of the abdomen. Hence the sensation of motion.
+> 
+> The period of quickening is uncertain. Some women are not conscious of foetal motion during the whole period of pregnancy. Others are sensible of it much before the usual time. Physiological researches have demonstrated that it exists in the early stages of utero-gestation, but it is too feeble to be perceived by the mother. The law now is settled, and it has averred, in most pithy and expressive language, that "quick with child is having conceived;" but our statutes have made an unnatural and unscientific distinction. Let it be proclaimed to the world, and let it be impressed upon the conscience of every woman in the land, "that the willful killing of a human being, at any stage of its existence, is murder."
+
+Throughout the 18th century, legislatures of the several states of the United States moved away from using quickening as an Aristotlean-Augustinian threshold. Some passed new statutes that simply removed any reference to quickening from the old statute. Maine is notable for having explicitly rejected quickening as a threshold in the text of its new statute.
+
+> Every person, who shall administer to any woman pregnant with child, whether such child be quick or not, any medicine, drug or substance whatever, or shall use or employ any instrument or other means whatever, with intent to destroy such child, and shall thereby destroy such child before its birth, unless the same shall have been done as necessary to preserve the life of the mother, shall be punished by imprisonment in the state prison, not more than five years, or by fine, not exceeding one thousand dollars, and imprisonment in the county jail, not more than one year.
+
 
 * Quickening transition
      * Blackstone, William. (1765) Commentaries on the Laws of England, vol.1, ch,1. p.129. Dublin. https://hdl.handle.net/2027/mdp.35112203967999?urlappend=%3Bseq=251
@@ -157,18 +174,16 @@ With attitudes changing again and again throughout the centuries, trying to summ
      * Revised Statutes of Maine, Ch. 160 §13 (Offenses Against Moral Decency, Procuring abortion; 1840) http://lldc.mainelegislature.org/Open/RS/RS1840/RS1840_c160.pdf
 
 
-#### Summary
+This is largely the state of the laws regarding killing fetuses and embryos that birth control pioneer Margaret Sanger lived in. 
 
+* Comstock law
+* Estimates from Margaret Sanger for early 20th century
 
-
-### Abortion is Common
-
-* 40 million abortions per year worldwide paper
 * Chart of abortions in U.S. based on Guttmacher APC numbers
+* 40 million abortions per year worldwide paper
 
 ![Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute.[@maddow-zimet_pregnancies_2022]](/images/Guttmacher_APC_abortion_totals.png){alt="A plot with the number of induced abortions of pregnancy in the United States on the y-axis and the year on the x-axis."}
 
-* Estimates from Margaret Sanger for early 20th century
 
 
 ## Implications
@@ -183,7 +198,7 @@ For those who have compunction about abortion,
 
 For those who advocate abortion,
 
-* You are not selling anything new. "Progressive" is self-aggrandizing foolishness.
+* This is not new.
 
 
 
