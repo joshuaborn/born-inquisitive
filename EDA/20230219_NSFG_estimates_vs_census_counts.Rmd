@@ -36,7 +36,7 @@ vital_births <- read_csv(
 )
 preg2017_2019 <- read_sas(
   here('data/d2017_2019fempreg.sas7bdat'),
-  #catalog_file = here('data/d2017_2019fempreg.sas7bcat')
+  catalog_file = here('data/d2017_2019fempreg.sas7bcat')
 )
 fem2017_2019 <- read_sas(
   here('data/d2017_2019femresp.sas7bdat'),
@@ -44,15 +44,15 @@ fem2017_2019 <- read_sas(
 )
 preg2015_2017 <- read_sas(
   here('data/d2015_2017fempreg.sas7bdat'),
-  #catalog_file = here('data/d2015_2017fempreg.sas7bcat')
+  catalog_file = here('data/d2015_2017fempreg.sas7bcat')
 )
 preg2013_2015 <- read_sas(
   here('data/d2013_2015fempreg.sas7bdat'),
-  #catalog_file = here('data/d2013_2015fempreg.sas7bcat')
+  catalog_file = here('data/d2013_2015fempreg.sas7bcat')
 )
 preg2011_2013 <- read_sas(
   here('data/d2011_2013fempreg.sas7bdat'),
-  #catalog_file = here('data/d2011_2013fempreg.sas7bcat')
+  catalog_file = here('data/d2011_2013fempreg.sas7bcat')
 )
 wgt2011_2019 <- read_sas(
   here('data/d2011_2019femwgt.sas7bdat')
