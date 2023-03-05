@@ -149,7 +149,7 @@ Furthermore, both kinds of judgement can be occurring in the commentary of Chris
 In this passage, Augustine subscribes to a basically Aristotlean view of prenatal life, such that there is a threshold _in utero_ after which killing an embryo or fetus is homicide, but before which is not.
 
 
-### Quickening and Abortion in 19th Century Law
+### Quickening and Abortion in 19th Criminal Century Law
 
 Trying to summarize views on induced abortion, contraception, and infanticide throughout the Christian era would likely require a book-length treatment and is beyond the scope of this article. However, a basically Aristotlean-Augustinian threshold-type attitude was popular enough throughout the centuries to be codified into laws of the United States.[^gump]
 
@@ -182,8 +182,31 @@ Throughout the 18th century, legislatures of the several states of the United St
 > Every person, who shall administer to any woman pregnant with child, whether such child be quick or not, any medicine, drug or substance whatever, or shall use or employ any instrument or other means whatever, with intent to destroy such child, and shall thereby destroy such child before its birth, unless the same shall have been done as necessary to preserve the life of the mother, shall be punished by imprisonment in the state prison, not more than five years, or by fine, not exceeding one thousand dollars, and imprisonment in the county jail, not more than one year. [@maine_revised_1840, 686]
 
 
-* Much like laws criminalizing infanticide did not bring infanticide to an end, criminal abortion persisted as a common act
-* Estimates from Margaret Sanger for early 20th century
+## Induced Abortion is Very Common
+
+### Early 20th Century
+
+Similarly to how laws criminalizing infanticide did not bring infanticide to an end, induced abortion of pregnancy persisted into the 20th century in the United States as a common occurrence despite it being prohibited. Because it was an underground activity, estimates of how frequently embryos or fetuses were intentionally killed varied wildly. Birth control pioneer Margaret Sanger, speaking in 1918, relates the opinions of the experts she consulted:
+
+> In the very nature of the case, it is impossible to get accurate figures upon the number of abortions performed annually in the United States. It is often said, however, that one in five pregnancies end in abortion. One estimate is that 150,000 occur in the United States each year and that 25,000 women die of the effects of such operations in every twelve months. Dr. William J. Robinson asserts that there are 1,000,000 abortions every year in this country and adds that the estimate is conservative. He quotes Justice John Proctor Clark as saying that there are at least 100,000 in the same length of time in New York City alone.
+>
+> Dr. Max Hirsch, a famous authority quotes an opinion that there are 2,000,000 abortions in the United States every year!
+>
+> "I believe" declares Dr. Hirsch, "that I may say without exaggeration that absolutely spontaneous or unprovoked abortions are extremely rare, that a vast majority&mdash;I should estimate it at 80 per cent&mdash;have a criminal origin."
+>
+> "Our examinations have informed us that the largest number of abortions are performed on married women. This fact brings us to the conclusion that contraceptive measures among the upper classes and the practice of abortion among the lower class, are the real means employed to regulate the number of offspring." [@sanger_birth_1918]
+
+While Aristotlean-Augustinian thresholds in the form of quickening were removed from criminal abortion statutes in the 19th century, Augustinian views on sexuality led to statutes prohibiting dissemination of information pertaining to contraception and induced abortion in what would be called the "Comstock laws." A United States Criminal Code bill entitled "An Act for the Suppression of Trade in, and Circulation of, obscene Literature and Articles of immoral Use" passed in 1873 reads:
+
+> _Be it enacted by the Senate and House of Representatives of the United States of America in Congress assembled,_ That whoever, within the District of Columnia or any of the Territories of the United States, or other place within the exclusive jurdisdiction of the United States, shall sell, or lend, or give away, or in any manner exhibit, or shall offer to sell, or to lend, or to give away, or in any manner exhibit, or shall otherwise publish or offer to publish in any manner, or shall have in his possession, for any such purpose or purposes, any obscene book, pamphlet, paper, writing, advertisement, circular, print, picture, drawing or other representation, figure, or image on or of paper or other material, or any cast, instrument, or other article of an immoral nature, or any drug or medicine, or any article whatever, for the prevention of contraception, for causing unlawful abortion, or shall advertize the same for sale, or shall write or print, or cause to be written or printed, any card, circular, book, pamplet, advertisement, or notice of any kind, stating when, where, how, or of whom, or by what means, any of the articles in this section hereinbefore mentioned, can be purchased or obtained, or shall manufacture, draw, or print, or in any wise make any of such articles, shall be deemed guilty of a misdemeanor, and, on conviction thereof in any court of the United States having criminal jurisdiction in the District of Columbia, or in any Territory or place within the exclusive jurisdiction of the United States, where such misdemeanor shall have ben committed ; and on conviction theref, he shall be imprisoned at hard labor in the peneitentiary for not less than six months nor more than five years for each offense, or fined not less than one hundred dollars nor more than two thousand dollars, with costs of court. [@sanger_statutes_1873, 598-599]
+
+Margaret Sanger lobbied to remove these Augustinian prohibitions on contraception with the goal of ending induced abortion as a method of fertility control, a subject given a [full treatment in its own article](/margaret-sanger-on-abortion-in-her-own-words.html).
+
+
+### At Present
+
+Today, there are much more accurate counts of the number of induced abortions occurring every year.
+
 * Chart of abortions in U.S. based on Guttmacher APC numbers
 * 40 million abortions per year worldwide paper
 
@@ -192,7 +215,7 @@ Throughout the 18th century, legislatures of the several states of the United St
 
 ## Summary
 
-* There has been a movement away from viewing children as the property of their parents (or more specifically father) toward protection of children from being killed arbitrarily, with a trend going from the Bronze Age all the way to the first half of the twentieth century of protecting them earlier and earlier in their development.
+* There has been a movement away from viewing children as the property of their parents (or more specifically father) toward protection of children from being killed arbitrarily, with a trend going at least from Greek classical period all the way to the first half of the twentieth century of protecting them earlier and earlier in their development.
 * While these efforts were being made by philosophers, theologians, and lawmakers, children were being killed as a form of fertility control. Infanticide and child abandonment persisted for centuries. Abortion was common even after it was criminalized.
 * The movement to legalize and normalize abortion in second half of the twentieth century is a reversal of this trend. This reversal is a regression back to earlier morals and acceptance of the _status quo._
 
