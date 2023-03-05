@@ -118,7 +118,7 @@ Despite the proscription of infanticide and child abandonment by some legal code
 This inability of the authorities to eliminate infanticide in Europe throughout the late medieval and early modern periods despite the practice being outlawed was paralleled in other parts of the world. Curiously, ameliorating infanticide became a _cause célèbre_ of European missionaries to China, leading to infanticide in East Asia being more well known for a time, despite infanticide being a social problem in Europe during the same time frame, as well. [@mungello_drowning_2008]
 
 
-### Christian View on Sexuality
+### Christian Views on Sexuality
 
 Much as understanding pre-Christian civilization's views on induced abortion are complicated by the fact that the killing of infants was viewed as a legal right of patriarchs in the Greco-Roman era, understanding views on induced abortion in the Christian era is complicated by the fact that contraception was (and in some cases, still is) viewed as a sin by prominent interpretations of Christianity.
 
@@ -144,18 +144,20 @@ However, it is also possible that a Christian commentator would judge the killin
 
 Furthermore, both kinds of judgement can be occurring in the commentary of Christians who subscribe to Aristotlean threshold-type views of induced abortion, which Augustine himself did.
 
-* Augustine on abortion (_Questiones Exodi,_ 80.1439-1445)
+> _If two men are fighting, and they strike a woman who is pregnant, and her child does not emerge deformed, he shall suffer a fine. As much as the woman's husband shall specify, he shall give what is demanded._ (Ex 21:22) It seems to be that his is said as having some meaning rather than as a scripture passage dealing with deeds of this sort. For, if its aim were that a pregnant woman not be struck and forced into a miscarriage, it would not posit two quarreling men, when it could be done by the one man who, when he was fighting with the woman herself, or, even if the were not fighting, nonetheless acted intentionally to harm another man's posterity. But he did not intend the unformed child to be the object of murder, and surely he did not deem what is carried in the womb to be a human being. At this point it is customary to raise a question about the soul, namely, whether what has not been formed can even be understood to possess a soul, and therefore whether this would be murder, because it cannot be said to have been deprived of life if it did not yet have a soul, for [the passage] continues and says, _But if it has been formed, he shall give a life for a life_ (Ex 21:23). . . .
+> 
+> Hence, if at the time that was indeed an unformed child, but still in some way possessed of an unformed soul (because the great question about the soul is not to be hurried along with the hastiness of an unconsidered opinion), the law was unwilling to make the case pertain to murder, because it cannot yet be called a living soul in that body which lacks sensation, if such [a soul] has not yet been formed in the flesh and [the flesh] has not yet been endowed with senses. [@augustine_writings_2016, 130-131]
 
-In this passage, Augustine subscribes to a basically Aristotlean view of prenatal life, such that there is a threshold _in utero_ after which killing an embryo or fetus is homicide, but before which is not.
+In this passage, Augustine recapitulates almost exactly the Aristolean doctrine regarding prenatal life, such that there is a threshold _in utero_ when offspring are "formed" after which killing an embryo or fetus is homicide, but before which it is not. All that has changed in Augustine's view from Aristotle's view is, in addition to concepts such as formedness, sensation, and life, the concept of possession of a soul is added.
 
 
-### Quickening and Abortion in 19th Criminal Century Law
+### Quickening and Abortion in 19th Century Law
 
-Trying to summarize views on induced abortion, contraception, and infanticide throughout the Christian era would likely require a book-length treatment and is beyond the scope of this article. However, a basically Aristotlean-Augustinian threshold-type attitude was popular enough throughout the centuries to be codified into laws of the United States.[^gump]
+Trying to summarize views on induced abortion, contraception, and infanticide throughout the Christian era would likely require a book-length treatment and is beyond the scope of this article. However, a basically Aristotlean-Augustinian threshold attitude was popular enough throughout the centuries to be codified into laws of the United States.[^gump]
 
 [^gump]: This section's discussion of the history of United States laws pertaining to abortion in the 19th century owes considerably to _Criminal Abortion Laws Across Before the Fourteenth Amendment_ [@gump_criminal_2023].
 
-The threshold that developed in English common law for this purpose was called "quickening." When a pregnant woman first felt movement from the embryo or fetus inside of her, she was said to be "quick with child." This was taken to be the beginning of "perception and life" that Aristotle talked about so many centuries before, and the inflection point after which the child was entitled legal protections. 
+The threshold that developed in English common law for this purpose was called "quickening." When a pregnant woman first felt movement from the embryo or fetus inside of her, she was said to be "quick with child." This was taken to be the beginning of "perception and life" that Aristotle spoke about or "possession of a soul" that Augustine spoke about so many centuries before. Quickening was the inflection point after which the child was entitled legal protections. 
 
 William Blackstone wrote in the seminal 18th century treatise on English common law _Commentaries on the Laws of England:_
 
@@ -177,13 +179,21 @@ A select committee report in the Ohio state senate summed up this change in atti
 > 
 > The period of quickening is uncertain. Some women are not conscious of foetal motion during the whole period of pregnancy. Others are sensible of it much before the usual time. Physiological researches have demonstrated that it exists in the early stages of utero-gestation, but it is too feeble to be perceived by the mother. The law now is settled, and it has averred, in most pithy and expressive language, that "quick with child is having conceived;" but our statutes have made an unnatural and unscientific distinction. Let it be proclaimed to the world, and let it be impressed upon the conscience of every woman in the land, "that the willful killing of a human being, at any stage of its existence, is murder." [@ohio_journal_1867, 234]
 
+The Ohio senate subcomittee's use of the term "venial" in this context is a rather conspicuous allusion Aristolean-Augustinian doctrine.
+
 Throughout the 18th century, legislatures of the several states of the United States moved away from using quickening as an Aristotlean-Augustinian threshold. Some passed new statutes that simply removed any reference to quickening from the old statute. Maine is notable for having explicitly rejected quickening as a threshold in the text of its new statute.
 
 > Every person, who shall administer to any woman pregnant with child, whether such child be quick or not, any medicine, drug or substance whatever, or shall use or employ any instrument or other means whatever, with intent to destroy such child, and shall thereby destroy such child before its birth, unless the same shall have been done as necessary to preserve the life of the mother, shall be punished by imprisonment in the state prison, not more than five years, or by fine, not exceeding one thousand dollars, and imprisonment in the county jail, not more than one year. [@maine_revised_1840, 686]
 
 
-### Comstock Laws and Persistence of Abortion into 20th Century
+### Comstock Laws
 
+While the Aristotlean-Augustinian threshold of quickening was removed from criminal abortion statutes in the 19th century, Augustinian views on sexuality led to statutes prohibiting dissemination of information pertaining to contraception and induced abortion in what would be called the "Comstock laws." A United States Criminal Code bill entitled "An Act for the Suppression of Trade in, and Circulation of, obscene Literature and Articles of immoral Use" passed in 1873 reads:
+
+> _Be it enacted by the Senate and House of Representatives of the United States of America in Congress assembled,_ That whoever, within the District of Columnia or any of the Territories of the United States, or other place within the exclusive jurdisdiction of the United States, . . . shall have in his possession, for any such purpose or purposes, any obscene book, pamphlet, paper, writing, advertisement, circular, print, picture, drawing or other representation, figure, or image on or of paper or other material, or any cast, instrument, or other article of an immoral nature, or any drug or medicine, or any article whatever, for the prevention of contraception, or for causing unlawful abortion, . . . shall be deemed guilty of a misdemeanor, and, on conviction thereof in any court of the United States having criminal jurisdiction in the District of Columbia, or in any Territory or place within the exclusive jurisdiction of the United States, where such misdemeanor shall have ben committed ; and on conviction theref, he shall be imprisoned at hard labor in the peneitentiary for not less than six months nor more than five years for each offense, or fined not less than one hundred dollars nor more than two thousand dollars, with costs of court. [@sanger_statutes_1873, 598-599]
+
+
+### Persistence of Abortion into 20th Century
 
 Similarly to how laws criminalizing infanticide did not bring infanticide to an end, induced abortion of pregnancy persisted into the 20th century in the United States as a common occurrence despite it being prohibited. Because it was an underground activity, estimates of how frequently embryos or fetuses were intentionally killed varied wildly. Birth control pioneer Margaret Sanger, speaking in 1918, relates the opinions of the experts she consulted:
 
@@ -195,12 +205,7 @@ Similarly to how laws criminalizing infanticide did not bring infanticide to an 
 >
 > "Our examinations have informed us that the largest number of abortions are performed on married women. This fact brings us to the conclusion that contraceptive measures among the upper classes and the practice of abortion among the lower class, are the real means employed to regulate the number of offspring." [@sanger_birth_1918]
 
-While Aristotlean-Augustinian thresholds in the form of quickening were removed from criminal abortion statutes in the 19th century, Augustinian views on sexuality led to statutes prohibiting dissemination of information pertaining to contraception and induced abortion in what would be called the "Comstock laws." A United States Criminal Code bill entitled "An Act for the Suppression of Trade in, and Circulation of, obscene Literature and Articles of immoral Use" passed in 1873 reads:
-
-> _Be it enacted by the Senate and House of Representatives of the United States of America in Congress assembled,_ That whoever, within the District of Columnia or any of the Territories of the United States, or other place within the exclusive jurdisdiction of the United States, . . . shall have in his possession, for any such purpose or purposes, any obscene book, pamphlet, paper, writing, advertisement, circular, print, picture, drawing or other representation, figure, or image on or of paper or other material, or any cast, instrument, or other article of an immoral nature, or any drug or medicine, or any article whatever, for the prevention of contraception, or for causing unlawful abortion, . . . shall be deemed guilty of a misdemeanor, and, on conviction thereof in any court of the United States having criminal jurisdiction in the District of Columbia, or in any Territory or place within the exclusive jurisdiction of the United States, where such misdemeanor shall have ben committed ; and on conviction theref, he shall be imprisoned at hard labor in the peneitentiary for not less than six months nor more than five years for each offense, or fined not less than one hundred dollars nor more than two thousand dollars, with costs of court. [@sanger_statutes_1873, 598-599]
-
-
-Margaret Sanger lobbied to remove these Augustinian prohibitions on contraception with the goal of ending induced abortion as a method of fertility control, a subject given a [full treatment in its own article](/margaret-sanger-on-abortion-in-her-own-words.html).
+Margaret Sanger lobbied to remove the Comstock laws' prohibitions on contraception with the goal of ending induced abortion as a method of fertility control, a subject given a [full treatment in its own article](/margaret-sanger-on-abortion-in-her-own-words.html). Much as the removal of quickening from criminal abortion laws in the 19th century was a rejection of Aristotlean-Augustinian conceptions of prenatal life, the removal of prohibitions on contraception was the removal of Augustinian doctrine on sexuality from United States obscenity law.
 
 
 ## Induced Abortion is Very Common
