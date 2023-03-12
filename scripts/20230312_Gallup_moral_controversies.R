@@ -43,7 +43,7 @@ gallup_morality_data <- bind_rows(
   ) |> mutate(Topic = 'Extramarital Affair'),
   read_csv(
     here('external/reproductive-responsibility/data/gallup/morality-fur.csv')
-  ) |> mutate(Topic = 'Buying and Wearing Clothing Made of Animal Fur'),
+  ) |> mutate(Topic = 'Clothing Made of Animal Fur'),
   read_csv(
     here('external/reproductive-responsibility/data/gallup/morality-gambling.csv')
   ) |> mutate(Topic = 'Gambling'),
@@ -192,4 +192,115 @@ gallup_morality_data |>
     difference = abs(acceptable - wrong)
   ) |>
   select(Topic, Time, difference) |>
-  arrange(Time, Topic)
+  arrange(Time, difference) |>
+  group_by(Time) |>
+  mutate(rank = rank(difference, ties.method = 'first')) |>
+  ungroup() |>
+  filter(rank <= 4) |>
+  select(Time, rank, Topic, difference) |>
+  group_by(Topic) |>
+  summarize(count = n()) |>
+  arrange(count)
+
+gallup_morality_data |>
+  filter(Demographic == 'Aggregate') |>
+  select(-Geography, -Demographic, -`Demographic Value`) |>
+  mutate(
+    acceptable = parse_number(`Morally acceptable`),
+    wrong = parse_number(`Morally wrong`),
+    difference = abs(acceptable - wrong)
+  ) |>
+  select(Time, Topic, difference) |>
+  arrange(Time, difference) |>
+  filter(
+    Topic %in%  c(
+      "Abortion",
+      "Baby Out of Wedlock",
+      "Animal Medical Testing"
+    )
+  ) |>
+  ggplot(
+    mapping = aes(
+      x = Time,
+      y = difference,
+      color = Topic,
+      shape = Topic
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      size = 1
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 1.5
+    ) +
+    scale_y_continuous(
+      expand = expansion(mult = c(0, 0.05)),
+      limits = c(0, NA)
+    ) +
+    scale_x_continuous(
+      breaks = \(x) seq(x[1]+1, x[2]-1, 2),
+      expand = expansion(add = 1),
+      minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
+    ) +
+    scale_shape_manual(
+      values = c(21, 22, 23)
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Difference between Percent "Morally Wrong" and Percent "Morally Acceptable"'
+    ) +
+    theme_classic() +
+    theme(
+      axis.line.x.bottom = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.line.y.left = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.text.x = element_text(
+        angle = 45,
+        color = 'black',
+        hjust = 0.5,
+        vjust = 0.65
+      ),
+      axis.text.y = element_text(
+        color = 'black',
+        margin = margin(r = 0)
+      ),
+      axis.ticks.y = element_blank(),
+      axis.ticks.x = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.title.x = element_text(
+        margin = margin(t = 2)
+      ),
+      axis.title.y = element_text(
+        margin = margin(r = 10)
+      ),
+      legend.margin = margin(t = 0, b = 0),
+      legend.position = 'top',
+      legend.title = element_blank(),
+      panel.grid.major = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      panel.grid.minor = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      plot.margin = margin(t = 0)
+  )
+
+ggsave(
+  here('static/images/Gallup_contentious_moral_opinions.png'),
+  width = 1500,
+  height = 1125,
+  units = 'px'
+)
