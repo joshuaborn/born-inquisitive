@@ -25,9 +25,17 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Different people have radically different judgments about the practice of killing human fetuses or embryos as a method of fertility control, which is euphemistically described in the medical literature as "induced abortion of pregnancy" and in the vernacular as just "abortion." For instance,
+Different people have radically different judgments about the practice of killing human fetuses or embryos as a method of fertility control, which is euphemistically described in the medical literature as "induced abortion of pregnancy" and in the vernacular as just "abortion."
 
-* Discuss Gallup poll here
+For instance, each May, Gallup administers its Values and Beliefs telephone poll on a representative sample of persons in the United States aged 18 or older, as part of the ongoing Gallup Poll Social Series. This poll contains a series of questions prompted with, "I'm going to read you a list of issues. Regardless of whether or not you think it should be legal, for each one, please tell me whether you personally believe that in general it is morally acceptable, or morally wrong."
+
+![Moral opinions on induced abortion of pregnancy from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014] Each estimate is associated with some sampling error. However, Gallup does not release information needed to calculate sampling error with its Gallup Analytics summary spreadsheets. Respondents are prompted for either the "morally acceptable" or "morally wrong" answers, whereas the "depends on the situation" responses are volunteered by respondents.](/images/Gallup_opinions_about_abortion.png){alt="A plot with the proportion of responses of morally acceptable, depends on the situation, and morally wrong on the y-axis and and the year on the x-axis."}
+
+As can be seen, for the past two decades, approximately half the United States has viewed induced abortion of pregnancy as morally wrong while about of half of the United States has viewed it as morally acceptable, making it a morally contentious issue in the United States.
+
+Indeed, induced abortion of pregnancy has appeared as either the most or one of the most contentious issues ever since the Values and Beliefs poll began in 2001. The difference between the percent of the population judging something to be morally wrong and the percent of the population judging something to be morally acceptable can be used as a measure of how morally contentious an issue is. Very contentious issue will have a small difference, and issues for which public opinion is mostly in agreement will have large differences.
+
+* Insert second Gallup plot here
 
 Among those who approve of this practice, how the approval is framed varies considerably by social context. In the United States, those who judge killing fetuses and embryos for fertility control as a moral good typically subscribe to some version of abortion-as-women's-liberation ideology, which is unsurprising given the prominence of "freedom" in the political mythology of the United States. However, in China, approval of abortion for fertility control is more likely to be construed as part of the duty of a family to act for the greater benefit of society at large, rather than individual freedom. [@nie_behind_2005]
 
@@ -209,7 +217,6 @@ Margaret Sanger lobbied to remove the Comstock laws' prohibitions on contracepti
 
 Today, there are much more accurate counts of the number of induced abortions occurring every year.
 
-* Chart of abortions in U.S. based on Guttmacher APC numbers
 * Lancet paper
 
 ![Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute.[@maddow-zimet_pregnancies_2022]](/images/Guttmacher_APC_abortion_totals.png){alt="A plot with the number of induced abortions of pregnancy in the United States on the y-axis and the year on the x-axis."}
