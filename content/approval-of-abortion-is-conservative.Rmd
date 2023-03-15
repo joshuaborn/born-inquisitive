@@ -27,37 +27,40 @@ knitr::opts_chunk$set(
 
 Different people have radically different judgments about the practice of killing human fetuses or embryos as a method of fertility control, which is euphemistically described in the medical literature as "induced abortion of pregnancy" and in the vernacular as just "abortion."
 
-For instance, each May, Gallup administers its Values and Beliefs telephone poll on a representative sample of persons in the United States aged 18 or older, as part of the ongoing Gallup Poll Social Series. This poll contains a series of questions prompted with, "I'm going to read you a list of issues. Regardless of whether or not you think it should be legal, for each one, please tell me whether you personally believe that in general it is morally acceptable, or morally wrong."
 
-Induced abortion of pregnancy has been either the most or one of the most contentious issues in the Values and Beliefs poll ever since it began in 2001. The difference between the percent of the population judging an issue to be morally wrong and the percent of the population judging an issue to be morally acceptable can be used as a measure of how morally contentious an issue is. Very contentious issues will have a small difference, and issues for which public opinion is mostly in agreement will have large differences.
+### Induced Abortion is Controversial
 
-![Absolute value of differences between percent judging "morally wrong" and percent judging "morally acceptable" on three issues from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014] In addition to induced abortion, animal medical testing and having a baby out of wedlock are included for comparison.](/images/Gallup_contentious_moral_opinions.png){alt="A plot with the different between percent judging 'morally wrong' and percent judging 'morally acceptable' on the y-axis and year on the x-axis."}
-
-Using this as a metric, out of the 18 topics ever asked about on the Values and Beliefs moral opinions poll, induced abortion has been the most contentious issue 11 times out of 22 times that the Value and Beliefs poll has been administered, and the the second most contentious issue another. It has never been ranked lower than the fourth most contentious issue on the poll.
+Each May, the public opinion company Gallup conducts its Values and Beliefs telephone poll on a representative sample of persons in the United States aged 18 or older, as part of the ongoing Gallup Poll Social Series. This poll contains a series of questions prompted with, "I'm going to read you a list of issues. Regardless of whether or not you think it should be legal, for each one, please tell me whether you personally believe that in general it is morally acceptable, or morally wrong."
 
 ![Moral opinions on induced abortion of pregnancy from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014] Each estimate is associated with some sampling error. However, Gallup does not release information needed to calculate sampling error with its Gallup Analytics summary spreadsheets. Respondents are prompted for either the "morally acceptable" or "morally wrong" answers, whereas the "depends on the situation" responses are volunteered by respondents.](/images/Gallup_opinions_about_abortion.png){alt="A plot with the proportion of responses of morally acceptable, depends on the situation, and morally wrong on the y-axis and and the year on the x-axis."}
 
-For the first twenty years of the Values and Beliefs poll, there appeared to be more Americans who judged induced abortion to be morally wrong than those who judged it to be morally acceptable, whereas in the past two years that trends appears to have reversed. This may or may not actually be the case. Estimates of the percent judging abortion to be wrong and the percent approving of abortion have been so close that they are likely to have been within fluctuations due to sampling error of each other. 
+Over the past 22 years, about half of the United States has judged induced abortion to be generally morally wrong, and about half of the United States has judged induced abortion to be generally morally acceptable, making it quite a controversial issue. 
 
-Furthermore, more detailed questions are needed to understand the sizable "depends on the situation" response. Indeed, given that there is much variation in public opinion on abortion depending on motives, gestational age, etc, it is likely the case that many more respondents would give a "depends on the situation" response if prompted with more than just a binary choice.
+Define a _moral controversy metric_ as $100 - \left| p_w - p_a \right|$ where $p_w$ is the proportion of a population that judges something to be morally wrong and $p_a$ is the proportion that judges it to be morally acceptable. This moral controversy metric is low when there is consensus on whether something is morally wrong or not, and in the extreme case is 0 when 100% of a population agrees that something is morally wrong or morally acceptable. Conversely, this metric is high when there is controversy about an issue, and in the extreme case it is 100 when there are exactly the same proportion of a population that judge something to be morally wrong as who judge it to be morally acceptable.
 
-Nonetheless, if one were to suppose this apparent trend of reversal of majority opinion between morally wrong and morally acceptable is actually the case, one might be tempted to conclude that judging abortion to be morally wrong is an older, conservative viewpoint.
+![Moral controversy metrics for four issues from the Gallup Poll Social Series, Values and Beliefs.](/images/Gallup_controversial_moral_opinions.png){alt="A plot with the different between percent judging 'morally wrong' and percent judging 'morally acceptable' on the y-axis and year on the x-axis."}
 
-However, this article contends that _approval_ of abortion as a method of fertility control is a conservative viewpoint. Polls like the Gallup Poll Social Series are only slightly more than twenty years old, whereas induced abortion of pregnancy is more than two thousand years old, if not far older. In order to truly understand the social context of the moral contentiousness around induced abortion, one must understand a history of ideas spanning thousands.
+Some issues, such as having an extramarital affair, have been relatively uncontroversial during the lifetime of the Values and Beliefs poll because a consistent majority of Americans judge having an extramarital affair to be wrong. Some issues like having a baby out of wedlock began the Values and Belief polling as controversial issues and became less controversial in the past 22 years. Other issues like animal medical testing began with less controversy and gradually became more controversial over the course of the poll. Induced abortion has remained very controversial throughout the 22 year period.
 
-Furthermore, one might believe that if polls similar to the Gallup Values and Beliefs poll do not similarly indicate that moral opinions about induced abortion are contentious in other parts of the world, then there is no moral contentiousness in these other parts of the world. For instance, induced abortion in China does not generate as much acrimony as it does in the United States. However, those who have engaged with a Chinese population in more detailed conversation about induced abortion have found diverse opinions, opinions that often touch on topics in the history of ideas summarized in this article, even if debate about induced abortion is not a prominent part of public discourse. [@nie_behind_2005]
+Indeed, out of the 18 topics ever asked about on the Values and Beliefs moral opinions poll, induced abortion has been the most controversial issue 11 times out of 22 times that the Value and Beliefs poll has been conducted, and the second most controversial issue another 7 times. It has never been ranked lower than the fourth most controversial issue on the poll. Induced abortion is quite possibly the most morally controversial issue in the United States.
+
+Furthermore, there is likely to be latent controversy about induced abortion in other parts of the world even where disagreement about induced abortion is not so public. For instance, induced abortion in China does not generate as much acrimony as it does in the United States. However, those who have engaged with a Chinese population in more detailed conversation about induced abortion have found diverse opinions even if debate about induced abortion is not a prominent part of public discourse due to cultural differences. [@nie_behind_2005]
 
 
-## Definition of "Conservative" Used
+### Definition of "Conservative" Used
 
-First of all, it should be noted that by "conservative" is not meant the definition of "conservative" used to refer to right-wing politics in contrast to left-wing politics, such as "of or constituting a political party professing the principles of conservatism." [-@noauthor_conservative_nodate, 1b] Rather, by "conservative" is meant such definitions as "tending or disposed to maintain existing views, conditions, or institutions." [@noauthor_conservative_nodate, 2a] Approval of abortion is conservative precisely because it is a viewpoint disposed to preserve the _status quo._
+In the late 20th century and early 21st century in the United States, there is a binary partisanship divided between left-wing and right-wing in which the right-wing is often labeled "conservative," and opposition to induced abortion of pregnancy is often associated with the right-wing. This might lead an indolent mind to think offhandedly that opposition to induced abortion is conservative in a broader sense.
+
+However, political partisanship is rarely logically coherent. Instead, it represents the ephemeral and arbitrary fads of the time and place in which one happens to live. What is right-wing one generation might be left-wing for another generation, and what is left-wing in one place might be right-wing in another place. Just because words such as "conservative" can be used to describe these fads, such labels do not give true insight into historical context.
+
+This article contends that _approval_ of induced abortion as a method of fertility control is a conservative viewpoint when evaluated according to such dictionary definitions of "conservative" as _tending or disposed to maintain existing views, conditions, or institutions._ [@noauthor_conservative_nodate, 2a]
 
 
 ## Brief History of Views on Induced Abortion
 
 The use of induced abortion of pregnancy as a method of fertility control is not new.
 
-### Abortion in Ancient Greco-Roman Society
+### Induced Abortion in Greco-Roman Society
 
 The ancient Greek[^eurocentric] physician Hippocrates who lived during the classical period (5th to 4th centuries B.C.E.) wrote of a story in his treatise _On the Nature of the Child:_
 
@@ -165,7 +168,7 @@ Furthermore, both kinds of judgement can be occurring in the commentary of Chris
 In this passage, Augustine recapitulates almost exactly the Aristolean doctrine regarding prenatal life, such that there is a threshold _in utero_ when offspring are "formed" after which killing an embryo or fetus is homicide, but before which it is not. All that has changed in Augustine's view from Aristotle's view is, in addition to concepts such as sensation and life, the concept of possession of a soul is added.
 
 
-### Quickening and Abortion in 19th Century Law
+### Quickening and Induced Abortion in 19th Century Law
 
 Trying to summarize views on induced abortion, contraception, and infanticide throughout the history of Christianity would likely require a book-length treatment and is beyond the scope of this article. However, a basically Aristotlean-Augustinian threshold attitude was popular enough throughout the centuries to become English common law and eventually be codified into laws of the United States.[^gump]
 
@@ -220,7 +223,7 @@ Margaret Sanger lobbied to remove the Comstock laws' prohibitions on contracepti
 
 ## Induced Abortion is Very Common
 
-Today, there are much more accurate counts of the number of induced abortions occurring every year.
+Today, there are more accurate counts of the number of induced abortions occurring every year than in Margaret Sanger's day, though estimates still suffer from some issues in accuracy.
 
 * Discussion of APC
 
@@ -231,7 +234,7 @@ Today, there are much more accurate counts of the number of induced abortions oc
 
 ## Summary
 
-There has been a trend toward protecting children from being arbitrarily killed at earlier and earlier points in their development. Western civilization began with no such protection, and instead enforced the legal right of patriarchs to choose which children to raise and which to kill as enshrined in laws such as _patria potestas._ In the late Roman Empire this became increasingly a contentious issue, until infanticide was outlawed in 374 C.E. This created the first protection of children from arbitrary killing, and established the point of protection at birth.
+There has been a trend toward protecting children from being arbitrarily killed at earlier and earlier points in their development. Western civilization began with no such protection, and instead enforced the legal right of patriarchs to choose which children to raise and which to kill as enshrined in laws such as _patria potestas._ In the late Roman Empire this became increasingly a controversial issue, until infanticide was outlawed in 374 C.E. This created the first protection of children from arbitrary killing, and established the point of protection at birth.
 
 Later, as Aristotlean-Augustinian doctrine regarding prenatal life was codified into law in the medieval and early modern periods, this protection was extended even earlier in child development to a threshold that would come to be known in English common law as "quickening." Eventually in the 19th century, quickening was seen as pre-scientific folk belief, and with the removal of quickening criteria from criminal abortion law, the point at which children were protected from being killed arbitrarily was effectively moved all the way to their conception.
 
@@ -243,10 +246,6 @@ While there has been a trend toward protecting children earlier and earlier in t
 Approval of induced abortion of pregnancy as a method of fertility control is conservative because it is disposed to maintain existing conditions. Induced abortion has been advocated as a method of fertility control for more than thousand years, since at least the Greek classical period. Induced abortion is extremely common today; there are hundreds of millions of induced abortions every year. Induced abortion is the _status quo._
 
 Furthermore, approval of induced abortion goes against a trend of protecting children earlier and earlier in their development that has slowly progressed for the past two millenia of Western civilization. If advocacy of induced abortion limits itself to advocating induced abortion before a threshold _in utero,_ then such advocacy is a return to pre-19th century thinking about prenatal life. If advocacy of induced abortion includes advocacy of induced abortion all the way up until birth, then such advocacy is a return to 4th century C.E. thinking.
-
-In the late 20th century and early 21st century in the United States, there is a binary partisanship divided between left-wing and right-wing in which the right-wing is often labeled "conservative." Additionally, opposition to induced abortion of pregnancy is often associated with the right-wing. This might lead an indolent mind to think offhandedly that opposition to induced abortion is conservative, in the dictionary definition of the word "conservative."
-
-As has been seen, this is not the case. It is important to remember that partisanship is not logically coherent and represents the ephemeral and arbitrary fads of the time and place in which one happens to live. What is right-wing one generation might be left-wing for another generation, and what is left-wing in one place might be right-wing in another place. Just because words such as "conservative" can be used to describe partisanship, such labels do not give true insight into historical context.
 
 The conservatism of approval of induced abortion has broad ramifications for those who are opposed to killing unborn children as a method of fertility control. Conservative -- in the definition used here -- approaches are the wrong approaches. History has nothing but thousands of years of infanticide, child abandonment, and induced abortion to offer. There has never been a time of reproductive responsibility through nonviolent fertility control. There is no golden era to return to.
 

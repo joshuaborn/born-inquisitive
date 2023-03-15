@@ -208,21 +208,23 @@ gallup_morality_data |>
   mutate(
     acceptable = parse_number(`Morally acceptable`),
     wrong = parse_number(`Morally wrong`),
-    difference = abs(acceptable - wrong)
+    difference = abs(acceptable - wrong),
+    metric = 100 - difference
   ) |>
-  select(Time, Topic, difference) |>
-  arrange(Time, difference) |>
+  select(Time, Topic, metric) |>
+  arrange(Time, metric) |>
   filter(
     Topic %in%  c(
       "Abortion",
       "Baby Out of Wedlock",
-      "Animal Medical Testing"
+      "Animal Medical Testing",
+      "Extramarital Affair"
     )
   ) |>
   ggplot(
     mapping = aes(
       x = Time,
-      y = difference,
+      y = metric,
       color = Topic,
       shape = Topic
     )
@@ -236,8 +238,7 @@ gallup_morality_data |>
       size = 1.5
     ) +
     scale_y_continuous(
-      expand = expansion(mult = c(0, 0.05)),
-      limits = c(0, NA)
+      limits = c(NA, 100)
     ) +
     scale_x_continuous(
       breaks = \(x) seq(x[1]+1, x[2]-1, 2),
@@ -245,11 +246,11 @@ gallup_morality_data |>
       minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
     ) +
     scale_shape_manual(
-      values = c(21, 22, 23)
+      values = c(21, 22, 23, 24)
     ) +
     labs(
       x = 'Year',
-      y = 'Difference between Percent "Morally Wrong" and Percent "Morally Acceptable"'
+      y = 'Moral Controversy Metric'
     ) +
     theme_classic() +
     theme(
@@ -299,7 +300,7 @@ gallup_morality_data |>
   )
 
 ggsave(
-  here('static/images/Gallup_contentious_moral_opinions.png'),
+  here('static/images/Gallup_controversial_moral_opinions.png'),
   width = 1500,
   height = 1125,
   units = 'px'
