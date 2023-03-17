@@ -223,13 +223,26 @@ Margaret Sanger lobbied to remove the Comstock laws' prohibitions on contracepti
 
 ## Induced Abortion is Very Common
 
-Today, there are more accurate counts of the number of induced abortions occurring every year than in Margaret Sanger's day, though estimates still suffer from some issues in accuracy.
+There are more accurate counts of the number of induced abortions occurring today than in Margaret Sanger's time, though estimates still suffer from some issues in accuracy.
 
-* Discussion of APC
+### In the United States
+
+The Centers for Disease Control publishes annual Abortion Surveillance Reports that collect data provided by the several states of the United States. However, the Abortion Surveillance Reports are known to be incomplete because of variation in reporting by the states. Most notably, some states, including very populous ones like California, do not report to the Centers for Disease Control at all. Therefore, the Abortion Surveillance Reports are underestimates.
+
+The National Survey of Family Growth administered by the National Center for Health Statistics is a periodic survey of nationally representative samples of persons living in the United States pertaining to reproductive behavior. The National Survey of Family Growth is quite accurate in estimating some pregnancy outcomes such as the number of live births, as confirmed by vital records statistics. However, induced abortions are underreported on the National Survey of Family Growth such that its official documentation advises against using the survey results for analysis of induced abortion.
+
+The most accurate counts of abortions induced in the United States come not from government official statistics, therefore, but from the Guttmacher Institute, a private non-profit think tank with abortion advocacy as part of its stated purpose. The Guttmacher Institute periodically conducts its Abortion Provider Census, which is a census in the sense that every induced abortion provider in the United States is asked for a count of abortions induced. The statistics reported from the Abortion Provider Census are not true census counts, however, because a relatively small minority of providers do not reply to the Abortion Provider Census, and so the Guttmacher Institute must estimate counts for these nonrespondents.
+
+Nonetheless, estimates of abortions induced in the United States from the Abortion Provider Census are consistently greater than those from either the Abortion Surveillance Reports or the National Survey of Family Growth and are likely the most accurate counts of abortions induced in the United States.
 
 ![Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute.[@maddow-zimet_pregnancies_2022]](/images/Guttmacher_APC_abortion_totals.png){alt="A plot with the number of induced abortions of pregnancy in the United States on the y-axis and the year on the x-axis."}
 
-* Lancet paper
+According to the Abortion Provider Census, the number of abortions induced in the United States peaked in the 1980s around 1,600,000 per year and declined to just under 900,000 per year in the late 2010s. (Estimates from the 1970s may have been underestimates due to undercoverage, given the legalization of induced abortion in that decade.)
+
+
+### Worldwide
+
+There have been several attempts to estimate the number of abortions induced worldwide by aggregating estimates for each country in the world. These worldwide estimates are estimates from models that themselves are based on estimates from national surveys, each of which might have issues such as discussed above for the case of the United States. They should be interpreted with caution, but can at least give a rough estimate. The latest such model estimates approximately 73.3 million induced abortions per year worldwide. [@bearak_unintended_2020]
 
 
 ## Summary
