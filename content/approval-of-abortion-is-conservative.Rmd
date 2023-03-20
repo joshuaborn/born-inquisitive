@@ -11,7 +11,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: "SUMMARY GOES HERE"
+summary: "Advocacy of induced abortion is ancient, and it is very common. This article explores the history of ideas, contemporary opinions, and prevalence of induced abortion."
 tags: ["opinion", "history", "reproductive responsibility", "abortion", "third-person"]
 title: 'Approval of Abortion is Conservative'
 ---
