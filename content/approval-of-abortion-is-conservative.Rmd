@@ -235,7 +235,7 @@ The most accurate counts of abortions induced in the United States come not from
 
 Nonetheless, estimates of abortions induced in the United States from the Abortion Provider Census are consistently greater than those from either the Abortion Surveillance Reports or the National Survey of Family Growth and are likely the most accurate counts of abortions induced in the United States.
 
-![Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute.[@maddow-zimet_pregnancies_2022]](/images/Guttmacher_APC_abortion_totals.png){alt="A plot with the number of induced abortions of pregnancy in the United States on the y-axis and the year on the x-axis."}
+![Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute.[@maddow-zimet_pregnancies_2022] [@jones_abortion_2022]](/images/Guttmacher_APC_abortion_totals.png){alt="A plot with the number of induced abortions of pregnancy in the United States on the y-axis and the year on the x-axis."}
 
 According to the Abortion Provider Census, the number of abortions induced in the United States peaked in the 1980s around 1,600,000 per year and declined to just under 900,000 per year in the late 2010s. (Estimates from the 1970s may have been underestimates due to undercoverage, given the legalization of induced abortion in that decade.)
 

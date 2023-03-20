@@ -13,7 +13,16 @@ guttmacher <- read_csv(
         2009, 2012, 2015)
   ) |>
   filter(state == 'US' & !abortions_interpolated) |>
-  select(-state, -notes)
+  select(year, abortionstotal)
+
+guttmacher <- bind_rows(
+  guttmacher,
+  data.frame(
+    year = 2020,
+    abortionstotal = 930160
+  )
+)
+
 years <- guttmacher$year
 
 
@@ -50,13 +59,13 @@ ggplot(
     limits = c(0, NA)
   ) +
   scale_x_continuous(
-    breaks = years[c(seq(1, 7, 2), seq(10, length(years), 2))],
+    breaks = years[c(seq(1, 7, 2), seq(10, length(years), 2), length(years))],
     expand = expansion(add = 1),
     minor_breaks = years
   ) +
   labs(
     x = 'Year',
-    y = 'Millions of Induced Abortions of Pregnancy in United States'
+    y = 'Millions of Induced Abortions in United States'
   ) +
   theme_classic() +
   theme(
