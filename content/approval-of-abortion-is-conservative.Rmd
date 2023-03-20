@@ -2,8 +2,7 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/approval-of-abortion-is-conservative.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2023-01-14
-draft: true
+date: 2023-03-19
 include-before: |
   ## Table of Contents
 output:
