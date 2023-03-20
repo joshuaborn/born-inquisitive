@@ -1,23 +1,6 @@
 # Reproductive Responsibility
 
-This repository contains scripts and documents for statistical analysis of what I've termed "reproductive responsibility," which focuses on the study of contraception and occasionally touches on related topics.
-
-
-## Data Sources
-
-Currently, the analysis uses two data sources:
-* the [National Survey of Family Growth (NSFG)](https://www.cdc.gov/nchs/nsfg/index.htm)
-* the [National Vital Statistics System (NVSS)](https://www.cdc.gov/nchs/nvss/index.htm)
-
-
-### National Survey of Family Growth
-
-The strategy used to ingest NSFG data is to first load them using the provided [SAS program statements](https://www.cdc.gov/nchs/nsfg/nsfg_2017_2019_puf.htm#program) into a SAS programming environment, then to export data from the SAS programming environment via comma-separated values (CSV) files that are loaded in an R programming environment. The export from SAS includes labels and formats, the latter of which can be used to generate R factors as needed.
-
-
-### National Vital Statistics System
-
-NVSS data on births is ingested by several means. The easiest approach is to use statistics from tables or graphs published by the National Center for Health Statistics (NCHS). If already published statistics are not available, the [CDC WONDER](https://wonder.cdc.gov/) system can be used to retrieve certain statistics for years 1995 and after. Finally, the [public use data files](https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm) can be used to directly calculate statistics that are not already published, but these files are quite large.
+This repository contains scripts and documents for statistical analysis of what I have come to call "reproductive responsibility," which includes covariates of unintended pregnancy and induced abortion, such as contraceptive use, sexual behavior, and parenting.
 
 
 ## License
