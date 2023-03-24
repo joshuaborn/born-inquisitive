@@ -1,6 +1,6 @@
 # Reproductive Responsibility
 
-This repository contains scripts and documents for statistical analysis of what I have come to call "reproductive responsibility," which includes covariates of unintended pregnancy and induced abortion, such as contraceptive use, sexual behavior, and parenting.
+This repository contains scripts and documents for statistical analysis of what I have come to call "reproductive responsibility," which includes covariates of unintended pregnancy and induced abortion, such as contraceptive use, sexual behavior, and alloparenting.
 
 
 ## License
