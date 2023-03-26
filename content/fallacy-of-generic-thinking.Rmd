@@ -28,7 +28,7 @@ opts_chunk$set(
 
 ## Introduction
 
-What unites the many types of [fallacies](/tags/fallacies.html) that this blog discusses is that they would appeal to a mind afflicted with what can be termed "generic thinking." For instance, the article "[How to Scrutinize a Statistic](/how-to-scrutinize-a-statistic.html)" discussed both the need to evaluate [practical significance](/how-to-scrutinize-a-statistic.html#practical-significance) and how this is typically done by quantifying an [effect size](/how-to-scrutinize-a-statistic.html#effect-size). The absence of summarizing an effect size was described as a fallacy of "[generic comparisons](http://localhost:4321/how-to-scrutinize-a-statistic.html#generic-comparisons)."
+What unites the many types of [fallacies](/tags/fallacies.html) that this blog discusses is that they would appeal to a mind afflicted with what can be termed "generic thinking." For instance, the article "[How to Scrutinize a Statistic](/how-to-scrutinize-a-statistic.html)" discussed both the need to evaluate [practical significance](/how-to-scrutinize-a-statistic.html#practical-significance) and how this is typically done by quantifying an [effect size](/how-to-scrutinize-a-statistic.html#effect-size). The absence of summarizing an effect size was described as a fallacy of "[generic comparisons](/how-to-scrutinize-a-statistic.html#generic-comparisons)."
 
 The phrase "generic comparison" is actually a neologism invented by this blog, but the word "generic" was used deliberately to allude to what is termed "generic generalization," a phrase established in the academic literature.
 
