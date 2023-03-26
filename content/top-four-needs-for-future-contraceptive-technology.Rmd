@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-With over 80 million unintended pregnancies and over 40 million induced abortions every year worldwide [@sedgh_intended_2014], it is abundantly clear that the current state of contraception is inadequate.
+With over 112 million unintended pregnancies and over 66 million induced abortions every year worldwide [@bearak_unintended_2020], it is abundantly clear that the current state of contraception is inadequate.
 
 This should not be surprising because human civilization is still in a very primitive stage of its contraceptive practice. Despite the relative affluence and technological development of the United States, many of the [most popular contraceptive methods in the United States](/use-of-contraception-in-the-united-states-2017-2019.html#methods-used) today -- such as the male condom or the practice of _coitus interruptus_ a.k.a. withdrawal -- are so ancient that their origins are forever lost to history or perhaps prehistory. Indeed, contraception itself in the United States [has only been legal for about a century](/margaret-sanger-on-abortion-in-her-own-words.html#who-was-margaret-sanger).
 
