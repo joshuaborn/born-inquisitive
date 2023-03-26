@@ -46,7 +46,6 @@
 		"publisher": "Brentano's",
 		"publisher-place": "New York",
 		"event-place": "New York",
-		"URL": "https://books.google.com/books?id=a-skAAAAYAAJ",
 		"note": "LCCN: 20015159",
 		"author": [
 			{
@@ -70,7 +69,6 @@
 		"page": "102–104",
 		"volume": "135",
 		"issue": "3473",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=303569.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -251,7 +249,6 @@
 		"type": "article-magazine",
 		"title": "What Every Girl Should Know: Part II--Reproduction",
 		"container-title": "New York Call",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=304533.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -284,7 +281,6 @@
 		"container-title": "True Confessions",
 		"page": "24, 76-79",
 		"source": "Library of Congress Microfilm 128:0689-073",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=101919.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -305,7 +301,6 @@
 		"type": "article-magazine",
 		"title": "Prudence or Prudery in Sex Matters",
 		"container-title": "Fairplay",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=302881.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -328,7 +323,6 @@
 		"title": "Birth Control or Abortion?",
 		"container-title": "Birth Control Review",
 		"page": "3-4",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=232534.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -351,7 +345,6 @@
 		"publisher-place": "New York",
 		"edition": "8th Edition, Revised",
 		"event-place": "New York",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=320146.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -372,7 +365,6 @@
 		"title": "A Better Race through Birth Control",
 		"container-title": "The Thinker",
 		"page": "60-62",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=306638.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -425,7 +417,6 @@
 		"title": "Why Not Birth Control Clinics in America?",
 		"container-title": "American Medicine",
 		"page": "164-167",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=320522.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -448,7 +439,6 @@
 		"publisher-place": "Hotel Brevoort",
 		"genre": "Typed speech",
 		"event-place": "Hotel Brevoort",
-		"URL": "https://www.nyu.edu/projects/sanger/webedition/app/documents/show.php?sangerDoc=128167.xml",
 		"author": [
 			{
 				"family": "Sanger",
@@ -563,7 +553,7 @@
 		"id": "bcca",
 		"type": "webpage",
 		"title": "Birth Control Council of America",
-		"URL": "http://www.nyu.edu/projects/sanger/aboutms/organization_bcca.php",
+		"URL": "https://sanger.hosting.nyu.edu/aboutms/organization_bcca/",
 		"accessed": {
 			"date-parts": [
 				[
@@ -578,7 +568,7 @@
 		"id": "bcfa",
 		"type": "webpage",
 		"title": "Birth Control Federation of America",
-		"URL": "http://www.nyu.edu/projects/sanger/aboutms/organization_bcfa.php",
+		"URL": "https://sanger.hosting.nyu.edu/aboutms/organization_bcfa/",
 		"accessed": {
 			"date-parts": [
 				[
@@ -633,36 +623,6 @@
 					"2018",
 					2,
 					24
-				]
-			]
-		}
-	},
-	{
-		"id": "bcca",
-		"type": "webpage",
-		"title": "Birth Control Council of America",
-		"URL": "http://www.nyu.edu/projects/sanger/aboutms/organization_bcca.php",
-		"accessed": {
-			"date-parts": [
-				[
-					"2018",
-					11,
-					11
-				]
-			]
-		}
-	},
-	{
-		"id": "bcfa",
-		"type": "webpage",
-		"title": "Birth Control Federation of America",
-		"URL": "http://www.nyu.edu/projects/sanger/aboutms/organization_bcfa.php",
-		"accessed": {
-			"date-parts": [
-				[
-					"2018",
-					11,
-					11
 				]
 			]
 		}
