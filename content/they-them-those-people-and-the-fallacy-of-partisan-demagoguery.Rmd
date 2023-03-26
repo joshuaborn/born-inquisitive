@@ -11,7 +11,7 @@ output:
     toc: true
     toc_depth: 5
 summary: 'Characterizations of partisan factions lead to the Straw Man Fallacy and to a kind of No True Scotsman Fallacy, and they empower polarized viewpoints at the expense of independent thinkers.'
-tags: ["opinion", "fallacies", "first-person"]
+tags: ["fallacies", "first-person"]
 title: '"They," "Them," "Those People," and the Fallacy of Partisan Demagoguery'
 ---
 

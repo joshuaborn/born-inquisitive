@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "Searching for moral knowledge is delusional. Differences between descriptive and normative mental models imply that truth and falsity do not apply to morality and that moral constructs are fictions."
-tags: ["opinion", "philosophy", "third-person"]
+tags: ["philosophy", "third-person"]
 title: "Moral Skepticism"
 ---
 

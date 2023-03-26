@@ -10,7 +10,7 @@ output:
     toc: true
     toc_depth: 5
 summary: '[OPENING SENTENCE]'
-tags: ["opinion", "philosophy", "first-person"]
+tags: ["philosophy", "first-person"]
 title: 'Moral Realism'
 ---
 

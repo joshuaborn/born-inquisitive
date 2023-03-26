@@ -1,0 +1,55 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/approval-of-abortion-is-conservative.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-03-22
+#include-before: |
+#  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: false
+summary: "Advocacy of induced abortion as a method of fertility control is a conservative viewpoint."
+tags: ["editorial", "reproductive responsibility", "abortion", "third-person"]
+title: "Approval of Induced Abortion is Conservative"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+In the late 20th century and early 21st century in the United States, there has been a binary partisanship divided between left-wing and right-wing in which the right-wing is often labeled "conservative," and opposition to induced abortion of pregnancy is often associated with the right-wing. This might lead an indolent mind to think offhandedly that opposition to induced abortion is conservative in a broader sense.
+
+However, political partisanship is rarely logically coherent. Instead, it represents the ephemeral and arbitrary fads of the time and place in which one happens to live. What is right-wing one generation might be left-wing for another generation, and what is left-wing in one place might be right-wing in another place. Just because words such as "conservative" can be used to describe these fads, such labels do not give true insight into historical context.
+
+This article contends that _approval_ of induced abortion as a method of fertility control is a conservative viewpoint when evaluated according to such dictionary definitions of "conservative" as _tending or disposed to maintain existing views, conditions, or institutions._ [@noauthor_conservative_nodate, 2a]
+
+There [has been a trend toward protecting children from being arbitrarily killed at earlier and earlier points in their development](/history-of-ideas-about-induced-abortion.html). Western civilization began with no such protection, and instead enforced the legal right of patriarchs to choose which children to raise and which to kill as enshrined in laws such as _patria potestas._ In the late Roman Empire this became increasingly a controversial issue, until infanticide was outlawed in 374 C.E. This created the first protection of children from arbitrary killing, and established the point of protection at birth.
+
+Later, as Aristotelian-Augustinian doctrine regarding prenatal life was codified into law in the medieval and early modern periods, this protection was extended even earlier in child development to a threshold that would come to be known in English common law as "quickening." Eventually in the 19th century, quickening was seen as pre-scientific folk belief, and with the removal of quickening criteria from criminal abortion law, the point at which children were protected from being killed arbitrarily was effectively moved all the way to their conception.
+
+While there has been a trend toward protecting children earlier and earlier in their development, these protections have failed spectacularly. For more than a thousand years after infanticide was made illegal and as late as the 19th century, authorities struggled with what to do about mass infanticide occurring in their jurisdictions. Even though 19th century legal changes effectively criminalized induced abortion at any point during a pregnancy, [hundreds of thousands if not millions of embryos and fetuses were killed every year just in the United States in the early 20th century](/induced-abortion-is-common.html).
+
+Approval of induced abortion of pregnancy as a method of fertility control is conservative because it is disposed to maintain existing conditions. Induced abortion has been advocated as a method of fertility control for more than thousand years, since at least the Greek classical period. Induced abortion is extremely common today; there are tens of millions of induced abortions every year. Induced abortion is the _status quo._
+
+Furthermore, approval of induced abortion goes against a trend of protecting children earlier and earlier in their development that has slowly progressed for the past two millennia of Western civilization. If advocacy of induced abortion limits itself to advocating induced abortion before a threshold _in utero,_ then such advocacy is a return to pre-19th century thinking about prenatal life. If advocacy of induced abortion includes advocacy of induced abortion all the way up until birth, then such advocacy is a return to 4th century C.E. thinking.
+
+The conservatism of approval of induced abortion has broad ramifications for those who are [opposed to killing unborn children as a method of fertility control](/induced-abortion-is-controversial.html). Conservative -- in the definition used here -- approaches are the wrong approaches. History has nothing but thousands of years of infanticide, child abandonment, and induced abortion to offer. There has never been a time of reproductive responsibility through nonviolent fertility control. There is no golden era to return to.
+
+Opposition to induced abortion is new, tenuous, and radical. The absence of a past to emulate forces those opposed to induced abortion to aspire to a future that has not yet been realized. Advocates of induced abortion have an easy task; they need only to perpetuate the _status quo,_ perhaps amend a few laws here and there to their liking, but generally keep the human condition as it is. Opponents of induced abortion, however, must drastically reshape human civilization.
+
+Such changes can be imperceptibly slow, and oftentimes they are generational. They do, however, happen. Who today would advocate for the right to infanticide that _patria potestas_ once enshrined? Furthermore, such changes may very well be occurring right now. Indeed, there has been a perceptible decline in the number of induced abortions in the United States in the past three decades, even as population has increased. Scholars of reproductive responsibility would be apt to engage in the scientific study of such changes. Future articles of this blog will report on one such line of scholarship.
+
+
+## Further Reading
+
+This is the final article in a series of four articles. Bibliographies and further discussion are in the preceding three articles: ["Induced Abortion is Controversial"](/induced-abortion-is-controversial.html), ["A History of Ideas about Induced Abortion"](/history-of-ideas-about-induced-abortion.html), and ["Induced Abortion is Common"](/induced-abortion-is-common.html).
+
+
+## Citation
+
+::: {#refs}
+:::

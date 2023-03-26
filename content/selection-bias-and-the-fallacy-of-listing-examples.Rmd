@@ -12,7 +12,7 @@ output:
     md_extensions: ["+footnotes"]
     toc: true
 summary: "Advocating a belief by finding supporting examples and listing them is fallacious because of selection bias; examples are selected _because_ they illustrate the belief and contradictory cases are ignored."
-tags: ["opinion", "fallacies", "statistics", "third-person"]
+tags: ["fallacies", "statistics", "third-person"]
 title: "Selection Bias and the Fallacy of Listing Examples"
 ---
 

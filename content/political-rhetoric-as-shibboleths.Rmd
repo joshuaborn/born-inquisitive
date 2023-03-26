@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "Slogans of political rhetoric function as shibboleths -- markers of tribal allegiance devoid of content -- and so promote conformity, superficiality, and exclusion of non-binary viewpoints."
-tags: ["opinion", "third-person"]
+tags: ["editorial", "third-person"]
 title: "Political Rhetoric as Shibboleths"
 ---
 

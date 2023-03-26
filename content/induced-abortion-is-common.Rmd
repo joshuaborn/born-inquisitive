@@ -1,0 +1,72 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/approval-of-abortion-is-conservative.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-03-21
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: "Induced abortion is common, though challenging to estimate. This article reviews sources for estimates of the prevalance induced abortion."
+tags: ["review of research", "reproductive responsibility", "abortion", "third-person"]
+title: "Induced Abortion is Common"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+
+
+## In the United States
+
+### Before 1973
+
+Similarly to how [laws criminalizing infanticide did not bring infanticide to an end](/history-of-ideas-about-induced-abortion.html), induced abortion of pregnancy persisted into the 20th century in the United States as a common occurrence despite it being prohibited. Because it was an underground activity, estimates of how frequently embryos or fetuses were intentionally killed varied wildly. [Birth control pioneer Margaret Sanger](/margaret-sanger-on-abortion-in-her-own-words.html), speaking in 1918, relates the opinions of the experts she consulted:
+
+> In the very nature of the case, it is impossible to get accurate figures upon the number of abortions performed annually in the United States. It is often said, however, that one in five pregnancies end in abortion. One estimate is that 150,000 occur in the United States each year and that 25,000 women die of the effects of such operations in every twelve months. Dr. William J. Robinson asserts that there are 1,000,000 abortions every year in this country and adds that the estimate is conservative. He quotes Justice John Proctor Clark as saying that there are at least 100,000 in the same length of time in New York City alone.
+>
+> Dr. Max Hirsch, a famous authority quotes an opinion that there are 2,000,000 abortions in the United States every year!
+>
+> "I believe" declares Dr. Hirsch, "that I may say without exaggeration that absolutely spontaneous or unprovoked abortions are extremely rare, that a vast majority&mdash;I should estimate it at 80 per cent&mdash;have a criminal origin."
+>
+> "Our examinations have informed us that the largest number of abortions are performed on married women. This fact brings us to the conclusion that contraceptive measures among the upper classes and the practice of abortion among the lower class, are the real means employed to regulate the number of offspring." [@sanger_birth_1918]
+
+
+### Today
+
+There are more accurate counts of the number of induced abortions occurring today than in Margaret Sanger’s time, though estimates still suffer from some issues in accuracy.
+
+The Centers for Disease Control publishes annual Abortion Surveillance reports that collect data provided by the several states of the United States. [@kortsmit_abortion_2022] However, the Abortion Surveillance reports are known to be incomplete because of variation in reporting by the states. Most notably, some states, including very populous ones like California, do not report to the Centers for Disease Control at all. Therefore, the Abortion Surveillance reports are underestimates.
+
+The National Survey of Family Growth administered by the National Center for Health Statistics is a periodic survey of nationally representative samples of persons living in the United States pertaining to reproductive behavior. The National Survey of Family Growth is quite accurate in estimating some pregnancy outcomes such as the number of live births, as confirmed by vital records statistics. However, induced abortions are underreported on the National Survey of Family Growth such that its official documentation advises against using the survey results for analysis of induced abortion. [@noauthor_appendix_2021]
+
+The most accurate counts of abortions induced in the United States come not from government official statistics, therefore, but from the Guttmacher Institute, an abortion advocacy think tank. The Guttmacher Institute periodically conducts its Abortion Provider Census, which is a census in the sense that every induced abortion provider in the United States is asked for a count of abortions induced. The statistics reported from the Abortion Provider Census include some estimation, however, because some induced abortion providers do not reply to the Abortion Provider Census, and so the Guttmacher Institute must estimate counts for these nonrespondents. [@jones_abortion_2022]
+
+Nonetheless, estimates of abortions induced in the United States from the Abortion Provider Census are consistently greater than those from either the Abortion Surveillance Reports or the National Survey of Family Growth and are likely the most accurate counts of abortions induced in the United States.
+
+![Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute.[@maddow-zimet_pregnancies_2022] [@jones_abortion_2022]](/images/Guttmacher_APC_abortion_totals.png){alt="A plot with the number of induced abortions of pregnancy in the United States on the y-axis and the year on the x-axis."}
+
+According to the Abortion Provider Census, the number of abortions induced in the United States peaked in the 1980s around 1,600,000 per year and declined to just under 900,000 per year in the late 2010s. (Estimates from the 1970s may have been underestimates due to under-coverage, given the legalization of induced abortion in that decade.)
+
+
+## Worldwide
+
+There have been several attempts to estimate the number of abortions induced worldwide by aggregating estimates for each country in the world. These worldwide estimates are estimates from models that themselves are based on estimates from national surveys, each of which might have issues such as discussed above for the case of the United States. They should be interpreted with caution, but can at least give a rough estimate. The latest such model estimates approximately 73.3 million induced abortions per year worldwide. [@bearak_unintended_2020]
+
+
+## Further Reading
+
+This article is a part of series of four articles. The next article discusses the thesis that [approval of induced abortion as method of fertility control is conservative](/approval-of-induced-abortion-is-conservative.html). The previous article in the series discussed the [history of ideas about induced abortion in Western civilization](/history-of-ideas-about-induced-abortion.html).
+
+
+## Citations
+
+::: {#refs}
+:::

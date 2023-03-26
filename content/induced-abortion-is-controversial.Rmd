@@ -1,0 +1,54 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/approval-of-abortion-is-conservative.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-03-19
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: "The empirical evidence of the Gallup Social Series' annual poll on Values and Beliefs shows that induced abortion is one of if not the most controversial moral issue in the United States."
+tags: ["original research", "public opinion", "reproductive responsibility", "abortion", "third-person"]
+title: "Induced Abortion is Controversial"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Gallup Polling
+
+Different people have radically different judgments about the practice of killing human fetuses or embryos as a method of fertility control, which is euphemistically described in the medical literature as "induced abortion of pregnancy" and in the vernacular as just "abortion."
+
+Each May, the public opinion company Gallup conducts its Values and Beliefs telephone poll on a representative sample of persons in the United States aged 18 or older, as part of the ongoing Gallup Poll Social Series. This poll contains a series of questions prompted with, "I'm going to read you a list of issues. Regardless of whether or not you think it should be legal, for each one, please tell me whether you personally believe that in general it is morally acceptable, or morally wrong."
+
+![Moral opinions on induced abortion of pregnancy from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014] Each estimate is associated with some sampling error. However, Gallup does not release information needed to calculate sampling error with its Gallup Analytics summary spreadsheets. Respondents are prompted for either the "morally acceptable" or "morally wrong" answers, whereas the "depends on the situation" responses are volunteered by respondents.](/images/Gallup_opinions_about_abortion.png){alt="A plot with the proportion of responses of morally acceptable, depends on the situation, and morally wrong on the y-axis and and the year on the x-axis."}
+
+Over the past 22 years, about half of the United States has judged induced abortion to be generally morally wrong, and about half of the United States has judged induced abortion to be generally morally acceptable, making it quite a controversial issue. 
+
+Define a _moral controversy metric_ as $100 - \left| p_w - p_a \right|$ where $p_w$ is the proportion of a population that judges something to be morally wrong and $p_a$ is the proportion that judges it to be morally acceptable. This moral controversy metric is low when there is consensus on whether something is morally wrong or not, and in the extreme case is 0 when 100% of a population agrees that something is morally wrong or morally acceptable. Conversely, this metric is high when there is controversy about an issue, and in the extreme case it is 100 when there are exactly the same proportion of a population that judge something to be morally wrong as who judge it to be morally acceptable.
+
+![Moral controversy metrics for four issues from the Gallup Poll Social Series, Values and Beliefs.](/images/Gallup_controversial_moral_opinions.png){alt="A plot with the different between percent judging 'morally wrong' and percent judging 'morally acceptable' on the y-axis and year on the x-axis."}
+
+Some issues, such as having an extramarital affair, have been relatively uncontroversial during the lifetime of the Values and Beliefs poll because a consistent majority of Americans judge having an extramarital affair to be wrong. Some issues like having a baby out of wedlock began the Values and Belief polling as controversial issues and became less controversial in the past 22 years. Other issues like animal medical testing began with less controversy and gradually became more controversial over the course of the poll. Induced abortion has remained very controversial throughout the 22 year period.
+
+Indeed, out of the 18 topics ever asked about on the Values and Beliefs moral opinions poll, induced abortion has been the most controversial issue 11 times out of 22 times that the Value and Beliefs poll has been conducted, and the second most controversial issue another 7 times. It has never been ranked lower than the fourth most controversial issue on the poll. Induced abortion is quite possibly the most morally controversial issue in the United States.
+
+Furthermore, there is likely to be latent controversy about induced abortion in other parts of the world even where disagreement about induced abortion is not so public. For instance, induced abortion in China does not generate as much acrimony as it does in the United States. However, those who have engaged with a Chinese population in more detailed conversation about induced abortion have found diverse opinions even if debate about induced abortion is not a prominent part of public discourse due to cultural differences. [@nie_behind_2005]
+
+
+## Further Reading
+
+This article is a part of series of four articles. The next article in the series discusses the [history of ideas about induced abortion in Western civilization](/history-of-ideas-about-induced-abortion.html).
+
+
+## Citations
+
+::: {#refs}
+:::
