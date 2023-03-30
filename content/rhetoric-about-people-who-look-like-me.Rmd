@@ -10,7 +10,7 @@ output:
   blogdown::html_page:
     number_sections: false
     toc: false
-summary: 'On several occasions I have encountered admonitions of those who do not understand what it is like to grow up not seeing people who "look like you." This article is a response.'
+summary: 'On several occasions I have encountered admonitions against those who do not understand what it is like to grow up not seeing people who "look like you." This article is a response.'
 tags: ["editorial", "first-person"]
 title: 'Rhetoric about People "Who Look Like Me"'
 ---
@@ -25,9 +25,9 @@ It seems to have become routine for entertainers who win awards and who are not 
 
 I will rapidly move past my annoyance at entertainers' self-aggrandizing attitudes and exaggerated views of the importance of entertainers to human civilization. However, I will allow myself to ruminate on a much more profound sense of annoyance I feel whenever I encounter these statements. 
 
-I am someone who is categorized as "interracial" by the rest of United States society. This is not a unique experience to me, and I do not view this categorization as a part of my core identity. If I were asked to summarize the attributes I find to be most important for someone to understand who I am, being categorized as "interracial" would likely not even make the top ten. However, my "interracial" status is important for understanding my disgust at the "people who look like me" rhetoric. 
+I am someone who is categorized as "interracial" by the rest of United States society. This is not an experience unique to me, and I do not view this categorization as a part of my core identity. If I were asked to summarize the attributes I find to be most important for someone to understand who I am, being categorized as "interracial" would likely not even make the top ten. However, that _others_ would describe me as "interracial" is important for understanding my disgust at the "people who look like me" rhetoric. 
 
-I have been a human version of what psychologists refer to as a "projective test." I am an ambiguous stimulus that allows others to react in ways that might reveal whatever internal agenda their subconscious has for interpreting the external world. I am like one of Hermann Rorschach's ink blots. Some have approached me with the expectation I speak Chinese, others Spanish. I was once picked up by an Uber driver who thought I was a "light-skinned Black man," despite being quite pale.
+I have been a human version of what psychologists refer to as a "projective test." I am an ambiguous stimulus that allows others to react in ways that might reveal whatever internal agenda their subconscious has for interpreting the external world. I am like one of Hermann Rorschach's ink blots. Some have approached me with the expectation I speak Chinese, others Spanish. I was once picked up by an Uber driver who thought I was a "light-skinned Black man" like her nephew, despite being quite pale.
 
 ![The first of the blots of the Rorschach inkblot test. Image was acquired via
 [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Rorschach_blot_01.jpg) and is in the public domain.
@@ -41,7 +41,7 @@ Throughout my life, I have struggled for representation, and I have searched in 
 
 Instead, I have struggled to be represented for my ideas, my values, and my desire to be a contributor to the marketplace of ideas. My people are not (necessarily) those who look like me, but those whose worldviews and whose work overlap with mine. My people are those who could be my colleagues, rather than my doppelgangers.
 
-I have always been a square peg in a round hole. I have never found my people. This is due to the nonconformity of my views, rather than the nonconformity of my appearance. I am content not in leftist orthodoxy, nor conservative orthodoxy, nor libertarian orthodoxy, nor religious orthodoxy.
+I have always been a square peg in a round hole. I have never found my people. This is due to the nonconformity of my views, rather than the nonconformity of my appearance. I am at home not with leftist orthodoxy, nor conservative orthodoxy, nor libertarian orthodoxy, nor religious orthodoxy.
 
 I would even welcome a kind of representation in which others at least stop misrepresenting my views. This would require the stupidity that is political partisanship to be attenuated enough for a more intelligent public discourse to emerge. That is a world so far removed from the one in which I live that it seems like a fever dream to think of it, so I expect tomorrow to wake up once again to a world of partisan hatred and demagoguery. 
 
@@ -49,4 +49,6 @@ There is at least an honesty in the "who look like me" rhetoric. The rhetoric is
 
 I unironically appreciate this honesty because there are those who have attempted to make the pseudo-genetic nonsense that is racial categorization seem more respectable and informative by asserting it to be a proxy for culture. This has always seemed a facile argument to me because [culture is something you learn, do, and teach](/kwame-anthony-appiahs-criticism-of-cultural-appropriation-criticism.html), not a category to which you are assigned in your youth and you use to check boxes on demographic forms.
 
-The "who look like me" rhetoric renounces this duplicity of defending racial identity by conflating it with culture. Instead of trying to evade judgements of superficiality, the "who look like me" rhetoric embraces the superficiality and proudly proclaims the superficiality as [essential](/essentialism.html) to one's core identity. Instead of trying to dissuade the world from the stereotype that Americans are culturally inept, the "who look like me" rhetoric accepts our cultural ineptitude. Rather than demonstrating knowledge of language, history, or customs, the rhetoric reinforces the perception that we judge one another based on how we look. The "who look like me" rhetoric does not hide behind specious pseudo-intellectual arguments, and so allows a discerning mind to easily see it for what it is.
+The "who look like me" rhetoric renounces this duplicity of defending racial identity by conflating it with culture. Instead of trying to evade judgements of superficiality, the "who look like me" rhetoric embraces the superficiality and proudly proclaims the superficiality as [essential](/essentialism.html) to one's core identity.
+
+Instead of trying to dissuade the world from the stereotype that Americans are culturally inept, the "who look like me" rhetoric accepts our cultural ineptitude. Rather than demonstrating knowledge of language, history, or customs, the rhetoric reinforces the perception that we judge one another based on how we look. The "who look like me" rhetoric does not hide behind specious pseudo-intellectual arguments, and so allows a discerning mind to easily see it for what it is.
