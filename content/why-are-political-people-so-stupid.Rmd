@@ -1,0 +1,48 @@
+---
+author: "Joshua Born"
+date: 2023-04-09
+draft: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: '[OPENING SENTENCE]'
+tags: ["editorial", "fallacies", "first-person"]
+title: 'Why Are Political People So Stupid?'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Introduction
+
+* Partisanship
+    * Groupthink bias. Less salient viewpoints are silenced.
+      * A lack of exposure to a diversity of viewpoints leads to intellectual weakness.
+    * Spitefulness. Hatred of the out-group becomes a motive unto itself.
+    * Out-group viewpoints are routinely misrepresented.
+    * Generic thinking and demagoguery
+    * Narratives. Harari's idea of mythology. When walking around with a hammer, everything looks like a nail. Real understanding of social issues is nuanced, detailed, and does not resolve into an easy ongoing story.
+* News cycle (There has been more attention to the issue of biased news sources in the United States. But why is paying attention to the news a good thing in the first place? The news consists of anecdotes and unrepresentative samples. Thus, it makes people less informed because they think they are informed when they are not.)
+    * Fallacy of celebrated cases. Kahneman's availability heuristic.
+    * Anecdotes generally
+    * Media selection bias
+    * Browse not search. Short attention span means no detailed knowledge of a social issue.
+    * Lack of historical context. 
+* Debate
+    * Motivated reasoning
+    * Lawyer-mode versus scientist-mode
+    * Selection bias again
+
+
+## Conclusion
+
+
+
