@@ -38,8 +38,9 @@ knitr::opts_chunk$set(
     * Lack of historical context. 
 * Debate
     * Motivated reasoning
-    * Lawyer-mode versus scientist-mode
-    * Selection bias again
+      * Lawyer-mode versus scientist-mode
+      * Selection bias again
+    * Nothing to "win," but it does mean you are not listening
 
 
 ## Conclusion
