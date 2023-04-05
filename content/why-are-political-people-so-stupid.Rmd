@@ -20,27 +20,52 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 ## Introduction
 
-* Partisanship
-    * Groupthink bias. Less salient viewpoints are silenced.
-      * A lack of exposure to a diversity of viewpoints leads to intellectual weakness.
-    * Spitefulness. Hatred of the out-group becomes a motive unto itself.
-    * Out-group viewpoints are routinely misrepresented.
-    * Generic thinking and demagoguery
-    * Narratives. Harari's idea of mythology. When walking around with a hammer, everything looks like a nail. Real understanding of social issues is nuanced, detailed, and does not resolve into an easy ongoing story.
-* News cycle (There has been more attention to the issue of biased news sources in the United States. But why is paying attention to the news a good thing in the first place? The news consists of anecdotes and unrepresentative samples. Thus, it makes people less informed because they think they are informed when they are not.)
-    * Fallacy of celebrated cases. Kahneman's availability heuristic.
-    * Anecdotes generally
-    * Media selection bias
-    * Browse not search. Short attention span means no detailed knowledge of a social issue.
-    * Lack of historical context. 
-* Debate
-    * Motivated reasoning
-      * Lawyer-mode versus scientist-mode
-      * Selection bias again
-    * Nothing to "win," but it does mean you are not listening
+There is nothing intrinsically wrong about thinking about public policy. While it is true that politics is just one aspect of human civilization and not the only way to address a social issue you care about, there are many social issues that will inevitably lead someone who genuinely cares about them to think about politics.
+
+If people are motivated to enter the realm of politics in this way, you would expect them to be on their best behavior, using the fullest abilities of their understanding to address an issue that earnestly concerns them.
+
+This has led me often to wonder, why are the political people we encounter, both in person and online, so stupid?
+
+There are many ways in which someone could become an enthusiastic outlet for stupidity. There are conspiracy theorists, religious fanatics, _et al._ However, in my anecdotal experience, the most common trait I have noticed about outspokenly stupid people I encounter is that they are _political._
+
+I do not mean "political" as in "political science." I have heard many individuals give insightful and informative analyses of politics.
+
+The political people I refer to are those who passionately support a party or a platform, those who post about politics on social media, those who go to rallies and protests, those who work on campaigns, those who consume or produce media outlets such as MSNBC or Fox News, and of course, politicians. They are not students of political phenomena; they _practice_ politics.
+
+Politics is not difficult to understand, at least in the same way as general relativity is difficult to understand. Anyone of rudimentary intelligence spending a few minutes of thoughtful consideration should be able to understand the most common viewpoints on any given issue.
+
+This makes it that much more baffling when politics becomes the dominion of those who make it clear within a few utterances that they do not understand that of which they speak. Oftentimes this stupidity is coupled with hatefulness, as well.
+
+This has led me to wonder, what are the characteristics of the practice of political engagement that are so inimical to the practice of truthfulness and so conducive to stupidity and hatefulness? In the sequel, I summarize my observations categorized into three broad practices commonly associated with political engagement and which I believe to be flawed: partisanship, following the news cycle, and debate.
+
+
+## Partisanship
+
+* Groupthink bias. Less salient viewpoints are silenced.
+  * A lack of exposure to a diversity of viewpoints leads to intellectual weakness.
+* Spitefulness. Hatred of the out-group becomes a motive unto itself.
+* Out-group viewpoints are routinely misrepresented.
+* Generic thinking and demagoguery
+* Narratives. Harari's idea of mythology. When walking around with a hammer, everything looks like a nail. Real understanding of social issues is nuanced, detailed, and does not resolve into an easy ongoing story.
+
+## Following the News
+
+There has been more attention to the issue of biased news sources in the United States. But why is paying attention to the news a good thing in the first place? The news consists of anecdotes and unrepresentative samples. Thus, it makes people less informed because they think they are informed when they are not.
+
+* Fallacy of celebrated cases. Kahneman's availability heuristic.
+* Anecdotes generally
+* Media selection bias
+* Browse not search. Short attention span means no detailed knowledge of a social issue.
+* Lack of historical context.
+
+## Debate
+
+* Motivated reasoning
+  * Lawyer-mode versus scientist-mode
+  * Selection bias again
+* Nothing to "win," but it does mean you are not listening
 
 
 ## Conclusion
