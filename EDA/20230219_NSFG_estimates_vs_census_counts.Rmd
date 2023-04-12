@@ -71,33 +71,28 @@ guttmacher_national <- guttmacher_raw |>
         2009, 2012, 2015)
   )
 
-census_counts <- full_join(
-  guttmacher_national |> 
-    rename(Year = year, Total.Abortions = abortionstotal) |> 
+census_counts <- bind_rows(
+  guttmacher_national |>
     filter(!abortions_interpolated) |> 
-    select(Year, Total.Abortions),
+    rename(Year = year, Total = abortionstotal) |>
+    select(Year, Total) |>
+    mutate(Type = 'abortions'),
   vital_births |> 
-    rename(Total.Births = Birth.Number) |> 
-    filter(Year >= 1973) |> 
-    select(Year, Total.Births),
-  by = join_by(Year)
-) |> arrange(Year)
+    filter(Year >= 1973) |>
+    rename(Total = Birth.Number) |>
+    select(Year, Total) |>
+    mutate(Type = 'births')
+)
 ```
 
 ```{r plot-census-counts-by-year, dependson="calculate-census-counts-by-year", dpi=200, fig.width=9.6, fig.height=9.6, fig.retina=1.5}
 ggplot(
-  data = census_counts |>
-    pivot_longer(
-      starts_with('Total'),
-      values_drop_na = TRUE,
-      values_to = 'Count'
-    ) |>
-    arrange(Year),
+  data = census_counts,
   mapping = aes(
-    y = Count,
+    y = Total,
     x = Year,
-    color = name,
-    shape = name
+    color = Type,
+    shape = Type
   )
 ) +
   geom_point() +
@@ -136,15 +131,15 @@ gt(census_counts) |>
 ## Estimates from Stacked 2015-2019 NSFG
 
 ```{r estimate-based-on-2015-2019-NSFG, dependson="load-data"}
-est2015_2019 <- bind_rows(
-  preg2015_2017 |> 
-    select(-QUARTER, -PHASE, -INTVWYEAR),
-  preg2017_2019 |> 
-    select(-QUARTER, -PHASE, -INTVWYEAR)
-) |> left_join(
-  wgt2011_2019,
-  by = join_by(CASEID)
-) |> 
+nsfg2015_2019 <- bind_rows(
+    preg2015_2017 |>
+      select(-QUARTER, -PHASE, -INTVWYEAR),
+    preg2017_2019 |>
+      select(-QUARTER, -PHASE, -INTVWYEAR)
+  ) |> left_join(
+    wgt2011_2019,
+    by = join_by(CASEID)
+  ) |>
   mutate(
     OUTCOME = labelled(OUTCOME, c(
       "LIVE BIRTH" = 1,
@@ -162,44 +157,62 @@ est2015_2019 <- bind_rows(
     ids = SECU,
     weights = WGT2015_2019,
     nest = TRUE
-  ) |> 
-  group_by(DATEND) |> 
+  )
+
+abortions2015_2019 <- nsfg2015_2019 |>
+  group_by(DATEND) |>
   summarize(
-    Abortions = survey_total(Abortions, vartype = 'ci'),
-    Births = survey_total(Births, vartype = 'ci')
+    Estimate = survey_total(Abortions, vartype = 'ci')
   ) |> 
   rename(Year = DATEND) |>
-  right_join(
-    census_counts,
-    by = 'Year'
-  ) |>
+  filter(!is.na(Year)) |>
   mutate(
-    Data.Vintage = '2015-2019',
-    Covers.Births = Births_low < Total.Births & Total.Births < Births_upp,
-    Covers.Abortions = Abortions_low < Total.Abortions & Total.Abortions < Abortions_upp
+    Vintage = '2015-2019',
+    Type = 'abortions'
+  )
+
+births2015_2019 <- nsfg2015_2019 |>
+  group_by(DATEND) |> 
+  summarize(
+    Estimate = survey_total(Births, vartype = 'ci')
+  ) |> 
+  rename(Year = DATEND) |>
+  filter(!is.na(Year)) |>
+  mutate(
+    Vintage = '2015-2019',
+    Type = 'births'
+  )
+
+est2015_2019 <- bind_rows(
+  abortions2015_2019,
+  births2015_2019
   ) |>
-  arrange(Year) |>
-  rename(
-    'Births.Low' = Births_low,
-    'Births.Est' = Births,
-    'Births.High' = Births_upp,
-    'Abortions.Low' = Abortions_low,
-    'Abortions.Est' = Abortions,
-    'Abortions.High' = Abortions_upp,
-    'Births.Total' = Total.Births,
-    'Abortions.Total' = Total.Abortions
-  ) |>
-  select(
-    Data.Vintage, Year,
-    Births.Low, Births.Est, Births.High, Births.Total, Covers.Births,
-    Abortions.Low, Abortions.Est, Abortions.High, Abortions.Total, Covers.Abortions
+  left_join(
+    census_counts,
+    by = c('Year', 'Type')
   )
 ```
 
 ```{r table-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG"}
 gt(est2015_2019) |>
   fmt_number(
-    starts_with(c('Abortions', 'Births')),
+    starts_with(c('Estimate', 'Total')),
     decimals = 0
+  )
+```
+
+```{r plot-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG"}
+ggplot(
+    data = est2015_2019
+  ) +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp,
+      color = Type
+    )
   )
 ```
