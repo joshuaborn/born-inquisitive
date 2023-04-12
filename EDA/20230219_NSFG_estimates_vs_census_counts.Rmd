@@ -218,10 +218,30 @@ ggplot(
     aes(
       x = Year,
       y = Total
-    )
+    ),
+    shape = 4,
+    size = 3
+  ) +
+  scale_y_continuous(
+    breaks = \(x) seq(x[1], x[2], 1e6),
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1], x[2], 2),
+    expand = expansion(add = 1)
   ) +
   labs(
     y = 'Live Births'
+  ) +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    )
   )
 ```
 
