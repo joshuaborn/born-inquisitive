@@ -201,9 +201,9 @@ gt(est2015_2019) |>
   )
 ```
 
-```{r plot-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG"}
+```{r plot-births-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG"}
 ggplot(
-    data = est2015_2019
+    data = filter(est2015_2019, Type == 'births')
   ) +
   geom_segment(
     arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
@@ -211,8 +211,18 @@ ggplot(
       x = Year,
       xend = Year,
       y = Estimate_low,
-      yend = Estimate_upp,
-      color = Type
+      yend = Estimate_upp
     )
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    )
+  ) +
+  labs(
+    y = 'Live Births'
   )
 ```
+
+
