@@ -76,12 +76,12 @@ census_counts <- bind_rows(
     filter(!abortions_interpolated) |> 
     rename(Year = year, Total = abortionstotal) |>
     select(Year, Total) |>
-    mutate(Type = 'abortions'),
+    mutate(Type = 'Abortions'),
   vital_births |> 
     filter(Year >= 1973) |>
     rename(Total = Birth.Number) |>
     select(Year, Total) |>
-    mutate(Type = 'births')
+    mutate(Type = 'Births')
 )
 ```
 
@@ -168,7 +168,7 @@ abortions2015_2019 <- nsfg2015_2019 |>
   filter(!is.na(Year)) |>
   mutate(
     Vintage = '2015-2019',
-    Type = 'abortions'
+    Type = 'Abortions'
   )
 
 births2015_2019 <- nsfg2015_2019 |>
@@ -180,7 +180,7 @@ births2015_2019 <- nsfg2015_2019 |>
   filter(!is.na(Year)) |>
   mutate(
     Vintage = '2015-2019',
-    Type = 'births'
+    Type = 'Births'
   )
 
 est2015_2019 <- bind_rows(
@@ -201,9 +201,10 @@ gt(est2015_2019) |>
   )
 ```
 
-```{r plot-births-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG"}
-ggplot(
-    data = filter(est2015_2019, Type == 'births')
+```{r define-plot-function, dependson="estimate-based-on-2015-2019-NSFG"}
+plot_CIs_against_census_counts <- function(these_data, y_label) {
+  ggplot(
+    data = these_data
   ) +
   geom_segment(
     arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
@@ -233,7 +234,7 @@ ggplot(
     expand = expansion(add = 1)
   ) +
   labs(
-    y = 'Live Births'
+    y = y_label
   ) +
   theme(
     axis.text.x = element_text(
@@ -243,6 +244,20 @@ ggplot(
       vjust = 0.65
     )
   )
+}
 ```
 
+```{r plot-births-from-2015-2019-NSFG, dependson="define-plot-function"}
+plot_CIs_against_census_counts(
+  filter(est2015_2019, Type == 'Births'),
+  'Live Births'
+)
+```
+
+```{r plot-abortions-from-2015-2019-NSFG, dependson="define-plot-function"}
+plot_CIs_against_census_counts(
+  filter(est2015_2019, Type == 'Abortions'),
+  'Induced Abortions'
+)
+```
 
