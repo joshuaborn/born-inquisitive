@@ -123,7 +123,6 @@ ggplot(
 
 ```{r print-table-of-census-counts-by-year, dependson="calculate-census-counts-by-year"}
 gt(census_counts) |>
-  gt_theme_538() |> 
   sub_missing(
     missing_text = ''
   ) |> 
@@ -134,55 +133,10 @@ gt(census_counts) |>
 ```
 
 
-## Estimates from 2017-2019 NSFG
-
-```{r estimate-based-on-2017-2019-NSFG, dependson="load-data"}
-preg2017_2019 |> 
-  mutate(
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1, # 7199
-      "INDUCED ABORTION" = 2, # 941
-      "STILLBIRTH" = 3, # 105
-      "MISCARRIAGE" = 4,  #  1654
-      "ECTOPIC PREGNANCY" = 5, #  123
-      "CURRENT PREGNANCY" = 6 #  193
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0)
-  ) |> 
-  as_survey_design(
-    strata = SEST,
-    ids = SECU,
-    weights = WGT2017_2019,
-    nest = TRUE
-  ) |> 
-  group_by(DATEND) |> 
-  summarize(
-    Abortions = survey_total(Abortions, vartype = 'ci'),
-    Births = survey_total(Births, vartype = 'ci')
-  ) |> 
-  mutate(
-    Abortions.CI.Width = Abortions_upp - Abortions_low,
-    Percent.CI.Abortions = Abortions.CI.Width / Abortions,
-    Births.CI.Width = Births_upp - Births_low,
-    Percent.CI.Births = Births.CI.Width / Births
-  ) |>
-  rename(Year = DATEND) |> 
-  select(Year, starts_with('Abortions'), starts_with('Births'), everything()) |>
-  filter(Year >= 2000 & Year <= 2016) |> 
-  gt() |>
-  gt_theme_538() |>
-  fmt_number(
-    starts_with(c('Abortions', 'Births')),
-    decimal = 0
-  )
-```
-
-
 ## Estimates from Stacked 2015-2019 NSFG
 
 ```{r estimate-based-on-2015-2019-NSFG, dependson="load-data"}
-bind_rows(
+est2015_2019 <- bind_rows(
   preg2015_2017 |> 
     select(-QUARTER, -PHASE, -INTVWYEAR),
   preg2017_2019 |> 
@@ -220,13 +174,14 @@ bind_rows(
     Births.CI.Width = Births_upp - Births_low,
     Percent.CI.Births = Births.CI.Width / Births
   ) |>
-  rename(Year = DATEND) |> 
-  select(Year, starts_with('Abortions'), starts_with('Births'), everything()) |> 
-  filter(Year >= 2000 & Year <= 2014) |> 
-  gt() |> 
-  gt_theme_538() |> 
+  rename(Year = DATEND)
+```
+
+```{r table-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG"}
+gt(est2015_2019) |>
+  #gt_theme_538() |>
   fmt_number(
     starts_with(c('Abortions', 'Births')),
-    decimal = 0
+    decimals = 0
   )
 ```
