@@ -128,13 +128,14 @@ gt(census_counts) |>
   )
 ```
 
-```{r estimate-based-on-2015-2019-NSFG, dependson="load-data"}
+```{r create-survey-objects, dependson="load-data"}
 nsfg2015_2019 <- bind_rows(
     preg2015_2017 |>
       select(-QUARTER, -PHASE, -INTVWYEAR),
     preg2017_2019 |>
       select(-QUARTER, -PHASE, -INTVWYEAR)
-  ) |> left_join(
+  ) |>
+  left_join(
     wgt2011_2019,
     by = join_by(CASEID)
   ) |>
@@ -156,52 +157,47 @@ nsfg2015_2019 <- bind_rows(
     weights = WGT2015_2019,
     nest = TRUE
   )
+```
 
-abortions2015_2019 <- nsfg2015_2019 |>
-  group_by(DATEND) |>
-  summarize(
-    Estimate = survey_total(Abortions, vartype = 'ci')
-  ) |> 
-  rename(Year = DATEND) |>
-  filter(!is.na(Year)) |>
-  mutate(
-    Begin = 2015,
-    End = 2019,
-    Type = 'Abortions'
-  )
 
-births2015_2019 <- nsfg2015_2019 |>
-  group_by(DATEND) |> 
-  summarize(
-    Estimate = survey_total(Births, vartype = 'ci')
-  ) |> 
-  rename(Year = DATEND) |>
-  filter(!is.na(Year)) |>
-  mutate(
-    Begin = 2015,
-    End = 2019,
-    Type = 'Births'
-  )
-
-est2015_2019 <- bind_rows(
-  abortions2015_2019,
-  births2015_2019
+```{r generate-estimates, dependson="create-survey-objects"}
+estimate_births_and_abortions <- function(survey, census_counts) {
+  bind_rows(
+    survey |>
+      group_by(DATEND) |>
+      summarize(
+        Estimate = survey_total(Abortions, vartype = 'ci')
+      ) |> 
+      rename(Year = DATEND) |>
+      filter(!is.na(Year)) |>
+      mutate(
+        Begin = 2015,
+        End = 2019,
+        Type = 'Abortions'
+      ),
+    survey |>
+      group_by(DATEND) |> 
+      summarize(
+        Estimate = survey_total(Births, vartype = 'ci')
+      ) |> 
+      rename(Year = DATEND) |>
+      filter(!is.na(Year)) |>
+      mutate(
+        Begin = 2015,
+        End = 2019,
+        Type = 'Births'
+      )
   ) |>
-  left_join(
-    census_counts,
-    by = c('Year', 'Type')
-  )
+    left_join(
+      census_counts,
+      by = c('Year', 'Type')
+    )
+}
+
+estimates <- estimate_births_and_abortions(nsfg2015_2019, census_counts)
 ```
 
-```{r table-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG", include=FALSE}
-gt(est2015_2019) |>
-  fmt_number(
-    starts_with(c('Estimate', 'Total')),
-    decimals = 0
-  )
-```
-
-```{r define-plot-function, dependson="estimate-based-on-2015-2019-NSFG"}
+```{r define-plot-function, dependson="generate-estimates"}
 plot_CIs_against_census_counts <- function(these_data, begin, end, y_label) {
   ggplot(
     data = filter(these_data, Begin == begin, End == end)
@@ -277,18 +273,18 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, y_label) {
 }
 ```
 
-```{r plot-births-from-2015-2019-NSFG, dependson="define-plot-function"}
+```{r births-2015-2019, dependson="define-plot-function"}
 plot_CIs_against_census_counts(
-  filter(est2015_2019, Type == 'Births'),
+  filter(estimates, Type == 'Births'),
   2015,
   2019,
   'Live Births'
 )
 ```
 
-```{r plot-abortions-from-2015-2019-NSFG, dependson="define-plot-function"}
+```{r abortions-2015-2019, dependson="define-plot-function"}
 plot_CIs_against_census_counts(
-  filter(est2015_2019, Type == 'Abortions'),
+  filter(estimates, Type == 'Abortions'),
   2015,
   2019,
   'Induced Abortions'
