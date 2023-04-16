@@ -217,8 +217,6 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
 ```
 
 ```{r create-survey-objects, dependson="load-data"}
-source(here('R/helpers/NSFG/century_month.R'))
-
 cm_to_year <- function(x) {
   x_int <- as.integer(x)
   ifelse(
