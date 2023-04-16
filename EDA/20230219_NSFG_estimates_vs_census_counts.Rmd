@@ -172,7 +172,7 @@ nsfg2015_2019 <- bind_rows(
 nsfg2011_2015 <- bind_rows(
   select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
     mutate(
-      DATEND = as.numeric(DATEND) + 3653 
+      DATEND = as.numeric(DATEND) + 3653
     ), # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
   select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
 ) |>
@@ -197,6 +197,48 @@ nsfg2011_2015 <- bind_rows(
     strata = SEST,
     ids = SECU,
     weights = WGT2011_2015,
+    nest = TRUE
+  )
+
+nsfg2011_2019 <- bind_rows(
+    bind_rows(
+      select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
+        mutate(
+          DATEND = as.numeric(DATEND) + 3653
+        ), # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
+      select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
+    ) |> mutate(
+      Year = cm_to_year(DATEND)
+    ),
+    bind_rows(
+      select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
+      select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
+    ) |>
+      mutate(
+        Year = DATEND
+      )
+  ) |>
+  left_join(
+    wgt2011_2019,
+    by = join_by(CASEID)
+  ) |>
+  mutate(
+    OUTCOME = labelled(OUTCOME, c(
+      "LIVE BIRTH" = 1,
+      "INDUCED ABORTION" = 2,
+      "STILLBIRTH" = 3,
+      "MISCARRIAGE" = 4,
+      "ECTOPIC PREGNANCY" = 5,
+      "CURRENT PREGNANCY" = 6
+    )),
+    Abortions = if_else(OUTCOME == 2, 1, 0),
+    Births = if_else(OUTCOME == 1, 1, 0)
+  ) |>
+  filter(!is.na(WGT2011_2019)) |>
+  as_survey_design(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2011_2019,
     nest = TRUE
   )
 ```
@@ -236,7 +278,8 @@ estimate_births_and_abortions <- function(survey, begin, end, census_counts) {
 
 estimates <- bind_rows(
   estimate_births_and_abortions(nsfg2015_2019, 2015, 2019, census_counts),
-  estimate_births_and_abortions(nsfg2011_2015, 2011, 2015, census_counts)
+  estimate_births_and_abortions(nsfg2011_2015, 2011, 2015, census_counts),
+  estimate_births_and_abortions(nsfg2011_2019, 2011, 2019, census_counts)
 )
 ```
 
@@ -368,3 +411,20 @@ plot_CIs_against_census_counts(
 )
 ```
 
+```{r births-2011-2019, dependson="define-plot-function"}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2011,
+  end = 2019,
+  outcome = 'Births'
+)
+```
+
+```{r abortions-2011-2019, dependson="define-plot-function"}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2011,
+  end = 2019,
+  outcome = 'Abortions'
+)
+```
