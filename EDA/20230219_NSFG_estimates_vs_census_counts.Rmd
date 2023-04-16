@@ -469,6 +469,9 @@ estimates <- bind_rows(
 )
 ```
 
+
+## Live Births
+
 ```{r births-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
@@ -478,30 +481,12 @@ plot_CIs_against_census_counts(
 )
 ```
 
-```{r abortions-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
-plot_CIs_against_census_counts(
-  estimates,
-  begin = 2015,
-  end = 2019,
-  outcome = 'Abortions'
-)
-```
-
 ```{r births-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 2011,
   end = 2015,
   outcome = 'Births'
-)
-```
-
-```{r abortions-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
-plot_CIs_against_census_counts(
-  estimates,
-  begin = 2011,
-  end = 2015,
-  outcome = 'Abortions'
 )
 ```
 
@@ -515,15 +500,6 @@ plot_CIs_against_census_counts(
 ```
 
 While using the combined 2011-2019 data set does result in a slight decrease in estimator variance compared with the 2011-2015 stacked data as reflected in narrower confidence intervals for the number of live births per year, it comes as the expense of a much more bias.
-
-```{r abortions-2011-2019, dependson=c("define-plot-function", "generate-estimates"), include=FALSE}
-plot_CIs_against_census_counts(
-  estimates,
-  begin = 2011,
-  end = 2019,
-  outcome = 'Abortions'
-)
-```
 
 ```{r births-2011-2013, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -564,3 +540,33 @@ plot_CIs_against_census_counts(
 Using the 2-year data sets of the NSFG data appears to result in more variance of the estimators of live births, and without any decrease in bias of the estimators. Sometimes the 4-year estimates appear to be less biased, and sometimes the 2-year estimates to appear to be less biased.
 
 The 4-year data sets of the 2011-2019 NSFG appear to produce the best overall estimators of number of live births per year.
+
+
+## Induced Abortions
+
+```{r abortions-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2015,
+  end = 2019,
+  outcome = 'Abortions'
+)
+```
+
+```{r abortions-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2011,
+  end = 2015,
+  outcome = 'Abortions'
+)
+```
+
+```{r abortions-2011-2019, dependson=c("define-plot-function", "generate-estimates"), include=FALSE}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2011,
+  end = 2019,
+  outcome = 'Abortions'
+)
+```
