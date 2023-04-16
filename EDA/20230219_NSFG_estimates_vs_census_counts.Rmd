@@ -21,8 +21,12 @@ library(tidyr)
 
 knitr::opts_chunk$set(
   cache = TRUE,
+  dpi=200,
   echo = FALSE,
-  fig.align = 'center'
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
 )
 ```
 
@@ -59,9 +63,6 @@ wgt2011_2019 <- read_sas(
 )
 ```
 
-
-## Census Counts
-
 ```{r, calculate-census-counts-by-year, dependson="load-data"}
 guttmacher_national <- guttmacher_raw |> 
   filter(state == 'US') |>
@@ -85,7 +86,7 @@ census_counts <- bind_rows(
 )
 ```
 
-```{r plot-census-counts-by-year, dependson="calculate-census-counts-by-year", dpi=200, fig.width=9.6, fig.height=9.6, fig.retina=1.5}
+```{r plot-census-counts-by-year, dependson="calculate-census-counts-by-year", include=FALSE}
 ggplot(
   data = census_counts,
   mapping = aes(
@@ -116,7 +117,7 @@ ggplot(
   )
 ```
 
-```{r print-table-of-census-counts-by-year, dependson="calculate-census-counts-by-year"}
+```{r print-table-of-census-counts-by-year, dependson="calculate-census-counts-by-year", include=FALSE}
 gt(census_counts) |>
   sub_missing(
     missing_text = ''
@@ -126,9 +127,6 @@ gt(census_counts) |>
     drop_trailing_zeros = TRUE
   )
 ```
-
-
-## Estimates from Stacked 2015-2019 NSFG
 
 ```{r estimate-based-on-2015-2019-NSFG, dependson="load-data"}
 nsfg2015_2019 <- bind_rows(
@@ -167,7 +165,8 @@ abortions2015_2019 <- nsfg2015_2019 |>
   rename(Year = DATEND) |>
   filter(!is.na(Year)) |>
   mutate(
-    Vintage = '2015-2019',
+    Begin = 2015,
+    End = 2019,
     Type = 'Abortions'
   )
 
@@ -179,7 +178,8 @@ births2015_2019 <- nsfg2015_2019 |>
   rename(Year = DATEND) |>
   filter(!is.na(Year)) |>
   mutate(
-    Vintage = '2015-2019',
+    Begin = 2015,
+    End = 2019,
     Type = 'Births'
   )
 
@@ -193,7 +193,7 @@ est2015_2019 <- bind_rows(
   )
 ```
 
-```{r table-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG"}
+```{r table-from-2015-2019-NSFG, dependson="estimate-based-on-2015-2019-NSFG", include=FALSE}
 gt(est2015_2019) |>
   fmt_number(
     starts_with(c('Estimate', 'Total')),
@@ -202,9 +202,30 @@ gt(est2015_2019) |>
 ```
 
 ```{r define-plot-function, dependson="estimate-based-on-2015-2019-NSFG"}
-plot_CIs_against_census_counts <- function(these_data, y_label) {
+plot_CIs_against_census_counts <- function(these_data, begin, end, y_label) {
   ggplot(
-    data = these_data
+    data = filter(these_data, Begin == begin, End == end)
+  ) +
+  geom_vline(
+    aes(
+      xintercept = Begin
+    ),
+    color = 'red',
+    linetype = 2
+  ) +
+  geom_vline(
+    aes(
+      xintercept = End
+    ),
+    color = 'red',
+    linetype = 2
+  ) +
+  geom_vline(
+    aes(
+      xintercept = Begin - 5
+    ),
+    color = 'darkgreen',
+    linetype = 4
   ) +
   geom_segment(
     arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
@@ -213,18 +234,22 @@ plot_CIs_against_census_counts <- function(these_data, y_label) {
       xend = Year,
       y = Estimate_low,
       yend = Estimate_upp
-    )
+    ),
+    color = 'darkblue',
+    na.rm = TRUE
   ) +
   geom_point(
     aes(
       x = Year,
       y = Total
     ),
+    color = 'darkorange',
     shape = 4,
-    size = 3
+    size = 4,
+    stroke = 1,
+    na.rm = TRUE
   ) +
   scale_y_continuous(
-    breaks = \(x) seq(x[1], x[2], 1e6),
     expand = expansion(mult = c(0, 0.05)),
     labels = scales::unit_format(unit = "M", scale = 1e-6),
     limits = c(0, NA)
@@ -234,15 +259,20 @@ plot_CIs_against_census_counts <- function(these_data, y_label) {
     expand = expansion(add = 1)
   ) +
   labs(
+    subtitle = paste('from the', paste(begin, end, sep = '-'), 'NSFG'),
     y = y_label
   ) +
+  theme_bw() +
   theme(
     axis.text.x = element_text(
       angle = 45,
       color = 'black',
       hjust = 0.5,
       vjust = 0.65
-    )
+    ),
+    axis.ticks.y = element_blank(),
+    legend.position = 'bottom',
+    legend.title = element_blank()
   )
 }
 ```
@@ -250,6 +280,8 @@ plot_CIs_against_census_counts <- function(these_data, y_label) {
 ```{r plot-births-from-2015-2019-NSFG, dependson="define-plot-function"}
 plot_CIs_against_census_counts(
   filter(est2015_2019, Type == 'Births'),
+  2015,
+  2019,
   'Live Births'
 )
 ```
@@ -257,6 +289,8 @@ plot_CIs_against_census_counts(
 ```{r plot-abortions-from-2015-2019-NSFG, dependson="define-plot-function"}
 plot_CIs_against_census_counts(
   filter(est2015_2019, Type == 'Abortions'),
+  2015,
+  2019,
   'Induced Abortions'
 )
 ```
