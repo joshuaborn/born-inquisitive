@@ -124,6 +124,98 @@ gt(census_counts) |>
   )
 ```
 
+```{r define-plot-function}
+plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
+  if (outcome == 'Births') {
+    y_axis_label <- 'Live Births'
+    title_string <- paste('Number of live births in the United States per year')
+    subtitle_string <- paste('CIs estimated by the', paste(begin, end, sep = '-'), "NSFG (brackets) compared with the NVSS counts (X's)")
+  }
+  if (outcome == 'Abortions') {
+    y_axis_label <- 'Induced Abortions'
+    title_string <- paste('Number of induced abortions in the United States per year')
+    subtitle_string <- paste('CIs estimated by the', paste(begin, end, sep = '-'), "NSFG (brackets) compared with the Guttmacher APC counts (X's)")
+  }
+  ggplot(
+    data = filter(
+      these_data,
+      Begin == begin,
+      End == end,
+      Outcome == outcome
+    )
+  ) +
+  geom_vline(
+    aes(
+      xintercept = Begin
+    ),
+    color = 'red',
+    linetype = 2
+  ) +
+  geom_vline(
+    aes(
+      xintercept = End
+    ),
+    color = 'red',
+    linetype = 2
+  ) +
+  geom_vline(
+    aes(
+      xintercept = Begin - 5
+    ),
+    color = 'darkgreen',
+    linetype = 4
+  ) +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp
+    ),
+    color = 'darkblue',
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    ),
+    color = 'darkorange',
+    shape = 4,
+    size = 4,
+    stroke = 1,
+    na.rm = TRUE
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1], x[2], 2),
+    expand = expansion(add = 1)
+  ) +
+  labs(
+    title = title_string,
+    subtitle = subtitle_string,
+    y = y_axis_label
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    ),
+    axis.ticks.y = element_blank(),
+    legend.position = 'bottom',
+    legend.title = element_blank()
+  )
+}
+```
+
 ```{r create-survey-objects, dependson="load-data"}
 source(here('R/helpers/NSFG/century_month.R'))
 
@@ -239,8 +331,7 @@ nsfg2011_2019 <- bind_rows(
   )
 ```
 
-
-```{r generate-estimates, dependson="create-survey-objects"}
+```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
 estimate_births_and_abortions <- function(survey, begin, end, census_counts) {
   bind_rows(
     survey |>
@@ -279,99 +370,7 @@ estimates <- bind_rows(
 )
 ```
 
-```{r define-plot-function, dependson="generate-estimates"}
-plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
-  if (outcome == 'Births') {
-    y_axis_label <- 'Live Births'
-    title_string <- paste('Number of live births in the United States per year')
-    subtitle_string <- paste('CIs estimated by the', paste(begin, end, sep = '-'), "NSFG (brackets) compared with the NVSS counts (X's)")
-  }
-  if (outcome == 'Abortions') {
-    y_axis_label <- 'Induced Abortions'
-    title_string <- paste('Number of induced abortions in the United States per year')
-    subtitle_string <- paste('CIs estimated by the', paste(begin, end, sep = '-'), "NSFG (brackets) compared with the Guttmacher APC counts (X's)")
-  }
-  ggplot(
-    data = filter(
-      these_data,
-      Begin == begin,
-      End == end,
-      Outcome == outcome
-    )
-  ) +
-  geom_vline(
-    aes(
-      xintercept = Begin
-    ),
-    color = 'red',
-    linetype = 2
-  ) +
-  geom_vline(
-    aes(
-      xintercept = End
-    ),
-    color = 'red',
-    linetype = 2
-  ) +
-  geom_vline(
-    aes(
-      xintercept = Begin - 5
-    ),
-    color = 'darkgreen',
-    linetype = 4
-  ) +
-  geom_segment(
-    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
-    aes(
-      x = Year,
-      xend = Year,
-      y = Estimate_low,
-      yend = Estimate_upp
-    ),
-    color = 'darkblue',
-    na.rm = TRUE
-  ) +
-  geom_point(
-    aes(
-      x = Year,
-      y = Total
-    ),
-    color = 'darkorange',
-    shape = 4,
-    size = 4,
-    stroke = 1,
-    na.rm = TRUE
-  ) +
-  scale_y_continuous(
-    expand = expansion(mult = c(0, 0.05)),
-    labels = scales::unit_format(unit = "M", scale = 1e-6),
-    limits = c(0, NA)
-  ) +
-  scale_x_continuous(
-    breaks = \(x) seq(x[1], x[2], 2),
-    expand = expansion(add = 1)
-  ) +
-  labs(
-    title = title_string,
-    subtitle = subtitle_string,
-    y = y_axis_label
-  ) +
-  theme_bw() +
-  theme(
-    axis.text.x = element_text(
-      angle = 45,
-      color = 'black',
-      hjust = 0.5,
-      vjust = 0.65
-    ),
-    axis.ticks.y = element_blank(),
-    legend.position = 'bottom',
-    legend.title = element_blank()
-  )
-}
-```
-
-```{r births-2015-2019, dependson="define-plot-function"}
+```{r births-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 2015,
@@ -380,7 +379,7 @@ plot_CIs_against_census_counts(
 )
 ```
 
-```{r abortions-2015-2019, dependson="define-plot-function"}
+```{r abortions-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 2015,
@@ -389,7 +388,7 @@ plot_CIs_against_census_counts(
 )
 ```
 
-```{r births-2011-2015, dependson="define-plot-function"}
+```{r births-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 2011,
@@ -398,7 +397,7 @@ plot_CIs_against_census_counts(
 )
 ```
 
-```{r abortions-2011-2015, dependson="define-plot-function"}
+```{r abortions-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 2011,
@@ -407,7 +406,7 @@ plot_CIs_against_census_counts(
 )
 ```
 
-```{r births-2011-2019, dependson="define-plot-function"}
+```{r births-2011-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 2011,
@@ -416,7 +415,7 @@ plot_CIs_against_census_counts(
 )
 ```
 
-```{r abortions-2011-2019, dependson="define-plot-function"}
+```{r abortions-2011-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 2011,
