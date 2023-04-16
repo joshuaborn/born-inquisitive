@@ -77,12 +77,12 @@ census_counts <- bind_rows(
     filter(!abortions_interpolated) |> 
     rename(Year = year, Total = abortionstotal) |>
     select(Year, Total) |>
-    mutate(Type = 'Abortions'),
+    mutate(Outcome = 'Abortions'),
   vital_births |> 
     filter(Year >= 1973) |>
     rename(Total = Birth.Number) |>
     select(Year, Total) |>
-    mutate(Type = 'Births')
+    mutate(Outcome = 'Births')
 )
 ```
 
@@ -92,8 +92,8 @@ ggplot(
   mapping = aes(
     y = Total,
     x = Year,
-    color = Type,
-    shape = Type
+    color = Outcome,
+    shape = Outcome
   )
 ) +
   geom_point() +
@@ -173,7 +173,7 @@ estimate_births_and_abortions <- function(survey, census_counts) {
       mutate(
         Begin = 2015,
         End = 2019,
-        Type = 'Abortions'
+        Outcome = 'Abortions'
       ),
     survey |>
       group_by(DATEND) |> 
@@ -185,12 +185,12 @@ estimate_births_and_abortions <- function(survey, census_counts) {
       mutate(
         Begin = 2015,
         End = 2019,
-        Type = 'Births'
+        Outcome = 'Births'
       )
   ) |>
     left_join(
       census_counts,
-      by = c('Year', 'Type')
+      by = c('Year', 'Outcome')
     )
 }
 
@@ -198,9 +198,14 @@ estimates <- estimate_births_and_abortions(nsfg2015_2019, census_counts)
 ```
 
 ```{r define-plot-function, dependson="generate-estimates"}
-plot_CIs_against_census_counts <- function(these_data, begin, end, y_label) {
+plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
   ggplot(
-    data = filter(these_data, Begin == begin, End == end)
+    data = filter(
+      these_data,
+      Begin == begin,
+      End == end,
+      Outcome == outcome
+    )
   ) +
   geom_vline(
     aes(
@@ -256,7 +261,7 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, y_label) {
   ) +
   labs(
     subtitle = paste('from the', paste(begin, end, sep = '-'), 'NSFG'),
-    y = y_label
+    y = if (outcome == 'Births') 'Live Births' else  'Induced Abortions'
   ) +
   theme_bw() +
   theme(
@@ -275,19 +280,19 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, y_label) {
 
 ```{r births-2015-2019, dependson="define-plot-function"}
 plot_CIs_against_census_counts(
-  filter(estimates, Type == 'Births'),
-  2015,
-  2019,
-  'Live Births'
+  estimates,
+  begin = 2015,
+  end = 2019,
+  outcome = 'Births'
 )
 ```
 
 ```{r abortions-2015-2019, dependson="define-plot-function"}
 plot_CIs_against_census_counts(
-  filter(estimates, Type == 'Abortions'),
-  2015,
-  2019,
-  'Induced Abortions'
+  estimates,
+  begin = 2015,
+  end = 2019,
+  outcome = 'Abortions'
 )
 ```
 
