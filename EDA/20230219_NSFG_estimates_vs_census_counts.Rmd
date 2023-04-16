@@ -42,10 +42,6 @@ preg2017_2019 <- read_sas(
   here('data/d2017_2019fempreg.sas7bdat'),
   catalog_file = here('data/d2017_2019fempreg.sas7bcat')
 )
-fem2017_2019 <- read_sas(
-  here('data/d2017_2019femresp.sas7bdat'),
-  catalog_file = here('data/d2017_2019femresp.sas7bcat')
-)
 preg2015_2017 <- read_sas(
   here('data/d2015_2017fempreg.sas7bdat'),
   catalog_file = here('data/d2015_2017fempreg.sas7bcat')
