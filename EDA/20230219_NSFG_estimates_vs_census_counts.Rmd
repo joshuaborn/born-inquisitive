@@ -129,11 +129,20 @@ gt(census_counts) |>
 ```
 
 ```{r create-survey-objects, dependson="load-data"}
+source(here('R/helpers/NSFG/century_month.R'))
+
+cm_to_year <- function(x) {
+  x_int <- as.integer(x)
+  ifelse(
+    x_int %in% c(NA, 9997, 9998, 9999),
+    NA,
+    floor((x_int - 1) / 12) + 1900
+  )
+}
+
 nsfg2015_2019 <- bind_rows(
-    preg2015_2017 |>
-      select(-QUARTER, -PHASE, -INTVWYEAR),
-    preg2017_2019 |>
-      select(-QUARTER, -PHASE, -INTVWYEAR)
+    select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
+    select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
   ) |>
   left_join(
     wgt2011_2019,
@@ -149,7 +158,8 @@ nsfg2015_2019 <- bind_rows(
       "CURRENT PREGNANCY" = 6
     )),
     Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0)
+    Births = if_else(OUTCOME == 1, 1, 0),
+    Year = DATEND
   ) |> 
   as_survey_design(
     strata = SEST,
@@ -157,34 +167,64 @@ nsfg2015_2019 <- bind_rows(
     weights = WGT2015_2019,
     nest = TRUE
   )
+
+
+nsfg2011_2015 <- bind_rows(
+  select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
+    mutate(
+      DATEND = as.numeric(DATEND) + 3653 
+    ), # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
+  select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
+) |>
+  left_join(
+    wgt2011_2019,
+    by = join_by(CASEID)
+  ) |>
+  mutate(
+    OUTCOME = labelled(OUTCOME, c(
+      "LIVE BIRTH" = 1,
+      "INDUCED ABORTION" = 2,
+      "STILLBIRTH" = 3,
+      "MISCARRIAGE" = 4,
+      "ECTOPIC PREGNANCY" = 5,
+      "CURRENT PREGNANCY" = 6
+    )),
+    Abortions = if_else(OUTCOME == 2, 1, 0),
+    Births = if_else(OUTCOME == 1, 1, 0),
+    Year = cm_to_year(DATEND)
+  ) |> 
+  as_survey_design(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2011_2015,
+    nest = TRUE
+  )
 ```
 
 
 ```{r generate-estimates, dependson="create-survey-objects"}
-estimate_births_and_abortions <- function(survey, census_counts) {
+estimate_births_and_abortions <- function(survey, begin, end, census_counts) {
   bind_rows(
     survey |>
-      group_by(DATEND) |>
+      group_by(Year) |>
       summarize(
         Estimate = survey_total(Abortions, vartype = 'ci')
       ) |> 
-      rename(Year = DATEND) |>
       filter(!is.na(Year)) |>
       mutate(
-        Begin = 2015,
-        End = 2019,
+        Begin = begin ,
+        End = end ,
         Outcome = 'Abortions'
       ),
     survey |>
-      group_by(DATEND) |> 
+      group_by(Year) |> 
       summarize(
         Estimate = survey_total(Births, vartype = 'ci')
       ) |> 
-      rename(Year = DATEND) |>
       filter(!is.na(Year)) |>
       mutate(
-        Begin = 2015,
-        End = 2019,
+        Begin = begin,
+        End = end,
         Outcome = 'Births'
       )
   ) |>
@@ -194,11 +234,24 @@ estimate_births_and_abortions <- function(survey, census_counts) {
     )
 }
 
-estimates <- estimate_births_and_abortions(nsfg2015_2019, census_counts)
+estimates <- bind_rows(
+  estimate_births_and_abortions(nsfg2015_2019, 2015, 2019, census_counts),
+  estimate_births_and_abortions(nsfg2011_2015, 2011, 2015, census_counts)
+)
 ```
 
 ```{r define-plot-function, dependson="generate-estimates"}
 plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
+  if (outcome == 'Births') {
+    y_axis_label <- 'Live Births'
+    title_string <- paste('Number of live births in the United States per year')
+    subtitle_string <- paste('CIs estimated by the', paste(begin, end, sep = '-'), "NSFG (brackets) compared with the NVSS counts (X's)")
+  }
+  if (outcome == 'Abortions') {
+    y_axis_label <- 'Induced Abortions'
+    title_string <- paste('Number of induced abortions in the United States per year')
+    subtitle_string <- paste('CIs estimated by the', paste(begin, end, sep = '-'), "NSFG (brackets) compared with the Guttmacher APC counts (X's)")
+  }
   ggplot(
     data = filter(
       these_data,
@@ -260,8 +313,9 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
     expand = expansion(add = 1)
   ) +
   labs(
-    subtitle = paste('from the', paste(begin, end, sep = '-'), 'NSFG'),
-    y = if (outcome == 'Births') 'Live Births' else  'Induced Abortions'
+    title = title_string,
+    subtitle = subtitle_string,
+    y = y_axis_label
   ) +
   theme_bw() +
   theme(
@@ -292,6 +346,24 @@ plot_CIs_against_census_counts(
   estimates,
   begin = 2015,
   end = 2019,
+  outcome = 'Abortions'
+)
+```
+
+```{r births-2011-2015, dependson="define-plot-function"}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2011,
+  end = 2015,
+  outcome = 'Births'
+)
+```
+
+```{r abortions-2011-2015, dependson="define-plot-function"}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2011,
+  end = 2015,
   outcome = 'Abortions'
 )
 ```
