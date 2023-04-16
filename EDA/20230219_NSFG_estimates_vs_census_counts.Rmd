@@ -413,6 +413,8 @@ plot_CIs_against_census_counts(
 )
 ```
 
+While using the combined 2011-2019 data set does result in a slight decrease in estimator variance compared with the 2011-2015 stacked data as reflected in narrower confidence intervals for the number of live births per year, it comes as the expense of a much more bias.
+
 ```{r abortions-2011-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
