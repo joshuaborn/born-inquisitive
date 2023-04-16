@@ -179,6 +179,18 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
   geom_point(
     aes(
       x = Year,
+      y = Estimate
+    ),
+    color = 'darkblue',
+    fill = 'white',
+    shape = 21,
+    size = 3,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
       y = Total
     ),
     color = 'darkorange',
