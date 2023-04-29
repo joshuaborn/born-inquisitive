@@ -170,13 +170,6 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
     color = 'red',
     linetype = 2
   ) +
-  geom_vline(
-    aes(
-      xintercept = Begin - 5
-    ),
-    color = 'darkgreen',
-    linetype = 4
-  ) +
   geom_segment(
     arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
     aes(
