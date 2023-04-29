@@ -489,6 +489,42 @@ estimates <- bind_rows(
 ```
 
 
+## Years with Coverage
+
+These are years for which the census count of live births is covered by at least one 95% confidence interval for live births based on the NSFG.
+
+```{r quantity-coverage, depends="generate-estimates"}
+estimates |>
+  filter(
+    !(Begin == 2011 & End == 2019) &
+      !(Begin == 2011 & End == 2013) &
+      !(Begin == 2013 & End == 2015) &
+      !(Begin == 2015 & End == 2017) &
+      !(Begin == 2017 & End == 2019)
+  ) |>
+  filter(
+    Outcome == 'Births' &
+    Estimate_low <= Total & Total <= Estimate_upp
+  ) |>
+  mutate(
+    Bias = Total - Estimate,
+    CI_Width = Estimate_upp - Estimate_low
+  ) |>
+  select(Year, Bias, CI_Width, Total, Estimate, Estimate_low, Estimate_upp, Begin, End) |>
+  arrange(Year) |>
+  gt() |>
+  sub_missing(
+    missing_text = ''
+  ) |>
+  fmt_number(
+    starts_with(c('Estimate', 'Total', 'Bias', 'CI_Width')),
+    drop_trailing_zeros = TRUE,
+    decimals = 0
+  )
+```
+
+
+
 ## Live Births
 
 
