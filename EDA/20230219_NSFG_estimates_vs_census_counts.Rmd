@@ -69,6 +69,10 @@ preg1992_1994 <- read_sas(
   here('data/d1992_1994fempreg.sas7bdat'),
   catalog_file = here('data/d1992_1994fempreg.sas7bcat')
 )
+preg1985_1987 <- read_sas(
+  here('data/d1985_1987fempreg.sas7bdat'),
+  catalog_file = here('data/d1985_1987fempreg.sas7bcat')
+)
 ```
 
 ```{r, calculate-census-counts-by-year, dependson="load-data"}
@@ -237,7 +241,9 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
 cm_to_year <- function(x) {
   x_int <- as.integer(x)
   ifelse(
-    x_int %in% c(NA, 9997, 9998, 9999),
+    x_int %in% c(NA, 9997, 9998, 9999) |
+      x_int >= 90000 |
+      x_int == 0,
     NA,
     floor((x_int - 1) / 12) + 1900
   )
@@ -440,6 +446,20 @@ as_survey_design(
   weights = POST_WT,
   nest = TRUE
 )
+
+select(
+  preg1988_1988, SEQNUM, OUTCOME, B14MO, W_5
+) |>
+mutate(
+  Year = cm_to_year(B14MO)
+) |>
+label_OUTCOME()
+
+# The survey design is going to have to use balanced repeated replication (BRR).
+#as_survey_design(
+#  weights = W_5,
+#  nest = TRUE
+#)
 ```
 
 ```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
