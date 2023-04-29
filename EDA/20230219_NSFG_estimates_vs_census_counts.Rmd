@@ -65,6 +65,10 @@ preg2002_2003 <- read_sas(
   here('data/d2002_2003fempreg.sas7bdat'),
   catalog_file = here('data/d2002_2003fempreg.sas7bcat')
 )
+preg1992_1994 <- read_sas(
+  here('data/d1992_1994fempreg.sas7bdat'),
+  catalog_file = here('data/d1992_1994fempreg.sas7bcat')
+)
 ```
 
 ```{r, calculate-census-counts-by-year, dependson="load-data"}
@@ -414,6 +418,7 @@ as_survey_design(
   nest = TRUE
 )
 
+
 preg_outcomes2002_2003 <- select(
   preg2002_2003, SECU_P, SEST, CASEID, DATEND, OUTCOME, FINALWGT
 ) |>
@@ -425,6 +430,21 @@ as_survey_design(
   strata = SEST,
   ids = SECU_P,
   weights = FINALWGT,
+  nest = TRUE
+)
+
+
+preg_outcomes1992_1994 <- select(
+  preg1992_1994, PANEL, COL_STR, CASEID, DATEND, OUTCOME, POST_WT
+) |>
+mutate(
+  Year = cm_to_year(DATEND)
+) |>
+label_OUTCOME() |>
+as_survey_design(
+  strata = COL_STR,
+  ids = PANEL,
+  weights = POST_WT,
   nest = TRUE
 )
 ```
@@ -470,7 +490,8 @@ estimates <- bind_rows(
   estimate_births_and_abortions(preg_outcomes2015_2017, 2015, 2017, census_counts),
   estimate_births_and_abortions(preg_outcomes2017_2019, 2017, 2019, census_counts),
   estimate_births_and_abortions(preg_outcomes2006_2010, 2006, 2010, census_counts),
-  estimate_births_and_abortions(preg_outcomes2002_2003, 2002, 2003, census_counts)
+  estimate_births_and_abortions(preg_outcomes2002_2003, 2002, 2003, census_counts),
+  estimate_births_and_abortions(preg_outcomes1992_1994, 1992, 1994, census_counts)
 )
 ```
 
@@ -592,6 +613,18 @@ plot_CIs_against_census_counts(
 ```
 
 
+### 1992-1994
+
+```{r births-1992-1994, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 1992,
+  end = 1994,
+  outcome = 'Births'
+)
+```
+
+
 ## Induced Abortions
 
 
@@ -650,6 +683,18 @@ plot_CIs_against_census_counts(
   estimates,
   begin = 2002,
   end = 2003,
+  outcome = 'Abortions'
+)
+```
+
+
+### 1992-1994
+
+```{r abortions-1992-1994, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 1992,
+  end = 1994,
   outcome = 'Abortions'
 )
 ```
