@@ -61,6 +61,10 @@ preg2006_2010 <- read_sas(
   here('data/d2006_2010fempreg.sas7bdat'),
   catalog_file = here('data/d2006_2010fempreg.sas7bcat')
 )
+preg2002_2003 <- read_sas(
+  here('data/d2002_2003fempreg.sas7bdat'),
+  catalog_file = here('data/d2002_2003fempreg.sas7bcat')
+)
 ```
 
 ```{r, calculate-census-counts-by-year, dependson="load-data"}
@@ -409,6 +413,20 @@ as_survey_design(
   weights = WGTQ1Q16,
   nest = TRUE
 )
+
+preg_outcomes2002_2003 <- select(
+  preg2002_2003, SECU_P, SEST, CASEID, DATEND, OUTCOME, FINALWGT
+) |>
+mutate(
+  Year = cm_to_year(DATEND)
+) |>
+label_OUTCOME() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU_P,
+  weights = FINALWGT,
+  nest = TRUE
+)
 ```
 
 ```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
@@ -451,7 +469,8 @@ estimates <- bind_rows(
   estimate_births_and_abortions(preg_outcomes2013_2015, 2013, 2015, census_counts),
   estimate_births_and_abortions(preg_outcomes2015_2017, 2015, 2017, census_counts),
   estimate_births_and_abortions(preg_outcomes2017_2019, 2017, 2019, census_counts),
-  estimate_births_and_abortions(preg_outcomes2006_2010, 2006, 2010, census_counts)
+  estimate_births_and_abortions(preg_outcomes2006_2010, 2006, 2010, census_counts),
+  estimate_births_and_abortions(preg_outcomes2002_2003, 2002, 2003, census_counts)
 )
 ```
 
@@ -537,6 +556,18 @@ plot_CIs_against_census_counts(
 ```
 
 
+### 2002-2003
+
+```{r births-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2002,
+  end = 2003,
+  outcome = 'Births'
+)
+```
+
+
 ## Induced Abortions
 
 ```{r abortions-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
@@ -566,11 +597,26 @@ plot_CIs_against_census_counts(
 )
 ```
 
+
+### 2006-2010
+
 ```{r abortions-2006-2010, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 2006,
   end = 2010,
+  outcome = 'Abortions'
+)
+```
+
+
+### 2002-2003
+
+```{r abortions-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2002,
+  end = 2003,
   outcome = 'Abortions'
 )
 ```
