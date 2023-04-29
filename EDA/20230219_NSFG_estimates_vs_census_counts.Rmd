@@ -57,6 +57,10 @@ preg2011_2013 <- read_sas(
 wgt2011_2019 <- read_sas(
   here('data/d2011_2019femwgt.sas7bdat')
 )
+preg2006_2010 <- read_sas(
+  here('data/d2006_2010fempreg.sas7bdat'),
+  catalog_file = here('data/d2006_2010fempreg.sas7bcat')
+)
 ```
 
 ```{r, calculate-census-counts-by-year, dependson="load-data"}
@@ -238,192 +242,173 @@ cm_to_year <- function(x) {
   )
 }
 
-nsfg2015_2019 <- bind_rows(
+label_OUTCOME <- function(tbl) {
+  mutate(
+    tbl,
+    OUTCOME = labelled(OUTCOME, c(
+      "LIVE BIRTH" = 1,
+      "INDUCED ABORTION" = 2,
+      "STILLBIRTH" = 3,
+      "MISCARRIAGE" = 4,
+      "ECTOPIC PREGNANCY" = 5,
+      "CURRENT PREGNANCY" = 6
+    )),
+    Abortions = if_else(OUTCOME == 2, 1, 0),
+    Births = if_else(OUTCOME == 1, 1, 0),
+  )
+}
+
+preg_outcomes2015_2019 <- bind_rows(
+  select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
+  select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
+) |>
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+mutate(
+  Year = DATEND
+) |> 
+label_OUTCOME() |> 
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2015_2019,
+  nest = TRUE
+)
+
+
+preg_outcomes2011_2015 <- bind_rows(
+  select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
+    mutate(
+      # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
+      DATEND = as.numeric(DATEND) + 3653
+    ), 
+  select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
+) |>
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+mutate(
+  Year = cm_to_year(DATEND)
+) |> 
+label_OUTCOME() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2011_2015,
+  nest = TRUE
+)
+
+
+preg_outcomes2011_2019 <- bind_rows(
+  bind_rows(
+    select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
+      mutate(
+        # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
+        DATEND = as.numeric(DATEND) + 3653
+      ), 
+    select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
+  ) |> mutate(
+    Year = cm_to_year(DATEND)
+  ),
+  bind_rows(
     select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
     select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
   ) |>
-  left_join(
-    wgt2011_2019,
-    by = join_by(CASEID)
-  ) |>
-  mutate(
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1,
-      "INDUCED ABORTION" = 2,
-      "STILLBIRTH" = 3,
-      "MISCARRIAGE" = 4,
-      "ECTOPIC PREGNANCY" = 5,
-      "CURRENT PREGNANCY" = 6
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0),
-    Year = DATEND
-  ) |> 
-  as_survey_design(
-    strata = SEST,
-    ids = SECU,
-    weights = WGT2015_2019,
-    nest = TRUE
-  )
-
-
-nsfg2011_2015 <- bind_rows(
-  select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
     mutate(
-      DATEND = as.numeric(DATEND) + 3653
-    ), # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
-  select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
+      Year = DATEND
+    )
 ) |>
-  left_join(
-    wgt2011_2019,
-    by = join_by(CASEID)
-  ) |>
-  mutate(
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1,
-      "INDUCED ABORTION" = 2,
-      "STILLBIRTH" = 3,
-      "MISCARRIAGE" = 4,
-      "ECTOPIC PREGNANCY" = 5,
-      "CURRENT PREGNANCY" = 6
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0),
-    Year = cm_to_year(DATEND)
-  ) |> 
-  as_survey_design(
-    strata = SEST,
-    ids = SECU,
-    weights = WGT2011_2015,
-    nest = TRUE
-  )
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+label_OUTCOME() |>
+filter(!is.na(WGT2011_2019)) |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2011_2019,
+  nest = TRUE
+)
 
-nsfg2011_2019 <- bind_rows(
-    bind_rows(
-      select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
-        mutate(
-          DATEND = as.numeric(DATEND) + 3653
-        ), # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
-      select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
-    ) |> mutate(
-      Year = cm_to_year(DATEND)
-    ),
-    bind_rows(
-      select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
-      select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
-    ) |>
-      mutate(
-        Year = DATEND
-      )
-  ) |>
-  left_join(
-    wgt2011_2019,
-    by = join_by(CASEID)
-  ) |>
-  mutate(
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1,
-      "INDUCED ABORTION" = 2,
-      "STILLBIRTH" = 3,
-      "MISCARRIAGE" = 4,
-      "ECTOPIC PREGNANCY" = 5,
-      "CURRENT PREGNANCY" = 6
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0)
-  ) |>
-  filter(!is.na(WGT2011_2019)) |>
-  as_survey_design(
-    strata = SEST,
-    ids = SECU,
-    weights = WGT2011_2019,
-    nest = TRUE
-  )
 
-nsfg2011_2013 <- select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2011_2013) |>
-  mutate(
-    DATEND = as.numeric(DATEND) + 3653,
-    Year = cm_to_year(DATEND),
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1,
-      "INDUCED ABORTION" = 2,
-      "STILLBIRTH" = 3,
-      "MISCARRIAGE" = 4,
-      "ECTOPIC PREGNANCY" = 5,
-      "CURRENT PREGNANCY" = 6
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0)
-  ) |> 
-  as_survey_design(
-    strata = SEST,
-    ids = SECU,
-    weights = WGT2011_2013,
-    nest = TRUE
-  )
+preg_outcomes2011_2013 <- select(
+  preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2011_2013
+) |>
+mutate(
+  DATEND = as.numeric(DATEND) + 3653,
+  Year = cm_to_year(DATEND)
+) |> 
+label_OUTCOME() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2011_2013,
+  nest = TRUE
+)
 
-nsfg2013_2015 <- select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2013_2015) |>
-  mutate(
-    Year = cm_to_year(DATEND),
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1,
-      "INDUCED ABORTION" = 2,
-      "STILLBIRTH" = 3,
-      "MISCARRIAGE" = 4,
-      "ECTOPIC PREGNANCY" = 5,
-      "CURRENT PREGNANCY" = 6
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0)
-  ) |> 
-  as_survey_design(
-    strata = SEST,
-    ids = SECU,
-    weights = WGT2013_2015,
-    nest = TRUE
-  )
 
-nsfg2015_2017 <- select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2015_2017) |>
-  mutate(
-    Year = DATEND,
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1,
-      "INDUCED ABORTION" = 2,
-      "STILLBIRTH" = 3,
-      "MISCARRIAGE" = 4,
-      "ECTOPIC PREGNANCY" = 5,
-      "CURRENT PREGNANCY" = 6
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0)
-  ) |> 
-  as_survey_design(
-    strata = SEST,
-    ids = SECU,
-    weights = WGT2015_2017,
-    nest = TRUE
-  )
+preg_outcomes2013_2015 <- select(
+  preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2013_2015
+) |>
+mutate(
+  Year = cm_to_year(DATEND)
+) |> 
+label_OUTCOME() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2013_2015,
+  nest = TRUE
+)
 
-nsfg2017_2019 <- select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2017_2019) |>
-  mutate(
-    Year = DATEND,
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1,
-      "INDUCED ABORTION" = 2,
-      "STILLBIRTH" = 3,
-      "MISCARRIAGE" = 4,
-      "ECTOPIC PREGNANCY" = 5,
-      "CURRENT PREGNANCY" = 6
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0)
-  ) |> 
-  as_survey_design(
-    strata = SEST,
-    ids = SECU,
-    weights = WGT2017_2019,
-    nest = TRUE
-  )
+
+preg_outcomes2015_2017 <- select(
+  preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2015_2017
+) |>
+mutate(
+  Year = DATEND,
+) |> 
+label_OUTCOME() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2015_2017,
+  nest = TRUE
+)
+
+
+preg_outcomes2017_2019 <- select(
+  preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2017_2019
+) |>
+mutate(
+  Year = DATEND,
+) |> 
+label_OUTCOME() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2017_2019,
+  nest = TRUE
+)
+
+
+preg_outcomes2006_2010 <- select(
+  preg2006_2010, SECU, SEST, CASEID, DATEND, OUTCOME, WGTQ1Q16
+) |>
+mutate(
+  Year = cm_to_year(DATEND)
+) |> 
+label_OUTCOME() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGTQ1Q16,
+  nest = TRUE
+)
 ```
 
 ```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
@@ -459,13 +444,14 @@ estimate_births_and_abortions <- function(survey, begin, end, census_counts) {
 }
 
 estimates <- bind_rows(
-  estimate_births_and_abortions(nsfg2015_2019, 2015, 2019, census_counts),
-  estimate_births_and_abortions(nsfg2011_2015, 2011, 2015, census_counts),
-  estimate_births_and_abortions(nsfg2011_2019, 2011, 2019, census_counts),
-  estimate_births_and_abortions(nsfg2011_2013, 2011, 2013, census_counts),
-  estimate_births_and_abortions(nsfg2013_2015, 2013, 2015, census_counts),
-  estimate_births_and_abortions(nsfg2015_2017, 2015, 2017, census_counts),
-  estimate_births_and_abortions(nsfg2017_2019, 2017, 2019, census_counts)
+  estimate_births_and_abortions(preg_outcomes2015_2019, 2015, 2019, census_counts),
+  estimate_births_and_abortions(preg_outcomes2011_2015, 2011, 2015, census_counts),
+  estimate_births_and_abortions(preg_outcomes2011_2019, 2011, 2019, census_counts),
+  estimate_births_and_abortions(preg_outcomes2011_2013, 2011, 2013, census_counts),
+  estimate_births_and_abortions(preg_outcomes2013_2015, 2013, 2015, census_counts),
+  estimate_births_and_abortions(preg_outcomes2015_2017, 2015, 2017, census_counts),
+  estimate_births_and_abortions(preg_outcomes2017_2019, 2017, 2019, census_counts),
+  estimate_births_and_abortions(preg_outcomes2006_2010, 2006, 2010, census_counts)
 )
 ```
 
@@ -541,6 +527,15 @@ Using the 2-year data sets of the NSFG data appears to result in more variance o
 
 The 4-year data sets of the 2011-2019 NSFG appear to produce the best overall estimators of number of live births per year.
 
+```{r births-2006-2010, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2006,
+  end = 2010,
+  outcome = 'Births'
+)
+```
+
 
 ## Induced Abortions
 
@@ -567,6 +562,15 @@ plot_CIs_against_census_counts(
   estimates,
   begin = 2011,
   end = 2019,
+  outcome = 'Abortions'
+)
+```
+
+```{r abortions-2006-2010, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2006,
+  end = 2010,
   outcome = 'Abortions'
 )
 ```
