@@ -15,6 +15,7 @@ library(gt)
 library(gtExtras)
 library(haven)
 library(here)
+library(lubridate)
 library(readr)
 library(srvyr)
 library(tidyr)
@@ -73,7 +74,41 @@ preg1985_1987 <- read_sas(
   here('data/d1985_1987fempreg.sas7bdat'),
   catalog_file = here('data/d1985_1987fempreg.sas7bcat')
 )
+preg1982_1983 <- read_sas(
+  here('data/d1982_1983fempreg.sas7bdat'),
+  catalog_file = here('data/d1982_1983fempreg.sas7bcat')
+)
+fem1982_1983 <- read_sas(
+  here('data/d1982_1983femresp.sas7bdat'),
+  catalog_file = here('data/d1982_1983femresp.sas7bcat')
+)
 ```
+
+
+```{r cycle-3-interview-dates, dependson="load-data"}
+cm_to_date <- function(x) {
+  x_int <- as.integer(x)
+  if_else(
+    x_int > 9000 | x_int == 0,
+    NA,
+    ym(paste0(
+      floor((x_int - 1) / 12) + 1900,
+      factor(
+        x_int %% 12,
+        levels = 0:11,
+        labels = c('Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov')
+      )
+    ))
+  )
+}
+
+fem1982_1983 |>
+  mutate(interview_date = cm_to_date(fem1982_1983$R7_CM)) |>
+  select(interview_date) |>
+  group_by(interview_date) |>
+  count()
+```
+
 
 ```{r, calculate-census-counts-by-year, dependson="load-data"}
 guttmacher_national <- guttmacher_raw |> 
@@ -421,7 +456,8 @@ as_survey_design(
 preg_outcomes2002_2003 <- select(
   preg2002_2003, SECU_P, SEST, CASEID, DATEND, OUTCOME, FINALWGT
 ) |>
-mutate(
+
+  mutate(
   Year = cm_to_year(DATEND)
 ) |>
 label_OUTCOME() |>
@@ -466,6 +502,63 @@ as_survey_rep(
   repweights = starts_with('REP'),
   type = 'BRR'
 )
+
+
+preg_outcomes1982_1983 <- left_join(
+  select(
+    preg1982_1983, CASEID, B22A, OUTCOME
+  ),
+  select(
+    fem1982_1983, CASEID, PSUCODE, PSEUDOST, PAIRNUM, FINALWT
+  ),
+  by = 'CASEID'
+) |>
+mutate(
+  PAIRNUM = if_else(
+    PSEUDOST == 21 & PSUCODE == 62,
+    2,
+    PAIRNUM
+  ),
+  Year = cm_to_year(B22A),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "MISCARRIAGE" = 3,
+    "STILLBIRTH" = 4,
+    "CURRENT PREGNANCY" = 5
+  )),
+  Abortions = if_else(OUTCOME == 2, 1, 0),
+  Births = if_else(OUTCOME == 1, 1, 0)
+) |>
+as_survey_design(
+  strata = PSEUDOST,
+  ids = PAIRNUM,
+  weights = FINALWT,
+  nest = TRUE
+)
+```
+
+```{r problem-cases, dependson="create-survey-objects"}
+left_join(
+  select(
+    preg1982_1983, CASEID, B22A, OUTCOME
+  ),
+  select(
+    fem1982_1983, CASEID, PSUCODE, PSEUDOST, PAIRNUM, FINALWT
+  ),
+  by = 'CASEID'
+) |>
+mutate(
+  PAIRNUM = if_else(
+    PSEUDOST == 21 & PSUCODE == 62,
+    2,
+    PAIRNUM
+  ),
+  Year = cm_to_year(B22A)
+) |>
+group_by(B22A, Year) |>
+count() |>
+arrange(B22A)
 ```
 
 ```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
@@ -511,7 +604,8 @@ estimates <- bind_rows(
   estimate_births_and_abortions(preg_outcomes2006_2010, 2006, 2010, census_counts),
   estimate_births_and_abortions(preg_outcomes2002_2003, 2002, 2003, census_counts),
   estimate_births_and_abortions(preg_outcomes1995_1995, 1995, 1995, census_counts),
-  estimate_births_and_abortions(preg_outcomes1985_1987, 1985, 1987, census_counts)
+  estimate_births_and_abortions(preg_outcomes1985_1987, 1985, 1987, census_counts),
+  estimate_births_and_abortions(preg_outcomes1982_1983, 1982, 1983, census_counts)
 )
 ```
 
@@ -693,6 +787,19 @@ plot_CIs_against_census_counts(
 ```
 
 
+### 1982-1983 (Cycle 3)
+
+```{r births-1982-1983, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 1982,
+  end = 1983,
+  outcome = 'Births'
+)
+```
+
+
+
 ## Induced Abortions
 
 
@@ -775,6 +882,18 @@ plot_CIs_against_census_counts(
   estimates,
   begin = 1985,
   end = 1987,
+  outcome = 'Abortions'
+)
+```
+
+
+### 1982-1983 (Cycle 3)
+
+```{r abortions-1982-1983, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 1982,
+  end = 1983,
   outcome = 'Abortions'
 )
 ```
