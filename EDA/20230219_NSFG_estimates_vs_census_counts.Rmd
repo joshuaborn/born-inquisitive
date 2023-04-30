@@ -65,9 +65,9 @@ preg2002_2003 <- read_sas(
   here('data/d2002_2003fempreg.sas7bdat'),
   catalog_file = here('data/d2002_2003fempreg.sas7bcat')
 )
-preg1992_1994 <- read_sas(
-  here('data/d1992_1994fempreg.sas7bdat'),
-  catalog_file = here('data/d1992_1994fempreg.sas7bcat')
+preg1995_1995 <- read_sas(
+  here('data/d1995_1995fempreg.sas7bdat'),
+  catalog_file = here('data/d1995_1995fempreg.sas7bcat')
 )
 preg1985_1987 <- read_sas(
   here('data/d1985_1987fempreg.sas7bdat'),
@@ -433,8 +433,8 @@ as_survey_design(
 )
 
 
-preg_outcomes1992_1994 <- select(
-  preg1992_1994, PANEL, COL_STR, CASEID, DATEND, OUTCOME, POST_WT
+preg_outcomes1995_1995 <- select(
+  preg1995_1995, PANEL, COL_STR, CASEID, DATEND, OUTCOME, POST_WT
 ) |>
 mutate(
   Year = cm_to_year(DATEND)
@@ -510,7 +510,7 @@ estimates <- bind_rows(
   estimate_births_and_abortions(preg_outcomes2017_2019, 2017, 2019, census_counts),
   estimate_births_and_abortions(preg_outcomes2006_2010, 2006, 2010, census_counts),
   estimate_births_and_abortions(preg_outcomes2002_2003, 2002, 2003, census_counts),
-  estimate_births_and_abortions(preg_outcomes1992_1994, 1992, 1994, census_counts),
+  estimate_births_and_abortions(preg_outcomes1995_1995, 1995, 1995, census_counts),
   estimate_births_and_abortions(preg_outcomes1985_1987, 1985, 1987, census_counts)
 )
 ```
@@ -669,13 +669,13 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 1992-1994 (Cycle 5)
+### 1995 (Cycle 5)
 
-```{r births-1992-1994, dependson=c("define-plot-function", "generate-estimates")}
+```{r births-1995, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 1992,
-  end = 1994,
+  begin = 1995,
+  end = 1995,
   outcome = 'Births'
 )
 ```
@@ -756,13 +756,13 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 1992-1994 (Cycle 5)
+### 1995 (Cycle 5)
 
-```{r abortions-1992-1994, dependson=c("define-plot-function", "generate-estimates")}
+```{r abortions-1995, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 1992,
-  end = 1994,
+  begin = 1995,
+  end = 1995,
   outcome = 'Abortions'
 )
 ```
