@@ -447,19 +447,25 @@ as_survey_design(
   nest = TRUE
 )
 
-select(
-  preg1988_1988, SEQNUM, OUTCOME, B14MO, W_5
+
+preg_outcomes1985_1987 <- select(
+  preg1985_1987, SEQNUM, OUTCOME, B14MO, W_5, starts_with('REP')
 ) |>
 mutate(
-  Year = cm_to_year(B14MO)
+  Year = cm_to_year(B14MO),
+  W_5 = W_5 / 100, # From Codebook: IMPLIED DECIMAL BETWEEN POSTIONS 370 AND 371
+  across(
+    starts_with('REP'),
+    ~ .x / 100 # From Codebook: THERE IS AN IMPLIED DECIMAL BEFORE THE LAST TWO DIGITS OF EACH WEIGHT.
+  )
 ) |>
-label_OUTCOME()
-
-# The survey design is going to have to use balanced repeated replication (BRR).
-#as_survey_design(
-#  weights = W_5,
-#  nest = TRUE
-#)
+label_OUTCOME() |>
+as_survey_rep(
+  variables = c(OUTCOME, Year, Births, Abortions),
+  weights = W_5,
+  repweights = starts_with('REP'),
+  type = 'BRR'
+)
 ```
 
 ```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
@@ -504,7 +510,8 @@ estimates <- bind_rows(
   estimate_births_and_abortions(preg_outcomes2017_2019, 2017, 2019, census_counts),
   estimate_births_and_abortions(preg_outcomes2006_2010, 2006, 2010, census_counts),
   estimate_births_and_abortions(preg_outcomes2002_2003, 2002, 2003, census_counts),
-  estimate_births_and_abortions(preg_outcomes1992_1994, 1992, 1994, census_counts)
+  estimate_births_and_abortions(preg_outcomes1992_1994, 1992, 1994, census_counts),
+  estimate_births_and_abortions(preg_outcomes1985_1987, 1985, 1987, census_counts)
 )
 ```
 
@@ -650,7 +657,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 2002-2003
+### 2002-2003 (Cycle 6)
 
 ```{r births-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -662,13 +669,25 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 1992-1994
+### 1992-1994 (Cycle 5)
 
 ```{r births-1992-1994, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 1992,
   end = 1994,
+  outcome = 'Births'
+)
+```
+
+
+### 1985-1987 (Cycle 4)
+
+```{r births-1985-1987, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 1985,
+  end = 1987,
   outcome = 'Births'
 )
 ```
@@ -725,7 +744,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 2002-2003
+### 2002-2003 (Cycle 6)
 
 ```{r abortions-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -737,13 +756,25 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 1992-1994
+### 1992-1994 (Cycle 5)
 
 ```{r abortions-1992-1994, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
   begin = 1992,
   end = 1994,
+  outcome = 'Abortions'
+)
+```
+
+
+### 1985-1987 (Cycle 4)
+
+```{r abortions-1985-1987, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 1985,
+  end = 1987,
   outcome = 'Abortions'
 )
 ```
