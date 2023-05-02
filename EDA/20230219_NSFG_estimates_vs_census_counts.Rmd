@@ -273,12 +273,10 @@ plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
 ```
 
 ```{r create-survey-objects, dependson="load-data"}
-cm_to_year <- function(x) {
+cm_to_year_cycle5 <- function(x) {
   x_int <- as.integer(x)
   ifelse(
-    x_int %in% c(NA, 9997, 9998, 9999) |
-      x_int >= 90000 |
-      x_int == 0,
+    x_int %in% c(NA, 0, 9997, 9998, 9999),
     NA,
     floor((x_int - 1) / 12) + 1900
   )
@@ -481,9 +479,17 @@ preg_outcomes1995_1995 <- select(
   preg1995_1995, PANEL, COL_STR, CASEID, DATEND, OUTCOME, POST_WT
 ) |>
 mutate(
-  Year = cm_to_year(DATEND)
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  )),
 ) |>
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = COL_STR,
   ids = PANEL,
