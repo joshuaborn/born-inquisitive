@@ -503,6 +503,20 @@ as_survey_rep(
   type = 'BRR'
 )
 
+cm_to_year_cycle3 <- function(x) {
+  x_int <- as.integer(x)
+  specials <- c(NA, 0, 9696, 9797, 9898, 9999)
+  x_modified <- if_else(
+    !is.element(x_int, specials) & x_int > 9000,
+    x_int - 9000,
+    x_int
+  )
+  ifelse(
+    x_modified %in% specials,
+    NA,
+    floor((x_modified - 1) / 12) + 1900
+  )
+}
 
 preg_outcomes1982_1983 <- left_join(
   select(
@@ -519,7 +533,8 @@ mutate(
     2,
     PAIRNUM
   ),
-  Year = cm_to_year(B22A),
+  FINALWT = FINALWT / 10,
+  Year = cm_to_year_cycle3(B22A),
   OUTCOME = labelled(OUTCOME, c(
     "LIVE BIRTH" = 1,
     "INDUCED ABORTION" = 2,
@@ -536,29 +551,6 @@ as_survey_design(
   weights = FINALWT,
   nest = TRUE
 )
-```
-
-```{r problem-cases, dependson="create-survey-objects"}
-left_join(
-  select(
-    preg1982_1983, CASEID, B22A, OUTCOME
-  ),
-  select(
-    fem1982_1983, CASEID, PSUCODE, PSEUDOST, PAIRNUM, FINALWT
-  ),
-  by = 'CASEID'
-) |>
-mutate(
-  PAIRNUM = if_else(
-    PSEUDOST == 21 & PSUCODE == 62,
-    2,
-    PAIRNUM
-  ),
-  Year = cm_to_year(B22A)
-) |>
-group_by(B22A, Year) |>
-count() |>
-arrange(B22A)
 ```
 
 ```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
