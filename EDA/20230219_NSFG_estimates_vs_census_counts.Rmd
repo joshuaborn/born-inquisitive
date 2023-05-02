@@ -448,9 +448,17 @@ preg_outcomes2006_2010 <- select(
   preg2006_2010, SECU, SEST, CASEID, DATEND, OUTCOME, WGTQ1Q16
 ) |>
 mutate(
-  Year = cm_to_year(DATEND)
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
 ) |> 
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
   ids = SECU,
