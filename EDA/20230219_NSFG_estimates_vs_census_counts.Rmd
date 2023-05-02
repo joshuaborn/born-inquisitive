@@ -300,6 +300,14 @@ label_OUTCOME <- function(tbl) {
   )
 }
 
+count_abortions_and_births <- function(tbl) {
+  mutate(
+    tbl,
+    Abortions = if_else(OUTCOME == 2, 1, 0),
+    Births = if_else(OUTCOME == 1, 1, 0),
+  )
+}
+
 preg_outcomes2015_2019 <- bind_rows(
   select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
   select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
@@ -484,24 +492,47 @@ as_survey_design(
 )
 
 
+cm_to_year_cycle4 <- function(x) {
+  x_int <- as.integer(x)
+  specials <- c(NA, 0, 99585, 99696, 99999)
+  x_modified <- if_else(
+    !is.element(x_int, specials) & x_int > 9000,
+    x_int - 90000,
+    x_int
+  )
+  ifelse(
+    x_modified %in% specials,
+    NA,
+    floor((x_modified - 1) / 12) + 1900
+  )
+}
+
 preg_outcomes1985_1987 <- select(
   preg1985_1987, SEQNUM, OUTCOME, B14MO, W_5, starts_with('REP')
 ) |>
 mutate(
-  Year = cm_to_year(B14MO),
+  Year = cm_to_year_cycle4(B14MO),
   W_5 = W_5 / 100, # From Codebook: IMPLIED DECIMAL BETWEEN POSTIONS 370 AND 371
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "MISCARRIAGE" = 3,
+    "STILLBIRTH" = 4,
+    "CURRENT PREGNANCY" = 5
+  )),
   across(
     starts_with('REP'),
     ~ .x / 100 # From Codebook: THERE IS AN IMPLIED DECIMAL BEFORE THE LAST TWO DIGITS OF EACH WEIGHT.
   )
 ) |>
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_rep(
   variables = c(OUTCOME, Year, Births, Abortions),
   weights = W_5,
   repweights = starts_with('REP'),
   type = 'BRR'
 )
+
 
 cm_to_year_cycle3 <- function(x) {
   x_int <- as.integer(x)
@@ -541,10 +572,9 @@ mutate(
     "MISCARRIAGE" = 3,
     "STILLBIRTH" = 4,
     "CURRENT PREGNANCY" = 5
-  )),
-  Abortions = if_else(OUTCOME == 2, 1, 0),
-  Births = if_else(OUTCOME == 1, 1, 0)
+  ))
 ) |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = PSEUDOST,
   ids = PAIRNUM,
