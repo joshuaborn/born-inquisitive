@@ -282,22 +282,6 @@ cm_to_year_cycle5 <- function(x) {
   )
 }
 
-label_OUTCOME <- function(tbl) {
-  mutate(
-    tbl,
-    OUTCOME = labelled(OUTCOME, c(
-      "LIVE BIRTH" = 1,
-      "INDUCED ABORTION" = 2,
-      "STILLBIRTH" = 3,
-      "MISCARRIAGE" = 4,
-      "ECTOPIC PREGNANCY" = 5,
-      "CURRENT PREGNANCY" = 6
-    )),
-    Abortions = if_else(OUTCOME == 2, 1, 0),
-    Births = if_else(OUTCOME == 1, 1, 0),
-  )
-}
-
 count_abortions_and_births <- function(tbl) {
   mutate(
     tbl,
@@ -305,6 +289,7 @@ count_abortions_and_births <- function(tbl) {
     Births = if_else(OUTCOME == 1, 1, 0),
   )
 }
+
 
 preg_outcomes2015_2019 <- bind_rows(
   select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
@@ -317,7 +302,7 @@ left_join(
 mutate(
   Year = DATEND
 ) |> 
-label_OUTCOME() |> 
+count_abortions_and_births() |> 
 as_survey_design(
   strata = SEST,
   ids = SECU,
@@ -339,9 +324,17 @@ left_join(
   by = join_by(CASEID)
 ) |>
 mutate(
-  Year = cm_to_year(DATEND)
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
 ) |> 
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
   ids = SECU,
@@ -359,7 +352,7 @@ preg_outcomes2011_2019 <- bind_rows(
       ), 
     select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
   ) |> mutate(
-    Year = cm_to_year(DATEND)
+    Year = cm_to_year_cycle5(DATEND)
   ),
   bind_rows(
     select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
@@ -369,11 +362,21 @@ preg_outcomes2011_2019 <- bind_rows(
       Year = DATEND
     )
 ) |>
+mutate(
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |>
 left_join(
   wgt2011_2019,
   by = join_by(CASEID)
 ) |>
-label_OUTCOME() |>
+count_abortions_and_births() |>
 filter(!is.na(WGT2011_2019)) |>
 as_survey_design(
   strata = SEST,
@@ -388,9 +391,17 @@ preg_outcomes2011_2013 <- select(
 ) |>
 mutate(
   DATEND = as.numeric(DATEND) + 3653,
-  Year = cm_to_year(DATEND)
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
 ) |> 
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
   ids = SECU,
@@ -403,9 +414,17 @@ preg_outcomes2013_2015 <- select(
   preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2013_2015
 ) |>
 mutate(
-  Year = cm_to_year(DATEND)
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
 ) |> 
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
   ids = SECU,
@@ -419,8 +438,16 @@ preg_outcomes2015_2017 <- select(
 ) |>
 mutate(
   Year = DATEND,
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
 ) |> 
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
   ids = SECU,
@@ -434,8 +461,16 @@ preg_outcomes2017_2019 <- select(
 ) |>
 mutate(
   Year = DATEND,
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
 ) |> 
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
   ids = SECU,
@@ -482,7 +517,7 @@ mutate(
   ))
 ) |>
 count_abortions_and_births() |>
-label_OUTCOME() |>
+count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
   ids = SECU_P,
