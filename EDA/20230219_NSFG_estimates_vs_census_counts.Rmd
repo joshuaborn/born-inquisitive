@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, load-data, message=FALSE}
+```{r load-data, message=FALSE}
 guttmacher_raw <- read_csv(
   here('data/guttmacher/NationalAndStatePregnancy_PublicUse.csv')
 )
@@ -110,7 +110,7 @@ fem1982_1983 |>
 ```
 
 
-```{r, calculate-census-counts-by-year, dependson="load-data"}
+```{r calculate-census-counts-by-year, dependson="load-data"}
 guttmacher_national <- guttmacher_raw |> 
   filter(state == 'US') |>
   select(-state, -notes) |>
