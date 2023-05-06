@@ -600,7 +600,7 @@ estimates <- bind_rows(
 ```
 
 
-## Years with Coverage
+## Years in which NSFG Estimates Cover Census Counts of Live Births
 
 These are years for which the census count of live births is covered by at least one 95% confidence interval for live births based on the NSFG.
 
@@ -617,7 +617,7 @@ estimates |>
     CI_Width = Estimate_upp - Estimate_low
   ) |>
   select(Year, Bias, CI_Width, UnweightedCount, SurveyLabel, Begin, End) |>
-  arrange(Year) |>
+  arrange(desc(Year)) |>
   gt() |>
   sub_missing(
     missing_text = ''
@@ -633,6 +633,46 @@ estimates |>
   )
 ```
 
+```{r assign-years}
+tribble(
+  ~Year, ~SurveyLabel,
+  2014, '2015-2019'
+  2013, '2015-2019'
+  2012, '2015-2019'
+  2011, '2015-2019', # However, 2011-2015 seems better, even while losing October, November, December. Using a partial year sample might be biased in other ways, nonetheless.
+  2010, '2011-2015',
+  2009, '2011-2015',
+  2008, '2011-2015',
+  2007, '2011-2015',
+  2006, '2011-2015',
+  2005, '2006-2010',
+  2004, '2006-2010',
+  2003, '2006-2010',
+  2002, '2006-2010',
+  2001, 'Cycle 6',
+  2000, 'Cycle 6', # However, 2006-2010 seems better.
+  1999, 'Cycle 6', # Again, 2006-2010 seems better.
+  1998, 'Cycle 6', # Again, 2006-2010 seems better.
+  1997, 'Cycle 6', # Cycle 6 is the only option.
+  1996, 'Cycle 6', # Cycle 6 outperforms 2006-2010.
+  1995, 'Cycle 6', # Cycle 6 is the only option.
+  1994, 'Cycle 5',
+  1993, 'Cycle 5',
+  1992, 'Cycle 5',
+  1991, 'Cycle 5',
+  1990, 'Cycle 5', # No estimates cover 1990.
+  1989, 'Cycle 5',
+  1988, 'Cycle 5',
+  1987, 'Cycle 5',
+  1986, 'Cycle 5',
+  1985, 'Cycle 4',
+  1984, 'Cycle 4', # Cycle 4 does not cover in 1984.
+  1983, 'Cycle 4', # Cycle 5 outperforms Cycle 4 here.
+  1982, 'Cycle 4', # No estimates cover 1982.
+  1981, 'Cycle 4',
+  1980, 'Cycle 4'
+)
+```
 
 
 ```{r define-plot-function}
