@@ -164,103 +164,6 @@ ggplot(
   )
 ```
 
-```{r define-plot-function}
-plot_CIs_against_census_counts <- function(these_data, begin, end, outcome) {
-  if (outcome == 'Births') {
-    y_axis_label <- 'Live Births'
-    title_string <- paste('Number of live births in the United States per year')
-    subtitle_string <- paste('CIs estimated by the', paste(begin, end, sep = '-'), "NSFG (brackets) compared with the NVSS counts (X's)")
-  }
-  if (outcome == 'Abortions') {
-    y_axis_label <- 'Induced Abortions'
-    title_string <- paste('Number of induced abortions in the United States per year')
-    subtitle_string <- paste('CIs estimated by the', paste(begin, end, sep = '-'), "NSFG (brackets) compared with the Guttmacher APC counts (X's)")
-  }
-  ggplot(
-    data = filter(
-      these_data,
-      Begin == begin,
-      End == end,
-      Outcome == outcome
-    )
-  ) +
-  geom_vline(
-    aes(
-      xintercept = Begin
-    ),
-    color = 'red',
-    linetype = 2
-  ) +
-  geom_vline(
-    aes(
-      xintercept = End
-    ),
-    color = 'red',
-    linetype = 2
-  ) +
-  geom_segment(
-    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
-    aes(
-      x = Year,
-      xend = Year,
-      y = Estimate_low,
-      yend = Estimate_upp
-    ),
-    color = 'darkblue',
-    na.rm = TRUE
-  ) +
-  geom_point(
-    aes(
-      x = Year,
-      y = Estimate
-    ),
-    color = 'darkblue',
-    fill = 'white',
-    shape = 21,
-    size = 3,
-    stroke = 0.75,
-    na.rm = TRUE
-  ) +
-  geom_point(
-    aes(
-      x = Year,
-      y = Total
-    ),
-    color = 'darkorange',
-    shape = 4,
-    size = 4,
-    stroke = 1,
-    na.rm = TRUE
-  ) +
-  scale_y_continuous(
-    expand = expansion(mult = c(0, 0.05)),
-    labels = scales::unit_format(unit = "M", scale = 1e-6),
-    limits = c(0, NA)
-  ) +
-  scale_x_continuous(
-    breaks = \(x) seq(x[1], x[2], 2),
-    expand = expansion(add = 1)
-  ) +
-  labs(
-    title = title_string,
-    subtitle = subtitle_string,
-    y = y_axis_label
-  ) +
-  theme_bw() +
-  theme(
-    axis.text.x = element_text(
-      angle = 45,
-      color = 'black',
-      hjust = 0.5,
-      vjust = 0.65
-    ),
-    axis.ticks.y = element_blank(),
-    legend.position = 'bottom',
-    legend.title = element_blank()
-  )
-}
-```
-
 ```{r create-survey-objects, dependson="load-data"}
 cm_to_year_cycle5 <- function(x) {
   x_int <- as.integer(x)
@@ -630,7 +533,7 @@ as_survey_design(
 ```
 
 ```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
-estimate_births_and_abortions <- function(survey, begin, end, census_counts) {
+estimate_births_and_abortions <- function(census_counts, survey, survey_label, begin, end) {
   bind_rows(
     survey |>
       group_by(Year) |>
@@ -641,7 +544,8 @@ estimate_births_and_abortions <- function(survey, begin, end, census_counts) {
       mutate(
         Begin = begin ,
         End = end ,
-        Outcome = 'Abortions'
+        Outcome = 'Abortions',
+        SurveyLabel = survey_label
       ),
     survey |>
       group_by(Year) |> 
@@ -652,7 +556,8 @@ estimate_births_and_abortions <- function(survey, begin, end, census_counts) {
       mutate(
         Begin = begin,
         End = end,
-        Outcome = 'Births'
+        Outcome = 'Births',
+        SurveyLabel = survey_label
       )
   ) |>
     left_join(
@@ -662,18 +567,18 @@ estimate_births_and_abortions <- function(survey, begin, end, census_counts) {
 }
 
 estimates <- bind_rows(
-  estimate_births_and_abortions(preg_outcomes2015_2019, 2015, 2019, census_counts),
-  estimate_births_and_abortions(preg_outcomes2011_2015, 2011, 2015, census_counts),
-  estimate_births_and_abortions(preg_outcomes2011_2019, 2011, 2019, census_counts),
-  estimate_births_and_abortions(preg_outcomes2011_2013, 2011, 2013, census_counts),
-  estimate_births_and_abortions(preg_outcomes2013_2015, 2013, 2015, census_counts),
-  estimate_births_and_abortions(preg_outcomes2015_2017, 2015, 2017, census_counts),
-  estimate_births_and_abortions(preg_outcomes2017_2019, 2017, 2019, census_counts),
-  estimate_births_and_abortions(preg_outcomes2006_2010, 2006, 2010, census_counts),
-  estimate_births_and_abortions(preg_outcomes2002_2003, 2002, 2003, census_counts),
-  estimate_births_and_abortions(preg_outcomes1995_1995, 1995, 1995, census_counts),
-  estimate_births_and_abortions(preg_outcomes1985_1987, 1985, 1987, census_counts),
-  estimate_births_and_abortions(preg_outcomes1982_1983, 1982, 1983, census_counts)
+  estimate_births_and_abortions(census_counts, preg_outcomes2015_2019, '2015-2019', my('September 2015'), my('September 2019')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2011_2015, '2011-2015', my('September 2011'), my('September 2015')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2011_2019, '2011-2019', my('September 2011'), my('September 2019')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2011_2013, '2011-2013', my('September 2011'), my('September 2013')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2013_2015, '2013-2015', my('September 2013'), my('September 2015')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2015_2017, '2015-2017', my('September 2015'), my('September 2017')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2017_2019, '2017-2019', my('September 2017'), my('September 2019')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2006_2010, '2006-2010', my('June 2006'),      my('June 2010')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2002_2003, 'Cycle 6', my('March 2002'),     my('March 2003')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1995_1995, 'Cycle 5', my('January 1995'),   my('October 1995')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1985_1987, 'Cycle 4', my('December 1985'),  my('March 1987')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1982_1983, 'Cycle 3', my('August 1982'),    my('April 1983'))
 )
 ```
 
@@ -685,11 +590,8 @@ These are years for which the census count of live births is covered by at least
 ```{r quantify-coverage, depends="generate-estimates"}
 estimates |>
   filter(
-    !(Begin == 2011 & End == 2019) &
-      !(Begin == 2011 & End == 2013) &
-      !(Begin == 2013 & End == 2015) &
-      !(Begin == 2015 & End == 2017) &
-      !(Begin == 2017 & End == 2019)
+    Year <= year(Begin) &
+    (year(Begin) < 2011 | !is.element(year(End) - year(Begin), c(2, 8)))
   ) |>
   filter(
     Outcome == 'Births' &
@@ -699,17 +601,119 @@ estimates |>
     Bias = Total - Estimate,
     CI_Width = Estimate_upp - Estimate_low
   ) |>
-  select(Year, Bias, CI_Width, Total, Estimate, Estimate_low, Estimate_upp, Begin, End) |>
+  select(Year, Bias, CI_Width, Begin, End) |>
   arrange(Year) |>
   gt() |>
   sub_missing(
     missing_text = ''
   ) |>
   fmt_number(
-    starts_with(c('Estimate', 'Total', 'Bias', 'CI_Width')),
+    c('Bias', 'CI_Width'),
     drop_trailing_zeros = TRUE,
     decimals = 0
+  ) |>
+  fmt_date(
+    c('Begin', 'End'),
+    date_style = 'yM'
   )
+```
+
+
+
+```{r define-plot-function}
+plot_CIs_against_census_counts <- function(these_data, survey_label, outcome) {
+  if (outcome == 'Births') {
+    y_axis_label <- 'Live Births'
+    title_string <- paste('Number of live births in the United States per year')
+    subtitle_string <- paste('Confidence intervals estimated by the', survey_label, "NSFG (brackets) compared with the NVSS counts (X's)")
+  }
+  if (outcome == 'Abortions') {
+    y_axis_label <- 'Induced Abortions'
+    title_string <- paste('Number of induced abortions in the United States per year')
+    subtitle_string <- paste('Confidence intervals estimated by the', survey_label, "NSFG (brackets) compared with the Guttmacher APC counts (X's)")
+  }
+
+  filter(
+      these_data,
+      Outcome == outcome,
+      SurveyLabel == survey_label
+  ) |>
+  ggplot() +
+  geom_vline(
+    aes(
+      xintercept = year(Begin)
+    ),
+    color = 'red',
+    linetype = 2
+  ) +
+  geom_vline(
+    aes(
+      xintercept = year(End)
+    ),
+    color = 'red',
+    linetype = 2
+  ) +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp
+    ),
+    color = 'darkblue',
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Estimate
+    ),
+    color = 'darkblue',
+    fill = 'white',
+    shape = 21,
+    size = 3,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    ),
+    color = 'darkorange',
+    shape = 4,
+    size = 4,
+    stroke = 1,
+    na.rm = TRUE
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1], x[2], 2),
+    expand = expansion(add = 1)
+  ) +
+  labs(
+    title = title_string,
+    subtitle = subtitle_string,
+    y = y_axis_label
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    ),
+    axis.ticks.y = element_blank(),
+    legend.position = 'bottom',
+    legend.title = element_blank()
+  )
+}
 ```
 
 
@@ -723,8 +727,7 @@ estimates |>
 ```{r births-2011-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2011,
-  end = 2019,
+  survey_label = '2011-2019',
   outcome = 'Births'
 )
 ```
@@ -737,8 +740,7 @@ While using the combined 2011-2019 data set does result in a slight decrease in 
 ```{r births-2011-2013, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2011,
-  end = 2013,
+  survey_label = '2011-2013',
   outcome = 'Births'
 )
 ```
@@ -749,8 +751,7 @@ plot_CIs_against_census_counts(
 ```{r births-2013-2015, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2013,
-  end = 2015,
+  survey_label = '2013-2015',
   outcome = 'Births'
 )
 ```
@@ -761,8 +762,7 @@ plot_CIs_against_census_counts(
 ```{r births-2015-2017, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2015,
-  end = 2017,
+  survey_label = '2015-2017',
   outcome = 'Births'
 )
 ```
@@ -773,8 +773,7 @@ plot_CIs_against_census_counts(
 ```{r births-2017-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2017,
-  end = 2019,
+  survey_label = '2017-2019',
   outcome = 'Births'
 )
 ```
@@ -793,8 +792,7 @@ The four-year data sets of the 2011-2019 NSFG appear to produce the best overall
 ```{r births-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2015,
-  end = 2019,
+  survey_label = '2015-2019',
   outcome = 'Births'
 )
 ```
@@ -805,8 +803,7 @@ plot_CIs_against_census_counts(
 ```{r births-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2011,
-  end = 2015,
+  survey_label = '2011-2015',
   outcome = 'Births'
 )
 ```
@@ -819,8 +816,7 @@ plot_CIs_against_census_counts(
 ```{r births-2006-2010, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2006,
-  end = 2010,
+  survey_label = '2006-2010',
   outcome = 'Births'
 )
 ```
@@ -831,8 +827,7 @@ plot_CIs_against_census_counts(
 ```{r births-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2002,
-  end = 2003,
+  survey_label = 'Cycle 6',
   outcome = 'Births'
 )
 ```
@@ -843,8 +838,7 @@ plot_CIs_against_census_counts(
 ```{r births-1995, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 1995,
-  end = 1995,
+  survey_label = 'Cycle 5',
   outcome = 'Births'
 )
 ```
@@ -855,8 +849,7 @@ plot_CIs_against_census_counts(
 ```{r births-1985-1987, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 1985,
-  end = 1987,
+  survey_label = 'Cycle 4',
   outcome = 'Births'
 )
 ```
@@ -867,8 +860,7 @@ plot_CIs_against_census_counts(
 ```{r births-1982-1983, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 1982,
-  end = 1983,
+  survey_label = 'Cycle 3',
   outcome = 'Births'
 )
 ```
@@ -885,8 +877,7 @@ Less than half of induced abortions are reported on the NSFG.
 ```{r abortions-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2015,
-  end = 2019,
+  survey_label = '2015-2019',
   outcome = 'Abortions'
 )
 ```
@@ -897,8 +888,7 @@ plot_CIs_against_census_counts(
 ```{r abortions-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2011,
-  end = 2015,
+  survey_label = '2011-2015',
   outcome = 'Abortions'
 )
 ```
@@ -909,8 +899,7 @@ plot_CIs_against_census_counts(
 ```{r abortions-2006-2010, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2006,
-  end = 2010,
+  survey_label = '2006-2010',
   outcome = 'Abortions'
 )
 ```
@@ -921,8 +910,7 @@ plot_CIs_against_census_counts(
 ```{r abortions-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 2002,
-  end = 2003,
+  survey_label = 'Cycle 6',
   outcome = 'Abortions'
 )
 ```
@@ -933,8 +921,7 @@ plot_CIs_against_census_counts(
 ```{r abortions-1995, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 1995,
-  end = 1995,
+  survey_label = 'Cycle 5',
   outcome = 'Abortions'
 )
 ```
@@ -945,8 +932,7 @@ plot_CIs_against_census_counts(
 ```{r abortions-1985-1987, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 1985,
-  end = 1987,
+  survey_label = 'Cycle 4',
   outcome = 'Abortions'
 )
 ```
@@ -957,8 +943,7 @@ plot_CIs_against_census_counts(
 ```{r abortions-1982-1983, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
   estimates,
-  begin = 1982,
-  end = 1983,
+  survey_label = 'Cycle 3',
   outcome = 'Abortions'
 )
 ```
