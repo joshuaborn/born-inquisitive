@@ -534,36 +534,53 @@ as_survey_design(
 
 ```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
 estimate_births_and_abortions <- function(census_counts, survey, survey_label, begin, end) {
+  these_estimates <- survey |>
+    group_by(Year) |> 
+    summarize(
+      Abortions = survey_total(Abortions, vartype = 'ci'),
+      Births = survey_total(Births, vartype = 'ci'),
+      AbortionsUnweighted = unweighted(sum(Abortions)),
+      BirthsUnweighted = unweighted(sum(Births))
+    ) |> 
+    filter(!is.na(Year))
+
   bind_rows(
-    survey |>
-      group_by(Year) |>
-      summarize(
-        Estimate = survey_total(Abortions, vartype = 'ci')
-      ) |> 
-      filter(!is.na(Year)) |>
+    these_estimates |>
+      select(
+        Year, starts_with('Abortions')
+      ) |>
+      rename(
+        Estimate = 'Abortions',
+        Estimate_low = 'Abortions_low',
+        Estimate_upp = 'Abortions_upp',
+        UnweightedCount = 'AbortionsUnweighted'
+      ) |>
       mutate(
-        Begin = begin ,
-        End = end ,
-        Outcome = 'Abortions',
-        SurveyLabel = survey_label
+        Outcome = 'Abortions'
       ),
-    survey |>
-      group_by(Year) |> 
-      summarize(
-        Estimate = survey_total(Births, vartype = 'ci')
-      ) |> 
-      filter(!is.na(Year)) |>
+    these_estimates |>
+      select(
+        Year, starts_with('Births')
+      ) |>
+      rename(
+        Estimate = 'Births',
+        Estimate_low = 'Births_low',
+        Estimate_upp = 'Births_upp',
+        UnweightedCount = 'BirthsUnweighted'
+      ) |>
       mutate(
-        Begin = begin,
-        End = end,
-        Outcome = 'Births',
-        SurveyLabel = survey_label
+        Outcome = 'Births'
       )
   ) |>
-    left_join(
-      census_counts,
-      by = c('Year', 'Outcome')
-    )
+  mutate(
+    Begin = begin,
+    End = end,
+    SurveyLabel = survey_label
+  ) |>
+  left_join(
+    census_counts,
+    by = c('Year', 'Outcome')
+  )
 }
 
 estimates <- bind_rows(
@@ -591,9 +608,7 @@ These are years for which the census count of live births is covered by at least
 estimates |>
   filter(
     Year <= year(Begin) &
-    (year(Begin) < 2011 | !is.element(year(End) - year(Begin), c(2, 8)))
-  ) |>
-  filter(
+    (year(Begin) < 2011 | !is.element(year(End) - year(Begin), c(2, 8))) &
     Outcome == 'Births' &
     Estimate_low <= Total & Total <= Estimate_upp
   ) |>
@@ -601,7 +616,7 @@ estimates |>
     Bias = Total - Estimate,
     CI_Width = Estimate_upp - Estimate_low
   ) |>
-  select(Year, Bias, CI_Width, Begin, End) |>
+  select(Year, Bias, CI_Width, UnweightedCount, SurveyLabel, Begin, End) |>
   arrange(Year) |>
   gt() |>
   sub_missing(
