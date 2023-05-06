@@ -85,7 +85,7 @@ fem1982_1983 <- read_sas(
 ```
 
 
-```{r cycle-3-interview-dates, dependson="load-data"}
+```{r cycle-3-interview-dates, dependson="load-data", include=FALSE}
 cm_to_date <- function(x) {
   x_int <- as.integer(x)
   if_else(
@@ -161,17 +161,6 @@ ggplot(
     legend.position = 'bottom',
     legend.title = element_blank(),
     axis.ticks.y = element_blank()
-  )
-```
-
-```{r print-table-of-census-counts-by-year, dependson="calculate-census-counts-by-year", include=FALSE}
-gt(census_counts) |>
-  sub_missing(
-    missing_text = ''
-  ) |> 
-  fmt_number(
-    starts_with('Total'),
-    drop_trailing_zeros = TRUE
   )
 ```
 
@@ -693,7 +682,7 @@ estimates <- bind_rows(
 
 These are years for which the census count of live births is covered by at least one 95% confidence interval for live births based on the NSFG.
 
-```{r quantity-coverage, depends="generate-estimates"}
+```{r quantify-coverage, depends="generate-estimates"}
 estimates |>
   filter(
     !(Begin == 2011 & End == 2019) &
@@ -727,32 +716,9 @@ estimates |>
 
 ## Live Births
 
+### Two-year and Eight-Year Data Sets
 
-### 2015-2019
-
-```{r births-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
-plot_CIs_against_census_counts(
-  estimates,
-  begin = 2015,
-  end = 2019,
-  outcome = 'Births'
-)
-```
-
-
-### 2011-2015
-
-```{r births-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
-plot_CIs_against_census_counts(
-  estimates,
-  begin = 2011,
-  end = 2015,
-  outcome = 'Births'
-)
-```
-
-
-### 2011-2019
+#### 2011-2019
 
 ```{r births-2011-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -766,7 +732,7 @@ plot_CIs_against_census_counts(
 While using the combined 2011-2019 data set does result in a slight decrease in estimator variance compared with the 2011-2015 stacked data as reflected in narrower confidence intervals for the number of live births per year, it comes as the expense of a much more bias.
 
 
-### 2011-2013
+#### 2011-2013
 
 ```{r births-2011-2013, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -778,7 +744,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 2013-2015
+#### 2013-2015
 
 ```{r births-2013-2015, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -790,7 +756,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 2015-2017
+#### 2015-2017
 
 ```{r births-2015-2017, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -802,7 +768,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 2017-2019
+#### 2017-2019
 
 ```{r births-2017-2019, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -815,10 +781,40 @@ plot_CIs_against_census_counts(
 
 Using the 2-year data sets of the NSFG data appears to result in more variance of the estimators of live births, and without any decrease in bias of the estimators. Sometimes the 4-year estimates appear to be less biased, and sometimes the 2-year estimates to appear to be less biased.
 
-The 4-year data sets of the 2011-2019 NSFG appear to produce the best overall estimators of number of live births per year.
 
 
-### 2006-2010
+### Four-Year Data Sets
+
+The four-year data sets of the 2011-2019 NSFG appear to produce the best overall estimators of number of live births per year.
+
+
+#### 2015-2019
+
+```{r births-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2015,
+  end = 2019,
+  outcome = 'Births'
+)
+```
+
+
+#### 2011-2015
+
+```{r births-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  begin = 2011,
+  end = 2015,
+  outcome = 'Births'
+)
+```
+
+
+
+
+#### 2006-2010
 
 ```{r births-2006-2010, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -830,7 +826,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 2002-2003 (Cycle 6)
+#### 2002-2003 (Cycle 6)
 
 ```{r births-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -842,7 +838,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 1995 (Cycle 5)
+#### 1995 (Cycle 5)
 
 ```{r births-1995, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -854,7 +850,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 1985-1987 (Cycle 4)
+#### 1985-1987 (Cycle 4)
 
 ```{r births-1985-1987, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -866,7 +862,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-### 1982-1983 (Cycle 3)
+#### 1982-1983 (Cycle 3)
 
 ```{r births-1982-1983, dependson=c("define-plot-function", "generate-estimates")}
 plot_CIs_against_census_counts(
@@ -880,6 +876,8 @@ plot_CIs_against_census_counts(
 
 
 ## Induced Abortions
+
+Less than half of induced abortions are reported on the NSFG.
 
 
 ### 2015-2019
@@ -901,18 +899,6 @@ plot_CIs_against_census_counts(
   estimates,
   begin = 2011,
   end = 2015,
-  outcome = 'Abortions'
-)
-```
-
-
-### 2011-2019
-
-```{r abortions-2011-2019, dependson=c("define-plot-function", "generate-estimates"), include=FALSE}
-plot_CIs_against_census_counts(
-  estimates,
-  begin = 2011,
-  end = 2019,
   outcome = 'Abortions'
 )
 ```
