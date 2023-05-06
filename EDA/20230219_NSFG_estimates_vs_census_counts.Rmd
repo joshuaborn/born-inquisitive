@@ -929,8 +929,7 @@ plot_CIs_against_census_counts(
 ```
 
 
-
-## Which Surveys to Use to Estimate Which Years
+## Which Surveys' Estimates Cover Census Counts of Live Births
 
 These are years for which the census count of live births is covered by at least one 95% confidence interval for live births based on the NSFG.
 
@@ -963,6 +962,8 @@ estimates |>
   )
 ```
 
+
+## Which Surveys to Use to Estimate Which Years
 
 These are the survey data sets that will be used to estimate each year of pregnancy outcomes.
 
@@ -1012,6 +1013,8 @@ years_assignment |>
 ```
 
 
+### Noncoverage of Live Births
+
 These are years for which the NSFG estimated confidence interval for live births does not cover the NVSS census count of live births.
 
 ```{r count-CIs-that-cover, dependson=c("years-assignment", "generate-estimates")}
@@ -1045,3 +1048,94 @@ births_estimates |>
 ```
 
 The proportion of confidence intervals that cover the census counts of live births is `r percent(coverage_percent, accuracy = 0.1)`.
+
+
+## Number of and Weights of Respondents with Induced Abortions
+
+These are the weights that will have a ~3 times increase during calibration.
+
+```{r}
+abortion_outcomes <- bind_rows(
+  preg_outcomes2015_2019$variables |>
+    select(Year, CASEID, Abortions, WGT2015_2019) |>
+    rename(Weight = 'WGT2015_2019') |>
+    mutate(SurveyLabel = '2015-2019', .before = everything()),
+  preg_outcomes2011_2015$variables |>
+    select(Year, CASEID, Abortions, WGT2011_2015) |>
+    rename(Weight = 'WGT2011_2015') |>
+    mutate(SurveyLabel = '2011-2015', .before = everything()),
+  preg_outcomes2006_2010$variables |>
+    select(Year, CASEID, Abortions, WGTQ1Q16) |>
+    rename(Weight = 'WGTQ1Q16') |>
+    mutate(SurveyLabel = '2006-2010', .before = everything()),
+  preg_outcomes2002_2003$variables |>
+    mutate(CASEID = as.numeric(CASEID)) |>
+    select(Year, CASEID, Abortions, FINALWGT) |>
+    rename(Weight = 'FINALWGT') |>
+    mutate(SurveyLabel = 'Cycle 6', .before = everything()),
+  preg_outcomes1995_1995$variables |>
+    select(Year, CASEID, Abortions, POST_WT) |>
+    rename(Weight = 'POST_WT') |>
+    mutate(SurveyLabel = 'Cycle 5', .before = everything()),
+  preg1985_1987 |>
+    mutate(
+      Year = cm_to_year_cycle4(B14MO),
+      W_5 = W_5 / 100, # From Codebook: IMPLIED DECIMAL BETWEEN POSTIONS 370 AND 371
+      Abortions = if_else(OUTCOME == 2, 1, 0)
+    ) |>
+    select(
+      Year, SEQNUM, Abortions, W_5
+    ) |>
+    rename(
+      CASEID = 'SEQNUM',
+      Weight = 'W_5'
+    ) |>
+    mutate(SurveyLabel = 'Cycle 4', .before = everything())
+) |>
+  mutate(
+    Survey = factor(
+      SurveyLabel,
+      levels = c('Cycle 4', 'Cycle 5', 'Cycle 6', '2006-2010', '2011-2015', '2015-2019'),
+      ordered = TRUE
+    )
+  )
+
+years_assignment |>
+  left_join(abortion_outcomes, by = join_by(Year, SurveyLabel)) |>
+  filter(Abortions == 1) |>
+  group_by(Survey) |>
+  summarize(
+    NumberRespondents = n_distinct(CASEID),
+    MedianWeight = median(Weight),
+    MeanWeight = mean(Weight),
+    StdDevWeight = sd(Weight),
+    MinWeight = min(Weight),
+    MaxWeight = max(Weight)
+  ) |>
+  arrange(desc(Survey)) |>
+  gt() |>
+  fmt_number(
+    ends_with('Weight'),
+    decimals = 1
+  )
+
+years_assignment |>
+  left_join(abortion_outcomes, by = join_by(Year, SurveyLabel)) |>
+  filter(Abortions == 1) |>
+  group_by(Survey, Year) |>
+  summarize(
+    NumberRespondents = n_distinct(CASEID),
+    MedianWeight = median(Weight),
+    MeanWeight = mean(Weight),
+    StdDevWeight = sd(Weight),
+    MinWeight = min(Weight),
+    MaxWeight = max(Weight),
+    .groups = 'drop_last'
+  ) |>
+  arrange(desc(Year)) |>
+  gt() |>
+  fmt_number(
+    ends_with('Weight'),
+    decimals = 1
+  )
+```
