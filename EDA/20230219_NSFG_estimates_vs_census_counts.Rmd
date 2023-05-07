@@ -1130,6 +1130,86 @@ births_estimates |>
 The proportion of confidence intervals that cover the census counts of live births is `r percent(coverage_percent, accuracy = 0.1)`.
 
 
+### Composite Plot of Induced Abortions
+
+```{r induced-abortions-composite-plot, dependson=c("assign-years", "define-plot-function", "generate-estimates")}
+years_assignment |>
+  left_join(estimates, by = join_by(Year, SurveyLabel)) |>
+  filter(Outcome == 'Abortions') |>
+  mutate(
+    Survey = factor(
+      SurveyLabel,
+      levels = c('Cycle 4', 'Cycle 5', 'Cycle 6', '2006-2010', '2011-2015', '2015-2019'),
+      ordered = TRUE
+    )
+  ) |>
+  ggplot() +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp,
+      color = Survey
+    ),
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Estimate,
+      color = Survey
+    ),
+    fill = 'white',
+    shape = 21,
+    size = 3,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    ),
+    shape = 4,
+    size = 4,
+    stroke = 0.625,
+    na.rm = TRUE
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1], x[2], 2),
+    expand = expansion(add = 1)
+  ) +
+  scale_color_cosmic() +
+  guides(colour = guide_legend(nrow = 1)) +
+  labs(
+    title = 'Number of induced abortions in the United States per year',
+    subtitle = "Confidence intervals estimated by the NSFG (brackets) compared with the Guttmacher APC counts (X's)",
+    y = 'Induced Abortions'
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    ),
+    axis.ticks.y = element_blank(),
+    legend.position = 'top',
+    legend.title = element_blank()
+  )
+
+```
+
+
+
 ## Number of and Weights of Respondents with Induced Abortions
 
 These are the weights that will have a ~3 times increase during calibration.
