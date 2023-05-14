@@ -4,7 +4,9 @@ author: "Joshua Born"
 date: "2023-05-14"
 output:
   html_document:
-      code_folding: hide
+    code_folding: hide
+    toc: true
+    toc_depth: 5
 ---
 
 ```{r setup, include=FALSE}
@@ -24,6 +26,9 @@ opts_chunk$set(
 Sys.setenv(CENSUS_KEY='7c06499a2432f6947e76ee1cf0876fc4ee43ce98')
 Sys.getenv("CENSUS_KEY")
 ```
+
+
+## Resident Population (pep/charagegroups)
 
 ```{r get-2019-vintage-data, dependson="check-api-key"}
 results2019 <- getCensus(
@@ -125,14 +130,12 @@ tidy_results2019 <- tibble(results2019) |>
   )
 ```
 
-
 ```{r check-2019-date, dependson="process-2019-vintage-data"}
 tidy_results2019 |>
   group_by(DATE_CODE, DATE_DESC) |>
   count() |>
   kable()
 ```
-
 
 ```{r check-2019-age, dependson="process-2019-vintage-data"}
 tidy_results2019 |>
@@ -141,14 +144,12 @@ tidy_results2019 |>
   kable()
 ```
 
-
 ```{r check-2019-hisp, dependson="process-2019-vintage-data"}
 tidy_results2019 |>
   group_by(HISP, HISP_f) |>
   count() |>
   kable()
 ```
-
 
 ```{r check-2019-race, dependson="process-2019-vintage-data"}
 tidy_results2019 |>
@@ -157,7 +158,6 @@ tidy_results2019 |>
   kable()
 ```
 
-
 ```{r check-2019-sex, dependson="process-2019-vintage-data"}
 tidy_results2019 |>
   group_by(SEX, SEX_f) |>
@@ -165,14 +165,12 @@ tidy_results2019 |>
   kable()
 ```
 
-
 ```{r check-2019-universe, dependson="process-2019-vintage-data"}
 tidy_results2019 |>
   group_by(UNIVERSE) |>
   count() |>
   kable()
 ```
-
 
 ```{r compare-with-2017-2019, dependson="process-2019-vintage-data"}
 nonhispanic_allrace2019 <- tidy_results2019 |>
@@ -233,3 +231,135 @@ race_ethn2019 |>
   kable()
 ```
 
+
+## Household Population (pep/natmonthly)
+
+```{r get-07-2018-monthly-data, dependson="check-api-key"}
+raw_monthly_07_18 <- getCensus(
+  name = 'pep/natmonthly',
+  vars = c(
+    'MONTHLY',
+    'MONTHLY_DESC',
+    'AGE',
+    'HISP',
+    'RACE',
+    'SEX',
+    'POP',
+    'UNIVERSE'
+  ),
+  monthly = 101,
+  region = 'us:*',
+  vintage = '2019'
+)
+```
+
+```{r process-07-2018-monthly-data, dependson="get-07-2018-monthly-data"}
+monthly_07_18 <- tibble(raw_monthly_07_18) |>
+  select(-us, -MONTHLY, -MONTHLY_DESC, -MONTHLY_1) |>
+  mutate(across(!ends_with(c('_DESC', 'UNIVERSE')), ~ as.integer(.x))) |>
+  mutate(
+    HISP_f = factor(
+      HISP,
+      levels = 0:2,
+      labels = c(
+        'Both Hispanic Origins',
+        'Non-Hispanic',
+        'Hispanic'
+      )
+    ),
+    RACE_f = factor(
+      RACE,
+      levels = 0:11,
+      labels =  c(
+        'All races',
+        'White alone',
+        'Black alone',
+        'American Indian and Alaska Native alone',
+        'Asian alone',
+        'Native Hawaiian and Other Pacific Islander alone',
+        'Two or more races',
+        'White alone or in combination',
+        'Black alone or in combination',
+        'American Indian and Alaska Native alone or in combination',
+        'Asian alone or in combination',
+        'Native Hawaiian and Other Pacific Islander alone or in combination'
+      )
+    ),
+    SEX_f = factor(
+      SEX,
+      levels = 0:2,
+      labels = c(
+        'Both Sexes',
+        'Male',
+        'Female'
+      )
+    )
+  )
+
+decompose_race_ethn <- function(these_data) {
+  nonhispanic_allrace <- these_data |>
+    filter(
+      HISP == 1 & RACE == 0
+    ) |>
+    select(-starts_with('HISP'), -starts_with('RACE'))
+  
+  nonhispanic_black <- these_data |>
+    filter(
+      HISP == 1 & RACE == 8
+    ) |>
+    select(-starts_with('HISP'), -starts_with('RACE'))
+  
+  nonhispanic_nonblack <- inner_join(
+    nonhispanic_allrace,
+    nonhispanic_black |>
+      rename('Black_POP' = 'POP') |>
+      select(-SEX_f),
+    by = join_by(AGE, SEX, UNIVERSE),
+    relationship = 'one-to-one'
+  ) |>
+    mutate(POP = POP - Black_POP) |> 
+    select(-Black_POP)
+  
+  hispanic <- these_data |>
+    filter(
+      HISP == 2 & RACE == 0
+    ) |>
+    select(-starts_with('HISP'), -starts_with('RACE'))
+  
+  
+  bind_rows(
+    mutate(nonhispanic_black, race_ethn = 1),
+    mutate(hispanic, race_ethn = 2),
+    mutate(nonhispanic_nonblack, race_ethn = 3)
+  ) |>
+    mutate(
+      race_ethn = factor(
+        race_ethn,
+        labels = c(
+          'Non-Hispanic Black',
+          'Hispanic',
+          'Non-Hispanic Non-Black'
+        )
+      )
+    )
+}
+
+processed_07_18 <- decompose_race_ethn(monthly_07_18) |>
+  filter(AGE >= 15 & AGE <= 49) |>
+  mutate(
+    age_group = cut(
+      AGE,
+      breaks = c(14, 19, 24, 29, 34, 39, 44, 49),
+      labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
+    )
+  ) |>
+  select(-AGE, -SEX) |>
+  group_by(UNIVERSE, SEX_f, race_ethn, age_group) |>
+  summarize(pop = sum(POP), .groups = 'drop')
+```
+
+```{r list-07-2018-household, dependson="process-07-2018-monthly-data"}
+processed_07_18 |>
+  filter(UNIVERSE == 'H' & as.integer(SEX_f) > 1) |>
+  kable()
+```
