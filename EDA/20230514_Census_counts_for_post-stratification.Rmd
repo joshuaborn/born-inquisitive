@@ -358,6 +358,14 @@ processed_07_18 <- decompose_race_ethn(monthly_07_18) |>
   summarize(pop = sum(POP), .groups = 'drop')
 ```
 
+```{r verify-populations, dependson="process-07-2018-monthly-data"}
+monthly_07_18 |>
+  filter(SEX == 0 & AGE == 999 & HISP == 0 & RACE == 0) |>
+  select(UNIVERSE, POP, SEX_f, HISP_f, RACE_f) |>
+  arrange(POP) |>
+  kable()
+```
+
 ```{r list-07-2018-household, dependson="process-07-2018-monthly-data"}
 processed_07_18 |>
   filter(UNIVERSE == 'H' & as.integer(SEX_f) > 1) |>
