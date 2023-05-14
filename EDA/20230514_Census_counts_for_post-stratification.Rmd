@@ -232,7 +232,7 @@ race_ethn2019 |>
 ```
 
 
-## Household Population (pep/natmonthly)
+## Civilian Noninstitutionalized Population (pep/natmonthly)
 
 ```{r get-07-2018-monthly-data, dependson="check-api-key"}
 raw_monthly_07_18 <- getCensus(
@@ -368,6 +368,6 @@ monthly_07_18 |>
 
 ```{r list-07-2018-household, dependson="process-07-2018-monthly-data"}
 processed_07_18 |>
-  filter(UNIVERSE == 'H' & as.integer(SEX_f) > 1) |>
+  filter(UNIVERSE == 'N' & as.integer(SEX_f) > 1) |>
   kable()
 ```
