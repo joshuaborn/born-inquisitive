@@ -1,0 +1,38 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/approval-of-abortion-is-conservative.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-05-15
+draft: true
+#include-before: |
+#  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: false
+summary: "Put summary sentence here."
+tags: ["research-update", "reproductive-responsibility", "abortion", "NSFG", "first-person"]
+title: "Abortion Under-Reporting on the National Survey of Family Growth in Two Plots"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+The [National Survey of Family Growth (NSFG)](https://www.cdc.gov/nchs/nsfg/index.htm) is the premier instrument for studying reproduction in the United States via a nationally representative sample. It was specifically designed to study most of the main topics of reproductive responsibility, and because of this, I spend a lot of my research efforts with the NSFG. However, there is one major, well-established flaw with the NSFG.
+
+If there is a single variable most central to the study of reproductive responsibility, it is the phenomenon of unintended pregnancy. Estimating accurate counts of unintended pregnancies and identifying covariates of unintended pregnancy are thus essential tasks when studying reproductive responsibility. It is also a reality that many unintended pregnancies in the United States are ended by induced abortion.
+
+Therein lies the issue. It is known that only a small fraction of pregnancies ended by induced abortion are actually reported by respondents to the NSFG, a phenomenon known as "abortion under-reporting." [@noauthor_appendix_2021] Therefore, estimates of the number of induced abortions -- and hence estimates of the number of unintended pregnancies -- based on the public use files of the NSFG will be drastic underestimates, if no preparatory work is done first. 
+
+Doing this preparatory work to compensate for abortion under-reporting is what I am spending my nights' and weekends' research time on now. The work is necessary, but time-consuming. The main import of this is that I will not have any actual information to report for awhile while I am doing this preparatory work.
+
+In the mean time, here are two plots that illustrate the consequences of induced abortion under-reporting on the NSFG.
+
+
+## Citation
+
+::: {#refs}
+:::
