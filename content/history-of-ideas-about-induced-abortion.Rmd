@@ -11,7 +11,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "Advocacy of induced abortion as a method of fertility control is ancient. This article explores ideas about induced abortion from the 5th century B.C.E. to the 20th century C.E."
-tags: ["history", "reproductive responsibility", "abortion", "third-person"]
+tags: ["history", "reproductive responsibility", "induced-abortion", "third-person"]
 title: "A History of Ideas about Induced Abortion"
 ---
 

@@ -12,7 +12,7 @@ output:
     toc: true
     toc_depth: 5
 summary: 'Birth control pioneer and Planned Parenthood founder Margaret Sanger felt that abortion was "taking life" and had the explicit goal of ending the use of abortion for family limitation.'
-tags: ["history", "reproductive responsibility", "birth control", "abortion", "third-person"]
+tags: ["history", "reproductive responsibility", "birth control", "induced-abortion", "third-person"]
 title: "Margaret Sanger on Abortion in Her Own Words"
 ---
 

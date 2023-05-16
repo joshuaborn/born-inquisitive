@@ -11,7 +11,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "Induced abortion is common, though challenging to estimate. This article reviews sources for estimates of the prevalance induced abortion."
-tags: ["review of research", "reproductive responsibility", "abortion", "third-person"]
+tags: ["review of research", "reproductive responsibility", "induced-abortion", "third-person"]
 title: "Induced Abortion is Common"
 ---
 

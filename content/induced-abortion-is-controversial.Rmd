@@ -11,7 +11,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "The empirical evidence of the Gallup Social Series' annual poll on Values and Beliefs shows that induced abortion is one of if not the most controversial moral issue in the United States."
-tags: ["original research", "public opinion", "reproductive responsibility", "abortion", "third-person"]
+tags: ["original research", "public opinion", "reproductive responsibility", "induced-abortion", "third-person"]
 title: "Induced Abortion is Controversial"
 ---
 
