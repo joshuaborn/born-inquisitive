@@ -1,0 +1,173 @@
+---
+title: "Formats"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+
+i_am('EDA/formats.Rmd')
+
+source(here('R/helpers/NSFG/load.R'))
+
+opts_chunk$set(
+  cache = TRUE,
+  echo = TRUE,
+  fig.height = 8,
+  fig.width = 12,
+  warning = FALSE
+)
+```
+
+```{r load-data}
+fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
+fem1719$Formats <- rbindlist(list(
+  fem1719$Formats,
+  data.table(
+    format_name = 'WHYNOTPGF',
+    factor_value = 13,
+    factor_label = 'No menstrual cycle or menstrual irregularity'
+  )
+))
+male1719 <- load_NSFG_data('2017_2019', 'Male')
+```
+
+# `METH3MF`
+
+## Females
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'METH3MF',
+  .(factor_value, factor_label)
+] |> kable()
+```
+
+## Males
+
+```{r, dependson='load-data'}
+male1719$Formats[
+  format_name == 'METH3MF',
+  .(factor_value, factor_label)
+] |> kable()
+```
+
+# `METHHXF`, `METHSTOPF`, `OTHRMETHF`
+
+```{r, dependson='load-data'}
+dcast(
+  fem1719$Formats[
+    format_name %in% c(
+      'OTHRMETHF',
+      'METHHXF',
+      'METHSTOPF'
+    )
+  ],
+  factor_value ~ format_name,
+  value.var = 'factor_label'
+) |> kable()
+```
+
+# `STOPPILLFMT`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'STOPPILLFMT',
+  .(factor_value, factor_label)
+] |> kable()
+```
+
+# `WHYNOUSNG`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'WHYNOUSNG',
+  .(factor_value, factor_label)
+] |> kable()
+```
+
+# `WHYNOTPGF`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'WHYNOTPGF',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```
+
+# `MTHDSV1F`, `MTHDSV2F`, and `MTHDSV3F`
+
+```{r, dependson='load-data'}
+dcast(
+  male1719$Formats[
+    format_name %in% c(
+      'MTHDSV1F',
+      'MTHDSV2F',
+      'MTHDSV3F'
+    )
+  ],
+  factor_value ~ format_name,
+  value.var = 'factor_label'
+) |> kable()
+```
+
+# `YUSEMTHF`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'YUSEMTHF',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```
+
+# `METHSTOPF`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'METHSTOPF',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```
+
+# `REASMFMT`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'REASMFMT',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```
+
+# `STOPPILLFMT`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'STOPPILLFMT',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```
+
+# `STOPIUDFMT`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'STOPIUDFMT',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```
+
+# `RSTRSTAT`
+
+```{r, dependson='load-data'}
+fem1719$Formats[
+  format_name == 'RSTRSTAT',
+  .(factor_value, factor_label)
+][order(factor_value)] |> kable()
+```

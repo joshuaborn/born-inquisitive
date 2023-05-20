@@ -1,0 +1,1301 @@
+---
+title: "NSFG Estimates Compared with Census Counts"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(ggsci)
+library(gt)
+library(gtExtras)
+library(haven)
+library(here)
+library(lubridate)
+library(readr)
+library(scales)
+library(srvyr)
+library(tidyr)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi=200,
+  echo = FALSE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+```{r load-data, message=FALSE}
+guttmacher_raw <- read_csv(
+  here('data/guttmacher/NationalAndStatePregnancy_PublicUse.csv')
+)
+vital_births <- read_csv(
+  here('data/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'),
+  name_repair = 'universal'
+)
+preg2017_2019 <- read_sas(
+  here('data/d2017_2019fempreg.sas7bdat'),
+  catalog_file = here('data/d2017_2019fempreg.sas7bcat')
+)
+preg2015_2017 <- read_sas(
+  here('data/d2015_2017fempreg.sas7bdat'),
+  catalog_file = here('data/d2015_2017fempreg.sas7bcat')
+)
+preg2013_2015 <- read_sas(
+  here('data/d2013_2015fempreg.sas7bdat'),
+  catalog_file = here('data/d2013_2015fempreg.sas7bcat')
+)
+preg2011_2013 <- read_sas(
+  here('data/d2011_2013fempreg.sas7bdat'),
+  catalog_file = here('data/d2011_2013fempreg.sas7bcat')
+)
+wgt2011_2019 <- read_sas(
+  here('data/d2011_2019femwgt.sas7bdat')
+)
+preg2006_2010 <- read_sas(
+  here('data/d2006_2010fempreg.sas7bdat'),
+  catalog_file = here('data/d2006_2010fempreg.sas7bcat')
+)
+preg2002_2003 <- read_sas(
+  here('data/d2002_2003fempreg.sas7bdat'),
+  catalog_file = here('data/d2002_2003fempreg.sas7bcat')
+)
+preg1995_1995 <- read_sas(
+  here('data/d1995_1995fempreg.sas7bdat'),
+  catalog_file = here('data/d1995_1995fempreg.sas7bcat')
+)
+preg1985_1987 <- read_sas(
+  here('data/d1985_1987fempreg.sas7bdat'),
+  catalog_file = here('data/d1985_1987fempreg.sas7bcat')
+)
+preg1982_1983 <- read_sas(
+  here('data/d1982_1983fempreg.sas7bdat'),
+  catalog_file = here('data/d1982_1983fempreg.sas7bcat')
+)
+fem1982_1983 <- read_sas(
+  here('data/d1982_1983femresp.sas7bdat'),
+  catalog_file = here('data/d1982_1983femresp.sas7bcat')
+)
+```
+
+
+```{r cycle-3-interview-dates, dependson="load-data", include=FALSE}
+cm_to_date <- function(x) {
+  x_int <- as.integer(x)
+  if_else(
+    x_int > 9000 | x_int == 0,
+    NA,
+    ym(paste0(
+      floor((x_int - 1) / 12) + 1900,
+      factor(
+        x_int %% 12,
+        levels = 0:11,
+        labels = c('Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov')
+      )
+    ))
+  )
+}
+
+fem1982_1983 |>
+  mutate(interview_date = cm_to_date(fem1982_1983$R7_CM)) |>
+  select(interview_date) |>
+  group_by(interview_date) |>
+  count()
+```
+
+
+```{r calculate-census-counts-by-year, dependson="load-data"}
+guttmacher_national <- guttmacher_raw |> 
+  filter(state == 'US') |>
+  select(-state, -notes) |>
+  mutate(abortions_interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
+  )
+
+census_counts <- bind_rows(
+  guttmacher_national |>
+    filter(!abortions_interpolated) |> 
+    rename(Year = year, Total = abortionstotal) |>
+    select(Year, Total) |>
+    mutate(Outcome = 'Abortions'),
+  vital_births |> 
+    filter(Year >= 1973) |>
+    rename(Total = Birth.Number) |>
+    select(Year, Total) |>
+    mutate(Outcome = 'Births')
+)
+```
+
+```{r plot-census-counts-by-year, dependson="calculate-census-counts-by-year", include=FALSE}
+ggplot(
+  data = census_counts,
+  mapping = aes(
+    y = Total,
+    x = Year,
+    color = Outcome,
+    shape = Outcome
+  )
+) +
+  geom_point() +
+  scale_y_continuous(
+    breaks = \(x) seq(x[1], x[2], 5e5),
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA),
+    minor_breaks = \(x) seq(x[1], x[2], 25e4)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1]+1, x[2], 4),
+    expand = expansion(add = 1),
+    minor_breaks = \(x) seq(x[1]+1, x[2], 2)
+  ) + 
+  theme_bw() +
+  theme(
+    legend.position = 'bottom',
+    legend.title = element_blank(),
+    axis.ticks.y = element_blank()
+  )
+```
+
+```{r create-survey-objects, dependson="load-data"}
+cm_to_year_cycle5 <- function(x) {
+  x_int <- as.integer(x)
+  ifelse(
+    x_int %in% c(NA, 0, 9997, 9998, 9999),
+    NA,
+    floor((x_int - 1) / 12) + 1900
+  )
+}
+
+count_abortions_and_births <- function(tbl) {
+  mutate(
+    tbl,
+    Abortions = if_else(OUTCOME == 2, 1, 0),
+    Births = if_else(OUTCOME == 1, 1, 0),
+  )
+}
+
+
+preg_outcomes2015_2019 <- bind_rows(
+  select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
+  select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
+) |>
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+mutate(
+  Year = DATEND
+) |> 
+count_abortions_and_births() |> 
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2015_2019,
+  nest = TRUE
+)
+
+
+preg_outcomes2011_2015 <- bind_rows(
+  select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
+    mutate(
+      # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
+      DATEND = as.numeric(DATEND) + 3653
+    ), 
+  select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
+) |>
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |> 
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2011_2015,
+  nest = TRUE
+)
+
+
+preg_outcomes2011_2019 <- bind_rows(
+  bind_rows(
+    select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
+      mutate(
+        # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
+        DATEND = as.numeric(DATEND) + 3653
+      ), 
+    select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
+  ) |> mutate(
+    Year = cm_to_year_cycle5(DATEND)
+  ),
+  bind_rows(
+    select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
+    select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
+  ) |>
+    mutate(
+      Year = DATEND
+    )
+) |>
+mutate(
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |>
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+count_abortions_and_births() |>
+filter(!is.na(WGT2011_2019)) |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2011_2019,
+  nest = TRUE
+)
+
+
+preg_outcomes2011_2013 <- select(
+  preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2011_2013
+) |>
+mutate(
+  DATEND = as.numeric(DATEND) + 3653,
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |> 
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2011_2013,
+  nest = TRUE
+)
+
+
+preg_outcomes2013_2015 <- select(
+  preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2013_2015
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |> 
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2013_2015,
+  nest = TRUE
+)
+
+
+preg_outcomes2015_2017 <- select(
+  preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2015_2017
+) |>
+mutate(
+  Year = DATEND,
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |> 
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2015_2017,
+  nest = TRUE
+)
+
+
+preg_outcomes2017_2019 <- select(
+  preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, WGT2017_2019
+) |>
+mutate(
+  Year = DATEND,
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |> 
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2017_2019,
+  nest = TRUE
+)
+
+
+preg_outcomes2006_2010 <- select(
+  preg2006_2010, SECU, SEST, CASEID, DATEND, OUTCOME, WGTQ1Q16
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |> 
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGTQ1Q16,
+  nest = TRUE
+)
+
+
+preg_outcomes2002_2003 <- select(
+  preg2002_2003, SECU_P, SEST, CASEID, DATEND, OUTCOME, FINALWGT
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |>
+count_abortions_and_births() |>
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU_P,
+  weights = FINALWGT,
+  nest = TRUE
+)
+
+
+preg_outcomes1995_1995 <- select(
+  preg1995_1995, PANEL, COL_STR, CASEID, DATEND, OUTCOME, POST_WT
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  )),
+) |>
+count_abortions_and_births() |>
+as_survey_design(
+  strata = COL_STR,
+  ids = PANEL,
+  weights = POST_WT,
+  nest = TRUE
+)
+
+
+cm_to_year_cycle4 <- function(x) {
+  x_int <- as.integer(x)
+  specials <- c(NA, 0, 99585, 99696, 99999)
+  x_modified <- if_else(
+    !is.element(x_int, specials) & x_int > 9000,
+    x_int - 90000,
+    x_int
+  )
+  ifelse(
+    x_modified %in% specials,
+    NA,
+    floor((x_modified - 1) / 12) + 1900
+  )
+}
+
+preg_outcomes1985_1987 <- select(
+  preg1985_1987, SEQNUM, OUTCOME, B14MO, W_5, starts_with('REP')
+) |>
+mutate(
+  Year = cm_to_year_cycle4(B14MO),
+  W_5 = W_5 / 100, # From Codebook: IMPLIED DECIMAL BETWEEN POSTIONS 370 AND 371
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "MISCARRIAGE" = 3,
+    "STILLBIRTH" = 4,
+    "CURRENT PREGNANCY" = 5
+  )),
+  across(
+    starts_with('REP'),
+    ~ .x / 100 # From Codebook: THERE IS AN IMPLIED DECIMAL BEFORE THE LAST TWO DIGITS OF EACH WEIGHT.
+  )
+) |>
+count_abortions_and_births() |>
+as_survey_rep(
+  variables = c(OUTCOME, Year, Births, Abortions),
+  weights = W_5,
+  repweights = starts_with('REP'),
+  type = 'BRR'
+)
+
+
+cm_to_year_cycle3 <- function(x) {
+  x_int <- as.integer(x)
+  specials <- c(NA, 0, 9696, 9797, 9898, 9999)
+  x_modified <- if_else(
+    !is.element(x_int, specials) & x_int > 9000,
+    x_int - 9000,
+    x_int
+  )
+  ifelse(
+    x_modified %in% specials,
+    NA,
+    floor((x_modified - 1) / 12) + 1900
+  )
+}
+
+preg_outcomes1982_1983 <- left_join(
+  select(
+    preg1982_1983, CASEID, B22A, OUTCOME
+  ),
+  select(
+    fem1982_1983, CASEID, PSUCODE, PSEUDOST, PAIRNUM, FINALWT
+  ),
+  by = 'CASEID'
+) |>
+mutate(
+  PAIRNUM = if_else(
+    PSEUDOST == 21 & PSUCODE == 62,
+    2,
+    PAIRNUM
+  ),
+  FINALWT = FINALWT / 10,
+  Year = cm_to_year_cycle3(B22A),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "MISCARRIAGE" = 3,
+    "STILLBIRTH" = 4,
+    "CURRENT PREGNANCY" = 5
+  ))
+) |>
+count_abortions_and_births() |>
+as_survey_design(
+  strata = PSEUDOST,
+  ids = PAIRNUM,
+  weights = FINALWT,
+  nest = TRUE
+)
+```
+
+```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
+estimate_births_and_abortions <- function(census_counts, survey, survey_label, begin, end) {
+  these_estimates <- survey |>
+    group_by(Year) |> 
+    summarize(
+      Abortions = survey_total(Abortions, vartype = 'ci'),
+      Births = survey_total(Births, vartype = 'ci'),
+      AbortionsUnweighted = unweighted(sum(Abortions)),
+      BirthsUnweighted = unweighted(sum(Births))
+    ) |> 
+    filter(!is.na(Year))
+
+  bind_rows(
+    these_estimates |>
+      select(
+        Year, starts_with('Abortions')
+      ) |>
+      rename(
+        Estimate = 'Abortions',
+        Estimate_low = 'Abortions_low',
+        Estimate_upp = 'Abortions_upp',
+        UnweightedCount = 'AbortionsUnweighted'
+      ) |>
+      mutate(
+        Outcome = 'Abortions'
+      ),
+    these_estimates |>
+      select(
+        Year, starts_with('Births')
+      ) |>
+      rename(
+        Estimate = 'Births',
+        Estimate_low = 'Births_low',
+        Estimate_upp = 'Births_upp',
+        UnweightedCount = 'BirthsUnweighted'
+      ) |>
+      mutate(
+        Outcome = 'Births'
+      )
+  ) |>
+  mutate(
+    Begin = begin,
+    End = end,
+    SurveyLabel = survey_label
+  ) |>
+  left_join(
+    census_counts,
+    by = c('Year', 'Outcome')
+  )
+}
+
+estimates <- bind_rows(
+  estimate_births_and_abortions(census_counts, preg_outcomes2015_2019, '2015-2019', my('September 2015'), my('September 2019')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2011_2015, '2011-2015', my('September 2011'), my('September 2015')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2011_2019, '2011-2019', my('September 2011'), my('September 2019')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2011_2013, '2011-2013', my('September 2011'), my('September 2013')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2013_2015, '2013-2015', my('September 2013'), my('September 2015')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2015_2017, '2015-2017', my('September 2015'), my('September 2017')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2017_2019, '2017-2019', my('September 2017'), my('September 2019')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2006_2010, '2006-2010', my('June 2006'),      my('June 2010')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2002_2003, 'Cycle 6', my('March 2002'),     my('March 2003')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1995_1995, 'Cycle 5', my('January 1995'),   my('October 1995')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1985_1987, 'Cycle 4', my('December 1985'),  my('March 1987')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1982_1983, 'Cycle 3', my('August 1982'),    my('April 1983'))
+)
+```
+
+```{r define-plot-function}
+plot_CIs_against_census_counts <- function(these_data, survey_label, outcome) {
+  if (outcome == 'Births') {
+    y_axis_label <- 'Live Births'
+    title_string <- paste('Number of live births in the United States per year')
+    subtitle_string <- paste('Confidence intervals estimated by the', survey_label, "NSFG (brackets) compared with the NVSS counts (X's)")
+  }
+  if (outcome == 'Abortions') {
+    y_axis_label <- 'Induced Abortions'
+    title_string <- paste('Number of induced abortions in the United States per year')
+    subtitle_string <- paste('Confidence intervals estimated by the', survey_label, "NSFG (brackets) compared with the Guttmacher APC counts (X's)")
+  }
+
+  filter(
+      these_data,
+      Outcome == outcome,
+      SurveyLabel == survey_label
+  ) |>
+  ggplot() +
+  geom_vline(
+    aes(
+      xintercept = year(Begin)
+    ),
+    color = 'red',
+    linetype = 2
+  ) +
+  geom_vline(
+    aes(
+      xintercept = year(End)
+    ),
+    color = 'red',
+    linetype = 2
+  ) +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp
+    ),
+    color = 'darkblue',
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Estimate
+    ),
+    color = 'darkblue',
+    fill = 'white',
+    shape = 21,
+    size = 3,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    ),
+    color = 'darkorange',
+    shape = 4,
+    size = 4,
+    stroke = 1,
+    na.rm = TRUE
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1], x[2], 2),
+    expand = expansion(add = 1)
+  ) +
+  labs(
+    title = title_string,
+    subtitle = subtitle_string,
+    y = y_axis_label
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    ),
+    axis.ticks.y = element_blank(),
+    legend.position = 'bottom',
+    legend.title = element_blank()
+  )
+}
+```
+
+
+
+## Live Births
+
+### Two-year and Eight-Year Data Sets
+
+#### 2011-2019
+
+```{r births-2011-2019, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2011-2019',
+  outcome = 'Births'
+)
+```
+
+While using the combined 2011-2019 data set does result in a slight decrease in estimator variance compared with the 2011-2015 stacked data as reflected in narrower confidence intervals for the number of live births per year, it comes as the expense of a much more bias.
+
+
+#### 2011-2013
+
+```{r births-2011-2013, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2011-2013',
+  outcome = 'Births'
+)
+```
+
+
+#### 2013-2015
+
+```{r births-2013-2015, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2013-2015',
+  outcome = 'Births'
+)
+```
+
+
+#### 2015-2017
+
+```{r births-2015-2017, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2015-2017',
+  outcome = 'Births'
+)
+```
+
+
+#### 2017-2019
+
+```{r births-2017-2019, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2017-2019',
+  outcome = 'Births'
+)
+```
+
+Using the 2-year data sets of the NSFG data appears to result in more variance of the estimators of live births, and without any decrease in bias of the estimators. Sometimes the 4-year estimates appear to be less biased, and sometimes the 2-year estimates to appear to be less biased.
+
+
+
+### Four-Year Data Sets
+
+The four-year data sets of the 2011-2019 NSFG appear to produce the best overall estimators of number of live births per year.
+
+
+#### 2015-2019
+
+```{r births-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2015-2019',
+  outcome = 'Births'
+)
+```
+
+
+#### 2011-2015
+
+```{r births-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2011-2015',
+  outcome = 'Births'
+)
+```
+
+
+
+
+#### 2006-2010
+
+```{r births-2006-2010, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2006-2010',
+  outcome = 'Births'
+)
+```
+
+
+#### 2002-2003 (Cycle 6)
+
+```{r births-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = 'Cycle 6',
+  outcome = 'Births'
+)
+```
+
+
+#### 1995 (Cycle 5)
+
+```{r births-1995, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = 'Cycle 5',
+  outcome = 'Births'
+)
+```
+
+
+#### 1985-1987 (Cycle 4)
+
+```{r births-1985-1987, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = 'Cycle 4',
+  outcome = 'Births'
+)
+```
+
+
+#### 1982-1983 (Cycle 3)
+
+```{r births-1982-1983, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = 'Cycle 3',
+  outcome = 'Births'
+)
+```
+
+
+
+## Induced Abortions
+
+Less than half of induced abortions are reported on the NSFG.
+
+
+### 2015-2019
+
+```{r abortions-2015-2019, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2015-2019',
+  outcome = 'Abortions'
+)
+```
+
+
+### 2011-2015
+
+```{r abortions-2011-2015, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2011-2015',
+  outcome = 'Abortions'
+)
+```
+
+
+### 2006-2010
+
+```{r abortions-2006-2010, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = '2006-2010',
+  outcome = 'Abortions'
+)
+```
+
+
+### 2002-2003 (Cycle 6)
+
+```{r abortions-2002-2003, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = 'Cycle 6',
+  outcome = 'Abortions'
+)
+```
+
+
+### 1995 (Cycle 5)
+
+```{r abortions-1995, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = 'Cycle 5',
+  outcome = 'Abortions'
+)
+```
+
+
+### 1985-1987 (Cycle 4)
+
+```{r abortions-1985-1987, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = 'Cycle 4',
+  outcome = 'Abortions'
+)
+```
+
+
+### 1982-1983 (Cycle 3)
+
+```{r abortions-1982-1983, dependson=c("define-plot-function", "generate-estimates")}
+plot_CIs_against_census_counts(
+  estimates,
+  survey_label = 'Cycle 3',
+  outcome = 'Abortions'
+)
+```
+
+
+## Which Surveys' Estimates Cover Census Counts of Live Births
+
+These are years for which the census count of live births is covered by at least one 95% confidence interval for live births based on the NSFG.
+
+```{r list-coverage-by-year, depends="generate-estimates"}
+estimates |>
+  filter(
+    Year <= year(Begin) &
+    (year(Begin) < 2011 | !is.element(year(End) - year(Begin), c(2, 8))) &
+    Outcome == 'Births' &
+    Estimate_low <= Total & Total <= Estimate_upp
+  ) |>
+  mutate(
+    Bias = Total - Estimate,
+    CI_Width = Estimate_upp - Estimate_low
+  ) |>
+  select(Year, Bias, CI_Width, UnweightedCount, SurveyLabel, Begin, End) |>
+  arrange(desc(Year)) |>
+  gt() |>
+  sub_missing(
+    missing_text = ''
+  ) |>
+  fmt_number(
+    c('Bias', 'CI_Width'),
+    drop_trailing_zeros = TRUE,
+    decimals = 0
+  ) |>
+  fmt_date(
+    c('Begin', 'End'),
+    date_style = 'yM'
+  )
+```
+
+
+## Which Surveys to Use to Estimate Which Years
+
+These are the survey data sets that will be used to estimate each year of pregnancy outcomes.
+
+```{r assign-years}
+years_assignment <- tribble(
+  ~Year, ~SurveyLabel,
+  2014, '2015-2019',
+  2013, '2015-2019',
+  2012, '2015-2019',
+  2011, '2015-2019', # However, 2011-2015 seems better, even while losing October, November, December. Using a partial year sample might be biased in other ways, nonetheless.
+  2010, '2011-2015',
+  2009, '2011-2015',
+  2008, '2011-2015',
+  2007, '2011-2015',
+  2006, '2011-2015',
+  2005, '2006-2010',
+  2004, '2006-2010',
+  2003, '2006-2010',
+  2002, '2006-2010',
+  2001, 'Cycle 6',
+  2000, 'Cycle 6', # However, 2006-2010 seems better.
+  1999, 'Cycle 6', # Again, 2006-2010 seems better.
+  1998, 'Cycle 6', # Again, 2006-2010 seems better.
+  1997, 'Cycle 6', # Cycle 6 is the only option.
+  1996, 'Cycle 6', # Cycle 6 outperforms 2006-2010.
+  1995, 'Cycle 6', # Cycle 6 is the only option.
+  1994, 'Cycle 5',
+  1993, 'Cycle 5',
+  1992, 'Cycle 5',
+  1991, 'Cycle 5',
+  1990, 'Cycle 5', # No estimates cover 1990.
+  1989, 'Cycle 5',
+  1988, 'Cycle 5',
+  1987, 'Cycle 5',
+  1986, 'Cycle 5',
+  1985, 'Cycle 4',
+  1984, 'Cycle 4', # Cycle 4 does not cover in 1984.
+  1983, 'Cycle 4', # Cycle 5 outperforms Cycle 4 here.
+  1982, 'Cycle 4', # No estimates cover 1982.
+  1981, 'Cycle 4',
+  1980, 'Cycle 4'
+)
+
+years_assignment |>
+  rename(Survey = 'SurveyLabel') |>
+  gt()
+```
+
+
+### Composite Plot of Live Births
+
+```{r live-births-composite-plot, dependson=c("assign-years", "define-plot-function", "generate-estimates")}
+years_assignment |>
+  left_join(estimates, by = join_by(Year, SurveyLabel)) |>
+  filter(Outcome == 'Births') |>
+  mutate(
+    Survey = factor(
+      SurveyLabel,
+      levels = c('Cycle 4', 'Cycle 5', 'Cycle 6', '2006-2010', '2011-2015', '2015-2019'),
+      ordered = TRUE
+    )
+  ) |>
+  ggplot() +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp,
+      color = Survey
+    ),
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Estimate,
+      color = Survey
+    ),
+    fill = 'white',
+    shape = 21,
+    size = 3,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    ),
+    shape = 4,
+    size = 4,
+    stroke = 0.625,
+    na.rm = TRUE
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1], x[2], 2),
+    expand = expansion(add = 1)
+  ) +
+  scale_color_cosmic() +
+  guides(colour = guide_legend(nrow = 1)) +
+  labs(
+    title = 'Number of live births in the United States per year',
+    subtitle = "Confidence intervals estimated by the NSFG (brackets) compared with the NVSS counts (X's)",
+    y = 'Live Births'
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    ),
+    axis.ticks.y = element_blank(),
+    legend.position = 'top',
+    legend.title = element_blank()
+  )
+
+```
+
+
+### Noncoverage of Live Births
+
+These are years for which the NSFG estimated confidence interval for live births does not cover the NVSS census count of live births.
+
+```{r count-CIs-that-cover, dependson=c("years-assignment", "generate-estimates")}
+births_estimates <- years_assignment |>
+  left_join(
+    estimates,
+    by = join_by(Year, SurveyLabel)
+  ) |>
+  filter(Outcome == 'Births') |>
+  mutate(
+    Covers = Estimate_low <= Total & Total <= Estimate_upp
+  )
+
+coverage_percent <- births_estimates |>
+  summarize(`Coverage Percent` = mean(Covers)) |>
+  pull()
+
+births_estimates |>
+  filter(!Covers) |>
+  select(-Covers, -Outcome) |>
+  gt() |>
+  fmt_number(
+    -Year,
+    drop_trailing_zeros = TRUE,
+    decimals = 0
+  ) |>
+  fmt_date(
+    c('Begin', 'End'),
+    date_style = 'yM'
+  )
+```
+
+The proportion of confidence intervals that cover the census counts of live births is `r percent(coverage_percent, accuracy = 0.1)`.
+
+
+### Composite Plot of Induced Abortions
+
+```{r induced-abortions-composite-plot, dependson=c("assign-years", "define-plot-function", "generate-estimates")}
+years_assignment |>
+  left_join(estimates, by = join_by(Year, SurveyLabel)) |>
+  filter(Outcome == 'Abortions') |>
+  mutate(
+    Survey = factor(
+      SurveyLabel,
+      levels = c('Cycle 4', 'Cycle 5', 'Cycle 6', '2006-2010', '2011-2015', '2015-2019'),
+      ordered = TRUE
+    )
+  ) |>
+  ggplot() +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp,
+      color = Survey
+    ),
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Estimate,
+      color = Survey
+    ),
+    fill = 'white',
+    shape = 21,
+    size = 3,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    ),
+    shape = 4,
+    size = 4,
+    stroke = 0.625,
+    na.rm = TRUE
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1], x[2], 2),
+    expand = expansion(add = 1)
+  ) +
+  scale_color_cosmic() +
+  guides(colour = guide_legend(nrow = 1)) +
+  labs(
+    title = 'Number of induced abortions in the United States per year',
+    subtitle = "Confidence intervals estimated by the NSFG (brackets) compared with the Guttmacher APC counts (X's)",
+    y = 'Induced Abortions'
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    ),
+    axis.ticks.y = element_blank(),
+    legend.position = 'top',
+    legend.title = element_blank()
+  )
+
+```
+
+
+
+## Number of and Weights of Respondents with Induced Abortions
+
+These are the weights that will have a ~3 times increase during calibration.
+
+```{r abortion-outcome-observations, dependson=c("create-survey-objects")}
+abortion_outcomes <- bind_rows(
+  preg_outcomes2015_2019$variables |>
+    select(Year, CASEID, Abortions, WGT2015_2019) |>
+    rename(Weight = 'WGT2015_2019') |>
+    mutate(SurveyLabel = '2015-2019', .before = everything()),
+  preg_outcomes2011_2015$variables |>
+    select(Year, CASEID, Abortions, WGT2011_2015) |>
+    rename(Weight = 'WGT2011_2015') |>
+    mutate(SurveyLabel = '2011-2015', .before = everything()),
+  preg_outcomes2006_2010$variables |>
+    select(Year, CASEID, Abortions, WGTQ1Q16) |>
+    rename(Weight = 'WGTQ1Q16') |>
+    mutate(SurveyLabel = '2006-2010', .before = everything()),
+  preg_outcomes2002_2003$variables |>
+    mutate(CASEID = as.numeric(CASEID)) |>
+    select(Year, CASEID, Abortions, FINALWGT) |>
+    rename(Weight = 'FINALWGT') |>
+    mutate(SurveyLabel = 'Cycle 6', .before = everything()),
+  preg_outcomes1995_1995$variables |>
+    select(Year, CASEID, Abortions, POST_WT) |>
+    rename(Weight = 'POST_WT') |>
+    mutate(SurveyLabel = 'Cycle 5', .before = everything()),
+  preg1985_1987 |>
+    mutate(
+      Year = cm_to_year_cycle4(B14MO),
+      W_5 = W_5 / 100, # From Codebook: IMPLIED DECIMAL BETWEEN POSTIONS 370 AND 371
+      Abortions = if_else(OUTCOME == 2, 1, 0)
+    ) |>
+    select(
+      Year, SEQNUM, Abortions, W_5
+    ) |>
+    rename(
+      CASEID = 'SEQNUM',
+      Weight = 'W_5'
+    ) |>
+    mutate(SurveyLabel = 'Cycle 4', .before = everything())
+) |>
+  mutate(
+    Survey = factor(
+      SurveyLabel,
+      levels = c('Cycle 4', 'Cycle 5', 'Cycle 6', '2006-2010', '2011-2015', '2015-2019'),
+      ordered = TRUE
+    )
+  )
+
+years_assignment |>
+  left_join(abortion_outcomes, by = join_by(Year, SurveyLabel)) |>
+  filter(Abortions == 1) |>
+  group_by(Survey) |>
+  summarize(
+    NumberRespondents = n_distinct(CASEID),
+    MedianWeight = median(Weight),
+    MeanWeight = mean(Weight),
+    StdDevWeight = sd(Weight),
+    MinWeight = min(Weight),
+    MaxWeight = max(Weight)
+  ) |>
+  arrange(desc(Survey)) |>
+  gt() |>
+  fmt_number(
+    ends_with('Weight'),
+    decimals = 1
+  )
+
+years_assignment |>
+  left_join(abortion_outcomes, by = join_by(Year, SurveyLabel)) |>
+  filter(Abortions == 1) |>
+  group_by(Survey, Year) |>
+  summarize(
+    NumberRespondents = n_distinct(CASEID),
+    MedianWeight = median(Weight),
+    MeanWeight = mean(Weight),
+    StdDevWeight = sd(Weight),
+    MinWeight = min(Weight),
+    MaxWeight = max(Weight),
+    .groups = 'drop_last'
+  ) |>
+  arrange(desc(Year)) |>
+  gt() |>
+  fmt_number(
+    ends_with('Weight'),
+    decimals = 1
+  )
+```

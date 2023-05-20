@@ -1,0 +1,452 @@
+---
+title: "Contraceptive Use Intervals in 2002 NSFG (Cycle 6)"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(here)
+library(knitr)
+library(survey)
+
+i_am('EDA/016_contraceptive_use_intervals_2002.Rmd')
+
+source(here('R/helpers/NSFG/century_month.R'))
+source(here('R/helpers/NSFG/formats.R'))
+source(here('R/helpers/NSFG/load.R'))
+source(here('R/helpers/data_table.R'))
+source(here('R/helpers/general.R'))
+
+opts_chunk$set(
+  cache = TRUE,
+  dpi = 72,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.asp = 0.5,
+  fig.retina = 2,
+  fig.width = 10
+)
+```
+
+```{r load-data}
+fem2002 <- load_NSFG_data('2002', 'FemResp')
+```
+
+```{r process-data, dependson='load-data'}
+fem2002$Formats[factor_value == 'LOW', factor_value := '0']
+fem2002$Formats[, factor_value := as.integer(factor_value)]
+setkeyv(fem2002$Formats, c('format_name', 'factor_value'))
+
+fem2002dt <- copy(
+  fem2002$Data[, lapply(.SD, function(x) {
+    if (class(x) == 'logical') {
+      as.integer(x)
+    } else {
+      x
+    }
+  })]
+)
+
+cal2002 <- melt(
+  fem2002dt,
+  id.vars = c('CASEID'),
+  measure.vars = patterns('^MONSX[[:digit:]]+'),
+  value.name = 'MONSX'
+)[, .(
+    CASEID,
+    cm_value = as.integer(sub(
+      '^MONSX([[:digit:]]+)',
+      '\\1',
+      variable
+    )),
+    MONSX = factor(
+      MONSX,
+      levels = c(1, 5, 7, 8, 9),
+      labels = c('YES', 'NO', 'NOT ASCERTAINED', 'REFUSED', "DON'T KNOW")
+    )
+  )
+][
+  melt(
+    fem2002dt,
+    id.vars = c('CASEID'),
+    measure.vars = patterns('^NUMMULT[[:digit:]]*', '^SIMSEQ[[:digit:]]*'),
+    value.name = c('NUMMULT', 'SIMSEQ'),
+    variable.name = 'month_offset',
+    variable.factor = FALSE
+  )[, .(
+    CASEID,
+    cm_value = 1188L + nafill(as.integer(month_offset), fill = 1),
+    NUMMULT,
+    SIMSEQ = factorize(
+      SIMSEQ,
+      'TE_158F',
+      formats_table = fem2002$Formats,
+      fill_na = FALSE
+    )
+  )],
+  on = c('CASEID', 'cm_value')
+][
+  dcast(
+    melt(
+      fem2002dt,
+      id.vars = c('CASEID'),
+      measure.vars = patterns('^METHHIST[[:digit:]]*'),
+      value.name = 'METHHIST'
+    )[, .(
+      CASEID,
+      cm_value =  1188L + as.integer(sub(
+        '^METHHIST([[:digit:]]{2,2})[[:digit:]]',
+        '\\1',
+        variable
+      )),
+      mention_num = as.integer(sub(
+        '^METHHIST[[:digit:]]{2,2}([[:digit:]])',
+        '\\1',
+        variable
+      )),
+      METHHIST = factorize(
+        METHHIST,
+        'TE_157F',
+        formats_table = fem2002$Formats,
+        fill_na = FALSE
+      ),
+      varname = 'METHHIST'
+    )],
+    formula = CASEID + cm_value ~ varname + mention_num,
+    value.var = c('METHHIST')
+  ),
+  on = c('CASEID', 'cm_value')
+][
+  dcast(
+    melt(
+      fem2002dt,
+      id.vars = c('CASEID'),
+      measure.vars = patterns('^MTHUSIMX[[:digit:]]*'),
+      value.name = 'MTHUSIMX'
+    )[, .(
+      CASEID,
+      cm_value =  1189L + nafill(
+        as.integer(sub(
+          '^MTHUSIMX([[:digit:]]{0,2})[[:digit:]]{2}$',
+          '\\1',
+          variable
+        )),
+        fill = 0
+      ),
+      mention_num = as.integer(sub(
+        '^MTHUSIMX[[:digit:]]{0,2}([[:digit:]]{2})$',
+        '\\1',
+        variable
+      )),
+      MTHUSIMX = factorize(
+        MTHUSIMX,
+        'TE_159F',
+        formats_table = fem2002$Formats,
+        fill_na = FALSE
+      ),
+      varname = 'MTHUSIMX'
+    )],
+    formula = CASEID + cm_value ~ varname + mention_num,
+    value.var = 'MTHUSIMX'
+  ),
+  on = c('CASEID', 'cm_value')
+]
+
+setkeyv(cal2002, c('CASEID', 'cm_value'))
+
+cal2002[, cm_label := to_century_month(cm_value)]
+
+setcolorder(cal2002, c('CASEID', 'cm_value', 'cm_label'))
+```
+
+
+## Encodings
+
+### SIMSEQ
+
+```{r encodings-1, dependson='load-data'}
+fem2002$Formats[format_name == 'TE_158F', .(
+  factor_value = as.integer(factor_value),
+  factor_label
+)][order(factor_value)] |> kable()
+```
+
+### METHHIST
+
+```{r encodings-2, dependson='load-data'}
+fem2002$Formats[format_name == 'TE_157F', .(
+  factor_value = as.integer(factor_value),
+  factor_label
+)][order(factor_value)] |> kable()
+```
+
+### METHUSIMX
+
+```{r encodings-3, dependson='load-data'}
+fem2002$Formats[format_name == 'TE_159F', .(
+  factor_value = as.integer(factor_value),
+  factor_label
+)][order(factor_value)] |> kable()
+```
+
+## Plan
+
+```{r NUMULT-counts, dependson='process-data'}
+cal2002[, .N, by = NUMMULT]
+```
+
+Some issues with the data:
+
+* "None" values are encoded as a kind of method, sometimes.
+    * When there is no method used in a month, this can be encoded either with `NUMMULT` of 1 and `METHHIST_1` of 1 or with a `NUMMULT` of 0.
+    * When all methods are used together and there are 3 or more methods, either `METHUSIMX_51` has a value of 1 or the entire second cluster variables are blank, i.e., `NA` values.
+* The order in which different methods are mentioned shouldn't matter, e.g., a row with `METHHIST_1` of "CONDOM" and `METHHIST_2` with "BIRTH CONTROL PILLS" is equivalent to a row with `METHHIST_1` of "BIRTH CONTROL PILLS" and `METHHIST_2` of "CONDOM," all other things being equal.
+* The way that simultaneous versus alternating use of 3 or more methods is encoded is a hot mess. It is pretty clear from reviewing the `MTHUSIMX` variables that a lot of respondents didn't understand the cluster question. Looking over them, it can be inferred that if there is one cluster of all the methods in `METHHIST`, or if there are multiple clusters with the exact same methods mentioned (possibly in a different order), then the methods were used simultaneously. Otherwise, if there are multiple clusters with any differences, the safest conclusion is methods were used alternatively.
+
+How to handle this:
+
+As I did for the earlier contraceptive use report, I'll create a new table with one row for each `CASEID` and century-month and set booleans for whether each possible method is mentioned in each given month. This allows me to easily ignore "none" and non-contraceptive sterility values values and set my own count of actual contraceptive methods. In addition, I'll set a boolean for whether methods are simultaneously or alternatively used, which will be easy in the 0, 1, or 2 methods cases (the latter is basically just `SIMSEQ`), but more challenging for the 3 or 4 method cases. Once this is set up, it will be easy to identify the base contraceptive intervals.
+
+
+## Boolean Table
+
+```{r boolean-table-exploration, dependson='process-data'}
+levels(cal2002$METHHIST_1)
+
+cal2002[
+  as.integer(METHHIST_1) == 2 |
+    as.integer(METHHIST_2) == 2 |
+    as.integer(METHHIST_3) == 2 |
+    as.integer(METHHIST_4) == 2
+]
+
+cal2002[
+  as.integer(METHHIST_1) == 26 |
+    as.integer(METHHIST_2) == 26 |
+    as.integer(METHHIST_3) == 26 |
+    as.integer(METHHIST_4) == 26
+]
+```
+
+The "SAME AS PREVIOUS MONTH" and "SAME METHOD USED THRU END OF YEAR" are unused and can be safely ignored. However, "NO METHOD USED", "RESPONDENT WAS STERILE", and "RESPONDENT'S PARTNER WAS STERILE" are special cases that need to be handled.
+
+```{r boolean-table, dependson='process-data'}
+mentions_to_boolean <- function(cols, level) {
+  Reduce(\(acc, col) acc | has_level(col, level), cols, FALSE)
+}
+
+cal2002[,
+  `:=`(
+    meth_pills = mentions_to_boolean(.SD, 3),
+    meth_condom = mentions_to_boolean(.SD, 4),
+    meth_vasectomy = mentions_to_boolean(.SD, 5),
+    meth_tubal = mentions_to_boolean(.SD, 6),
+    meth_withdrawal = mentions_to_boolean(.SD, 7),
+    meth_depo = mentions_to_boolean(.SD, 8),
+    meth_norplant = mentions_to_boolean(.SD, 9),
+    meth_rhythm = mentions_to_boolean(.SD, 10),
+    meth_safe_period = mentions_to_boolean(.SD, 11),
+    meth_diaphragm = mentions_to_boolean(.SD, 12),
+    meth_female_condom = mentions_to_boolean(.SD, 13),
+    meth_foam = mentions_to_boolean(.SD, 14),
+    meth_jelly_cream = mentions_to_boolean(.SD, 15),
+    meth_cervical_cap = mentions_to_boolean(.SD, 16),
+    meth_suppository = mentions_to_boolean(.SD, 17),
+    meth_sponge = mentions_to_boolean(.SD, 18),
+    meth_iud = mentions_to_boolean(.SD, 19),
+    meth_emergency = mentions_to_boolean(.SD, 20),
+    meth_other = mentions_to_boolean(.SD, 21),
+    meth_lunelle = mentions_to_boolean(.SD, 24),
+    meth_patch = mentions_to_boolean(.SD, 25),
+    no_method = Reduce(\(acc, col) acc | has_level(col, 1), .SD, FALSE),
+    sterile_respondent = Reduce(\(acc, col) acc | has_level(col, 22), .SD, FALSE),
+    sterile_partner = Reduce(\(acc, col) acc | has_level(col, 23), .SD, FALSE)
+  ),
+  .SDcols = paste('METHHIST', 1:4, sep = '_')
+]
+
+cal2002[,
+  count_meths := rowSums(.SD),
+  .SDcols = patterns('^meth')
+]
+```
+
+
+## Method Prioritization
+
+```{r prioritization, dependson='boolean-table'}
+cal2002[,
+  priority_method := factorize(
+    fcase(
+      # Sterility, either non-contraceptive or contraceptive
+      mentions_to_boolean(.SD, 22), 22,
+      mentions_to_boolean(.SD, 23), 23,
+      mentions_to_boolean(.SD, 5), 5,
+      mentions_to_boolean(.SD, 6), 6,
+      # Implants, which in this year is just Norplant
+      mentions_to_boolean(.SD, 9), 9,
+      # IUDs
+      mentions_to_boolean(.SD, 19), 19,
+      # Depo-Provera
+      mentions_to_boolean(.SD, 8), 8,
+      # Lunelle
+      mentions_to_boolean(.SD, 24), 24,
+      # Pill
+      mentions_to_boolean(.SD, 3), 3,
+      # Patch
+      mentions_to_boolean(.SD, 25), 25,
+      # Male Condom 15
+      mentions_to_boolean(.SD, 4), 4,
+      # Diaphragm 16
+      mentions_to_boolean(.SD, 12), 12,
+      # Female Condom 21
+      mentions_to_boolean(.SD, 13), 13,
+      # Sponge 32/16
+      mentions_to_boolean(.SD, 18), 18,
+      # Cervical Cap 32/16
+      mentions_to_boolean(.SD, 16), 16,
+      # Periodic Abstinence 25
+        # Temperature or Cervical Mucus Test
+        mentions_to_boolean(.SD, 11), 11,
+        # Calendar
+        mentions_to_boolean(.SD, 10), 10,
+      # Withdrawal 27
+      mentions_to_boolean(.SD, 7), 7,
+      # Spermicides 29
+        # Foam
+        mentions_to_boolean(.SD, 14), 14,
+        # Jelly or Cream
+        mentions_to_boolean(.SD, 15), 15,
+        # Suppository
+        mentions_to_boolean(.SD, 17), 17,
+      # Emergency Contraception
+      mentions_to_boolean(.SD, 20), 20,
+      # Other
+      mentions_to_boolean(.SD, 21), 21
+    ),
+    name = 'TE_157F',
+    formats_table = fem2002$Formats,
+    fill_na = FALSE
+  ),
+  .SDcols = paste('METHHIST', 1:4, sep = '_')
+]
+
+cal2002[, tablena(priority_method)] |> kable()
+```
+
+
+## Sequential Use Flag
+
+Default the sequential flag to `FALSE` when answers are missing.
+
+```{r sequential-exploration-1, dependson='prioritization', eval=FALSE}
+cal2002[CASEID %in% cal2002[is.na(SIMSEQ) & NUMMULT == 2, CASEID]] |> View()
+```
+
+In the case of of 2 methods mentioned and the `SIMSEQ` answer missing, which occurs for `CASEID`s 1745 and 5032, assume simultaneous use, since that is what occurs elsewhere in the respondents' contraceptive use calendars.
+
+```{r sequential-exploration-2, dependson='prioritization', eval=FALSE}
+cal2002[NUMMULT > 2] |> View()
+```
+
+Upon looking at the use calendar rows with `NUMMULT` greater than 2, the sequential flag should be set to
+
+* `TRUE` if there is no clusters specified in `MTHUSIMX`. The way the questions are worded, this indicates that no methods were used simultaneously.
+* `FALSE` if the `priority_method` appears in every cluster, and
+* `TRUE` otherwise.
+
+```{r number-of-clusters, dependson='prioritization'}
+cal2002[, `:=`(
+  count_clusters = fcase(
+    MTHUSIMX_1 %in% c(NA, 'NONE') &
+      MTHUSIMX_2 %in% c(NA, 'NONE') &
+      MTHUSIMX_3 %in% c(NA, 'NONE') &
+      MTHUSIMX_4 %in% c(NA, 'NONE'),
+    0,
+    MTHUSIMX_26 %in% c(NA, 'NONE') &
+      MTHUSIMX_27 %in% c(NA, 'NONE') &
+      MTHUSIMX_28 %in% c(NA, 'NONE') &
+      MTHUSIMX_29 %in% c(NA, 'NONE'),
+    1,
+    MTHUSIMX_51 %in% c(NA, 'NONE') &
+      MTHUSIMX_52 %in% c(NA, 'NONE') &
+      MTHUSIMX_53 %in% c(NA, 'NONE') &
+      MTHUSIMX_53 %in% c(NA, 'NONE'),
+    2,
+    default = 3
+  ),
+  priority_in_cluster1 = (
+    as.integer(MTHUSIMX_1) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_2) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_3) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_4) == as.integer(priority_method)
+  ) %in% TRUE,
+  priority_in_cluster2 = (
+    as.integer(MTHUSIMX_26) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_27) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_28) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_29) == as.integer(priority_method)
+  ) %in% TRUE,
+  priority_in_cluster3 = (
+    as.integer(MTHUSIMX_51) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_52) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_53) == as.integer(priority_method) |
+    as.integer(MTHUSIMX_54) == as.integer(priority_method)
+  ) %in% TRUE
+)]
+
+cal2002[, tablena(count_clusters)] |> kable()
+```
+
+```{r sequential, dependson='number-of-clusters'}
+cal2002[,
+  sequential := !(
+    count_meths %in% 0:1 |
+      (NUMMULT < 2 & count_meths > 1) |
+      (NUMMULT == 2 & (SIMSEQ == 'SAME TIME' | is.na(SIMSEQ))) |
+      (
+        NUMMULT > 2 & count_clusters > 0 & (
+          (count_clusters == 3 & priority_in_cluster1 & priority_in_cluster2 & priority_in_cluster3) |
+            (count_clusters == 2 & priority_in_cluster1 & priority_in_cluster2) |
+            (count_clusters == 1 & priority_in_cluster1)
+        )
+      )
+  )
+]
+
+cal2002[, tablena(sequential)] |> kable()
+```
+
+Look into these edge cases to verify:
+
+```{r sequential-exploration-3, dependson='prioritization'}
+cal2002[count_meths != NUMMULT, table(count_meths, NUMMULT)]
+```
+
+
+## Next Steps
+
+* Check edge cases for `sequential` variable
+* Assign months to categorization used in Kost et al (2008)
+* Make initial pass at breaking up months into segments
+* Include pregnancy information in segments
+* Include master segment termination variable
+* Include marital/cohabitation status change in counting segments
+* Count number of months of exposure in a segment and assign ordinal month
+
+
+## Notes
+
+* Look at the dates for sterilizing operations and override contraceptive use calendars with this information.
+    * There appear to be mistakes in the contraceptive use calendar in which "STERILIZING OPERATION/TUBAL LIGATION" appears as a method mentioned used in one month and then disappears again. These are almost certainly mistakes.
+    * Sometimes respondents appear to be confused, interchanging between "STERILIZING OPERATION/TUBAL LIGATION" and "RESPONDENT WAS STERILE". This is best handled by looking up century-month dates of sterilizing operations and overriding the contraceptive use calendar. In cases when no sterilizing operation is reported and there are months in which "STERILIZING OPERATION/TUBAL LIGATION" are mentioned, but then not mentioned afterward, these are probably spurious.
+* One or two respondents have `NUMMULT` of 2 with one of the methods being "NO METHOD USED". This appears to be a way to indicate the condoms were used inconsistently, because `SIMSEQ` is set to "DIFFERENT TIMES".
+* Handle non-contraceptive sterility for both
+    * respondent and
+    * respondent's partner.
+* Going forward doing analysis on different years of the NSFG, having the NSFG helper functions set and get variables is going to be unwieldy. I should remove that and just pass in the relevant tables as function parameters.

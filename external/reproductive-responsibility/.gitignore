@@ -1,0 +1,12 @@
+**.swp
+**/*_cache/
+**/*_files/
+**/EDA/*.html
+**/reports/*.html
+.RData
+.Rhistory
+.Rproj.user
+.Ruserdata
+SAS/
+data/
+output/*
