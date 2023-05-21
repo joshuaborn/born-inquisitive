@@ -29,16 +29,6 @@ theme_set(
   )
 )
 
-source(here('R/helpers/NSFG/century_month.R'))
-source(here('R/helpers/NSFG/formats.R'))
-source(here('R/helpers/NSFG/ggplot2.R'))
-source(here('R/helpers/NSFG/load.R'))
-source(here('R/helpers/NSFG/survey.R'))
-source(here('R/helpers/data_table.R'))
-source(here('R/helpers/general.R'))
-source(here('R/helpers/huxtable.R'))
-source(here('R/helpers/survey.R'))
-
 knitr::opts_chunk$set(
   cache = TRUE,
   dpi = 72,
@@ -50,6 +40,573 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE
 )
+```
+
+```{r helper-functions}
+tablena <- function(x) {
+  table(x, useNA = 'ifany')
+}
+
+equals <- function(x, y) {
+  !is.na(x) & !is.na(y) & x == y
+}
+
+na_to_false <- function(x) {
+  fifelse(is.na(x), FALSE, x)
+}
+
+has_level <- function(x, ids) {
+  is.element(as.integer(x), ids)
+}
+
+set_mentions_to_booleans <- function(
+  in_dt,
+  out_dt,
+  out_prefix,
+  in_prefix,
+  in_series,
+  indices
+) {
+  in_vars <- paste0(in_prefix, in_series)
+
+  for (x in indices) {
+    set(
+      out_dt,
+      j = paste0(out_prefix, x),
+      value = in_dt[
+        ,
+        lapply(.SD, \(col) has_level(col, x)),
+        .SDcols = in_vars
+      ] |> apply(1, any)
+    )
+  }
+
+  set_count_variable_for_mentions(out_dt, out_prefix)
+}
+
+set_count_variable_for_mentions <- function(dt, prefix) {
+  if (paste(prefix, 'count', sep = '_') %in% colnames(dt)) {
+    dt[
+      ,
+      (paste(prefix, 'count', sep = '_')) := NULL
+    ]
+  }
+  dt[
+    ,
+    (paste(prefix, 'count', sep = '_')) := rowSums(.SD),
+    .SDcols = patterns(paste('^', prefix, sep = ''))
+  ]
+}
+
+create_pivot_table <- function(
+  source_dt,
+  prefix,
+  series,
+  id_vars
+) {
+  dt <- copy(
+    source_dt[
+      ,
+      c(id_vars, paste0(prefix, series)),
+      with = FALSE
+    ]
+  )
+
+  dt <- melt(
+    dt,
+    id.vars = id_vars,
+    variable.factor = FALSE,
+    value.name = prefix
+  )
+
+  dt[
+    ,
+    (paste0(prefix, 'ID')) :=
+      as.integer(sub(prefix, '', variable))
+  ]
+
+  dt[, variable := NULL]
+
+  if (!is.null(id_vars)) {
+    setkeyv(dt, id_vars)
+  }
+
+  dt
+}
+
+century_month_comparison <- function(operator, x, y) {
+  !is.na(x) &
+    x != 9998 &
+    x != 9999 &
+    !is.na(y) &
+    y != 9998 &
+    y != 9999 &
+    operator(x, y)
+}
+
+to_century_month <- function(x) {
+  x_int <- as.integer(x)
+  months <- factor(
+    x_int %% 12,
+    levels = 0:11,
+    labels = c('Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov')
+  )
+  years <- floor((x_int - 1) / 12) + 1900
+  fifelse(
+    x_int > 9000,
+    fcase(
+      x_int == 9997, 'Not ascertained',
+      x_int == 9998, 'Refused',
+      x_int == 9999, "Don't know"
+    ),
+    paste(as.character(months), years)
+  )
+}
+
+names_to_century_month <- function(x) {
+  names(x) <- to_century_month(names(x))
+  x
+}
+
+year_from_century_month <- function(x) {
+  as.integer(sub('^.*([[:digit:]]{4})$', '\\1', x))
+}
+
+get_NSFG_format_indices <- function(formats_table, format, skip = NULL) {
+  idxs <- formats_table[format_name == format, factor_value]
+  if (!is.null(skip)) {
+    idxs[!is.element(idxs, skip)]
+  } else {
+    idxs
+  }
+}
+
+factorize <- function(x, name, formats_table, fill_na = TRUE) {
+  if (fill_na) {
+    nafill_value <- max(formats_table[format_name == name, as.integer(factor_value)]) + 1
+    factor(
+      nafill(x, fill = nafill_value),
+      levels = c(
+        formats_table[format_name == name, factor_value],
+        nafill_value
+      ),
+      labels = c(
+        formats_table[format_name == name, factor_label],
+        'No answer provided'
+      )
+    )
+  } else {
+    factor(
+      x,
+      levels = formats_table[format_name == name, factor_value],
+      labels = formats_table[format_name == name, factor_label]
+    )
+  }
+}
+
+set_NSFG_variables_as_factors <- function(raw_data, dt, formats_table, variables) {
+  for (x in seq(length(variables))) {
+    variable_name <- names(variables)[x]
+    format_name <- variables[x]
+    values <- factorize(
+      raw_data[, get(variable_name)],
+      format_name,
+      formats_table
+    )
+
+    dt[, (variable_name) := ..values]
+  }
+}
+
+plot_with_CIs <- function(
+  data,
+  val_col,
+  reordering = TRUE,
+  scale_factor = 1,
+  label_col = 'description'
+) {
+  if (reordering) {
+    y_expr <- expr(reorder(.data[[label_col]], .data[[val_col]]))
+    y_end_expr <- expr(reorder(.data[[label_col]], .data[[val_col]]))
+  } else {
+    y_expr <- expr(.data[[label_col]])
+    y_end_expr <- expr(.data[[label_col]])
+  }
+  ggplot(
+    data = data,
+    mapping = aes(
+      y = !!y_expr
+    )
+  ) +
+    geom_segment(
+      aes(
+        x = .data[[paste0(val_col, '_CI_low')]] * scale_factor,
+        xend = .data[[paste0(val_col, '_CI_high')]] * scale_factor,
+        yend = !!y_end_expr
+      ),
+      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+      size = 0.5
+    ) +
+    geom_point(
+      aes(
+        x = .data[[val_col]] * scale_factor
+      ),
+      size = 2
+    )
+}
+
+plot_totals_with_CIs <- function(data, reordering = TRUE) {
+  plot_with_CIs(data, 'total', reordering, scale_factor = 10e-7) +
+    scale_y_discrete(
+      labels = scales::wrap_format(50)
+    ) +
+    theme(
+      axis.title.y = element_blank()
+    ) +
+    xlab('Total Persons')
+}
+
+plot_percentages_with_CIs <- function(data, reordering = TRUE) {
+  plot_with_CIs(data, 'percentage', reordering) +
+    scale_x_continuous(
+      labels = scales::label_percent(1),
+      limits = c(0, 1),
+      expand = expansion(mult = c(0, 0.025))
+    ) +
+    scale_y_discrete(
+      labels = scales::wrap_format(50)
+    ) +
+    theme(
+      axis.title = element_blank(),
+      legend.position = 'none'
+    ) +
+    xlab('Percentage of Persons')
+}
+
+load_NSFG_data <- function(years, data_name) {
+  this_list <- list(
+    fread(
+      here(sprintf('data/old/%sData_%s.csv', data_name, years)),
+      key = ifelse(data_name == 'FemPreg', c('CASEID', 'PREGORDR'), 'CASEID')
+    ),
+    fread(
+      here(sprintf('data/old/%sLabels_%s.csv', data_name, years)),
+      select = c('name', 'label'),
+      key = 'name'
+    ),
+    fread(
+      here(sprintf('data/old/%sFormats_%s.csv', data_name, years)),
+      select = c( 'FMTNAME', 'START', 'LABEL'),
+      key = c('FMTNAME', 'START')
+   )
+  )
+
+  setnames(this_list[[2]], c('column_name', 'column_label'))
+  setnames(this_list[[3]], c('format_name', 'factor_value', 'factor_label'))
+
+  names(this_list) <- c('Data', 'Labels', 'Formats')
+
+  this_list
+}
+
+options(huxtable.knit_print_df = FALSE)
+
+theme_article_extra <- function(ht) {
+  header_rows <- which(header_rows(ht))
+  header_cols <- which(header_cols(ht))
+  body_rows <- which(!header_rows(ht))
+  body_cols <- which(!header_cols(ht))
+  ht |>
+    theme_article() |>
+    set_wrap(everywhere, body_cols, FALSE) |>
+    set_align(everywhere, body_cols, 'center') |>
+    set_tb_padding(header_rows, everywhere, 0) |>
+    set_all_padding(body_rows, everywhere, 3) |>
+    set_bold(everywhere, header_cols, FALSE) |>
+    set_left_padding(
+      everywhere,
+      seq(min(body_cols), ncol(ht), 2),
+      16
+    )
+}
+
+conditionally_stripe_rows <- function(ht) {
+  body_rows <- which(!header_rows(ht))
+  if (length(body_rows) > 4) {
+    ht |>
+      set_background_color(
+        stripe(2, min(body_rows) + 1),
+        everywhere,
+        'grey93'
+      )
+  } else {
+    ht
+  }
+}
+
+pretty_millions <- function(x, digits = 2) {
+  formatC(
+    round(x / 10e5, digits = digits),
+    format = 'f',
+    digits = digits
+  )
+}
+
+style_totals_and_percentages <- function(dt, digits = 2) {
+  dt |>
+  mutate_vars('total', \(x) pretty_millions(x, digits)) |>
+  mutate_dt(
+    total = paste0(total, 'M'),
+    total_CI = sprintf(
+      "(%sM, %sM)",
+      total_CI_low,
+      total_CI_high
+    ),
+    percentage_CI = sprintf(
+      "(%0.1f%%, %0.1f%%)",
+      round(100 * percentage_CI_low, digits = 1),
+      round(100 * percentage_CI_high, digits = 1)
+    )
+  ) |>
+  select_dt(description, total, total_CI, percentage, percentage_CI) |>
+  as_huxtable() |>
+  set_number_format(everywhere, 'percentage', fmt_percent(1)) |>
+  set_contents(1, everywhere, c('', rep(c('Est.', '95% C.I.'), 2))) |>
+  insert_row('', 'Total', '', 'Percentage', '', after = 0) |>
+  merge_cells(1, 2:3) |>
+  merge_cells(1, 4:5) |>
+  set_header_rows(1:2, TRUE) |>
+  set_header_cols(1, TRUE) |>
+  theme_article_extra() |>
+  conditionally_stripe_rows()
+}
+
+combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {
+  if (!all.equal(ht1[header_rows(ht1),], ht2[header_rows(ht2),])) {
+    stop('huxtables do not have identical headers and cannot be combined vertically')
+  }
+  ht <- rbind(
+    ht1,
+    ht2[!header_rows(ht2), ]
+  )
+  body_rows1 <- which(!header_rows(ht1))
+  body_rows2 <- which(!header_rows(ht2))
+  body_start_index1 <- min(body_rows1)
+  body_start_index2 <- max(body_rows1) + 1
+  label_column <- rep('', nrow(ht))
+  label_column[body_start_index1] <- label1
+  label_column[body_start_index2] <- label2
+  header_column_index <- 1
+  old_header_columns <- names(header_cols(ht))[header_cols(ht)]
+  insert_column(ht, label_column) |>
+    set_header_cols(header_column_index, TRUE) |>
+    style_header_cols(valign = 'middle') |>
+    set_rowspan(
+      body_start_index1,
+      header_column_index,
+      length(body_rows1)
+    ) |>
+    set_rowspan(
+      body_start_index2,
+      header_column_index,
+      length(body_rows2)
+    ) |>
+    theme_article_extra() |>
+    set_bold(everywhere, header_column_index, TRUE) |>
+    set_right_padding(everywhere, header_column_index, 12) |>
+    set_top_border(body_start_index2, everywhere)
+}
+
+style_and_combine_totals_and_percentages_vertically <- function(
+  label1, estimate1, label2, estimate2, digits = 2
+) {
+  combine_huxtables_vertically(
+    label1,
+    style_totals_and_percentages(estimate1, digits = digits),
+    label2,
+    style_totals_and_percentages(estimate2, digits = digits)
+  )
+}
+
+combine_huxtables_horizontally <- function(label1, ht1, label2, ht2) {
+  if (!all.equal(ht2[, header_cols(ht2)], ht1[, header_cols(ht1)])) {
+    stop('huxtables do not have identical header columns and cannot be combined horizontally')
+  }
+  body_cols1 <- which(!header_cols(ht1))
+  body_cols2 <- which(!header_cols(ht2))
+  body_start_index1 <- min(body_cols1)
+  body_start_index2 <- max(body_cols1) + 1
+  superheader_row <- rep('', ncol(ht1) + sum(!header_cols(ht2)))
+  superheader_row[body_start_index1] <- label1
+  superheader_row[body_start_index2] <- label2
+  cbind(
+    ht1,
+    ht2[, which(!header_cols(ht2))]
+  ) |>
+    insert_row(superheader_row, after = 0) |>
+    set_header_rows(1, TRUE) |>
+    set_colspan(
+      1,
+      body_start_index1,
+      length(body_cols1)
+    ) |>
+    set_colspan(
+      1,
+      body_start_index2,
+      length(body_cols2)
+    ) |>
+    theme_article_extra() |>
+    set_left_border(everywhere, body_start_index1) |>
+    set_left_padding(everywhere, body_start_index1, 4) |>
+    set_left_border(everywhere, body_start_index2) |>
+    set_left_padding(everywhere, body_start_index2, 4)
+}
+
+style_and_combine_totals_and_percentages_horizontally <- function(
+  label1, estimate1, label2, estimate2, digits = 2
+) {
+  combine_huxtables_horizontally(
+    label1,
+    style_totals_and_percentages(estimate1, digits = digits),
+    label2,
+    style_totals_and_percentages(estimate2, digits = digits)
+  )
+}
+
+estimate_totals_and_percentages <- function(f, svy) {
+  totals <- svytotal(f, svy)
+  totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
+  names(totals_ci) <- c('total_CI_low', 'total_CI_high')
+  percentages <- svymean(f, svy)
+  percentages_ci <- as.data.frame(confint(percentages, df = degf(svy)))
+  names(percentages_ci) <- c('percentage_CI_low', 'percentage_CI_high')
+  level_prefix <- as.character(f)
+  level_prefix <- level_prefix[seq(2, length(level_prefix))]
+
+  cbind(
+    data.table(
+      description = sub(level_prefix, '', names(totals), fixed = TRUE),
+      total = as.vector(totals)
+    ),
+    totals_ci,
+    data.table(
+      percentage = as.vector(percentages)
+    ),
+    percentages_ci
+  )
+}
+
+estimate_mean <- function(f, svy) {
+  y <- svymean(f, svy)
+  y_ci <- as.data.frame(confint(y, df = degf(svy)))
+  names(y_ci) <- c('CI_low', 'CI_high')
+
+  cbind(
+    data.table(
+      description = names(y),
+      mean = as.vector(y)
+    ),
+    y_ci
+  )
+}
+
+estimate_row_total_and_percentage <- function(f, svy) {
+  totals <- svytotal(f, svy)
+  totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
+  names(totals_ci) <- c('total_CI_low', 'total_CI_high')
+  totals_df <- cbind(totals, totals_ci)
+  level_prefix <- as.character(f)
+  level_prefix <- level_prefix[seq(2, length(level_prefix))]
+  rownames(totals_df) <- sub(level_prefix, '', rownames(totals_df), fixed = TRUE)
+  totals_df <- totals_df[rownames(totals_df) == 'TRUE', -2]
+  if (nrow(svy) > 0) {
+    percentage <- svyciprop(f, svy)
+    percentage_ci <- as.data.frame(confint(percentage, df = degf(svy)))
+    names(percentage_ci) <- c('percentage_CI_low', 'percentage_CI_high')
+    as.data.table(cbind(
+      totals_df,
+      data.table(
+        percentage = as.vector(percentage)
+      ),
+      percentage_ci
+    ))
+  } else {
+    as.data.table(cbind(
+      totals_df,
+      data.table(
+        percentage = 0,
+        percentage_CI_low = NaN,
+        percentage_CI_high = NaN
+      )
+    ))
+  }
+}
+
+estimate_mentions <- function(
+  survey_design,
+  prefix,
+  indices
+) {
+  estimates <- rbindlist(lapply(
+    indices,
+    function(x) {
+      tryCatch(
+        expr = {
+          row <- estimate_row_total_and_percentage(
+            as.formula(paste0('~', prefix, x)),
+            survey_design
+          )
+          row[, description := x]
+          row
+        },
+        error = function(err) {
+          message(paste('Error with row', x, ':', err))
+        }
+      )
+    }
+  ))
+}
+
+estimate_mentions_in_subdomains <- function(row_estimation_function, indices) {
+  estimates <- rbindlist(lapply(
+    indices,
+    function(x) {
+      row <- row_estimation_function(x)
+      row[, description := x]
+      row
+    }
+  ))
+}
+
+estimate_NSFG_mentions <- function(
+  formats_table,
+  survey_design,
+  prefix,
+  format,
+  skip = NULL
+) {
+  estimates <- estimate_mentions(
+    survey_design,
+    prefix, 
+    get_NSFG_format_indices(formats_table, format, skip)
+  )
+  estimates[, description := factorize(description, format, formats_table)]
+  estimates
+}
+
+estimate_NSFG_mentions_in_subdomains <- function(
+  formats_table,
+  row_estimation_function,
+  format,
+  skip = NULL
+) {
+  estimates <- estimate_mentions_in_subdomains(
+    row_estimation_function,
+    get_NSFG_format_indices(formats_table, format, skip)
+  )
+  estimates[, description := factorize(description, format, formats_table)]
+  estimates
+}
 ```
 
 ```{r load-data}
