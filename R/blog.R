@@ -1,6 +1,6 @@
 library(here)
 
-i_am('blog/build.R')
+i_am('R/blog.R')
 
 
 build_hugo <- function() {
