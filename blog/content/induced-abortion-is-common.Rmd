@@ -69,7 +69,7 @@ Nonetheless, estimates of abortions induced in the United States from the Aborti
 
 ```{r Guttmacher-APC-counts, fig.cap="Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute. [@maddow-zimet_pregnancies_2022] [@jones_abortion_2022]"}
 guttmacher <- read_csv(
-    here('data/guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
+    here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
     show_col_types = FALSE
   ) |>
   mutate(abortions_interpolated = year %in%

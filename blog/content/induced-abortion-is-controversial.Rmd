@@ -42,58 +42,58 @@ knitr::opts_chunk$set(
 ```{r load-data, include=FALSE}
 gallup_morality_data <- bind_rows(
   read_csv(
-    here('data/gallup/morality-abortion.csv')
+    here('data/Gallup/morality-abortion.csv')
   ) |> mutate(Topic = 'Abortion'),
   read_csv(
-    here('data/gallup/morality-animal-medical-testing.csv')
+    here('data/Gallup/morality-animal-medical-testing.csv')
   ) |> mutate(Topic = 'Animal Medical Testing'),
   read_csv(
-    here('data/gallup/morality-baby-out-of-wedlock.csv')
+    here('data/Gallup/morality-baby-out-of-wedlock.csv')
   ) |> mutate(Topic = 'Baby Out of Wedlock'),
   read_csv(
-    here('data/gallup/morality-changing-gender.csv')
+    here('data/Gallup/morality-changing-gender.csv')
   ) |> mutate(Topic = 'Changing Gender'),
   read_csv(
-    here('data/gallup/morality-cloning-animals.csv')
+    here('data/Gallup/morality-cloning-animals.csv')
   ) |> mutate(Topic = 'Cloning Animals'),
   read_csv(
-    here('data/gallup/morality-cloning-humans.csv')
+    here('data/Gallup/morality-cloning-humans.csv')
   ) |> mutate(Topic = 'Cloning Humans'),
   read_csv(
-    here('data/gallup/morality-death-penalty.csv')
+    here('data/Gallup/morality-death-penalty.csv')
   ) |> mutate(Topic = 'Death Penalty'),
   read_csv(
-    here('data/gallup/morality-extramarital-affair.csv')
+    here('data/Gallup/morality-extramarital-affair.csv')
   ) |> mutate(Topic = 'Extramarital Affair'),
   read_csv(
-    here('data/gallup/morality-fur.csv')
+    here('data/Gallup/morality-fur.csv')
   ) |> mutate(Topic = 'Clothing Made of Animal Fur'),
   read_csv(
-    here('data/gallup/morality-gambling.csv')
+    here('data/Gallup/morality-gambling.csv')
   ) |> mutate(Topic = 'Gambling'),
   read_csv(
-    here('data/gallup/morality-marijuana.csv')
+    here('data/Gallup/morality-marijuana.csv')
   ) |> mutate(Topic = 'Marijuana'),
   read_csv(
-    here('data/gallup/morality-polygamy.csv')
+    here('data/Gallup/morality-polygamy.csv')
   ) |> mutate(Topic = 'Polygamy'),
   read_csv(
-    here('data/gallup/morality-pornography.csv')
+    here('data/Gallup/morality-pornography.csv')
   ) |> mutate(Topic = 'Pornography'),
   read_csv(
-    here('data/gallup/morality-same-sex-relations.csv')
+    here('data/Gallup/morality-same-sex-relations.csv')
   ) |> mutate(Topic = 'Same-sex Relations'),
   read_csv(
-    here('data/gallup/morality-stem-cell-research.csv')
+    here('data/Gallup/morality-stem-cell-research.csv')
   ) |> mutate(Topic = 'Stem Cell Research'),
   read_csv(
-    here('data/gallup/morality-suicide.csv')
+    here('data/Gallup/morality-suicide.csv')
   ) |> mutate(Topic = 'Suicide'),
   read_csv(
-    here('data/gallup/morality-teenage-sex.csv')
+    here('data/Gallup/morality-teenage-sex.csv')
   ) |> mutate(Topic = 'Sex between Teenagers'),
   read_csv(
-    here('data/gallup/morality-unmarried-sex.csv')
+    here('data/Gallup/morality-unmarried-sex.csv')
   ) |> mutate(Topic = 'Sex between an Unmarried Man and Woman')
 )
 ```

@@ -35,54 +35,54 @@ knitr::opts_chunk$set(
 
 ```{r load-data, message=FALSE}
 guttmacher_raw <- read_csv(
-  here('data/guttmacher/NationalAndStatePregnancy_PublicUse.csv')
+  here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv')
 )
 vital_births <- read_csv(
   here('data/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'),
   name_repair = 'universal'
 )
 preg2017_2019 <- read_sas(
-  here('data/d2017_2019fempreg.sas7bdat'),
-  catalog_file = here('data/d2017_2019fempreg.sas7bcat')
+  here('data/NSFG/d2017_2019fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
 )
 preg2015_2017 <- read_sas(
-  here('data/d2015_2017fempreg.sas7bdat'),
-  catalog_file = here('data/d2015_2017fempreg.sas7bcat')
+  here('data/NSFG/d2015_2017fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
 )
 preg2013_2015 <- read_sas(
-  here('data/d2013_2015fempreg.sas7bdat'),
-  catalog_file = here('data/d2013_2015fempreg.sas7bcat')
+  here('data/NSFG/d2013_2015fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2013_2015fempreg.sas7bcat')
 )
 preg2011_2013 <- read_sas(
-  here('data/d2011_2013fempreg.sas7bdat'),
-  catalog_file = here('data/d2011_2013fempreg.sas7bcat')
+  here('data/NSFG/d2011_2013fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2011_2013fempreg.sas7bcat')
 )
 wgt2011_2019 <- read_sas(
-  here('data/d2011_2019femwgt.sas7bdat')
+  here('data/NSFG/d2011_2019femwgt.sas7bdat')
 )
 preg2006_2010 <- read_sas(
-  here('data/d2006_2010fempreg.sas7bdat'),
-  catalog_file = here('data/d2006_2010fempreg.sas7bcat')
+  here('data/NSFG/d2006_2010fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2006_2010fempreg.sas7bcat')
 )
 preg2002_2003 <- read_sas(
-  here('data/d2002_2003fempreg.sas7bdat'),
-  catalog_file = here('data/d2002_2003fempreg.sas7bcat')
+  here('data/NSFG/d2002_2003fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2002_2003fempreg.sas7bcat')
 )
 preg1995_1995 <- read_sas(
-  here('data/d1995_1995fempreg.sas7bdat'),
-  catalog_file = here('data/d1995_1995fempreg.sas7bcat')
+  here('data/NSFG/d1995_1995fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1995_1995fempreg.sas7bcat')
 )
 preg1985_1987 <- read_sas(
-  here('data/d1985_1987fempreg.sas7bdat'),
-  catalog_file = here('data/d1985_1987fempreg.sas7bcat')
+  here('data/NSFG/d1985_1987fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1985_1987fempreg.sas7bcat')
 )
 preg1982_1983 <- read_sas(
-  here('data/d1982_1983fempreg.sas7bdat'),
-  catalog_file = here('data/d1982_1983fempreg.sas7bcat')
+  here('data/NSFG/d1982_1983fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1982_1983fempreg.sas7bcat')
 )
 fem1982_1983 <- read_sas(
-  here('data/d1982_1983femresp.sas7bdat'),
-  catalog_file = here('data/d1982_1983femresp.sas7bcat')
+  here('data/NSFG/d1982_1983femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d1982_1983femresp.sas7bcat')
 )
 ```
 
