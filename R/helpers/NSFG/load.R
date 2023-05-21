@@ -4,16 +4,16 @@ library(here)
 load_NSFG_data <- function(years, data_name) {
   this_list <- list(
     fread(
-      here(sprintf('data/%sData_%s.csv', data_name, years)),
+      here(sprintf('data/old/%sData_%s.csv', data_name, years)),
       key = ifelse(data_name == 'FemPreg', c('CASEID', 'PREGORDR'), 'CASEID')
     ),
     fread(
-      here(sprintf('data/%sLabels_%s.csv', data_name, years)),
+      here(sprintf('data/old/%sLabels_%s.csv', data_name, years)),
       select = c('name', 'label'),
       key = 'name'
     ),
     fread(
-      here(sprintf('data/%sFormats_%s.csv', data_name, years)),
+      here(sprintf('data/old/%sFormats_%s.csv', data_name, years)),
       select = c( 'FMTNAME', 'START', 'LABEL'),
       key = c('FMTNAME', 'START')
    )

@@ -11,7 +11,7 @@ output:
     number_sections: false
     toc: false
 summary: "Put summary sentence here."
-tags: ["research-update", "reproductive-responsibility", "induced-abortion", "NSFG", "first-person"]
+tags: ["research update", "reproductive responsibility", "induced abortion", "NSFG", "first-person"]
 title: "Abortion Under-Reporting on the National Survey of Family Growth in Two Plots"
 ---
 
