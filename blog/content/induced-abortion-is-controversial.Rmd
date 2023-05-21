@@ -16,8 +16,85 @@ title: "Induced Abortion is Controversial"
 ---
 
 ```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(here)
+library(readr)
+library(showtext)
+library(tidyr)
+
+font_add_google('Open Sans', 'open')
+showtext_auto()
+showtext_opts(dpi = 200)
+theme_update(text = element_text(family = 'open'))
+
 knitr::opts_chunk$set(
-  echo = FALSE
+  cache = TRUE,
+  dpi = 300,
+  echo = FALSE,
+  fig.align = 'center',
+  fig.height = 3.75,
+  fig.retina = 1,
+  fig.width = 5
+)
+```
+
+```{r load-data, include=FALSE}
+gallup_morality_data <- bind_rows(
+  read_csv(
+    here('data/gallup/morality-abortion.csv')
+  ) |> mutate(Topic = 'Abortion'),
+  read_csv(
+    here('data/gallup/morality-animal-medical-testing.csv')
+  ) |> mutate(Topic = 'Animal Medical Testing'),
+  read_csv(
+    here('data/gallup/morality-baby-out-of-wedlock.csv')
+  ) |> mutate(Topic = 'Baby Out of Wedlock'),
+  read_csv(
+    here('data/gallup/morality-changing-gender.csv')
+  ) |> mutate(Topic = 'Changing Gender'),
+  read_csv(
+    here('data/gallup/morality-cloning-animals.csv')
+  ) |> mutate(Topic = 'Cloning Animals'),
+  read_csv(
+    here('data/gallup/morality-cloning-humans.csv')
+  ) |> mutate(Topic = 'Cloning Humans'),
+  read_csv(
+    here('data/gallup/morality-death-penalty.csv')
+  ) |> mutate(Topic = 'Death Penalty'),
+  read_csv(
+    here('data/gallup/morality-extramarital-affair.csv')
+  ) |> mutate(Topic = 'Extramarital Affair'),
+  read_csv(
+    here('data/gallup/morality-fur.csv')
+  ) |> mutate(Topic = 'Clothing Made of Animal Fur'),
+  read_csv(
+    here('data/gallup/morality-gambling.csv')
+  ) |> mutate(Topic = 'Gambling'),
+  read_csv(
+    here('data/gallup/morality-marijuana.csv')
+  ) |> mutate(Topic = 'Marijuana'),
+  read_csv(
+    here('data/gallup/morality-polygamy.csv')
+  ) |> mutate(Topic = 'Polygamy'),
+  read_csv(
+    here('data/gallup/morality-pornography.csv')
+  ) |> mutate(Topic = 'Pornography'),
+  read_csv(
+    here('data/gallup/morality-same-sex-relations.csv')
+  ) |> mutate(Topic = 'Same-sex Relations'),
+  read_csv(
+    here('data/gallup/morality-stem-cell-research.csv')
+  ) |> mutate(Topic = 'Stem Cell Research'),
+  read_csv(
+    here('data/gallup/morality-suicide.csv')
+  ) |> mutate(Topic = 'Suicide'),
+  read_csv(
+    here('data/gallup/morality-teenage-sex.csv')
+  ) |> mutate(Topic = 'Sex between Teenagers'),
+  read_csv(
+    here('data/gallup/morality-unmarried-sex.csv')
+  ) |> mutate(Topic = 'Sex between an Unmarried Man and Woman')
 )
 ```
 
@@ -28,13 +105,213 @@ Different people have radically different judgments about the practice of killin
 
 Each May, the public opinion company Gallup conducts its Values and Beliefs telephone poll on a representative sample of persons in the United States aged 18 or older, as part of the ongoing Gallup Poll Social Series. This poll contains a series of questions prompted with, "I'm going to read you a list of issues. Regardless of whether or not you think it should be legal, for each one, please tell me whether you personally believe that in general it is morally acceptable, or morally wrong."
 
-![Moral opinions on induced abortion of pregnancy from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014] Each estimate is associated with some sampling error. However, Gallup does not release information needed to calculate sampling error with its Gallup Analytics summary spreadsheets. Respondents are prompted for either the "morally acceptable" or "morally wrong" answers, whereas the "depends on the situation" responses are volunteered by respondents.](/images/Gallup_opinions_about_abortion.png){alt="A plot with the proportion of responses of morally acceptable, depends on the situation, and morally wrong on the y-axis and and the year on the x-axis."}
+```{r Gallup-opinions-about-abortion, fig.cap='Moral opinions on induced abortion of pregnancy from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014] Each estimate is associated with some sampling error. However, Gallup does not release information needed to calculate sampling error with its Gallup Analytics summary spreadsheets. Respondents are prompted for either the "morally acceptable" or "morally wrong" answers, whereas the "depends on the situation" responses are volunteered by respondents.'}
+gallup_morality_data |>
+  filter(Demographic == 'Aggregate') |>
+  select(-Geography, -Demographic, -`Demographic Value`) |>
+  mutate(
+    acceptable = parse_number(`Morally acceptable`),
+    wrong = parse_number(`Morally wrong`),
+    depends = parse_number(`Depends on the situation (vol.)`)
+  ) |>
+  filter(Topic == 'Abortion') |>
+  select(Time, acceptable, wrong, depends) |>
+  arrange(Time) |>
+  pivot_longer(cols = 2:4) |>
+  ggplot(
+    mapping = aes(
+      x = Time,
+      y = value,
+      color = name,
+      shape = name
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      linewidth = 1
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 1.5
+    ) +
+    scale_y_continuous(
+      expand = expansion(mult = c(0, 0.05)),
+      limits = c(0, NA)
+    ) +
+    scale_x_continuous(
+      breaks = \(x) seq(x[1]+1, x[2]-1, 2),
+      expand = expansion(add = 1),
+      minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
+    ) +
+    scale_color_hue(
+      label = c(
+        acceptable = 'Morally acceptable',
+        wrong = 'Morally wrong',
+        depends = 'Depends on the situation'
+      )
+    ) +
+    scale_shape_manual(
+      label = c(
+        acceptable = 'Morally acceptable',
+        wrong = 'Morally wrong',
+        depends = 'Depends on the situation'
+      ),
+      values = c(21, 22, 23)
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Estimated Percent of Population with Opinion'
+    ) +
+    theme_classic() +
+    theme(
+      axis.line.x.bottom = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.line.y.left = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.text.x = element_text(
+        angle = 45,
+        color = 'black',
+        hjust = 0.5,
+        vjust = 0.65
+      ),
+      axis.text.y = element_text(
+        color = 'black',
+        margin = margin(r = 0)
+      ),
+      axis.ticks.y = element_blank(),
+      axis.ticks.x = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.title.x = element_text(
+        margin = margin(t = 2)
+      ),
+      axis.title.y = element_text(
+        margin = margin(r = 10)
+      ),
+      legend.margin = margin(t = 0, b = 0),
+      legend.position = 'top',
+      legend.title = element_blank(),
+      panel.grid.major = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      panel.grid.minor = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      plot.margin = margin(t = 0)
+  )
+```
 
 Over the past 22 years, about half of the United States has judged induced abortion to be generally morally wrong, and about half of the United States has judged induced abortion to be generally morally acceptable, making it quite a controversial issue. 
 
 Define a _moral controversy metric_ as $100 - \left| p_w - p_a \right|$ where $p_w$ is the proportion of a population that judges something to be morally wrong and $p_a$ is the proportion that judges it to be morally acceptable. This moral controversy metric is low when there is consensus on whether something is morally wrong or not, and in the extreme case is 0 when 100% of a population agrees that something is morally wrong or morally acceptable. Conversely, this metric is high when there is controversy about an issue, and in the extreme case it is 100 when there are exactly the same proportion of a population that judge something to be morally wrong as who judge it to be morally acceptable.
 
-![Moral controversy metrics for four issues from the Gallup Poll Social Series, Values and Beliefs.](/images/Gallup_controversial_moral_opinions.png){alt="A plot with the different between percent judging 'morally wrong' and percent judging 'morally acceptable' on the y-axis and year on the x-axis."}
+```{r Gallup-controversial-moral-opinions, fig.cap="Moral controversy metrics for four issues from the Gallup Poll Social Series, Values and Beliefs."}
+gallup_morality_data |>
+  filter(Demographic == 'Aggregate') |>
+  select(-Geography, -Demographic, -`Demographic Value`) |>
+  mutate(
+    acceptable = parse_number(`Morally acceptable`),
+    wrong = parse_number(`Morally wrong`),
+    difference = abs(acceptable - wrong),
+    metric = 100 - difference
+  ) |>
+  select(Time, Topic, metric) |>
+  arrange(Time, metric) |>
+  filter(
+    Topic %in%  c(
+      "Abortion",
+      "Baby Out of Wedlock",
+      "Animal Medical Testing",
+      "Extramarital Affair"
+    )
+  ) |>
+  ggplot(
+    mapping = aes(
+      x = Time,
+      y = metric,
+      color = Topic,
+      shape = Topic
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      linewidth = 1
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 1.5
+    ) +
+    scale_y_continuous(
+      limits = c(NA, 100)
+    ) +
+    scale_x_continuous(
+      breaks = \(x) seq(x[1]+1, x[2]-1, 2),
+      expand = expansion(add = 1),
+      minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
+    ) +
+    scale_shape_manual(
+      values = c(21, 22, 23, 24)
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Moral Controversy Metric'
+    ) +
+    theme_classic() +
+    theme(
+      axis.line.x.bottom = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.line.y.left = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.text.x = element_text(
+        angle = 45,
+        color = 'black',
+        hjust = 0.5,
+        vjust = 0.65
+      ),
+      axis.text.y = element_text(
+        color = 'black',
+        margin = margin(r = 0)
+      ),
+      axis.ticks.y = element_blank(),
+      axis.ticks.x = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.title.x = element_text(
+        margin = margin(t = 2)
+      ),
+      axis.title.y = element_text(
+        margin = margin(r = 10)
+      ),
+      legend.margin = margin(t = 0, b = 0),
+      legend.position = 'top',
+      legend.title = element_blank(),
+      panel.grid.major = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      panel.grid.minor = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      plot.margin = margin(t = 0)
+  )
+```
 
 Some issues, such as having an extramarital affair, have been relatively uncontroversial during the lifetime of the Values and Beliefs poll because a consistent majority of Americans judge having an extramarital affair to be wrong. Some issues like having a baby out of wedlock began the Values and Belief polling as controversial issues and became less controversial in the past 22 years. Other issues like animal medical testing began with less controversy and gradually became more controversial over the course of the poll. Induced abortion has remained very controversial throughout the 22 year period.
 

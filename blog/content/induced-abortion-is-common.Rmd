@@ -22,12 +22,19 @@ library(here)
 library(readr)
 library(showtext)
 
+font_add_google('Open Sans', 'open')
+showtext_auto()
+showtext_opts(dpi = 200)
+theme_update(text = element_text(family = 'open'))
+
 knitr::opts_chunk$set(
-  cache = FALSE,
+  cache = TRUE,
   dpi = 300,
   echo = FALSE,
   fig.align = 'center',
-  fig.retina = 1
+  fig.height = 3.75,
+  fig.retina = 1,
+  fig.width = 5
 )
 ```
 
@@ -60,8 +67,7 @@ The most accurate counts of abortions induced in the United States come not from
 
 Nonetheless, estimates of abortions induced in the United States from the Abortion Provider Census are consistently greater than those from either the Abortion Surveillance Reports or the National Survey of Family Growth and are likely the most accurate counts of abortions induced in the United States.
 
-```{r Guttmacher-APC-counts, fig.width=5, fig.height=3.75, fig.cap="Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute. [@maddow-zimet_pregnancies_2022] [@jones_abortion_2022]"}
-
+```{r Guttmacher-APC-counts, fig.cap="Number of induced abortions of pregnancy in the United States per year, based on the Abortion Provider Census by the Guttmacher Institute. [@maddow-zimet_pregnancies_2022] [@jones_abortion_2022]"}
 guttmacher <- read_csv(
     here('data/guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
     show_col_types = FALSE
@@ -82,15 +88,6 @@ guttmacher <- bind_rows(
 )
 
 years <- guttmacher$year
-
-
-font_add_google('Open Sans', 'open')
-showtext_auto()
-showtext_opts(dpi = 200)
-theme_update(
-  text = element_text(family = 'open')
-)
-
 
 ggplot(
   data = guttmacher,
