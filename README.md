@@ -1,6 +1,9 @@
-# Reproductive Responsibility
+# Born Inquisitive
 
-This repository contains scripts and documents for statistical analysis of what I have come to call "reproductive responsibility," which includes covariates of unintended pregnancy and induced abortion, such as contraceptive use, sexual behavior, and alloparenting.
+This repository contains two projects:
+
+  * statistical analysis work focusing on reproductive responsibility, and
+  * the [Born Inquisitive](https://borninquisitive.com/) blog.
 
 
 ## License
@@ -10,22 +13,18 @@ All work contained in this repository was created by Joshua Born and is licensed
 
 ## Directory Structure
 
-### SAS/
+### blog/
 
-The `SAS/` subdirectory contains scripts written in the SAS statistical programming language. The `FORMAT` steps in the `DATA` steps of the program statements are commented out in order to make data exports to R compact and consistent.
-
-### R/
-
-The `R/` subdirectory contains scripts written in the R statistical programming language.
+The `blog/` subdirectory contains the project directory for a [blogdown](https://github.com/rstudio/blogdown) (and hence [Hugo](https://gohugo.io/)) site.
 
 ### data/
 
-The `data/` subdirectory is the expected location of data files.
+The `data/` subdirectory is the expected location of data files, which are not committed to the git repository and instead can be acquired from the appropriate sources.
 
-### eda/
+### EDA/
 
-The `eda/` subdirectory contains R Markdown files that summarize exploratory analysis. These are not formal reports as much as they are real-time records of analysis as the analysis is done.
+The `EDA/` subdirectory contains [R Markdown](https://rmarkdown.rstudio.com/) files in which exploratory data analysis is done. These are not formal reports as much as they are real-time records of analysis as the analysis is done.
 
-### reports/
+### R/
 
-The `reports/` subdirectory contains R Markdown files that are intended for some form of publication.
+The `R/` subdirectory contains programs written in the R statistical programming language.
