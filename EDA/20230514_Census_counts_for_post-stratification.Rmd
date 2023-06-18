@@ -11,9 +11,9 @@ output:
 
 ```{r setup, include=FALSE}
 library(censusapi)
+library(knitr)
 library(dplyr)
 library(gt)
-library(knitr)
 
 opts_chunk$set(
   echo = TRUE,
@@ -240,8 +240,12 @@ race_ethn2019 <- bind_rows(
 race_ethn2019 |>
   filter(DATE_CODE == 11 & AGEGROUP %in% 4:10 & SEX > 0) |>
   arrange(SEX_f, race_ethn, AGEGROUP_f) |>
-  select(SEX_f, race_ethn, AGEGROUP_f, POP, UNIVERSE) |>
-  kable()
+  select(UNIVERSE, SEX_f, race_ethn, AGEGROUP_f, POP) |>
+  gt() |>
+  fmt_number(
+    POP,
+    decimals = 0
+  )
 ```
 
 
@@ -387,11 +391,19 @@ monthly_07_18 |>
   filter(SEX == 0 & AGE == 999 & HISP == 0 & RACE == 0) |>
   select(UNIVERSE, POP, SEX_f, HISP_f, RACE_f) |>
   arrange(POP) |>
-  kable()
+  gt() |>
+  fmt_number(
+    POP,
+    decimals = 0
+  )
 ```
 
 ```{r list-07-2018-household, dependson="process-07-2018-monthly-data"}
 processed_07_18 |>
   filter(UNIVERSE == "Household population" & as.integer(SEX_f) > 1) |>
-  kable()
+  gt() |>
+  fmt_number(
+    pop,
+    decimals = 0
+  )
 ```
