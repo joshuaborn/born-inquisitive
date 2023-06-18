@@ -367,72 +367,7 @@ monthly_07_18 |>
 ```
 
 
-### Post-stratification Targets, "Household Population" Universe
-
-```{r list-07-2018-household, dependson="process-07-2018-monthly-data"}
-processed_07_18 |>
-  filter(UNIVERSE_f == "Household population" & as.integer(SEX_f) > 1) |>
-  gt() |>
-  fmt_number(
-    pop,
-    decimals = 0
-  )
-```
-
-
-### Post-stratification Targets, "Civilian Noninstitutionalized Population" Universe
-
-```{r list-07-2018-civilian-noninstitutionalized, dependson="process-07-2018-monthly-data"}
-processed_07_18 |>
-  filter(UNIVERSE_f == "Civilian noninstitutionalized population" & as.integer(SEX_f) > 1) |>
-  gt() |>
-  fmt_number(
-    pop,
-    decimals = 0
-  )
-```
-
-
-### Post-stratification Targets, "Civilian Population" Universe
-
-```{r list-07-2018-civilian, dependson="process-07-2018-monthly-data"}
-processed_07_18 |>
-  filter(UNIVERSE_f == "Civilian population" & as.integer(SEX_f) > 1) |>
-  gt() |>
-  fmt_number(
-    pop,
-    decimals = 0
-  )
-```
-
-
-### Post-stratification Targets, "Resident Population" Universe
-
-```{r list-07-2018-resident, dependson="process-07-2018-monthly-data"}
-processed_07_18 |>
-  filter(UNIVERSE_f == "Resident population" & as.integer(SEX_f) > 1) |>
-  gt() |>
-  fmt_number(
-    pop,
-    decimals = 0
-  )
-```
-
-
-### Post-stratification Targets, "Resident Population Plus Armed Forces Overseas" Universe
-
-```{r list-07-2018-resident-plus-overseas, dependson="process-07-2018-monthly-data"}
-processed_07_18 |>
-  filter(UNIVERSE_f == "Resident population plus Armed Forces overseas" & as.integer(SEX_f) > 1) |>
-  gt() |>
-  fmt_number(
-    pop,
-    decimals = 0
-  )
-```
-
-
-### Universe Comparisons with Table 7 from NSFG 2017-2019 Weighting Design Documetation
+### Comparisons with Table 7 from NSFG 2017-2019 Weighting Design Documetation by Universe
 
 ```{r compare-universes-07-2018, dependson="process-07-2018-monthly-data"}
 NSFG_control_totals <- c(
@@ -504,7 +439,7 @@ wide_07_18 |>
 ```
 
 
-### Differences Between Universes and NSFG Control Totals
+### Differences with Table 7 by Universe
 
 ```{r compare-differences-07-2018, dependson="compare-universes-07-2018"}
 diffs_07_18 <- wide_07_18 |>
