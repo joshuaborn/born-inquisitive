@@ -431,3 +431,69 @@ processed_07_18 |>
   )
 ```
 
+
+### Comparisons with Table 7 from NSFG 2017-2019 Weighting Design Documetation
+
+```{r comparisons-07-2018, dependson="process-07-2018-monthly-data"}
+NSFG_control_totals <- c(
+  1517604,
+  1503424,
+  1699019,
+  1350050,
+  1259059,
+  1101783,
+  1138804,
+  2447590,
+  2355767,
+  2452515,
+  2316665,
+  2259957,
+  2042130,
+  1854169,
+  5925638,
+  6223463,
+  7393103,
+  7137295,
+  6943620,
+  6339338,
+  6960892,
+  1501808,
+  1588120,
+  1832548,
+  1561910,
+  1502718,
+  1354692,
+  1402470,
+  2364573,
+  2292692,
+  2319186,
+  2145325,
+  2147094,
+  2006586,
+  1857318,
+  5572796,
+  6070213,
+  7228890,
+  7164179,
+  7059902,
+  6488082,
+  7150824
+)
+
+processed_07_18 |>
+  filter(
+    SEX_f != 'Both Sexes'
+  ) |>
+  pivot_wider(
+    names_from = UNIVERSE_f,
+    values_from = pop
+  ) |>
+  mutate(
+    control_totals = NSFG_control_totals,
+    .after = age_group
+  ) |>
+  gt() |>
+  fmt_number(
+    decimals = 0
+  )
+```
