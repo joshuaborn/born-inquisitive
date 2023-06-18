@@ -132,57 +132,18 @@ tidy_results2019 <- tibble(results2019) |>
         'Female'
       )
     ),
-    UNIVERSE = case_match(
+    UNIVERSE_f = factor(
       UNIVERSE,
-      "R" ~ "Resident population",
-      "P" ~ "Resident population plus Armed Forces overseas",
-      "H" ~ "Household population",
-      "C" ~ "Civilian population",
-      "N" ~ "Civilian noninstitutionalized population"
+      levels = c('R', 'P', 'H', 'C', 'N'),
+      labels = c(
+        "Resident population",
+        "Resident population plus Armed Forces overseas",
+        "Household population",
+        "Civilian population",
+        "Civilian noninstitutionalized population"
+      )
     )
   )
-```
-
-```{r check-2019-date, dependson="process-charagegroups-data-2019"}
-tidy_results2019 |>
-  group_by(DATE_CODE, DATE_DESC) |>
-  count() |>
-  kable()
-```
-
-```{r check-2019-age, dependson="process-charagegroups-data-2019"}
-tidy_results2019 |>
-  group_by(AGEGROUP, AGEGROUP_f) |>
-  count() |>
-  kable()
-```
-
-```{r check-2019-hisp, dependson="process-charagegroups-data-2019"}
-tidy_results2019 |>
-  group_by(HISP, HISP_f) |>
-  count() |>
-  kable()
-```
-
-```{r check-2019-race, dependson="process-charagegroups-data-2019"}
-tidy_results2019 |>
-  group_by(RACE, RACE_f) |>
-  count() |>
-  kable()
-```
-
-```{r check-2019-sex, dependson="process-charagegroups-data-2019"}
-tidy_results2019 |>
-  group_by(SEX, SEX_f) |>
-  count() |>
-  kable()
-```
-
-```{r check-2019-universe, dependson="process-charagegroups-data-2019"}
-tidy_results2019 |>
-  group_by(UNIVERSE) |>
-  count() |>
-  kable()
 ```
 
 ```{r compare-with-2017-2019, dependson="process-charagegroups-data-2019"}
@@ -202,7 +163,7 @@ nonhispanic_nonblack2019 <- inner_join(
   nonhispanic_allrace2019,
   nonhispanic_black2019 |>
     rename('Black_POP' = 'POP') |>
-    select(-AGEGROUP_f, -SEX_f, -DATE_DESC, -UNIVERSE),
+    select(-AGEGROUP_f, -SEX_f, -DATE_DESC, -UNIVERSE_f),
   by = join_by(DATE_CODE, AGEGROUP, SEX),
   relationship = 'one-to-one'
 ) |>
@@ -240,7 +201,7 @@ race_ethn2019 <- bind_rows(
 race_ethn2019 |>
   filter(DATE_CODE == 11 & AGEGROUP %in% 4:10 & SEX > 0) |>
   arrange(SEX_f, race_ethn, AGEGROUP_f) |>
-  select(UNIVERSE, SEX_f, race_ethn, AGEGROUP_f, POP) |>
+  select(UNIVERSE_f, SEX_f, race_ethn, AGEGROUP_f, POP) |>
   gt() |>
   fmt_number(
     POP,
@@ -314,13 +275,16 @@ monthly_07_18 <- tibble(raw_monthly_07_18) |>
         'Female'
       )
     ),
-    UNIVERSE = case_match(
+    UNIVERSE_f = factor(
       UNIVERSE,
-      "R" ~ "Resident population",
-      "P" ~ "Resident population plus Armed Forces overseas",
-      "H" ~ "Household population",
-      "C" ~ "Civilian population",
-      "N" ~ "Civilian noninstitutionalized population"
+      levels = c('R', 'P', 'H', 'C', 'N'),
+      labels = c(
+        "Resident population",
+        "Resident population plus Armed Forces overseas",
+        "Household population",
+        "Civilian population",
+        "Civilian noninstitutionalized population"
+      )
     )
   )
 
@@ -382,14 +346,14 @@ processed_07_18 <- decompose_race_ethn(monthly_07_18) |>
     )
   ) |>
   select(-AGE, -SEX) |>
-  group_by(UNIVERSE, SEX_f, race_ethn, age_group) |>
+  group_by(UNIVERSE_f, SEX_f, race_ethn, age_group) |>
   summarize(pop = sum(POP), .groups = 'drop')
 ```
 
 ```{r verify-populations, dependson="process-07-2018-monthly-data"}
 monthly_07_18 |>
   filter(SEX == 0 & AGE == 999 & HISP == 0 & RACE == 0) |>
-  select(UNIVERSE, POP, SEX_f, HISP_f, RACE_f) |>
+  select(UNIVERSE_f, POP, SEX_f, HISP_f, RACE_f) |>
   arrange(POP) |>
   gt() |>
   fmt_number(
@@ -400,7 +364,7 @@ monthly_07_18 |>
 
 ```{r list-07-2018-household, dependson="process-07-2018-monthly-data"}
 processed_07_18 |>
-  filter(UNIVERSE == "Household population" & as.integer(SEX_f) > 1) |>
+  filter(UNIVERSE_f == "Household population" & as.integer(SEX_f) > 1) |>
   gt() |>
   fmt_number(
     pop,
