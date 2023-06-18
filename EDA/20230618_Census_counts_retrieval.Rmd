@@ -1,0 +1,123 @@
+---
+title: "Retrieval of Census Counts for Post-Stratification of NSFG"
+author: "Joshua Born"
+date: "2023-06-18"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(censusapi)
+library(dplyr)
+library(gt)
+library(knitr)
+library(tidyr)
+
+opts_chunk$set(
+  echo = TRUE,
+  cache = TRUE,
+  tidy = TRUE
+)
+```
+
+
+## API Key
+
+```{r check-api-key}
+Sys.setenv(CENSUS_KEY='7c06499a2432f6947e76ee1cf0876fc4ee43ce98')
+Sys.getenv("CENSUS_KEY")
+```
+
+## Vintage 2019
+
+Because the 2010-2020 Intercensal Estimates are not available yet, I will have to use the 2019 Vintage estimates for the 2011-2015 and 2015-2019 NSFGs.
+
+```{r get-monthly-codes-2019, dependson="check-api-key"}
+months2019 <- getCensus(
+  name = 'pep/natmonthly',
+  vars = c(
+    'MONTHLY',
+    'MONTHLY_DESC'
+  ),
+  region = 'us:*',
+  vintage = '2019'
+)
+
+months2019 |>
+  select(MONTHLY, MONTHLY_DESC) |>
+  filter(MONTHLY %in% c('43', '91')) |>
+  gt()
+```
+
+
+## 2000-2010 Intercensals
+
+Post-stratification totals for the Cycle 6 and 2006-2010 NSFGs can be acquired from the `pep/int_natmonthly` data set through the Census API.
+
+```{r get-monthly-codes-2000-2010, dependson="check-api-key"}
+months2000_2010 <- getCensus(
+  name = 'pep/int_natmonthly',
+  vars = c(
+    'MONTHLY',
+    'MONTHLY_DESC'
+  ),
+  region = 'us:1',
+  vintage = '2000'
+)
+
+months2000_2010 |>
+  select(MONTHLY, MONTHLY_DESC) |>
+  filter(MONTHLY %in% c('29', '99')) |>
+  gt()
+```
+
+
+## 1990-2000 Intercensals
+
+* The 1990-2000 Intercensals do not have a `pep/int_natmonthly` data set, so the annual `pep/int_charagegroups` data set will have to be used.
+* The `pep/int_charagegroups` is released _by county_, and can only be downloaded from the API for a specific state. All of these downloads will have to be summed up to national estimates.
+* The `pep/int_charagegroups` pertains to the "Resident" universe, not the "Household" or "Civilian noninstitutionalized population" universes.
+* The Cycle 5 NSFG User's Guide does not specify what variables were used for post-stratification. The same variables as other surveys, i.e., age group, race, and Hispanic origin, will be used here. (Sex will necessarily be used because Cycle 4 only surveyed women.)
+
+```{r get-int_charagegroups-1990-2000, dependson="check-api-key"}
+int_charagegroups1990_2000_state02 <- getCensus(
+  name = 'pep/int_charagegroups',
+  vars = c(
+    'POP', 'YEAR', 'AGEGRP', 'RACE_SEX', 'HISP', 'SUMLEV'
+  ),
+  region = 'county:*',
+  regionin = 'state:02',
+  vintage = '1990'
+)
+
+int_charagegroups1990_2000_state02 |>
+  select(YEAR) |>
+  distinct()
+
+int_charagegroups1990_2000_state02 |>
+  select(AGEGRP) |>
+  distinct()
+
+int_charagegroups1990_2000_state02 |>
+  select(RACE_SEX) |>
+  distinct()
+
+int_charagegroups1990_2000_state02 |>
+  select(HISP) |>
+  distinct()
+
+int_charagegroups1990_2000_state02 |>
+  select(SUMLEV) |>
+  distinct()
+```
+
+
+## 1980-1990 Intercensals
+
+* It does not appear that the 1980-1990 Intercensal data sets are available through the API. "Estimates of the Population of Counties in the United States by Age, Sex, and Race" is available as a downloadable Microsoft Excel file for each year. See file `pe-02-1986.xls`. It will have to be parsed and summed up to the national estimates.
+* The file does not specify what the universe used is.
+* The Cycle 4 NSFG was post-stratified by "by age, race, marital status, and parity (the number of live births the woman has had) obtained from the U.S. Bureau of the Census." Marital status and parity are not in the PEP. However, sex, age group, and race are available, these will be used in the calibration.
+* While there is a web page defining the encoding of the 2000-2010 Intercensals, there does not appear to be on for 1990-2000. It might be safe to assume that variable encoding did not change between 1990-2000 and 2000-2010, but that leaves the encoding of `RACE_SEX` to be a mystery.
