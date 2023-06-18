@@ -350,6 +350,9 @@ processed_07_18 <- decompose_race_ethn(monthly_07_18) |>
   summarize(pop = sum(POP), .groups = 'drop')
 ```
 
+
+### Total U.S. Population in July 2018 by Universe
+
 ```{r verify-populations, dependson="process-07-2018-monthly-data"}
 monthly_07_18 |>
   filter(SEX == 0 & AGE == 999 & HISP == 0 & RACE == 0) |>
@@ -362,9 +365,64 @@ monthly_07_18 |>
   )
 ```
 
+
+### Post-stratification Targets, "Household Population" Universe
+
 ```{r list-07-2018-household, dependson="process-07-2018-monthly-data"}
 processed_07_18 |>
   filter(UNIVERSE_f == "Household population" & as.integer(SEX_f) > 1) |>
+  gt() |>
+  fmt_number(
+    pop,
+    decimals = 0
+  )
+```
+
+
+### Post-stratification Targets, "Civilian Noninstitutionalized Population" Universe
+
+```{r list-07-2018-civilian-noninstitutionalized, dependson="process-07-2018-monthly-data"}
+processed_07_18 |>
+  filter(UNIVERSE_f == "Civilian noninstitutionalized population" & as.integer(SEX_f) > 1) |>
+  gt() |>
+  fmt_number(
+    pop,
+    decimals = 0
+  )
+```
+
+
+### Post-stratification Targets, "Civilian Population" Universe
+
+```{r list-07-2018-civilian, dependson="process-07-2018-monthly-data"}
+processed_07_18 |>
+  filter(UNIVERSE_f == "Civilian population" & as.integer(SEX_f) > 1) |>
+  gt() |>
+  fmt_number(
+    pop,
+    decimals = 0
+  )
+```
+
+
+### Post-stratification Targets, "Resident Population" Universe
+
+```{r list-07-2018-resident, dependson="process-07-2018-monthly-data"}
+processed_07_18 |>
+  filter(UNIVERSE_f == "Resident population" & as.integer(SEX_f) > 1) |>
+  gt() |>
+  fmt_number(
+    pop,
+    decimals = 0
+  )
+```
+
+
+### Post-stratification Targets, "Resident Population Plus Armed Forces Overseas" Universe
+
+```{r list-07-2018-resident-plus-overseas, dependson="process-07-2018-monthly-data"}
+processed_07_18 |>
+  filter(UNIVERSE_f == "Resident population plus Armed Forces overseas" & as.integer(SEX_f) > 1) |>
   gt() |>
   fmt_number(
     pop,
