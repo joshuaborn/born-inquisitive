@@ -34,7 +34,7 @@ Sys.getenv("CENSUS_KEY")
 
 ## Demographic Characteristics Estimates by Age Groups (pep/charagegroups)
 
-The pep/charagegroups data set from Census appears to have population totals by needed dimensions for the post-stratification targets of the NSFG. However, it only has population totals by the "Resident population" Census universe, which may not correspond well to the NSFG target population.
+The pep/charagegroups data set from Census appears to have population totals by needed dimensions for the post-stratification targets of the NSFG. However, it only has population totals by the "Resident population" Census universe, which is larger than the target population for the NSFG.
 
 ```{r get-charagegroups-data-2019, dependson="check-api-key"}
 results2019 <- getCensus(
@@ -472,3 +472,14 @@ diffs_07_18 |>
     decimals = 0
   )
 ```
+
+The totals used by the 2017-2019 NSFG for post-stratification are closest to the "Household population" universe, which is consistent with the Weighting Design Documentation. However, the actual target population of the NSFG sounds closer to the "Civilian noninstitutionalized population" universe, which is what was used for the 2006-2010 NSFG and earlier.
+
+According to the 2017-2019 NSFG Weighting Design Documentation. The "Household population" universe includes military personnel living in households, but does not include individuals living in noninstitutional group quarters, such as college dormitories, while the "Civilian noninstitutionalized population" universe does include individuals living in noninstitutional group quarters, such as college dormitories.
+
+Based on U.S. Census [definitions](https://www.census.gov/programs-surveys/popest/about/glossary/national.html), it does seem like the "Civilian noninstitutionalized population" does not include military personnel.
+
+Because the "Civilian noninstitutionalized population" of the United States appears to be larger than the "Household population" of the United States, the number of civilians living in group quarters must be greater than the number of military personnel living in households.
+
+It is a judgment call whether to use "Household population" like the NSFG from 2011 to 2019 or the "Civilian noninstitutionalized population" like the NSFG from 2006-2010 and earlier.
+
