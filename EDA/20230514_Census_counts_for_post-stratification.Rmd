@@ -278,13 +278,13 @@ monthly_07_18 <- tibble(raw_monthly_07_18) |>
     ),
     UNIVERSE_f = factor(
       UNIVERSE,
-      levels = c('R', 'P', 'H', 'C', 'N'),
+      levels = c('H', 'N', 'C', 'R', 'P'),
       labels = c(
-        "Resident population",
-        "Resident population plus Armed Forces overseas",
         "Household population",
+        "Civilian noninstitutionalized population",
         "Civilian population",
-        "Civilian noninstitutionalized population"
+        "Resident population",
+        "Resident population plus Armed Forces overseas"
       )
     )
   )
@@ -432,9 +432,9 @@ processed_07_18 |>
 ```
 
 
-### Comparisons with Table 7 from NSFG 2017-2019 Weighting Design Documetation
+### Universe Comparisons with Table 7 from NSFG 2017-2019 Weighting Design Documetation
 
-```{r comparisons-07-2018, dependson="process-07-2018-monthly-data"}
+```{r compare-universes-07-2018, dependson="process-07-2018-monthly-data"}
 NSFG_control_totals <- c(
   1517604,
   1503424,
@@ -480,7 +480,7 @@ NSFG_control_totals <- c(
   7150824
 )
 
-processed_07_18 |>
+wide_07_18 <- processed_07_18 |>
   filter(
     SEX_f != 'Both Sexes'
   ) |>
@@ -491,6 +491,46 @@ processed_07_18 |>
   mutate(
     control_totals = NSFG_control_totals,
     .after = age_group
+  )
+
+wide_07_18 |>
+  gt() |>
+  fmt_number(
+    decimals = 0
+  ) |>
+  cols_width(
+    race_ethn ~ px(250)
+  )
+```
+
+
+### Differences Between Universes and NSFG Control Totals
+
+```{r compare-differences-07-2018, dependson="compare-universes-07-2018"}
+diffs_07_18 <- wide_07_18 |>
+  mutate(
+     `Household population` = abs(control_totals - `Household population`),
+     `Civilian noninstitutionalized population` = abs(control_totals - `Civilian noninstitutionalized population`),
+     `Civilian population` = abs(control_totals - `Civilian population`),
+     `Resident population` = abs(control_totals - `Resident population`),
+     `Resident population plus Armed Forces overseas` = abs(control_totals - `Resident population plus Armed Forces overseas`)
+  )
+
+diffs_07_18 |>
+  gt() |>
+  fmt_number(
+    decimals = 0
+  ) |>
+  cols_width(
+    race_ethn ~ px(250)
+  )
+
+diffs_07_18 |>
+  summarize(across(ends_with(c('population', 'overseas')), sum)) |>
+  pivot_longer(
+    everything(),
+    values_to = 'Difference',
+    names_to = 'Universe'
   ) |>
   gt() |>
   fmt_number(
