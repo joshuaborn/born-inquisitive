@@ -11,9 +11,10 @@ output:
 
 ```{r setup, include=FALSE}
 library(censusapi)
-library(knitr)
 library(dplyr)
 library(gt)
+library(knitr)
+library(tidyr)
 
 opts_chunk$set(
   echo = TRUE,
@@ -306,7 +307,7 @@ decompose_race_ethn <- function(these_data) {
     nonhispanic_black |>
       rename('Black_POP' = 'POP') |>
       select(-SEX_f),
-    by = join_by(AGE, SEX, UNIVERSE),
+    by = join_by(AGE, SEX, UNIVERSE_f),
     relationship = 'one-to-one'
   ) |>
     mutate(POP = POP - Black_POP) |> 
@@ -429,3 +430,4 @@ processed_07_18 |>
     decimals = 0
   )
 ```
+
