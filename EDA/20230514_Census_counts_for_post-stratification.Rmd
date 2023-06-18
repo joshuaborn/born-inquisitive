@@ -22,15 +22,20 @@ opts_chunk$set(
 )
 ```
 
+
+## API Key
+
 ```{r check-api-key}
 Sys.setenv(CENSUS_KEY='7c06499a2432f6947e76ee1cf0876fc4ee43ce98')
 Sys.getenv("CENSUS_KEY")
 ```
 
 
-## Resident Population (pep/charagegroups)
+## Demographic Characteristics Estimates by Age Groups (pep/charagegroups)
 
-```{r get-2019-vintage-data, dependson="check-api-key"}
+The pep/charagegroups data set from Census appears to have population totals by needed dimensions for the post-stratification targets of the NSFG. However, it only has population totals by the "Resident population" Census universe, which may not correspond well to the NSFG target population.
+
+```{r get-charagegroups-data-2019, dependson="check-api-key"}
 results2019 <- getCensus(
   name = 'pep/charagegroups',
   vars = c(
@@ -48,7 +53,7 @@ results2019 <- getCensus(
 )
 ```
 
-```{r process-2019-vintage-data, dependson="get-2019-vintage-data"}
+```{r process-charagegroups-data-2019, dependson="get-charagegroups-data-2019"}
 tidy_results2019 <- tibble(results2019) |>
   select(-us) |>
   mutate(across(!ends_with(c('_DESC', 'UNIVERSE')), ~ as.integer(.x))) |>
@@ -126,53 +131,61 @@ tidy_results2019 <- tibble(results2019) |>
         'Male',
         'Female'
       )
+    ),
+    UNIVERSE = case_match(
+      UNIVERSE,
+      "R" ~ "Resident population",
+      "P" ~ "Resident population plus Armed Forces overseas",
+      "H" ~ "Household population",
+      "C" ~ "Civilian population",
+      "N" ~ "Civilian noninstitutionalized population"
     )
   )
 ```
 
-```{r check-2019-date, dependson="process-2019-vintage-data"}
+```{r check-2019-date, dependson="process-charagegroups-data-2019"}
 tidy_results2019 |>
   group_by(DATE_CODE, DATE_DESC) |>
   count() |>
   kable()
 ```
 
-```{r check-2019-age, dependson="process-2019-vintage-data"}
+```{r check-2019-age, dependson="process-charagegroups-data-2019"}
 tidy_results2019 |>
   group_by(AGEGROUP, AGEGROUP_f) |>
   count() |>
   kable()
 ```
 
-```{r check-2019-hisp, dependson="process-2019-vintage-data"}
+```{r check-2019-hisp, dependson="process-charagegroups-data-2019"}
 tidy_results2019 |>
   group_by(HISP, HISP_f) |>
   count() |>
   kable()
 ```
 
-```{r check-2019-race, dependson="process-2019-vintage-data"}
+```{r check-2019-race, dependson="process-charagegroups-data-2019"}
 tidy_results2019 |>
   group_by(RACE, RACE_f) |>
   count() |>
   kable()
 ```
 
-```{r check-2019-sex, dependson="process-2019-vintage-data"}
+```{r check-2019-sex, dependson="process-charagegroups-data-2019"}
 tidy_results2019 |>
   group_by(SEX, SEX_f) |>
   count() |>
   kable()
 ```
 
-```{r check-2019-universe, dependson="process-2019-vintage-data"}
+```{r check-2019-universe, dependson="process-charagegroups-data-2019"}
 tidy_results2019 |>
   group_by(UNIVERSE) |>
   count() |>
   kable()
 ```
 
-```{r compare-with-2017-2019, dependson="process-2019-vintage-data"}
+```{r compare-with-2017-2019, dependson="process-charagegroups-data-2019"}
 nonhispanic_allrace2019 <- tidy_results2019 |>
   filter(
     HISP == 1 & RACE == 0
@@ -232,7 +245,10 @@ race_ethn2019 |>
 ```
 
 
-## Civilian Noninstitutionalized Population (pep/natmonthly)
+
+## National Monthly Population Estimates (pep/natmonthly)
+
+The pep/natmonthly data set also appears to have population totals for all the necessary dimensions for NSFG post-stratification, and it has population totals for all 5 Census universes.
 
 ```{r get-07-2018-monthly-data, dependson="check-api-key"}
 raw_monthly_07_18 <- getCensus(
@@ -293,6 +309,14 @@ monthly_07_18 <- tibble(raw_monthly_07_18) |>
         'Male',
         'Female'
       )
+    ),
+    UNIVERSE = case_match(
+      UNIVERSE,
+      "R" ~ "Resident population",
+      "P" ~ "Resident population plus Armed Forces overseas",
+      "H" ~ "Household population",
+      "C" ~ "Civilian population",
+      "N" ~ "Civilian noninstitutionalized population"
     )
   )
 
@@ -368,6 +392,6 @@ monthly_07_18 |>
 
 ```{r list-07-2018-household, dependson="process-07-2018-monthly-data"}
 processed_07_18 |>
-  filter(UNIVERSE == 'N' & as.integer(SEX_f) > 1) |>
+  filter(UNIVERSE == "Household population" & as.integer(SEX_f) > 1) |>
   kable()
 ```
