@@ -490,3 +490,22 @@ int_charagegroups_10_date <- int_charagegroups_2000_2010 |>
 
 Date: `r int_charagegroups_10_date`
 
+
+### Cycle 6
+
+```{r process-census-counts-for-cycle-6, dependson=c("define-pep-int-charagegroups-functions", "download-pet-int-charagegroups-2000-2010")}
+int_charagegroups_2000_2010 |>
+  filter(DATE_ == 4) |>
+  process_pep_int_charagegroups() |>
+  filter(UNIVERSE == 'R' & SEX != 0 & AGEGROUP %in% 4:9) |>
+  select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
+  gt() |>
+  fmt_number(decimals = 0)
+
+int_charagegroups_4_date <- int_charagegroups_2000_2010 |>
+  filter(DATE_ == 4) |>
+  pull(DATE_DESC) |>
+  unique()
+```
+
+Date: `r int_charagegroups_4_date`
