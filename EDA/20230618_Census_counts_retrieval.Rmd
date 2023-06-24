@@ -34,6 +34,9 @@ Sys.getenv("CENSUS_KEY")
 
 ## Notes
 
+The "Resident" population universe appears to the only universe available for the older time periods. For consistency, I will use the "Resident" population counts for post-stratification, even though the "Resident" population is larger than the actual target population of the NSFG.
+
+
 ### Vintage 2019
 
 Because the 2010-2020 Intercensal Estimates are not available yet, I will have to use the 2019 Vintage estimates for the 2011-2015 and 2015-2019 NSFGs.
@@ -58,31 +61,28 @@ months2019 |>
 
 ### 2000-2010 Intercensals
 
-Post-stratification totals for the Cycle 6 and 2006-2010 NSFGs can be acquired from the `pep/int_natmonthly` data set through the Census API.
+The `pep/int_natmonthly` data set does not have `HISP`, `RACE`, or `SEX` variables and so cannot be used for post-stratification of the NSFG. Instead, I will have to use the `pep/int_charagegroups`.
 
 ```{r get-monthly-codes-2000-2010, dependson="check-api-key"}
-months2000_2010 <- getCensus(
-  name = 'pep/int_natmonthly',
+census2000_2010 <- getCensus(
+  name = 'pep/int_charagegroups',
   vars = c(
-    'MONTHLY',
-    'MONTHLY_DESC'
+    'DATE_',
+    'DATE_DESC'
   ),
   region = 'us:1',
   vintage = '2000'
 )
 
-months2000_2010 |>
-  select(MONTHLY, MONTHLY_DESC) |>
-  filter(MONTHLY %in% c('29', '99')) |>
+census2000_2010 |>
+  select(DATE_, DATE_DESC) |>
   gt()
 ```
 
 
 ### 1990-2000 Intercensals
 
-* The 1990-2000 Intercensals do not have a `pep/int_natmonthly` data set, so the annual `pep/int_charagegroups` data set will have to be used.
-* The `pep/int_charagegroups` is released _by county_, and can only be downloaded from the API for a specific state. All of these downloads will have to be summed up to national estimates.
-* The `pep/int_charagegroups` pertains to the "Resident" universe, not the "Household" or "Civilian noninstitutionalized population" universes.
+* The `pep/int_charagegroups` data set for the 1990-2000 Intercensals is released _by county_, and can only be downloaded from the API for a specific state. All of these downloads will have to be summed up to national estimates.
 * The Cycle 5 NSFG User's Guide does not specify what variables were used for post-stratification. The same variables as other surveys, i.e., age group, race, and Hispanic origin, will be used here. (Sex will necessarily be used because Cycle 4 only surveyed women.)
 * While there is a web page defining the encoding of the 2000-2010 Intercensals, there does not appear to be on for 1990-2000. It might be safe to assume that variable encoding did not change between 1990-2000 and 2000-2010, but that leaves the encoding of `RACE_SEX` to be a mystery.
 
@@ -122,7 +122,7 @@ int_charagegroups1990_2000_state02 |>
 ### 1980-1990 Intercensals
 
 * It does not appear that the 1980-1990 Intercensal data sets are available through the API. "Estimates of the Population of Counties in the United States by Age, Sex, and Race" is available as a downloadable Microsoft Excel file for each year. See file `pe-02-1986.xls`. It will have to be parsed and summed up to the national estimates.
-* The file does not specify what the universe used is.
+* The file does not specify what the universe used is, so it is likely the "Resident" population universe.
 * The Cycle 4 NSFG was post-stratified by "by age, race, marital status, and parity (the number of live births the woman has had) obtained from the U.S. Bureau of the Census." Marital status and parity are not in the PEP. However, sex, age group, and race are available, these will be used in the calibration.
 
 
@@ -267,7 +267,7 @@ pep_natmonthly_91 <- getCensus(
 pep_natmonthly_91_date <- unique(pull(pep_natmonthly_91, MONTHLY_DESC))
 
 process_pep_natmonthly(pep_natmonthly_91) |>
-  filter(UNIVERSE == 'H' & SEX != 0) |>
+  filter(UNIVERSE == 'R' & SEX != 0) |>
   select(UNIVERSE_f, SEX_f, race_ethn_f, age_group, pop) |>
   gt() |>
   fmt_number(decimals = 0)
@@ -298,7 +298,7 @@ pep_natmonthly_43 <- getCensus(
 pep_natmonthly_43_date <- unique(pull(pep_natmonthly_43, MONTHLY_DESC))
 
 process_pep_natmonthly(pep_natmonthly_43) |>
-  filter(UNIVERSE == 'H' & SEX != 0) |>
+  filter(UNIVERSE == 'R' & SEX != 0) |>
   select(UNIVERSE_f, SEX_f, race_ethn_f, age_group, pop) |>
   gt() |>
   fmt_number(decimals = 0)
