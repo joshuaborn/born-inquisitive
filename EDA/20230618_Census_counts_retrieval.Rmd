@@ -31,7 +31,10 @@ Sys.setenv(CENSUS_KEY='7c06499a2432f6947e76ee1cf0876fc4ee43ce98')
 Sys.getenv("CENSUS_KEY")
 ```
 
-## Vintage 2019
+
+## Notes
+
+### Vintage 2019
 
 Because the 2010-2020 Intercensal Estimates are not available yet, I will have to use the 2019 Vintage estimates for the 2011-2015 and 2015-2019 NSFGs.
 
@@ -53,7 +56,7 @@ months2019 |>
 ```
 
 
-## 2000-2010 Intercensals
+### 2000-2010 Intercensals
 
 Post-stratification totals for the Cycle 6 and 2006-2010 NSFGs can be acquired from the `pep/int_natmonthly` data set through the Census API.
 
@@ -75,12 +78,13 @@ months2000_2010 |>
 ```
 
 
-## 1990-2000 Intercensals
+### 1990-2000 Intercensals
 
 * The 1990-2000 Intercensals do not have a `pep/int_natmonthly` data set, so the annual `pep/int_charagegroups` data set will have to be used.
 * The `pep/int_charagegroups` is released _by county_, and can only be downloaded from the API for a specific state. All of these downloads will have to be summed up to national estimates.
 * The `pep/int_charagegroups` pertains to the "Resident" universe, not the "Household" or "Civilian noninstitutionalized population" universes.
 * The Cycle 5 NSFG User's Guide does not specify what variables were used for post-stratification. The same variables as other surveys, i.e., age group, race, and Hispanic origin, will be used here. (Sex will necessarily be used because Cycle 4 only surveyed women.)
+* While there is a web page defining the encoding of the 2000-2010 Intercensals, there does not appear to be on for 1990-2000. It might be safe to assume that variable encoding did not change between 1990-2000 and 2000-2010, but that leaves the encoding of `RACE_SEX` to be a mystery.
 
 ```{r get-int_charagegroups-1990-2000, dependson="check-api-key"}
 int_charagegroups1990_2000_state02 <- getCensus(
@@ -115,9 +119,189 @@ int_charagegroups1990_2000_state02 |>
 ```
 
 
-## 1980-1990 Intercensals
+### 1980-1990 Intercensals
 
 * It does not appear that the 1980-1990 Intercensal data sets are available through the API. "Estimates of the Population of Counties in the United States by Age, Sex, and Race" is available as a downloadable Microsoft Excel file for each year. See file `pe-02-1986.xls`. It will have to be parsed and summed up to the national estimates.
 * The file does not specify what the universe used is.
 * The Cycle 4 NSFG was post-stratified by "by age, race, marital status, and parity (the number of live births the woman has had) obtained from the U.S. Bureau of the Census." Marital status and parity are not in the PEP. However, sex, age group, and race are available, these will be used in the calibration.
-* While there is a web page defining the encoding of the 2000-2010 Intercensals, there does not appear to be on for 1990-2000. It might be safe to assume that variable encoding did not change between 1990-2000 and 2000-2010, but that leaves the encoding of `RACE_SEX` to be a mystery.
+
+
+## Downloads and Processing
+
+```{r define-pep-natmonthly-functions}
+decompose_race_ethn <- function(these_data) {
+  nonhispanic_allrace <- these_data |>
+    filter(
+      HISP == 1 & RACE == 0
+    ) |>
+    select(-starts_with('HISP'), -starts_with('RACE'))
+  
+  nonhispanic_black <- these_data |>
+    filter(
+      HISP == 1 & RACE == 8
+    ) |>
+    select(-starts_with('HISP'), -starts_with('RACE'))
+  
+  nonhispanic_nonblack <- inner_join(
+    nonhispanic_allrace,
+    nonhispanic_black |>
+      rename('Black_POP' = 'POP'),
+    by = join_by(AGE, SEX, SEX_f, UNIVERSE, UNIVERSE_f),
+    relationship = 'one-to-one'
+  ) |>
+    mutate(POP = POP - Black_POP) |> 
+    select(-Black_POP)
+  
+  hispanic <- these_data |>
+    filter(
+      HISP == 2 & RACE == 0
+    ) |>
+    select(-starts_with('HISP'), -starts_with('RACE'))
+  
+  
+  bind_rows(
+    mutate(nonhispanic_black, race_ethn = 1),
+    mutate(hispanic, race_ethn = 2),
+    mutate(nonhispanic_nonblack, race_ethn = 3)
+  ) |>
+    mutate(
+      race_ethn_f = factor(
+        race_ethn,
+        labels = c(
+          'Non-Hispanic Black',
+          'Hispanic',
+          'Non-Hispanic Non-Black'
+        )
+      )
+    )
+}
+
+process_pep_natmonthly <- function(these_data) {
+  tibble(these_data) |>
+    select(-us, -MONTHLY, -MONTHLY_DESC) |>
+    mutate(across(!ends_with(c('_DESC', 'UNIVERSE')), ~ as.integer(.x))) |>
+    mutate(
+      HISP_f = factor(
+        HISP,
+        levels = 0:2,
+        labels = c(
+          'Both Hispanic Origins',
+          'Non-Hispanic',
+          'Hispanic'
+        )
+      ),
+      RACE_f = factor(
+        RACE,
+        levels = 0:11,
+        labels =  c(
+          'All races',
+          'White alone',
+          'Black alone',
+          'American Indian and Alaska Native alone',
+          'Asian alone',
+          'Native Hawaiian and Other Pacific Islander alone',
+          'Two or more races',
+          'White alone or in combination',
+          'Black alone or in combination',
+          'American Indian and Alaska Native alone or in combination',
+          'Asian alone or in combination',
+          'Native Hawaiian and Other Pacific Islander alone or in combination'
+        )
+      ),
+      SEX_f = factor(
+        SEX,
+        levels = 0:2,
+        labels = c(
+          'Both Sexes',
+          'Male',
+          'Female'
+        )
+      ),
+      UNIVERSE_f = factor(
+        UNIVERSE,
+        levels = c('H', 'N', 'C', 'R', 'P'),
+        labels = c(
+          "Household population",
+          "Civilian noninstitutionalized population",
+          "Civilian population",
+          "Resident population",
+          "Resident population plus Armed Forces overseas"
+        )
+      )
+    ) |>
+    decompose_race_ethn() |>
+    filter(AGE >= 15 & AGE <= 49) |>
+    mutate(
+      age_group = cut(
+        AGE,
+        breaks = c(14, 19, 24, 29, 34, 39, 44, 49),
+        labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
+      )
+    ) |>
+    select(-AGE) |>
+    group_by(UNIVERSE, UNIVERSE_f, SEX, SEX_f, race_ethn, race_ethn_f, age_group) |>
+    summarize(pop = sum(POP), .groups = 'drop')
+}
+```
+
+
+### 2015-2019
+
+```{r process-census-counts-for-2015-2019, dependson="define-pep-natmonthly-functions"}
+pep_natmonthly_91 <- getCensus(
+    name = 'pep/natmonthly',
+    vars = c(
+      'MONTHLY_DESC',
+      'AGE',
+      'HISP',
+      'RACE',
+      'SEX',
+      'POP',
+      'UNIVERSE'
+    ),
+    monthly = 91,
+    region = 'us:*',
+    vintage = '2019'
+  )
+
+pep_natmonthly_91_date <- unique(pull(pep_natmonthly_91, MONTHLY_DESC))
+
+process_pep_natmonthly(pep_natmonthly_91) |>
+  filter(UNIVERSE == 'H' & SEX != 0) |>
+  select(UNIVERSE_f, SEX_f, race_ethn_f, age_group, pop) |>
+  gt() |>
+  fmt_number(decimals = 0)
+```
+
+Date: `r pep_natmonthly_91_date`
+
+
+### 2011-2015
+
+```{r process-census-counts-for-2011-2015, dependson="define-pep-natmonthly-functions"}
+pep_natmonthly_43 <- getCensus(
+    name = 'pep/natmonthly',
+    vars = c(
+      'MONTHLY_DESC',
+      'AGE',
+      'HISP',
+      'RACE',
+      'SEX',
+      'POP',
+      'UNIVERSE'
+    ),
+    monthly = 43,
+    region = 'us:*',
+    vintage = '2019'
+  )
+
+pep_natmonthly_43_date <- unique(pull(pep_natmonthly_43, MONTHLY_DESC))
+
+process_pep_natmonthly(pep_natmonthly_43) |>
+  filter(UNIVERSE == 'H' & SEX != 0) |>
+  select(UNIVERSE_f, SEX_f, race_ethn_f, age_group, pop) |>
+  gt() |>
+  fmt_number(decimals = 0)
+```
+
+Date: `r pep_natmonthly_43_date`
