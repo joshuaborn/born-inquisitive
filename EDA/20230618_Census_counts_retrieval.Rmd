@@ -509,3 +509,17 @@ int_charagegroups_4_date <- int_charagegroups_2000_2010 |>
 ```
 
 Date: `r int_charagegroups_4_date`
+
+
+### Cycle 4
+
+```{r}
+raw_1986 <- read_csv(here('data/Census/pe-02-1986_processed.csv'))
+raw_1986 |>
+  select(-YEAR, -FIPS) |>
+  group_by(race_sex) |>
+  summarize(across(everything(), sum)) |>
+  pivot_longer(-race_sex, names_to = 'age_group', values_to = 'pop') |>
+  gt() |>
+  fmt_number(decimals = 0)
+```
