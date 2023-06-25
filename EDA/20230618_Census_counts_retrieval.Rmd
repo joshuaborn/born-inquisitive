@@ -577,6 +577,138 @@ census_for_cycle_6 |>
 ```
 
 
+### Cycle 5
+
+```{r download-pep-int-charagegroups-1990-2000}
+state_FIPS_codes <- c(1:2, 4:6, 8:13, 15:42, 44:51, 53:56)
+
+pep_int_charagegroups_1990_2000 <- lapply(
+  state_FIPS_codes,
+  function (x) {
+    getCensus(
+      name = 'pep/int_charagegroups',
+      vars = c(
+        'AGEGRP',
+        'HISP',
+        'POP',
+        'RACE_SEX',
+        'SUMLEV'
+      ),
+      region = 'county:*',
+      regionin = sprintf('state:%02d', x),
+      vintage = '1990',
+      year = 95
+    )
+  }
+) |> bind_rows()
+```
+
+```{r process-census-counts-for-cycle-5, dependson="download-pep-int-charagegroups-1990-2000"}
+census_for_cycle_5 <- pep_int_charagegroups_1990_2000 |>
+  as_tibble() |>
+  mutate(across(c(AGEGRP, HISP, RACE_SEX), as.integer)) |>
+  mutate(
+    RACE_SEX_f = factor(
+      RACE_SEX,
+      levels = 1:8,
+      labels = c(
+        # These are not accurate. I still need to find out what the 8 levels encode.
+        'White male?',
+        'White female?',
+        'Black male?',
+        'Black female?',
+        'Other races male?',
+        'Other races female?',
+        'Other, other races male?',
+        'Other, other races female?'
+      )
+    ),
+    .after = RACE_SEX
+  ) |>
+  mutate(
+    HISP_f = factor(
+      HISP,
+      levels = 0:2,
+      labels = c(
+        'Both Hispanic Origins',
+        'Non-Hispanic',
+        'Hispanic'
+      )
+    ),
+    .after = HISP
+  ) |>
+  rename(
+    AGEGROUP = AGEGRP
+  ) |>
+  mutate(
+    AGEGROUP_f = factor(
+      AGEGROUP,
+      levels = 1:18,
+      labels = c(
+        # This is also incorrect. I took this from the AGEGROUP definition. The 0 value here is not "all ages."
+        "Age 0 to 4 years",
+        "Age 5 to 9 years",
+        "Age 10 to 14 years",
+        "Age 15 to 19 years",
+        "Age 20 to 24 years",
+        "Age 25 to 29 years",
+        "Age 30 to 34 years",
+        "Age 35 to 39 years",
+        "Age 40 to 44 years",
+        "Age 45 to 49 years",
+        "Age 50 to 54 years",
+        "Age 55 to 59 years",
+        "Age 60 to 64 years",
+        "Age 65 to 69 years",
+        "Age 70 to 74 years",
+        "Age 75 to 79 years",
+        "Age 80 to 84 years",
+        "Age 85 years and older"
+      )
+    ),
+    .after = AGEGROUP
+  ) |>
+  mutate(
+    SEX = case_when(
+      grepl('female', RACE_SEX_f) ~ 2,
+      grepl('male', RACE_SEX_f) ~ 1
+    ),
+    SEX_f = factor(
+      SEX,
+      levels = 0:2,
+      labels = c(
+        'Both Sexes',
+        'Male',
+        'Female'
+      )
+    ),
+    race_ethn = case_when(
+      HISP == 1 & grepl('[Bb]lack', RACE_SEX_f) ~ 1,
+      HISP == 2 ~ 2,
+      HISP == 1 ~ 3,
+    ),
+    race_ethn_f = factor(
+      race_ethn,
+      labels = c(
+        'Non-Hispanic Black',
+        'Hispanic',
+        'Non-Hispanic Non-Black'
+      )
+    ),
+    .before = AGEGROUP
+  ) |>
+  group_by(SEX, SEX_f, race_ethn, race_ethn_f, AGEGROUP, AGEGROUP_f) |>
+  summarize(pop = sum(POP), .groups = 'drop') |>
+  filter(AGEGROUP %in% 4:9) |>
+  mutate(survey = 'Cycle 5', .before = everything())
+
+census_for_cycle_5 |>
+  select(ends_with('_f'), pop) |>
+  gt() |>
+  fmt_number(decimals = 0)
+```
+
+
 ### Cycle 4
 
 ```{r process-census-counts-for-cycle-4}
@@ -686,6 +818,7 @@ census_combined <- bind_rows(
     census_for_2011_2015,
     census_for_2006_2010,
     census_for_cycle_6,
+    census_for_cycle_5,
     census_for_cycle_4
   ) |>
   mutate(
@@ -710,7 +843,7 @@ saveRDS(census_combined, here('data/Census/combined_pep.Rds'))
 ```{r summarize-final-table, dependson="combine-census-counts"}
 census_combined |>
   filter(is.na(UNIVERSE) | UNIVERSE == 'R') |>
-  select(ends_with('_f'), pop) |>
+  select(!starts_with('UNIVERSE') & ends_with('_f'), pop) |>
   pivot_wider(
     names_from = survey_f,
     values_from = pop,
