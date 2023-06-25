@@ -88,8 +88,8 @@ census2000_2010 |>
 * The Cycle 5 NSFG User's Guide does not specify what variables were used for post-stratification. The same variables as other surveys, i.e., age group, race, and Hispanic origin, will be used here. (Sex will necessarily be used because Cycle 4 only surveyed women.)
 * While there is a web page defining the encoding of the 2000-2010 Intercensals, there does not appear to be on for 1990-2000. It might be safe to assume that variable encoding did not change between 1990-2000 and 2000-2010, but that leaves the encoding of `RACE_SEX` to be a mystery.
 
-```{r get-int_charagegroups-1990-2000, dependson="check-api-key"}
-int_charagegroups1990_2000_state02 <- getCensus(
+```{r get-pep-int-charagegroups-1990-2000, dependson="check-api-key"}
+pep_int_charagegroups1990_2000_state02 <- getCensus(
   name = 'pep/int_charagegroups',
   vars = c(
     'POP', 'YEAR', 'AGEGRP', 'RACE_SEX', 'HISP', 'SUMLEV'
@@ -99,23 +99,23 @@ int_charagegroups1990_2000_state02 <- getCensus(
   vintage = '1990'
 )
 
-int_charagegroups1990_2000_state02 |>
+pep_int_charagegroups1990_2000_state02 |>
   select(YEAR) |>
   distinct()
 
-int_charagegroups1990_2000_state02 |>
+pep_int_charagegroups1990_2000_state02 |>
   select(AGEGRP) |>
   distinct()
 
-int_charagegroups1990_2000_state02 |>
+pep_int_charagegroups1990_2000_state02 |>
   select(RACE_SEX) |>
   distinct()
 
-int_charagegroups1990_2000_state02 |>
+pep_int_charagegroups1990_2000_state02 |>
   select(HISP) |>
   distinct()
 
-int_charagegroups1990_2000_state02 |>
+pep_int_charagegroups1990_2000_state02 |>
   select(SUMLEV) |>
   distinct()
 ```
@@ -297,7 +297,7 @@ process_pep_natmonthly <- function(these_data) {
 
 ### 2015-2019
 
-```{r process-census-counts-for-2015-2019, dependson="define-pep-natmonthly-functions"}
+```{r download-pep-natmonthly-91}
 pep_natmonthly_91 <- getCensus(
     name = 'pep/natmonthly',
     vars = c(
@@ -315,7 +315,11 @@ pep_natmonthly_91 <- getCensus(
   )
 
 pep_natmonthly_91_date <- unique(pull(pep_natmonthly_91, MONTHLY_DESC))
+```
 
+Date: `r pep_natmonthly_91_date`
+
+```{r process-census-counts-for-2015-2019, dependson=c("define-pep-natmonthly-functions", "download-pep-natmonthly-91")}
 process_pep_natmonthly(pep_natmonthly_91) |>
   filter(UNIVERSE == 'R' & SEX != 0) |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
@@ -323,12 +327,10 @@ process_pep_natmonthly(pep_natmonthly_91) |>
   fmt_number(decimals = 0)
 ```
 
-Date: `r pep_natmonthly_91_date`
-
 
 ### 2011-2015
 
-```{r process-census-counts-for-2011-2015, dependson="define-pep-natmonthly-functions"}
+```{r download-pep-natmonthly-43}
 pep_natmonthly_43 <- getCensus(
     name = 'pep/natmonthly',
     vars = c(
@@ -346,15 +348,17 @@ pep_natmonthly_43 <- getCensus(
   )
 
 pep_natmonthly_43_date <- unique(pull(pep_natmonthly_43, MONTHLY_DESC))
+```
 
+Date: `r pep_natmonthly_43_date`
+
+```{r process-census-counts-for-2011-2015, dependson=c("define-pep-natmonthly-functions", "download-pep-natmonthly-43")}
 process_pep_natmonthly(pep_natmonthly_43) |>
   filter(UNIVERSE == 'R' & SEX != 0) |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
 ```
-
-Date: `r pep_natmonthly_43_date`
 
 
 ### 2006-2010
@@ -505,8 +509,8 @@ process_pep_int_charagegroups <- function(these_data) {
 ```
 
 
-```{r download-pet-int-charagegroups-2000-2010}
-int_charagegroups_2000_2010 <- getCensus(
+```{r download-pep-int-charagegroups-2000-2010}
+pep_int_charagegroups_2000_2010 <- getCensus(
   name = 'pep/int_charagegroups',
   vars = c(
     'UNIVERSE',
@@ -521,44 +525,44 @@ int_charagegroups_2000_2010 <- getCensus(
   region = 'us:1',
   vintage = '2000'
 )
+
+pep_int_charagegroups_10_date <- pep_int_charagegroups_2000_2010 |>
+  filter(DATE_ == 10) |>
+  pull(DATE_DESC) |>
+  unique()
+
+pep_int_charagegroups_4_date <- pep_int_charagegroups_2000_2010 |>
+  filter(DATE_ == 4) |>
+  pull(DATE_DESC) |>
+  unique()
 ```
 
-```{r process-census-counts-for-2006-2010, dependson=c("define-pep-int-charagegroups-functions", "download-pet-int-charagegroups-2000-2010")}
-int_charagegroups_2000_2010 |>
+Date: `r pep_int_charagegroups_10_date`
+
+```{r process-census-counts-for-2006-2010, dependson=c("define-pep-int-charagegroups-functions", "download-pep-int-charagegroups-2000-2010")}
+pep_int_charagegroups_2000_2010 |>
   filter(DATE_ == 10) |>
   process_pep_int_charagegroups() |>
   filter(UNIVERSE == 'R' & SEX != 0 & AGEGROUP %in% 4:9) |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
-
-int_charagegroups_10_date <- int_charagegroups_2000_2010 |>
-  filter(DATE_ == 10) |>
-  pull(DATE_DESC) |>
-  unique()
 ```
-
-Date: `r int_charagegroups_10_date`
 
 
 ### Cycle 6
 
-```{r process-census-counts-for-cycle-6, dependson=c("define-pep-int-charagegroups-functions", "download-pet-int-charagegroups-2000-2010")}
-int_charagegroups_2000_2010 |>
+Date: `r pep_int_charagegroups_4_date`
+
+```{r process-census-counts-for-cycle-6, dependson=c("define-pep-int-charagegroups-functions", "download-pep-int-charagegroups-2000-2010")}
+pep_int_charagegroups_2000_2010 |>
   filter(DATE_ == 4) |>
   process_pep_int_charagegroups() |>
   filter(UNIVERSE == 'R' & SEX != 0 & AGEGROUP %in% 4:9) |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
-
-int_charagegroups_4_date <- int_charagegroups_2000_2010 |>
-  filter(DATE_ == 4) |>
-  pull(DATE_DESC) |>
-  unique()
 ```
-
-Date: `r int_charagegroups_4_date`
 
 
 ### Cycle 4
