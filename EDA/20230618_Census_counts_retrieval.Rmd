@@ -707,3 +707,17 @@ census_combined <- bind_rows(
 saveRDS(census_combined, here('data/Census/combined_pep.Rds'))
 ```
 
+```{r summarize-final-table, dependson="combine-census-counts"}
+census_combined |>
+  filter(is.na(UNIVERSE) | UNIVERSE == 'R') |>
+  select(ends_with('_f'), pop) |>
+  pivot_wider(
+    names_from = survey_f,
+    values_from = pop,
+    names_prefix = 'pop_'
+  ) |>
+  select(SEX_f, race_ethn_f, race_f, AGEGROUP_f, starts_with('pop')) |>
+  arrange(SEX_f, AGEGROUP_f, race_ethn_f, race_f) |>
+  gt() |>
+  fmt_number(decimal = 0)
+```
