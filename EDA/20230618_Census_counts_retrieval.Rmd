@@ -290,7 +290,8 @@ process_pep_natmonthly <- function(these_data) {
     ) |>
     select(-AGE, -age_group) |>
     group_by(UNIVERSE, UNIVERSE_f, SEX, SEX_f, race_ethn, race_ethn_f, AGEGROUP, AGEGROUP_f) |>
-    summarize(pop = sum(POP), .groups = 'drop')
+    summarize(pop = sum(POP), .groups = 'drop') |>
+    filter(SEX != 0)
 }
 ```
 
@@ -320,8 +321,11 @@ pep_natmonthly_91_date <- unique(pull(pep_natmonthly_91, MONTHLY_DESC))
 Date: `r pep_natmonthly_91_date`
 
 ```{r process-census-counts-for-2015-2019, dependson=c("define-pep-natmonthly-functions", "download-pep-natmonthly-91")}
-process_pep_natmonthly(pep_natmonthly_91) |>
-  filter(UNIVERSE == 'R' & SEX != 0) |>
+census_for_2015_2019 <- process_pep_natmonthly(pep_natmonthly_91) |>
+  mutate(survey = '2015-2019', .before = everything())
+
+census_for_2015_2019 |>
+  filter(UNIVERSE == 'R') |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
@@ -353,8 +357,11 @@ pep_natmonthly_43_date <- unique(pull(pep_natmonthly_43, MONTHLY_DESC))
 Date: `r pep_natmonthly_43_date`
 
 ```{r process-census-counts-for-2011-2015, dependson=c("define-pep-natmonthly-functions", "download-pep-natmonthly-43")}
-process_pep_natmonthly(pep_natmonthly_43) |>
-  filter(UNIVERSE == 'R' & SEX != 0) |>
+census_for_2011_2015 <- process_pep_natmonthly(pep_natmonthly_43) |>
+  mutate(survey = '2011-2015', .before = everything())
+
+census_for_2011_2015 |>
+  filter(UNIVERSE == 'R') |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
@@ -504,7 +511,8 @@ process_pep_int_charagegroups <- function(these_data) {
     ) |>
     decompose_race_ethn_by_agegroup() |>
     group_by(UNIVERSE, UNIVERSE_f, SEX, SEX_f, race_ethn, race_ethn_f, AGEGROUP, AGEGROUP_f) |>
-    summarize(pop = sum(POP), .groups = 'drop')
+    summarize(pop = sum(POP), .groups = 'drop') |>
+    filter(SEX != 0 & AGEGROUP %in% 4:9)
 }
 ```
 
@@ -540,10 +548,12 @@ pep_int_charagegroups_4_date <- pep_int_charagegroups_2000_2010 |>
 Date: `r pep_int_charagegroups_10_date`
 
 ```{r process-census-counts-for-2006-2010, dependson=c("define-pep-int-charagegroups-functions", "download-pep-int-charagegroups-2000-2010")}
-pep_int_charagegroups_2000_2010 |>
+census_for_2006_2010 <- pep_int_charagegroups_2000_2010 |>
   filter(DATE_ == 10) |>
   process_pep_int_charagegroups() |>
-  filter(UNIVERSE == 'R' & SEX != 0 & AGEGROUP %in% 4:9) |>
+  mutate(survey = '2006-2010', .before = everything())
+
+census_for_2006_2010 |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
@@ -555,10 +565,12 @@ pep_int_charagegroups_2000_2010 |>
 Date: `r pep_int_charagegroups_4_date`
 
 ```{r process-census-counts-for-cycle-6, dependson=c("define-pep-int-charagegroups-functions", "download-pep-int-charagegroups-2000-2010")}
-pep_int_charagegroups_2000_2010 |>
+census_for_cycle_6 <- pep_int_charagegroups_2000_2010 |>
   filter(DATE_ == 4) |>
   process_pep_int_charagegroups() |>
-  filter(UNIVERSE == 'R' & SEX != 0 & AGEGROUP %in% 4:9) |>
+  mutate(survey = 'Cycle 6', .before = everything())
+
+census_for_cycle_6 |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
@@ -567,13 +579,11 @@ pep_int_charagegroups_2000_2010 |>
 
 ### Cycle 4
 
-```{r process-cycle-4}
-raw_1986 <- read_csv(
-  here('data/Census/pe-02-1986_processed.csv'),
-  show_col_types = FALSE
-)
-
-raw_1986 |>
+```{r process-census-counts-for-cycle-4}
+census_for_cycle_4 <- read_csv(
+    here('data/Census/pe-02-1986_processed.csv'),
+    show_col_types = FALSE
+  ) |>
   select(-YEAR, -FIPS) |>
   group_by(race_sex) |>
   summarize(across(everything(), sum)) |>
@@ -659,7 +669,41 @@ raw_1986 |>
   filter(!is.na(AGEGROUP)) |>
   group_by(SEX, SEX_f, race, race_f, AGEGROUP, AGEGROUP_f) |>
   summarize(pop = sum(pop), .groups = 'drop') |>
+  mutate(survey = 'Cycle 4', .before = everything())
+
+census_for_cycle_4 |>
   select(SEX_f, race_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
 ```
+
+
+## Final, Combined Data Table
+
+```{r combine-census-counts, dependson=c("process-census-counts-for-2015-2019", "process-census-counts-for-2011-2015", "process-census-counts-for-2006-2010", "process-census-counts-for-cycle-6", "process-census-counts-for-cycle-4")}
+census_combined <- bind_rows(
+    census_for_2015_2019,
+    census_for_2011_2015,
+    census_for_2006_2010,
+    census_for_cycle_6,
+    census_for_cycle_4
+  ) |>
+  mutate(
+    survey_f = factor(
+      survey,
+      ordered = TRUE,
+      levels = c(
+        '2015-2019',
+        '2011-2015',
+        '2006-2010',
+        'Cycle 6',
+        'Cycle 5',
+        'Cycle 4'
+      )
+    ),
+    .after = survey
+  )
+
+saveRDS(census_combined, here('data/Census/combined_pep.Rds'))
+```
+
