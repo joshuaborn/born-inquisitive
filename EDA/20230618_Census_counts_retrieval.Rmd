@@ -13,7 +13,9 @@ output:
 library(censusapi)
 library(dplyr)
 library(gt)
+library(here)
 library(knitr)
+library(readr)
 library(tidyr)
 
 opts_chunk$set(
@@ -236,10 +238,58 @@ process_pep_natmonthly <- function(these_data) {
         AGE,
         breaks = c(14, 19, 24, 29, 34, 39, 44, 49),
         labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
+      ),
+      AGEGROUP = case_match(
+        age_group,
+        '15-19' ~ 4,
+        '20-24' ~ 5,
+        '25-29' ~ 6,
+        '30-34' ~ 7,
+        '35-39' ~ 8,
+        '40-44' ~ 9,
+        '45-49' ~ 10
+      ),
+      AGEGROUP_f = factor(
+        AGEGROUP,
+        levels = 0:31,
+        labels = c(
+          "All ages",
+          "Age 0 to 4 years",
+          "Age 5 to 9 years",
+          "Age 10 to 14 years",
+          "Age 15 to 19 years",
+          "Age 20 to 24 years",
+          "Age 25 to 29 years",
+          "Age 30 to 34 years",
+          "Age 35 to 39 years",
+          "Age 40 to 44 years",
+          "Age 45 to 49 years",
+          "Age 50 to 54 years",
+          "Age 55 to 59 years",
+          "Age 60 to 64 years",
+          "Age 65 to 69 years",
+          "Age 70 to 74 years",
+          "Age 75 to 79 years",
+          "Age 80 to 84 years",
+          "Age 85 years and older",
+          "Under 18 years",
+          "5 to 13 years",
+          "14 to 17 years",
+          "18 to 64 years",
+          "18 to 24 years",
+          "25 to 44 years",
+          "45 to 64 years",
+          "65 years and over",
+          "85 years and over",
+          "16 years and over",
+          "18 years and over",
+          "15 to 44 years",
+          "Median age"
+        )
       )
     ) |>
-    select(-AGE) |>
-    group_by(UNIVERSE, UNIVERSE_f, SEX, SEX_f, race_ethn, race_ethn_f, age_group) |>
+    select(-AGE, -age_group) |>
+    group_by(UNIVERSE, UNIVERSE_f, SEX, SEX_f, race_ethn, race_ethn_f, AGEGROUP, AGEGROUP_f) |>
     summarize(pop = sum(POP), .groups = 'drop')
 }
 ```
@@ -268,7 +318,7 @@ pep_natmonthly_91_date <- unique(pull(pep_natmonthly_91, MONTHLY_DESC))
 
 process_pep_natmonthly(pep_natmonthly_91) |>
   filter(UNIVERSE == 'R' & SEX != 0) |>
-  select(SEX_f, race_ethn_f, age_group, pop) |>
+  select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
 ```
@@ -299,7 +349,7 @@ pep_natmonthly_43_date <- unique(pull(pep_natmonthly_43, MONTHLY_DESC))
 
 process_pep_natmonthly(pep_natmonthly_43) |>
   filter(UNIVERSE == 'R' & SEX != 0) |>
-  select(SEX_f, race_ethn_f, age_group, pop) |>
+  select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
 ```
@@ -513,13 +563,99 @@ Date: `r int_charagegroups_4_date`
 
 ### Cycle 4
 
-```{r}
-raw_1986 <- read_csv(here('data/Census/pe-02-1986_processed.csv'))
+```{r process-cycle-4}
+raw_1986 <- read_csv(
+  here('data/Census/pe-02-1986_processed.csv'),
+  show_col_types = FALSE
+)
+
 raw_1986 |>
   select(-YEAR, -FIPS) |>
   group_by(race_sex) |>
   summarize(across(everything(), sum)) |>
   pivot_longer(-race_sex, names_to = 'age_group', values_to = 'pop') |>
+  mutate(
+    race = if_else(
+      grepl('Black', race_sex),
+      1,
+      2
+    ),
+    race_f = factor(
+      race,
+      levels = 1:2,
+      labels = c(
+        'Black',
+        'Non-Black'
+      )
+    ),
+    SEX = case_when(
+      grepl('female', race_sex) ~ 2,
+      grepl('male', race_sex) ~ 1
+    ),
+    SEX_f = factor(
+      SEX,
+      levels = 0:2,
+      labels = c(
+        'Both Sexes',
+        'Male',
+        'Female'
+      )
+    ),
+    AGEGROUP = case_match(
+      age_group,
+      '15_to_19' ~ 4,
+      '20_to_24' ~ 5,
+      '25_to_29' ~ 6,
+      '30_to_34' ~ 7,
+      '35_to_39' ~ 8,
+      '40_to_44' ~ 9,
+      '45_to_49' ~ 10,
+      '50_to_54' ~ 11,
+      '55_to_59' ~ 12
+    ),
+    AGEGROUP_f = factor(
+      AGEGROUP,
+      levels = 0:31,
+      labels = c(
+        "All ages",
+        "Age 0 to 4 years",
+        "Age 5 to 9 years",
+        "Age 10 to 14 years",
+        "Age 15 to 19 years",
+        "Age 20 to 24 years",
+        "Age 25 to 29 years",
+        "Age 30 to 34 years",
+        "Age 35 to 39 years",
+        "Age 40 to 44 years",
+        "Age 45 to 49 years",
+        "Age 50 to 54 years",
+        "Age 55 to 59 years",
+        "Age 60 to 64 years",
+        "Age 65 to 69 years",
+        "Age 70 to 74 years",
+        "Age 75 to 79 years",
+        "Age 80 to 84 years",
+        "Age 85 years and older",
+        "Under 18 years",
+        "5 to 13 years",
+        "14 to 17 years",
+        "18 to 64 years",
+        "18 to 24 years",
+        "25 to 44 years",
+        "45 to 64 years",
+        "65 years and over",
+        "85 years and over",
+        "16 years and over",
+        "18 years and over",
+        "15 to 44 years",
+        "Median age"
+      )
+    )
+  ) |> 
+  filter(!is.na(AGEGROUP)) |>
+  group_by(SEX, SEX_f, race, race_f, AGEGROUP, AGEGROUP_f) |>
+  summarize(pop = sum(pop), .groups = 'drop') |>
+  select(SEX_f, race_f, AGEGROUP_f, pop) |>
   gt() |>
   fmt_number(decimals = 0)
 ```
