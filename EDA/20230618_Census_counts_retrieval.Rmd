@@ -612,15 +612,14 @@ census_for_cycle_5 <- pep_int_charagegroups_1990_2000 |>
       RACE_SEX,
       levels = 1:8,
       labels = c(
-        # These are not accurate. I still need to find out what the 8 levels encode.
-        'White male?',
-        'White female?',
-        'Black male?',
-        'Black female?',
-        'Other races male?',
-        'Other races female?',
-        'Other, other races male?',
-        'Other, other races female?'
+        'White male',
+        'White female',
+        'Black male',
+        'Black female',
+        'American Indian or Alaska Native male',
+        'American Indian or Alaska Native female',
+        'Asian or Pacific Islander male',
+        'Asian or Pacific Islander female'
       )
     ),
     .after = RACE_SEX
@@ -637,15 +636,16 @@ census_for_cycle_5 <- pep_int_charagegroups_1990_2000 |>
     ),
     .after = HISP
   ) |>
-  rename(
-    AGEGROUP = AGEGRP
-  ) |>
   mutate(
+    AGEGROUP = if_else(
+      AGEGRP == 0,
+      1,
+      AGEGRP
+    ),
     AGEGROUP_f = factor(
       AGEGROUP,
       levels = 1:18,
       labels = c(
-        # This is also incorrect. I took this from the AGEGROUP definition. The 0 value here is not "all ages."
         "Age 0 to 4 years",
         "Age 5 to 9 years",
         "Age 10 to 14 years",
