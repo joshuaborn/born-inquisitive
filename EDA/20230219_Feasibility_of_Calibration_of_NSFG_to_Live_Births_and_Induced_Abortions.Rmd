@@ -1299,3 +1299,21 @@ years_assignment |>
     decimals = 1
   )
 ```
+
+
+## Number of Induced Abortions in Extremal Age Groups
+
+```{r extremal-age-range-counts, dependson="load-data"}
+guttmacher_raw |>
+  filter(state == 'US') |>
+  mutate(
+    abortions1519 = abortions1517 + abortions1819,
+    prop_abortionslt15 = abortionslt15 / abortionstotal,
+    prop_abortions1519 = abortions1519 / abortionstotal,
+    prop_abortions40plus = abortions40plus / abortionstotal
+  ) |>
+  select(year, abortionslt15, abortions1519, abortions40plus, starts_with('prop_')) |>
+  gt() |>
+  fmt_percent(starts_with('prop_')) |>
+  fmt_number(starts_with('abortions'), decimal = 0)
+```
