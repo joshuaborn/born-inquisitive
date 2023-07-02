@@ -184,10 +184,9 @@ count_abortions_and_births <- function(tbl) {
   )
 }
 
-
 preg_outcomes2015_2019 <- bind_rows(
-  select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME),
-  select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME)
+  select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG),
+  select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG)
 ) |>
 left_join(
   wgt2011_2019,
@@ -196,7 +195,7 @@ left_join(
 mutate(
   Year = DATEND
 ) |> 
-count_abortions_and_births() |> 
+count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
   ids = SECU,
@@ -204,14 +203,16 @@ as_survey_design(
   nest = TRUE
 )
 
-
 preg_outcomes2011_2015 <- bind_rows(
-  select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME) |>
+  select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG) |>
     mutate(
       # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
       DATEND = as.numeric(DATEND) + 3653
     ), 
-  select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME),
+  select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG),
+) |>
+mutate(
+  AGEPREG = floor(AGEPREG / 100)
 ) |>
 left_join(
   wgt2011_2019,
@@ -227,7 +228,7 @@ mutate(
     "ECTOPIC PREGNANCY" = 5,
     "CURRENT PREGNANCY" = 6
   ))
-) |> 
+) |>
 count_abortions_and_births() |>
 as_survey_design(
   strata = SEST,
@@ -374,7 +375,7 @@ as_survey_design(
 
 
 preg_outcomes2006_2010 <- select(
-  preg2006_2010, SECU, SEST, CASEID, DATEND, OUTCOME, WGTQ1Q16
+  preg2006_2010, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, WGTQ1Q16
 ) |>
 mutate(
   Year = cm_to_year_cycle5(DATEND),
@@ -385,7 +386,8 @@ mutate(
     "MISCARRIAGE" = 4,
     "ECTOPIC PREGNANCY" = 5,
     "CURRENT PREGNANCY" = 6
-  ))
+  )),
+  AGEPREG = floor(AGEPREG / 100)
 ) |> 
 count_abortions_and_births() |>
 as_survey_design(
@@ -397,7 +399,7 @@ as_survey_design(
 
 
 preg_outcomes2002_2003 <- select(
-  preg2002_2003, SECU_P, SEST, CASEID, DATEND, OUTCOME, FINALWGT
+  preg2002_2003, SECU_P, SEST, CASEID, DATEND, OUTCOME, AGEPREG, FINALWGT
 ) |>
 mutate(
   Year = cm_to_year_cycle5(DATEND),
@@ -408,7 +410,8 @@ mutate(
     "MISCARRIAGE" = 4,
     "ECTOPIC PREGNANCY" = 5,
     "CURRENT PREGNANCY" = 6
-  ))
+  )),
+  AGEPREG = floor(AGEPREG / 100)
 ) |>
 count_abortions_and_births() |>
 count_abortions_and_births() |>
@@ -421,7 +424,7 @@ as_survey_design(
 
 
 preg_outcomes1995_1995 <- select(
-  preg1995_1995, PANEL, COL_STR, CASEID, DATEND, OUTCOME, POST_WT
+  preg1995_1995, PANEL, COL_STR, CASEID, DATEND, OUTCOME, AGEPREG, POST_WT
 ) |>
 mutate(
   Year = cm_to_year_cycle5(DATEND),
@@ -433,6 +436,7 @@ mutate(
     "ECTOPIC PREGNANCY" = 5,
     "CURRENT PREGNANCY" = 6
   )),
+  AGEPREG = floor(AGEPREG / 100)
 ) |>
 count_abortions_and_births() |>
 as_survey_design(
@@ -459,7 +463,7 @@ cm_to_year_cycle4 <- function(x) {
 }
 
 preg_outcomes1985_1987 <- select(
-  preg1985_1987, SEQNUM, OUTCOME, B14MO, W_5, starts_with('REP')
+  preg1985_1987, SEQNUM, OUTCOME, AGEPREG, B14MO, W_5, starts_with('REP')
 ) |>
 mutate(
   Year = cm_to_year_cycle4(B14MO),
@@ -474,11 +478,12 @@ mutate(
   across(
     starts_with('REP'),
     ~ .x / 100 # From Codebook: THERE IS AN IMPLIED DECIMAL BEFORE THE LAST TWO DIGITS OF EACH WEIGHT.
-  )
+  ),
+  AGEPREG = floor(AGEPREG / 100)
 ) |>
 count_abortions_and_births() |>
 as_survey_rep(
-  variables = c(OUTCOME, Year, Births, Abortions),
+  variables = c(OUTCOME, AGEPREG, Year, Births, Abortions),
   weights = W_5,
   repweights = starts_with('REP'),
   type = 'BRR'
@@ -1217,34 +1222,34 @@ These are the weights that will have a ~3 times increase during calibration.
 ```{r abortion-outcome-observations, dependson=c("create-survey-objects")}
 abortion_outcomes <- bind_rows(
   preg_outcomes2015_2019$variables |>
-    select(Year, CASEID, Abortions, WGT2015_2019) |>
+    select(Year, CASEID, AGEPREG, Abortions, WGT2015_2019) |>
     rename(Weight = 'WGT2015_2019') |>
     mutate(SurveyLabel = '2015-2019', .before = everything()),
   preg_outcomes2011_2015$variables |>
-    select(Year, CASEID, Abortions, WGT2011_2015) |>
+    select(Year, CASEID, AGEPREG, Abortions, WGT2011_2015) |>
     rename(Weight = 'WGT2011_2015') |>
     mutate(SurveyLabel = '2011-2015', .before = everything()),
   preg_outcomes2006_2010$variables |>
-    select(Year, CASEID, Abortions, WGTQ1Q16) |>
+    select(Year, CASEID, AGEPREG, Abortions, WGTQ1Q16) |>
     rename(Weight = 'WGTQ1Q16') |>
     mutate(SurveyLabel = '2006-2010', .before = everything()),
   preg_outcomes2002_2003$variables |>
     mutate(CASEID = as.numeric(CASEID)) |>
-    select(Year, CASEID, Abortions, FINALWGT) |>
+    select(Year, CASEID, AGEPREG, Abortions, FINALWGT) |>
     rename(Weight = 'FINALWGT') |>
     mutate(SurveyLabel = 'Cycle 6', .before = everything()),
   preg_outcomes1995_1995$variables |>
-    select(Year, CASEID, Abortions, POST_WT) |>
+    select(Year, CASEID, AGEPREG, Abortions, POST_WT) |>
     rename(Weight = 'POST_WT') |>
     mutate(SurveyLabel = 'Cycle 5', .before = everything()),
-  preg1985_1987 |>
+  preg_outcomes1985_1987$variables |>
     mutate(
       Year = cm_to_year_cycle4(B14MO),
       W_5 = W_5 / 100, # From Codebook: IMPLIED DECIMAL BETWEEN POSTIONS 370 AND 371
       Abortions = if_else(OUTCOME == 2, 1, 0)
     ) |>
     select(
-      Year, SEQNUM, Abortions, W_5
+      Year, SEQNUM, AGEPREG, Abortions, W_5
     ) |>
     rename(
       CASEID = 'SEQNUM',
@@ -1257,8 +1262,18 @@ abortion_outcomes <- bind_rows(
       SurveyLabel,
       levels = c('Cycle 4', 'Cycle 5', 'Cycle 6', '2006-2010', '2011-2015', '2015-2019'),
       ordered = TRUE
+    ),
+    age_group = cut(
+      AGEPREG,
+      breaks = c(0, 15, 20, 25, 30, 35, 40, 45, Inf),
+      right = FALSE
     )
   )
+
+abortion_outcomes |>
+  group_by(Survey, AGEPREG, age_group) |>
+  count() |>
+  View()
 
 years_assignment |>
   left_join(abortion_outcomes, by = join_by(Year, SurveyLabel)) |>
@@ -1283,6 +1298,26 @@ years_assignment |>
   left_join(abortion_outcomes, by = join_by(Year, SurveyLabel)) |>
   filter(Abortions == 1) |>
   group_by(Survey, Year) |>
+  summarize(
+    NumberRespondents = n_distinct(CASEID),
+    MedianWeight = median(Weight),
+    MeanWeight = mean(Weight),
+    StdDevWeight = sd(Weight),
+    MinWeight = min(Weight),
+    MaxWeight = max(Weight),
+    .groups = 'drop_last'
+  ) |>
+  arrange(desc(Year)) |>
+  gt() |>
+  fmt_number(
+    ends_with('Weight'),
+    decimals = 1
+  )
+
+years_assignment |>
+  left_join(abortion_outcomes, by = join_by(Year, SurveyLabel)) |>
+  filter(Abortions == 1) |>
+  group_by(Survey, Year, age_group) |>
   summarize(
     NumberRespondents = n_distinct(CASEID),
     MedianWeight = median(Weight),
