@@ -1,5 +1,5 @@
 ---
-title: "Data Set and Universe of Census Counts for Post-Stratification"
+title: "Exploration of U.S. Census Counts for Post-Stratification"
 author: "Joshua Born"
 date: "2023-05-14"
 output:
