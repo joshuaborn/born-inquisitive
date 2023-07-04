@@ -25,27 +25,53 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-One of the things that troubles me about contemporary culture is that the state of discourse is public abominable. Nearly every day I am confronted with more people who are uninformed, have nothing insightful to share, but will nonetheless share their snarky, ignorant [partisan demagoguery](/they-them-those-people-and-the-fallacy-of-partisan-demagoguery.html) with the rest of the world.
+One of the things that troubles me most about contemporary culture is that the state of public discourse is abominable. Nearly every day I am confronted with more people who are uninformed, have nothing insightful to share, but will nonetheless volunteer their snarky, ignorant [partisan demagoguery](/they-them-those-people-and-the-fallacy-of-partisan-demagoguery.html) with the rest of the world.
 
-I am certainly not the first to decry the decline in the quality of public discourse. Jonathan Haidt has made a career as a public intellectual criticizing this decline, and he has attributed much of it to the rise of social media. [@haidt_why_2022]  While the rise of social media might be one causal factor in the decline of public discourse, I notice the decline in my everyday experience even though I scrupulously avoid social media like the plague that it is.
+I am certainly not the first to decry the abysmal state of public discourse. Jonathan Haidt has made a career as a public intellectual criticizing this decline, and he has attributed much of it to the rise of social media. [@haidt_why_2022]  While the rise of social media might be one causal factor in the decline of public discourse, I notice the decline in my everyday experience even though I scrupulously avoid social media like the plague that it is.
 
-In this article I allege that the poverty in the quality of public discourse we are experiencing today is caused, at least in part, by a feature of United States political culture that goes back much farther than the past few decades in which social media has become more salient in public life -- a feature that Jonathan Haidt celebrates rather than censures. Specifically, I believe the rhetoric of "rights" is detrimental to public discourse.
+In this article I allege that the terrible quality of public discourse we are experiencing today is caused, at least in part, by a feature of United States political culture that goes back much farther than the past few decades in which social media has become more salient in public life -- a feature that Jonathan Haidt celebrates rather than censures. Specifically, I believe the rhetoric of "rights" is detrimental to public discourse.
 
 
-* Wisdom of crowds versus madness of crowds
-  * Know own opinion
-    * Value judgments
-    * Relevant facts
-  * Know other, disagreeing opinions
-  * Intrinsic versus instrumental goods
+## What "Rights" Rhetoric Does and Does Not Do
+
+Whoever invokes "rights" rhetoric is making a normative rather than descriptive claim. When someone asserts a right to free speech or to own a firearm or to kill an embryo or fetus, this is not an attempt to share information about what _is_ happening. It is an attempt to assert what _should_ happen.
+
+As I discussed in my [article on moral skepticism](/moral-skepticism.html), normative constructs are fictions.
+
+Perhaps a better way to put construe this is that when you think about rights, rights are ideas you _invent_ because you have a opinion about what should happen. This is different from when someone _discovers_ gravity or stoichiometry or Mendelian inheritance. This is even different from when Christopher Columbus brought back reports of his "discovery" of what would become the Americas.
+
+In both normative and descriptive cases, people are making up ideas. However, in the normative case of "rights" rhetoric, people are inventing an idea that is not trying to describe the world, does not constitute knowledge, does not directly contain any information, and does not even make sense to consider in terms of truth of falsity. In the descriptive case, people are making up ideas because they have encountered some phenomenon and are trying to explain it. These ideas are trying to describe the world, can constitute knowledge if true, are informative if true, and must be evaluated as to their truth or falsity in order to determine their worth.
+
+
+## Laws and Rights
+
+Of course, fictions such as rights are not alien to public life just because they are fictions. The entire field of law is concerned with fictions. Laws are things that people have made up not to describe human society as it _is,_ but to prescribe how things in human society _should_ work. Therefore, all legal constructs are fictions, at least in part.
+
+One of the more famous fictions in the law is that of a corporation, which is defined as a fictitious being. Corporations do not actually exist, but the law pretends they do in order to let them be a litigant in a court case.
+
+If you work as a lawyer, depending on the field of law you practice, you will necessarily be spending your professional time talking about rights and other fictions. Similarly, if you are a legislator, you are necessarily concerned with what laws you are inventing and thus what rights you inventing. Finally, if you are someone who votes for legislators, you might be concerned with what laws they will create and thus what rights they will invent. There is nothing necessarily fallacious about any of this.
+
+The important implication from this is that legal rights are invented along with the invention of laws, and laws are invented by human beings. Therefore, _people invent rights._
+
+
+## Circularity
+
+People invent the fiction of rights by inventing the fiction of laws. The invocation of rights-fictions when discussing what laws should be invented, therefore, is entirely circular.
+
+However, this is exactly what was done during the founding of the United States, which appealed to "Laws of Nature and of Nature's God." Indeed, the philosophy of "natural rights" had been prominent in European political philosophy leading up the American Revolution. Today, similar circularity is invoked when people pontificate on "human rights" as a justification for their desired policy changes.
+
+It should be noted that this fallacy only occurs one way: when rights are invoked to justify the creation of laws. Once the fiction of laws is taken as a given, it is not fallacious to analyze logically what rights-fictions are implied by the law-fictions that have been created.
+
+To remove the medium of laws and put things more broadly, the main fallacy in thinking about fictions such as rights occurs when rights are invoked in order to justify an opinion. People invent the fiction of rights _because_ they have a (prescriptive) opinion. The invention of the rights-fiction does not _justify_ the opinion.
+
+* Marketplace of Ideas versus the Madness of Crowds
+  * Facts in common, even with differing values
+  * Complementary values
+  * Marketplace of ideas
 * How "rights" rhetoric poisons public discourse
-  * Normative, not description, and thus not factual
-  * Loaded term that poisons public discourse with self-righteousness
-  * Inverts instrumental good versus final good, e.g., free speech
-  * Circular argument
-* Two kinds of "rights"
-  * Legal fiction
-  * Complete fantasy, e.g., "human rights"
+  * Loaded term that poisons public discourse with self-righteousness and ignorance of other viewpoints
+  * Obfuscates instrumental good versus final good
+  * Obfuscates differences in values with failure of knowledge
 
 
 ## Citation
