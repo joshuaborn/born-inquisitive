@@ -1,0 +1,4338 @@
+---
+author: "Joshua Born"
+bibliography: "../blog/bibliographies/use-of-contraception-in-the-united-states-2017-2019.bib"
+csl: "../blog/bibliographies/chicago-author-date.csl"
+date: 2022-04-28
+output:
+  bookdown::word_document2:
+summary: "Original research on the number of persons using and not using contraception in the United States, the contraceptive methods being used, and motives for using or discontinuing contraceptive methods."
+tags: ["original research", "reproductive responsibility", "birth control", "NSFG", "third-person"]
+title: "Use of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
+---
+
+```{r setup, include=FALSE}
+library(data.table)
+library(ggplot2)
+library(here)
+library(huxtable)
+library(survey)
+library(tidyfst)
+
+theme_set(
+  theme_bw() + theme(
+    text = element_text(family = 'sans', size = 12)
+  )
+)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi = 72,
+  echo = FALSE,
+  fig.align = 'left',
+  fig.asp = 0.5,
+  fig.retina = 2,
+  fig.width = 8,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+```{r helper-functions}
+tablena <- function(x) {
+  table(x, useNA = 'ifany')
+}
+
+equals <- function(x, y) {
+  !is.na(x) & !is.na(y) & x == y
+}
+
+na_to_false <- function(x) {
+  fifelse(is.na(x), FALSE, x)
+}
+
+has_level <- function(x, ids) {
+  is.element(as.integer(x), ids)
+}
+
+set_mentions_to_booleans <- function(
+  in_dt,
+  out_dt,
+  out_prefix,
+  in_prefix,
+  in_series,
+  indices
+) {
+  in_vars <- paste0(in_prefix, in_series)
+
+  for (x in indices) {
+    set(
+      out_dt,
+      j = paste0(out_prefix, x),
+      value = in_dt[
+        ,
+        lapply(.SD, \(col) has_level(col, x)),
+        .SDcols = in_vars
+      ] |> apply(1, any)
+    )
+  }
+
+  set_count_variable_for_mentions(out_dt, out_prefix)
+}
+
+set_count_variable_for_mentions <- function(dt, prefix) {
+  if (paste(prefix, 'count', sep = '_') %in% colnames(dt)) {
+    dt[
+      ,
+      (paste(prefix, 'count', sep = '_')) := NULL
+    ]
+  }
+  dt[
+    ,
+    (paste(prefix, 'count', sep = '_')) := rowSums(.SD),
+    .SDcols = patterns(paste('^', prefix, sep = ''))
+  ]
+}
+
+create_pivot_table <- function(
+  source_dt,
+  prefix,
+  series,
+  id_vars
+) {
+  dt <- copy(
+    source_dt[
+      ,
+      c(id_vars, paste0(prefix, series)),
+      with = FALSE
+    ]
+  )
+
+  dt <- melt(
+    dt,
+    id.vars = id_vars,
+    variable.factor = FALSE,
+    value.name = prefix
+  )
+
+  dt[
+    ,
+    (paste0(prefix, 'ID')) :=
+      as.integer(sub(prefix, '', variable))
+  ]
+
+  dt[, variable := NULL]
+
+  if (!is.null(id_vars)) {
+    setkeyv(dt, id_vars)
+  }
+
+  dt
+}
+
+century_month_comparison <- function(operator, x, y) {
+  !is.na(x) &
+    x != 9998 &
+    x != 9999 &
+    !is.na(y) &
+    y != 9998 &
+    y != 9999 &
+    operator(x, y)
+}
+
+to_century_month <- function(x) {
+  x_int <- as.integer(x)
+  months <- factor(
+    x_int %% 12,
+    levels = 0:11,
+    labels = c('Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov')
+  )
+  years <- floor((x_int - 1) / 12) + 1900
+  fifelse(
+    x_int > 9000,
+    fcase(
+      x_int == 9997, 'Not ascertained',
+      x_int == 9998, 'Refused',
+      x_int == 9999, "Don't know"
+    ),
+    paste(as.character(months), years)
+  )
+}
+
+names_to_century_month <- function(x) {
+  names(x) <- to_century_month(names(x))
+  x
+}
+
+year_from_century_month <- function(x) {
+  as.integer(sub('^.*([[:digit:]]{4})$', '\\1', x))
+}
+
+get_NSFG_format_indices <- function(formats_table, format, skip = NULL) {
+  idxs <- formats_table[format_name == format, factor_value]
+  if (!is.null(skip)) {
+    idxs[!is.element(idxs, skip)]
+  } else {
+    idxs
+  }
+}
+
+factorize <- function(x, name, formats_table, fill_na = TRUE) {
+  if (fill_na) {
+    nafill_value <- max(formats_table[format_name == name, as.integer(factor_value)]) + 1
+    factor(
+      nafill(x, fill = nafill_value),
+      levels = c(
+        formats_table[format_name == name, factor_value],
+        nafill_value
+      ),
+      labels = c(
+        formats_table[format_name == name, factor_label],
+        'No answer provided'
+      )
+    )
+  } else {
+    factor(
+      x,
+      levels = formats_table[format_name == name, factor_value],
+      labels = formats_table[format_name == name, factor_label]
+    )
+  }
+}
+
+set_NSFG_variables_as_factors <- function(raw_data, dt, formats_table, variables) {
+  for (x in seq(length(variables))) {
+    variable_name <- names(variables)[x]
+    format_name <- variables[x]
+    values <- factorize(
+      raw_data[, get(variable_name)],
+      format_name,
+      formats_table
+    )
+
+    dt[, (variable_name) := ..values]
+  }
+}
+
+plot_with_CIs <- function(
+  data,
+  val_col,
+  reordering = TRUE,
+  scale_factor = 1,
+  label_col = 'description'
+) {
+  if (reordering) {
+    y_expr <- expr(reorder(.data[[label_col]], .data[[val_col]]))
+    y_end_expr <- expr(reorder(.data[[label_col]], .data[[val_col]]))
+  } else {
+    y_expr <- expr(.data[[label_col]])
+    y_end_expr <- expr(.data[[label_col]])
+  }
+  ggplot(
+    data = data,
+    mapping = aes(
+      y = !!y_expr
+    )
+  ) +
+    geom_segment(
+      aes(
+        x = .data[[paste0(val_col, '_CI_low')]] * scale_factor,
+        xend = .data[[paste0(val_col, '_CI_high')]] * scale_factor,
+        yend = !!y_end_expr
+      ),
+      arrow = arrow(angle = 90, ends = 'both', length = unit(0.075, 'inches')),
+      size = 0.5
+    ) +
+    geom_point(
+      aes(
+        x = .data[[val_col]] * scale_factor
+      ),
+      size = 2
+    )
+}
+
+plot_totals_with_CIs <- function(data, reordering = TRUE) {
+  plot_with_CIs(data, 'total', reordering, scale_factor = 10e-7) +
+    scale_y_discrete(
+      labels = scales::wrap_format(50)
+    ) +
+    theme(
+      axis.title.y = element_blank()
+    ) +
+    xlab('Total Persons')
+}
+
+plot_percentages_with_CIs <- function(data, reordering = TRUE) {
+  plot_with_CIs(data, 'percentage', reordering) +
+    scale_x_continuous(
+      labels = scales::label_percent(1),
+      limits = c(0, 1),
+      expand = expansion(mult = c(0, 0.025))
+    ) +
+    scale_y_discrete(
+      labels = scales::wrap_format(50)
+    ) +
+    theme(
+      axis.title = element_blank(),
+      legend.position = 'none'
+    ) +
+    xlab('Percentage of Persons')
+}
+
+load_NSFG_data <- function(years, data_name) {
+  this_list <- list(
+    fread(
+      here(sprintf('data/NSFG/old/%sData_%s.csv', data_name, years)),
+      key = ifelse(data_name == 'FemPreg', c('CASEID', 'PREGORDR'), 'CASEID')
+    ),
+    fread(
+      here(sprintf('data/NSFG/old/%sLabels_%s.csv', data_name, years)),
+      select = c('name', 'label'),
+      key = 'name'
+    ),
+    fread(
+      here(sprintf('data/NSFG/old/%sFormats_%s.csv', data_name, years)),
+      select = c( 'FMTNAME', 'START', 'LABEL'),
+      key = c('FMTNAME', 'START')
+   )
+  )
+
+  setnames(this_list[[2]], c('column_name', 'column_label'))
+  setnames(this_list[[3]], c('format_name', 'factor_value', 'factor_label'))
+
+  names(this_list) <- c('Data', 'Labels', 'Formats')
+
+  this_list
+}
+
+options(huxtable.knit_print_df = FALSE)
+
+theme_article_extra <- function(ht) {
+  header_rows <- which(header_rows(ht))
+  header_cols <- which(header_cols(ht))
+  body_rows <- which(!header_rows(ht))
+  body_cols <- which(!header_cols(ht))
+  ht |>
+    theme_article() |>
+    set_wrap(everywhere, body_cols, FALSE) |>
+    set_align(everywhere, body_cols, 'center') |>
+    set_tb_padding(header_rows, everywhere, 0) |>
+    set_all_padding(body_rows, everywhere, 3) |>
+    set_bold(everywhere, header_cols, FALSE) |>
+    set_left_padding(
+      everywhere,
+      seq(min(body_cols), ncol(ht), 2),
+      16
+    ) |>
+    set_font_size(everywhere, everywhere, 8) |>
+    set_width(1)
+}
+
+conditionally_stripe_rows <- function(ht) {
+  body_rows <- which(!header_rows(ht))
+  if (length(body_rows) > 4) {
+    ht |>
+      set_background_color(
+        stripe(2, min(body_rows) + 1),
+        everywhere,
+        'grey93'
+      )
+  } else {
+    ht
+  }
+}
+
+pretty_millions <- function(x, digits = 2) {
+  formatC(
+    round(x / 10e5, digits = digits),
+    format = 'f',
+    digits = digits
+  )
+}
+
+style_totals_and_percentages <- function(dt, digits = 2) {
+  dt |>
+  mutate_vars('total', \(x) pretty_millions(x, digits)) |>
+  mutate_dt(
+    total = paste0(total, 'M'),
+    total_CI = sprintf(
+      "(%sM, %sM)",
+      total_CI_low,
+      total_CI_high
+    ),
+    percentage_CI = sprintf(
+      "(%0.1f%%, %0.1f%%)",
+      round(100 * percentage_CI_low, digits = 1),
+      round(100 * percentage_CI_high, digits = 1)
+    )
+  ) |>
+  select_dt(description, total, total_CI, percentage, percentage_CI) |>
+  as_huxtable() |>
+  set_number_format(everywhere, 'percentage', fmt_percent(1)) |>
+  set_contents(1, everywhere, c('', rep(c('Est.', '95% C.I.'), 2))) |>
+  insert_row('', 'Total', '', 'Percentage', '', after = 0) |>
+  merge_cells(1, 2:3) |>
+  merge_cells(1, 4:5) |>
+  set_header_rows(1:2, TRUE) |>
+  set_header_cols(1, TRUE) |>
+  theme_article_extra() |>
+  conditionally_stripe_rows()
+}
+
+combine_huxtables_vertically <- function(label1, ht1, label2, ht2) {
+  if (!all.equal(ht1[header_rows(ht1),], ht2[header_rows(ht2),])) {
+    stop('huxtables do not have identical headers and cannot be combined vertically')
+  }
+  ht <- rbind(
+    ht1,
+    ht2[!header_rows(ht2), ]
+  )
+  body_rows1 <- which(!header_rows(ht1))
+  body_rows2 <- which(!header_rows(ht2))
+  body_start_index1 <- min(body_rows1)
+  body_start_index2 <- max(body_rows1) + 1
+  label_column <- rep('', nrow(ht))
+  label_column[body_start_index1] <- label1
+  label_column[body_start_index2] <- label2
+  header_column_index <- 1
+  old_header_columns <- names(header_cols(ht))[header_cols(ht)]
+  insert_column(ht, label_column) |>
+    set_header_cols(header_column_index, TRUE) |>
+    style_header_cols(valign = 'middle') |>
+    set_rowspan(
+      body_start_index1,
+      header_column_index,
+      length(body_rows1)
+    ) |>
+    set_rowspan(
+      body_start_index2,
+      header_column_index,
+      length(body_rows2)
+    ) |>
+    theme_article_extra() |>
+    set_bold(everywhere, header_column_index, TRUE) |>
+    set_right_padding(everywhere, header_column_index, 12) |>
+    set_top_border(body_start_index2, everywhere)
+}
+
+style_and_combine_totals_and_percentages_vertically <- function(
+  label1, estimate1, label2, estimate2, digits = 2
+) {
+  combine_huxtables_vertically(
+    label1,
+    style_totals_and_percentages(estimate1, digits = digits),
+    label2,
+    style_totals_and_percentages(estimate2, digits = digits)
+  )
+}
+
+combine_huxtables_horizontally <- function(label1, ht1, label2, ht2) {
+  if (!all.equal(ht2[, header_cols(ht2)], ht1[, header_cols(ht1)])) {
+    stop('huxtables do not have identical header columns and cannot be combined horizontally')
+  }
+  body_cols1 <- which(!header_cols(ht1))
+  body_cols2 <- which(!header_cols(ht2))
+  body_start_index1 <- min(body_cols1)
+  body_start_index2 <- max(body_cols1) + 1
+  superheader_row <- rep('', ncol(ht1) + sum(!header_cols(ht2)))
+  superheader_row[body_start_index1] <- label1
+  superheader_row[body_start_index2] <- label2
+  cbind(
+    ht1,
+    ht2[, which(!header_cols(ht2))]
+  ) |>
+    insert_row(superheader_row, after = 0) |>
+    set_header_rows(1, TRUE) |>
+    set_colspan(
+      1,
+      body_start_index1,
+      length(body_cols1)
+    ) |>
+    set_colspan(
+      1,
+      body_start_index2,
+      length(body_cols2)
+    ) |>
+    theme_article_extra() |>
+    set_left_border(everywhere, body_start_index1) |>
+    set_left_padding(everywhere, body_start_index1, 4) |>
+    set_left_border(everywhere, body_start_index2) |>
+    set_left_padding(everywhere, body_start_index2, 4)
+}
+
+style_and_combine_totals_and_percentages_horizontally <- function(
+  label1, estimate1, label2, estimate2, digits = 2
+) {
+  combine_huxtables_horizontally(
+    label1,
+    style_totals_and_percentages(estimate1, digits = digits),
+    label2,
+    style_totals_and_percentages(estimate2, digits = digits)
+  )
+}
+
+estimate_totals_and_percentages <- function(f, svy) {
+  totals <- svytotal(f, svy)
+  totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
+  names(totals_ci) <- c('total_CI_low', 'total_CI_high')
+  percentages <- svymean(f, svy)
+  percentages_ci <- as.data.frame(confint(percentages, df = degf(svy)))
+  names(percentages_ci) <- c('percentage_CI_low', 'percentage_CI_high')
+  level_prefix <- as.character(f)
+  level_prefix <- level_prefix[seq(2, length(level_prefix))]
+
+  cbind(
+    data.table(
+      description = sub(level_prefix, '', names(totals), fixed = TRUE),
+      total = as.vector(totals)
+    ),
+    totals_ci,
+    data.table(
+      percentage = as.vector(percentages)
+    ),
+    percentages_ci
+  )
+}
+
+estimate_mean <- function(f, svy) {
+  y <- svymean(f, svy)
+  y_ci <- as.data.frame(confint(y, df = degf(svy)))
+  names(y_ci) <- c('CI_low', 'CI_high')
+
+  cbind(
+    data.table(
+      description = names(y),
+      mean = as.vector(y)
+    ),
+    y_ci
+  )
+}
+
+estimate_row_total_and_percentage <- function(f, svy) {
+  totals <- svytotal(f, svy)
+  totals_ci <- as.data.frame(confint(totals, df = degf(svy)))
+  names(totals_ci) <- c('total_CI_low', 'total_CI_high')
+  totals_df <- cbind(totals, totals_ci)
+  level_prefix <- as.character(f)
+  level_prefix <- level_prefix[seq(2, length(level_prefix))]
+  rownames(totals_df) <- sub(level_prefix, '', rownames(totals_df), fixed = TRUE)
+  totals_df <- totals_df[rownames(totals_df) == 'TRUE', -2]
+  if (nrow(svy) > 0) {
+    percentage <- svyciprop(f, svy)
+    percentage_ci <- as.data.frame(confint(percentage, df = degf(svy)))
+    names(percentage_ci) <- c('percentage_CI_low', 'percentage_CI_high')
+    as.data.table(cbind(
+      totals_df,
+      data.table(
+        percentage = as.vector(percentage)
+      ),
+      percentage_ci
+    ))
+  } else {
+    as.data.table(cbind(
+      totals_df,
+      data.table(
+        percentage = 0,
+        percentage_CI_low = NaN,
+        percentage_CI_high = NaN
+      )
+    ))
+  }
+}
+
+estimate_mentions <- function(
+  survey_design,
+  prefix,
+  indices
+) {
+  estimates <- rbindlist(lapply(
+    indices,
+    function(x) {
+      tryCatch(
+        expr = {
+          row <- estimate_row_total_and_percentage(
+            as.formula(paste0('~', prefix, x)),
+            survey_design
+          )
+          row[, description := x]
+          row
+        },
+        error = function(err) {
+          message(paste('Error with row', x, ':', err))
+        }
+      )
+    }
+  ))
+}
+
+estimate_mentions_in_subdomains <- function(row_estimation_function, indices) {
+  estimates <- rbindlist(lapply(
+    indices,
+    function(x) {
+      row <- row_estimation_function(x)
+      row[, description := x]
+      row
+    }
+  ))
+}
+
+estimate_NSFG_mentions <- function(
+  formats_table,
+  survey_design,
+  prefix,
+  format,
+  skip = NULL
+) {
+  estimates <- estimate_mentions(
+    survey_design,
+    prefix, 
+    get_NSFG_format_indices(formats_table, format, skip)
+  )
+  estimates[, description := factorize(description, format, formats_table)]
+  estimates
+}
+
+estimate_NSFG_mentions_in_subdomains <- function(
+  formats_table,
+  row_estimation_function,
+  format,
+  skip = NULL
+) {
+  estimates <- estimate_mentions_in_subdomains(
+    row_estimation_function,
+    get_NSFG_format_indices(formats_table, format, skip)
+  )
+  estimates[, description := factorize(description, format, formats_table)]
+  estimates
+}
+```
+
+```{r load-data}
+fem1719 <- load_NSFG_data('2017_2019', 'FemResp')
+fem1719dt <- copy(fem1719$Data)
+male1719 <- load_NSFG_data('2017_2019', 'Male')
+male1719dt <- copy(male1719$Data)
+```
+
+```{r process-fem-data, dependson='load-data'}
+get_NSFG_survey_design <- function(dt) {
+  svydesign(
+    ids = ~SECU,
+    strata = ~SEST,
+    data = dt,
+    nest = TRUE,
+    weights = ~WGT2017_2019
+  )
+}
+
+fem1719formats <- rbindlist(list(
+  fem1719$Formats,
+  # Include missing level 13 for WHYNOTPGF format.
+  data.table(
+    format_name = 'WHYNOTPGF',
+    factor_value = 13,
+    factor_label = 'No menstrual cycle or menstrual irregularity'
+  ),
+  # Create custom format encoding for ever_used_method series from METHHXF and OTHRMETHF.
+  fem1719$Formats[
+    (
+      format_name == 'METHHXF' &
+        factor_value %in% c(3:18, 20:21, 25:26, 98:99)
+    ) | (
+      format_name == 'OTHRMETHF' &
+        factor_value == 24
+    ),
+    .(
+      format_name = 'ever_used_method',
+      factor_value,
+      factor_label
+    )
+  ],
+  data.table(
+    format_name = 'ever_used_method',
+    factor_value = c(31:33),
+    factor_label = c(
+      'Copper-bearing IUD (such as Copper-T or ParaGard)',
+      'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)',
+      'Other or unknown IUD'
+    )
+  )
+))
+setkey(fem1719formats, format_name, factor_value)
+
+
+## Make IF VOLUNTEERED: text in factor labels not all caps.
+fem1719formats[,
+  factor_label := gsub(
+    "(.?If volunteered:.?\\s?)(.*)",
+    'If volunteered: \\2',
+    factor_label,
+    ignore.case = TRUE
+  )
+]
+
+
+## Start working female respondents data table.
+fem1719dt <- copy(fem1719$Data[, .(
+  AGE_R,
+  CASEID,
+  DATFEMOP_Y,
+  INTVWYEAR,
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
+
+
+## Copy variables to working data table and set them to factors.
+set_NSFG_variables_as_factors(
+  fem1719$Data,
+  fem1719dt,
+  fem1719formats,
+  variables = c(
+    ATTRACT = 'ATTRACT',
+    CONDVAG = 'YESNONAF',
+    CONSTAT1 = 'CONSTATF',
+    CURRMETH1 = 'METHHXF',
+    CURRPREG = 'Y1N5C',
+    EVERUSED = 'YESNONAF',
+    HADSEX = 'HADSEX',
+    HPPREGQ = 'HPPREGQ',
+    IUDTYPE = 'IUDTYPE',
+    LSEXPREG = 'Y1N2RECF',
+    MISSPILL = 'MISSPILL',
+    P12MOCON = 'P12MOCON',
+    P1YRELP = 'P1YRELP',
+    PCURRNT = 'Y1N5C',
+    POSIBLMN = 'Y1N5RDF',
+    POSIBLPG = 'Y1N5RDF',
+    PSURGSTR = 'Y1N5C',
+    PXNOFREQ = 'P12METHF',
+    REASIMPP = 'REASP',
+    REASIMPR = 'REASR',
+    RSTRSTAT = 'RSTRSTAT',
+    SEX3MO = 'Y1N2RECF',
+    TUBS = 'Y1N5C',
+    VAGSEX = 'YESNONAF',
+    WHYCONDL = 'WHYCONDL',
+    WHYNOUSING1 = 'WHYNOUSNG',
+    WYNOLSTP = 'Y1N5RDF',
+    WYNOTUSE = 'Y1N5RDF',
+    YNOSEX = 'YNOSEX'
+  )
+)
+
+
+## Create categorical variable for whether had intercourse with opposite sex in previous 3 months.
+fem1719dt[,
+  sexually_active_3m := factor(fifelse(
+    SEX3MO == 'YES',
+    'Had intercourse',
+    'Did not have intercourse'
+  ))
+]
+
+
+## Create Boolean variables for whether each contraceptive method was used during last intercourse within the past 3 months.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'used_last_3m_method',
+  in_prefix = 'METH3M',
+  in_series = 1:3,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'METH3MF',
+    skip = 20:21
+  )
+)
+
+
+## If last intercourse within the past 3 months was with husband or cohabitating partner who has an active vasectomy, then set Boolean variable of vasectomy use during last intercourse within the past 3 months to true.
+fem1719dt[,
+  used_last_3m_method3 := fifelse(
+    SEX3MO == 'YES' & PSURGSTR == 'YES' & (
+      P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+      P1YRELP == 'Current cohabiting partner'
+    ),
+    TRUE,
+    used_last_3m_method3
+  )
+]
+
+
+## If respondent has had intercourse in the past 3 months and has an active tubal ligation (or essure), then set Boolean variable of tubal ligation use during last intercourse within the past 3 months to true.
+fem1719dt[,
+  used_last_3m_method4 := fifelse(
+    SEX3MO == 'YES' & TUBS == 'YES',
+    TRUE,
+    used_last_3m_method4
+  )
+]
+
+
+## Reset count of methods used during last intercourse within the past 3 months to include overrides of vasectomy and tubal ligation Boolean variables.
+set_count_variable_for_mentions(fem1719dt, 'used_last_3m_method')
+
+
+## Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
+fem1719dt[,
+  used_last_3m_status := factor(
+    fcase(
+      used_last_3m_method_count > 0,
+        'Used at least one contraceptive method during last intercourse',
+      SEX3MO != 'YES',
+        'Did not have sexual intercourse with male in past 3 months',
+      LSEXPREG == 'YES',
+        'Pregnant in month of last intercourse',
+      CONSTAT1 == 'Postpartum',
+        'Postpartum',
+      (WYNOTUSE == 'Yes' | WYNOLSTP == 'Yes'),
+        'Currently trying to conceive',
+      POSIBLPG == 'No',
+        'Physically infertile not due to sterilizing procedure',
+      POSIBLMN == 'No' & (
+        P1YRELP == 'Current cohabiting partner' |
+        P1YRELP == 'Current husband or (current husband from whom she is separated)'
+      ),
+        'Last intercourse was with partner who is physically infertile not due to sterilizing procedure',
+      default = 'Otherwise did not use contraception during last intercourse'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Used at least one contraceptive method during last intercourse',
+      'Did not have sexual intercourse with male in past 3 months',
+      'Pregnant in month of last intercourse',
+      'Postpartum',
+      'Currently trying to conceive',
+      'Physically infertile not due to sterilizing procedure',
+      'Last intercourse was with partner who is physically infertile not due to sterilizing procedure',
+      'Otherwise did not use contraception during last intercourse'
+    )
+  )
+]
+
+
+## Create categorical variable specifying whether respondent or partner wants to conceive.
+fem1719dt[,
+  pregnancy_intent_status := factor(
+    fcase(
+      WYNOTUSE == 'No answer provided',
+        'No answer provided',
+      WYNOTUSE == 'Yes',
+        'Wants to get pregnant',
+      HPPREGQ == 'Yes',
+        'Partner wants respondent to get pregnant',
+      WYNOTUSE == "Don't know" | HPPREGQ == "Don't know",
+        "Don't know",
+      WYNOTUSE == 'Refused' | HPPREGQ == 'Refused',
+        'Refused',
+      HPPREGQ == 'If volunteered: no current partner',
+        'If volunteered: No current partner',
+      HPPREGQ == 'No answer provided',
+        'No answer provided',
+      default = 'Not intending to conceive'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Wants to get pregnant',
+      'Partner wants respondent to get pregnant',
+      "Don't know",
+      'Refused',
+      'If volunteered: No current partner',
+      'Not intending to conceive',
+      'No answer provided'
+    )
+  )
+]
+
+
+## Create Boolean variables for whether each reason for not using contraception was mentioned.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'nonuse_reason',
+  in_prefix = 'WHYNOUSING',
+  in_series = 1:5,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'WHYNOUSNG'
+  )
+)
+
+
+## Create Boolean variables for whether each reason for not being able to get pregnant was mentioned.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'pregnancy_impossible_reason',
+  in_prefix = 'WHYNOTPG',
+  in_series = 1:2,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'WHYNOTPGF'
+  )
+)
+
+
+## Create Boolean variables for whether each method was used at all in the past 3 months.
+fem1719METHXidxs <- get_NSFG_format_indices(fem1719formats, 'METHHXF', skip = c(1:2, 22:23, 55, 98:99))
+names(fem1719METHXidxs) <- paste0('any_use_12m_method', fem1719METHXidxs)
+fem1719METHX <- create_pivot_table(fem1719$Data, 'METHX', 1:192, 'CASEID')
+fem1719METHX[, CMMHCALXID := ceiling(METHXID / 4)]
+fem1719METHX <- fem1719METHX[
+  create_pivot_table(
+    fem1719$Data,
+    'CMMHCALX',
+    1:48,
+    c('CASEID', 'CMINTVW', 'CMLSTYR', 'LSEXDATE')
+  ),
+  on = c('CASEID', 'CMMHCALXID')
+]
+fem1719dt <- fem1719METHX[
+  !is.na(METHX) & !is.na(CMMHCALX) &
+    CMMHCALX > CMLSTYR &
+    CMMHCALX <= CMINTVW,
+  lapply(
+    fem1719METHXidxs,
+    \(x) any(.SD$METHX == x)
+  ),
+  by = CASEID
+][fem1719dt]
+fem1719dt[,
+  names(fem1719METHXidxs) := lapply(.SD, na_to_false),
+  .SDcols = names(fem1719METHXidxs)
+]
+
+
+## Create Boolean variable for whether any contraceptive was used in the month of last intercourse.
+fem1719dt <- fem1719METHX[
+  century_month_comparison(`==`, LSEXDATE, CMMHCALX) &
+    !is.na(METHX) &
+    !is.element(METHX, c(1, 95, 98, 99)),
+  .(
+    used_in_month_last_sex = .N > 0
+  ),
+  by = CASEID
+][fem1719dt]
+fem1719dt[, used_in_month_last_sex := na_to_false(used_in_month_last_sex)]
+
+
+## Create pivot table of MONSX variables for creating the sex12mo and sex_this_month variables below.
+fem1719MONSX <- create_pivot_table(
+  fem1719$Data,
+  'CMMONSX',
+  2:48,
+  c('CASEID', 'CMINTVW', 'CMLSTYR')
+)[
+  create_pivot_table(fem1719$Data, 'MONSX', 2:48, 'CASEID'),
+  on = c(CASEID = 'CASEID', CMMONSXID = 'MONSXID')
+]
+
+
+## Create sex12mo variable for females.
+fem1719dt <- fem1719MONSX[
+  !is.na(MONSX) & MONSX == 1 &
+    CMMONSX > CMLSTYR &
+    CMMONSX <= CMINTVW,
+  .(sex12mo = TRUE),
+  by = CASEID
+][fem1719dt]
+fem1719dt[, sex12mo := na_to_false(sex12mo)]
+
+
+## Create sex_this_month variable.
+fem1719dt <- fem1719MONSX[
+  CMMONSX == CMINTVW,
+  .(sex_this_month = equals(MONSX, 1)),
+  by = CASEID
+][fem1719dt]
+fem1719dt[, sex_this_month := na_to_false(sex_this_month)]
+
+
+## If last intercourse within the past 12 months was with husband or cohabitating partner who has an active vasectomy, then set Boolean variable of vasectomy use in the past 12 months to true.
+fem1719dt[,
+  any_use_12m_method5 := fifelse(
+    sex12mo & PSURGSTR == 'YES' & (
+        P1YRELP == 'Current husband or (current husband from whom she is separated)' |
+        P1YRELP == 'Current cohabiting partner'
+      ),
+    TRUE,
+    any_use_12m_method5
+  )
+]
+
+
+## If respondent has had intercourse in past 12 months and has an active tubal ligation (or essure), then set Boolean variable of tubal ligation use at in the past 12 months to true.
+fem1719dt[,
+  any_use_12m_method6 := fifelse(
+    sex12mo & TUBS == 'YES',
+    TRUE,
+    any_use_12m_method6
+  )
+]
+
+
+## Reset count of methods used in the past 12 months to include overrides of vasectomy and tubal ligation Boolean variables.
+set_count_variable_for_mentions(fem1719dt, 'any_use_12m_method')
+
+
+## Create Boolean variables for whether each method was used in the month preceding the interview.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'last_month_method',
+  in_prefix = 'LSTMONMETH',
+  in_series = 1:4,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'METHHXF',
+    skip = c(1:2, 22:23, 55, 98:99)
+  )
+)
+
+
+## Create Boolean variables for whether each method was used in the month of the interview.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'this_month_method',
+  in_prefix = 'CURRMETH',
+  in_series = 1:4,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'METHHXF',
+    skip = c(1:2, 22:23, 55, 98:99)
+  )
+)
+
+
+## Create Boolean variables for each reason for using pill.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'why_use_pill_reason',
+  in_prefix = 'YUSEPILL',
+  in_series = 1:6,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'YUSEMTHF'
+  )
+)
+
+
+## Create Boolean variables for each reason for using an IUD.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'why_use_iud_reason',
+  in_prefix = 'YUSEIUD',
+  in_series = 1:6,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'YUSEMTHF'
+  )
+)
+
+
+## Create categorical variable reflecting overall motivation for IUD use.
+fem1719dt[,
+  iud_motivation := factor(
+    fcase(
+      why_use_iud_reason99,
+        "Don't know",
+      why_use_iud_reason1 & (
+        why_use_iud_reason2 |
+        why_use_iud_reason3 |
+        why_use_iud_reason4 |
+        why_use_iud_reason5 |
+        why_use_iud_reason6 |
+        why_use_iud_reason7 |
+        why_use_iud_reason8
+      ),
+        'For both reasons',
+      why_use_iud_reason1 & !(
+        why_use_iud_reason2 |
+        why_use_iud_reason3 |
+        why_use_iud_reason4 |
+        why_use_iud_reason5 |
+        why_use_iud_reason6 |
+        why_use_iud_reason7 |
+        why_use_iud_reason8
+      ),
+        'Only for contraception',
+      !why_use_iud_reason1 & (
+        why_use_iud_reason2 |
+        why_use_iud_reason3 |
+        why_use_iud_reason4 |
+        why_use_iud_reason5 |
+        why_use_iud_reason6 |
+        why_use_iud_reason7 |
+        why_use_iud_reason8
+      ),
+        'Only for reasons other than contraception',
+      default = 'No answer provided'
+    )
+  )
+]
+
+
+## Create Boolean variables for whether specific contraceptive method was ever used. Because this is encoded in various method-specific variables in addition to the OTHRMETH series, this has to be done in two parts. Additionally, IUD is being split into copper and hormone based IUDs, so this is handled as special cases.
+fem1719dt[
+  fem1719$Data,
+  `:=`(
+    ever_used_method3  = na_to_false(i.PILLR == 1),
+    ever_used_method4  = na_to_false(i.CONDOMR == 1),
+    ever_used_method5  = na_to_false(i.VASECTMY == 1),
+    ever_used_method6  = na_to_false(i.EVERTUBS %in% c(1, 4) | i.ESSURE == 1),
+    ever_used_method7  = na_to_false(i.WIDRAWAL == 1),
+    ever_used_method8  = na_to_false(i.DEPOPROV == 1),
+    ever_used_method10 = na_to_false(i.RHYTHM == 1),
+    ever_used_method11 = na_to_false(i.TEMPSAFE == 1),
+    ever_used_method20 = na_to_false(i.MORNPILL == 1),
+    ever_used_method25 = na_to_false(i.PATCH == 1),
+    ever_used_method26 = na_to_false(i.RING == 1),
+    ever_used_method33 = na_to_false(
+      has_level(i.EVIUDTYP1, c(3, 9)) |
+      has_level(i.EVIUDTYP2, c(3, 9)) |
+      has_level(i.EVIUDTYP3, c(3, 9))
+    )
+  )
+]
+for (x in c(1:2)) {
+  fem1719dt[
+    fem1719$Data,
+    (sprintf('ever_used_method%d', 30 + x)) := na_to_false(
+      has_level(i.EVIUDTYP1, x) |
+      has_level(i.EVIUDTYP2, x) |
+      has_level(i.EVIUDTYP3, x)
+    )
+  ]
+}
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'ever_used_method',
+  in_prefix = 'OTHRMETH0',
+  in_series = 1:7,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'OTHRMETHF',
+    skip = c(19, 95)
+  )
+)
+
+
+## Create Boolean variables for whether each contraceptive method was ever discontinued due to dissatisfaction. Because IUD types have been split out, these cases must be handled individually.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'ever_quit_method',
+  in_prefix = 'METHSTOP',
+  in_series = sprintf('%02d', 1:10),
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'METHSTOPF'
+  )
+)
+for (x in c(1:2)) {
+  fem1719dt[
+    fem1719$Data,
+    (sprintf('ever_quit_method%d', 30 + x)) := ever_quit_method19 & (
+      has_level(i.TYPEIUD_1, x) |
+      has_level(i.TYPEIUD_2, x) |
+      has_level(i.TYPEIUD_3, x)
+    )
+  ]
+}
+fem1719dt[
+  fem1719$Data,
+  ever_quit_method33 := ever_quit_method19 & (
+    has_level(i.TYPEIUD_1, c(3, 9)) |
+    has_level(i.TYPEIUD_2, c(3, 9)) |
+    has_level(i.TYPEIUD_3, c(3, 9))
+  )
+]
+
+
+## Create Boolean variables for reason(s) for dissatisfaction with condom.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'condom_quit_reason',
+  in_prefix = 'REASCOND0',
+  in_series = 1:7,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'REASMFMT'
+  )
+)
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'specific_condom_quit_reason',
+  in_prefix = 'STOPCOND',
+  in_series = 1:2,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'STOPCONDFMT'
+  )
+)
+
+
+## Create Boolean variables for reason(s) for dissatisfaction with pill.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'pill_quit_reason',
+  in_prefix = 'REASPILL0',
+  in_series = 1:9,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'REASMFMT'
+  )
+)
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'specific_pill_quit_reason',
+  in_prefix = 'STOPPILL',
+  in_series = 1:6,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'STOPPILLFMT'
+  )
+)
+
+
+## Create Boolean variables for reason(s) for dissatisfaction with IUDs.
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'iud_quit_reason',
+  in_prefix = 'REASIUD0',
+  in_series = 1:5,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'REASMFMT'
+  )
+)
+set_mentions_to_booleans(
+  fem1719$Data,
+  fem1719dt,
+  out_prefix = 'specific_iud_quit_reason',
+  in_prefix = 'STOPIUD',
+  in_series = 1:5,
+  get_NSFG_format_indices(
+    fem1719formats,
+    format = 'STOPIUDFMT'
+  )
+)
+```
+
+```{r process-male-data, dependson='load-data'}
+
+## Fix the labeling used by METH3MF for males to be more like that of females.
+METH3MF1719_join_table <- as.data.table(matrix(
+  data = c(
+    1, 2,
+    2, 5,
+    4, 1,
+    5, 4,
+    6, 6,
+    8, 7,
+    9, 8,
+    10, 23,
+    11, 24,
+    12, 17,
+    13, 19
+  ),
+  ncol = 2,
+  byrow = TRUE,
+  dimnames = list(
+    NULL,
+    c('male_factor_value', 'fem_factor_value')
+  )
+))
+METH3MF1719_replacements <- rbindlist(list(
+  fem1719formats[
+    format_name == 'METH3MF',
+    .(
+      fem_factor_value = factor_value,
+      factor_label
+    )
+  ][
+    METH3MF1719_join_table,
+    .(
+      factor_value = male_factor_value,
+      factor_label = factor_label
+    ),
+    on = 'fem_factor_value'
+  ],
+  data.table(
+    factor_value = c(
+      3,
+      7,
+      95,
+      96
+    ),
+    factor_label = c(
+      'Vasectomy',
+      'Spermicidal foam, jelly, cream, film, or suppository',
+      "Don't know",
+      'No method used at last sex in the past 3 months'
+    )
+  )
+))
+METH3MF1719_replacements[, format_name := 'METH3MF']
+male1719formats <- copy(male1719$Formats)
+male1719formats[
+  METH3MF1719_replacements,
+  factor_label := i.factor_label,
+  on = c('format_name', 'factor_value')
+]
+
+
+## Start working male respondents data table.
+male1719dt <- copy(male1719$Data[, .(
+  AGE_R,
+  CASEID,
+  CMLSTYR,
+  CMLSXCWP,
+  CONDFREQ,
+  CWPALLBC01,
+  PXCONFRQ,
+  PXMETHOD01,
+  SECU,
+  SEST,
+  WGT2017_2019
+)])
+
+
+## Copy variables to working data table and set them to factors.
+set_NSFG_variables_as_factors(
+  male1719$Data,
+  male1719dt,
+  male1719formats,
+  variables = c(
+    ATTRACT = 'ATTRACT',
+    CONDVAG = 'YESNONAF',
+    CWPLMET201 = 'MTHDSV3F',
+    CWPLUSE2 = 'Y1N5RDF',
+    CWPNOFRQ = 'OFTIMEF',
+    CWPPOSS = 'Y1N5RDF',
+    CWPPRGNW ='Y1N5RDF',
+    CWPTRYPG = 'Y1N5RDF',
+    FATHPOSS = 'Y1N5RDF',
+    HADSEX = 'HADSEX',
+    P12MOCON = 'OFTIMEF',
+    P12MOCONO = 'Y1N5RDF',
+    P1COHABIT = 'Y1N5RDF',
+    P1CURRWIFE = 'Y1N5RDF',
+    PSURGSTR = 'N0Y1CF',
+    PXCPREG = 'Y1N5RDF',
+    PXLPMETH01 = 'MTHDSV3F',
+    PXLPUSE = 'Y1N5RDF',
+    PXLSXPRB = 'Y1N5RDF',
+    PXNOFREQ = 'OFTIMEF',
+    PXTRYING = 'Y1N5RDF',
+    RSURGSTR = 'N0Y1RDF',
+    SEX12MO = 'SEX3MO',
+    SEX3MO = 'SEX3MO',
+    VAGSEX = 'YESNONAF',
+    WHYCONDL = 'WHYCONDF',
+    YNOSEX = 'YNOSEX'
+  )
+)
+
+
+## Create categorical variable for whether had intercourse with opposite sex in previous 3 months.
+male1719dt[,
+  sexually_active_3m := factor(fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE',
+    'Had intercourse',
+    'Did not have intercourse'
+  ))
+]
+
+
+## Create Boolean variables for whether each contraceptive method was used during last intercourse within the past 3 months.
+set_mentions_to_booleans(
+  male1719$Data,
+  male1719dt,
+  out_prefix = 'used_last_3m_method',
+  in_prefix = 'METH3M',
+  in_series = 1:4,
+  get_NSFG_format_indices(
+    male1719formats,
+    format = 'METH3MF',
+    skip = 95:96
+  )
+)
+
+
+## If last intercourse within the past 3 months was with wife or cohabitating partner who has an tubal ligation (or other sterilizing procedure), then set Boolean variable of tubal ligation use during last intercourse within the past 3 months to true.
+male1719dt[,
+  used_last_3m_method5 := fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' &
+      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') &
+      PSURGSTR == 'YES',
+    TRUE,
+    used_last_3m_method5
+  )
+]
+
+
+## If respondent has had intercourse in the past 3 months and has an active vasectomy, then set Boolean variable of vasectomy use during last intercourse within the past 3 months to true.
+male1719dt[,
+  used_last_3m_method3 := fifelse(
+    SEX3MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+    TRUE,
+    used_last_3m_method3
+  )
+]
+
+
+## Reset count of methods used during last intercourse within the past 3 months to include overrides of tubal ligation and vasectomy Boolean variables.
+set_count_variable_for_mentions(male1719dt, 'used_last_3m_method')
+
+
+## Create categorical variable specifying reasons not at increased risk for unintended pregnancy, if applicable.
+male1719dt[,
+  used_last_3m_status := factor(
+    fcase(
+      used_last_3m_method_count > 0,
+        'Used at least one contraceptive method during last intercourse',
+      SEX3MO != 'YES, HAD INTERCOURSE',
+        'Did not have sexual intercourse with female in past 3 months',
+      PXCPREG == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPRGNW == 'Yes'),
+        'Last intercourse was with partner who is pregnant',
+      PXTRYING == 'Yes' | ((P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPTRYPG == 'Yes'),
+        'Last intercourse was with partner who is trying to conceive',
+      FATHPOSS == 'No',
+        'Physically infertile not due to sterilizing procedure',
+      (P1CURRWIFE == 'Yes' | P1COHABIT == 'Yes') & CWPPOSS == 'No',
+        'Last intercourse was with partner who is physically unable to conceive',
+      default = 'Otherwise did not use contraception during last intercourse'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Used at least one contraceptive method during last intercourse',
+      'Did not have sexual intercourse with female in past 3 months',
+      'Last intercourse was with partner who is pregnant',
+      'Last intercourse was with partner who is trying to conceive',
+      'Physically infertile not due to sterilizing procedure',
+      'Last intercourse was with partner who is physically unable to conceive',
+      'Otherwise did not use contraception during last intercourse'
+    )
+  )
+]
+
+
+## Create Boolean variables for whether each specific method was used in past 12 months.
+for (x in get_NSFG_format_indices(male1719formats, 'MTHDSV1F', skip = c(10, 98:99))) {
+  male1719dt[,
+    (sprintf('any_use_12m_method%d', x)) := male1719$Data[,
+      !is.na(
+        (century_month_comparison(`>`, CMLSXCWP, CMLSTYR) & (
+          CWPLMET11 == x |
+          CWPLMET12 == x |
+          CWPLMET13 == x |
+          CWPLMET201 == x |
+          CWPLMET202 == x
+        )) |
+        (century_month_comparison(`>`, CMFSXCWP, CMLSTYR) & (
+          CWPFMET01 == x |
+          CWPFMET02 == x |
+          CWPFMET03 == x |
+          CWPFMET04 == x |
+          CWPFMET05 == x
+        )) |
+        CWPALLBC01 == x |
+        CWPALLBC02 == x |
+        CWPALLBC03 == x |
+        CWPALLBC04 == x |
+        CWPALLBC05 == x |
+        (century_month_comparison(`>`, CMLSXP1, CMLSTYR) & (
+          PXLRMETH1 == x |
+          PXLRMETH2 == x |
+          PXLRMETH3 == x |
+          PXLPMETH01 == x |
+          PXLPMETH02 == x |
+          PXLPMETH03 == x
+        )) |
+        (century_month_comparison(`>`, CMLSXP2, CMLSTYR) & (
+          PXLRMETH5 == x |
+          PXLRMETH6 == x |
+          PXLRMETH7 == x |
+          PXLPMETH11 == x |
+          PXLPMETH12 == x |
+          PXLPMETH13 == x
+        )) |
+        (century_month_comparison(`>`, CMLSXP3, CMLSTYR) & (
+          PXLRMETH9 == x |
+          PXLRMETH10 == x |
+          PXLRMETH11 == x |
+          PXLPMETH21 == x |
+          PXLPMETH22 == x |
+          PXLPMETH23 == x
+        )) |
+        (century_month_comparison(`>`, CMFSXP, CMLSTYR) & (
+          PXFMETH01 == x |
+          PXFMETH02 == x |
+          PXFMETH03 == x |
+          PXFMETH04 == x
+        )) |
+        (century_month_comparison(`>`, CMFSXP2, CMLSTYR) & (
+          PXFMETH14 == x |
+          PXFMETH15 == x |
+          PXFMETH16 == x |
+          PXFMETH17 == x
+        )) |
+        (century_month_comparison(`>`, CMFSXP3, CMLSTYR) & (
+          PXFMETH27 == x |
+          PXFMETH28 == x |
+          PXFMETH29 == x |
+          PXFMETH30 == x
+        )) |
+        PXMETHOD01 == x |
+        PXMETHOD02 == x |
+        PXMETHOD03 == x |
+        PXMETHOD04 == x |
+        PXMETHOD05 == x |
+        PXMETHOD14 == x |
+        PXMETHOD15 == x |
+        PXMETHOD16 == x |
+        PXMETHOD17 == x |
+        PXMETHOD18 == x |
+        PXMETHOD27 == x |
+        PXMETHOD28 == x |
+        PXMETHOD29 == x |
+        PXMETHOD30 == x |
+        PXMETHOD31 == x
+      )
+    ]
+  ]
+}
+
+## Set a Boolean variable for whether "Something else" was used in past 12 months separately because its encoding collides with "Contraceptive patch (Ortho-Evra)".
+male1719dt[,
+  any_use_12m_method13 := male1719$Data[,
+    !is.na(
+      (century_month_comparison(`>`, CMLSXCWP, CMLSTYR) & (
+        CWPLMET11 == 10 |
+        CWPLMET12 == 10 |
+        CWPLMET13 == 10 |
+        CWPLMET201 == 13 |
+        CWPLMET202 == 13
+      )) |
+      (century_month_comparison(`>`, CMFSXCWP, CMLSTYR) & (
+        CWPFMET01 == 13 |
+        CWPFMET02 == 13 |
+        CWPFMET03 == 13 |
+        CWPFMET04 == 13 |
+        CWPFMET05 == 13
+      )) |
+      CWPALLBC01 == 13 |
+      CWPALLBC02 == 13 |
+      CWPALLBC03 == 13 |
+      CWPALLBC04 == 13 |
+      CWPALLBC05 == 13 |
+      (century_month_comparison(`>`, CMLSXP1, CMLSTYR) & (
+        PXLRMETH1 == 10 |
+        PXLRMETH2 == 10 |
+        PXLRMETH3 == 10 |
+        PXLPMETH01 == 13 |
+        PXLPMETH02 == 13 |
+        PXLPMETH03 == 13
+      )) |
+      (century_month_comparison(`>`, CMLSXP2, CMLSTYR) & (
+        PXLRMETH5 == 10 |
+        PXLRMETH6 == 10 |
+        PXLRMETH7 == 10 |
+        PXLPMETH11 == 13 |
+        PXLPMETH12 == 13 |
+        PXLPMETH13 == 13
+      )) |
+      (century_month_comparison(`>`, CMLSXP3, CMLSTYR) & (
+        PXLRMETH9 == 10 |
+        PXLRMETH10 == 10 |
+        PXLRMETH11 == 10 |
+        PXLPMETH21 == 13 |
+        PXLPMETH22 == 13 |
+        PXLPMETH23 == 13
+      )) |
+      (century_month_comparison(`>`, CMFSXP, CMLSTYR) & (
+        PXFMETH01 == 13 |
+        PXFMETH02 == 13 |
+        PXFMETH03 == 13 |
+        PXFMETH04 == 13
+      )) |
+      (century_month_comparison(`>`, CMFSXP2, CMLSTYR) & (
+        PXFMETH14 == 13 |
+        PXFMETH15 == 13 |
+        PXFMETH16 == 13 |
+        PXFMETH17 == 13
+      )) |
+      (century_month_comparison(`>`, CMFSXP3, CMLSTYR) & (
+        PXFMETH27 == 13 |
+        PXFMETH28 == 13 |
+        PXFMETH29 == 13 |
+        PXFMETH30 == 13
+      )) |
+      PXMETHOD01 == 13 |
+      PXMETHOD02 == 13 |
+      PXMETHOD03 == 13 |
+      PXMETHOD04 == 13 |
+      PXMETHOD05 == 13 |
+      PXMETHOD14 == 13 |
+      PXMETHOD15 == 13 |
+      PXMETHOD16 == 13 |
+      PXMETHOD17 == 13 |
+      PXMETHOD18 == 13 |
+      PXMETHOD27 == 13 |
+      PXMETHOD28 == 13 |
+      PXMETHOD29 == 13 |
+      PXMETHOD30 == 13 |
+      PXMETHOD31 == 13
+    )
+  ]
+]
+
+
+## Set a Boolean variable for whether "Contraceptive patch (Ortho-Evra)" was used in past 12 months separately because its encoding collides with "Something else".
+male1719dt[,
+  any_use_12m_method10 := male1719$Data[,
+    !is.na(
+      (century_month_comparison(`>`, CMLSXCWP, CMLSTYR) & (
+        CWPLMET201 == 10 |
+        CWPLMET202 == 10
+      )) |
+      (century_month_comparison(`>`, CMFSXCWP, CMLSTYR) & (
+        CWPFMET01 == 10 |
+        CWPFMET02 == 10 |
+        CWPFMET03 == 10 |
+        CWPFMET04 == 10 |
+        CWPFMET05 == 10
+      )) |
+      CWPALLBC01 == 10 |
+      CWPALLBC02 == 10 |
+      CWPALLBC03 == 10 |
+      CWPALLBC04 == 10 |
+      CWPALLBC05 == 10 |
+      (century_month_comparison(`>`, CMLSXP1, CMLSTYR) & (
+        PXLPMETH01 == 10 |
+        PXLPMETH02 == 10 |
+        PXLPMETH03 == 10
+      )) |
+      (century_month_comparison(`>`, CMLSXP2, CMLSTYR) & (
+        PXLPMETH11 == 10 |
+        PXLPMETH12 == 10 |
+        PXLPMETH13 == 10
+      )) |
+      (century_month_comparison(`>`, CMLSXP3, CMLSTYR) & (
+        PXLPMETH21 == 10 |
+        PXLPMETH22 == 10 |
+        PXLPMETH23 == 10
+      )) |
+      (century_month_comparison(`>`, CMFSXP, CMLSTYR) & (
+        PXFMETH01 == 10 |
+        PXFMETH02 == 10 |
+        PXFMETH03 == 10 |
+        PXFMETH04 == 10
+      )) |
+      (century_month_comparison(`>`, CMFSXP2, CMLSTYR) & (
+        PXFMETH14 == 10 |
+        PXFMETH15 == 10 |
+        PXFMETH16 == 10 |
+        PXFMETH17 == 10
+      )) |
+      (century_month_comparison(`>`, CMFSXP3, CMLSTYR) & (
+        PXFMETH27 == 10 |
+        PXFMETH28 == 10 |
+        PXFMETH29 == 10 |
+        PXFMETH30 == 10
+      )) |
+      PXMETHOD01 == 10 |
+      PXMETHOD02 == 10 |
+      PXMETHOD03 == 10 |
+      PXMETHOD04 == 10 |
+      PXMETHOD05 == 10 |
+      PXMETHOD14 == 10 |
+      PXMETHOD15 == 10 |
+      PXMETHOD16 == 10 |
+      PXMETHOD17 == 10 |
+      PXMETHOD18 == 10 |
+      PXMETHOD27 == 10 |
+      PXMETHOD28 == 10 |
+      PXMETHOD29 == 10 |
+      PXMETHOD30 == 10 |
+      PXMETHOD31 == 10
+    )
+  ]
+]
+
+
+## If respondent has had intercourse in the past 12 months and has an active vasectomy, then set Boolean variable of vasectomy use at in the past 12 months to true.
+male1719dt[,
+  any_use_12m_method3 := fifelse(
+    SEX12MO == 'YES, HAD INTERCOURSE' & RSURGSTR == 'YES',
+    TRUE,
+    any_use_12m_method3
+  )
+]
+
+
+## If last intercourse with wife or cohabitating partner was within the past 12 months, and wife or cohabitating partner has an active tubal ligation (or other sterilizing procedure), then set Boolean variable of tubal ligation use at in the past 12 months to true.
+male1719dt[,
+  any_use_12m_method5 := fifelse(
+    SEX12MO == 'YES, HAD INTERCOURSE' &
+      century_month_comparison(`>`, CMLSXCWP, CMLSTYR) &
+      PSURGSTR == 'YES',
+    TRUE,
+    any_use_12m_method5
+  )
+]
+
+
+## Count number of contraceptive methods used in past 12 months.
+set_count_variable_for_mentions(male1719dt, 'any_use_12m_method')
+```
+
+
+
+# Introduction
+
+The purpose of this report is to describe the current state of the use of contraception in the United States. It is intended to be a preliminary report to inform subsequent analyses that pose and answer more specific questions and is therefore designed for breadth rather than depth.
+
+## Data Source
+
+This report is based on the 2017-2019 National Survey of Family Growth (NSFG). The NSFG is a survey of a nationally representative sample of persons living in households in the United States that is designed to produce estimates of factors related to reproduction, such as sexual activity, contraceptive use, pregnancy, infertility, and childcare. It uses a probability-based, multistage sampling design based on geographic areas, housing units in selected geographic areas, and persons in selected housing units. The NSFG is administered by the National Center for Health Statistics (NCHS), but is funded and planned by several agencies within the United States Department of Health and Human Services.
+
+Respondents who are selected for sampling and who consent to be interviewed are visited in their households by female interviewers trained specifically for the NSFG. Interviewers use laptop computers programmed with survey questionnaires and enter respondents' answers into the laptops, using an approach known as computer-assisted personal interviewing (CAPI). Additionally, some questions of a sensitive nature are asked after the CAPI portion of the interview using audio computer-assisted self-interviews (ACASI). During the ACASI portion of the interview, respondents wear headsets to listen to prerecorded questions and enter their responses directly into the laptops.
+
+### Sample Characteristics
+
+The first NSFG was done in 1973 and sampled only female persons aged 15-44 years who had ever been married. The 1982 edition of the NSFG expanded the sample to all females regardless of marital status, and the 2002 edition of the NSFG was the first to sample males in addition to females. More recently, the 2015-2017 edition of the NSFG expanded the age range for sampling from 15-44 years to 15-49 years.
+
+In the NSFG, female respondents and male respondents are given different questionnaires, and NSFG results are provided in separate data tables for females and males with survey design information specific to the data table. Therefore, separate estimates for females and males are given throughout this report. Estimates for both females and males are only combined when no attempt is made to quantify [sampling error](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals).
+
+The 2017-2019 edition of the NSFG has a sample size of 6,141 females and 5,206 males. The overall response rate is 63.4%, with response rates of 65.2% for females and 61.4% for males. Results are weighted to approximate the population at July 2018, the midpoint of sampling. The sampled population is persons aged 15-49 living in households in the United States and includes neither those without a current residential address nor those living in group housing, such as military bases, correctional facilities, etc. However, the population does include college students living in dormitories by way of their parents' households.
+
+### Sexes of Sexual Partners
+
+Use of contraceptive methods for the purpose of contraception _per se_ is only relevant for sexual intercourse with the opposite sex, though, as seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), contraceptive methods are sometimes used for other purposes than contraception. Therefore, the NSFG and this report focus extensively on sexual intercourse between individuals of opposite sex. All mentions of sexual activity in this report should be interpreted to refer to sexual intercourse with someone of the opposite sex unless stated otherwise.
+
+### Disclosure Risk Reduction
+
+Before the NSFG public use data files are released, actions are taken in order to reduce the risk that a specific respondent can be personally identified based on the information to be contained therein. This disclosure risk reduction can be as severe as suppressing certain variables from the public use data files entirely, though many variables are merely modified to be less specific. For instance, while respondents are asked about the month and year that pregnancies begin and end in the NSFG, only the year that pregnancies begin and end are available in the public use data files.
+
+This report is based entirely on the NSFG public use data files. Whenever analysis is constrained in some way by the disclosure risk reduction, this is noted in the report.
+
+### Documentation
+
+More information about the NSFG is available in its official User's Guide and appendices [@nsfg-users-guide], the Summary of Design and Data Collection [@nsfg-summary], and its more detailed design documentation [@nsfg-1; @nsfg-2; @nsfg-3].
+
+## Differences with Prior Works
+
+There are prior works based on the NSFG about the same subject as this report. [@kavanaugh_contraceptive_2018] Indeed, personnel associated with the NCHS themselves publish reports based on the NSFG in journals [@piccinino_trends_1998], National Health Statistics Reports [@jones_current_2012; @daniels_contraceptive_2013; @copen_condom_2017], and NCHS Data Briefs [@daniels_current_2020]. This report differs from prior works in several ways:
+
+* Most notably, many prior works based on the NSFG focus exclusively on contraceptive use among females living in the United States. [@piccinino_trends_1998; @jones_current_2012; @daniels_contraceptive_2013; @kavanaugh_contraceptive_2018; @daniels_current_2020] This report examines contraceptive use reported by both females and males and includes results for males alongside results for females, wherever data is available in both NSFG data files.[^males-too]
+* Unlike many prior works based on past editions of the NSFG, this report is based on the latest 2017-2019 edition of the NSFG. While several academic papers on more specific topics based on the 2017-2019 data are published in the literature at the time of the writing of this report, only a single NCHS Data Brief covers contraceptive use in a similarly broad way using the 2017-2019 NSFG. [@daniels_current_2020]
+* Much analysis of contraceptive use based on the NSFG is based on contraceptive status as encoded in the `CONSTAT` series of variables in the public use data files. [@jones_current_2012; @kavanaugh_contraceptive_2018; @daniels_current_2020] Contraceptive status is based on respondents' answer to the question of what contraceptive method(s) they are using in the month they are interviewed. This report differs from this trend by focusing analysis on method(s) of contraception reported used during respondents' most recent sexual intercourse. The reasons for this are discussed further in Section \@ref(contraceptive-methods-used-during-last-intercourse-versus-contraceptive-status).
+* Prior analysis using contraceptive status often categorizes respondents only by the most effective contraceptive method they mention using. [@piccinino_trends_1998; @jones_current_2012; @kavanaugh_contraceptive_2018; @daniels_current_2020] This report differs from this practice by exploring the simultaneous use of multiple methods of contraception.
+* Prior works often include analysis of contraceptive use by demographic or background covariates -- such as age, education, income, racial categorization, or ethnic background -- and in terms of more proximal reproductive covariates -- such as parity (number of existing children) or intentions for future children. [@piccinino_trends_1998; @jones_current_2012; @kavanaugh_contraceptive_2018; @daniels_current_2020] This report leaves such covariate-based analysis to further research, with the exception that it contains some descriptive statistics using age as a covariate in order to facilitate discussion of observed differences in contraceptive use reporting between females and males. (Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males))
+* Similarly, while many prior works focus on discussing trends in how contraceptive use changes over time [@piccinino_trends_1998; @jones_current_2012; @kavanaugh_contraceptive_2018], this report leaves trend analysis to further research.
+* Finally, this report broadly covers in one report several topics that are discussed in individual prior works, such as methods of contraception ever used [@daniels_contraceptive_2013] or consistency of condom use [@copen_condom_2017].
+
+[^males-too]: While this is a novel approach for the topic of contraceptive use generally based on the NSFG, this approach has been used for other data sources [@bensyl_contraceptive_2005] and for more specific contraceptive methods such as condoms [@copen_condom_2017].
+
+## Source Code and License
+
+Analysis for this report is done using the R statistical programming language. [@rlang] Estimates handling the NSFG's sampling weights and complex sampling design pseudo-structure are made using the `survey` package. [@lumley_survey_2021]
+
+The source code for this report and all supporting source code are available in [a public GitHub repository](https://github.com/joshuaborn/born-inquisitive). This report and supporting source code are licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license. Anyone is free to share and adapt the material contained here as long as appropriate credit is given, a link to the license is provided, and any changes made are indicated.
+
+
+# Results
+
+Sections \@ref(use-of-contraception-during-most-recent-intercourse) and \@ref(use-of-contraceptive-methods-for-other-reasons) pertain to what contraceptive method(s) were used during the sexual intercourse that occurred most recently before the respondents' interviews. Sections \@ref(use-of-contraception-during-past-12-months) and \@ref(consistency-of-use-of-contraception) focus on contraceptive use over the 12 months preceding the interview. Sections \@ref(use-of-contraception-ever-during-lifetime) and \@ref(discontinuation-due-to-dissatisfaction) pertain to contraceptive use ever during the lifetime of respondents. Section \@ref(reasons-for-not-currently-using-contraception) pertains to contraceptive use reported in the month of the interview.
+
+
+## Population Size
+
+```{r population-size, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[, person := 1]
+male1719dt[, person := 1]
+
+this <- list()
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~person,
+    get_NSFG_survey_design(fem1719dt)
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~person,
+    get_NSFG_survey_design(male1719dt)
+  )
+)
+this$df <- as.data.frame(this$ht)
+this$fem <- this$df[3, 3]
+this$male <- this$df[4, 3]
+this$ht[, 1:4] |>
+  set_caption('Number persons aged 15-49 living in households in the United States estimated by the NSFG.')
+```
+
+Based on the NSFG, there is an estimated `r this$fem` females[^millions] and `r this$male` males living in households in the United States. (Table \@ref(tab:population-size))[^ci] According to census data, there are 73,874,470 females and 74,595,017 males living in the United States.[^census] [@us_census_bureau_table_2010] The 95\% confidence intervals of the NSFG-based estimates of population size cover the census-based counts. Thus, the NSFG estimates of population size are consistent with known population sizes.[^consistent]
+
+[^ci]: The phrase "95\% C.I." refers to a 95\% [confidence interval](/how-to-scrutinize-a-statistic.html#estimation-error-and-confidence-intervals).
+
+[^millions]:The "M" in the figures refers to "millions," such that "15.2M persons" describes approximately fifteen million, two hundred thousand persons.
+
+[^census]: As of the writing of this report, the full results of the 2020 U.S. Census have not been released. Therefore, the 2010 Census is used. Census counts from 2010 can be expected to be lesser than what would have been the census counts from the 2017-2019 time frame, if there was any population growth between 2010 and 2017.
+
+[^consistent]: Furthermore, the point estimates of population size based on the NSFG are quite close to the census counts, though the census counts are more than a million persons greater for both females and males. Unlike the NSFG estimates, the U.S. Census does count those without a current residential address and those living in group housing, which might account for these differences.
+
+
+## Use of Contraception during Most Recent Intercourse
+
+```{r sexually-active, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~sexually_active_3m,
+    get_NSFG_survey_design(fem1719dt)
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~sexually_active_3m,
+    get_NSFG_survey_design(male1719dt)
+  ),
+  digits = 1
+)
+this$df <- as.data.frame(this$ht)
+this$fem <- this$df[4, 3]
+this$male <- this$df[6, 3]
+
+this$ht |> set_caption('Persons who have had sexual intercourse with someone of the opposite sex in the past 3 months, among persons aged 15-49 living in households in the United States.')
+```
+
+The estimates in this section pertain to a subdomain of persons in the United States who had intercourse with someone of the opposite sex in the past 3 months. There are approximately `r this$fem` females and `r this$male` males in this subdomain. (Table \@ref(tab:sexually-active))
+
+```{r used-last-3m-at-all, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[,
+  used_last_3m_at_all := factor(fifelse(
+    used_last_3m_method_count > 0,
+    'Used contraception',
+    'Did not use contraception'
+  ))
+]
+
+male1719dt[,
+  used_last_3m_at_all := factor(fifelse(
+    used_last_3m_method_count > 0,
+    'Used contraception',
+    'Did not use contraception'
+  ))
+]
+
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~used_last_3m_at_all,
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      sexually_active_3m == 'Had intercourse'
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~used_last_3m_at_all,
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      sexually_active_3m == 'Had intercourse'
+    )
+  )
+) |>
+  set_caption('Persons who used any method of contraception during their last sexual intercourse with the opposite sex, among those who have had intercourse in the past 3 months.')
+```
+
+Over three quarters of persons sexually active with the opposite sex used at least one method of contraception during their most recent intercourse, and a slightly greater proportion of females report using contraception than males. (Table \@ref(tab:used-last-3m-at-all))
+
+
+### Reason for Nonuse
+
+```{r reason-for-nonuse, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_status),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      used_last_3m_method_count == 0 &
+        SEX3MO == 'YES'
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_status),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      used_last_3m_method_count == 0 &
+        SEX3MO == 'YES, HAD INTERCOURSE'
+    )
+  )
+) |>
+  set_caption('Persons categorized by reason for not using contraception, among persons who had sexual intercourse with someone of the opposite sex in the past 3 months.')
+```
+
+Some persons intentionally refrain from using contraception for various reasons. The most common reason for intentional nonuse of contraception is a desire to conceive a pregnancy, followed by the female partner currently being pregnant. (Table \@ref(tab:reason-for-nonuse))
+
+The "otherwise did not use contraception during last intercourse" category in Table \@ref(tab:reason-for-nonuse) estimates those who are at increased risk for unintended pregnancy due contraceptive nonuse.
+
+"Postpartum" is categorized separately in Table \@ref(tab:reason-for-nonuse) for females, but not for males because this information is not available in the public use data files for males due to disclosure risk reduction. "Otherwise did not use contraception during last intercourse" for males therefore includes some persons who last had intercourse with a postpartum female. However, as can be gleaned from the estimates for females, this is a small number of persons.
+
+The "physically infertile not due to sterilizing procedure" category is explored in Section \@ref(reason-for-physical-infertility-not-due-to-sterilizing-procedure).
+
+
+### Contraception Use Rate
+
+```{r contraception-use-rate, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
+
+this$data <- rbindlist(list(
+  fem1719dt[,
+    .(
+      SECU,
+      SEST,
+      WGT2017_2019,
+      at_risk = used_last_3m_status %in% c(
+        'Used at least one contraceptive method during last intercourse',
+        'Otherwise did not use contraception during last intercourse'
+      ),
+      sex = 'female',
+      used_contraception = used_last_3m_status ==
+        'Used at least one contraceptive method during last intercourse'
+    )
+  ],
+  male1719dt[,
+    .(
+      SECU,
+      SEST,
+      WGT2017_2019,
+      at_risk = used_last_3m_status %in% c(
+        'Used at least one contraceptive method during last intercourse',
+        'Otherwise did not use contraception during last intercourse'
+      ),
+      sex = 'male',
+      used_contraception = used_last_3m_status ==
+        'Used at least one contraceptive method during last intercourse'
+    )
+  ]
+))
+
+this$data[, sex := factor(sex)]
+
+this$svy <- svydesign(
+  ids = ~SECU,
+  strata = ~SEST,
+  data = this$data,
+  nest = TRUE,
+  weights = ~WGT2017_2019
+)
+
+this$chisq <- svychisq(~ used_contraception + sex, this$svy)
+
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_status),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      used_last_3m_status %in% c(
+        'Used at least one contraceptive method during last intercourse',
+        'Otherwise did not use contraception during last intercourse'
+      )
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_status),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      used_last_3m_status %in% c(
+        'Used at least one contraceptive method during last intercourse',
+        'Otherwise did not use contraception during last intercourse'
+      )
+    )
+  )
+) |>
+  set_caption('Contraceptive use among persons who had sexual intercourse with someone of the opposite sex in past 3 months and are not themselves nor had intercourse with a partner who is intending to become pregnant, pregnant, postpartum, or physically infertile.')
+```
+
+Combining the estimates from Table \@ref(tab:used-last-3m-at-all) and Table \@ref(tab:reason-for-nonuse), an overall contraceptive use rate can be calculated with the number of persons using contraception in the numerator and the number persons at risk for unintended pregnancy in the denominator. Those "at risk for unintended pregnancy" refers to persons who had sexual intercourse with someone of the opposite sex in past 3 months and are not themselves nor had intercourse with a partner who is intending to become pregnant, currently pregnant, postpartum, or physically infertile.
+
+Generally, the contraceptive use rate is high, though this still leaves several million persons at increased risk for unintended pregnancy due to contraceptive nonuse. (Table \@ref(tab:contraception-use-rate))
+
+The reported contraceptive use rate is higher for females than for males. A chi-squared test of independence with second-order Rao-Scott adjustment is statistically significant $(p = `r signif(this$chisq$p.value, 2)`)$. Therefore, there is sufficient evidence to conclude that a person's sex and reported contraception use during last intercourse are dependent, and the difference in contraception use rates between females and males in Table \@ref(tab:contraception-use-rate) is not attributable to sampling error.
+
+#### Reported Ignorance of Contraceptive Use
+
+The contraceptive use rate is greater for females than males. (Table \@ref(tab:contraception-use-rate)) However, one factor that might decrease the rate at which males report contraceptive use is that some males do not know that their partners are using contraception.
+
+```{r not-aware, dependson='process-male-data'}
+male1719dt[,
+  not_aware := factor(fifelse(
+    CWPLUSE2 == "Don't know" |
+      CWPLMET201 == "Don't know" |
+      PXLPUSE == "Don't know" |
+      PXLPMETH01 == "Don't know" |
+      PXLSXPRB == 'Yes' |
+      PXLSXPRB == "Don't know",
+    "Ignorant of partner's contraceptive use",
+    "Does not report ignorance of partner's contraceptive use"
+  ))
+]
+
+estimate_totals_and_percentages(
+  ~not_aware,
+  subset(
+    get_NSFG_survey_design(male1719dt),
+    SEX3MO == 'YES, HAD INTERCOURSE'
+  )
+) |>
+  style_totals_and_percentages() |>
+  set_caption("Males who report ignorance of partner's contraceptive use during their last intercourse, among males who have had sexual intercourse with a female in the past 3 months.")
+```
+
+A small proportion of sexually active males report not knowing if their partner used contraception during their last intercourse. However, the estimates of Table \@ref(tab:not-aware) are based on two types of questions:
+
+1. questions about partners' use of contraception, or
+2. questions specifically asking respondents whether their partners could have used contraception without their knowledge.
+
+Respondents are counted in the "ignorant of partner's contraceptive use" category for the estimates of Table \@ref(tab:not-aware) if they respond "don't know" to the first type of question or if they respond "yes" or "don't know" to the second type of question. However, the second type of question is only asked of NSFG respondents who are neither married nor cohabitating. Therefore, these results should be interpreted with care. This is discussed further in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males).
+
+
+### Sexual Inactivity
+
+```{r sexual-inactivity, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
+this$fem <- estimate_totals_and_percentages(
+  ~factor(HADSEX),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    SEX3MO != 'YES'
+  )
+)
+this$male <- estimate_totals_and_percentages(
+  ~factor(HADSEX),
+  subset(
+    get_NSFG_survey_design(male1719dt),
+    SEX3MO != 'YES, HAD INTERCOURSE'
+  )
+)
+
+for (dt in this) {
+  dt[,
+    description := fcase(
+      description == 'YES, R EVER HAD INTERCOURSE',
+      'Had intercourse',
+      description == 'NO, R NEVER HAD INTERCOURSE',
+      'Never have had intercourse'
+    )
+  ]
+}
+
+style_and_combine_totals_and_percentages_vertically(
+  'Females', this$fem, 'Males', this$male
+) |>
+  set_caption('Persons who have ever had intercourse with someone of the opposite sex, among persons who have not had intercourse with someone of the opposite sex in the past 3 months.')
+```
+
+Among persons who have not had intercourse with someone of the opposite sex in the past 3 months, a sizable minority have never had intercourse with someone of the opposite sex. (Table \@ref(tab:sexual-inactivity))
+
+```{r never-had-sex, dependson=c('fem-process-data', 'male-process-data'), fig.cap='Persons who have never had sexual intercourse with the opposite sex by age group.'}
+rbindlist(list(
+  fem1719dt[
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE',
+    .(
+      WGT2017_2019,
+      age = cut(AGE_R, breaks = seq(15, 50, 5), right = FALSE),
+      sex = 'female'
+    )
+  ],
+  male1719dt[
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE',
+    .(
+      WGT2017_2019,
+      age = cut(AGE_R, breaks = seq(15, 50, 5), right = FALSE),
+      sex = 'male'
+    )
+  ]
+)) |>
+  ggplot(
+    mapping = aes(
+      y = ..count.. / 10e5,
+      x = age,
+      weight = WGT2017_2019
+    )
+  ) +
+  geom_bar(stat = 'count') +
+  scale_y_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    expand = expansion(mult = c(0, 0.05)),
+    minor_breaks = seq(0, 12, 1),
+    breaks = seq(0, 12, 2)
+  ) +
+  scale_x_discrete() +
+  labs(
+    x = 'Age (years)',
+    y = 'Total Persons'
+  ) +
+  theme(
+    axis.ticks = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+```
+
+Most persons who have never had sexual intercourse with someone of the opposite sex are in younger age groups, and totals of persons who have never had sexual intercourse decrease with increasing age. (Figure \@ref(fig:never-had-sex))
+
+
+#### Reason for Never Having Intercourse
+
+```{r fem-reason-no-sex, dependson='process-fem-data', fig.cap="Females by reason for not having had sexual intercourse with the opposite sex, among those who have not. Dots represent point estimates and brackets represent 95 percent confidence intervals."}
+estimate_totals_and_percentages(
+  ~factor(YNOSEX),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+  )
+) |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1)
+  )
+```
+
+```{r male-reason-no-sex, dependson='process-male-data', fig.cap="Males by reason for not having had sexual intercourse with the opposite sex, among those who have not. Dots represent point estimates and brackets represent 95 percent confidence intervals."}
+estimate_totals_and_percentages(
+  ~factor(YNOSEX),
+  subset(
+    get_NSFG_survey_design(male1719dt),
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+  )
+) |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1)
+  )
+```
+
+Many persons who have not had intercourse with someone of the opposite sex report "haven't found the right person yet" as a reason, though this appears to be more common for males than for females. "Against religion or morals" is another commonly cited reason. It is notable that "other" is also a popular reason chosen for not having had intercourse with someone of the opposite sex. (Figures \@ref(fig:fem-reason-no-sex) and \@ref(fig:male-reason-no-sex)) This is indirectly explored in the subsequent Section \@ref(attraction-by-sex).
+
+
+#### Attraction by Sex
+
+```{r fem-sex-attraction, dependson='process-fem-data'}
+this <- list()
+
+this$totals <- estimate_totals_and_percentages(
+  ~sexually_active_3m,
+  get_NSFG_survey_design(fem1719dt)
+) |> style_totals_and_percentages()
+
+this$total_row <- cbind(
+  this$totals[4, ],
+  this$totals[3, 2:5]
+) |>
+  set_contents(
+    1, 1, 'Total'
+  ) |>
+  set_contents(
+    1, c(4:5, 8:9), ''
+  ) |>
+  set_bottom_border(final(1), everywhere, 1) |>
+  set_top_border(final(1), everywhere, 1) |>
+  set_left_border(everywhere, c(2, 6), 1) |>
+  set_left_padding(everywhere, c(2, 6), 4)
+
+this$chisq <- svychisq(
+  ~ ATTRACT + sexually_active_3m,
+  get_NSFG_survey_design(fem1719dt),
+  statistic = 'adjWald'
+)
+
+style_and_combine_totals_and_percentages_horizontally(
+  'Had intercourse with male in past 3 months',
+  estimate_totals_and_percentages(
+    ~factor(ATTRACT),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      SEX3MO == 'YES'
+    )
+  ),
+  'Did not have intercourse with male in past 3 months',
+  estimate_totals_and_percentages(
+    ~factor(ATTRACT),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      SEX3MO != 'YES'
+    )
+  )
+) |>
+  rbind(this$total_row) |>
+  set_caption('Females by attraction to males versus females.')
+```
+
+Among females who have had sexual intercourse with a male in the past 3 months, approximately 0.5\% describe themselves as "mostly attracted to females" and 0.2\% as "only attracted to females." However, among those that have not had intercourse with a male in the past 3 months, 4.9\% describe themselves as "mostly attracted to females" and 4.4\% as "only attracted to females." An adjusted Wald-Koch chi-squared test of homogeneity of proportions is statistically significant $(p = `r signif(this$chisq$p.value, 2)`)$. Therefore, the differences in proportions in Table \@ref(tab:fem-sex-attraction) of persons categorized by attraction between those sexually active with males in the past 3 months and those not sexually active with males are not attributable to sampling error.
+
+```{r male-sex-attraction, dependson='process-male-data'}
+this <- list()
+
+this$totals <- estimate_totals_and_percentages(
+  ~I(SEX3MO == 'YES, HAD INTERCOURSE'),
+  get_NSFG_survey_design(male1719dt)
+) |> style_totals_and_percentages()
+
+this$total_row <- cbind(
+  this$totals[4, ],
+  this$totals[3, 2:5]
+) |>
+  set_contents(
+    1, 1, 'Total'
+  ) |>
+  set_contents(
+    1, c(4:5, 8:9), ''
+  ) |>
+  set_bottom_border(final(1), everywhere, 1) |>
+  set_top_border(final(1), everywhere, 1) |>
+  set_left_border(everywhere, c(2, 6), 1) |>
+  set_left_padding(everywhere, c(2, 6), 4)
+
+this$chisq <- svychisq(
+  ~ ATTRACT + sexually_active_3m,
+  get_NSFG_survey_design(male1719dt),
+  statistic = 'adjWald'
+)
+
+style_and_combine_totals_and_percentages_horizontally(
+  'Had intercourse with female in past 3 months',
+  estimate_totals_and_percentages(
+    ~factor(ATTRACT),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      SEX3MO == 'YES, HAD INTERCOURSE'
+    )
+  ),
+  'Did not have intercourse with female in past 3 months',
+  estimate_totals_and_percentages(
+    ~ATTRACT,
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      SEX3MO != 'YES, HAD INTERCOURSE'
+    )
+  )[1:9, ]
+) |>
+  rbind(this$total_row) |>
+  set_caption('Males by attraction to females versus males.')
+```
+
+Similarly, the proportion of males who are "only attracted to females" is approximately 92.4\% among those who have had intercourse with a female in the past 3 months, but only 79.5\% among those who have not, and the proportion "only attracted to males" is approximately 0.1\% among those who had intercourse with a female in the past 3 months, but is 6.4\% among those who have not. An adjusted Wald-Koch chi-squared test of homogeneity of proportions is again statistically significant $(p = `r signif(this$chisq$p.value, 2)`)$, and the differences in Table \@ref(tab:male-sex-attraction) in proportions of persons categorized by attraction between those sexually active with males in the past 3 months and those not sexually active with a male in the past 3 months are not due to sampling error.
+
+Thus, some persons who are not sexually active with the opposite sex are simply not attracted to the opposite sex, such as the approximately 1.5M males only attracted to males who did not have intercourse with a female in the past 3 months in Table \@ref(tab:male-sex-attraction).
+
+
+### Reason for Physical Infertility Not Due to Sterilizing Procedure
+
+```{r fem-infertility, dependson='process-fem-data', fig.cap="Females by reason reported for their inability to become pregnant, among those who report being physically infertile not due to a sterilizing procedure."}
+estimate_totals_and_percentages(
+  ~factor(REASIMPR),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    POSIBLPG == 'No'
+  )
+) |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 0.01)
+  )
+```
+
+```{r fem-partner-infertility, dependson='process-fem-data', fig.asp=0.4, fig.cap="Females by reason reported for their partners' inability to father a child, among those who report having a partner who is physically infertile not due to a sterilizing procedure."}
+estimate_totals_and_percentages(
+  ~factor(REASIMPP),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    POSIBLMN == 'No'
+  )
+) |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
+```
+
+The reason for physical infertility not due to a sterilizing procedure is part of the questionnaire for female respondents of the NSFG, but not the questionnaire for male respondents. As Figures \@ref(fig:fem-infertility) and \@ref(fig:fem-partner-infertility) illustrate, because these conditions are relatively rare, the effective sample sizes of the relevant subdomains from a two-year sequence of the NSFG are small, and the sampling error is quite large relative to the estimates.
+
+
+### Number of Methods
+
+```{r number-of-methods, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_method_count),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      used_last_3m_method_count > 0
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(used_last_3m_method_count),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      used_last_3m_method_count > 0
+    )
+  )
+) |>
+  set_caption('Persons categorized by number of contraceptive methods used during last intercourse, among persons who used contraception during sexual intercourse with someone of the opposite sex in the past 3 months.')
+```
+
+While the vast majority of both females and males used only one method of contraception during their last intercourse, a substantial minority of persons used multiple methods. (Table \@ref(tab:number-of-methods))
+
+
+### Method(s) Used
+
+```{r fem-methods-used, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by whether or not each contraceptive method was used during last intercourse with a male in the past 3 months, with persons using multiple methods counted multiple times.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method_count > 0
+  ),
+  prefix = 'used_last_3m_method',
+  skip = 20:21,
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 2),
+    limits = c(-0.05, 14)
+  )
+```
+
+```{r male-methods-used, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by whether or not each contraceptive method was used during last intercourse with a female in the past 3 months, with persons using multiple methods counted multiple times.', }
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method_count > 0
+  ),
+  prefix = 'used_last_3m_method',
+  skip = 95:96,
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 2),
+    limits = c(-0.05, 14)
+  )
+```
+
+Overall, there are similar distributions in contraceptive method(s) used during last intercourse reported by females and males. (Figures \@ref(fig:fem-methods-used) and \@ref(fig:male-methods-used)) For instance, condoms and pills are the most commonly reported methods by males, and they are the second and third most common methods reported by females. Indeed, female sterilizing operations, condoms, and pills are in the top three most common methods reported both by females and males. However, the most salient difference between females and males is that approximately 10.5M females report a female sterilizing operation being used during their last intercourse, whereas only approximately 6.7M males report a female sterilizing operation being used.
+
+Other differences include a greater number of males reporting use of condom, pill, contraceptive patch, and "other" methods than females, and a greater number of females reporting use of intrauterine device (IUD), calendar-based, and temperature or cervical mucus test methods. Possible reasons for these and other differences are discussed in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males).
+
+Estimates of the number of female and male persons using withdrawal, vasectomy, implant, injectable, and ring methods are similar between females and males. Methods such as suppository, female condom, diaphragm, film, foam, jelly, and cream are rarely reported used by either females or males. Withdrawal is the fourth most commonly reported method both by females and males.
+
+
+### Method Used Exclusively
+
+```{r fem-exclusive-method-used, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by which contraceptive method was used during last intercourse with a male in the past 3 months, among those who used exactly one method during last intercourse.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method_count == 1
+  ),
+  prefix = 'used_last_3m_method',
+  skip = 20:21,
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = seq(0, 10, 2),
+    limits = c(-0.1, 10)
+  )
+```
+
+```{r male-exclusive-method-used, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by which contraceptive method was used during last intercourse with a female in the past 3 months, among those who used exactly one method during last intercourse.'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method_count == 1
+  ),
+  prefix = 'used_last_3m_method',
+  skip = 95:96,
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = seq(0, 10, 2),
+    limits = c(-0.1, 10)
+  )
+```
+
+Restricting analysis to persons who used only one method of contraception during their last intercourse, there is a similar overall pattern of contraceptive method use as seen in Section \@ref(methods-used). (Figures \@ref(fig:fem-exclusive-method-used) and \@ref(fig:male-exclusive-method-used)) However, in this subdomain, the number of females and number of males reporting pill use is roughly the same. Another salient difference in this subdomain is that there are relatively fewer persons who report using withdrawal, indicating a substantial number of withdrawal users do not rely on withdrawal as their only method of contraception, which is investigated further in Section \@ref(proportion-of-method-users-who-also-used-other-methods).
+
+
+### Proportion of Method Users Who Also Used Other Method(s)
+
+```{r fem-proportion-another, dependson='process-fem-data', fig.asp=0.8, fig.cap='Proportion using another method of contraception among females using each method of contraception during last intercourse with a male in the past 3 months.'}
+estimate_NSFG_mentions_in_subdomains(
+  fem1719formats,
+  row_estimation_function = function(x) {
+    estimate_row_total_and_percentage(
+      ~I(used_last_3m_method_count > 1),
+      subset(
+        get_NSFG_survey_design(fem1719dt),
+        fem1719dt[, get(sprintf('used_last_3m_method%d', x))]
+      )
+    )
+  },
+  format = 'METH3MF',
+  skip = c(20:22)
+)[!is.nan(percentage_CI_high)][order(-percentage)] |>
+  plot_percentages_with_CIs()
+```
+
+```{r male-proportion-another, dependson='process-fem-data', fig.asp=0.6, fig.cap='Proportion using another method of contraception among males using each method of contraception during last intercourse with a female in the past 3 months.'}
+estimate_NSFG_mentions_in_subdomains(
+  male1719formats,
+  row_estimation_function = function(x) {
+    estimate_row_total_and_percentage(
+      ~I(used_last_3m_method_count > 1),
+      subset(
+        get_NSFG_survey_design(male1719dt),
+        male1719dt[, get(sprintf('used_last_3m_method%d', x))]
+      )
+    )
+  },
+  format = 'METH3MF',
+  skip = 95:96
+)[!is.nan(percentage_CI_high)][order(-percentage)] |>
+  plot_percentages_with_CIs()
+```
+
+A direct way to measure the extent to which specific contraceptive methods are used exclusively or in combination with other methods is to estimate the proportion of users of each method that used it with another method. (Figures \@ref(fig:fem-proportion-another) and \@ref(fig:male-proportion-another).) The number of persons using safe period by temperature or cervical mucus test method, contraceptive patch method, emergency contraception, and "other" method are relatively few, constituting small effective sample sizes with large sampling errors. Indeed, estimates for contraceptive patch are contradictory between female and male respondents.
+
+Ignoring those, calendar-based methods have the greatest proportion of users who also used another method during their last intercourse, particularly among females. As alluded to in Section \@ref(method-used-exclusively), about half of withdrawal users used another method during their last intercourse. Thus, withdrawal use is split between those using withdrawal alone as a method of contraception and those using withdrawal in addition to another method.
+
+While a simple majority of users of pill and condom methods used them exclusively during their last intercourse, a sizable minority of pill and condom users also used another method. On the other hand, female sterilizing operation, IUD, and perhaps contraceptive ring are the methods most often used exclusively.
+
+The remaining subsections of Section \@ref(use-of-contraception-during-most-recent-intercourse) explore what other contraceptive methods are used in conjunction with the methods commonly used with others, i.e., calendar, withdrawal, condom, and pill methods.
+
+
+### Other Method(s) Used with Calendar Method
+
+```{r other-with-calendar, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_NSFG_mentions(
+    fem1719formats,
+    survey_design = subset(
+      get_NSFG_survey_design(fem1719dt),
+      used_last_3m_method8
+    ),
+    prefix = 'used_last_3m_method',
+    skip = c(8, 20:21),
+    format = 'METH3MF'
+  )[total > 0][order(-total)],
+  'Males',
+  estimate_NSFG_mentions(
+    male1719formats,
+    survey_design = subset(
+      get_NSFG_survey_design(male1719dt),
+      used_last_3m_method9
+    ),
+    prefix = 'used_last_3m_method',
+    skip = c(9, 95:96),
+    format = 'METH3MF'
+  )[total > 0][order(-total)]
+) |>
+  set_caption('Persons by other contraceptive method(s) used during last intercourse, among persons who used a calendar-based method of contraception during sexual intercourse with someone of the opposite sex in the past 3 months.') |>
+  set_width(1)
+```
+
+When used in conjunction with other methods, calendar-based methods are most commonly used with withdrawal or to a lesser extent condoms. (Table \@ref(tab:other-with-calendar))
+
+
+### Other Method(s) Used with Withdrawal, Condom, and Pill
+
+```{r fem-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a male in the past 3 months.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method5
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(5, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    breaks = seq(0, 1.8, 0.2),
+    limits = c(-0.1, 1.85),
+    expand = c(0, 0)
+  )
+```
+
+```{r male-other-with-withdrawal, dependson='process-fem-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a female in the past 3 months.'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method2
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(2, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    breaks = seq(0, 1.8, 0.2),
+    limits = c(-0.1, 1.85),
+    expand = c(0, 0)
+  )
+```
+
+```{r fem-other-with-condom, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a male in the past 3 months.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method2
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(2, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |># style_totals_and_percentages()
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    breaks = seq(0, 3.5, 0.5),
+    limits = c(-0.1, 3.6),
+    expand = c(0, 0)
+  )
+```
+
+```{r male-other-with-condom, dependson='process-male-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a female in the past 3 months.'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method1
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(1, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    breaks = seq(0, 3.5, 0.5),
+    limits = c(-0.1, 3.6),
+    expand = c(0, 0)
+  )
+```
+
+
+```{r fem-other-with-pill, dependson='process-fem-data', fig.cap='Females by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a male in the past 3 months.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method1
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(1, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    breaks = seq(0, 3.5, 0.5),
+    limits = c(-0.1, 3.6),
+    expand = c(0, 0)
+  )
+```
+
+```{r male-other-with-pill, dependson='process-male-data', fig.asp=0.6, fig.cap='Males by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a female in the past 3 months.'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method4
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(4, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 0.1),
+    breaks = seq(0, 3.5, 0.5),
+    limits = c(-0.1, 3.6),
+    expand = c(0, 0)
+  )
+```
+
+When used in conjunction with other methods, withdrawal, condom, and pill methods are used with a variety of other methods, though the most commonly used other methods with any one of these three are the other two methods. (Figures \@ref(fig:fem-other-with-withdrawal),  \@ref(fig:male-other-with-withdrawal), \@ref(fig:fem-other-with-condom), \@ref(fig:male-other-with-condom), \@ref(fig:fem-other-with-pill) and \@ref(fig:male-other-with-pill)) However, this is to be expected, since these three methods are more common generally. (Section \@ref(methods-used)) One exception to this general trend is that calendar-based methods are unusually common among methods used in conjunction with withdrawal as reported by females. (Figure \@ref(fig:fem-other-with-withdrawal))
+
+
+## Use of Contraception during Past 12 Months
+
+```{r at-risk, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
+
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~I(used_last_3m_status == 'Otherwise did not use contraception during last intercourse'),
+    get_NSFG_survey_design(fem1719dt)
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~I(used_last_3m_status == 'Otherwise did not use contraception during last intercourse'),
+    get_NSFG_survey_design(male1719dt)
+  )
+)
+
+this$fem <- as.data.frame(this$ht)[4, 3]
+this$male <- as.data.frame(this$ht)[6, 3]
+```
+
+Section \@ref(reason-for-nonuse) identified approximately `r this$fem` females and `r this$male` males at increased risk for unintended pregnancy due to not using contraception during their last intercourse. In order to investigate whether this is due to habitual nonuse of contraception or due to inconsistency of use, this section examines use of contraception over the preceding 12 months.
+
+```{r sexually-active-12-months, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[,
+  had_sex_12m := factor(fifelse(
+    sex12mo,
+    'Had intercourse',
+    'Did not have intercourse'
+  ))
+]
+
+male1719dt[,
+  had_sex_12m := factor(fifelse(
+    SEX12MO == 'YES, HAD INTERCOURSE',
+    'Had intercourse',
+    'Did not have intercourse'
+  ))
+]
+
+this <- list()
+
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~had_sex_12m,
+    get_NSFG_survey_design(fem1719dt)
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~had_sex_12m,
+    get_NSFG_survey_design(male1719dt)
+  ),
+  digits = 1
+)
+
+this$fem <- as.data.frame(this$ht)[4, 3]
+this$male <- as.data.frame(this$ht)[6, 3]
+
+this$ht |>
+  set_caption('Persons who have had sexual intercourse with someone of the opposite sex in the past 12 months, among persons aged 15-49 living in households in the United States.')
+```
+
+The size of the relevant subdomain for this section is approximately `r this$fem` females and `r this$male` males. (Table \@ref(tab:sexually-active-12-months))
+
+
+### Number of Methods
+
+```{r number-of-methods-12-months, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(any_use_12m_method_count),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      sex12mo
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(any_use_12m_method_count),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      SEX12MO == 'YES, HAD INTERCOURSE'
+    )
+  )
+) |>
+  set_caption('Persons by number of contraceptive methods ever used in past 12 months, among those who have had intercourse with someone of the opposite sex in the past 12 months.')
+```
+
+A majority of persons sexually active in the past 12 months used at least one method of contraception at least once in the past 12 months, and a sizable minority used more than one method of contraception in the past 12 months. (Table \@ref(tab:number-of-methods-12-months))
+
+The estimates of those who have not used any method of contraception in the past 12 months despite being sexually active in Table \@ref(tab:number-of-methods-12-months) should not be interpreted as an estimate of those at increased risk for unintended pregnancy due to not using contraception, since the estimates include sexual partners trying to conceive, partners with a pregnant or postpartum female, and partners with one or more physically infertile persons.[^no-pregnancy-months]
+
+[^no-pregnancy-months]: Separating out estimates of those who are pregnant or postpartum is not possible over extended periods of time such as 12 months when using the NSFG's public use data files, since the months that pregnancies begin and end are not released for disclosure risk reduction.
+
+
+### Method(s) Used
+
+```{r fem-methods-used-12-months, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    any_use_12m_method_count > 0
+  ),
+  prefix = 'any_use_12m_method',
+  skip = c(1:2, 22:23, 55, 98:99),
+  format = 'METHHXF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, 28, 4),
+    limits = c(-0.05, 28)
+  )
+```
+
+```{r male-methods-used-12-months, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    any_use_12m_method_count > 0
+  ),
+  prefix = 'any_use_12m_method',
+  skip = 98:99,
+  format = 'MTHDSV1F'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, 28, 4),
+    limits = c(-0.05, 28)
+  )
+```
+
+The distribution of method(s) used by females in the past 12 months in Table \@ref(fig:fem-methods-used-12-months) parallels the distribution of method(s) used during last intercourse in Figure \@ref(fig:fem-methods-used), with the counts of persons using each method increased. The major exception is the number of females using a sterilizing operation, which is barely greater in Figure \@ref(fig:fem-methods-used-12-months), causing it to be the third most rather than most prevalent method of contraception among females when examining the past 12 months.
+
+Similarly, the distribution of method(s) used in the past 12 months in Table \@ref(fig:male-methods-used-12-months) parallels the distribution of method(s) used during last intercourse in Figure \@ref(fig:male-methods-used), but with counts of those using female sterilizing operations not increasing as much as other methods, causing it to decrease from the third most to the fourth most prevalent method among males when examining the past 12 months. A salient feature of Figure \@ref(fig:male-methods-used-12-months) is the extent to which the number of males who have used condoms at least once in the past 12 months is greater than other methods.
+
+
+### Method Used Exclusively
+
+```{r fem-exclusive-method-used-12-months, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    any_use_12m_method_count == 1
+  ),
+  prefix = 'any_use_12m_method',
+  skip = c(1:2, 22:23, 55, 98:99),
+  format = 'METHHXF'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = seq(0, 12, 2),
+    limits = c(-0.1, 12)
+  )
+```
+
+```{r male-exclusive-method-used-12-months, dependson='process-male-data', fig.asp=0.6, fig.cap='Males categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    any_use_12m_method_count == 1
+  ),
+  prefix = 'any_use_12m_method',
+  skip = 98:99,
+  format = 'MTHDSV1F'
+)[total > 0][order(-total)] |>
+  plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = seq(0, 12, 2),
+    limits = c(-0.1, 12)
+  )
+```
+
+When restricting analysis to those who reported using only one method of contraception, the distributions of method used during the past 12 months (Figures \@ref(fig:fem-exclusive-method-used-12-months) and \@ref(fig:male-exclusive-method-used-12-months)) parallels the distributions of method used during last intercourse (Figures \@ref(fig:fem-exclusive-method-used) and \@ref(fig:male-exclusive-method-used)) very closely, with female sterilizing operation being the most commonly method reported by females, and condoms then female sterilizing operation being the most commonly methods reported by males.
+
+
+## Consistency of Use of Contraception
+
+```{r used-12-months-but-not-last, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[,
+  any_use_12m_at_all := factor(fifelse(
+    any_use_12m_method_count > 0,
+    'Used contraception in past 12 months',
+    'Did not use contraception in past 12 months'
+  ))
+]
+
+male1719dt[,
+  any_use_12m_at_all := factor(fifelse(
+    any_use_12m_method_count > 0,
+    'Used contraception in past 12 months',
+    'Did not use contraception in past 12 months'
+  ))
+]
+
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~any_use_12m_at_all,
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~any_use_12m_at_all,
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
+    )
+  )
+) |>
+  set_caption('Persons who used any method of contraception in the past 12 months, among those who did not use contraception during their most recent intercourse despite being at risk for unintended pregnancy.')
+```
+
+```{r used-in-month-but-not-last, dependson='process-fem-data'}
+fem1719dt[,
+  used_in_month_last_sex_factor := factor(fifelse(
+    used_in_month_last_sex,
+    'Used contraception in month of last intercourse',
+    'Did not use contraception in month of last intercourse'
+  ))
+]
+
+estimate_totals_and_percentages(
+  ~used_in_month_last_sex_factor,
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
+  )
+) |> style_totals_and_percentages() |>
+  set_caption('Females who reported using at least one method of contraception in month of last intercourse, among those who did not use contraception during their most recent intercourse despite being at risk for unintended pregnancy.')
+```
+
+```{r used-ever-but-not-last, dependson='process-fem-data'}
+fem1719dt[,
+  used_ever := factor(fifelse(
+    EVERUSED == 'Yes',
+    'Used contraception ever in lifetime',
+    'Has not use contraception ever in lifetime'
+  ))
+]
+
+estimate_totals_and_percentages(
+  ~used_ever,
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_status == 'Otherwise did not use contraception during last intercourse'
+  )
+) |> style_totals_and_percentages() |>
+  set_caption('Females who reported using at least one method of contraception ever in their lifetimes, among those who did not use contraception during their most recent intercourse despite being at risk for unintended pregnancy.')
+```
+
+Some of those who did not use contraception during their most recent intercourse with the opposite sex in the past 3 months despite being at risk for unintended pregnancy might use contraception generally, having failed to do so during their most recent intercourse because of inconsistency. Respondents to the NSFG were not directly asked whether this was the case, but this can be inferred in other ways.
+
+The subdomain of those at increased risk of unintended pregnancy due to contraceptive nonuse constitutes a relatively small sample, as seen in the relatively great sampling error in Table \@ref(tab:used-12-months-but-not-last). Nonetheless, slightly less than half of those who did not use contraception at their most recent intercourse despite being at risk for unintended pregnancy used contraception at least once the past 12 months. This implies that those at increased risk for unintended pregnancy due to lack of contraception use are split between those who are using contraception inconsistently and those who are not using contraception at all.
+
+A substantial minority of females who did not use contraception during their most recent intercourse despite being at risk of unintended pregnancy reported using at least one method of contraception during the month of their most recent intercourse, providing further evidence that some of this contraceptive nonuse is due to inconsistency. (Table \@ref(tab:used-in-month-but-not-last))
+
+Nearly all females who did not use contraception during their most recent intercourse despite being at risk of unintended pregnancy have used contraception at some point in their lifetime, indicating that contraceptive nonuse in these cases is rarely if ever a matter of principle. (Table \@ref(tab:used-ever-but-not-last))
+
+Male respondents to the NSFG are not asked if they have ever used the various contraceptive methods, nor do they fill out the contraceptive use calendar that female respondents do, so estimates for males such as those in Tables \@ref(tab:used-in-month-but-not-last) and \@ref(tab:used-ever-but-not-last) are not available.
+
+
+### Any Method During Past 12 Months
+
+```{r consistency-12-months-any, dependson=c('process-fem-data', 'process-male-data')}
+fem1719dt[,
+  any_use_12m_consistency := factor(
+    fcase(
+      P12MOCON == 'Every time',
+        'Every time',
+      PXNOFREQ != 'No answer provided',
+        as.character(PXNOFREQ),
+      default = 'No answer provided'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided'
+    )
+  )
+]
+
+male1719dt[,
+  any_use_12m_consistency := factor(
+    fifelse(
+      !is.na(PXCONFRQ),
+      fcase(
+        PXCONFRQ == 100,
+          'Every time',
+        PXNOFREQ != 'No answer provided',
+          as.character(PXNOFREQ),
+        default = 'No answer provided'
+      ),
+      fcase(
+        CONDFREQ == 100,
+          'Every time',
+        CWPNOFRQ != 'No answer provided',
+          as.character(CWPNOFRQ),
+        default = 'No answer provided'
+      )
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided'
+    )
+  )
+]
+
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(any_use_12m_consistency),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      sex12mo &
+        any_use_12m_method_count > 0 &
+        TUBS != 'YES'
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(any_use_12m_consistency),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      (
+        !is.na(PXMETHOD01) &
+          RSURGSTR != 'YES'
+      ) | (
+        !is.na(CWPALLBC01) &
+          RSURGSTR != 'YES' &
+          PSURGSTR != 'YES'
+      )
+    )
+  )
+) |>
+  set_caption('Persons by their reported frequency of using any contraceptive method with their most recent partner, among those who used a method of contraception in the past 12 months and who do not themselves have a sterilizing operation or are males who are married or cohabitating with a female partner with a sterilizing operation.')
+```
+
+Among those who have used a method of contraception in the past 12 months, the majority of persons report using a method of contraception every time, though a substantial minority report more inconsistency in their contraceptive use. Some respondents to the NSFG report their frequency of using any method of contraception to be "none of the time." This is contradictory with their answers to other questions that indicate that they used at least one method of contraception in the past 12 months. These self-contradictory answers represent several million persons in the population. (Table \@ref(tab:consistency-12-months-any))
+
+In the NSFG, different series of questions about consistency of contraceptive use are asked of males who are married or cohabitating than of those who are not, whereas the same series of questions pertaining to consistency are asked of all females. This is why the subdomains for the estimates in Table \@ref(tab:consistency-12-months-any) differ slightly for females and for males. The estimates for females exclude all persons who have active sterilizing operations. The estimates for males exclude such persons and also exclude persons who are married or cohabitating with a female partner who has an active sterilizing operation.
+
+In cases of males who have answers for both series of questions because they have had intercourse both with a wife or cohabitating partner and with a more recent female partner in the past 12 months, the answers pertaining to contraceptive use with the more recent partner are used for the estimates of Table \@ref(tab:consistency-12-months-any).
+
+Two methods of contraception, condoms and pills, are both popular and require user interventions either during each intercourse or daily, respectively. They are explored further in Sections \@ref(condom-use-during-past-12-months) and \@ref(pill-use-during-past-4-weeks).
+
+
+### Condom Use During Past 12 Months
+
+```{r consistency-condom, dependson=c('process-fem-data', 'process-male-data')}
+male1719dt[,
+  condom_12m_consistency := factor(
+    fcase(
+      P12MOCONO == 'Yes',
+        'Every time',
+      P12MOCONO == 'No',
+        'None of the time',
+      P12MOCON != 'No answer provided',
+        as.character(P12MOCON),
+      default = 'No answer provided'
+    ),
+    ordered = TRUE,
+    levels = c(
+      'Every time',
+      'Most of the time',
+      'About half of the time',
+      'Some of the time',
+      'None of the time',
+      'Refused',
+      "Don't know",
+      'No answer provided'
+    )
+  )
+]
+
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(
+      P12MOCON,
+      levels = c(
+        'Every time',
+        'Most of the time',
+        'About half of the time',
+        'Some of the time',
+        'None of the time',
+        'Refused',
+        'No answer provided'
+      )
+    ),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      sex12mo &
+        any_use_12m_method4 &
+        any_use_12m_method_count == 1
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(condom_12m_consistency),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      SEX12MO == 'YES, HAD INTERCOURSE' &
+        any_use_12m_method1 &
+        any_use_12m_method_count == 1
+    )
+  )
+) |> set_caption('Persons by their reported frequency of using condoms during the past 12 months, among those whose only reported method of contraception for the past 12 months is condoms.')
+```
+
+Consistency of condom use is slightly worse than consistency of the use of any method of contraception described in Section \@ref(any-method-during-past-12-months), though a simple majority of those relying on condoms as their exclusive method of contraception report using condoms every time. (Table \@ref(tab:consistency-condom))
+
+
+### Pill Use During Past 4 Weeks
+
+```{r consistency-pill, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(MISSPILL),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    sex12mo & (last_month_method3 | this_month_method3)
+  )
+) |> style_totals_and_percentages() |>
+  set_caption('Females by their reported number of pills missed, among those who reported using pills as a method of contraception in this or the previous month and who have had intercourse with someone of the opposite sex in the past 12 months.')
+```
+
+A majority of pill users report never missing a pill, though there is substantial amount of inconsistency of pill use among a minority of pill users. (Table \@ref(tab:consistency-pill))
+
+
+## Use of Contraceptive Methods for Other Reasons
+
+Some users of methods of contraception are actually motivated by reasons other than contraception. The NSFG asks respondents about these other motives regarding condoms, and asks female respondents about these other motives regarding pills and IUDs.
+
+### Condom
+
+```{r condom-during-last-intercourse, dependson=c('process-fem-data', 'process-male-data')}
+this <- list()
+
+this$ht <- style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(CONDVAG),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      VAGSEX %in% c(
+        'Yes',
+        'No answer provided'
+      )
+    )
+  ),
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(CONDVAG),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      VAGSEX %in% c(
+        'Yes',
+        'No answer provided'
+      )
+    )
+  ),
+  digits = 1
+)
+
+this$fem <- as.data.frame(this$ht)[3, 3]
+this$male <- as.data.frame(this$ht)[7, 3]
+
+this$ht |> set_caption('Persons by whether they used a condom during last vaginal intercourse with someone of the opposite sex, among those who have had vaginal intercourse with someone of the opposite sex regardless of when the intercourse occurred.')
+```
+
+The size of the subdomain of condom users who are surveyed regarding their motives for condom use by the NSFG is approximately `r this$fem` females and `r this$male` males. (Table \@ref(tab:condom-during-last-intercourse)) However, it should be noted this subdomain specifically contains users of condoms for vaginal intercourse with the opposite sex and does not address non-vaginal or same-sex condom use.
+
+```{r motive-for-condom, dependson=c('process-fem-data', 'process-male-data')}
+style_and_combine_totals_and_percentages_vertically(
+  'Females',
+  estimate_totals_and_percentages(
+    ~factor(WHYCONDL),
+    subset(
+      get_NSFG_survey_design(fem1719dt),
+      CONDVAG == 'Yes'
+    )
+  )[order(-total)],
+  'Males',
+  estimate_totals_and_percentages(
+    ~factor(WHYCONDL),
+    subset(
+      get_NSFG_survey_design(male1719dt),
+      CONDVAG == 'Yes'
+    )
+  )[order(-total)]
+) |> set_caption('Persons by reason for using condoms during last vaginal intercourse with someone of the opposite sex.')
+```
+
+The vast majority of persons who use condoms during vaginal intercourse are motivated by contraception at least in part, though these persons are split approximately equally between those who are exclusively motivated by contraception and those motivated by both contraception and prevention of sexually transmitted diseases. (Table \@ref(tab:motive-for-condom))
+
+
+### Pill
+
+```{r pill-during-month-or-previous, dependson='process-fem-data'}
+this <- list()
+
+this$dt <- estimate_totals_and_percentages(
+  ~I(this_month_method3 | last_month_method3),
+  get_NSFG_survey_design(fem1719dt)
+)
+
+this$dt[, description := c(
+  'Did not use pill',
+  'Used pill'
+)]
+
+this$ht <- this$dt |> style_totals_and_percentages(digits = 1)
+
+this$size <- as.data.frame(this$ht)[4, 2]
+
+this$ht |>
+  set_caption('Females by whether they report using contraceptive pills either this or the previous month.')
+```
+
+The size of the subdomain of pill users who are surveyed about their motives for pill use by the NSFG is approximately `r this$size` females. (Table \@ref(tab:pill-during-month-or-previous))
+
+```{r pill-reason-mentions, dependson='process-fem-data', fig.cap='Females by reason(s) mentioned for using contraceptive pills with persons mentioning multiple reasons counted multiple times, among those who used pills either this or the previous month.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    this_month_method3 | last_month_method3
+  ),
+  prefix = 'why_use_pill_reason',
+  format = 'YUSEMTHF',
+  skip = 98:99
+)[order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
+```
+
+```{r pill-motivation, dependson='process-fem-data'}
+fem1719dt[,
+  pill_motivation := factor(
+    fcase(
+      why_use_pill_reason1 & !(
+        why_use_pill_reason2 |
+        why_use_pill_reason3 |
+        why_use_pill_reason4 |
+        why_use_pill_reason5 |
+        why_use_pill_reason6 |
+        why_use_pill_reason7 |
+        why_use_pill_reason8
+      ), 'Only for birth control',
+      !why_use_pill_reason1 & (
+        why_use_pill_reason2 |
+        why_use_pill_reason3 |
+        why_use_pill_reason4 |
+        why_use_pill_reason5 |
+        why_use_pill_reason6 |
+        why_use_pill_reason7 |
+        why_use_pill_reason8
+      ), 'Only for reasons other than contraception',
+      default = 'For both reasons'
+    )
+  )
+]
+
+estimate_totals_and_percentages(
+  ~pill_motivation,
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    this_month_method3 | last_month_method3
+  )
+)[order(-total)] |> style_totals_and_percentages() |>
+  set_caption('Females by whether contraceptive or other reasons were mentioned for using pills, among those who used pills either this or the previous month.')
+```
+
+The most commonly mentioned reason for use of contraceptive pills is indeed birth control. (Figure \@ref(fig:pill-reason-mentions)) However, a minority of pill users mention birth control exclusively as a reason for their use. About half of all pill users are motivated both by birth control and other health reasons, and a substantial minority of pill users are motivated exclusively by reasons other than contraception. (Table \@ref(tab:pill-motivation))
+
+
+### Hormonal IUD
+
+```{r iud-use-during-month-or-previous, dependson='process-fem-data'}
+this <- list()
+
+this$dt <- estimate_totals_and_percentages(
+  ~I(
+    IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
+      (this_month_method19 | last_month_method19)
+  ),
+  get_NSFG_survey_design(fem1719dt)
+)
+
+this$dt[, description := c(
+  'Did not use hormonal IUD',
+  'Used hormonal IUD'
+)]
+
+this$ht <- this$dt |> style_totals_and_percentages(digits = 1)
+
+this$size <- as.data.frame(this$ht)[4, 2]
+
+this$ht |>
+  set_caption('Females by whether they report using an hormonal IUD either this or the previous month.')
+```
+
+The size of the subdomain of hormonal IUD users who are surveyed about their motives for hormonal IUD use by the NSFG is approximately `r this$size` females. (Table \@ref(tab:iud-use-during-month-or-previous))
+
+```{r iud-reason-mentions, dependson='process-fem-data', fig.cap='Females by reason(s) mentioned for using hormonal IUD with persons mentioning multiple reasons counted multiple times, among those who used an hormonal IUD either this or the previous month.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
+      (this_month_method19 | last_month_method19)
+  ),
+  prefix = 'why_use_iud_reason',
+  format = 'YUSEMTHF',
+  skip = 98:99
+)[order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
+```
+
+```{r iud-motivation, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(iud_motivation),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
+      (this_month_method19 | last_month_method19)
+  )
+)[order(-total)] |> style_totals_and_percentages() |>
+  set_caption('Females by whether contraceptive or other reasons were mentioned for using an hormonal IUD, among those who used an hormonal IUD either this or the previous month.')
+```
+
+The most commonly mentioned reason for use of hormonal IUD is birth control. (Figure \@ref(fig:iud-reason-mentions)) For approximately half of hormonal IUD users, contraception is the sole motivation for use of an hormonal IUD, but approximately a third of hormonal IUD users are motivated by other health reasons in addition to birth control, and a minority of hormonal IUD users are motivated exclusively by reasons other than contraception. (Table \@ref(tab:iud-motivation))
+
+
+## Use of Contraception Ever During Lifetime
+
+Female respondents to the NSFG are asked whether they have ever used specific methods of contraception ever in their lifetimes. As was seen in Section \@ref(use-of-contraceptive-methods-for-other-reasons), sometimes contraceptive methods are used for reasons other than contraception. The total counts of persons who have ever used certain methods are thus greater when considering the general population than when considering those who have had sexual intercourse with the opposite sex. Therefore, this section twice estimates persons who have ever used contraceptives, once among all females in the NSFG population and once among those who have had sexual intercourse with the opposite sex.
+
+```{r used-ever, dependson='process-fem-data'}
+this <- list()
+
+this$dt <- estimate_totals_and_percentages(
+  ~I(ever_used_method_count > 0),
+  get_NSFG_survey_design(fem1719dt)
+)[order(-total)]
+
+this$dt[, description := c('Used a method of contraception', 'Never have used a method  of contraception')]
+
+this$ht <- this$dt |> style_totals_and_percentages()
+
+this$percentage <- paste0(round(this$dt[1, percentage] * 100, 1), '%')
+
+this$ht |> set_caption('Females by whether they ever have used any method of contraception, among those aged 15-49 living in households in the United States.')
+```
+
+```{r methods-used-ever, dependson='process-fem-data', fig.asp=1.1, fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = get_NSFG_survey_design(fem1719dt),
+  prefix = 'ever_used_method',
+  format = 'ever_used_method'
+)[total > 0] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, 60, 10)
+  )
+```
+
+Approximately `r this$percentage` of females have used at least one method of contraception at some time in their lives. (Table \@ref(tab:used-ever)) Condom, pill, and withdrawal methods are the most common methods ever used by females. (Figure \@ref(fig:methods-used-ever))
+
+### Among Those Who Have Ever Had Intercourse
+
+```{r fem-had-sex, dependson='process-fem-data'}
+this <- list()
+
+this$dt <- estimate_totals_and_percentages(
+  ~factor(HADSEX),
+  get_NSFG_survey_design(fem1719dt)
+)[order(-total)]
+
+this$dt[, description := c('Has had intercourse', 'Never had intercourse')]
+
+this$ht <- this$dt |> style_totals_and_percentages(digits = 1)
+
+this$size <- as.data.frame(this$ht)[3, 2]
+
+this$ht |>
+  set_caption('Females by whether they have ever had intercourse with someone of the opposite sex, among females aged 15-49 living in households in the United States.')
+```
+
+```{r used-ever-had-sex, dependson='process-fem-data'}
+this$dt2 <- estimate_totals_and_percentages(
+  ~I(ever_used_method_count > 0),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    HADSEX == 'YES, R EVER HAD INTERCOURSE'
+  )
+)[order(-total)]
+
+this$dt2[,
+  description := c(
+    'Used a method of contraception',
+    'Never have used a method  of contraception'
+  )
+]
+
+this$percentage <- paste0(round(this$dt2[1, percentage] * 100, 1), '%')
+
+this$dt2 |> style_totals_and_percentages(digits = 1) |>
+  set_caption('Females by whether they ever have used any method of contraception, among those who have ever had intercourse with someone of the opposite sex.')
+```
+
+```{r methods-used-ever-had-sex, dependson='process-fem-data', fig.asp=1.2, fig.cap='Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times, among those who have ever had intercourse with someone of the opposite sex.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    HADSEX == 'YES, R EVER HAD INTERCOURSE'
+  ),
+  prefix = 'ever_used_method',
+  format = 'ever_used_method'
+)[order(-total)] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, 60, 10)
+  )
+```
+
+There are approximately `r this$size` females who have ever had intercourse with someone of the opposite sex. (Table \@ref(tab:fem-had-sex)) Of these, approximately `r this$percentage` have used a method of contraception at least once in their lives. (Table \@ref(tab:used-ever-had-sex)) The major difference between the totals estimated in Figure \@ref(fig:methods-used-ever-had-sex) and Figure \@ref(fig:methods-used-ever) is that the estimates in \@ref(fig:methods-used-ever-had-sex) are slightly lower for some methods, such as birth control pills, owing to persons who have never had sexual intercourse with someone of the opposite sex using these methods for reasons other than contraception.
+
+
+## Discontinuation Due to Dissatisfaction
+
+```{r discontinuation, dependson='process-fem-data', fig.asp=0.9, fig.cap='Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing multiple methods counted multiple times.'}
+this <- list()
+this$dt <- estimate_NSFG_mentions_in_subdomains(
+  fem1719formats,
+  row_estimation_function = function(x) {
+    estimate_row_total_and_percentage(
+      as.formula(sprintf('~ever_quit_method%d', x)),
+      subset(
+        get_NSFG_survey_design(fem1719dt),
+        fem1719dt[, get(sprintf('ever_used_method%d', x))]
+      )
+    )
+  },
+  format = 'ever_used_method',
+  skip = c(20)
+)[!is.nan(percentage_CI_high)][order(-total)]
+
+this$dt |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 5)
+  )
+```
+
+```{r discontinuation-by-percentage, dependson='process-fem-data', fig.asp=0.9, fig.cap='Proportion of females who have discontinued using each contraceptive method due to dissatisfaction, among those who have ever used each method of contraception.'}
+this$dt |> plot_percentages_with_CIs()
+```
+
+The NSFG asks female respondents whether they have ever discontinued use of contraceptive methods due to dissatisfaction. While birth control pills have a discontinuation rate that is near the median of discontinuation rates (Figure \@ref(fig:discontinuation-by-percentage)), the popularity of pills leads to pills being the most discontinued method of contraception. (Figure \@ref(fig:discontinuation)) Similarly, condoms have one of the lowest discontinuation rates, but still are the third most discontinued method. On the other hand, injectables have a relatively high discontinuation rate and are the second most discontinued method.
+
+Some methods, such as Lunelle, are so rarely used by respondents to the NSFG that the sampling error associated with estimating their discontinuation rate is too large for useful estimates.
+
+The following subsections examine reasons for dissatisfaction leading to discontinuation of condoms, pills, and IUDs. Reasons for dissatisfaction were asked of NSFG respondents in two steps. In the first, respondents were asked to select one or more reasons from a prefabricated list of possible reasons. The second step gave the respondent an opportunity to describe reasons in their own words and occurred if the respondent selected any of the reasons "too difficult to use," "side effects," or "other."
+
+
+### Condom
+
+```{r condom-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    ever_quit_method4
+  ),
+  prefix = 'condom_quit_reason',
+  format = 'REASMFMT'
+)[total > 0][order(-total)] |> plot_totals_with_CIs() + 
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1)
+  )
+```
+
+```{r condom-quit-specific-reasons, dependson='process-fem-data', fig.cap='Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    condom_quit_reason3 | condom_quit_reason6 | condom_quit_reason15
+  ),
+  prefix = 'specific_condom_quit_reason',
+  format = 'STOPCONDFMT'
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
+```
+
+When condoms are discontinued due to dissatisfaction, the most common reasons are due to decrease in sexual pleasure or dislike from male partners, though a nontrivial number of persons report experiencing side effects. (Figure \@ref(fig:condom-quit-reasons)) The most common side effects are allergy or discomfort. (Figure \@ref(fig:condom-quit-specific-reasons))
+
+
+### Pill
+
+```{r pill-quit-reasons, dependson='process-fem-data', fig.asp=0.7, fig.cap='Females categorized by reason for dissatisfaction with contraceptive pills, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using pills due to dissatisfaction.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    ever_quit_method3
+  ),
+  prefix = 'pill_quit_reason',
+  format = 'REASMFMT'
+)[order(-total)] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 2)
+  )
+```
+
+```{r pill-quit-specific-reasons, dependson='process-fem-data', fig.asp=0.8, fig.cap='Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    pill_quit_reason3 | pill_quit_reason6 | pill_quit_reason15
+  ),
+  prefix = 'specific_pill_quit_reason',
+  format = 'STOPPILLFMT'
+)[order(-total)] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 1)
+  )
+```
+
+Side effects are by far the most commonly reported reason for discontinuation of contraceptive pills. (Figure \@ref(fig:pill-quit-reasons)) Side effects are varied, but mood, weight gain, or nausea issues are commonly reported. (Figure \@ref(fig:pill-quit-specific-reasons)) It is also commonly reported that pills are too difficult to use or that persons cannot remember to take pills regularly.
+
+
+### IUD
+
+```{r iud-quit-reasons, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using an IUD due to dissatisfaction.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    ever_quit_method31 |
+      ever_quit_method32 |
+      ever_quit_method33
+  ),
+  prefix = 'iud_quit_reason',
+  format = 'REASMFMT'
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+  scale_x_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    breaks = \(x) seq(0, ceiling(x[2]), 1)
+  )
+```
+
+```{r iud-specific-quit-reasons, dependson='process-fem-data', fig.asp=0.55, fig.cap='Females categorized by reason described for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using a IUD due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    (
+      ever_quit_method31 |
+        ever_quit_method32 |
+        ever_quit_method33
+    ) & (
+      iud_quit_reason3 |
+        iud_quit_reason6 |
+        iud_quit_reason15
+    )
+  ),
+  prefix = 'specific_iud_quit_reason',
+  format = 'STOPIUDFMT'
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
+```
+
+Like with contraceptive pills, side effects are by far the most commonly reported reason for discontinuation of IUDs. (Figure \@ref(fig:iud-quit-reasons)) For IUDs, commonly reported side effects involve abdominal pain or bleeding. (Figure \@ref(fig:iud-specific-quit-reasons))
+
+
+## Reason(s) for Not Currently Using Contraception
+
+```{r not-currently-using-size, dependson='process-fem-data'}
+this <- list()
+
+this$ht <- estimate_totals_and_percentages(
+  ~I(
+    CURRPREG == 'NO' &
+      (
+        sex_this_month & PCURRNT != 'NO'
+      ) &
+      !is.element(
+        RSTRSTAT,
+        c('SURGICALLY STERILE')
+      ) &
+      !this_month_method6 &
+      CURRMETH1 == 'No method used'
+  ),
+  get_NSFG_survey_design(fem1719dt)
+) |> style_totals_and_percentages()
+
+this$est <- as.data.frame(this$ht)[4, 2]
+this$ci <- as.data.frame(this$ht)[4, 3]
+```
+
+The respondents who did use contraception during their last intercourse despite being at risk of unintended pregnancy that were identified in Section \@ref(reason-for-nonuse) were not specifically asked as part of the NSFG about their reasons for not using contraception. However, a series of questions were asked of female respondents who did not report pregnancy or use of any method of contraception in the month of the interview, but did report having a current partner and having sexual intercourse with someone of the opposite sex in the month of the interview. There are approximately `r this$est` females in this subdomain, with a 95\% confidence interval for this estimate of `r this$ci`.
+
+Unfortunately, the results of this line of questioning on the NSFG are uninformative due to both sampling error and measurement error.
+
+### Intent to Conceive
+
+```{r pregnancy-intent-status, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(pregnancy_intent_status),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    CURRPREG == 'NO' &
+      (
+        sex_this_month & PCURRNT != 'NO'
+      ) &
+      !is.element(
+        RSTRSTAT,
+        c('SURGICALLY STERILE')
+      ) &
+      !this_month_method6 &
+      PCURRNT != 'NO' &
+      CURRMETH1 == 'No method used'
+  )
+) |> style_totals_and_percentages() |>
+  set_caption('Females categorized by intent to conceive, among those who had intercourse in the current month, are not currently pregnant, are neither sterilized nor sterile, and did not use a contraceptive in the current month interview.')
+```
+
+Among those in this subdomain, a substantial minority do not have any intent to become pregnant and so are at risk for unintended pregnancy. (Table \@ref(tab:pregnancy-intent-status))
+
+### Reason(s) for Nonuse When Not Intending to Conceive
+
+```{r nonuse-reason, dependson='process-fem-data', fig.cap='Females categorized by reason(s) for not using contraception, with persons reporting multiple reasons counted multiple times, among those at increased risk for unintended pregnancy due to contraceptive nonuse.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    pregnancy_intent_status == 'Not intending to conceive'
+  ),
+  prefix = 'nonuse_reason',
+  format = 'WHYNOUSNG'
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
+```
+
+A nontrivial number of up to half a million persons are falsely included in this subdomain, because some respondents to the NSFG spontaneously respond that they actually are using a method of contraception when asked why they are not. (Figure \@ref(fig:nonuse-reason)) This is evidence of an opposite type of measurement error to that found in Section \@ref(any-method-during-past-12-months).
+
+Because there are a relatively few number of persons estimated in Figure \@ref(fig:nonuse-reason), the effective sample size is small, leading to large sampling errors. Nonetheless, a person's belief she cannot get pregnant is either the most common or one of the most common reasons for not using contraception. This itself is another form of measurement error because respondents are elsewhere asked whether they are physically unable to conceive, and if so, are not asked this series of questions.
+
+### Reason(s) Respondent Believes She Cannot Become Pregnant
+
+```{r pregnancy-impossible-reason, dependson='process-fem-data', fig.asp=0.6, fig.cap='Females categorized by reason(s) they believe they cannot become pregnant, with persons using reporting multiple reasons counted multiple times, among those who select "you do not think you can get pregnant" as a reason for contraceptive nonuse.'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    nonuse_reason2
+  ),
+  prefix = 'pregnancy_impossible_reason',
+  format = 'WHYNOTPGF'
+)[total > 0][order(-total)] |> plot_totals_with_CIs() +
+    scale_x_continuous(
+      labels = scales::label_number(suffix = 'M', accuracy = 0.1)
+    )
+```
+
+Among the approximately million females who select "you do not think you can get pregnant" as a reason for not using contraception, there is no clearly most common reason for the belief that becoming pregnant is impossible. (Figure \@ref(fig:pregnancy-impossible-reason)) Some answers, such as having prior unprotected sexual intercourse without a pregnancy, are likely spurious reasons to believe pregnancy is impossible, while others, such as medical diagnosis of a reproductive condition, should have led to respondents reporting their physical infertility earlier in the NSFG questioning.
+
+
+## Age for Female Sterilizing Operations
+
+One of the more salient differences in reporting of contraceptive use between females and males is in reporting of female sterilizing operations such as tubal ligation. As Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males) discusses, one confounding variable in this may be the age at which females undergo sterilizing operations.
+
+```{r age-sterilizing-operation, dependson='process-fem-data'}
+fem1719dt[, age_sterilizing_operation := fifelse(
+  DATFEMOP_Y > 9000, # 9998 represents "Refused"
+  DATFEMOP_Y,
+  AGE_R - (INTVWYEAR - DATFEMOP_Y) + 1
+)]
+
+this <- list()
+
+this$est <- estimate_mean(
+  ~age_sterilizing_operation,
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    !is.na(age_sterilizing_operation) & age_sterilizing_operation < 9000
+  )
+)
+
+this$mean <- round(this$est[1, 2], 1)
+this$ci <- paste0(
+  '(',
+  sprintf('%.1f', round(this$est[1, 3], 1)),
+  ', ',
+  sprintf('%.1f', round(this$est[1, 4], 1)),
+  ')'
+)
+```
+
+The average[^mean] age at which females living in households in the United States have sterilizing operations is approximately `r paste0(this$mean)` years, with a 95\% confidence interval of `r this$ci` years.
+
+[^mean]: Here "average" refers to the arithmetic mean.
+
+```{r histogram-ages-sterilizing-operation, dependson='process-fem-data', fig.cap='Total number of females who have had sterilizing operations, by age.'}
+fem1719dt[
+  TUBS == 'YES',
+  .(
+    WGT2017_2019,
+    age = cut(AGE_R, breaks = seq(17, 50, 3), right = TRUE),
+    AGE_R
+  )
+] |>
+  ggplot(
+    mapping = aes(
+      y = ..count.. / 10e5,
+      x = age,
+      weight = WGT2017_2019
+    )
+  ) +
+  geom_bar(stat = 'count') +
+  scale_y_continuous(
+    labels = scales::label_number(suffix = 'M', accuracy = 1),
+    expand = expansion(mult = c(0, 0.05))
+  ) +
+  scale_x_discrete() +
+  labs(
+    x = 'Age (years)',
+    y = 'Total Persons'
+  ) +
+  theme(
+    axis.ticks = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+```
+
+```{r proportion-ages-sterilizing-operation, dependson='process-fem-data', fig.cap='Proportion of females who have had sterilizing operations, by age.'}
+fem1719dt[, `:=`(
+  sterilized_person = fifelse(TUBS == 'YES', 1, 0),
+  age_group = cut(AGE_R, breaks = seq(14, 50, 3), right = TRUE)
+)]
+
+as.data.table(svyby(
+  ~sterilized_person,
+  ~age_group,
+  get_NSFG_survey_design(fem1719dt),
+  svymean
+))[sterilized_person > 0] |>
+  ggplot(
+    mapping = aes(
+      y = sterilized_person,
+      x = age_group
+    )
+  ) +
+  geom_col() +
+  scale_y_continuous(
+    labels = scales::label_percent(1),
+    expand = expansion(mult = c(0, 0.05))
+  ) +
+  labs(
+    x = 'Age (years)',
+    y = 'Proportion of Persons'
+  ) +
+  theme(
+    axis.ticks = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+```
+
+The number of females who have had sterilizing operations such as tubal ligation increases with age group until the early forties, then declines slightly. (Figure \@ref(fig:histogram-ages-sterilizing-operation)) The proportion of females in each group that have had sterilizing operations increases with age, with the exception of an aberration in the (44, 47] years age group.  (Figure \@ref(fig:proportion-ages-sterilizing-operation)) Thus, older females are more likely to have had a sterilizing operation than younger persons.
+
+
+# Discussion
+
+Contraception is a nearly ubiquitous part of the reproductive behavior of persons living in the United States. More than three quarters of those sexually active with someone of the opposite sex used contraception during their most recent intercourse. (Section \@ref(use-of-contraception-during-most-recent-intercourse)) Among females who have ever had sexual intercourse with a male, approximately 99\% have used a method of contraception at least once in their lives. (Section \@ref(among-those-who-have-ever-had-intercourse))
+
+Despite the overall prevalence of contraception, at any given time, millions of persons neglect to use contraception during their most recent sexual intercourse despite being at risk for unintended pregnancy. (Section \@ref(reason-for-nonuse)) This is the case, at least in part, because there is much inconsistency in contraceptive use. (Section \@ref(consistency-of-use-of-contraception))
+
+This inconsistency occurs even though persons living in the United States compose a population that has abundant access to contraceptive methods. Among the over 5 million females not currently using contraception despite being at risk for unintended pregnancy, less than 250 thousand are not using a method of contraception because they could not get a method. (Section \@ref(reasons-for-not-currently-using-contraception))
+
+Furthermore, there is much dissatisfaction with contraceptive methods currently available. For instance, birth control pills are one of the most common methods of contraception in the United States and near the median in discontinuation rate among methods, but approximately a third of females who have ever used birth control pills have discontinued use due to dissatisfaction. (Section \@ref(discontinuation-due-to-dissatisfaction))
+
+Condoms, pills, and female sterilizing operations are the most prevalent methods of contraception in the United States, and withdrawal, vasectomy, and IUDs are the next most prevalent methods. The exact ordering of prevalence of these methods depends on whether females or males are asked and on the handling of the use of multiple methods of contraception. (Sections \@ref(use-of-contraception-during-most-recent-intercourse) and \@ref(use-of-contraception-during-past-12-months))
+
+
+## Differences in Reported Contraceptive Use Between Females and Males
+
+Sexual intercourse with someone of the opposite sex involves both females and males, so estimates based on female respondents to the NSFG  and those based on male respondents to the NSFG  should be similar. For the most part, the results discussed in this report do reflect similar patterns. However, there are a few noticeable differences that cannot be fully attributed to sampling error.
+
+One difference is that the reported contraception use rate, i.e., the ratio between the number of persons using contraception during their most recent intercourse to the total number of persons at risk for unintended pregnancy during their most recent intercourse, is greater for females than for males. (Section \@ref(contraception-use-rate))
+
+A second, even more salient difference is that the reported prevalence of female sterilizing operations being used as a method of contraception is much higher for females than for males. (Sections \@ref(methods-used) and \@ref(methods-used-1))
+
+There at least three hypotheses that might explain these differences, at least in part. All of them stem from the fact that those who are surveyed about sexual intercourse are surveyed not just about their own, but also about their partners' behaviors:
+
+* Some males might not be aware of their female partners' contraceptive use.
+* Female partners of male respondents are on average younger than male partners of female respondents.
+* Those with multiple recent partners are effectively sampled with a greater probability than those who do not have multiple recent partners.
+
+Investigation of these hypothesis is left to further research, but they are summarized in the following subsections.
+
+### Ignorance of Partners' Contraceptive Use
+
+Few males report ignorance of their partners' contraceptive use in the NSFG. (Section \@ref(reported-ignorance-of-contraceptive-use)) However, direct questions about this are only asked of some male respondents to the NSFG, and thus some respondents may not think to give such an answer, even if such an answer would be the most accurate description. Further, some males may not know that they do not know that their partners are using contraception. This is particularly the case for methods of contraception -- such as tubal ligation, IUDs, injectables, implants, etc. -- that are largely not visible to male sexual partners. The effect of this would be for males to under-report contraception use, which might explain some of the variation in both the lower contraception use rate reported by males and the lower prevalence of female sterilizing operations reported by males.
+
+### Younger Female Partners of Males and Older Male Partners of Females
+
+As part of disclosure risk reduction efforts, the 2017-2019 edition of the NSFG (as well as the 2015-2017 edition) does not release age of most recent sexual partners in its public use data files. However, prior research based on previous editions of the NSFG has found that male sexual partners of females are more likely to be older, and female sexual partners of males are more likely to be younger. [@darroch_age_1999] The effect of the age asymmetry of sexual partners is that, while the age ranges of female respondents and of male respondents surveyed by the NSFG are both 15-49 years, the average age of the partners of male respondents is likely younger than the average age of the female respondents.
+
+As seen in Section \@ref(age-for-female-sterilizing-operations), the probability that a female has a sterilizing operation apparently increases with increasing age. Thus, the effectively older sample of females in the female respondents sample are more likely to have had sterilizing operations than the effectively younger partners of respondents in the male respondents sample. This might explain some of the difference in reported prevalence of female sterilizing operations between females and males.
+
+### Oversampling of Those with Multiple Recent Partners
+
+The last sexual partner of the opposite sex within the past 3 months for one person might also be the last sexual partner of the opposite sex within the past 3 months for another person. Thus, the behavior of persons who have many recent sexual partners are effectively over-sampled in any analysis examining behavior during most recent sexual intercourse.
+
+If the contraceptive use of those who have multiple recent sexual partners differs from the more general population and between females and males, this might explain some of the reported differences in contraceptive use between females and males. For instance, if males, but not females, who have multiple recent partners are more likely to use contraception than the general population, this would cause the contraception use rate reported by females to be greater for females than that reported by males. Similarly, if females who have multiple recent partners are less likely to have had sterilizing operations, this would cause the prevalence of female sterilizing operations reported by males to be lesser than that reported by females.
+
+
+## Further Research
+
+While this report is a preliminary analysis consisting mostly of descriptive statistics, it informs further research using model-based or covariate-adjusted analyses.
+
+The most obvious direction for further research after determining what contraceptive methods are being used is the estimation of how effective the various contraceptive methods are at preventing unintended pregnancy. Knowledge that a substantial minority of somewhere between 6 and 10 million persons use multiple methods of contraception simultaneously (Section \@ref(number-of-methods)) implies that such analysis should take into account use of multiple methods of contraception simultaneously. It might be the case, for instance, that condoms and pills used together are more effective than either method used separately. Another opportunity for further research, once contraceptive efficacy is established, is the analysis of covariates that explain the tendency to use less effective methods of contraception instead of more effective methods.
+
+As noted in Section \@ref(consistency-of-use-of-contraception), failure to use contraception despite being at risk of unintended pregnancy appears to be in part due to inconsistent use and in part due to long-term nonuse. One opportunity for further research is the investigation of covariates that explain the probability to engage in sexual intercourse without contraception despite being at risk for unintended pregnancy. Finally, the discussion in Section \@ref(differences-in-reported-contraceptive-use-between-females-and-males) highlights the need for analyses adjusted for age as covariate in order to draw conclusions about differences in contraceptive use between females and males.
+
+
+
+# Citations
+
+::: {#refs}
+:::
+
+
+
+# Appendix A: Technical Notes
+
+## Contraceptive Method(s) Used During Last Intercourse versus Contraceptive Status
+
+As mentioned in Section \@ref(differences-with-prior-works), many similar prior works examine contraceptive use by way of current contraceptive status, which is based on respondents' answers to the question of what contraceptive method(s) they are using during the month of the interview. These responses are encoded in variables `CONSTAT1`, `CONSTAT2`, `CONSTAT3`, and `CONSTAT4` in the public use data files of the NSFG.
+
+Instead of using such an approach, Section \@ref(use-of-contraception-during-most-recent-intercourse) is based on questions about what contraceptive method(s) respondents used during their most recent sexual intercourse with someone of the opposite sex, and Section \@ref(use-of-contraception-during-past-12-months) is based on questions about what contraceptive method(s) respondents used during the previous 12 months. There are several advantages to this approach:
+
+* More detailed information is available on contraceptive use over periods of time for female respondents than for male respondents in the NSFG. In particular, male respondents are not directly asked about contraceptive use in the month of the interview, and there is no male analog of the `CONSTAT` series. However, both females and males are asked about contraceptive use during their most recent intercourse and about contraceptive use during the previous 12 months. Therefore, such analysis can lead to equivalent estimates for males in addition to females.
+* Categorization for the `CONSTAT` series is based on an exclusive prioritization, such that any individual placed in a category with higher priority is excluded from consideration from lower priority categories, and individuals are only categorized by reason for not using contraception if they are not currently using any method of contraception. Therefore, respondents who are using any long-acting contraceptive method -- such as sterilizing operations, implants, injectables, IUDs -- are categorized as currently using those methods even if they are not sexually active. Thus, estimates of the number of persons who are not sexually active with the opposite sex based on `CONSTAT1` are underestimates.
+* There is some measurement error in the reporting of contraceptive use over specific time periods. Some respondents who report using a method of contraception during a specific time frame, when asked about how consistently they used a method of contraception during the same time frame, report a frequency of "never." (Section \@ref(any-method-during-past-12-months)) Furthermore, some respondents who report not using a method of contraception during the month of the interview, when asked why not, volunteer that they are using a method of contraception during the month of the interview. (Section \@ref(reasons-for-nonuse-when-not-intending-to-conceive)) Analysis of contraceptive use during last intercourse rather than in the current month is intended to minimize this kind of measurement error.
+
+On the other hand, one major disadvantage of analysis of contraceptive use during last intercourse is that there is variation among respondents in how long it has been, at the time of the interview, since their last intercourse. Therefore, Section \@ref(use-of-contraception-during-most-recent-intercourse) focuses on contraceptive use during the last intercourse within the 3 months prior to the interview.
+
+## Failure to Report Sterilizing Operations as Contraceptive Methods
+
+Some NSFG respondents reported having an active sterilizing operation, such as a tubal ligation or vasectomy, or having last had intercourse with a spouse or cohabitating partner with an active sterilizing operation, but in response to other questions do not report using said sterilizing operation as a method of contraception.
+
+This may be due to confusion on the part of respondents with questions referring to a specific sexual encounter or to a specific period of time, since the sterilizing operations in question are likely performed well in advance of the specific encounter or time frame.
+
+Therefore, all those who reported having an active sterilizing operation or having intercourse with a spouse or cohabitating partner with an active sterilizing operation are counted as using said sterilizing operation as a method of contraception for the appropriate encounters or time frames, even if the respondents did not themselves mention the sterilizing operation when asked about methods of contraception.
+
+Thus, even if a respondent does not mention using a partner's vasectomy when asked what methods were used during the last intercourse, if the respondent reports her last intercourse was with her husband and reports her husband has an active vasectomy, then the respondent is counted as using a partner's vasectomy as a contraceptive method during last intercourse.
+
+Similarly, even if a respondent did not mention using tubal ligation during any of the 12 months preceding the interview, if the respondent had sexual intercourse during the 12 months preceding the interview and has an active tubal ligation, then the respondent is counted as using tubal ligation as a contraceptive method during the 12 months preceding the interview.
+
+
+# Appendix B: Supplementary Tables
+
+This appendix contains table versions of estimates that are rendered as plots in the preceding report.
+
+## Reason for Never Having Intercourse
+
+```{r fem-reason-no-sex-table, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(YNOSEX),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+  )
+) |>
+  style_totals_and_percentages() |>
+  set_caption('Females by reason for not having had sexual intercourse with the opposite sex, among those who have not.')
+```
+
+```{r male-reason-no-sex-table, dependson='process-male-data'}
+estimate_totals_and_percentages(
+  ~factor(YNOSEX),
+  subset(
+    get_NSFG_survey_design(male1719dt),
+    HADSEX == 'NO, R NEVER HAD INTERCOURSE'
+  )
+) |>
+  style_totals_and_percentages() |>
+  set_caption('Males by reason for not having had sexual intercourse with the opposite sex, among those who have not.')
+```
+
+## Reason for Physical Infertility Not Due to Sterilizing Procedure
+
+```{r fem-infertility-table, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(REASIMPR),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    POSIBLPG == 'No'
+  )
+) |>
+  style_totals_and_percentages() |>
+  set_caption("Females by reason reported for their inability to become pregnant, among those who report being physically infertile not due to a sterilizing procedure.")
+```
+
+```{r fem-partner-infertility-table, dependson='process-fem-data'}
+estimate_totals_and_percentages(
+  ~factor(REASIMPP),
+  subset(
+    get_NSFG_survey_design(fem1719dt),
+    POSIBLMN == 'No'
+  )
+) |>
+  style_totals_and_percentages() |>
+  set_caption("Females by reason reported for their partners' inability to father a child, among those who report having a partner who is physically infertile not due to a sterilizing procedure.")
+```
+
+## Method(s) Used during Most Recent Intercourse
+
+```{r fem-methods-used-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method_count > 0
+  ),
+  prefix = 'used_last_3m_method',
+  skip = 20:21,
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by whether or not each contraceptive method was used during last intercourse with a male in the past 3 months, with persons using multiple methods counted multiple times.')
+```
+
+```{r male-methods-used-table, dependson='process-male-data'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method_count > 0
+  ),
+  prefix = 'used_last_3m_method',
+  skip = 95:96,
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Males categorized by whether or not each contraceptive method was used during last intercourse with a female in the past 3 months, with persons using multiple methods counted multiple times.')
+```
+
+## Method Used Exclusively during Most Recent Intercourse
+
+```{r fem-exclusive-method-used-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method_count == 1
+  ),
+  prefix = 'used_last_3m_method',
+  skip = 20:21,
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by which contraceptive method was used during last intercourse with a male in the past 3 months, among those who used exactly one method during last intercourse.')
+```
+
+```{r male-exclusive-method-used-table, dependson='process-male-data'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method_count == 1
+  ),
+  prefix = 'used_last_3m_method',
+  skip = 95:96,
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Males categorized by which contraceptive method was used during last intercourse with a female in the past 3 months, among those who used exactly one method during last intercourse.')
+```
+
+## Proportion of Method Users Who Also Used Other Method(s) during Most Recent Intercourse
+
+```{r fem-proportion-another-table, dependson='process-fem-data'}
+estimate_NSFG_mentions_in_subdomains(
+  fem1719formats,
+  row_estimation_function = function(x) {
+    estimate_row_total_and_percentage(
+      ~I(used_last_3m_method_count > 1),
+      subset(
+        get_NSFG_survey_design(fem1719dt),
+        fem1719dt[, get(sprintf('used_last_3m_method%d', x))]
+      )
+    )
+  },
+  format = 'METH3MF',
+  skip = c(20:22)
+)[!is.nan(percentage_CI_high)][order(-percentage)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females using another method of contraception among persons using each method of contraception during last intercourse with a male in the past 3 months.')
+```
+
+```{r male-proportion-another-table, dependson='process-fem-data'}
+estimate_NSFG_mentions_in_subdomains(
+  male1719formats,
+  row_estimation_function = function(x) {
+    estimate_row_total_and_percentage(
+      ~I(used_last_3m_method_count > 1),
+      subset(
+        get_NSFG_survey_design(male1719dt),
+        male1719dt[, get(sprintf('used_last_3m_method%d', x))]
+      )
+    )
+  },
+  format = 'METH3MF',
+  skip = 95:96
+)[!is.nan(percentage_CI_high)][order(-percentage)] |>
+  style_totals_and_percentages() |>
+  set_caption('Males using another method of contraception among persons using each method of contraception during last intercourse with a female in the past 3 months.')
+```
+
+## Other Method(s) Used with Withdrawal, Condom, and Pill during Most Recent Intercourse
+
+```{r fem-other-with-withdrawal-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method5
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(5, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a male in the past 3 months.')
+```
+
+```{r male-other-with-withdrawal-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method2
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(2, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Males by other contraceptive method(s) used during last intercourse, among those who used withdrawal during last intercourse with a female in the past 3 months.')
+```
+
+```{r fem-other-with-condom-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method2
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(2, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a male in the past 3 months.')
+```
+
+```{r male-other-with-condom-table, dependson='process-male-data'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method1
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(1, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Males by other contraceptive method(s) used during last intercourse, among those who used condom during last intercourse with a female in the past 3 months.')
+```
+
+
+```{r fem-other-with-pill-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    used_last_3m_method1
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(1, 20:21),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a male in the past 3 months.')
+```
+
+```{r male-other-with-pill-table, dependson='process-male-data'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    used_last_3m_method4
+  ),
+  prefix = 'used_last_3m_method',
+  skip = c(4, 95:96),
+  format = 'METH3MF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Males by other contraceptive method(s) used during last intercourse, among those who used pill during last intercourse with a female in the past 3 months.')
+```
+
+## Method(s) Used during Past 12 Months
+
+```{r fem-methods-used-12-months-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    any_use_12m_method_count > 0
+  ),
+  prefix = 'any_use_12m_method',
+  skip = c(1:2, 22:23, 55, 98:99),
+  format = 'METHHXF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.')
+```
+
+```{r male-methods-used-12-months-table, dependson='process-male-data'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    any_use_12m_method_count > 0
+  ),
+  prefix = 'any_use_12m_method',
+  skip = 98:99,
+  format = 'MTHDSV1F'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Males categorized by whether or not each contraceptive method was used at all during the past 12 months, with persons using multiple methods counted multiple times.')
+```
+
+## Method Used Exclusively during Past 12 Months
+
+```{r fem-exclusive-method-used-12-months-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    any_use_12m_method_count == 1
+  ),
+  prefix = 'any_use_12m_method',
+  skip = c(1:2, 22:23, 55, 98:99),
+  format = 'METHHXF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.')
+```
+
+```{r male-exclusive-method-used-12-months-table, dependson='process-male-data'}
+estimate_NSFG_mentions(
+  male1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(male1719dt),
+    any_use_12m_method_count == 1
+  ),
+  prefix = 'any_use_12m_method',
+  skip = 98:99,
+  format = 'MTHDSV1F'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Males categorized by which contraceptive method was used during past 12 months, among those who used exactly one method in past 12 months.')
+```
+
+## Reasons for Using Pill
+
+```{r pill-reason-mentions-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    this_month_method3 | last_month_method3
+  ),
+  prefix = 'why_use_pill_reason',
+  format = 'YUSEMTHF',
+  skip = 98:99
+)[order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females by reason(s) mentioned for using contraceptive pills with persons mentioning multiple reasons counted multiple times, among those who used pills either this or the previous month.')
+```
+
+## Reasons for Using Hormonal IUD
+
+```{r iud-reason-mentions-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    IUDTYPE == 'Hormonal IUD (such as Mirena, Skyla, Liletta, or Kyleena)' &
+      (this_month_method19 | last_month_method19)
+  ),
+  prefix = 'why_use_iud_reason',
+  format = 'YUSEMTHF',
+  skip = 98:99
+)[order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females by reason(s) mentioned for using hormonal IUD with persons mentioning multiple reasons counted multiple times, among those who used an hormonal IUD either this or the previous month.')
+```
+
+## Use of Contraception Ever During Lifetime
+
+```{r methods-used-ever-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = get_NSFG_survey_design(fem1719dt),
+  prefix = 'ever_used_method',
+  format = 'ever_used_method'
+)[total > 0] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times.')
+```
+
+### Among Those Who Have Ever Had Intercourse
+
+```{r methods-used-ever-had-sex-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    HADSEX == 'YES, R EVER HAD INTERCOURSE'
+  ),
+  prefix = 'ever_used_method',
+  format = 'ever_used_method'
+)[order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by whether or not each contraceptive method was ever used, with persons using multiple methods counted multiple times, among those who have ever had intercourse with someone of the opposite sex.')
+```
+
+## Discontinuation Due to Dissatisfaction
+
+```{r discontinuation-table}
+estimate_NSFG_mentions_in_subdomains(
+  fem1719formats,
+  row_estimation_function = function(x) {
+    estimate_row_total_and_percentage(
+      as.formula(sprintf('~ever_quit_method%d', x)),
+      subset(
+        get_NSFG_survey_design(fem1719dt),
+        fem1719dt[, get(sprintf('ever_used_method%d', x))]
+      )
+    )
+  },
+  format = 'ever_used_method',
+  skip = c(20)
+)[!is.nan(percentage_CI_high)][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females by whether or not they have discontinued using each contraceptive method due to dissatisfaction, with persons using discontinuing multiple methods counted multiple times.')
+```
+
+## Reason(s) for Discontinuation of Condom
+
+```{r condom-quit-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    ever_quit_method4
+  ),
+  prefix = 'condom_quit_reason',
+  format = 'REASMFMT'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction.')
+```
+
+```{r condom-quit-specific-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    condom_quit_reason3 | condom_quit_reason6 | condom_quit_reason15
+  ),
+  prefix = 'specific_condom_quit_reason',
+  format = 'STOPCONDFMT'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
+```
+
+## Reason(s) for Discontinuation of Pill
+
+```{r pill-quit-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    ever_quit_method3
+  ),
+  prefix = 'pill_quit_reason',
+  format = 'REASMFMT'
+)[order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason for dissatisfaction with contraceptive pills, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using pills due to dissatisfaction.')
+```
+
+```{r pill-quit-specific-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    pill_quit_reason3 | pill_quit_reason6 | pill_quit_reason15
+  ),
+  prefix = 'specific_pill_quit_reason',
+  format = 'STOPPILLFMT'
+)[order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason described for dissatisfaction with condoms, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using condoms due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
+```
+
+## Reason(s) for Discontinuation of IUD
+
+```{r iud-quit-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    ever_quit_method31 |
+      ever_quit_method32 |
+      ever_quit_method33
+  ),
+  prefix = 'iud_quit_reason',
+  format = 'REASMFMT'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using an IUD due to dissatisfaction.')
+```
+
+```{r iud-specific-quit-reasons-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    (
+      ever_quit_method31 |
+        ever_quit_method32 |
+        ever_quit_method33
+    ) & (
+      iud_quit_reason3 |
+        iud_quit_reason6 |
+        iud_quit_reason15
+    )
+  ),
+  prefix = 'specific_iud_quit_reason',
+  format = 'STOPIUDFMT'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason described for dissatisfaction with IUDs, with persons mentioning multiple reasons counted multiple times, among those who have ever discontinued using a IUD due to dissatisfaction for reasons "too difficult to use," "side effects," or "other."')
+```
+
+## Reason(s) for Nonuse When Not Intending to Conceive
+
+```{r nonuse-reason-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    pregnancy_intent_status == 'Not intending to conceive'
+  ),
+  prefix = 'nonuse_reason',
+  format = 'WHYNOUSNG'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason(s) for not using contraception, with persons reporting multiple reasons counted multiple times, among those at increased risk for unintended pregnancy due to contraceptive nonuse.')
+```
+
+## Reason(s) Respondent Believes She Cannot Become Pregnant
+
+```{r pregnancy-impossible-reason-table, dependson='process-fem-data'}
+estimate_NSFG_mentions(
+  fem1719formats,
+  survey_design = subset(
+    get_NSFG_survey_design(fem1719dt),
+    nonuse_reason2
+  ),
+  prefix = 'pregnancy_impossible_reason',
+  format = 'WHYNOTPGF'
+)[total > 0][order(-total)] |>
+  style_totals_and_percentages() |>
+  set_caption('Females categorized by reason(s) they believe they cannot become pregnant, with persons using reporting multiple reasons counted multiple times, among those who select "you do not think you can get pregnant" as a reason for contraceptive nonuse.')
+```
+

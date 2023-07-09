@@ -16,5 +16,7 @@
 /blog/static/*_files
 /blog/static/NSFG
 /blog/static/rmarkdown-libs
+/blog/word/*.docx
+/blog/word/*.pdf
 Thumbs.db
 data/
