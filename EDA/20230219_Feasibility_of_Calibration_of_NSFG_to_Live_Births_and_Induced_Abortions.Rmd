@@ -483,7 +483,7 @@ mutate(
 ) |>
 count_abortions_and_births() |>
 as_survey_rep(
-  variables = c(OUTCOME, AGEPREG, Year, Births, Abortions),
+  variables = c(SEQNUM, W_5, OUTCOME, AGEPREG, Year, Births, Abortions),
   weights = W_5,
   repweights = starts_with('REP'),
   type = 'BRR'
@@ -1243,11 +1243,6 @@ abortion_outcomes <- bind_rows(
     rename(Weight = 'POST_WT') |>
     mutate(SurveyLabel = 'Cycle 5', .before = everything()),
   preg_outcomes1985_1987$variables |>
-    mutate(
-      Year = cm_to_year_cycle4(B14MO),
-      W_5 = W_5 / 100, # From Codebook: IMPLIED DECIMAL BETWEEN POSTIONS 370 AND 371
-      Abortions = if_else(OUTCOME == 2, 1, 0)
-    ) |>
     select(
       Year, SEQNUM, AGEPREG, Abortions, W_5
     ) |>
@@ -1270,21 +1265,17 @@ abortion_outcomes <- bind_rows(
     )
   )
 
-abortion_outcomes |>
-  group_by(Survey, AGEPREG, age_group) |>
-  count() |>
-  View()
-
 years_assignment |>
   left_join(abortion_outcomes, by = join_by(Year, SurveyLabel)) |>
   filter(Abortions == 1) |>
   group_by(Survey) |>
   summarize(
     NumberRespondents = n_distinct(CASEID),
-    MedianWeight = median(Weight),
     MeanWeight = mean(Weight),
-    StdDevWeight = sd(Weight),
     MinWeight = min(Weight),
+    Q25Weight = quantile(Weight, 0.25),
+    MedianWeight = median(Weight),
+    Q75Weight = quantile(Weight, 0.75),
     MaxWeight = max(Weight)
   ) |>
   arrange(desc(Survey)) |>
@@ -1300,10 +1291,11 @@ years_assignment |>
   group_by(Survey, Year) |>
   summarize(
     NumberRespondents = n_distinct(CASEID),
-    MedianWeight = median(Weight),
     MeanWeight = mean(Weight),
-    StdDevWeight = sd(Weight),
     MinWeight = min(Weight),
+    Q25Weight = quantile(Weight, 0.25),
+    MedianWeight = median(Weight),
+    Q75Weight = quantile(Weight, 0.75),
     MaxWeight = max(Weight),
     .groups = 'drop_last'
   ) |>
@@ -1320,10 +1312,11 @@ years_assignment |>
   group_by(Survey, Year, age_group) |>
   summarize(
     NumberRespondents = n_distinct(CASEID),
-    MedianWeight = median(Weight),
     MeanWeight = mean(Weight),
-    StdDevWeight = sd(Weight),
     MinWeight = min(Weight),
+    Q25Weight = quantile(Weight, 0.25),
+    MedianWeight = median(Weight),
+    Q75Weight = quantile(Weight, 0.75),
     MaxWeight = max(Weight),
     .groups = 'drop_last'
   ) |>
