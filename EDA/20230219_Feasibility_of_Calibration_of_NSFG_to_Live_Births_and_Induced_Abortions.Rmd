@@ -1260,7 +1260,7 @@ abortion_outcomes <- bind_rows(
     ),
     age_group = cut(
       AGEPREG,
-      breaks = c(0, 15, 20, 25, 30, 35, 40, 45, Inf),
+      breaks = c(0, 20, 30, Inf),
       right = FALSE
     )
   )
