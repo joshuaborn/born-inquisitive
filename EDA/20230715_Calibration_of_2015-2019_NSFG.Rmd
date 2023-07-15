@@ -10,10 +10,13 @@ output:
 
 ```{r setup, include=FALSE}
 library(dplyr)
+library(gt)
 library(haven)
 library(here)
 library(readr)
 library(srvyr)
+library(stringr)
+library(tidyr)
 
 knitr::opts_chunk$set(
   cache = TRUE,
@@ -32,28 +35,151 @@ guttmacher_raw <- read_csv(
 )
 ```
 
-```{r load-NSFG-data}
-preg2017_2019 <- read_sas(
-  here('data/NSFG/d2017_2019fempreg.sas7bdat'),
-  catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
-)
-preg2015_2017 <- read_sas(
-  here('data/NSFG/d2015_2017fempreg.sas7bdat'),
-  catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
-)
-wgt2011_2019 <- read_sas(
-  here('data/NSFG/d2011_2019femwgt.sas7bdat')
-)
-```
-
 ```{r process-national-guttmacher-data, dependson="load-guttmacher-data"}
-guttmacher_national <- guttmacher_raw |> 
+guttmacher_national <- guttmacher_raw |>
   filter(state == 'US') |>
   select(-state, -notes) |>
-  mutate(abortions_interpolated = year %in%
+  mutate(interpolated = year %in%
       c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
         2009, 2012, 2015)
   )
+```
+
+```{r create-test-harness, dependson="process-national-guttmacher-data"}
+abortion_counts2014 <- guttmacher_national |>
+  filter(year == 2014) |>
+  select(starts_with('abortions'))
+
+abortionstotal2014 <- pull(abortion_counts2014, abortionstotal)
+
+guttmacher2014 <- bind_rows(
+  tribble(
+    ~Level, ~Percentage2014,
+    'lt20',     11.9,
+    '1517',     3.4,
+    '1819',     8.2,
+    '2024',     33.6,
+    '2529',     26.5,
+    '3034',     15.9,
+    '3539',     9.1,
+    '40plus',   3.1
+  ) |> mutate(
+    Variable = 'Age group',
+    name = paste0('abortions', Level),
+    .before = everything()
+  ) |>
+    left_join(
+      pivot_longer(
+        abortion_counts2014,
+        cols = everything(),
+        values_to = 'Total2014fromCalibration'
+      ),
+      by = 'name'
+    ) |>
+    select(-name),
+  tribble(
+    ~Level, ~Percentage2014,
+    'Married            ',               14.3,
+    'Cohabitating, no married',          31.0,
+    'Never-married, not cohabiting',     45.9,
+    'Previously married, not cohabiting', 8.8
+  ) |>  mutate(
+    Variable = 'Relationship status',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~Percentage2014,
+    'White',    38.7,
+    'Black',    27.6,
+    'Hispanic', 24.8,
+    'Asian/Pacific Islander', 5.5,
+    'Other',    3.4
+  ) |>  mutate(
+    Variable = 'Race/ethnicity',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~Percentage2014,
+    'U.S.-born',     83.9,
+    'Foreign-born',  16.1
+  ) |>  mutate(
+    Variable = 'Nativity',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~Percentage2014,
+    '<high school',                  8.9,
+    'High school graduate/GED',      27.0,
+    'Some college/associate degree', 40.9,
+    'College graduate',               23.1
+  ) |>  mutate(
+    Variable = 'Educational attainment',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~Percentage2014,
+    '0',   40.7,
+    '1',   26.2,
+    '>=2', 33.1
+  ) |>  mutate(
+    Variable = 'No. of prior births',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~Percentage2014,
+    '<100',    49.3,
+    '100-199', 25.7,
+    '>=200',   25.0
+  ) |>  mutate(
+    Variable = 'Family income as % of poverty level',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~Percentage2014,
+    'Mainline Protestant',    17.3,
+    'Evangelical Protestant', 12.8,
+    'Roman Catholic',         23.7,
+    'Other',                  8.2,
+    'None',                   38.0
+  ) |>  mutate(
+    Variable = 'Religious affiliation',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~Percentage2014,
+    'Heterosexual/straight',    94.4,
+    'Homosexual/gay/lesbian',   0.3,
+    'Bisexual',                 4.2,
+    'Something else',           1.1
+  ) |>  mutate(
+    Variable = 'Sexual orientation',
+    .before = everything()
+  )
+) |> mutate(
+  Level = str_squish(Level),
+  Percentage2014 = Percentage2014 / 100,
+  Total2014 = as.integer(round(abortionstotal2014 * Percentage2014)),
+  .before = 'Total2014fromCalibration'
+)
+
+guttmacher2014 |>
+  gt() |>
+  fmt_percent(starts_with('Percent'), decimals = 1) |>
+  fmt_number(starts_with('Total'), decimals = 0)
+```
+
+```{r load-NSFG-data}
+preg2017_2019 <- read_sas(
+  data_file = here('data/NSFG/d2017_2019fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
+)
+preg2015_2017 <- read_sas(
+  data_file = here('data/NSFG/d2015_2017fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
+)
+wgt2011_2019 <- read_sas(
+  data_file = here('data/NSFG/d2011_2019femwgt.sas7bdat')
+)
 ```
 
 ```{r create-pregnancies-table-survey-object, dependson="load-NSFG-data"}
