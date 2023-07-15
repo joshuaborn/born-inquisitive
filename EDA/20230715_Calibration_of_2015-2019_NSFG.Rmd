@@ -1,0 +1,78 @@
+---
+title: "Calibration of 2015-2019 National Survey of Family Growth (NSFG)"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(haven)
+library(here)
+library(readr)
+library(srvyr)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi=200,
+  echo = FALSE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+```{r load-guttmacher-data}
+guttmacher_raw <- read_csv(
+  here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv')
+)
+```
+
+```{r load-NSFG-data}
+preg2017_2019 <- read_sas(
+  here('data/NSFG/d2017_2019fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
+)
+preg2015_2017 <- read_sas(
+  here('data/NSFG/d2015_2017fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
+)
+wgt2011_2019 <- read_sas(
+  here('data/NSFG/d2011_2019femwgt.sas7bdat')
+)
+```
+
+```{r process-national-guttmacher-data, dependson="load-guttmacher-data"}
+guttmacher_national <- guttmacher_raw |> 
+  filter(state == 'US') |>
+  select(-state, -notes) |>
+  mutate(abortions_interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
+  )
+```
+
+```{r create-pregnancies-table-survey-object, dependson="load-NSFG-data"}
+preg_2015_2019_svy <- bind_rows(
+  select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, PRGLNGTH),
+  select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG)
+) |>
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+mutate(
+  Year = DATEND
+) |> 
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2015_2019,
+  nest = TRUE
+)
+```
+
