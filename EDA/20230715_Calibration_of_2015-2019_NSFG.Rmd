@@ -6,6 +6,7 @@ output:
     code_folding: show
     toc: true
     toc_depth: 5
+    css: wide.css
 ---
 
 ```{r setup, include=FALSE}
@@ -450,6 +451,44 @@ CDC2011 <- bind_rows(
 )
 
 CDC2011 |>
+  gt() |>
+  fmt_percent(starts_with('Percent'), decimals = 1) |>
+  fmt_number(starts_with('Total'), decimals = 0)
+```
+
+```{r combine-CDC-test-harnesses, dependson=c("create-CDC2014-test-harness", "create-CDC2012-test-harness", "create-CDC2011-test-harness"), R.options=list(width = 3000)}
+CDC_combined <- full_join(
+  CDC2014,
+  CDC2012,
+  by = c('Variable', 'Level'),
+  suffix = c('2014', '2012')
+) |>
+  full_join(
+    rename_with(
+      CDC2011,
+      ~paste0(.x, '2011'),
+      starts_with(c('Percentage', 'Total'))
+    ),
+    by = c('Variable', 'Level')
+  ) |>
+  select(-contains('APC'))
+
+CDC_combined |>
+  gt() |>
+  fmt_percent(starts_with('Percent'), decimals = 1) |>
+  fmt_number(starts_with('Total'), decimals = 0)
+```
+
+
+## Combined Abortion Test Harness
+
+```{r combine-guttmacher-and-CDC-test-harnesses, dependson=c("combine-CDC-test-harnesses", "create-guttmacher-test-harness")}
+full_join(
+  select(guttmacher2014, -TotalAPC2014),
+  CDC_combined,
+  by = c('Variable', 'Level')
+) |>
+  arrange(Variable) |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
   fmt_number(starts_with('Total'), decimals = 0)
