@@ -326,7 +326,7 @@ CDC2012 <- bind_rows(
     ~Level, ~PctCDC,
     'White',    37.6,
     'Black',    36.7,
-    'Other',    7.0,
+    'Other (incl. Asian/Pacific Islander)',    7.0,
     'Hispanic', 18.7,
   ) |>  mutate(
     Variable = 'Race/ethnicity',
@@ -416,7 +416,7 @@ CDC2011 <- bind_rows(
     ~Level, ~PctCDC,
     'White',    37.2,
     'Black',    36.2,
-    'Other',    7.0,
+    'Other (incl. Asian/Pacific Islander)',    7.0,
     'Hispanic', 19.7,
   ) |>  mutate(
     Variable = 'Race/ethnicity',
