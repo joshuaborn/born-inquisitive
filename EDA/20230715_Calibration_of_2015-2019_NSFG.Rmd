@@ -71,7 +71,7 @@ abortionstotal2011 <- pull(guttmacher_abortions2011, abortionstotal)
 ```{r create-guttmacher-test-harness, dependson="process-national-guttmacher-data"}
 guttmacher2014 <- bind_rows(
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     'lt20',     11.9,
     '1517',     3.4,
     '1819',     8.2,
@@ -89,13 +89,13 @@ guttmacher2014 <- bind_rows(
       pivot_longer(
         guttmacher_abortions2014,
         cols = everything(),
-        values_to = 'TotalAPC2014'
+        values_to = 'TtlAPC2014'
       ),
       by = 'name'
     ) |>
     select(-name),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     'Married            ',               14.3,
     'Cohabitating, no married',          31.0,
     'Never-married, not cohabiting',     45.9,
@@ -105,7 +105,7 @@ guttmacher2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     'White',    38.7,
     'Black',    27.6,
     'Hispanic', 24.8,
@@ -116,7 +116,7 @@ guttmacher2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     'U.S.-born',     83.9,
     'Foreign-born',  16.1
   ) |>  mutate(
@@ -124,7 +124,7 @@ guttmacher2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     '<high school',                  8.9,
     'High school graduate/GED',      27.0,
     'Some college/associate degree', 40.9,
@@ -134,7 +134,7 @@ guttmacher2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     '0',   40.7,
     '1',   26.2,
     '>=2', 33.1
@@ -143,14 +143,14 @@ guttmacher2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     '>=1', 44.8
   ) |>  mutate(
     Variable = 'No. of previous induced abortions',
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     '<100',    49.3,
     '100-199', 25.7,
     '>=200',   25.0
@@ -159,7 +159,7 @@ guttmacher2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     'Mainline Protestant',    17.3,
     'Evangelical Protestant', 12.8,
     'Roman Catholic',         23.7,
@@ -170,7 +170,7 @@ guttmacher2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageAPS2014,
+    ~Level, ~PctAPS2014,
     'Heterosexual/straight',    94.4,
     'Homosexual/gay/lesbian',   0.3,
     'Bisexual',                 4.2,
@@ -181,15 +181,15 @@ guttmacher2014 <- bind_rows(
   )
 ) |> mutate(
   Level = str_squish(Level),
-  PercentageAPS2014 = PercentageAPS2014 / 100,
-  TotalAPS2014 = as.integer(round(abortionstotal2014 * PercentageAPS2014)),
-  .before = 'TotalAPC2014'
+  PctAPS2014 = PctAPS2014 / 100,
+  TtlAPS2014 = as.integer(round(abortionstotal2014 * PctAPS2014)),
+  .before = 'TtlAPC2014'
 )
 
 guttmacher2014 |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
-  fmt_number(starts_with('Total'), decimals = 0)
+  fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
@@ -200,7 +200,7 @@ guttmacher2014 |>
 ```{r create-CDC2014-test-harness, dependson="process-national-guttmacher-data"}
 CDC2014 <- bind_rows(
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'lt15',   0.3,
     '1519',   10.4,
     '2024',   32.2,
@@ -216,12 +216,12 @@ CDC2014 <- bind_rows(
     pivot_longer(
       guttmacher_abortions2014,
       cols = everything(),
-      values_to = 'TotalAPC'
+      values_to = 'TtlAPC'
     ),
     by = 'name'
   ) |> select(-name),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '<=8',   64.9,
     '9-13',  26.1,
     '14-15', 3.6,
@@ -233,7 +233,7 @@ CDC2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'White',    38.0,
     'Black',    36.0,
     'Other (incl. Asian/Pacific Islander)',    7.7,
@@ -243,7 +243,7 @@ CDC2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'Married',    14.5,
     'Unmarried',  85.5
   ) |>  mutate(
@@ -251,7 +251,7 @@ CDC2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '0',   40.4,
     '1',   26.0,
     '2',   19.7,
@@ -262,7 +262,7 @@ CDC2014 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '0',   55.1,
     '1',   24.7,
     '2',   11.6,
@@ -273,15 +273,15 @@ CDC2014 <- bind_rows(
   )
 ) |> mutate(
   Level = str_squish(Level),
-  PercentageCDC = PercentageCDC / 100,
-  TotalCDC = as.integer(round(abortionstotal2014 * PercentageCDC)),
-  .before = 'TotalAPC'
+  PctCDC = PctCDC / 100,
+  TtlCDC = as.integer(round(abortionstotal2014 * PctCDC)),
+  .before = 'TtlAPC'
 )
 
 CDC2014 |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
-  fmt_number(starts_with('Total'), decimals = 0)
+  fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
@@ -290,7 +290,7 @@ CDC2014 |>
 ```{r create-CDC2012-test-harness, dependson="process-national-guttmacher-data"}
 CDC2012 <- bind_rows(
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'lt15',   0.4,
     '1519',   12.2,
     '2024',   32.8,
@@ -306,12 +306,12 @@ CDC2012 <- bind_rows(
     pivot_longer(
       guttmacher_abortions2012,
       cols = everything(),
-      values_to = 'TotalAPC'
+      values_to = 'TtlAPC'
     ),
     by = 'name'
   ) |> select(-name),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '<=8',   65.8,
     '9-13',  25.6,
     '14-15', 3.5,
@@ -323,7 +323,7 @@ CDC2012 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'White',    37.6,
     'Black',    36.7,
     'Other',    7.0,
@@ -333,7 +333,7 @@ CDC2012 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'Married',    14.7,
     'Unmarried',  85.3
   ) |>  mutate(
@@ -341,7 +341,7 @@ CDC2012 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '0',   40.3,
     '1',   26.2,
     '2',   19.6,
@@ -352,7 +352,7 @@ CDC2012 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '0',   55.7,
     '1',   24.6,
     '2',   11.0,
@@ -363,15 +363,15 @@ CDC2012 <- bind_rows(
   )
 ) |> mutate(
   Level = str_squish(Level),
-  PercentageCDC = PercentageCDC / 100,
-  TotalCDC = as.integer(round(abortionstotal2012 * PercentageCDC)),
-  .before = 'TotalAPC'
+  PctCDC = PctCDC / 100,
+  TtlCDC = as.integer(round(abortionstotal2012 * PctCDC)),
+  .before = 'TtlAPC'
 )
 
 CDC2012 |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
-  fmt_number(starts_with('Total'), decimals = 0)
+  fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
@@ -380,7 +380,7 @@ CDC2012 |>
 ```{r create-CDC2011-test-harness, dependson="process-national-guttmacher-data"}
 CDC2011 <- bind_rows(
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'lt15',   0.4,
     '1519',   13.5,
     '2024',   32.9,
@@ -396,12 +396,12 @@ CDC2011 <- bind_rows(
     pivot_longer(
       guttmacher_abortions2011,
       cols = everything(),
-      values_to = 'TotalAPC'
+      values_to = 'TtlAPC'
     ),
     by = 'name'
   ) |> select(-name),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '<=8',   64.5,
     '9-13',  26.9,
     '14-15', 3.5,
@@ -413,7 +413,7 @@ CDC2011 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'White',    37.2,
     'Black',    36.2,
     'Other',    7.0,
@@ -423,7 +423,7 @@ CDC2011 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     'Married',    14.5,
     'Unmarried',  85.5
   ) |>  mutate(
@@ -431,7 +431,7 @@ CDC2011 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '0',   39.9,
     '1',   26.5,
     '2',   19.6,
@@ -442,7 +442,7 @@ CDC2011 <- bind_rows(
     .before = everything()
   ),
   tribble(
-    ~Level, ~PercentageCDC,
+    ~Level, ~PctCDC,
     '0',   53.7,
     '1',   25.5,
     '2',   11.6,
@@ -453,15 +453,15 @@ CDC2011 <- bind_rows(
   )
 ) |> mutate(
   Level = str_squish(Level),
-  PercentageCDC = PercentageCDC / 100,
-  TotalCDC = as.integer(round(abortionstotal2011 * PercentageCDC)),
-  .before = 'TotalAPC'
+  PctCDC = PctCDC / 100,
+  TtlCDC = as.integer(round(abortionstotal2011 * PctCDC)),
+  .before = 'TtlAPC'
 )
 
 CDC2011 |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
-  fmt_number(starts_with('Total'), decimals = 0)
+  fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
@@ -478,7 +478,7 @@ CDC_combined <- full_join(
     rename_with(
       CDC2014,
       ~paste0(.x, '2014'),
-      starts_with(c('Percentage', 'Total'))
+      starts_with(c('Pct', 'Ttl'))
     ),
     by = c('Variable', 'Level')
   ) |>
@@ -487,7 +487,7 @@ CDC_combined <- full_join(
 CDC_combined |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
-  fmt_number(starts_with('Total'), decimals = 0)
+  fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
@@ -529,7 +529,7 @@ CDC_releveled <- CDC_combined |>
   )
 
 guttmacher_releveled <- guttmacher2014 |>
-  select(-TotalAPC2014) |>
+  select(-TtlAPC2014) |>
   combine_levels(
     'Relationship status',
     c('Cohabitating, no married', 'Never-married, not cohabiting', 'Previously married, not cohabiting'),
@@ -545,7 +545,7 @@ full_join(
   arrange(Variable) |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
-  fmt_number(starts_with('Total'), decimals = 0)
+  fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
