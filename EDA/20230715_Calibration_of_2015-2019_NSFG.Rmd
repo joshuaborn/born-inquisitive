@@ -46,23 +46,23 @@ guttmacher_national <- guttmacher_raw |>
         2009, 2012, 2015)
   )
 
-guttmacher_2014 <- guttmacher_national |>
+guttmacher_abortions2014 <- guttmacher_national |>
   filter(year == 2014) |>
   select(starts_with('abortions'))
 
-abortionstotal2014 <- pull(guttmacher_2014, abortionstotal)
+abortionstotal2014 <- pull(guttmacher_abortions2014, abortionstotal)
 
-guttmacher_2012 <- guttmacher_national |>
+guttmacher_abortions2012 <- guttmacher_national |>
   filter(year == 2012) |>
   select(starts_with('abortions'))
 
-abortionstotal2012 <- pull(guttmacher_2012, abortionstotal)
+abortionstotal2012 <- pull(guttmacher_abortions2012, abortionstotal)
 
-guttmacher_2011 <- guttmacher_national |>
+guttmacher_abortions2011 <- guttmacher_national |>
   filter(year == 2011) |>
   select(starts_with('abortions'))
 
-abortionstotal2011 <- pull(guttmacher_2011, abortionstotal)
+abortionstotal2011 <- pull(guttmacher_abortions2011, abortionstotal)
 ```
 
 
@@ -87,7 +87,7 @@ guttmacher2014 <- bind_rows(
   ) |>
     left_join(
       pivot_longer(
-        guttmacher_2014,
+        guttmacher_abortions2014,
         cols = everything(),
         values_to = 'TotalAPC2014'
       ),
@@ -195,6 +195,8 @@ guttmacher2014 |>
 
 ## Test Harness from CDC Abortion Surveillance
 
+### 2014
+
 ```{r create-CDC2014-test-harness, dependson="process-national-guttmacher-data"}
 CDC2014 <- bind_rows(
   tribble(
@@ -212,7 +214,7 @@ CDC2014 <- bind_rows(
     .before = everything()
   ) |> left_join(
     pivot_longer(
-      guttmacher_2014,
+      guttmacher_abortions2014,
       cols = everything(),
       values_to = 'TotalAPC'
     ),
@@ -234,7 +236,7 @@ CDC2014 <- bind_rows(
     ~Level, ~PercentageCDC,
     'White',    38.0,
     'Black',    36.0,
-    'Other',    7.7,
+    'Other (incl. Asian/Pacific Islander)',    7.7,
     'Hispanic', 18.3,
   ) |>  mutate(
     Variable = 'Race/ethnicity',
@@ -245,7 +247,7 @@ CDC2014 <- bind_rows(
     'Married',    14.5,
     'Unmarried',  85.5
   ) |>  mutate(
-    Variable = 'Marital status',
+    Variable = 'Relationship status',
     .before = everything()
   ),
   tribble(
@@ -282,6 +284,9 @@ CDC2014 |>
   fmt_number(starts_with('Total'), decimals = 0)
 ```
 
+
+### 2012
+
 ```{r create-CDC2012-test-harness, dependson="process-national-guttmacher-data"}
 CDC2012 <- bind_rows(
   tribble(
@@ -299,7 +304,7 @@ CDC2012 <- bind_rows(
     .before = everything()
   ) |> left_join(
     pivot_longer(
-      guttmacher_2012,
+      guttmacher_abortions2012,
       cols = everything(),
       values_to = 'TotalAPC'
     ),
@@ -332,7 +337,7 @@ CDC2012 <- bind_rows(
     'Married',    14.7,
     'Unmarried',  85.3
   ) |>  mutate(
-    Variable = 'Marital status',
+    Variable = 'Relationship status',
     .before = everything()
   ),
   tribble(
@@ -369,6 +374,9 @@ CDC2012 |>
   fmt_number(starts_with('Total'), decimals = 0)
 ```
 
+
+### 2011
+
 ```{r create-CDC2011-test-harness, dependson="process-national-guttmacher-data"}
 CDC2011 <- bind_rows(
   tribble(
@@ -386,7 +394,7 @@ CDC2011 <- bind_rows(
     .before = everything()
   ) |> left_join(
     pivot_longer(
-      guttmacher_2011,
+      guttmacher_abortions2011,
       cols = everything(),
       values_to = 'TotalAPC'
     ),
@@ -419,7 +427,7 @@ CDC2011 <- bind_rows(
     'Married',    14.5,
     'Unmarried',  85.5
   ) |>  mutate(
-    Variable = 'Marital status',
+    Variable = 'Relationship status',
     .before = everything()
   ),
   tribble(
@@ -456,17 +464,20 @@ CDC2011 |>
   fmt_number(starts_with('Total'), decimals = 0)
 ```
 
+
+### Combined
+
 ```{r combine-CDC-test-harnesses, dependson=c("create-CDC2014-test-harness", "create-CDC2012-test-harness", "create-CDC2011-test-harness"), R.options=list(width = 3000)}
 CDC_combined <- full_join(
-  CDC2014,
+  CDC2011,
   CDC2012,
   by = c('Variable', 'Level'),
-  suffix = c('2014', '2012')
+  suffix = c('2011', '2012')
 ) |>
   full_join(
     rename_with(
-      CDC2011,
-      ~paste0(.x, '2011'),
+      CDC2014,
+      ~paste0(.x, '2014'),
       starts_with(c('Percentage', 'Total'))
     ),
     by = c('Variable', 'Level')
@@ -483,9 +494,52 @@ CDC_combined |>
 ## Combined Abortion Test Harness
 
 ```{r combine-guttmacher-and-CDC-test-harnesses, dependson=c("combine-CDC-test-harnesses", "create-guttmacher-test-harness")}
+combine_levels <- function(tbl, variable, levels, new_level, remove = TRUE) {
+  new_row <- tbl |>
+    filter(Variable == variable, Level %in% levels) |>
+    group_by(Variable) |>
+    summarize(across(c(-Level), sum)) |>
+    mutate(Level = new_level, .after = Variable)
+
+  if (remove) {
+    add_row(tbl, new_row, .before = 1) |>
+      filter(!is.element(Level, levels))
+  } else {
+    add_row(tbl, new_row, .before = 1)
+  }
+}
+
+CDC_releveled <- CDC_combined |>
+  combine_levels(
+    'Age group',
+    c('lt15', '1519'),
+    'lt20'
+  ) |>
+  combine_levels(
+    'No. of previous induced abortions',
+    c('1', '2', '>=3'),
+    '>=1',
+    remove = FALSE
+  ) |>
+  combine_levels(
+    'No. of prior births',
+    c('2', '3', '>=4'),
+    '>=2',
+    remove = FALSE
+  )
+
+guttmacher_releveled <- guttmacher2014 |>
+  select(-TotalAPC2014) |>
+  combine_levels(
+    'Relationship status',
+    c('Cohabitating, no married', 'Never-married, not cohabiting', 'Previously married, not cohabiting'),
+    'Unmarried',
+    remove = FALSE
+  )
+
 full_join(
-  select(guttmacher2014, -TotalAPC2014),
-  CDC_combined,
+  CDC_releveled,
+  guttmacher_releveled,
   by = c('Variable', 'Level')
 ) |>
   arrange(Variable) |>
