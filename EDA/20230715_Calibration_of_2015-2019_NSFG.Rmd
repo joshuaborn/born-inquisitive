@@ -608,10 +608,11 @@ NVSS_combined <- bind_rows(
     ) |>
     select(Notes, Year, Hispanic.Origin, Race, Births) |>
     mutate(
-      Level = if_else(
-        Hispanic.Origin == 'Hispanic or Latino',
-        'Hispanic',
-        paste0(Race, ', Not Hispanic')
+      Level = case_when(
+        Hispanic.Origin == 'Hispanic or Latino' ~ 'Hispanic',
+        Race == 'White' ~ 'Non-Hispanic White',
+        Race == 'Black or African American' ~ 'Non-Hispanic Black',
+        .default = 'Non-Hispanic Other or Multiple Race'
       )
     ) |>
     group_by(Year, Level) |>
@@ -651,7 +652,8 @@ NSFG_data_preg2015_2019 <- bind_rows(
     OUTCOME,
     AGEPREG,
     NBRNLV_S,
-    FMAROUT5
+    FMAROUT5,
+    HISPRACE2
   ),
   select(
     NSFG_raw_preg2017_2019,
@@ -660,7 +662,8 @@ NSFG_data_preg2015_2019 <- bind_rows(
     OUTCOME,
     AGEPREG,
     NBRNLV_S,
-    FMAROUT5
+    FMAROUT5,
+    HISPRACE2
   )
 ) |>
 left_join(
@@ -704,7 +707,13 @@ mutate(
     FMAROUT5 == 'MARRIED',
     'Married',
     'Unmarried'
-  ))
+  )),
+  HISPRACE2 = as_factor(labelled(HISPRACE2, c(
+    'Hispanic' = 1,
+    'Non-Hispanic White' = 2,
+    'Non-Hispanic Black' = 3,
+    'Non-Hispanic Other or Multiple Race' = 4
+  )))
 ) |>
 rename(
   Year = DATEND
@@ -722,15 +731,13 @@ NSFG_svy_preg_2015_2019 <- NSFG_data_preg2015_2019 |>
 ```
 
 ```{r estimate-uncalibrated, dependson="create-NSFG-survey-object"}
-est_unc_totals <- NSFG_svy_preg_2015_2019 |>
+NSFG_svy_preg_2015_2019 |>
   group_by(Year, OUTCOME) |>
   summarize(
     Est_Pregnancies = survey_total(one, vartype = 'ci'),
     n = unweighted(sum(one))
   ) |>
-  filter(Year %in% 2011:2014)
-
-est_unc_totals |>
+  filter(Year %in% 2011:2014) |>
   gt() |>
   fmt_number(decimal = 0)
 
@@ -760,7 +767,20 @@ est_unc_births <- bind_rows(
     ) |>
     select(-OUTCOME) |>
     rename(Level = marital_status) |>
-    mutate(Variable = 'Marital status', .after = Year)
+    mutate(Variable = 'Marital status', .after = Year),
+  NSFG_svy_preg_2015_2019 |>
+    group_by(Year, OUTCOME, HISPRACE2) |>
+    summarize(
+      Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    select(-OUTCOME) |>
+    rename(Level = HISPRACE2) |>
+    mutate(Variable = 'Race and ethnicity', .after = Year)
 )
 ```
 
