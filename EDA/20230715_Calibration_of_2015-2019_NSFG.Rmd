@@ -644,8 +644,24 @@ NSFG_wgt2011_2019 <- read_sas(
 
 ```{r select-NSFG-variables, dependson="load-NSFG-data"}
 NSFG_data_preg2015_2019 <- bind_rows(
-  select(NSFG_raw_preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, NBRNLV_S),
-  select(NSFG_raw_preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, NBRNLV_S)
+  select(
+    NSFG_raw_preg2015_2017,
+    SECU, SEST, CASEID,
+    DATEND,
+    OUTCOME,
+    AGEPREG,
+    NBRNLV_S,
+    FMAROUT5
+  ),
+  select(
+    NSFG_raw_preg2017_2019,
+    SECU, SEST, CASEID,
+    DATEND,
+    OUTCOME,
+    AGEPREG,
+    NBRNLV_S,
+    FMAROUT5
+  )
 ) |>
 left_join(
   select(NSFG_wgt2011_2019, CASEID, WGT2015_2019),
@@ -676,7 +692,19 @@ mutate(
       "45-49 years",
       "50 years and over"
     )
-  )
+  ),
+  FMAROUT5 = as_factor(labelled(FMAROUT5, c(
+    "MARRIED" = 1,
+    "DIVORCED" = 2,
+    "WINDOWED" = 3,
+    "SEPARATED" = 4,
+    "NEVER MARRIED" = 5
+  ))),
+  marital_status = as.factor(if_else(
+    FMAROUT5 == 'MARRIED',
+    'Married',
+    'Unmarried'
+  ))
 ) |>
 rename(
   Year = DATEND
@@ -706,16 +734,34 @@ est_unc_totals |>
   gt() |>
   fmt_number(decimal = 0)
 
-est_unc_by_age_group <- NSFG_svy_preg_2015_2019 |>
-  group_by(Year, OUTCOME, age_group) |>
-  summarize(
-    Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
-    n = unweighted(sum(one))
-  ) |>
-  filter(
-    Year %in% 2011:2014 &
-      OUTCOME %in% c('LIVE BIRTH', 'INDUCED ABORTION')
-  )
+est_unc_births <- bind_rows(
+  NSFG_svy_preg_2015_2019 |>
+    group_by(Year, OUTCOME, age_group) |>
+    summarize(
+      Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    select(-OUTCOME) |>
+    rename(Level = age_group) |>
+    mutate(Variable = 'Age group', .after = Year),
+  NSFG_svy_preg_2015_2019 |>
+    group_by(Year, OUTCOME, marital_status) |>
+    summarize(
+      Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    select(-OUTCOME) |>
+    rename(Level = marital_status) |>
+    mutate(Variable = 'Marital status', .after = Year)
+)
 ```
 
 
@@ -724,14 +770,8 @@ est_unc_by_age_group <- NSFG_svy_preg_2015_2019 |>
 ```{r compare-uncalibrated-estimates-with-NVSS, dependson=c("create-NVSS-test-harness", "estimate-uncalibrated")}
 full_join(
   NVSS_combined,
-  est_unc_by_age_group |>
-    ungroup() |>
-    filter(OUTCOME == 'LIVE BIRTH') |>
-    select(-OUTCOME) |>
-    rename(
-      Level = age_group
-    ),
-  by = c('Year', 'Level')
+  est_unc_births,
+  by = c('Year', 'Variable', 'Level')
 ) |>
   mutate(
     Bias = Est_Births - Births,
