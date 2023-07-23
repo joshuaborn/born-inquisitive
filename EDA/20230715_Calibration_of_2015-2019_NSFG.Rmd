@@ -573,11 +573,12 @@ full_join(
 
 ## Live Births Test Harness
 
-```{r create-NVSS-test-harness}
+```{r create-NVSS-test-harness, message=FALSE}
 NVSS_combined <- bind_rows(
   read_tsv(
       here('data/NVSS/2011-2014/age.txt'),
-      name_repair = 'universal'
+      name_repair = 'universal',
+      show_col_types = FALSE
     ) |>
     filter(is.na(Notes)) |>
     rename(Level = Age.of.Mother.9) |>
@@ -585,7 +586,8 @@ NVSS_combined <- bind_rows(
     mutate(Variable = 'Age group', .after = Year),
   read_tsv(
       here('data/NVSS/2011-2014/education.txt'),
-      name_repair = 'universal'
+      name_repair = 'universal',
+      show_col_types = FALSE
     ) |>
     filter(is.na(Notes)) |>
     rename(Level = Mother.s.Education) |>
@@ -593,7 +595,8 @@ NVSS_combined <- bind_rows(
     mutate(Variable = 'Education'),
   read_tsv(
       here('data/NVSS/2011-2014/marital_status.txt'),
-      name_repair = 'universal'
+      name_repair = 'universal',
+      show_col_types = FALSE
     ) |>
     filter(is.na(Notes)) |>
     rename(Level = Marital.Status) |>
@@ -601,7 +604,8 @@ NVSS_combined <- bind_rows(
     mutate(Variable = 'Marital status'),
   read_tsv(
       here('data/NVSS/2011-2014/race_ethnicity.txt'),
-      name_repair = 'universal'
+      name_repair = 'universal',
+      show_col_types = FALSE
     ) |>
     rename(
       Hispanic.Origin = Mother.s.Hispanic.Origin,
@@ -634,36 +638,116 @@ NVSS_combined |>
 ## Uncalibrated NSFG Estimates
 
 ```{r load-NSFG-data}
-preg2017_2019 <- read_sas(
+NSFG_raw_preg2017_2019 <- read_sas(
   data_file = here('data/NSFG/d2017_2019fempreg.sas7bdat'),
   catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
 )
-preg2015_2017 <- read_sas(
+NSFG_raw_preg2015_2017 <- read_sas(
   data_file = here('data/NSFG/d2015_2017fempreg.sas7bdat'),
   catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
 )
-wgt2011_2019 <- read_sas(
+NSFG_wgt2011_2019 <- read_sas(
   data_file = here('data/NSFG/d2011_2019femwgt.sas7bdat')
 )
 ```
 
-```{r create-pregnancies-table-survey-object, dependson="load-NSFG-data"}
-preg_2015_2019_svy <- bind_rows(
-  select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, PRGLNGTH),
-  select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG)
+```{r select-NSFG-variables, dependson="load-NSFG-data"}
+NSFG_data_preg2015_2019 <- bind_rows(
+  select(NSFG_raw_preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG),
+  select(NSFG_raw_preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG)
 ) |>
 left_join(
-  wgt2011_2019,
+  select(NSFG_wgt2011_2019, CASEID, WGT2015_2019),
   by = join_by(CASEID)
 ) |>
 mutate(
+  one = 1,
+  OUTCOME = as_factor(labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))),
+  age_group = cut(
+    AGEPREG,
+    breaks = c(0, seq(15, 50, 5), Inf),
+    right = FALSE,
+    labels = c(
+      "Under 15 years",
+      "15-19 years",
+      "20-24 years",
+      "25-29 years",
+      "30-34 years",
+      "35-39 years",
+      "40-44 years",
+      "45-49 years",
+      "50 years and over"
+    )
+  )
+) |>
+rename(
   Year = DATEND
-) |> 
-as_survey_design(
-  strata = SEST,
-  ids = SECU,
-  weights = WGT2015_2019,
-  nest = TRUE
 )
 ```
 
+```{r create-NSFG-survey-object, dependson="select-NSFG-variables"}
+NSFG_svy_preg_2015_2019 <- NSFG_data_preg2015_2019 |>
+  as_survey_design(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2015_2019,
+    nest = TRUE
+  )
+```
+
+```{r estimate-uncalibrated, dependson="create-NSFG-survey-object"}
+est_unc_totals <- NSFG_svy_preg_2015_2019 |>
+  group_by(Year, OUTCOME) |>
+  summarize(
+    Est_Preg = survey_total(one, vartype = 'ci'),
+    n = unweighted(sum(one))
+  ) |>
+  filter(Year %in% 2011:2014)
+
+est_unc_totals |>
+  gt() |>
+  fmt_number(decimal = 0)
+
+est_unc_by_age_group <- NSFG_svy_preg_2015_2019 |>
+  group_by(Year, OUTCOME, age_group) |>
+  summarize(
+    Est_Births = survey_total(one, vartype = 'ci'),
+    n = unweighted(sum(one))
+  ) |>
+  filter(
+    Year %in% 2011:2014 &
+      OUTCOME %in% c('LIVE BIRTH', 'INDUCED ABORTION')
+  )
+```
+
+
+## Comparison of Uncalibrated NSFG Estimates with NVSS Live Births
+
+```{r compare-uncalibrated-estimates-with-NVSS, dependson=c("create-NVSS-test-harness", "estimate-uncalibrated")}
+full_join(
+  NVSS_combined,
+  est_unc_by_age_group |>
+    ungroup() |>
+    filter(OUTCOME == 'LIVE BIRTH') |>
+    select(-OUTCOME) |>
+    rename(
+      Level = age_group
+    ),
+  by = c('Year', 'Level')
+) |>
+  mutate(
+    Bias = Est_Births - Births,
+    Relative_Bias = Bias / Births,
+    `Covers?` = Births <= Est_Births_upp & Births >= Est_Births_low
+  ) |>
+  gt() |>
+  fmt_number(-Year, decimal = 0) |>
+  fmt_percent(Relative_Bias, decimal = 1)
+```
