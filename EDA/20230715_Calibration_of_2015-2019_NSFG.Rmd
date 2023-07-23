@@ -97,7 +97,7 @@ guttmacher2014 <- bind_rows(
   tribble(
     ~Level, ~PctAPS2014,
     'Married            ',               14.3,
-    'Cohabitating, no married',          31.0,
+    'Cohabitating, not married',          31.0,
     'Never-married, not cohabiting',     45.9,
     'Previously married, not cohabiting', 8.8
   ) |>  mutate(
@@ -568,6 +568,66 @@ full_join(
   gt() |>
   fmt_percent(starts_with('Pct'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
+```
+
+
+## Live Births Test Harness
+
+```{r create-NVSS-test-harness}
+NVSS_combined <- bind_rows(
+  read_tsv(
+      here('data/NVSS/2011-2014/age.txt'),
+      name_repair = 'universal'
+    ) |>
+    filter(is.na(Notes)) |>
+    rename(Level = Age.of.Mother.9) |>
+    select(Year, Level, Births) |>
+    mutate(Variable = 'Age group', .after = Year),
+  read_tsv(
+      here('data/NVSS/2011-2014/education.txt'),
+      name_repair = 'universal'
+    ) |>
+    filter(is.na(Notes)) |>
+    rename(Level = Mother.s.Education) |>
+    select(Year, Level, Births) |>
+    mutate(Variable = 'Education'),
+  read_tsv(
+      here('data/NVSS/2011-2014/marital_status.txt'),
+      name_repair = 'universal'
+    ) |>
+    filter(is.na(Notes)) |>
+    rename(Level = Marital.Status) |>
+    select(Year, Level, Births) |>
+    mutate(Variable = 'Marital status'),
+  read_tsv(
+      here('data/NVSS/2011-2014/race_ethnicity.txt'),
+      name_repair = 'universal'
+    ) |>
+    rename(
+      Hispanic.Origin = Mother.s.Hispanic.Origin,
+      Race = Mother.s.Bridged.Race
+    ) |>
+    filter(
+      (is.na(Notes) & Hispanic.Origin != 'Hispanic or Latino') |
+        (Notes == 'Total' & Hispanic.Origin == 'Hispanic or Latino')
+    ) |>
+    select(Notes, Year, Hispanic.Origin, Race, Births) |>
+    mutate(
+      Level = if_else(
+        Hispanic.Origin == 'Hispanic or Latino',
+        'Hispanic',
+        paste0(Race, ', Not Hispanic')
+      )
+    ) |>
+    group_by(Year, Level) |>
+    summarize(Births = sum(Births), .groups = 'drop') |>
+    mutate(Variable = 'Race and ethnicity')
+) |>
+  arrange(Year, Variable)
+
+NVSS_combined |>
+  gt() |>
+  fmt_number('Births', decimals = 0)
 ```
 
 
