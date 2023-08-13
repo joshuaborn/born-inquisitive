@@ -30,15 +30,83 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r load-guttmacher-data}
-guttmacher_raw <- read_csv(
-  here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
-  show_col_types = FALSE
-)
+
+## NVSS Live Births Test Harness
+
+```{r create-NVSS-test-harness, message=FALSE}
+NVSS_combined <- bind_rows(
+  read_tsv(
+      here('data/NVSS/2011-2014/age.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ) |>
+    filter(is.na(Notes)) |>
+    mutate(Level = case_when(
+      Age.of.Mother.9 %in% c(
+        'Under 15 years',
+        '15-19 years'
+      ) ~ 'Under 20 years',
+      Age.of.Mother.9 %in% c(
+        '40-44 years',
+        '45-49 years',
+        '50 years and over'
+      ) ~ '40 years and over',
+      .default = Age.of.Mother.9
+    )) |>
+    select(Year, Level, Births) |>
+    group_by(Year, Level) |>
+    summarize(Births = sum(Births), .groups = 'drop') |>
+    mutate(Variable = 'Age group', .after = Year),
+  read_tsv(
+      here('data/NVSS/2011-2014/marital_status.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ) |>
+    filter(is.na(Notes)) |>
+    rename(Level = Marital.Status) |>
+    select(Year, Level, Births) |>
+    mutate(Variable = 'Marital status'),
+  read_tsv(
+      here('data/NVSS/2011-2014/race_ethnicity.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ) |>
+    rename(
+      Hispanic.Origin = Mother.s.Hispanic.Origin,
+      Race = Mother.s.Bridged.Race
+    ) |>
+    filter(
+      (is.na(Notes) & Hispanic.Origin != 'Hispanic or Latino') |
+        (Notes == 'Total' & Hispanic.Origin == 'Hispanic or Latino')
+    ) |>
+    select(Notes, Year, Hispanic.Origin, Race, Births) |>
+    mutate(
+      Level = case_when(
+        Hispanic.Origin == 'Hispanic or Latino' ~ 'Hispanic',
+        Race == 'White' ~ 'Non-Hispanic White',
+        Race == 'Black or African American' ~ 'Non-Hispanic Black',
+        .default = 'Non-Hispanic Other or Multiple Race'
+      )
+    ) |>
+    group_by(Year, Level) |>
+    summarize(Births = sum(Births), .groups = 'drop') |>
+    mutate(Variable = 'Race and ethnicity')
+) |>
+  arrange(-Year, Variable)
+
+NVSS_combined |>
+  gt() |>
+  fmt_number('Births', decimals = 0)
 ```
 
-```{r process-national-guttmacher-data, dependson="load-guttmacher-data"}
-guttmacher_national <- guttmacher_raw |>
+
+## 2014 Guttmacher APS Test Harness
+
+```{r load-and-process-guttmacher-APC-data}
+guttmacher_APC_national <- read_csv(
+    here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
+    show_col_types = FALSE
+  ) |>
   filter(state == 'US') |>
   select(-state, -notes) |>
   mutate(interpolated = year %in%
@@ -46,48 +114,44 @@ guttmacher_national <- guttmacher_raw |>
         2009, 2012, 2015)
   )
 
-guttmacher_abortions2014 <- guttmacher_national |>
+guttmacher_APC_2014 <- guttmacher_APC_national |>
   filter(year == 2014) |>
   select(starts_with('abortions'))
 
-abortionstotal2014 <- pull(guttmacher_abortions2014, abortionstotal)
+guttmacher_APC_2014_total <- pull(guttmacher_APC_2014, abortionstotal)
 
-guttmacher_abortions2012 <- guttmacher_national |>
+guttmacher_APC_2012 <- guttmacher_APC_national |>
   filter(year == 2012) |>
   select(starts_with('abortions'))
 
-abortionstotal2012 <- pull(guttmacher_abortions2012, abortionstotal)
+guttmacher_APC_2012_total <- pull(guttmacher_APC_2012, abortionstotal)
 
-guttmacher_abortions2011 <- guttmacher_national |>
+guttmacher_APC_2011 <- guttmacher_APC_national |>
   filter(year == 2011) |>
   select(starts_with('abortions'))
 
-abortionstotal2011 <- pull(guttmacher_abortions2011, abortionstotal)
+guttmacher_APC_2011_total <- pull(guttmacher_APC_2011, abortionstotal)
 ```
 
-
-## Test Harness from 2014 Guttmacher APS
-
-```{r create-guttmacher-test-harness, dependson="process-national-guttmacher-data"}
-guttmacher2014 <- bind_rows(
+```{r create-guttmacher-test-harness, dependson="load-and-process-guttmacher-APC-data"}
+guttmacher_APS_2014 <- bind_rows(
   tribble(
-    ~Level, ~PctAPS2014,
-    'lt20',     11.9,
-    '1517',     3.4,
-    '1819',     8.2,
-    '2024',     33.6,
-    '2529',     26.5,
-    '3034',     15.9,
-    '3539',     9.1,
-    '40plus',   3.1
+    ~name, ~Level, ~PctAPS2014,
+    'abortionslt20',   'Under 20 years',     11.9,
+    'abortions1517',   '15-17 years',     3.4,
+    'abortions1819',   '18-19 years',     8.2,
+    'abortions2024',   '20-24 years',     33.6,
+    'abortions2529',   '25-29 years',     26.5,
+    'abortions3034',   '30-34 years',     15.9,
+    'abortions3539',   '35-39 years',     9.1,
+    'abortions40plus', '40 years and over',   3.1
   ) |> mutate(
     Variable = 'Age group',
-    name = paste0('abortions', Level),
     .before = everything()
   ) |>
     left_join(
       pivot_longer(
-        guttmacher_abortions2014,
+        guttmacher_APC_2014,
         cols = everything(),
         values_to = 'TtlAPC2014'
       ),
@@ -97,7 +161,7 @@ guttmacher2014 <- bind_rows(
   tribble(
     ~Level, ~PctAPS2014,
     'Married            ',               14.3,
-    'Cohabitating, not married',          31.0,
+    'Cohabitating, not married',         31.0,
     'Never-married, not cohabiting',     45.9,
     'Previously married, not cohabiting', 8.8
   ) |>  mutate(
@@ -128,7 +192,7 @@ guttmacher2014 <- bind_rows(
     '<high school',                  8.9,
     'High school graduate/GED',      27.0,
     'Some college/associate degree', 40.9,
-    'College graduate',               23.1
+    'College graduate',              23.1
   ) |>  mutate(
     Variable = 'Educational attainment',
     .before = everything()
@@ -204,39 +268,38 @@ guttmacher2014 <- bind_rows(
 ) |> mutate(
   Level = str_squish(Level),
   PctAPS2014 = PctAPS2014 / 100,
-  TtlAPS2014 = as.integer(round(abortionstotal2014 * PctAPS2014)),
+  TtlAPS2014 = as.integer(round(guttmacher_APC_2014_total * PctAPS2014)),
   .before = 'TtlAPC2014'
 )
 
-guttmacher2014 |>
+guttmacher_APS_2014 |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
-## Test Harness from CDC Abortion Surveillance
+## CDC Abortion Surveillance Test Harnesses
 
 ### 2014
 
-```{r create-CDC2014-test-harness, dependson="process-national-guttmacher-data"}
-CDC2014 <- bind_rows(
+```{r create-CDC-2014-test-harness, dependson="load-and-process-guttmacher-APC-data"}
+CDC_2014 <- bind_rows(
   tribble(
-    ~Level, ~PctCDC,
-    'lt15',   0.3,
-    '1519',   10.4,
-    '2024',   32.2,
-    '2529',   26.7,
-    '3034',   17.1,
-    '3539',   9.7,
-    '40plus', 3.6
+    ~name, ~Level, ~PctCDC,
+    'abortionslt15',   'Under 15 years',   0.3,
+    'abortions1519',   '15-19 years',   10.4,
+    'abortions2024',   '20-24 years',   32.2,
+    'abortions2529',   '25-29 years',   26.7,
+    'abortions3034',   '30-34 years',   17.1,
+    'abortions3539',   '35-39 years',   9.7,
+    'abortions40plus', '40 years and over', 3.6
   ) |> mutate(
     Variable = 'Age group',
-    name = paste0('abortions', Level),
     .before = everything()
   ) |> left_join(
     pivot_longer(
-      guttmacher_abortions2014,
+      guttmacher_APC_2014,
       cols = everything(),
       values_to = 'TtlAPC'
     ),
@@ -296,11 +359,11 @@ CDC2014 <- bind_rows(
 ) |> mutate(
   Level = str_squish(Level),
   PctCDC = PctCDC / 100,
-  TtlCDC = as.integer(round(abortionstotal2014 * PctCDC)),
+  TtlCDC = as.integer(round(guttmacher_APC_2014_total * PctCDC)),
   .before = 'TtlAPC'
 )
 
-CDC2014 |>
+CDC_2014 |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
@@ -309,24 +372,23 @@ CDC2014 |>
 
 ### 2012
 
-```{r create-CDC2012-test-harness, dependson="process-national-guttmacher-data"}
-CDC2012 <- bind_rows(
+```{r create-CDC-2012-test-harness, dependson="load-and-process-guttmacher-APC-data"}
+CDC_2012 <- bind_rows(
   tribble(
-    ~Level, ~PctCDC,
-    'lt15',   0.4,
-    '1519',   12.2,
-    '2024',   32.8,
-    '2529',   25.4,
-    '3034',   16.4,
-    '3539',   9.1,
-    '40plus', 3.7
+    ~name, ~Level, ~PctCDC,
+    'abortionslt15',   'Under 15 years',   0.4,
+    'abortions1519',   '15-19 years',   12.2,
+    'abortions2024',   '20-24 years',   32.8,
+    'abortions2529',   '25-29 years',   25.4,
+    'abortions3034',   '30-34 years',   16.4,
+    'abortions3539',   '35-39 years',   9.1,
+    'abortions40plus', '40 years and over', 3.7
   ) |> mutate(
     Variable = 'Age group',
-    name = paste0('abortions', Level),
     .before = everything()
   ) |> left_join(
     pivot_longer(
-      guttmacher_abortions2012,
+      guttmacher_APC_2012,
       cols = everything(),
       values_to = 'TtlAPC'
     ),
@@ -386,11 +448,11 @@ CDC2012 <- bind_rows(
 ) |> mutate(
   Level = str_squish(Level),
   PctCDC = PctCDC / 100,
-  TtlCDC = as.integer(round(abortionstotal2012 * PctCDC)),
+  TtlCDC = as.integer(round(guttmacher_APC_2012_total * PctCDC)),
   .before = 'TtlAPC'
 )
 
-CDC2012 |>
+CDC_2012 |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
@@ -399,24 +461,23 @@ CDC2012 |>
 
 ### 2011
 
-```{r create-CDC2011-test-harness, dependson="process-national-guttmacher-data"}
-CDC2011 <- bind_rows(
+```{r create-CDC-2011-test-harness, dependson="load-and-process-guttmacher-APC-data"}
+CDC_2011 <- bind_rows(
   tribble(
-    ~Level, ~PctCDC,
-    'lt15',   0.4,
-    '1519',   13.5,
-    '2024',   32.9,
-    '2529',   24.9,
-    '3034',   15.8,
-    '3539',   8.9,
-    '40plus', 3.6
+    ~name, ~Level, ~PctCDC,
+    'abortionslt15',   'Under 15 years',   0.4,
+    'abortions1519',   '15-19 years',   13.5,
+    'abortions2024',   '20-24 years',   32.9,
+    'abortions2529',   '25-29 years',   24.9,
+    'abortions3034',   '30-34 years',   15.8,
+    'abortions3539',   '35-39 years',   8.9,
+    'abortions40plus', '40 years and over', 3.6
   ) |> mutate(
     Variable = 'Age group',
-    name = paste0('abortions', Level),
     .before = everything()
   ) |> left_join(
     pivot_longer(
-      guttmacher_abortions2011,
+      guttmacher_APC_2011,
       cols = everything(),
       values_to = 'TtlAPC'
     ),
@@ -476,29 +537,29 @@ CDC2011 <- bind_rows(
 ) |> mutate(
   Level = str_squish(Level),
   PctCDC = PctCDC / 100,
-  TtlCDC = as.integer(round(abortionstotal2011 * PctCDC)),
+  TtlCDC = as.integer(round(guttmacher_APC_2011_total * PctCDC)),
   .before = 'TtlAPC'
 )
 
-CDC2011 |>
+CDC_2011 |>
   gt() |>
   fmt_percent(starts_with('Percent'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
-### Combined
+### Comparison of CDC Abortion Test Harnesses
 
-```{r combine-CDC-test-harnesses, dependson=c("create-CDC2014-test-harness", "create-CDC2012-test-harness", "create-CDC2011-test-harness"), R.options=list(width = 3000)}
+```{r compare-CDC-test-harnesses, dependson=c("create-CDC_2014-test-harness", "create-CDC_2012-test-harness", "create-CDC_2011-test-harness"), R.options=list(width = 3000)}
 CDC_combined <- full_join(
-  CDC2011,
-  CDC2012,
+  CDC_2011,
+  CDC_2012,
   by = c('Variable', 'Level'),
   suffix = c('2011', '2012')
 ) |>
   full_join(
     rename_with(
-      CDC2014,
+      CDC_2014,
       ~paste0(.x, '2014'),
       starts_with(c('Pct', 'Ttl'))
     ),
@@ -508,14 +569,14 @@ CDC_combined <- full_join(
 
 CDC_combined |>
   gt() |>
-  fmt_percent(starts_with('Percent'), decimals = 1) |>
+  fmt_percent(starts_with('Pct'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
 
-## Combined Abortion Test Harness
+## Comparison of Abortion Test Harnesses
 
-```{r combine-guttmacher-and-CDC-test-harnesses, dependson=c("combine-CDC-test-harnesses", "create-guttmacher-test-harness")}
+```{r compare-abortion-test-harnesses, dependson=c("create-CDC_2014-test-harness", "create-CDC_2012-test-harness", "create-CDC_2011-test-harness", "create-guttmacher-test-harness")}
 combine_levels <- function(tbl, variable, levels, new_level, remove = TRUE) {
   new_row <- tbl |>
     filter(Variable == variable, Level %in% levels) |>
@@ -531,122 +592,57 @@ combine_levels <- function(tbl, variable, levels, new_level, remove = TRUE) {
   }
 }
 
-CDC_releveled <- CDC_combined |>
-  combine_levels(
-    'Age group',
-    c('lt15', '1519'),
-    'lt20'
-  ) |>
-  combine_levels(
-    'No. of previous induced abortions',
-    c('1', '2', '>=3'),
-    '>=1',
-    remove = FALSE
-  ) |>
-  combine_levels(
-    'No. of prior births',
-    c('2', '3', '>=4'),
-    '>=2',
-    remove = FALSE
-  )
-
-guttmacher_releveled <- guttmacher2014 |>
-  select(-TtlAPC2014) |>
-  combine_levels(
-    'Relationship status',
-    c('Cohabitating, no married', 'Never-married, not cohabiting', 'Previously married, not cohabiting'),
-    'Unmarried',
-    remove = FALSE
-  )
-
 full_join(
-  CDC_releveled,
-  guttmacher_releveled,
+  CDC_combined |>
+    combine_levels(
+      'No. of previous induced abortions',
+      c('1', '2', '>=3'),
+      '>=1',
+      remove = FALSE
+    ) |>
+    combine_levels(
+      'No. of prior births',
+      c('2', '3', '>=4'),
+      '>=2',
+      remove = FALSE
+    ),
+  guttmacher_APS_2014 |>
+    select(-TtlAPC2014) |>
+    combine_levels(
+      'Relationship status',
+      c('Cohabitating, no married', 'Never-married, not cohabiting', 'Previously married, not cohabiting'),
+      'Unmarried',
+      remove = FALSE
+    ),
   by = c('Variable', 'Level')
 ) |>
   arrange(Variable) |>
   gt() |>
-  fmt_percent(starts_with('Pct'), decimals = 1) |>
-  fmt_number(starts_with('Ttl'), decimals = 0)
-```
-
-
-## Live Births Test Harness
-
-```{r create-NVSS-test-harness, message=FALSE}
-NVSS_combined <- bind_rows(
-  read_tsv(
-      here('data/NVSS/2011-2014/age.txt'),
-      name_repair = 'universal',
-      show_col_types = FALSE
-    ) |>
-    filter(is.na(Notes)) |>
-    rename(Level = Age.of.Mother.9) |>
-    select(Year, Level, Births) |>
-    mutate(Variable = 'Age group', .after = Year),
-  read_tsv(
-      here('data/NVSS/2011-2014/marital_status.txt'),
-      name_repair = 'universal',
-      show_col_types = FALSE
-    ) |>
-    filter(is.na(Notes)) |>
-    rename(Level = Marital.Status) |>
-    select(Year, Level, Births) |>
-    mutate(Variable = 'Marital status'),
-  read_tsv(
-      here('data/NVSS/2011-2014/race_ethnicity.txt'),
-      name_repair = 'universal',
-      show_col_types = FALSE
-    ) |>
-    rename(
-      Hispanic.Origin = Mother.s.Hispanic.Origin,
-      Race = Mother.s.Bridged.Race
-    ) |>
-    filter(
-      (is.na(Notes) & Hispanic.Origin != 'Hispanic or Latino') |
-        (Notes == 'Total' & Hispanic.Origin == 'Hispanic or Latino')
-    ) |>
-    select(Notes, Year, Hispanic.Origin, Race, Births) |>
-    mutate(
-      Level = case_when(
-        Hispanic.Origin == 'Hispanic or Latino' ~ 'Hispanic',
-        Race == 'White' ~ 'Non-Hispanic White',
-        Race == 'Black or African American' ~ 'Non-Hispanic Black',
-        .default = 'Non-Hispanic Other or Multiple Race'
-      )
-    ) |>
-    group_by(Year, Level) |>
-    summarize(Births = sum(Births), .groups = 'drop') |>
-    mutate(Variable = 'Race and ethnicity')
-) |>
-  arrange(Year, Variable)
-
-NVSS_combined |>
-  gt() |>
-  fmt_number('Births', decimals = 0)
+  fmt_number(starts_with('Ttl'), decimals = 0) |>
+  fmt_percent(starts_with('Pct'), decimals = 1)
 ```
 
 
 ## Uncalibrated NSFG Estimates
 
 ```{r load-NSFG-data}
-NSFG_raw_preg2017_2019 <- read_sas(
+NSFG_2017_2019_preg_raw <- read_sas(
   data_file = here('data/NSFG/d2017_2019fempreg.sas7bdat'),
   catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
 )
-NSFG_raw_preg2015_2017 <- read_sas(
+NSFG_2015_2017_preg_raw <- read_sas(
   data_file = here('data/NSFG/d2015_2017fempreg.sas7bdat'),
   catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
 )
-NSFG_wgt2011_2019 <- read_sas(
+NSFG_2011_2019_wgts <- read_sas(
   data_file = here('data/NSFG/d2011_2019femwgt.sas7bdat')
 )
 ```
 
 ```{r select-NSFG-variables, dependson="load-NSFG-data"}
-NSFG_data_preg2015_2019 <- bind_rows(
+NSFG_2015_2019_preg_data <- bind_rows(
   select(
-    NSFG_raw_preg2015_2017,
+    NSFG_2015_2017_preg_raw,
     SECU, SEST, CASEID,
     DATEND,
     OUTCOME,
@@ -656,7 +652,7 @@ NSFG_data_preg2015_2019 <- bind_rows(
     HISPRACE2
   ),
   select(
-    NSFG_raw_preg2017_2019,
+    NSFG_2017_2019_preg_raw,
     SECU, SEST, CASEID,
     DATEND,
     OUTCOME,
@@ -667,7 +663,7 @@ NSFG_data_preg2015_2019 <- bind_rows(
   )
 ) |>
 left_join(
-  select(NSFG_wgt2011_2019, CASEID, WGT2015_2019),
+  select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
   by = join_by(CASEID)
 ) |>
 mutate(
@@ -682,18 +678,15 @@ mutate(
   ))),
   age_group = cut(
     AGEPREG,
-    breaks = c(0, seq(15, 50, 5), Inf),
+    breaks = c(0, seq(20, 40, 5), Inf),
     right = FALSE,
     labels = c(
-      "Under 15 years",
-      "15-19 years",
+      "Under 20 years",
       "20-24 years",
       "25-29 years",
       "30-34 years",
       "35-39 years",
-      "40-44 years",
-      "45-49 years",
-      "50 years and over"
+      "40 years and over"
     )
   ),
   FMAROUT5 = as_factor(labelled(FMAROUT5, c(
@@ -721,7 +714,7 @@ rename(
 ```
 
 ```{r create-NSFG-survey-object, dependson="select-NSFG-variables"}
-NSFG_svy_preg_2015_2019 <- NSFG_data_preg2015_2019 |>
+NSFG_2015_2019_preg_srv <- NSFG_2015_2019_preg_data |>
   as_survey_design(
     strata = SEST,
     ids = SECU,
@@ -730,8 +723,8 @@ NSFG_svy_preg_2015_2019 <- NSFG_data_preg2015_2019 |>
   )
 ```
 
-```{r estimate-uncalibrated, dependson="create-NSFG-survey-object"}
-NSFG_svy_preg_2015_2019 |>
+```{r estimate-uncalibrated-pregnancies, dependson="create-NSFG-survey-object"}
+NSFG_2015_2019_preg_srv |>
   group_by(Year, OUTCOME) |>
   summarize(
     Est_Pregnancies = survey_total(one, vartype = 'ci'),
@@ -740,9 +733,14 @@ NSFG_svy_preg_2015_2019 |>
   filter(Year %in% 2011:2014) |>
   gt() |>
   fmt_number(decimal = 0)
+```
 
-est_unc_births <- bind_rows(
-  NSFG_svy_preg_2015_2019 |>
+
+### Comparison of Uncalibrated Estimates with Births Test Harness
+
+```{r estimate-uncalibrated-births, dependson="create-NSFG-survey-object"}
+NSFG_2015_2019_est_unc_births <- bind_rows(
+  NSFG_2015_2019_preg_srv |>
     group_by(Year, OUTCOME, age_group) |>
     summarize(
       Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
@@ -755,7 +753,7 @@ est_unc_births <- bind_rows(
     select(-OUTCOME) |>
     rename(Level = age_group) |>
     mutate(Variable = 'Age group', .after = Year),
-  NSFG_svy_preg_2015_2019 |>
+  NSFG_2015_2019_preg_srv |>
     group_by(Year, OUTCOME, marital_status) |>
     summarize(
       Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
@@ -768,7 +766,7 @@ est_unc_births <- bind_rows(
     select(-OUTCOME) |>
     rename(Level = marital_status) |>
     mutate(Variable = 'Marital status', .after = Year),
-  NSFG_svy_preg_2015_2019 |>
+  NSFG_2015_2019_preg_srv |>
     group_by(Year, OUTCOME, HISPRACE2) |>
     summarize(
       Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
@@ -784,19 +782,68 @@ est_unc_births <- bind_rows(
 )
 ```
 
-
-## Comparison of Uncalibrated NSFG Estimates with NVSS Live Births
-
-```{r compare-uncalibrated-estimates-with-NVSS, dependson=c("create-NVSS-test-harness", "estimate-uncalibrated")}
+```{r compare-uncalibrated-estimates-with-NVSS, dependson=c("create-NVSS-test-harness", "estimate-uncalibrated-births")}
 full_join(
   NVSS_combined,
-  est_unc_births,
+  NSFG_2015_2019_est_unc_births,
   by = c('Year', 'Variable', 'Level')
 ) |>
   mutate(
     Bias = Est_Births - Births,
     Relative_Bias = Bias / Births,
     `Covers?` = Births <= Est_Births_upp & Births >= Est_Births_low
+  ) |>
+  gt() |>
+  fmt_number(-Year, decimal = 0) |>
+  fmt_percent(Relative_Bias, decimal = 1)
+```
+
+
+### Comparison of Uncalibrated Estimates with Abortion Test Harness
+
+```{r create-combined-abortion-test-harness, dependson=c("create-CDC_2014-test-harness", "create-CDC_2012-test-harness", "create-CDC_2011-test-harness", "create-guttmacher-test-harness")}
+combined_abortion_test_harness <- bind_rows(
+  mutate(CDC_2014, Year = 2014, Source = 'CDC', .before = everything()),
+  mutate(CDC_2012, Year = 2012, Source = 'CDC', .before = everything()),
+  mutate(CDC_2011, Year = 2011, Source = 'CDC', .before = everything())
+) |>
+  select(-TtlAPC, -PctCDC) |>
+  rename(Abortions = TtlCDC) |>
+  bind_rows(
+    guttmacher_APS_2014 |>
+      select(-TtlAPC2014, -PctAPS2014) |>
+      mutate(Year = 2014, Source = 'APS', .before = everything()) |>
+      rename(Abortions = TtlAPS2014)
+  ) |>
+  arrange(-Year, Variable, Source)
+```
+
+```{r estimate-uncalibrated-abortions, dependson="create-NSFG-survey-object"}
+NSFG_2015_2019_est_unc_abortions <- NSFG_2015_2019_preg_srv |>
+    group_by(Year, OUTCOME, age_group) |>
+    summarize(
+      Est_Abortions = survey_total(one, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    select(-OUTCOME) |>
+    rename(Level = age_group) |>
+    mutate(Variable = 'Age group', .after = Year)
+```
+
+```{r compare-uncalibrated-abortion-estimates, dependson=c("create-combined-abortion-test-harness", "estimate-uncalibrated-births")}
+left_join(
+  combined_abortion_test_harness,
+  NSFG_2015_2019_est_unc_abortions,
+  by = c('Year', 'Variable', 'Level')
+) |>
+  mutate(
+    Bias = Est_Abortions - Abortions,
+    Relative_Bias = Bias / Abortions,
+    `Covers?` = Abortions <= Est_Abortions_upp & Abortions >= Est_Abortions_low
   ) |>
   gt() |>
   fmt_number(-Year, decimal = 0) |>
