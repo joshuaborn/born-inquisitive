@@ -652,7 +652,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     NBRNLV_S,
     FMAROUT5,
     HISPRACE2,
-    PRGLNGTH
+    PRGLNGTH,
+    RMAROUT6
   ),
   select(
     NSFG_2017_2019_preg_raw,
@@ -663,7 +664,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     NBRNLV_S,
     FMAROUT5,
     HISPRACE2,
-    GEST_OTHR
+    GEST_OTHR,
+    RMAROUT6
   )
 ) |>
 left_join(
@@ -724,7 +726,21 @@ mutate(
   gestational_age = case_when(
     GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
     GEST_OTHR %in% 2:3 | PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
-  )
+  ),
+  relationship_status = case_when(
+    RMAROUT6 == 1 ~ 'Married',
+    RMAROUT6 == 5 ~ 'Cohabitating, not married',
+    RMAROUT6 == 6 ~ 'Never-married, not cohabiting',
+    RMAROUT6 %in% 2:4 ~ 'Previously married, not cohabiting'
+  ),
+  RMAROUT6 = as_factor(labelled(RMAROUT6, c(
+    "MARRIED" = 1,
+    "DIVORCED" = 2,
+    "WINDOWED" = 3,
+    "SEPARATED" = 4,
+    "COHABITING" = 5,
+    "NEVER MARRIED, NOT COHABITING" = 6
+  )))
 ) |>
 rename(
   Year = DATEND
@@ -897,6 +913,37 @@ NSFG_2015_2019_est_unc_abortions <- bind_rows(
     rename(Level = gestational_age) |>
     mutate(
       Variable = 'Gestational age'
+    ) |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    select(-OUTCOME),
+  NSFG_2015_2019_preg_srv |>
+    group_by(Year, OUTCOME, marital_status) |>
+    summarize(
+      Est_Abortions = survey_total(one, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    rename(Level = marital_status) |>
+    mutate(
+      Variable = 'Relationship status'
+    ) |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION' &
+        Level == 'Unmarried'
+    ) |>
+    select(-OUTCOME),
+  NSFG_2015_2019_preg_srv |>
+    group_by(Year, OUTCOME, relationship_status) |>
+    summarize(
+      Est_Abortions = survey_total(one, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    rename(Level = relationship_status) |>
+    mutate(
+      Variable = 'Relationship status'
     ) |>
     filter(
       Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
