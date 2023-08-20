@@ -274,7 +274,7 @@ guttmacher_APS_2014 <- bind_rows(
 
 guttmacher_APS_2014 |>
   gt() |>
-  fmt_percent(starts_with('Percent'), decimals = 1) |>
+  fmt_percent(starts_with('Pct'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
@@ -365,7 +365,7 @@ CDC_2014 <- bind_rows(
 
 CDC_2014 |>
   gt() |>
-  fmt_percent(starts_with('Percent'), decimals = 1) |>
+  fmt_percent(starts_with('Pct'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
@@ -454,7 +454,7 @@ CDC_2012 <- bind_rows(
 
 CDC_2012 |>
   gt() |>
-  fmt_percent(starts_with('Percent'), decimals = 1) |>
+  fmt_percent(starts_with('Pct'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
@@ -543,7 +543,7 @@ CDC_2011 <- bind_rows(
 
 CDC_2011 |>
   gt() |>
-  fmt_percent(starts_with('Percent'), decimals = 1) |>
+  fmt_percent(starts_with('Pct'), decimals = 1) |>
   fmt_number(starts_with('Ttl'), decimals = 0)
 ```
 
@@ -621,6 +621,8 @@ full_join(
   fmt_number(starts_with('Ttl'), decimals = 0) |>
   fmt_percent(starts_with('Pct'), decimals = 1)
 ```
+
+There is something going on with race and ethnicity. Other than that, the CDC report and the Guttmacher APS confirm each other in categories in which they overlap.
 
 
 ## Uncalibrated NSFG Estimates
