@@ -651,7 +651,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     AGEPREG,
     NBRNLV_S,
     FMAROUT5,
-    HISPRACE2
+    HISPRACE2,
+    PRGLNGTH
   ),
   select(
     NSFG_2017_2019_preg_raw,
@@ -661,7 +662,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     AGEPREG,
     NBRNLV_S,
     FMAROUT5,
-    HISPRACE2
+    HISPRACE2,
+    GEST_OTHR
   )
 ) |>
 left_join(
@@ -718,7 +720,11 @@ mutate(
     'Non-Hispanic White' = 2,
     'Non-Hispanic Black' = 3,
     'Non-Hispanic Other or Multiple Race' = 4
-  )))
+  ))),
+  gestational_age = case_when(
+    GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
+    GEST_OTHR %in% 2:3 | PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
+  )
 ) |>
 rename(
   Year = DATEND
@@ -831,7 +837,8 @@ combined_abortion_test_harness <- bind_rows(
 ```
 
 ```{r estimate-uncalibrated-abortions, dependson="create-NSFG-survey-object"}
-NSFG_2015_2019_est_unc_abortions <- NSFG_2015_2019_preg_srv |>
+NSFG_2015_2019_est_unc_abortions <- bind_rows(
+  NSFG_2015_2019_preg_srv |>
     group_by(Year, OUTCOME) |>
     summarize(
       Est_age_under_15 = survey_total(age_under_15, vartype = 'ci'),
@@ -879,15 +886,46 @@ NSFG_2015_2019_est_unc_abortions <- NSFG_2015_2019_preg_srv |>
     pivot_wider(
       id_cols = c(Year, Variable, Level),
       names_from = ColName
-    )
+    ),
+  NSFG_2015_2019_preg_srv |>
+    group_by(Year, OUTCOME, gestational_age) |>
+    summarize(
+      Est_Abortions = survey_total(one, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    rename(Level = gestational_age) |>
+    mutate(
+      Variable = 'Gestational age'
+    ) |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    select(-OUTCOME)
+)
 ```
 
 ```{r compare-uncalibrated-abortion-estimates, dependson=c("create-combined-abortion-test-harness", "estimate-uncalibrated-births")}
-left_join(
-  combined_abortion_test_harness,
-  NSFG_2015_2019_est_unc_abortions,
-  by = c('Year', 'Variable', 'Level')
-) |>
+combined_abortion_test_harness |>
+  mutate(
+    Level = case_match(
+      Level,
+      '<=8' ~ '1st trimester (13 or less weeks)',
+      '9-13' ~ '1st trimester (13 or less weeks)',
+      '14-15' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '16-17' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '18-20' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '>=21' ~ '2nd or 3rd trimester (14 or more weeks)',
+      .default = Level
+    )
+  ) |> 
+  group_by(Year, Source, Variable, Level) |>
+  summarize(across(everything(), sum), .groups = 'drop') |>
+  arrange(desc(Year)) |> 
+  left_join(
+    NSFG_2015_2019_est_unc_abortions,
+    by = c('Year', 'Variable', 'Level')
+  ) |>
   mutate(
     Bias = Est_Abortions - Abortions,
     Relative_Bias = Bias / Abortions,
