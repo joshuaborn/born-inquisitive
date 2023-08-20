@@ -678,6 +678,16 @@ mutate(
     "ECTOPIC PREGNANCY" = 5,
     "CURRENT PREGNANCY" = 6
   ))),
+  age_under_20 = (AGEPREG < 20),
+  age_under_15 = (AGEPREG < 15),
+  age_15_to_17 = (15 <= AGEPREG & AGEPREG <= 17),
+  age_18_to_19 = (18 <= AGEPREG & AGEPREG <= 19),
+  age_15_to_19 = (15 <= AGEPREG & AGEPREG <= 19),
+  age_20_to_24 = (20 <= AGEPREG & AGEPREG <= 24),
+  age_25_to_29 = (25 <= AGEPREG & AGEPREG <= 29),
+  age_30_to_34 = (30 <= AGEPREG & AGEPREG <= 34),
+  age_35_to_39 = (35 <= AGEPREG & AGEPREG <= 39),
+  age_40_and_over = (40 <= AGEPREG),
   age_group = cut(
     AGEPREG,
     breaks = c(0, seq(20, 40, 5), Inf),
@@ -822,18 +832,54 @@ combined_abortion_test_harness <- bind_rows(
 
 ```{r estimate-uncalibrated-abortions, dependson="create-NSFG-survey-object"}
 NSFG_2015_2019_est_unc_abortions <- NSFG_2015_2019_preg_srv |>
-    group_by(Year, OUTCOME, age_group) |>
+    group_by(Year, OUTCOME) |>
     summarize(
-      Est_Abortions = survey_total(one, vartype = 'ci'),
-      n = unweighted(sum(one))
+      Est_age_under_15 = survey_total(age_under_15, vartype = 'ci'),
+      n_age_under_15 = unweighted(sum(age_under_15)),
+      Est_age_under_20 = survey_total(age_under_20, vartype = 'ci'),
+      n_age_under_20 = unweighted(sum(age_under_20)),
+      Est_age_15_to_17 = survey_total(age_15_to_17, vartype = 'ci'),
+      n_age_15_to_17 = unweighted(sum(age_15_to_17)),
+      Est_age_18_to_19 = survey_total(age_18_to_19, vartype = 'ci'),
+      n_age_18_to_19 = unweighted(sum(age_18_to_19)),
+      Est_age_15_to_19 = survey_total(age_15_to_19, vartype = 'ci'),
+      n_age_15_to_19 = unweighted(sum(age_15_to_19)),
+      Est_age_20_to_24 = survey_total(age_20_to_24, vartype = 'ci'),
+      n_age_20_to_24 = unweighted(sum(age_20_to_24)),
+      Est_age_25_to_29 = survey_total(age_25_to_29, vartype = 'ci'),
+      n_age_25_to_29 = unweighted(sum(age_25_to_29)),
+      Est_age_30_to_34 = survey_total(age_30_to_34, vartype = 'ci'),
+      n_age_30_to_34 = unweighted(sum(age_30_to_34)),
+      Est_age_35_to_39 = survey_total(age_35_to_39, vartype = 'ci'),
+      n_age_35_to_39 = unweighted(sum(age_35_to_39)),
+      Est_age_40_and_over = survey_total(age_40_and_over, vartype = 'ci'),
+      n_age_40_and_over = unweighted(sum(age_40_and_over))
     ) |>
     ungroup() |>
     filter(
       Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
     ) |>
     select(-OUTCOME) |>
-    rename(Level = age_group) |>
-    mutate(Variable = 'Age group', .after = Year)
+    pivot_longer(cols = starts_with(c('Est_', 'n_'))) |>
+    mutate(
+      Variable = 'Age group',
+      Level = sub('^.*_age_', '', name) %>% 
+        sub('(_low|_upp)$', '', .) %>%
+        sub('_to_', '-', .) %>% 
+        gsub('_', ' ', .) %>% 
+        sub('([[:digit:]]{2})([^[:digit:]]*$)', '\\1 years\\2', .) %>% 
+        str_to_sentence(),
+      ColName = case_when(
+        grepl('_low', name) ~ 'Est_Abortions_low',
+        grepl('_upp', name) ~ 'Est_Abortions_upp',
+        grepl('Est_', name) ~ 'Est_Abortions',
+        grepl('n_', name) ~ 'n'
+      )
+    ) |>
+    pivot_wider(
+      id_cols = c(Year, Variable, Level),
+      names_from = ColName
+    )
 ```
 
 ```{r compare-uncalibrated-abortion-estimates, dependson=c("create-combined-abortion-test-harness", "estimate-uncalibrated-births")}
