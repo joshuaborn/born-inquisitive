@@ -643,7 +643,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     FMAROUT5,
     HISPRACE2,
     PRGLNGTH,
-    RMAROUT6
+    RMAROUT6,
+    PARITY
   ),
   select(
     NSFG_2017_2019_preg_raw,
@@ -655,7 +656,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     FMAROUT5,
     HISPRACE2,
     GEST_OTHR,
-    RMAROUT6
+    RMAROUT6,
+    PARITY
   )
 ) |>
 left_join(
@@ -730,11 +732,28 @@ mutate(
     "SEPARATED" = 4,
     "COHABITING" = 5,
     "NEVER MARRIED, NOT COHABITING" = 6
-  )))
+  ))),
+  birth = if_else(
+    OUTCOME == 'LIVE BIRTH',
+    1,
+    0
+  ),
+  previous_births = 0
 ) |>
 rename(
   Year = DATEND
-)
+) |>
+arrange(
+  CASEID, Year
+) |>
+group_by(
+  CASEID
+) |>
+mutate(
+  births = cumsum(birth),
+  previous_births = lag(births, default = 0)
+) |>
+ungroup()
 ```
 
 ```{r create-NSFG-survey-object, dependson="select-NSFG-variables"}
