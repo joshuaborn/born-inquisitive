@@ -235,16 +235,6 @@ guttmacher_APS_2014 <- bind_rows(
   ),
   tribble(
     ~Level, ~PctAPS2014,
-    'Heterosexual/straight',    94.4,
-    'Homosexual/gay/lesbian',   0.3,
-    'Bisexual',                 4.2,
-    'Something else',           1.1
-  ) |>  mutate(
-    Variable = 'Sexual orientation',
-    .before = everything()
-  ),
-  tribble(
-    ~Level, ~PctAPS2014,
     'Any method',  50.9,
     'Sterilization',  0.2,
     'Long-active reversible methods', 1.0,
