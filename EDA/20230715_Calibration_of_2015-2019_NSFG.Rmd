@@ -660,100 +660,100 @@ NSFG_2015_2019_preg_data <- bind_rows(
     PARITY
   )
 ) |>
-left_join(
-  select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
-  by = join_by(CASEID)
-) |>
-mutate(
-  one = 1,
-  OUTCOME = as_factor(labelled(OUTCOME, c(
-    "LIVE BIRTH" = 1,
-    "INDUCED ABORTION" = 2,
-    "STILLBIRTH" = 3,
-    "MISCARRIAGE" = 4,
-    "ECTOPIC PREGNANCY" = 5,
-    "CURRENT PREGNANCY" = 6
-  ))),
-  age_under_20 = (AGEPREG < 20),
-  age_under_15 = (AGEPREG < 15),
-  age_15_to_17 = (15 <= AGEPREG & AGEPREG <= 17),
-  age_18_to_19 = (18 <= AGEPREG & AGEPREG <= 19),
-  age_15_to_19 = (15 <= AGEPREG & AGEPREG <= 19),
-  age_20_to_24 = (20 <= AGEPREG & AGEPREG <= 24),
-  age_25_to_29 = (25 <= AGEPREG & AGEPREG <= 29),
-  age_30_to_34 = (30 <= AGEPREG & AGEPREG <= 34),
-  age_35_to_39 = (35 <= AGEPREG & AGEPREG <= 39),
-  age_40_and_over = (40 <= AGEPREG),
-  age_group = cut(
-    AGEPREG,
-    breaks = c(0, seq(20, 40, 5), Inf),
-    right = FALSE,
-    labels = c(
-      "Under 20 years",
-      "20-24 years",
-      "25-29 years",
-      "30-34 years",
-      "35-39 years",
-      "40 years and over"
-    )
-  ),
-  FMAROUT5 = as_factor(labelled(FMAROUT5, c(
-    "MARRIED" = 1,
-    "DIVORCED" = 2,
-    "WINDOWED" = 3,
-    "SEPARATED" = 4,
-    "NEVER MARRIED" = 5
-  ))),
-  marital_status = as.factor(if_else(
-    FMAROUT5 == 'MARRIED',
-    'Married',
-    'Unmarried'
-  )),
-  HISPRACE2 = as_factor(labelled(HISPRACE2, c(
-    'Hispanic' = 1,
-    'Non-Hispanic White' = 2,
-    'Non-Hispanic Black' = 3,
-    'Non-Hispanic Other or Multiple Race' = 4
-  ))),
-  gestational_age = case_when(
-    GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
-    GEST_OTHR %in% 2:3 | PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
-  ),
-  relationship_status = case_when(
-    RMAROUT6 == 1 ~ 'Married',
-    RMAROUT6 == 5 ~ 'Cohabitating, not married',
-    RMAROUT6 == 6 ~ 'Never-married, not cohabiting',
-    RMAROUT6 %in% 2:4 ~ 'Previously married, not cohabiting'
-  ),
-  RMAROUT6 = as_factor(labelled(RMAROUT6, c(
-    "MARRIED" = 1,
-    "DIVORCED" = 2,
-    "WINDOWED" = 3,
-    "SEPARATED" = 4,
-    "COHABITING" = 5,
-    "NEVER MARRIED, NOT COHABITING" = 6
-  ))),
-  birth = if_else(
-    OUTCOME == 'LIVE BIRTH',
-    1,
-    0
-  ),
-  previous_births = 0
-) |>
-rename(
-  Year = DATEND
-) |>
-arrange(
-  CASEID, Year
-) |>
-group_by(
-  CASEID
-) |>
-mutate(
-  births = cumsum(birth),
-  previous_births = lag(births, default = 0)
-) |>
-ungroup()
+  left_join(
+    select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
+    by = join_by(CASEID)
+  ) |>
+  mutate(
+    one = 1,
+    OUTCOME = as_factor(labelled(OUTCOME, c(
+      "LIVE BIRTH" = 1,
+      "INDUCED ABORTION" = 2,
+      "STILLBIRTH" = 3,
+      "MISCARRIAGE" = 4,
+      "ECTOPIC PREGNANCY" = 5,
+      "CURRENT PREGNANCY" = 6
+    ))),
+    age_under_20 = (AGEPREG < 20),
+    age_under_15 = (AGEPREG < 15),
+    age_15_to_17 = (15 <= AGEPREG & AGEPREG <= 17),
+    age_18_to_19 = (18 <= AGEPREG & AGEPREG <= 19),
+    age_15_to_19 = (15 <= AGEPREG & AGEPREG <= 19),
+    age_20_to_24 = (20 <= AGEPREG & AGEPREG <= 24),
+    age_25_to_29 = (25 <= AGEPREG & AGEPREG <= 29),
+    age_30_to_34 = (30 <= AGEPREG & AGEPREG <= 34),
+    age_35_to_39 = (35 <= AGEPREG & AGEPREG <= 39),
+    age_40_and_over = (40 <= AGEPREG),
+    age_group = cut(
+      AGEPREG,
+      breaks = c(0, seq(20, 40, 5), Inf),
+      right = FALSE,
+      labels = c(
+        "Under 20 years",
+        "20-24 years",
+        "25-29 years",
+        "30-34 years",
+        "35-39 years",
+        "40 years and over"
+      )
+    ),
+    FMAROUT5 = as_factor(labelled(FMAROUT5, c(
+      "MARRIED" = 1,
+      "DIVORCED" = 2,
+      "WINDOWED" = 3,
+      "SEPARATED" = 4,
+      "NEVER MARRIED" = 5
+    ))),
+    marital_status = as.factor(if_else(
+      FMAROUT5 == 'MARRIED',
+      'Married',
+      'Unmarried'
+    )),
+    HISPRACE2 = as_factor(labelled(HISPRACE2, c(
+      'Hispanic' = 1,
+      'Non-Hispanic White' = 2,
+      'Non-Hispanic Black' = 3,
+      'Non-Hispanic Other or Multiple Race' = 4
+    ))),
+    gestational_age = case_when(
+      GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
+      GEST_OTHR %in% 2:3 | PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
+    ),
+    relationship_status = case_when(
+      RMAROUT6 == 1 ~ 'Married',
+      RMAROUT6 == 5 ~ 'Cohabitating, not married',
+      RMAROUT6 == 6 ~ 'Never-married, not cohabiting',
+      RMAROUT6 %in% 2:4 ~ 'Previously married, not cohabiting'
+    ),
+    RMAROUT6 = as_factor(labelled(RMAROUT6, c(
+      "MARRIED" = 1,
+      "DIVORCED" = 2,
+      "WINDOWED" = 3,
+      "SEPARATED" = 4,
+      "COHABITING" = 5,
+      "NEVER MARRIED, NOT COHABITING" = 6
+    ))),
+    birth = if_else(
+      OUTCOME == 'LIVE BIRTH',
+      1,
+      0
+    ),
+    previous_births = 0
+  ) |>
+  rename(
+    Year = DATEND
+  ) |>
+  arrange(
+    CASEID, Year
+  ) |>
+  group_by(
+    CASEID
+  ) |>
+  mutate(
+    births = cumsum(birth),
+    previous_births = lag(births, default = 0)
+  ) |>
+  ungroup()
 ```
 
 ```{r create-NSFG-survey-object, dependson="select-NSFG-variables"}
