@@ -644,7 +644,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     HISPRACE2,
     PRGLNGTH,
     RMAROUT6,
-    PARITY
+    PARITY,
+    POVERTY
   ),
   select(
     NSFG_2017_2019_preg_raw,
@@ -657,7 +658,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     HISPRACE2,
     GEST_OTHR,
     RMAROUT6,
-    PARITY
+    PARITY,
+    POVERTY
   )
 ) |>
   left_join(
@@ -738,7 +740,12 @@ NSFG_2015_2019_preg_data <- bind_rows(
       1,
       0
     ),
-    previous_births = 0
+    poverty_level = cut(
+      POVERTY,
+      breaks = c(0, 99, 199, Inf),
+      include.lowest = TRUE,
+      labels = c('<100', '100-199', '>=200')
+    )
   ) |>
   rename(
     Year = DATEND
@@ -997,6 +1004,21 @@ NSFG_2015_2019_est_unc_abortions <- bind_rows(
     filter(
       Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION',
       Level == '>=2'
+    ) |>
+    select(-OUTCOME),
+  NSFG_2015_2019_preg_srv |>
+    group_by(Year, OUTCOME, poverty_level) |>
+    summarize(
+      Est_Abortions = survey_total(one, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    rename(Level = poverty_level) |>
+    mutate(
+      Variable = 'Family income as % of poverty level'
+    ) |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
     ) |>
     select(-OUTCOME)
 )
