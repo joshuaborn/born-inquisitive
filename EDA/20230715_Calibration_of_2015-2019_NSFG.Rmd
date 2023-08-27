@@ -879,6 +879,26 @@ combined_abortion_test_harness <- bind_rows(
 ```
 
 ```{r estimate-uncalibrated-abortions, dependson="create-NSFG-survey-object"}
+estimate_abortions_by_domain <- function(variable, label) {
+  NSFG_2015_2019_preg_srv |>
+    group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
+    summarize(
+      n = unweighted(sum(one)),
+      Est_Abortions = survey_total(one, vartype = 'ci'),
+      .groups = 'drop'
+    ) |>
+    rename(Level = variable) |>
+    mutate(
+      Variable = label,
+      .after = Year
+    ) |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    select(-OUTCOME)
+}
+
+
 NSFG_2015_2019_est_unc_abortions <- bind_rows(
   NSFG_2015_2019_preg_srv |>
     group_by(Year, OUTCOME) |>
@@ -929,98 +949,14 @@ NSFG_2015_2019_est_unc_abortions <- bind_rows(
       id_cols = c(Year, Variable, Level),
       names_from = ColName
     ),
-  NSFG_2015_2019_preg_srv |>
-    group_by(Year, OUTCOME, gestational_age) |>
-    summarize(
-      Est_Abortions = survey_total(one, vartype = 'ci'),
-      n = unweighted(sum(one))
-    ) |>
-    ungroup() |>
-    rename(Level = gestational_age) |>
-    mutate(
-      Variable = 'Gestational age'
-    ) |>
-    filter(
-      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
-    ) |>
-    select(-OUTCOME),
-  NSFG_2015_2019_preg_srv |>
-    group_by(Year, OUTCOME, marital_status) |>
-    summarize(
-      Est_Abortions = survey_total(one, vartype = 'ci'),
-      n = unweighted(sum(one))
-    ) |>
-    ungroup() |>
-    rename(Level = marital_status) |>
-    mutate(
-      Variable = 'Relationship status'
-    ) |>
-    filter(
-      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION' &
-        Level == 'Unmarried'
-    ) |>
-    select(-OUTCOME),
-  NSFG_2015_2019_preg_srv |>
-    group_by(Year, OUTCOME, relationship_status) |>
-    summarize(
-      Est_Abortions = survey_total(one, vartype = 'ci'),
-      n = unweighted(sum(one))
-    ) |>
-    ungroup() |>
-    rename(Level = relationship_status) |>
-    mutate(
-      Variable = 'Relationship status'
-    ) |>
-    filter(
-      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
-    ) |>
-    select(-OUTCOME),
-  NSFG_2015_2019_preg_srv |>
-    group_by(Year, OUTCOME, previous_births_topcoded4) |>
-    summarize(
-      Est_Abortions = survey_total(one, vartype = 'ci'),
-      n = unweighted(sum(one))
-    ) |>
-    ungroup() |>
-    rename(Level = previous_births_topcoded4) |>
-    mutate(
-      Variable = 'No. of prior births'
-    ) |>
-    filter(
-      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
-    ) |>
-    select(-OUTCOME),
-  NSFG_2015_2019_preg_srv |>
-    group_by(Year, OUTCOME, previous_births_topcoded2) |>
-    summarize(
-      Est_Abortions = survey_total(one, vartype = 'ci'),
-      n = unweighted(sum(one))
-    ) |>
-    ungroup() |>
-    rename(Level = previous_births_topcoded2) |>
-    mutate(
-      Variable = 'No. of prior births'
-    ) |>
-    filter(
-      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION',
-      Level == '>=2'
-    ) |>
-    select(-OUTCOME),
-  NSFG_2015_2019_preg_srv |>
-    group_by(Year, OUTCOME, poverty_level) |>
-    summarize(
-      Est_Abortions = survey_total(one, vartype = 'ci'),
-      n = unweighted(sum(one))
-    ) |>
-    ungroup() |>
-    rename(Level = poverty_level) |>
-    mutate(
-      Variable = 'Family income as % of poverty level'
-    ) |>
-    filter(
-      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
-    ) |>
-    select(-OUTCOME)
+  estimate_abortions_by_domain('gestational_age', 'Gestational age'),
+  estimate_abortions_by_domain('marital_status', 'Relationship status') |>
+    filter(Level == 'Unmarried'),
+  estimate_abortions_by_domain('relationship_status', 'Relationship status'),
+  estimate_abortions_by_domain('previous_births_topcoded4', 'No. of prior births'),
+  estimate_abortions_by_domain('previous_births_topcoded2', 'No. of prior births') |>
+    filter(Level == '>=2'),
+  estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level')
 )
 ```
 
