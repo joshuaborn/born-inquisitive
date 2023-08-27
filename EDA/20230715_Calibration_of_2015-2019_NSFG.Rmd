@@ -751,7 +751,17 @@ NSFG_2015_2019_preg_data <- bind_rows(
   ) |>
   mutate(
     births = cumsum(birth),
-    previous_births = lag(births, default = 0)
+    previous_births = lag(births, default = 0),
+    previous_births_topcoded4 = factor(if_else(
+      previous_births >= 4,
+      '>=4',
+      as.character(previous_births)
+    )),
+    previous_births_topcoded2 = factor(if_else(
+      previous_births >= 2,
+      '>=2',
+      as.character(previous_births)
+    ))
   ) |>
   ungroup()
 ```
@@ -957,6 +967,37 @@ NSFG_2015_2019_est_unc_abortions <- bind_rows(
     filter(
       Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
     ) |>
+    select(-OUTCOME),
+  NSFG_2015_2019_preg_srv |>
+    group_by(Year, OUTCOME, previous_births_topcoded4) |>
+    summarize(
+      Est_Abortions = survey_total(one, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    rename(Level = previous_births_topcoded4) |>
+    mutate(
+      Variable = 'No. of prior births'
+    ) |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    select(-OUTCOME),
+  NSFG_2015_2019_preg_srv |>
+    group_by(Year, OUTCOME, previous_births_topcoded2) |>
+    summarize(
+      Est_Abortions = survey_total(one, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    rename(Level = previous_births_topcoded2) |>
+    mutate(
+      Variable = 'No. of prior births'
+    ) |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION',
+      Level == '>=2'
+    ) |>
     select(-OUTCOME)
 )
 ```
@@ -977,7 +1018,7 @@ combined_abortion_test_harness |>
   ) |> 
   group_by(Year, Source, Variable, Level) |>
   summarize(across(everything(), sum), .groups = 'drop') |>
-  arrange(desc(Year)) |> 
+  arrange(desc(Year)) |>
   left_join(
     NSFG_2015_2019_est_unc_abortions,
     by = c('Year', 'Variable', 'Level')
