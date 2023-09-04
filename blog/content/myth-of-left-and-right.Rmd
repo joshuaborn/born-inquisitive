@@ -1,0 +1,94 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/myth-of-left-and-right.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-09-04
+draft: true
+implicit-figures: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: 'Put opening sentence here.'
+tags: ["book, article, or podcast review", "first-person"]
+title: 'The Myth of Left and Right'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+Over the years, I have thought about writing a book on politics in the United States. If I were ever to write such a book, it would be _The Myth of Left and Right_ by the brothers Hyrum and Verlan Lewis [-@lewis_myth_2023], at least in content. The authors have therefore saved me the trouble of writing the book.
+
+<p class="figure">
+![](/images/myth-of-left-and-right.jpg){alt="The cover of the book The Myth of Left and Right: How the Political Spectrum Misleads and Harms America"}
+</p>
+
+
+## Contents of the Book
+
+### Background
+
+In _The Myth of Left and Right,_ the authors explore and support several propositions:
+
+* The "left" versus "right" dichotomy was only imported into the United States in the 1920s, borrowed from the Russian Revolution and the early days of the Soviet Union in which factions attempted to divide themselves into "left-wing" inheritors of the revolution and "right-wing" "counter-revolutionaries." (The Russians in turn borrowed this distinction from the earlier French Revolution.) It was first applied in the United States in 1920s to differentiate various factions of socialism, then to whether or not someone supported the New Deal, and only later broadened into a more general political spectrum.
+
+* There is no consistency over time in what is a "left-wing" viewpoint or what is "right-wing" viewpoint. There are numerous instances in which what was the "right-wing" view on an issue in one generation has become the "left-wing" view in another generation or what was the "left-wing" view on an issue in one generation has become the "right-wing" view in another.
+
+* People have to be socialized into thinking in terms of "left" versus "right." Those who are not socialized into this dichotomous way of thinking exhibit less tendency to conform their viewpoints to "left-wing" or "right-wing" orthodoxies.
+
+* There is no logical connection between all the different viewpoints that are construed as "left-wing" today or all the different viewpoints that are construed as "right-wing" today, despite numerous authors attempting to define a left-wing essence or a right-wing essence. These are just-so stories that do not stand up to scrutiny.
+
+* Many people are not picking their partisan affiliations because of their viewpoints, but are picking their viewpoints because of their partisan affiliations. These partisan affiliations themselves can come purely from social influences, such as for someone who grows up in a very "left-wing" or very "right-wing" town. Alternatively, the partisan affiliations can come from initiation into a faction by an anchor issue that leads to adopting other viewpoints common in the faction. Either way, this social conformity, rather than an underlying ideology, explains _de facto_ correlations of viewpoints into two bundles.
+
+
+
+### Conclusion
+
+The implication of these propositions is that what is "left-wing" or "right-wing" in any given moment is a fad, and that those dedicated to this dichotomous thinking are not dedicated to a high-minded ideology, but are committed to tribalism, conformity, and hatred of the "other side" (an exercise in what psychologists might more politely call "coalitional instincts").
+
+This is not just a theoretical concern, but has two major ill effects. For any one person, the left-right partisan delusion installs cognitive defects that make it harder to understand anything tinged with partisan politics. More collectively, the partisan delusion has contributed greatly to the decline of public discourse in the United States and the ability for any of us to communicate or live together in a productive society.
+
+> We have learned that although ideologues of left and right constantly tell themselves that their ideological opponents are "stupid and evil," the reality is that the essentialist paradigm is making everyone stupid and evil. It shuts down thinking and stirs up anger and prejudice. [-@lewis_myth_2023, p. 85]
+
+### Suggestions
+
+The authors of _The Myth of Left and Right_ do not just identify this glaring problem with American discourse and leave it at that, but instead give some recommendations beyond just recognizing the myth. Perhaps the most compelling is to go "granular." Instead of talking about viewpoints as being "more" or "less" "left-wing" or "right-wing" as if there is a linear scale and all viewpoints come in two bundles, think and talk about specific viewpoints about specific issues.   Another of the authors' suggestions is to find more healthy outlets for tribalism than political partisanship.
+
+Finally, the authors end on a suggestion that is the toughest sell, because it requires institutional change. This is the prescription to engage in "adversarial collaboration" by bringing together teams of people with diverse and contrary viewpoints. The authors, themselves academics, think this is particularly important for scholarship. This is recognizably the mission of the [Heterodox Academy](https://heterodoxacademy.org/), but considering how much academia is captured by the "left" tribe and how much hostility there is to free speech in academic environments, this may be a bit of pipe dream.
+
+
+## Criticisms of the Book
+
+### Too Much Argumentation, Not Enough Discussion of Evidence
+
+_The Myth of Left and Right_ is not without flaws. The main text of the book is far too short at exactly one hundred pages. Given how precisely a round number this is, I suspect the authors might have been under publisher's constraints. The effect this creates is that a lot of the most interesting subject-matter, such as discussion of the studies supporting the propositions that the authors' argument is based on, are pushed into footnotes.
+
+What is left in the main text is basically just argumentation, and this gets too repetitive for my tastes. I would like to see more discussion of the empirical evidence in the main text and briefer summaries of the argument.
+
+
+### Overemphasis on Essentialism
+
+One of the reasons for the apparent repetitiveness of the main text of the book is that the authors ascribe a lot to what they call the "essentialist paradigm" for interpreting left-right partisanship. I myself have written about [essentialism](/essentialism.html) and believe it to be one of the great fallacies of human thinking through the millennia, but I do not think it summarizes everything wrong with political partisanship. Perhaps this was done to simplify the message of the book, but if so, it is an oversimplification that makes every chapter feel a bit like the last.
+
+
+### Preaching to the Choir
+
+I learned about _The Myth of Left and Right_ when the authors were interviewed on the _Conversations with Coleman_ podcast. [Coleman Hughes](https://colemanhughes.org/) is himself a very independent thinker, who has said repeatedly that he does not care whether a talking point is a "right-wing" talking point or a "left-wing" talking point, but instead evaluates a proposition on its actual merits according to his values and his best estimation the facts. This alludes to what may unfortunately be the fate of _The Myth of Left and Right._
+
+_The Myth of Left and Right,_ I fear, will likely preach to the choir. This is not a fault of the authors, but a flaw of the culture of the United States. This book was written by independent thinkers, cites independent thinkers, and will likely be read by independent thinkers. Those few of us already more enlightened than partisan demagogues will find the book to be a brisk and agreeable read. The loud mobs of partisan demagogues themselves will simply not read a book like this, though they should, as they have the most to benefit from the book's attempt to disabuse them of their ignorance.
+
+
+## My Learnings
+
+Perhaps, then, I am precisely the target audience of _The Myth of Left and Right._ I am someone who has always felt "other" than left-wing or right-wing and [alienated by the demagoguery](/they-them-those-people-and-the-fallacy-of-partisan-demagoguery.html) all too common in political speech. It is clear the authors and I have been reading the same material. If you, too, are familiar with Heterodox Academy, have listened to the podcasts of [Julia Galef](/discussion-about-disagreement-on-the-rationally-speaking-podcast.html) or Coleman Hughes, are familiar with the academic literature on partisan political bias affecting cognition done by Dan Kahan and others, are familiar with concepts such as essentialism, then you, like me, have probably thought about most of the points made in _The Myth of Left and Right._
+
+What the authors have done with _The Myth of Left and Right_ is take the habitual thoughts of independent thinkers and written them down in one place. This is a book I expect to return to again and again, not necessarily to reread the main text straight through, but to consult the footnotes for deeper inquiries into the various points made throughout the book. I look forward to making this slim tome weathered and dog-eared over the years to come.
+
+
+## Citation
