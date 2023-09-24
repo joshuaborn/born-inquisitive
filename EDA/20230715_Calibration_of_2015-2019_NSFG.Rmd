@@ -645,7 +645,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     PRGLNGTH,
     RMAROUT6,
     PARITY,
-    POVERTY
+    POVERTY,
+    HIEDUC
   ),
   select(
     NSFG_2017_2019_preg_raw,
@@ -659,7 +660,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     GEST_OTHR,
     RMAROUT6,
     PARITY,
-    POVERTY
+    POVERTY,
+    HIEDUC
   )
 ) |>
   left_join(
@@ -745,7 +747,26 @@ NSFG_2015_2019_preg_data <- bind_rows(
       breaks = c(0, 99, 199, Inf),
       include.lowest = TRUE,
       labels = c('<100', '100-199', '>=200')
-    )
+    ),
+    educational_attainment = case_when(
+      HIEDUC %in% 5:8 ~ '<high school',
+      HIEDUC == 9 ~ 'High school graduate/GED',
+      HIEDUC %in% 10:11 ~ 'Some college/associate degree',
+      HIEDUC %in% 12:15 ~ 'College graduate',
+    ),
+    HIEDUC = as_factor(labelled(HIEDUC, c(
+      "9TH GRADE OR LESS" = 5,
+      "10TH GRADE" = 6,
+      "11TH GRADE" = 7,
+      "12TH GRADE, NO DIPLOMA (NOR GED)" = 8,
+      "HIGH SCHOOL GRADUATE (DIPLOMA OR GED)" = 9,
+      "SOME COLLEGE BUT NO DEGREE" = 10,
+      "ASSOCIATE DEGREE IN COLLEGE/UNIVERSITY" = 11,
+      "BACHELOR'S DEGREE" = 12,
+      "MASTER'S DEGREE" = 13,
+      "DOCTORATE DEGREE" = 14,
+      "PROFESSIONAL DEGREE" = 15
+    )))
   ) |>
   rename(
     Year = DATEND
@@ -899,7 +920,6 @@ estimate_abortions_by_domain <- function(variable, label) {
     select(-OUTCOME)
 }
 
-
 NSFG_2015_2019_est_unc_abortions <- bind_rows(
   NSFG_2015_2019_preg_srv |>
     group_by(Year, OUTCOME) |>
@@ -957,7 +977,8 @@ NSFG_2015_2019_est_unc_abortions <- bind_rows(
   estimate_abortions_by_domain('previous_births_topcoded4', 'No. of prior births'),
   estimate_abortions_by_domain('previous_births_topcoded2', 'No. of prior births') |>
     filter(Level == '>=2'),
-  estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level')
+  estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level'),
+  estimate_abortions_by_domain('educational_attainment', 'Educational attainment')
 )
 ```
 
