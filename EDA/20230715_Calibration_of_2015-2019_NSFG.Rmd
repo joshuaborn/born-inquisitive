@@ -880,6 +880,7 @@ combined_abortion_test_harness <- bind_rows(
 
 ```{r estimate-uncalibrated-abortions, dependson="create-NSFG-survey-object"}
 estimate_abortions_by_domain <- function(variable, label) {
+  external_vector <- c(Level = variable)
   NSFG_2015_2019_preg_srv |>
     group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
     summarize(
@@ -887,7 +888,7 @@ estimate_abortions_by_domain <- function(variable, label) {
       Est_Abortions = survey_total(one, vartype = 'ci'),
       .groups = 'drop'
     ) |>
-    rename(Level = variable) |>
+    rename(any_of(external_vector)) |>
     mutate(
       Variable = label,
       .after = Year
