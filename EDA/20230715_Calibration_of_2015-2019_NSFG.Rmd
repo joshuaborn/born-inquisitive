@@ -646,7 +646,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     RMAROUT6,
     PARITY,
     POVERTY,
-    HIEDUC
+    HIEDUC,
+    RELIGION
   ),
   select(
     NSFG_2017_2019_preg_raw,
@@ -661,7 +662,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     RMAROUT6,
     PARITY,
     POVERTY,
-    HIEDUC
+    HIEDUC,
+    RELIGION
   )
 ) |>
   left_join(
@@ -766,6 +768,18 @@ NSFG_2015_2019_preg_data <- bind_rows(
       "MASTER'S DEGREE" = 13,
       "DOCTORATE DEGREE" = 14,
       "PROFESSIONAL DEGREE" = 15
+    ))),
+    religious_affiliation = case_when(
+      RELIGION == 1 ~ 'None',
+      RELIGION == 2 ~ 'Roman Catholic',
+      RELIGION == 3 ~ 'Protestant',
+      RELIGION == 4 ~ 'Other'
+    ),
+    RELIGION = as_factor(labelled(RELIGION, c(
+      "NO RELIGION" = 1,
+      "CATHOLIC" = 2,
+      "PROTESTANT" = 3,
+      "OTHER RELIGIONS" = 4
     )))
   ) |>
   rename(
@@ -978,7 +992,8 @@ NSFG_2015_2019_est_unc_abortions <- bind_rows(
   estimate_abortions_by_domain('previous_births_topcoded2', 'No. of prior births') |>
     filter(Level == '>=2'),
   estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level'),
-  estimate_abortions_by_domain('educational_attainment', 'Educational attainment')
+  estimate_abortions_by_domain('educational_attainment', 'Educational attainment'),
+  estimate_abortions_by_domain('religious_affiliation', 'Religious affiliation')
 )
 ```
 
@@ -993,6 +1008,8 @@ combined_abortion_test_harness |>
       '16-17' ~ '2nd or 3rd trimester (14 or more weeks)',
       '18-20' ~ '2nd or 3rd trimester (14 or more weeks)',
       '>=21' ~ '2nd or 3rd trimester (14 or more weeks)',
+      'Mainline Protestant' ~ 'Protestant',
+      'Evangelical Protestant' ~ 'Protestant',
       .default = Level
     )
   ) |> 
