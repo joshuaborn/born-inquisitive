@@ -3,7 +3,7 @@ author: "Joshua Born"
 bibliography: "../bibliographies/myth-of-left-and-right.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2023-10-01
-draft: true
+draft: false
 implicit-figures: true
 include-before: |
   ## Table of Contents

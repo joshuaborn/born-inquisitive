@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 
-In the late 20th century and early 21st century in the United States, there has been a binary partisanship divided between left-wing and right-wing in which the right-wing is often labeled "conservative," and opposition to induced abortion of pregnancy is often associated with the right-wing. This might lead an indolent mind to think offhandedly that opposition to induced abortion is conservative in a broader sense.
+In the late 20th century and early 21st century in the United States, there has been a [binary partisanship divided between left-wing and right-wing](/myth-of-left-and-right.html) in which the right-wing is often labeled "conservative," and opposition to induced abortion of pregnancy is often associated with the right-wing. This might lead an indolent mind to think offhandedly that opposition to induced abortion is conservative in a broader sense.
 
 However, political partisanship is rarely logically coherent. Instead, it represents the ephemeral and arbitrary fads of the time and place in which one happens to live. What is right-wing one generation might be left-wing for another generation, and what is left-wing in one place might be right-wing in another place. Just because words such as "conservative" can be used to describe these fads, such labels do not give true insight into historical context.
 
