@@ -624,7 +624,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     PARITY,
     POVERTY,
     HIEDUC,
-    RELIGION
+    RELIGION,
+    PREGORDR
   ),
   select(
     NSFG_2017_2019_preg_raw,
@@ -640,7 +641,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
     PARITY,
     POVERTY,
     HIEDUC,
-    RELIGION
+    RELIGION,
+    PREGORDR
   )
 ) |>
   left_join(
@@ -721,6 +723,11 @@ NSFG_2015_2019_preg_data <- bind_rows(
       1,
       0
     ),
+    abortion = if_else(
+      OUTCOME == 'INDUCED ABORTION',
+      1,
+      0
+    ),
     poverty_level = cut(
       POVERTY,
       breaks = c(0, 99, 199, Inf),
@@ -763,7 +770,7 @@ NSFG_2015_2019_preg_data <- bind_rows(
     Year = DATEND
   ) |>
   arrange(
-    CASEID, Year
+    CASEID, PREGORDR
   ) |>
   group_by(
     CASEID
@@ -780,10 +787,23 @@ NSFG_2015_2019_preg_data <- bind_rows(
       previous_births >= 2,
       '>=2',
       as.character(previous_births)
+    )),
+    abortions = cumsum(abortion),
+    previous_abortions = lag(abortions, default = 0),
+    previous_abortions_topcoded3 = factor(if_else(
+      previous_abortions >= 3,
+      '>=3',
+      as.character(previous_abortions)
+    )),
+    any_previous_abortions = factor(if_else(
+      previous_abortions >= 1,
+      '>=1',
+      'None'
     ))
   ) |>
   ungroup()
 ```
+
 
 ```{r create-NSFG-survey-object, dependson="select-NSFG-variables"}
 NSFG_2015_2019_preg_srv <- NSFG_2015_2019_preg_data |>
@@ -971,7 +991,9 @@ NSFG_2015_2019_est_unc_abortions <- bind_rows(
   estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level'),
   estimate_abortions_by_domain('educational_attainment', 'Educational attainment'),
   estimate_abortions_by_domain('religious_affiliation', 'Religious affiliation'),
-  estimate_abortions_by_domain('HISPRACE2', 'Race/ethnicity')
+  estimate_abortions_by_domain('HISPRACE2', 'Race/ethnicity'),
+  estimate_abortions_by_domain('previous_abortions_topcoded3', 'No. of previous induced abortions'),
+  estimate_abortions_by_domain('any_previous_abortions', 'No. of previous induced abortions')
 )
 ```
 
