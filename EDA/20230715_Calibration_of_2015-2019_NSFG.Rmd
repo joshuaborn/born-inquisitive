@@ -232,28 +232,6 @@ guttmacher_APS_2014 <- bind_rows(
   ) |>  mutate(
     Variable = 'Religious affiliation',
     .before = everything()
-  ),
-  tribble(
-    ~Level, ~PctAPS2014,
-    'Any method',  50.9,
-    'Sterilization',  0.2,
-    'Long-active reversible methods', 1.0,
-    'Short-acting hormonal methods', 14.2,
-    'Not using a method', 49.1,
-    'IUD', 0.8,
-    'Implant', 0.2,
-    'Injectables', 1.6,
-    'Ring', 1.4,
-    'Pill', 12.6,
-    'Patch', 0.2,
-    'Condom', 24.2,
-    'Withdrawal', 8.6,
-    'Other', 1.1,
-    'Not using, but ever used', 39.2,
-    'Never used', 9.9
-  ) |>  mutate(
-    Variable = 'Contraceptive used in month pregnancy began',
-    .before = everything()
   )
 ) |> mutate(
   Level = str_squish(Level),
