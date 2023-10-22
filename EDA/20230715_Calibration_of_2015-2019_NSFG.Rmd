@@ -85,7 +85,7 @@ NVSS_combined <- bind_rows(
         Hispanic.Origin == 'Hispanic or Latino' ~ 'Hispanic',
         Race == 'White' ~ 'Non-Hispanic White',
         Race == 'Black or African American' ~ 'Non-Hispanic Black',
-        .default = 'Non-Hispanic Other or Multiple Race'
+        .default = 'Non-Hispanic Other'
       )
     ) |>
     group_by(Year, Level) |>
@@ -170,11 +170,10 @@ guttmacher_APS_2014 <- bind_rows(
   ),
   tribble(
     ~Level, ~PctAPS2014,
-    'White',    38.7,
-    'Black',    27.6,
-    'Hispanic', 24.8,
-    'Asian/Pacific Islander', 5.5,
-    'Other',    3.4
+    'Non-Hispanic White',    38.7,
+    'Non-Hispanic Black',    27.6,
+    'Hispanic',              24.8,
+    'Non-Hispanic Other',    8.8
   ) |>  mutate(
     Variable = 'Race/ethnicity',
     .before = everything()
@@ -287,9 +286,9 @@ CDC_2014 <- bind_rows(
   ),
   tribble(
     ~Level, ~PctCDC,
-    'White',    38.0,
-    'Black',    36.0,
-    'Other (incl. Asian/Pacific Islander)',    7.7,
+    'Non-Hispanic White',    38.0,
+    'Non-Hispanic Black',    36.0,
+    'Non-Hispanic Other',    7.7,
     'Hispanic', 18.3,
   ) |>  mutate(
     Variable = 'Race/ethnicity',
@@ -376,9 +375,9 @@ CDC_2012 <- bind_rows(
   ),
   tribble(
     ~Level, ~PctCDC,
-    'White',    37.6,
-    'Black',    36.7,
-    'Other (incl. Asian/Pacific Islander)',    7.0,
+    'Non-Hispanic White',    37.6,
+    'Non-Hispanic Black',    36.7,
+    'Non-Hispanic Other',    7.0,
     'Hispanic', 18.7,
   ) |>  mutate(
     Variable = 'Race/ethnicity',
@@ -465,9 +464,9 @@ CDC_2011 <- bind_rows(
   ),
   tribble(
     ~Level, ~PctCDC,
-    'White',    37.2,
-    'Black',    36.2,
-    'Other (incl. Asian/Pacific Islander)',    7.0,
+    'Non-Hispanic White',    37.2,
+    'Non-Hispanic Black',    36.2,
+    'Non-Hispanic Other',    7.0,
     'Hispanic', 19.7,
   ) |>  mutate(
     Variable = 'Race/ethnicity',
@@ -518,7 +517,7 @@ CDC_2011 |>
 
 ### Comparison of CDC Abortion Test Harnesses
 
-```{r compare-CDC-test-harnesses, dependson=c("create-CDC_2014-test-harness", "create-CDC_2012-test-harness", "create-CDC_2011-test-harness"), R.options=list(width = 3000)}
+```{r compare-CDC-test-harnesses, dependson=c("create-CDC-2014-test-harness", "create-CDC-2012-test-harness", "create-CDC-2011-test-harness"), R.options=list(width = 3000)}
 CDC_combined <- full_join(
   CDC_2011,
   CDC_2012,
@@ -544,7 +543,7 @@ CDC_combined |>
 
 ## Comparison of Abortion Test Harnesses
 
-```{r compare-abortion-test-harnesses, dependson=c("create-CDC_2014-test-harness", "create-CDC_2012-test-harness", "create-CDC_2011-test-harness", "create-guttmacher-test-harness")}
+```{r compare-abortion-test-harnesses, dependson=c("create-CDC-2014-test-harness", "create-CDC-2012-test-harness", "create-CDC-2011-test-harness", "create-guttmacher-test-harness")}
 combine_levels <- function(tbl, variable, levels, new_level, remove = TRUE) {
   new_row <- tbl |>
     filter(Variable == variable, Level %in% levels) |>
@@ -697,7 +696,7 @@ NSFG_2015_2019_preg_data <- bind_rows(
       'Hispanic' = 1,
       'Non-Hispanic White' = 2,
       'Non-Hispanic Black' = 3,
-      'Non-Hispanic Other or Multiple Race' = 4
+      'Non-Hispanic Other' = 4
     ))),
     gestational_age = case_when(
       GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
@@ -971,7 +970,8 @@ NSFG_2015_2019_est_unc_abortions <- bind_rows(
     filter(Level == '>=2'),
   estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level'),
   estimate_abortions_by_domain('educational_attainment', 'Educational attainment'),
-  estimate_abortions_by_domain('religious_affiliation', 'Religious affiliation')
+  estimate_abortions_by_domain('religious_affiliation', 'Religious affiliation'),
+  estimate_abortions_by_domain('HISPRACE2', 'Race/ethnicity')
 )
 ```
 
