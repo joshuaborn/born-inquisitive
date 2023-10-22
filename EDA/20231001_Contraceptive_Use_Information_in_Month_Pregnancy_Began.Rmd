@@ -1,0 +1,194 @@
+---
+title: "Contraceptive Use Information in Month Pregnancy Began"
+author: "Joshua Born"
+date: "2023-10-01"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_depth: 5
+    css: wide.css
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(gt)
+library(haven)
+library(here)
+library(lubridate)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi=200,
+  echo = FALSE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+I discovered that the NSFG only asks respondents about contraceptive use in the month a pregnancy began when that month falls within the contraceptive use calendar for the respondent. The contraceptive use calendar extends 3 years before the interview date. Therefore, there is not contraceptive use information for any pregnancies that began more than 3 years before the interview date.
+
+Contraceptive use when a pregnancy began is a critical variable for reproductive responsibility analysis, so this is a bit disappointing.
+
+For the most part, analysis will proceed as originally planned, but any analysis pertaining to contraceptive failure will necessarily have to be limited to the years immediately proceeding a survey. One change I would like to make is to to break up the data sets from 2011-2019 into two year data sets for calibration. This way, more of pregnancies from the 2009-2017 will have contraceptive use information associated with them.
+
+This will change how I do calibration of analysis weights to handle abortion underreporting. Because NSFG surveys only accurately estimate pregnancies in the years _before_ the survey begins, but much of the contraceptive use information only occurs _during_ the survey administration time period, I will need a way to calibrate to compensate for abortion underreporting even during the time frame of the survey.
+
+My idea of this is to do a raking weight adjustment where most of the dimensions are calibrated traditionally, but the abortion dimensions have a ratio adjustment applied to the weights of all respondents reporting an abortion, regardless of year abortion occurred. This should allow me to calibrate by pregnancy outcome in specific years (years preceding the survey), and still calibrate based on pregnancy outcome for respondents who pregnancies ended during the survey time frame.
+
+This should be relatively straightforward in terms of the math if I use replicate weights, since I only need to apply the same operations done in the modified raking procedure to all the replicate weights in order to have standard errors based on the final replicate weights that are valid.
+
+```{r assign-years}
+years_assignment <- tribble(
+  ~Year, ~SurveyLabel, ~ContraceptivePregnancy,
+  2016, '2017-2019', TRUE,
+  2015, '2017-2019', TRUE,
+  2014, '2015-2017', TRUE,
+  2013, '2015-2017', TRUE,
+  2012, '2013-2015', TRUE,
+  2011, '2013-2015', TRUE,
+  2010, '2011-2013', TRUE,
+  2009, '2011-2013', TRUE,
+  2008, '2011-2015', FALSE,
+  2007, '2011-2015', FALSE,
+  2006, '2011-2015', FALSE,
+  2005, '2006-2010', TRUE,
+  2004, '2006-2010', TRUE,
+  2003, '2006-2010', FALSE,
+  2002, '2006-2010', FALSE,
+  2001, 'Cycle 6', TRUE,
+  2000, 'Cycle 6', TRUE, # However, 2006-2010 seems better.
+  1999, 'Cycle 6', FALSE, # Again, 2006-2010 seems better.
+  1998, 'Cycle 6', FALSE, # Again, 2006-2010 seems better.
+  1997, 'Cycle 6', FALSE, # Cycle 6 is the only option.
+  1996, 'Cycle 6', FALSE, # Cycle 6 outperforms 2006-2010.
+  1995, 'Cycle 6', FALSE, # Cycle 6 is the only option.
+  1994, 'Cycle 5', TRUE,
+  1993, 'Cycle 5', TRUE,
+  1992, 'Cycle 5', FALSE,
+  1991, 'Cycle 5', FALSE,
+  1990, 'Cycle 5', FALSE, # No estimates cover 1990.
+  1989, 'Cycle 5', FALSE,
+  1988, 'Cycle 5', FALSE,
+  1987, 'Cycle 5', FALSE,
+  1986, 'Cycle 5', FALSE,
+  1985, 'Cycle 4', TRUE,
+  1984, 'Cycle 4', TRUE, # Cycle 4 does not cover in 1984.
+  1983, 'Cycle 4', FALSE,# Cycle 5 outperforms Cycle 4 here.
+  1982, 'Cycle 4', FALSE,# No estimates cover 1982.
+  1981, 'Cycle 4', FALSE,
+  1980, 'Cycle 4', FALSE
+)
+
+years_assignment |>
+  rename(Survey = 'SurveyLabel') |>
+  gt()
+```
+
+```{r load-data, message=FALSE}
+preg2017_2019 <- read_sas(
+  here('data/NSFG/d2017_2019fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
+)
+preg2015_2017 <- read_sas(
+  here('data/NSFG/d2015_2017fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
+)
+preg2013_2015 <- read_sas(
+  here('data/NSFG/d2013_2015fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2013_2015fempreg.sas7bcat')
+)
+preg2011_2013 <- read_sas(
+  here('data/NSFG/d2011_2013fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2011_2013fempreg.sas7bcat')
+)
+preg2006_2010 <- read_sas(
+  here('data/NSFG/d2006_2010fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2006_2010fempreg.sas7bcat')
+)
+preg2002_2003 <- read_sas(
+  here('data/NSFG/d2002_2003fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2002_2003fempreg.sas7bcat')
+)
+preg1995_1995 <- read_sas(
+  here('data/NSFG/d1995_1995fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1995_1995fempreg.sas7bcat')
+)
+preg1985_1987 <- read_sas(
+  here('data/NSFG/d1985_1987fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1985_1987fempreg.sas7bcat')
+)
+preg1982_1983 <- read_sas(
+  here('data/NSFG/d1982_1983fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1982_1983fempreg.sas7bcat')
+)
+fem1982_1983 <- read_sas(
+  here('data/NSFG/d1982_1983femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d1982_1983femresp.sas7bcat')
+)
+```
+
+```{r helper-methods}
+cm_to_year_cycle5 <- function(x) {
+  x_int <- as.integer(x)
+  ifelse(
+    x_int %in% c(NA, 0, 9997, 9998, 9999),
+    NA,
+    floor((x_int - 1) / 12) + 1900
+  )
+}
+
+cm_to_date <- function(x) {
+  x_int <- as.integer(x)
+  if_else(
+    x_int > 9000 | x_int == 0,
+    NA,
+    ym(paste0(
+      floor((x_int - 1) / 12) + 1900,
+      factor(
+        x_int %% 12,
+        levels = 0:11,
+        labels = c('Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov')
+      )
+    ))
+  )
+}
+```
+
+```{r prepare-2017-2019-data, dependson=c("load-data", "helper-methods")}
+preg2017_2019data <- preg2017_2019 |>
+  select(SECU, SEST, CASEID, DATECON, DATEND, OUTCOME, CMJAN3YR, CMINTVW) |>
+  mutate(
+    Year = DATEND,
+    OUTCOME = labelled(OUTCOME, c(
+      "LIVE BIRTH" = 1,
+      "INDUCED ABORTION" = 2,
+      "STILLBIRTH" = 3,
+      "MISCARRIAGE" = 4,
+      "ECTOPIC PREGNANCY" = 5,
+      "CURRENT PREGNANCY" = 6
+    )),
+    year_calendar_starts = cm_to_year_cycle5(CMJAN3YR),
+    in_contraceptive_calendar = (DATECON >= year_calendar_starts),
+    interview_date = cm_to_date(CMINTVW)
+  )
+```
+
+```{r}
+preg2017_2019data |>
+  count(Year, OUTCOME) |>
+  filter(Year %in% 2014:2015) |>
+  gt()
+
+preg2017_2019data |>
+  filter(Year > 2014) |>
+  count(Year, DATECON, year_calendar_starts, interview_date, in_contraceptive_calendar) |> 
+  gt()
+
+preg2017_2019data |>
+  filter(Year > 2011) |>
+  count(Year, in_contraceptive_calendar) |>
+  gt()
+```
