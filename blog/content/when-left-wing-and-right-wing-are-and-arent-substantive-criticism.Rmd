@@ -1,0 +1,49 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/myth-of-left-and-right.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-10-28
+draft: true
+implicit-figures: true
+#include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: false
+    toc_depth: 5
+summary: 'Summary sentence goes here.'
+tags: ["editorial", "first-person"]
+title: 'When "Left-wing" and "Right-wing" Are and Are Not Substantive Criticism'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## Introduction
+
+I gained a very nuanced insight from reflecting on [my reading of _The Myth of Left and Right_](/myth-of-left-and-right.html) [@lewis_myth_2023]. If there is indeed no _logical_ coherence to what happens to constitute "left-wing" and "right-wing" in the United States, both over time and between the various issues grouped together, then what happens to be "left-wing" or "right-wing" is just a fad. This makes the left-right spectrum woefully inadequate to describe viewpoints, which is something that independent thinkers such as myself have bemoaned for years.
+
+However, there is still the social or demographic phenomenon in which partisan conformity leads to groups of viewpoints clustered together in the general population. This clustering is certainly not absolute. There are plenty of independent thinkers living in the United States. Nonetheless, there are plenty of partisan conformists, as well. 
+
+Thus, while the left-right spectrum is woefully inadequate to describe _viewpoints,_ it is an accurate description of certain _people,_ and not just any people, but specifically partisan conformists. This has numerous implications for when labeling something as "left-wing" or "right-wing" is criticism with any substance versus when it is not.
+
+The nuance is that sometimes invoking "left-wing" or "right-wing" labels is done by partisan conformists in order to invoke partisan conformity, and sometimes it is done as a criticism of partisan conformity.
+
+The former is not substantive criticism. It is just invoking the fad of left-right partisanship in order to prevent individuals from thinking for themselves and giving a fair evaluation of an idea. The latter _is_ substantive criticism, because arbitrary dismissal of a viewpoint or uncritical agreement with a whole collection of viewpoints are intellectual failings.
+
+
+## Viewpoint Dimissal
+
+
+## Uncritical Agreement
+
+
+## Lack of Diverse Viewpoints
+
+
+## Citation
