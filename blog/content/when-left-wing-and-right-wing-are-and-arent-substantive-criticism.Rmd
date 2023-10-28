@@ -2,18 +2,18 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/myth-of-left-and-right.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2023-10-28
-draft: true
+date: 2023-10-29
+draft: false
 implicit-figures: true
-#include-before: |
+include-before: |
   ## Table of Contents
 output:
   blogdown::html_page:
     number_sections: false
-    toc: false
+    toc: true
     toc_depth: 5
-summary: 'Summary sentence goes here.'
-tags: ["editorial", "first-person"]
+summary: 'Labels such as "left-wing" or "right-wing" can be used as substantive criticism of partisan conformity, but they can also be used by partisans in order to dismiss viewpoints arbitrarily.'
+tags: ["editorial", "fallacies", "first-person"]
 title: 'When "Left-wing" and "Right-wing" Are and Are Not Substantive Criticism'
 ---
 
@@ -26,24 +26,83 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-I gained a very nuanced insight from reflecting on [my reading of _The Myth of Left and Right_](/myth-of-left-and-right.html) [@lewis_myth_2023]. If there is indeed no _logical_ coherence to what happens to constitute "left-wing" and "right-wing" in the United States, both over time and between the various issues grouped together, then what happens to be "left-wing" or "right-wing" is just a fad. This makes the left-right spectrum woefully inadequate to describe viewpoints, which is something that independent thinkers such as myself have bemoaned for years.
+I gained a nuanced insight from reflecting on [my reading of _The Myth of Left and Right_](/myth-of-left-and-right.html) [@lewis_myth_2023] with regard to my attitudes toward the use of "left-wing" and "right-wing" in criticism.
+
+If, as the authors content, there is indeed no _logical_ coherence to what happens to constitute "left-wing" and "right-wing" in the United States, both over time and between the various issues grouped together in partisan packages, then what happens to be "left-wing" or "right-wing" is just a fad. This makes the left-right spectrum woefully inadequate to describe viewpoints, which is something that independent thinkers such as myself have bemoaned for years.
 
 However, there is still the social or demographic phenomenon in which partisan conformity leads to groups of viewpoints clustered together in the general population. This clustering is certainly not absolute. There are plenty of independent thinkers living in the United States. Nonetheless, there are plenty of partisan conformists, as well. 
 
-Thus, while the left-right spectrum is woefully inadequate to describe _viewpoints,_ it is an accurate description of certain _people,_ and not just any people, but specifically partisan conformists. This has numerous implications for when labeling something as "left-wing" or "right-wing" is criticism with any substance versus when it is not.
-
-The nuance is that sometimes invoking "left-wing" or "right-wing" labels is done by partisan conformists in order to invoke partisan conformity, and sometimes it is done as a criticism of partisan conformity.
-
-The former is not substantive criticism. It is just invoking the fad of left-right partisanship in order to prevent individuals from thinking for themselves and giving a fair evaluation of an idea. The latter _is_ substantive criticism, because arbitrary dismissal of a viewpoint or uncritical agreement with a whole collection of viewpoints are intellectual failings.
+Thus, while the left-right spectrum is woefully inadequate to describe _viewpoints,_ it is an accurate description of certain _people._ This has several implications for when labeling something as "left-wing" or "right-wing" is criticism with any substance versus when it is not.
 
 
-## Viewpoint Dimissal
+## Criticism of Conformists
+
+Calling a person "left-wing" or "right-wing" can be criticism with valid substance. If you encounter an individual who, for every single possible issue, consistently has the "left-wing" or "right-wing" view on the issue, then this person suffers from a serious lack of independent thinking.
+
+The probability that anyone could take the time to become informed about many issues, reflect on their values with regard to the implications around all these issue, and come to having intelligent viewpoints on these several issues, but always be in perfect agreement with whatever has happened to become the "left-wing" or "right-wing" orthodoxy on each issue is astronomically small. 
+
+What is much more likely is that such individuals are not taking the time to inform themselves about these issues and have not thought critically about such issues, and are instead conforming to the social milieu in which they find themselves. They are repeating the [shibboleths](/political-rhetoric-as-shibboleths.html), [demagoguery](/they-them-those-people-and-the-fallacy-of-partisan-demagoguery.html), misinformation, and disinformation that they hear. 
+
+There are two main criticisms about this. One, for the benefit of the partisan conformists, is that they would be better served to think for themselves than not, because they are more susceptible to believing things that are untrue and to compromising their own values in their rush to conform.
+
+The second criticism, for the benefit of the rest of us, is that these conformists can be safely ignored because they are not adding anything to the discourse. Conformists are merely uncritically repeating what they hear. Just as it is safe to cut a parrot out of a conversation and listen directly to whomever the parrot is imitating, so too can we skip the words of conformists without losing anything.
+
+Indeed, it is probably better to skip the conformists than not, because they might be distorting the original message akin to a [game of "telephone."](/anecdotes-are-not-evidence.html#flaws-of-serial-reproduction) Thus, paying attention to partisan conformists can make you less informed, but not more informed. You can achieve a more faithful rendition of an argument by seeking the source, while whatever you encounter from conformists after several rounds of serial reproduction is liable to be a distorted, abbreviated version of the original argument.
 
 
-## Uncritical Agreement
+## Viewpoint Dismissal
+
+An egregious lack of any substance involving the labeling of something as "left-wing" or "right-wing" occurs when such labeling is used to dismiss a viewpoint arbitrarily. Unlike the previous section which discussed a valid criticism _of_ partisan conformists, this is instead a technique used _by_ partisan conformists.
+
+It is an unfortunate state of affairs that many if not most of us have encountered incidents where someone is encountering a viewpoint and immediately dismisses it with the assertion that it is a "left-wing" talking point or it is a "right-wing" talking point. For instance, left-wingers might immediately close their ears and their minds when someone discusses border security issues, or right-wingers might reflexively stop paying attention to someone discussing environmental issues.
+
+The problems with this practice are numerous, but a fundamental principle behind all the particular fallacies of such arbitrary dismissal is that partisan labels of viewpoints are irrelevant. An intelligent response to any viewpoint is to learn the relevant facts about an issue to the best of your ability, reflect on what you have learned in light of your own values, and then come to your own viewpoint.
+
+Whether or not any talking point in this process is "left-wing" or "right-wing" does not aid you on your intellectual journey, and arbitrarily dismissing viewpoints because of such labels only prevents opportunities for you to learn about different viewpoints and thus discover your own.
 
 
-## Lack of Diverse Viewpoints
+### Straw Man Fallacy
+
+Sometimes partisan conformists are quite overt in their arbitrary dismissal of viewpoints they attribute to the "other side," but sometimes this arbitrary dismissal takes a more subtle form of substituting a [straw man argument](/they-them-those-people-and-the-fallacy-of-partisan-demagoguery.html#straw-man) for the actual viewpoint they are failing to consider. For instance, left-wingers do this when they dismiss all discussion of border security as "racist," and right-wingers do this when they dismiss discussion of environmental issues as a ploy to increase the size of government and limit freedom.
+
+An intellectual defense against this kind of straw man substitution is to try to understand all viewpoints by taking the literal points being made in the argument for the viewpoint in good faith, rather than searching for ulterior motives. We may very well encounter ulterior motives in our lives, but the exercise of analyzing the viewpoint itself is not wasted, because it gives a clearer understanding of merits of the viewpoint.
+
+
+### _Ad Hominem_ Variants
+
+An even more subtle version of this invocation of "left-wing" or "right-wing" labels for the arbitrary dismissal of ideas is an _ad hominem,_ person-targeted variant. This occurs when a left-winger encounters a viewpoint and warns others that the person espousing the viewpoint is "right-wing" or "far-right" and advises not to listen to the viewpoint in order to avoid the "right-wing agenda," or _vice versa_ with "left" and "right" reversed.
+
+This is subtle because it sounds a lot like the valid criticism discussed earlier. However, this kind of valid criticism was criticism of a _person._ The fallacy discussed in this section occurs if similar sounding criticism is used to dismiss a _viewpoint_ before the viewpoint is even considered.
+
+It may be the case that the person accused of being "left-wing" or "right-wing" is _not_ actually a partisan conformist, and instead partisan conformists are using such accusations in order to dissuade others from listening to the person so accused. Perhaps the person is actually making points, above and beyond the parroting of partisan ideology, that would be well taken if we considered the points being made.
+
+Furthermore, even if the person being so accused is indeed a partisan conformist, this does not invalidate the _viewpoint_ being expressed. It is quite possible that a point worth considering _would_ be championed by the "left" or the "right" at any given point in time. In such cases, it may be worth finding a better articulation of the viewpoint than that given by a partisan conformist, for the reasons explored in the preceding, but the viewpoint itself should not be dismissed arbitrarily. It should be evaluated on its own merits.
+
+A common sign that labeling of people as "right-wing" or "left-wing" is being used to dismiss viewpoints arbitrarily is the use of labels such as "far left" or "far right." One of the major points made by _The Myth of Left and Right_ is that the linear left-right dimension is not adequate to describe the range of possible viewpoints. There is thus no point in ranking viewpoints in just _how much_ they are "left-wing" or _how much_ they are "right-wing." Using the adjective "far" or "extreme" is a rhetorical trick to portray someone else as an outlier and, by implication, the person using the adjective as somehow more reasonable.
+
+Again, these kind of rhetorical tricks can be defended against by simply evaluating a viewpoint on its own merits according to your best understanding of the relevant facts and according to your value judgments. Whether a viewpoint is being espoused by someone who is "left-wing," "right-wing," "far left," "far right," or any other partisan label is not relevant for your understanding of the viewpoint.
+
+
+## Lack of Viewpoint Diversity
+
+Returning to a case in which the use of "left-wing" or "right-wing" labels does lend itself valid criticism, there are instances in which _groups_ of people exhibit a lack of viewpoint diversity.
+
+An association between people with similar viewpoints is not necessarily a fallacy in and of itself. For instance, people might seek each other out specifically because they are looking for others with a similar viewpoint. We should not, for instance, be surprised to find out that in a society of vegetarians no members approve of the eating of meat.
+
+However, an intellectual failing occurs when there is lack of viewpoint diversity in a group of people who are in the business of discovering or disseminating information, such as in associations of researchers or journalists. This is unfortunately the very situation that exists today, with research institutions captured by left-wing ideologues and news media divided into left-wing and right-wing institutions.
+
+The issue is that all human beings are prone to various forms of psychological bias. Those who are left-wing are more likely to accept false beliefs that are popular among the left, and those who are right-wing are more likely to accept false beliefs that are popular among the right. Thus, partisans are more apt to spread misinformation or disinformation, but only the misinformation or disinformation of their "side."
+
+A natural way to check against the dissemination of false beliefs is to have viewpoint diversity. If people with _different_ viewpoints congregate, then an organization has _different_ biases within it. While any one person might be biased in such a way as to be predisposed to accept a given belief as an article of faith, others in the organization who do not share the bias (and instead have different biases) can check against this predisposition. Thus, the whole organization, provided there is viewpoint diversity, should be better at policing its own biases and getting to the truth of a matter than any one person in the organization.
+
+Unfortunately, in an organization with a lack of viewpoint diversity such as when all or nearly all individuals are left-wing or right-wing, the opposite occurs. Rather than checking each other's biases, such individuals are liable to reinforce each other's biases. Once a false belief that is in accord with the partisan biases of the organization enters into such a situation, people in the organization are that much more prone to accepting the false belief because they are surrounded by others also espousing the false belief. It is easy to mistake conformity for truth.
+
+Therefore, pointing out that an organization lacks viewpoint diversity by identifying it as a "left-wing" or "right-wing" organization points out that the organization is more susceptible to cognitive bias leading to false beliefs. For any organization whose mission is contingent on separating out truth from falsity, this is substantial criticism.
+
+
+## Conclusion
+
+There are partisan conformists in the world, and it is substantive criticism to point out the defects in conformist worldviews. However, viewpoints should be evaluated on their own merits. Partisanship is not helpful in such evaluation, especially when it is used in attempts to dismiss viewpoints arbitrarily. A general rule of thumb for determining when "left-wing" and "right-wing" labels are substantive criticism is that they can be apt criticism of _people,_ but they are never valid criticism of _ideas._
 
 
 ## Citation
