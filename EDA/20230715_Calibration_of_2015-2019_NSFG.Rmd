@@ -14,6 +14,7 @@ library(dplyr)
 library(gt)
 library(haven)
 library(here)
+library(purrr)
 library(readr)
 library(srvyr)
 library(stringr)
@@ -606,6 +607,14 @@ NSFG_2015_2017_preg_raw <- read_sas(
 NSFG_2011_2019_wgts <- read_sas(
   data_file = here('data/NSFG/d2011_2019femwgt.sas7bdat')
 )
+NSFG_2017_2019_fem_raw <- read_sas(
+  data_file = here('data/NSFG/d2017_2019femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019femresp.sas7bcat')
+)
+NSFG_2015_2017_fem_raw <- read_sas(
+  data_file = here('data/NSFG/d2015_2017femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017femresp.sas7bcat')
+)
 ```
 
 ```{r select-NSFG-variables, dependson="load-NSFG-data"}
@@ -802,6 +811,28 @@ NSFG_2015_2019_preg_data <- bind_rows(
     ))
   ) |>
   ungroup()
+
+NSFG_2015_2019_fem_data <- bind_rows(
+  select(NSFG_2017_2019_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2),
+  select(NSFG_2015_2017_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2)
+) |>
+  mutate(
+    age_group = cut(
+      AGER,
+      breaks = c(14, 19, 24, 29, 34, 39, 44, 50),
+      labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
+    ),
+    HISPRACE2 = as_factor(labelled(HISPRACE2, c(
+      'Hispanic' = 1,
+      'Non-Hispanic White' = 2,
+      'Non-Hispanic Black' = 3,
+      'Non-Hispanic Other' = 4
+    )))
+  ) |> 
+  left_join(
+    select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
+    by = join_by(CASEID)
+  )
 ```
 
 
@@ -1028,4 +1059,79 @@ combined_abortion_test_harness |>
   gt() |>
   fmt_number(-Year, decimal = 0) |>
   fmt_percent(Relative_Bias, decimal = 1)
+```
+
+
+```{r set-calibration-flags, dependson="select-NSFG-variables"}
+indicators <- model.matrix(~age_group:HISPRACE2-1, data=NSFG_2015_2019_fem_data)
+
+colnames(indicators) <- gsub('_group|HISPRACE2', '', colnames(indicators))
+
+NSFG_2015_2019_for_calibration <- bind_cols(
+  NSFG_2015_2019_fem_data,
+  indicators
+) |>
+  left_join(
+    NSFG_2015_2019_preg_data |>
+      mutate(
+        calibrate_abortion2014 = if_else(
+          OUTCOME == 'INDUCED ABORTION' & Year == 2014,
+          1,
+          0
+        ),
+        calibrate_abortion2013 = if_else(
+          OUTCOME == 'INDUCED ABORTION' & Year == 2013,
+          1,
+          0
+        ),
+        calibrate_abortion2012 = if_else(
+          OUTCOME == 'INDUCED ABORTION' & Year == 2012,
+          1,
+          0
+        ),
+        calibrate_abortion2011 = if_else(
+          OUTCOME == 'INDUCED ABORTION' & Year == 2011,
+          1,
+          0
+        ),
+        calibrate_birth2014 = if_else(
+          OUTCOME == 'LIVE BIRTH' & Year == 2014,
+          1,
+          0
+        ),
+        calibrate_birth2013 = if_else(
+          OUTCOME == 'LIVE BIRTH' & Year == 2013,
+          1,
+          0
+        ),
+        calibrate_birth2012 = if_else(
+          OUTCOME == 'LIVE BIRTH' & Year == 2012,
+          1,
+          0
+        ),
+        calibrate_birth2011 = if_else(
+          OUTCOME == 'LIVE BIRTH' & Year == 2011,
+          1,
+          0
+        )
+      ) |>
+      select(CASEID, starts_with('calibrate_')) |>
+      group_by(CASEID) |>
+      summarize(across(everything(), sum)),
+    by = 'CASEID'
+  ) |> 
+  mutate(across(starts_with('calibrate'), \(x) coalesce(x, 0)))
+
+rm(indicators)
+```
+
+
+## Counts of Cells to be Used for Calibration
+
+```{r count-cells-for-calibration, dependson="set-calibration-flags"}
+NSFG_2015_2019_for_calibration |>
+  select(c(contains('Hispanic'), starts_with('calibrate_'))) |>
+  map(table) |>
+  bind_rows(.id = 'Cell Description') |>
+  gt()
 ```
