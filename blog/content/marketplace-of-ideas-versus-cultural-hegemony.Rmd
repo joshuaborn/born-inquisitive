@@ -1,0 +1,55 @@
+---
+author: "Joshua Born"
+#bibliography: "../bibliographies/myth-of-left-and-right.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-11-08
+draft: true
+implicit-figures: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: ''
+tags: ["editorial"]
+title: 'The Marketplace of Ideas versus (Left-Wing, Professional-Class) Cultural Hegemony'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+
+## The Marketplace of Ideas
+
+* Free speech
+* Persuasion
+* Appeal to different values
+* Information
+* Diversity of viewpoints
+* Values-free ideal
+
+
+## Cultural Hegemony
+
+* Silence opposition
+  * Censorship
+  * Getting people fired (i.e., "cancellation")
+* Misrepresent opposing views
+* Frame disagreement binary
+* Defame others
+* More subtle
+  * Don't hire or promote people with viewpoints that differ from the orthodoxy
+  * Create incentives in social structures for people to adopt the orthodoxy
+
+
+## The University and the _Quid Pro Quo_ of Modern Society
+
+* Left-wing capture of universities
+* People want to make more money and have job security
+* Some true believers, many more going along with the crowd, few openly going against the grain
+* Exodus of working class from the left-wing
