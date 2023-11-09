@@ -33,6 +33,7 @@ knitr::opts_chunk$set(
 * The messaging should be, "Six (seven if you count Chief Justice Burger voting with the majority so he could assign the writing of the opinion) unelected judges exceeded their constitutional mandate and abused their power to overturn the abortion laws in all 50 states, and instituted that contradicted public opinion at the time and is in an outlier internationally. We are returning abortion policy back to the American people, which is why we have carefully surveyed the voters in ______ and are setting our policy to be exactly what the voters in ______ want."
 
 Other issues:
+* Republicans being timid and avoiding abortion versus Democrats going emphasizing it and spending lots of money emphasizing it.
 * Misinformation and coupling with contraception. Contraception is far more popular than abortion. (Gallup Values and Belief Poll)
 * Status quo effect. After 50 years of judicial overreach, the American public has been condition to think of _Roe vs. Wade_ and _Doe vs. Bolton_ as the baseline.
 
