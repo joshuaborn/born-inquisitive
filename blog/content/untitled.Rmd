@@ -1,0 +1,40 @@
+---
+author: "Joshua Born"
+#bibliography: "../bibliographies/myth-of-left-and-right.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2023-11-09
+draft: true
+implicit-figures: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: ''
+tags: ["editorial"]
+title: 'Untitled Article'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+* Don't typically write much about politics of abortion (separate article why)
+* This week, the abortion lobby had a several supposed victories.
+* Gallup polling shows that before and after _Roe vs. Wade_ and _Doe vs. Bolton_, a simple majority of Americans want _some_ restrictions and regulations on abortion, while a minority of Americans want the _Roe_ and _Doe_ regime of legal abortion for any reason for any time in pregnancy, and a minority of Americans want a complete ban on abortion (Gallup Annual Poll on View on Abortion)
+* When abortion lobbyists are successful in framing abortion policy as an all-or-nothing, either complete ban or complete legalization, proposition, then, depending on the jurisdiction, this can eek out a simple majority
+* Republicans (and the few Democrats opposed to abortion) need to reject the all-or-nothing framing, identify what restrictions the majority of voters in their jurisdiction approve of, and then set their abortion policy platform to this
+* This rejects the all-or-nothing framing that will lead to 54% of voters in Ohio voting for Issue 1, and instead create a majority out of the "always illegal" and the "certain circumstances" from the Gallup polling.
+* Messaging needs to be straightforward in order to counter the stupidly simple "rights are good" and "Republicans take away your rights" messaging of the abortion lobby.
+* The messaging should be, "Six (seven if you count Chief Justice Burger voting with the majority so he could assign the writing of the opinion) unelected judges exceeded their constitutional mandate and abused their power to overturn the abortion laws in all 50 states, and instituted that contradicted public opinion at the time and is in an outlier internationally. We are returning abortion policy back to the American people, which is why we have carefully surveyed the voters in ______ and are setting our policy to be exactly what the voters in ______ want."
+
+Other issues:
+* Misinformation and coupling with contraception. Contraception is far more popular than abortion. (Gallup Values and Belief Poll)
+* Status quo effect. After 50 years of judicial overreach, the American public has been condition to think of _Roe vs. Wade_ and _Doe vs. Bolton_ as the baseline.
+
+* Fund the things that need to happen to put abortion in the history books: prevent unintended pregnancy, alloparenting support.
+
