@@ -48,7 +48,7 @@ The main question asked of Americans by Gallup polling since 1975 about viewpoin
 
 Throughout the past several decades, there has been a majority of Americans who think abortion should be legal only under certain circumstances, flanked by two minorities: one that thinks abortion should legal under any circumstances and one that abortion should be illegal in all circumstances.[^all]
 
-[^all]: Making one option "illegal in all circumstances" is likely biasing against respondents who want to express an disapproving attitude toward abortion, since even those most strongly against abortion usually allow for at least _some_ exceptional cases.
+[^all]: The "illegal in all circumstances" verbiage probably makes this question biased against those respondents who wish to express disapproval of abortion, since even those most emphatically against abortion usually allow for at least _some_ exceptional cases. Starting in the 1990s, Gallup has asked a follow-up question for those who reply "legal only under certain circumstances," and the follow-up question has revealed that a supermajority of these respondents intend for abortion to be legal in few or limited circumstances.
 
 
 ```{r}
