@@ -39,7 +39,7 @@ I do not typically write much about abortion[^definition] politics. However, thi
 
 In the wake of this past week's elections, there have been opinion pieces interpreting the results as a resounding win for the abortion lobby and indicative of abortion policy being a weak spot for Republican candidates to political office. (In 2023, there is a strong correlation between opposition to abortion and Republican politicians and between support for abortion and Democrats, though this was not always the case.)
 
-However, as I show in this article, an analysis of Gallup data on the views of Americans on abortion does not support the interpretation of abortion policy being a strong point for Democrats. Instead, it shows that the abortion policy pursued by Democrats represents a relatively small, but very enthusiastic, minority of Americans. If Republicans can identify and campaign for the majority's viewpoints on abortion, then abortion policy would be an asset, not a detriment, to Republican campaigns.
+However, as I show in this article, an analysis of Gallup data on the views of Americans on abortion does not support the interpretation of abortion policy being a strong point for Democrats. Instead, it shows that the abortion policy pursued by Democrats represents a minority of Americans.
 
 
 ## Viewpoints on Abortion in the United States
@@ -61,16 +61,13 @@ The minority of Americans that think abortion should be legal under any circumst
 
 ```
 
-
-### Majority Think Second and Third Trimester Abortions Should Be Illegal
-
 Additionally, a large supermajority of Americans, according to Gallup polling, think that abortion in the third trimester should be generally illegal.
 
 ```{r}
 
 ```
 
-In addition, a simple majority of Americans think that abortion in the second trimester should be generally illegal. 
+Furthermore, a simple majority of Americans think that abortion in the second trimester should be generally illegal. 
 
 ```{r}
 
@@ -79,13 +76,13 @@ In addition, a simple majority of Americans think that abortion in the second tr
 
 ### Policy of _Roe vs. Wade,_ _Doe vs. Bolton,_ and Ohio's _Issue 1_
 
-The abortion laws of all fifty states of the United States from 1973 to 2022 had been overruled by the _Roe vs. Wade_ and _Doe vs. Bolton_ decisions. _Roe vs. Wade_ overturned any laws that prohibited abortion _for any reason_ up until "viability," which was stipulated to be the time at which a fetus can live outside his or her mother's womb and was interpreted in _Roe vs. Wade_ as "at about seven months (28 weeks) but may occur earlier, even at 24 weeks." [] Thus, "viability" according to _Roe vs. Wade_ includes the first two trimesters of pregnancy and some unspecified amount of first month of the third trimester of pregnancy.
+The abortion laws of all fifty states of the United States from 1973 to 2022 had been overruled by the _Roe vs. Wade_ and _Doe vs. Bolton_ decisions. _Roe vs. Wade_ overturned any laws that prohibited abortion _for any reason_ up until "viability," which was stipulated to be the time at which a fetus can live outside his or her mother's womb and was interpreted in _Roe vs. Wade_ as "at about seven months (28 weeks) but may occur earlier, even at 24 weeks." [] Thus, "viability" according to _Roe vs. Wade_ includes the first two trimesters of pregnancy and some unspecified amount of the first month of the third trimester of pregnancy.
 
 Since the vast majority of abortions are induced before the twenty-eighth week of gestational age, [] _Roe vs. Wade_ already made abortion policy in all fifty states very close to legal abortion under any circumstances. Additionally, the companion decision _Doe vs. Bolton_ overturned any law that prohibited abortion, even only abortions after viability, that did not have an exception for "health" reasons, and "health" was interpreted so broadly as to include things such as emotional distress. _Doe vs. Bolton_ would later be used to strike down laws prohibiting abortion even after the viability threshold. Thus, _Roe_ and _Doe_ together legalized abortion _under any circumstances_ and _at any time throughout pregnancy._ []
 
-The text of Ohio's _Issue 1_ mirrors _Roe vs. Wade_ and _Doe vs. Bolton_ very closely, again legalizing abortion for any reason up until fetal viability, backed up a very broad "health" exception that could otherwise be used to strike down laws pertaining to any stage of pregnancy. [] 
+The text of Ohio's _Issue 1_ mirrors _Roe vs. Wade_ and _Doe vs. Bolton_ very closely, again legalizing abortion for any reason up until fetal viability, backed up a very broad "health" exception that could otherwise be used to strike down laws pertaining to any stage of pregnancy.[] 
 
-The policy actually enforced by _Roe vs. Wade_ and _Doe vs. Bolton_ and now enforced once again by Ohio's _Issue 1_ is not the policy that the majority of Americans want. _Roe vs. Wade_ and Ohio's _Issue 1_ legalize abortion for any reason up until viability, which at least partially includes the third trimester of pregnancy, but as was seen in the previous section, a supermajority of Americans think that abortions in the third trimester should be generally illegal. Additionally, _Roe vs. Wade_ and Ohio's _Issue 1_ legalize abortion for any reason throughout all of the second trimester of pregnancy, but as was seen, a simple majority of Americans think that abortion should be generally illegal in the second trimester.
+The policy actually enforced by _Roe vs. Wade_ and _Doe vs. Bolton_ and now enforced once again by Ohio's _Issue 1_ is not the policy that the majority of Americans want. _Roe vs. Wade_ and Ohio's _Issue 1_ legalize abortion _for any reason,_ but as we have seen, a majority of Americans think abortion should be legal only in certain circumstances. _Roe _ and _Issue 1_ legalize abortion for any reason up until viability, which at least partially includes the _third trimester_ of pregnancy, but as was seen in the previous section, a supermajority of Americans think that abortions in the third trimester should be generally illegal. Finally, _Roe_ and _Issue 1_ legalize abortion for any reason throughout all of the _second trimester_ of pregnancy, but as was seen, a simple majority of Americans think that abortion should be generally illegal in the second trimester. 
 
 
 ### How the Abortion Lobby Succeeds
@@ -102,20 +99,20 @@ With Ohio's _Issue 1,_ which was put to a popular vote, the answer is more subtl
 
 ```
 
-While the 2023 Ohio election has yet to be certified at the time of the writing of this article, the unofficial rate of voter turnout for the 2023 Ohio election is currently at 48.9%, which is consistent with previous Ohio elections in which there was no vote for President. [] The unofficial rate of those who voted "yes" on _Issue 1_ is currently at 56.6%.[] Thus, to put things in perspective, only about 27.7% of registered voters in Ohio voted for _Issue 1._
+While the 2023 Ohio election has yet to be certified at the time of the writing of this article, the unofficial rate of voter turnout for the 2023 Ohio election is currently at 48.9%, which is consistent with previous Ohio elections in which there was no vote for President. [] The unofficial rate of those who voted "yes" on _Issue 1_ is currently at 56.6%.[] Thus, to put things in perspective, only about 27.7% of registered voters in the state of Ohio voted for _Issue 1._
 
 
-#### Campaigning for Polar versus Median Voters
+#### Median Voter vs. Polar Voter Strategies
 
-The fact that only 27.7% of registered voters in a state can win a referendum in an off-year election is striking, and it highlights two alternative strategies for winning democratic elections.
+The fact that only 27.7% of registered voters in a state can win a referendum in an off-year election is striking, and it highlights two alternative strategies for winning elections.
 
 The more obvious strategy is to appeal to the _median voter._ This is the strategy of figuring out what the majority of voters in an electorate want and to match a campaign's policy platform to this majority position. All other things being equal, if a candidate's platform matches the views of the majority of voters, then that candidate should win.
 
-However, the success of the median voter strategy is contingent on everyone voting. When only 48.86% of registered voters -- and thus an even lower rate of _eligible_ voters -- vote in an election, then for close votes like Ohio's _Issue 1,_ who actually does vote in an election can determine the outcome of the election.
+However, the success of the median voter strategy is contingent on everyone voting. When only 48.86% of registered voters -- and thus an even lower rate of _eligible_ voters -- vote in an election, then for close votes like Ohio's _Issue 1,_ _which voters_ actually do vote in an election can determine the outcome of the election.
 
 An alternative strategy to the median voter strategy is to target the _polar voter._ This strategy explicitly targets viewpoints that are in the minority in an electorate, but that constitute a very _passionate_ minority. The goal here is to target a cohort that is more likely to vote in an election and to excite others to vote in the election than the median voter.
 
-This is likely what occurred in the Ohio 2023 election. With _Issue 1_ on the ballot, a passionate minority of voters who would otherwise not have bothered voting in the 2023 election went to vote specifically for abortion, which was enough to tip the voting for _Issue 1_ to a 56.6% to 43.4% majority during an off-year when turnout was less than 50%.
+This is likely what occurred in the Ohio 2023 election. With _Issue 1_ on the ballot, a passionate minority of voters who would otherwise not have bothered voting in the 2023 election went to vote specifically for abortion, which was enough to tip the voting for _Issue 1_ to a 56.6% to 43.4% majority during an off year when turnout was less than 50%.
 
 
 #### Lack of Understanding of Actual Policy
@@ -133,16 +130,16 @@ The only way this can be the case is for some nontrivial number of Americans to 
 
 #### Capture of Democrats
 
-While those who think abortion should be legal in all circumstances constitute a minority of Americans, something important for politics in the United States has occurred in recent years. From 1975 to 2013, among Democrats, legal abortion in all circumstances was also a minority viewpoint, just it was for all Americans regardless of party affiliation. However, starting in 2014, about an equal number of Democrats supported legal abortion in all circumstances as did those who supported legal abortion only in certain circumstances. Now, as of 2023, a clear _majority_ of Democrats support legal abortion _in all circumstances_ at about 60%.
+While those who think abortion should be legal in all circumstances constitute a minority of Americans, something important for politics in the United States has occurred in recent years. From 1975 to 2013, among Democrats, legal abortion in all circumstances was also a minority viewpoint, just it was for all Americans regardless of party affiliation. However, starting in 2014, about an equal number of Democrats supported legal abortion in all circumstances as did those who supported legal abortion only in certain circumstances. Now, as of 2023, a clear _majority_ of Democrats, about 60%, support legal abortion _in all circumstances._
 
 ```{r}
 
 ```
 
-Thus, while the viewpoint that abortion should be legal in all circumstances is a minority viewpoint among Americans, this viewpoint now dominates the Democratic Party. Since there are only two political parties in the United States that regularly win elections, the legal-abortion-in-all-cases platform of the abortion lobby has an outsized impact on American politics because it controls one of the two main political parties.
+Thus, while the viewpoint that abortion should be legal in all circumstances is a minority viewpoint among Americans, this viewpoint now dominates the Democrats. Since there are only two political parties in the United States that regularly win elections, the legal-abortion-in-all-cases platform of the abortion lobby has an outsized impact on American politics because it controls one of the two main political parties.
 
 
-## Recommendations
+## Recommendations for Median Voter Strategy
 
 Democrats as a party have been captured by the minority viewpoint that abortion should be legal in all circumstances. As we have seen, the majority of Americans want abortion to be legal only in certain circumstances, and the majority of Americans think that abortion should be generally illegal in the second and third trimesters. The abortion lobby, on the other hand, has legalized abortion for any reason into the third trimester with _Roe vs. Wade_ and with Ohio's _Issue 1._
 
@@ -150,12 +147,12 @@ If Republicans can successfully campaign for the median voter, then abortion pol
 
 Next year during the 2024 elections, Americans will vote for a President of the United States. Such elections usually have higher voter turnout, which may decrease the effectiveness of the polar voter strategy and increase the effectiveness of the median voter strategy.
 
-Regardless of whether any given election is a Presidential election or not, candidates using the median voter strategy must adhere to several strategies in order for abortion policy to be an asset to their campaigns.
+Regardless of whether any given election is a Presidential election or not, candidates using the median voter strategy must adhere to several strategies in order for abortion policy to be an asset, not a detriment, to their campaigns.
 
 
 ### Reject an All-or-Nothing Framing
 
-A tactic that the abortion lobby has been successful in using is to frame the abortion issue as an all-or-nothing question between abortion being illegal in all circumstances or abortion being legal in all circumstances. As Gallup polling indicates, a minority of Americans think that abortion should be illegal _in all circumstances._ Thus, if this dichotomy is the way the issue is framed to voters, then abortion advocates can cobble together a majority to vote for abortion being legal in all circumstances, especially in elections with relatively low voter turnout, such what occurred with Ohio's _Issue 1_. However, a minority of Americans _actually want_ abortion to be legal in all circumstances.
+A tactic that the abortion lobby has been successful in using is to frame the abortion issue as an all-or-nothing question between abortion being illegal in all circumstances or abortion being legal in all circumstances. As Gallup polling indicates, a minority of Americans think that abortion should be illegal _in all circumstances._ Thus, if the way the issue is framed to voters is this dichotomy, then abortion advocates can cobble together a majority to vote for abortion being legal in all circumstances. However, a minority of Americans _actually want_ abortion to be legal in all circumstances.
 
 Politicians campaigning for the median voter must be very careful, therefore, not to allow the issue to be framed as whether abortion should be legal or be banned. Instead, they must frame abortion policy as being a question of _under what circumstances_ abortion is to be legal and _under what circumstances_ it is to be illegal.
 
@@ -164,11 +161,17 @@ Politicians campaigning for the median voter must be very careful, therefore, no
 
 This leads to the next important point. It is imperative for politicians campaigning for the median voter on abortion policy to _discover_ under what circumstances a majority in their electorate want abortion to be illegal. Since abortion policy is made by the legislatures of the several states in the United States, this must be done at the state level.
 
-This is admittedly more challenging than the all-or-nothing framing that is working for the abortion lobby, but it can be accomplished simply by taking a survey of a representative random sample of registered voters in a given state. Furthermore, polling at the national level can give a political campaign hints on where to begin. Since a majority of Americans think that second and third trimester abortions should be generally illegal, it is likely that the electorate in many states want some kind of gestational age limit on abortion. It is therefore a matter of polling to find out the specific gestational age limit desired by majority of voters in a given state.
+This is admittedly more challenging than the all-or-nothing framing that is working for the abortion lobby, but it can be accomplished simply by taking a survey of a representative random sample of registered voters in a given state. Furthermore, polling at the national level can give a political campaign hints on where to begin. Since a majority of Americans think that second and third trimester abortions should be generally illegal, it is likely that the electorate in many states want some kind of gestational age limit on abortion. It is therefore a matter of polling to find out the specific gestational age limit is desired by majority of voters in a given state.
 
-This was actually a process that began back in the 1960s in the state legislatures, but was overridden by the _Roe vs. Wade_ and _Doe vs. Bolton_ decisions. For instance, several states had allowed for exceptions to their criminal abortion statutes for cases such as rape or severe fetal deformity, while rejecting attempts to legalize abortion as a method of fertility control. It remains to be seen what are the circumstances under which majorities in various states want abortion to be prohibited, but this can be discovered with surveys. []
+This was actually a process that began back in the 1960s in the state legislatures, but was overridden by the _Roe vs. Wade_ and _Doe vs. Bolton_ decisions. For instance, several states had allowed for exceptions to their criminal abortion statutes for cases such as rape or severe fetal deformity, while rejecting attempts to legalize abortion as a method of fertility control. [] It remains to be seen what are the circumstances under which majorities in various states want abortion to be prohibited, but this can be discovered.
 
-In addition to outright prohibition, there are likely many _regulations_ of abortion that a majority of voters in a given state approve. Gallup polling suggests that a policy requiring abortion providers to provide information about alternatives to abortion has historically been quite popular at the national level in the United States. There are probably numerous such regulations that would be found to be popular in a given state.
+In addition to outright prohibition, there are likely many _regulations_ of abortion that a majority of voters in a given state approve.[^regulations] For instance, Gallup polling suggests that a policy requiring abortion providers to provide information about alternatives to abortion has historically been quite popular at the national level in the United States. There are probably numerous such regulations that would be found to be popular in any given state.
+
+[^regulations]: In addition to legalizing abortion until fetal viability, _Roe vs. Wade_ overturned any _regulations_ of abortions done in the first trimester. 
+
+```{r}
+
+```
 
 
 ### Create Simple Messaging
@@ -177,25 +180,24 @@ The abortion lobby has a stupidly simple message that they are promulgating that
 
 This message should be something to the effect of, "Elites used unelected judges who abused their Constitutional authority in order to override the will of the American people and overturn laws in all fifty states pertaining to abortion policy. More recently, the Supreme Court returned matters of abortion policy back to American people and their duly elected representatives. I, as a candidate for ______ office, will fulfill my duty to represent the people of the state of ______. The majority of voters in the state of ______ want..."
 
-Knowledge of the circumstances under which the the majority of voters in a given state want abortion to be illegal, as discussed in the previous section, would then be used to substantiate this message.
+Knowledge of the circumstances under which the the majority of voters in a given state want abortion to be illegal, as discussed in the previous section, could then be used to substantiate this message.
 
 
-### Do Not Be Scared of Abortion Policy
+## Consideration of Polar Voter Strategy
 
-I have noticed several Republican politicians approach the abortion issue with trepidation and almost apologetically. This is a bad appearance for any candidate for public office. People can sense when others lack confidence, and this lack of confidence does not inspire confidence in others.
 
-If a candidate is armed with the knowledge of the specific circumstances under which the majority of voters in the candidate's state want abortion to be illegal, then there no need for such trepidation. A candidate thus armed can campaign to the median voter with the assertiveness and confidence that voters expect in a public official.
+## Do Not Be Scared of Abortion Policy
+
+Regardless of whether the median voter or polar voter strategy is being used, candidates for political office who hope to succeed should run their campaigns with confidence. I have noticed several Republican politicians approach the abortion issue with trepidation and almost apologetically. This is a bad appearance for any candidate for public office. People can sense when others lack confidence, and this lack of confidence does not inspire confidence in others.
+
+One of the advantages of the median voter strategy is that a candidate is armed with the knowledge that the candidate's platform is aligned with the majority of voters in the candidate's state. Candidates using the polar voter strategy must express personal conviction and the confidence that comes from such conviction. Either way, a candidate hemming and hawing about one's platform on abortion does not flatter a candidate.
 
 
 ## Conclusion
 
 A majority of Democrats want abortion to be legal in all circumstances, which is a view shared by only a minority of Americans. The majority of Americans want abortion to be legal only in certain circumstances and believe that abortion in the second and third trimester should be generally illegal. Any candidate for public office who can successfully campaign for the median voter by rejecting an all-or-nothing framing, by identifying the abortion policy desired by a majority of voters in the candidate's electorate, and by messaging this policy in a straightforward and confident manner can exploit this as a weakness in Democrats' platform.
 
-Some who harbor severe moral compunction about abortion might protest that this campaign for the median voter is middling and would result in policies that are so moderate as to be unsatisfactory. I, too, am someone who judges abortion to be a form of homicide and its use as a method of fertility control to be morally wrong. However, I see politics as just one aspect of human civilization.
-
-I believe it is better to look at abortion policy, in a country with a representative system of government, as more of an _effect,_ rather than a _cause_ of progress in ridding the world of abortion as a method of fertility control. Realistically, when there are upwards of fifty million abortions every year worldwide, this practice will not be ended by mere laws alone. What we need from our politicians is to accurately set our laws to the will of the people. If that can be accomplished, then we can all do the hard work of changing the hearts and minds of the people.
-
-What was worse than the policy implications of _Roe vs. Wade_ and _Doe vs. Bolton_ was the corruption of the culture of the United States. Americans, with all our wealth and resources, could have been leaders in progress against abortion. But instead our vast public health apparatus and pharmaceutical industry began to look at abortion not as a problem, but as a solution. Instead of being a world leader in putting abortion into the history books, the United States has promulgated the proposition that abortion is freedom to the rest of the world.
+What was worse than the policy implications of _Roe vs. Wade_ and _Doe vs. Bolton_ was the corruption of the culture of the United States. Americans, with all our wealth and resources, could have been leaders in progress against abortion. But instead our vast public health apparatus and pharmaceutical industry began to look at abortion not as a problem, but as a solution. Instead of being a world leader in putting abortion into the history books, the United States has promulgated the proposition that abortion is "freedom" to the rest of the world.
 
 There is an asymmetry in the goals of those who look at abortion as something that is morally wrong and those who look at it as righteous. The abortion lobby need only maintain the _status quo_ and to focus exclusively on politics. Those opposed to abortion must change how human civilization works. There are many ways we can do this. We can work on preventing unintended pregnancy to the point it is no longer part of the banality of everyday life. We can remedy the loss of alloparenting support -- from day care to adoption and everything in between -- in modern society created by demographic shifts away from large families and sedentary populations. We can reclaim institutions that we once populated -- institutions of public health, birth control, medicine, and, yes, law and government.
 
