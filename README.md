@@ -5,6 +5,7 @@ This repository contains two projects:
   * statistical analysis work focusing on reproductive responsibility, and
   * the [Born Inquisitive](https://borninquisitive.com/) blog.
 
+"Reproductive responsibility" refers to the social science study of pregnancy intent and outcome, contraception, childcare, and parenting.
 
 ## License
 
