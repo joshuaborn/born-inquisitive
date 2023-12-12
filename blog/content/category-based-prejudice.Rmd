@@ -530,7 +530,7 @@ Suppose for the scenario in which the hiring manager is looking for math ability
 
     A review of the literature finds numerous papers about the supposed effects of stereotypes on math performance, but few about the prevalence of such stereotypes. For the purposes of this article, the existence of these stereotypes only functions to motivate a thought experiment, and no claim is made as to how prevalent they are.
 
-Because categorization is arbitrary, the hiring manager can pick whatever variable to use for the category-based prejudice approach. In cases in which the choice of two different variables, such as gender or Asian-ness, lead to different conclusions, the category-based prejudice approach leads to ambiguous results. In this scenario, category-based prejudice, in addition to its other flaws, does not actually resolve the problem it set out to solve in the first place: picking being the two final prospective employees.
+Because categorization is arbitrary, the hiring manager can pick whatever variable to use for the category-based prejudice approach. In cases in which the choice of two different variables, such as gender or Asian-ness, lead to different conclusions, the category-based prejudice approach leads to ambiguous results. In this scenario, category-based prejudice, in addition to its other flaws, does not actually resolve the problem it set out to solve in the first place: picking between the two final prospective employees.
 
 
 ### Ambiguous Category Levels
