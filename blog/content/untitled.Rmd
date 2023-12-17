@@ -1,6 +1,6 @@
 ---
 author: "Joshua Born"
-bibliography: "../bibliographies/untitled.bib"
+bibliography: "../bibliographies/untitled.json"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2023-12-16
 draft: true
@@ -503,56 +503,65 @@ Thus, there has actually been a majority consensus among Americans for at least 
 
 ## Policy of _Roe v. Wade,_ _Doe v. Bolton,_ and Ohio's _Issue 1_
 
-The abortion laws of all fifty states of the United States from 1973 to 2022 had been overruled by the _Roe vs. Wade_ and _Doe vs. Bolton_ decisions. _Roe vs. Wade_ overturned any laws that prohibited abortion _for any reason_ up until "viability," which was stipulated to be the time at which a fetus can live outside his or her mother's womb and was interpreted in _Roe vs. Wade_ as "at about seven months (28 weeks) but may occur earlier, even at 24 weeks." [] Thus, the time before "viability" according to _Roe vs. Wade_ includes the first two trimesters of pregnancy and some unspecified amount of the first month of the third trimester of pregnancy.
+The abortion laws of all fifty states of the United States from 1973 to 2022 had been overruled by the _Roe v. Wade_ and _Doe v. Bolton_ decisions. _Roe v. Wade_ overturned any laws that prohibited abortion _for any reason_ up until "viability," which was stipulated to be the time at which a fetus can live outside his or her mother's womb and was interpreted in _Roe v. Wade_ as "at about seven months (28 weeks) but may occur earlier, even at 24 weeks." [@roe_v_wade] Thus, the time before "viability" according to _Roe v. Wade_ includes the first two trimesters of pregnancy and some unspecified amount of the first month of the third trimester of pregnancy.
 
-Since the vast majority of abortions are induced before the twenty-eighth week of gestational age, [] _Roe vs. Wade_ already made abortion policy in all fifty states very close to legal abortion under any circumstances. Additionally, the companion decision _Doe vs. Bolton_ overturned any law that prohibited abortion, even only abortions after viability, that did not have an exception for "health" reasons, and "health" was interpreted so broadly as to include things such as emotional distress. _Doe vs. Bolton_ would later be used to strike down laws prohibiting abortion even after the viability threshold. Thus, _Roe_ and _Doe_ together legalized abortion _under any circumstances_ and _at any time throughout pregnancy._ []
+Since the vast majority of abortions are induced before the twenty-eighth week of gestational age, [@cdc_2020] _Roe v. Wade_ already made abortion policy in all fifty states very close to legal abortion under any circumstances. Additionally, the companion decision _Doe v. Bolton_ overturned any law that prohibited abortion, even only abortions after viability, that did not have an exception for "health" reasons, and "health" was interpreted so broadly as to include things such as emotional distress. _Doe v. Bolton_ would later be used to strike down laws prohibiting abortion even after the viability threshold. [@forsythe_2013, 150-152] Thus, _Roe_ and _Doe_ together effectively legalized abortion _under any circumstances_ and _at any time throughout pregnancy._
 
-The text of Ohio's _Issue 1_ mirrors _Roe vs. Wade_ and _Doe vs. Bolton_ very closely, again legalizing abortion for any reason up until fetal viability, coupled with a very broad "health" exception that could otherwise be used to strike down laws pertaining to any stage of pregnancy.[] 
+The text of Ohio's _Issue 1_ mirrors _Roe v. Wade_ and _Doe v. Bolton_ very closely, again legalizing abortion for any reason up until fetal viability, coupled with a very broad "health" exception that could otherwise be used to strike down laws pertaining to any stage of pregnancy. [@ohio_issues_1_and_2] 
 
-The policy actually enforced by _Roe vs. Wade_ and _Doe vs. Bolton_ and now enforced once again by Ohio's _Issue 1_ is not the policy that the majority of Americans want. _Roe vs. Wade_ and Ohio's _Issue 1_ legalize abortion _for any reason,_ but as we have seen, a majority of Americans think abortion should be legal only in certain circumstances. _Roe _ and _Issue 1_ legalize abortion for any reason up until viability, which at least partially includes the _third trimester_ of pregnancy, but as was seen in the previous section, a supermajority of Americans think that abortions in the third trimester should be generally illegal. Finally, _Roe_ and _Issue 1_ legalize abortion for any reason throughout all of the _second trimester_ of pregnancy, but as was seen, a simple majority of Americans think that abortion should be generally illegal in the second trimester. 
+The policy actually enforced by _Roe v. Wade_ and _Doe v. Bolton_ and now enforced once again by Ohio's _Issue 1_ is not the policy that the majority of Americans want.
+
+_Roe v. Wade_ and Ohio's _Issue 1_ legalize abortion _for any reason,_ but as we saw in the previous section, a majority of Americans think abortion should be legal only in certain circumstances and support at least some restrictions on abortion.
+
+_Roe _ and _Issue 1_ legalize abortion for any reason up until viability, which at least partially includes the _third trimester_ and includes all of the _second trimester_ of pregnancy, but as we saw in the previous section, a majority of Americans think that abortions in the third and second trimesters should be generally illegal.
 
 
 ## How the Abortion Lobby Succeeds
 
-The abortion lobby that campaigns for the legality of abortion under any circumstances represents only a minority of Americans. The majority of Americans think that abortion should be legal only in certain circumstances and think that second and third trimester abortions should be generally illegal. How, then, has the abortion lobby succeeded?
+For the sake of brevity, let us the term "abortion lobby" to all of the elements in American society that labor to make abortion policy match that entailed by _Roe_ and _Doe_ and reiterated in Ohio's _Issue 1._ The abortion lobby campaigns for a set of policies that is effectively equivalent to the response to Gallup polling that "abortions should be legal under any circumstances," and so support for the platform of the abortion lobby has fluctuated between 21% and 35% of Americans.
+
+How, then, has the abortion lobby succeeded in instituting its policies when it represents a minority of Americans?
+
+
+### Judicial Activism
 
 With _Roe_ and _Doe_, the answer is obvious. The _Roe_ and _Doe_ policy was instituted by just a half dozen unelected judges[^burger] who were not subject to popular vote and hence public opinion.
 
 [^burger]: The Supreme Court vote for _Roe_ and _Doe_ was actually seven to two, not six to three, but Chief Justice Burger may have voted with the majority once he saw that a majority would vote for _Roe_ and _Doe_ just so that he could choose which Justice to assign the writing of the opinion.
 
-With Ohio's _Issue 1,_ which was put to a popular vote, the answer is more subtle. The 2023 Ohio election occurred during a year when there was not a vote for President of the United States. Historically, when an election occurs in one of the several states of the United States when there is no vote for President, voter turnout is lower.
+You could read numerous papers and books of arguments for and against doctrines such as _substantive due process_ and _selective fourteenth amendment incorporation_ on which the validity of _Roe_ and _Doe_ turn. You could also read numerous papers and books on the validity of the specific arguments and circumstances of the _Roe_ and _Doe_ decisions. Such legal aspect of the validity of the _Roe_ and _Doe_ decisions are beyond the scope of this article. 
 
-```{r}
-
-```
-
-While the 2023 Ohio election has yet to be certified at the time of the writing of this article, the unofficial rate of voter turnout for the 2023 Ohio election is currently at 48.9%, which is consistent with previous Ohio elections in which there was no vote for President. [] The unofficial rate of those who voted "yes" on _Issue 1_ is currently at 56.6%.[] Thus, to put things in perspective, only about 27.7% of registered voters in the state of Ohio voted for _Issue 1._
+What is not controversial, however, is that the judiciary in the United States is very much by design not subject to popular opinion. Therefore, the use of the judiciary to achieve policy changes, regardless if you judge it to be valid or invalid, explains how the abortion lobby succeeded in achieving its policy goals, despite representing a minority viewpoint, for the time period of 1973 to 2022.
 
 
 ### Polarization
 
-The fact that only 27.7% of registered voters in a state can win a referendum in an off-year election is striking, and it highlights two alternative strategies for winning elections.
+Unlike _Roe_ and _Doe,_ Ohio's _Issue 1_ was put to a popular vote. Up until now, we have been discussing Gallup polling of a representative _nation-wide_ sample of the United States. The federal system of government in the United States entails that voting such as what was done for Ohio's _Issue 1_ is done on a state by state basis. Any one given state may have a different distribution of public opinion about abortion than what is observed nationally.
 
-The more obvious strategy is to appeal to the _majority voter._ This is the strategy of figuring out what the majority of voters in an electorate want and to match a campaign's policy platform to this majority position. All other things being equal, if a candidate's platform matches the views of the majority of voters, then that candidate should win.
+However, Ohio is a state that voted in the 2022 general election 62.41% for current Republican governor Mike DeWine, who is publicly opposed to abortion, compared with just 37.38% for the Democrat running against him. [@ohio_election_2022] Furthermore, the general election occurred on November 3, 2020, a few months after the _Dobbs_ decision that overturned _Roe_ and _Doe._ If the distribution of viewpoints on abortion of the citizens of Ohio differed from the national distribution such that more Ohioans support legal abortion under any circumstances than do Americans generally, then we would have expected to have seen it effect the 2022 gubernatorial election in Ohio. Therefore, this is unlikely to be the case.
 
-However, the success of the majority voter strategy is contingent on everyone voting. When only 48.86% of registered voters -- and thus an even lower rate of _eligible_ voters -- vote in an election, then for close votes like Ohio's _Issue 1,_  the outcome of the election can be determined by _which voters_ actually do vote.
+_Issue 1_ passed in Ohio because different people turned out to vote in the 2023 general election than did in the 2022 general election. Exit polling confirms that only 35% of voters in the 2023 Ohio general election were Republicans, the lowest proportion since 2012, and self-described "liberals" accounted for 34% of voters in the 2023 elections, compared with 20% in the 2022 elections. [@kgfw_issue_1]
 
-An alternative strategy to the majority voter strategy is to target the _polar voter._ This strategy explicitly targets viewpoints that are in the minority in an electorate, but that constitute a very _passionate_ minority. The goal here is to target a cohort that is more likely to vote and to excite others to vote in the election than the majority voter.
+In short, the abortion lobby succeeded in the 2023 Ohio general election by using the [polar voter strategy](#majority-voters-versus-polar-voters-in-the-united-states). As discussed in the preceding, only 49.63% of registered voters participated in the 2023 Ohio general election and thus only 28.18% of registered voters in Ohio voted for _Issue 1._
 
-This is likely what occurred in the Ohio 2023 election. With _Issue 1_ on the ballot, a passionate minority of voters who would otherwise not have bothered voting in the 2023 election went to vote specifically for abortion, which was enough to tip the voting for _Issue 1_ to a 56.6% to 43.4% majority during an off year when turnout was less than 50%.
+The polar voter strategy only works in elections in which turnout is relatively low. Next year the 2024 general elections will include a voting for President of the United States, and such elections historically have had higher voter turnout. This is why Democratic strategist Ruy Teixeira commented on a recent podcast that Democrats risk becoming "low turnout election specialists" should they continue to emphasize issues like abortion.
+
+> And we should always remember that, I mean, people are moderately pro-choice but are actually very leery about abortions after the first trimester, and then in the third trimester, they're just flat out against it. So, the real hardcore activist position on abortion rights, which obviously has a real presence to the Democratic Party, is abortion at any time for any reason, at will. That is not the position of the median voter who is quite a bit more conservative on this issue. They want abortion rights in some form maintained, but they don't want a sort of at will anytime kind of approach to abortion.
+> 
+> So, that may eventually come to be a bit more of a conflict and a problem for the Democrats. So far, they've been able to leverage the issue pretty easily in their favor by basically saying Republicans want to ban it completely. So, we'll see what happens with that, but even as it's played out so far, it hasn't been quite the magic bullet people think, and as I argue in a piece that's just about to come out from the _[Washington] Post,_ another important thing to remember here is Democrats are now in a sense low turnout election specialists. Right? Their coalition is engaged. It's more educated. It's more animated by an issue like abortion, and they're actually likely, because of the structure of their coalition, to do particularly well in off-year and special elections. And it's much more of a challenge in a big presidential election when the peripheral voters come out of the woodwork. [@teixeira_podcast]
 
 
 ### Lack of Understanding of Actual Policy
 
-It is clear that a sizable number of people in the United States do not know what it means for abortion to be legal for any reason up until the point of fetal viability, which is the policy of _Roe vs. Wade_ and of Ohio's _Issue 1._ As we have seen, during the time _Roe vs. Wade_ was in force, a supermajority of Americans thought (and still think) that abortion in the third trimester should be generally illegal and simple majority thought (and still think) that abortion in the second trimester should be generally illegal. At the same time, a majority of Americans did not support overturning _Roe vs. Wade_, and a majority of Americans think that overturning _Roe vs. Wade_ was a bad thing.
+It is clear that a sizable number of people in the United States do not know what it means for abortion to be legal for any reason up until the point of fetal viability, which is the policy of _Roe v. Wade_ and of Ohio's _Issue 1._ As we have seen, during the time _Roe v. Wade_ was in force, a supermajority of Americans thought (and still think) that abortion in the third trimester should be generally illegal and simple majority thought (and still think) that abortion in the second trimester should be generally illegal. At the same time, a majority of Americans did not support overturning _Roe v. Wade_, and a majority of Americans think that overturning _Roe v. Wade_ was a bad thing.
 
 ```{r}
 
 ```
 
-How can a majority of Americans support _Roe vs. Wade,_ which legalizes abortion for any reason into the early third trimester, and at the same time a majority of Americans think that abortion in the second and third trimester should be generally illegal?
+How can a majority of Americans support _Roe v. Wade,_ which legalizes abortion for any reason into the early third trimester, and at the same time a majority of Americans think that abortion in the second and third trimester should be generally illegal?
 
-The only way this can be the case is for some nontrivial number of Americans to be in a state of self-contradiction, both supporting policies that legalize second and third trimester abortions and supporting the general prohibition of second and third trimester abortions. This indicates that there is a nontrivial number of Americans who either do not understand that _Roe vs. Wade_ implies abortion is legal for any reason up until fetal viability or do not understand what legal abortion for any reason until fetal viability means.
+The only way this can be the case is for some nontrivial number of Americans to be in a state of self-contradiction, both supporting policies that legalize second and third trimester abortions and supporting the general prohibition of second and third trimester abortions. This indicates that there is a nontrivial number of Americans who either do not understand that _Roe v. Wade_ implies abortion is legal for any reason up until fetal viability or do not understand what legal abortion for any reason until fetal viability means.
 
 
 #### Capture of Democrats
@@ -568,7 +577,7 @@ Thus, while the viewpoint that abortion should be legal in all circumstances is 
 
 ## Recommendations for Majority Voter Strategy
 
-Democrats as a party have been captured by the minority viewpoint that abortion should be legal in all circumstances. As we have seen, the majority of Americans want abortion to be legal only in certain circumstances, and the majority of Americans think that abortion should be generally illegal in the second and third trimesters. The abortion lobby, on the other hand, has legalized abortion for any reason into the third trimester with _Roe vs. Wade_ and with Ohio's _Issue 1._
+Democrats as a party have been captured by the minority viewpoint that abortion should be legal in all circumstances. As we have seen, the majority of Americans want abortion to be legal only in certain circumstances, and the majority of Americans think that abortion should be generally illegal in the second and third trimesters. The abortion lobby, on the other hand, has legalized abortion for any reason into the third trimester with _Roe v. Wade_ and with Ohio's _Issue 1._
 
 If Republicans can successfully campaign for the majority voter, then abortion policy will be an issue of strength for them. However, Democrats have the advantage of being able to excite a very passionate minority, which can cause an increase in voter turnout and be successful in elections by way of the polar voter strategy.
 
@@ -590,11 +599,11 @@ This leads to the next important point. It is imperative for politicians campaig
 
 This is admittedly more challenging than the all-or-nothing framing that is working for the abortion lobby, but it can be accomplished simply by taking a survey of a representative random sample of registered voters in a given state. Furthermore, polling at the national level can give a political campaign hints on where to begin. Since a majority of Americans think that second and third trimester abortions should be generally illegal, it is likely that the electorate in many states want some kind of gestational age limit on abortion. It is therefore a matter of polling to find out the specific gestational age limit that is desired by majority of voters in a given state.
 
-Setting abortion policy to the majority will was a process that was occurring in the 1960s in the state legislatures, but was overridden by the _Roe vs. Wade_ and _Doe vs. Bolton_ decisions. For instance, several states had allowed for exceptions to their criminal abortion statutes for cases such as rape or severe fetal deformity, while rejecting attempts to legalize abortion as a method of fertility control. [] It remains to be seen what are the circumstances under which majorities in various states want abortion to be prohibited, but this can be discovered.
+Setting abortion policy to the majority will was a process that was occurring in the 1960s in the state legislatures, but was overridden by the _Roe v. Wade_ and _Doe v. Bolton_ decisions. For instance, several states had allowed for exceptions to their criminal abortion statutes for cases such as rape or severe fetal deformity, while rejecting attempts to legalize abortion as a method of fertility control. [] It remains to be seen what are the circumstances under which majorities in various states want abortion to be prohibited, but this can be discovered.
 
 In addition to outright prohibition, there are likely many _regulations_ of abortion that a majority of voters in a given state approve.[^regulations] For instance, Gallup polling suggests that a policy requiring abortion providers to provide information about alternatives to abortion has historically been quite popular at the national level in the United States. There are probably numerous regulations of various kinds that would be found to be popular in any given state.
 
-[^regulations]: In addition to legalizing abortion until fetal viability, _Roe vs. Wade_ overturned any _regulations_ of abortions done in the first trimester. 
+[^regulations]: In addition to legalizing abortion until fetal viability, _Roe v. Wade_ overturned any _regulations_ of abortions done in the first trimester. 
 
 ```{r}
 

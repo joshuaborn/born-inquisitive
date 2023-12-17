@@ -1,0 +1,231 @@
+[
+	{
+		"id": "gallup_abortion_in_depth",
+		"type": "webpage",
+		"container-title": "Gallup.com",
+		"language": "en",
+		"note": "section: In Depth: Topics A to Z",
+		"title": "In Depth: Topics A to Z: Abortion",
+		"URL": "https://news.gallup.com/poll/1576/Abortion.aspx",
+		"author": [
+			{
+				"literal": "Gallup"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					11,
+					12
+				]
+			]
+		}
+	},
+	{
+		"id": "ohio_election_2023",
+		"type": "webpage",
+		"language": "en-US",
+		"title": "2023 Official Election Results",
+		"URL": "https://www.ohiosos.gov/elections/election-results-and-data/2023-official-election-results/",
+		"author": [
+			{
+				"literal": "Ohio Secretary of State"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					16
+				]
+			]
+		}
+	},
+	{
+		"id": "ohio_election_2022",
+		"type": "webpage",
+		"language": "en-US",
+		"title": "2022 Official Election Results",
+		"URL": "https://www.ohiosos.gov/elections/election-results-and-data/2022-official-election-results/",
+		"author": [
+			{
+				"literal": "Ohio Secretary of State"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					17
+				]
+			]
+		}
+	},
+	{
+		"id": "roe_v_wade",
+		"type": "legal_case",
+		"authority": "U.S. Supreme Court",
+		"container-title": "U.S.",
+		"number": "70-18",
+		"page": "113",
+		"title": "Roe v. Wade",
+		"volume": "410",
+		"issued": {
+			"date-parts": [
+				[
+					"1973",
+					1,
+					22
+				]
+			]
+		}
+	},
+	{
+		"id": "cdc_2020",
+		"type": "article-journal",
+		"abstract": "CDC publishes an annual summary of abortion data in the United States. This report is for the year 2020.",
+		"container-title": "MMWR. Surveillance Summaries",
+		"DOI": "10.15585/mmwr.ss7110a1",
+		"ISSN": "1546-07381545-8636",
+		"journalAbbreviation": "MMWR Surveill Summ",
+		"language": "en-us",
+		"source": "www.cdc.gov",
+		"title": "Abortion Surveillance — United States, 2020",
+		"URL": "https://www.cdc.gov/mmwr/volumes/71/ss/ss7110a1.htm",
+		"volume": "71",
+		"author": [
+			{
+				"family": "Kortsmit",
+				"given": "Katherine"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					3,
+					19
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2022"
+				]
+			]
+		}
+	},
+	{
+		"id": "forsythe_2013",
+		"type": "book",
+		"event-place": "New York",
+		"ISBN": "978-1-59403-692-7",
+		"publisher": "Encounter Books",
+		"publisher-place": "New York",
+		"title": "Abuse of discretion : the inside story of Roe v. Wade",
+		"title-short": "Abuse of discretion",
+		"author": [
+			{
+				"family": "Forsythe",
+				"given": "Clark D."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2013"
+				]
+			]
+		}
+	},
+	{
+		"id": "ohio_issues_1_and_2",
+		"type": "document",
+		"publisher": "Ohio Secretary of State",
+		"title": "State Issues 1 and 2",
+		"URL": "https://www.ohiosos.gov/globalassets/elections/2023/gen/issuesreport.pdf",
+		"author": [
+			{
+				"literal": "Ohio Secretary of State"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					17
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2023",
+					9
+				]
+			]
+		}
+	},
+	{
+		"id": "teixeira_podcast",
+		"type": "broadcast",
+		"abstract": "In 2002, Ruy Teixeira co-authored The Emerging Democratic Majority. Now, two decades later, his new book is out Where Have All the Democrats Gone?",
+		"container-title": "American Enterprise Institute - AEI",
+		"language": "en-US",
+		"title": "WTH Have All the Democrats Gone? With Ruy Teixeira",
+		"title-short": "WTH Have All the Democrats Gone?",
+		"URL": "https://www.aei.org/podcast/where-the-hell-have-all-the-democrats-gone-with-ruy-teixeira/",
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					17
+				]
+			]
+		}
+	},
+	{
+		"id": "kgfw_issue_1",
+		"type": "article-newspaper",
+		"abstract": "adamkaz/Getty Images(WASHINGTON) -- Striking liberal turnout, a comparative dearth of voters who backed Donald Trump in 2020 and broad support for legal abortion helped make Ohio, on Tuesday, the latest state projected to support abortion rights since ...",
+		"container-title": "1340 KGFW - The Information Channel",
+		"language": "en",
+		"title": "Why Ohio voters approved abortion ballot measure, according to exit polling",
+		"URL": "https://kgfw.com/2023/11/08/why-ohio-voters-approved-abortion-ballot-measure-according-to-exit-polling/",
+		"author": [
+			{
+				"literal": "Christine Filer"
+			},
+			{
+				"literal": "Gary Langer"
+			},
+			{
+				"literal": "Allison De Jong"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					17
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2023",
+					11,
+					8
+				]
+			]
+		}
+	}
+]
