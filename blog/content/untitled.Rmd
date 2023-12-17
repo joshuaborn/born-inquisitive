@@ -59,7 +59,7 @@ Because of these and other election results in the past year since the _Dobbs v.
 However, an analysis of Gallup polling on the views of Americans on abortion does not support this interpretation. A minority of Americans actually support the abortion policy advocated by Democrats. To understand how campaigning on a platform that only a minority of voters agree with can lead to victories in elections, an understanding of voting dynamics in the United States is necessary.
 
 
-### Majority versus Polar Voter Strategies in the United States
+### Majority Voters versus Polar Voters in the United States
 
 The most obvious way to win an election when there is a popular vote is to find out what policy position a majority of voters in the electorate support and to campaign on that. Call this the **"majority voter strategy."** If there were only one issue, and if there were a majority position on this one issue, and if a candidate for public office were to campaign on the majority position, then it seems like a safe assumption that the that candidate would win.
 
@@ -82,13 +82,13 @@ This is, also, how Democrats win elections by campaigning on abortion. To put th
 
 ## Viewpoints on Abortion in the United States
 
-Gallup has been polling Americans on abortion about every year since 1975. The main question asked about the legality of abortion gives the respondent three options and is phrased as "Do you think abortions should be legal under any circumstances, legal only under certain circumstances or illegal in all circumstances?"
+Gallup has been polling Americans on abortion more or less annually since 1975. The main question asked about the legality of abortion gives the respondent three options and is phrased as "Do you think abortions should be legal under any circumstances, legal only under certain circumstances or illegal in all circumstances?"
 
-(The "illegal in all circumstances" response was a poor construction on the part of Gallup. Even those who are very strongly against abortion usually admit of exception cases in which it should be legal, and so would be less likely to respond "illegal in all circumstances." Starting in the 1990s, Gallup has asked a follow-up question for those who reply "legal only under certain circumstances," and the follow-up question has revealed that most of these respondents intend for abortion to be legal in few or limited circumstances. Thus, those strongly against abortion are split between "legal only under certain circumstances" and "illegal in all circumstances" responses in Gallup polling.)
-
-Throughout the past several decades, there has been a majority[^sampling-error] of Americans who respond that abortion should be legal only under certain circumstances, flanked by two minorities: one that respond that abortion should be legal under any circumstances and one that responds that abortion should be illegal in all circumstances.
+Throughout the past several decades, there has been a majority[^sampling-error] of Americans who respond that abortion should be legal only under certain circumstances, flanked by two minorities: one that respond that abortion should be legal under any circumstances and one that responds that abortion should be illegal in all circumstances.[^illegal-all-circumstances]
 
 [^sampling-error]: Sometimes the percent of respondents who reply "legal only under certain circumstances" dips below 51%, but in these cases, the the sample proportion responding "legal only under certain circumstances" is still within margin of error of 51% and may not represent actual changes in the population, but could be fluctuations due to random sampling.
+
+[^illegal-all-circumstances]: The "illegal in all circumstances" response was a poor construction on the part of Gallup. Even those who are very strongly against abortion usually admit of exception cases in which it should be legal, and so would be less likely to respond "illegal in all circumstances." Starting in the 1990s, Gallup has asked a follow-up question for those who reply "legal only under certain circumstances," and the follow-up question has revealed that most of these respondents intend for abortion to be legal in few or limited circumstances. Thus, those strongly against abortion are split between "legal only under certain circumstances" and "illegal in all circumstances" responses in Gallup polling.
 
 ```{r ggplot-theme}
 theme_set(
@@ -209,18 +209,23 @@ Gallup_abortions_should_be_legal <- tribble(
   "1979 Feb", 22,	54,	19,	5, FALSE,
   "1977 Dec", 22,	55,	19,	4, FALSE,
   "1975 Apr", 21,	54,	22,	3, FALSE
-)
+) |>
+  mutate(
+    at_least_some = legal_only_certain + illegal_all
+  ) |>
+  mutate(
+    across(Month, ym)
+  )
 ```
 
 ```{r plot-Gallup-abortions-should-be-legal, cache=TRUE, fig.cap="Distributions of responses over time to question 'Do you think abortions should be legal under any circumstances, legal only under certain circumstances or illegal in all circumstances?' in Gallup polling. [@gallup_abortion_in_depth]"}
 Gallup_abortions_should_be_legal |>
   mutate(
-    across(where(is.double), \(x) x / 100)
+    across(c(legal_any, legal_only_certain, illegal_all, no_opinion), \(x) x / 100)
   ) |>
-  mutate(
-    across(Month, ym)
+  pivot_longer(
+    cols = c(legal_any, legal_only_certain, illegal_all, no_opinion)
   ) |>
-  pivot_longer(cols = 2:5) |>
   ggplot(
     mapping = aes(
       x = Month,
@@ -267,32 +272,238 @@ Gallup_abortions_should_be_legal |>
     ) +
     labs(
       x = 'Year',
-      y = 'Percent of respondents with response'
+      y = 'Percent of respondents'
     )
 ```
 
-The minority of Americans that think abortion should be legal under any circumstances has fluctuated over the years from the low twenty percent to the mid thirty percent, peaking in 2022 at thirty five percent. In contrast, if we take those who answer "legal only under certain circumstances" and "illegal in all circumstances" as constituting those who want there to be _at least some_ restrictions on abortion, then there is now and historically has been a supermajority of Americans who want _at least some_ restrictions on abortion.
+The proportion of respondents that think abortion should be legal under any circumstances has fluctuated since 1975 with low of `r paste0(min(Gallup_abortions_should_be_legal$legal_any), '%')` and a high of `r paste0(max(Gallup_abortions_should_be_legal$legal_any), '%')`, which occurred last year in 2022 exceeding a similar maximum in 1992. 
 
-```{r}
+In contrast, if we take those who answer "legal only under certain circumstances" and "illegal in all circumstances" as constituting those who want there to be _at least some_ restrictions on abortion, then there is now and historically has been a majority of Americans who want _at least some_ restrictions on abortion.
 
+```{r plot-Gallup-at-least-some-restrictions, cache=TRUE, fig.cap="Distributions of responses over time to question 'Do you think abortions should be legal under any circumstances, legal only under certain circumstances or illegal in all circumstances?' with 'legal only under certain circumstances' and 'illegal in all circumstances' responses summed into an 'at least some restrictions' category. [@gallup_abortion_in_depth]"}
+Gallup_abortions_should_be_legal |>
+  mutate(
+    across(c(legal_any, at_least_some, no_opinion), \(x) x / 100)
+  ) |>
+  pivot_longer(
+    cols = c(legal_any, at_least_some, no_opinion)
+  ) |>
+  ggplot(
+    mapping = aes(
+      x = Month,
+      y = value,
+      color = name,
+      shape = name
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      linewidth = 1
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 0.8
+    ) +
+    scale_y_continuous(
+      breaks = \(x) seq(0, x[2], 0.1),
+      expand = expansion(mult = c(0, 0.05)),
+      labels = scales::label_percent(),
+      limits = c(0, NA)
+    ) +
+    scale_x_date(
+      breaks = scales::breaks_width('2 years', offset = '1 year'),
+      expand = expansion(add = 365),
+      labels = scales::label_date(format = '%Y')
+    ) +
+    scale_color_hue(
+      label = c(
+        legal_any = 'Legal under any',
+        at_least_some = 'At least some restrictions',
+        no_opinion = 'No opinion'
+      )
+    ) +
+    scale_shape_manual(
+      label = c(
+        legal_any = 'Legal under any',
+        at_least_some = 'At least some restrictions',
+        no_opinion = 'No opinion'
+      ),
+      values = c(21, 22, 23)
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Percent of respondents'
+    )
 ```
 
-Additionally, a large supermajority of Americans, according to Gallup polling, think that abortion in the third trimester should be generally illegal.
+The proportion of respondents that think there should be at least some restrictions on abortion has fluctuated since 1975 with a low of `r paste0(min(Gallup_abortions_should_be_legal$at_least_some), '%')` and a high of `r paste0(max(Gallup_abortions_should_be_legal$at_least_some), '%')`.
 
-```{r}
+Additionally, a large majority of Americans, according to Gallup polling that has been done intermittently since 1996, think that abortion in the third trimester should be generally illegal.
 
+```{r data-Gallup-third-trimester-legal}
+Gallup_third_trimester_legal <- tribble(
+  ~Month, ~legal, ~illegal, ~depends, ~no_opinion,
+  '2023 May 1',   22,	70,	7, 1,
+  '2022 May 2',   20,	71,	8, 1,
+  '2018 May 1',   13,	81,	4, 2,
+  '2012 Dec 27',	14,	80,	4, 2,
+  '2011 Jun 9',	  10,	86,	2, 1,
+  '2003 Jan 10',	10,	84, 4, 2,
+  '2000 Mar 30',	8, 	86, 3, 3,
+  '1996 Jul 25',	13,	82, 3, 2
+) |>
+  mutate(
+    across(Month, ymd)
+  )
 ```
 
-Furthermore, a simple majority of Americans think that abortion in the second trimester should be generally illegal. 
-
-```{r}
-
+```{r plot-Gallup-third-trimester-legal, cache=TRUE, fig.cap="Distributions of responses over time to question 'Thinking more generally, do you think abortion should generally be legal or generally illegal during each of the following stages of pregnancy. How about in the last three months of pregnancy?' [@gallup_abortion_in_depth]"}
+Gallup_third_trimester_legal|>
+  mutate(
+    across(c(legal, illegal, depends, no_opinion), \(x) x / 100)
+  ) |>
+  pivot_longer(
+    cols = c(legal, illegal, depends, no_opinion)
+  ) |>
+  ggplot(
+    mapping = aes(
+      x = Month,
+      y = value,
+      color = name,
+      shape = name
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      linewidth = 1
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 1.5
+    ) +
+    scale_y_continuous(
+      breaks = \(x) seq(0, x[2], 0.1),
+      expand = expansion(mult = c(0, 0.05)),
+      labels = scales::label_percent(),
+      limits = c(0, NA)
+    ) +
+    scale_x_date(
+      breaks = scales::breaks_width('2 years', offset = '1 year'),
+      expand = expansion(add = 365),
+      labels = scales::label_date(format = '%Y')
+    ) +
+    scale_color_hue(
+      label = c(
+        legal = 'Should be legal',
+        illegal = 'Should be illegal',
+        depends = 'Depends (volunteered)',
+        no_opinion = 'No opinion'
+      )
+    ) +
+    scale_shape_manual(
+      label = c(
+        legal = 'Should be legal',
+        illegal = 'Should be illegal',
+        depends = 'Depends (volunteered)',
+        no_opinion = 'No opinion'
+      ),
+      values = c(21, 22, 23, 24)
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Percent of respondents'
+    )
 ```
 
+The proportion of respondents that think third trimester abortions should be generally illegal has fluctuated since 1996 with a low of `r paste0(min(Gallup_third_trimester_legal$illegal), '%')` and a high of `r paste0(max(Gallup_third_trimester_legal$illegal), '%')`.[^trend]
 
-### Policy of _Roe v. Wade,_ _Doe v. Bolton,_ and Ohio's _Issue 1_
+Furthermore, a smaller majority of Americans think that abortion in the second trimester should be generally illegal. 
 
-The abortion laws of all fifty states of the United States from 1973 to 2022 had been overruled by the _Roe vs. Wade_ and _Doe vs. Bolton_ decisions. _Roe vs. Wade_ overturned any laws that prohibited abortion _for any reason_ up until "viability," which was stipulated to be the time at which a fetus can live outside his or her mother's womb and was interpreted in _Roe vs. Wade_ as "at about seven months (28 weeks) but may occur earlier, even at 24 weeks." [] Thus, "viability" according to _Roe vs. Wade_ includes the first two trimesters of pregnancy and some unspecified amount of the first month of the third trimester of pregnancy.
+```{r data-Gallup-second-trimester-legal}
+Gallup_second_trimester_legal <- tribble(
+  ~Month, ~legal, ~illegal, ~depends, ~no_opinion,
+  '2023 May 1', 37,	55,	6,	1,
+  '2022 May 2', 36,	55,	7,	2,
+  '2018 May 1', 28,	65,	4,	2,
+  '2012 Dec 27',27,	64,	5,	4,
+  '2011 Jun 9', 24,	71,	3,	2,
+  '2003 Jan 10',25,	68,	4,	3,
+  '2000 Mar 30',24,	69,	4,	3,
+  '1996 Jul 25',26,	65,	7,	2
+) |>
+  mutate(
+    across(Month, ymd)
+  )
+```
+
+```{r plot-Gallup-second-trimester-legal, cache=TRUE, fig.cap="Distributions of responses over time to question 'Thinking more generally, do you think abortion should generally be legal or generally illegal during each of the following stages of pregnancy. How about in the second three months of pregnancy?' [@gallup_abortion_in_depth]"}
+Gallup_second_trimester_legal|>
+  mutate(
+    across(c(legal, illegal, depends, no_opinion), \(x) x / 100)
+  ) |>
+  pivot_longer(
+    cols = c(legal, illegal, depends, no_opinion)
+  ) |>
+  ggplot(
+    mapping = aes(
+      x = Month,
+      y = value,
+      color = name,
+      shape = name
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      linewidth = 1
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 1.5
+    ) +
+    scale_y_continuous(
+      breaks = \(x) seq(0, x[2], 0.1),
+      expand = expansion(mult = c(0, 0.05)),
+      labels = scales::label_percent(),
+      limits = c(0, NA)
+    ) +
+    scale_x_date(
+      breaks = scales::breaks_width('2 years', offset = '1 year'),
+      expand = expansion(add = 365),
+      labels = scales::label_date(format = '%Y')
+    ) +
+    scale_color_hue(
+      label = c(
+        legal = 'Should be legal',
+        illegal = 'Should be illegal',
+        depends = 'Depends (volunteered)',
+        no_opinion = 'No opinion'
+      )
+    ) +
+    scale_shape_manual(
+      label = c(
+        legal = 'Should be legal',
+        illegal = 'Should be illegal',
+        depends = 'Depends (volunteered)',
+        no_opinion = 'No opinion'
+      ),
+      values = c(21, 22, 23, 24)
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Percent of respondents'
+    )
+```
+
+The proportion of respondents that think second trimester abortions should be generally illegal has fluctuated between a low of `r paste0(min(Gallup_second_trimester_legal$illegal), '%')` and a high of `r paste0(max(Gallup_second_trimester_legal$illegal), '%')`.[^trend]
+
+[^trend]: While it may appear that there is a trend toward more public support for the legality of second and third trimester abortions, it should be noted that the polling with regard to trimesters of pregnancy began in 1996, which was just before the a peak in popular opinion supporting abortion restriction (Figure \@ref(fig:plot-Gallup-at-least-some-restrictions)). It may be that this apparent trend is just part of a cyclical fluctuation, it may be that this is a trend in its own right.
+
+Thus, there has actually been a majority consensus among Americans for at least forty eight years. Throughout this time, a majority of Americans support at least some restrictions on abortion, thinking either that it should be legal only in certain circumstances or that it should be illegal in all circumstances, and a majority of Americans think that abortion in the second and third trimesters should be generally illegal.
+
+
+## Policy of _Roe v. Wade,_ _Doe v. Bolton,_ and Ohio's _Issue 1_
+
+The abortion laws of all fifty states of the United States from 1973 to 2022 had been overruled by the _Roe vs. Wade_ and _Doe vs. Bolton_ decisions. _Roe vs. Wade_ overturned any laws that prohibited abortion _for any reason_ up until "viability," which was stipulated to be the time at which a fetus can live outside his or her mother's womb and was interpreted in _Roe vs. Wade_ as "at about seven months (28 weeks) but may occur earlier, even at 24 weeks." [] Thus, the time before "viability" according to _Roe vs. Wade_ includes the first two trimesters of pregnancy and some unspecified amount of the first month of the third trimester of pregnancy.
 
 Since the vast majority of abortions are induced before the twenty-eighth week of gestational age, [] _Roe vs. Wade_ already made abortion policy in all fifty states very close to legal abortion under any circumstances. Additionally, the companion decision _Doe vs. Bolton_ overturned any law that prohibited abortion, even only abortions after viability, that did not have an exception for "health" reasons, and "health" was interpreted so broadly as to include things such as emotional distress. _Doe vs. Bolton_ would later be used to strike down laws prohibiting abortion even after the viability threshold. Thus, _Roe_ and _Doe_ together legalized abortion _under any circumstances_ and _at any time throughout pregnancy._ []
 
@@ -301,7 +512,7 @@ The text of Ohio's _Issue 1_ mirrors _Roe vs. Wade_ and _Doe vs. Bolton_ very cl
 The policy actually enforced by _Roe vs. Wade_ and _Doe vs. Bolton_ and now enforced once again by Ohio's _Issue 1_ is not the policy that the majority of Americans want. _Roe vs. Wade_ and Ohio's _Issue 1_ legalize abortion _for any reason,_ but as we have seen, a majority of Americans think abortion should be legal only in certain circumstances. _Roe _ and _Issue 1_ legalize abortion for any reason up until viability, which at least partially includes the _third trimester_ of pregnancy, but as was seen in the previous section, a supermajority of Americans think that abortions in the third trimester should be generally illegal. Finally, _Roe_ and _Issue 1_ legalize abortion for any reason throughout all of the _second trimester_ of pregnancy, but as was seen, a simple majority of Americans think that abortion should be generally illegal in the second trimester. 
 
 
-### How the Abortion Lobby Succeeds
+## How the Abortion Lobby Succeeds
 
 The abortion lobby that campaigns for the legality of abortion under any circumstances represents only a minority of Americans. The majority of Americans think that abortion should be legal only in certain circumstances and think that second and third trimester abortions should be generally illegal. How, then, has the abortion lobby succeeded?
 
@@ -318,20 +529,20 @@ With Ohio's _Issue 1,_ which was put to a popular vote, the answer is more subtl
 While the 2023 Ohio election has yet to be certified at the time of the writing of this article, the unofficial rate of voter turnout for the 2023 Ohio election is currently at 48.9%, which is consistent with previous Ohio elections in which there was no vote for President. [] The unofficial rate of those who voted "yes" on _Issue 1_ is currently at 56.6%.[] Thus, to put things in perspective, only about 27.7% of registered voters in the state of Ohio voted for _Issue 1._
 
 
-#### Median Voter vs. Polar Voter Strategies
+### Polarization
 
 The fact that only 27.7% of registered voters in a state can win a referendum in an off-year election is striking, and it highlights two alternative strategies for winning elections.
 
-The more obvious strategy is to appeal to the _median voter._ This is the strategy of figuring out what the majority of voters in an electorate want and to match a campaign's policy platform to this majority position. All other things being equal, if a candidate's platform matches the views of the majority of voters, then that candidate should win.
+The more obvious strategy is to appeal to the _majority voter._ This is the strategy of figuring out what the majority of voters in an electorate want and to match a campaign's policy platform to this majority position. All other things being equal, if a candidate's platform matches the views of the majority of voters, then that candidate should win.
 
-However, the success of the median voter strategy is contingent on everyone voting. When only 48.86% of registered voters -- and thus an even lower rate of _eligible_ voters -- vote in an election, then for close votes like Ohio's _Issue 1,_  the outcome of the election can be determined by _which voters_ actually do vote.
+However, the success of the majority voter strategy is contingent on everyone voting. When only 48.86% of registered voters -- and thus an even lower rate of _eligible_ voters -- vote in an election, then for close votes like Ohio's _Issue 1,_  the outcome of the election can be determined by _which voters_ actually do vote.
 
-An alternative strategy to the median voter strategy is to target the _polar voter._ This strategy explicitly targets viewpoints that are in the minority in an electorate, but that constitute a very _passionate_ minority. The goal here is to target a cohort that is more likely to vote and to excite others to vote in the election than the median voter.
+An alternative strategy to the majority voter strategy is to target the _polar voter._ This strategy explicitly targets viewpoints that are in the minority in an electorate, but that constitute a very _passionate_ minority. The goal here is to target a cohort that is more likely to vote and to excite others to vote in the election than the majority voter.
 
 This is likely what occurred in the Ohio 2023 election. With _Issue 1_ on the ballot, a passionate minority of voters who would otherwise not have bothered voting in the 2023 election went to vote specifically for abortion, which was enough to tip the voting for _Issue 1_ to a 56.6% to 43.4% majority during an off year when turnout was less than 50%.
 
 
-#### Lack of Understanding of Actual Policy
+### Lack of Understanding of Actual Policy
 
 It is clear that a sizable number of people in the United States do not know what it means for abortion to be legal for any reason up until the point of fetal viability, which is the policy of _Roe vs. Wade_ and of Ohio's _Issue 1._ As we have seen, during the time _Roe vs. Wade_ was in force, a supermajority of Americans thought (and still think) that abortion in the third trimester should be generally illegal and simple majority thought (and still think) that abortion in the second trimester should be generally illegal. At the same time, a majority of Americans did not support overturning _Roe vs. Wade_, and a majority of Americans think that overturning _Roe vs. Wade_ was a bad thing.
 
@@ -355,27 +566,27 @@ While those who think abortion should be legal in all circumstances constitute a
 Thus, while the viewpoint that abortion should be legal in all circumstances is a minority viewpoint among Americans, this viewpoint now dominates the Democrats. Since there are only two political parties in the United States that regularly win elections, the legal-abortion-in-all-cases platform of the abortion lobby has an outsized impact on American politics because it controls one of the two main political parties.
 
 
-## Recommendations for Median Voter Strategy
+## Recommendations for Majority Voter Strategy
 
 Democrats as a party have been captured by the minority viewpoint that abortion should be legal in all circumstances. As we have seen, the majority of Americans want abortion to be legal only in certain circumstances, and the majority of Americans think that abortion should be generally illegal in the second and third trimesters. The abortion lobby, on the other hand, has legalized abortion for any reason into the third trimester with _Roe vs. Wade_ and with Ohio's _Issue 1._
 
-If Republicans can successfully campaign for the median voter, then abortion policy will be an issue of strength for them. However, Democrats have the advantage of being able to excite a very passionate minority, which can cause an increase in voter turnout and be successful in elections by way of the polar voter strategy.
+If Republicans can successfully campaign for the majority voter, then abortion policy will be an issue of strength for them. However, Democrats have the advantage of being able to excite a very passionate minority, which can cause an increase in voter turnout and be successful in elections by way of the polar voter strategy.
 
-Next year during the 2024 elections, Americans will vote for a President of the United States. Such elections usually have higher voter turnout, which may decrease the effectiveness of the polar voter strategy and increase the effectiveness of the median voter strategy.
+Next year during the 2024 elections, Americans will vote for a President of the United States. Such elections usually have higher voter turnout, which may decrease the effectiveness of the polar voter strategy and increase the effectiveness of the majority voter strategy.
 
-Regardless of whether any given election is a Presidential election or not, candidates using the median voter strategy must adhere to several strategies in order for abortion policy to be an asset, not a detriment, to their campaigns.
+Regardless of whether any given election is a Presidential election or not, candidates using the majority voter strategy must adhere to several strategies in order for abortion policy to be an asset, not a detriment, to their campaigns.
 
 
 ### Reject an All-or-Nothing Framing
 
 A tactic that the abortion lobby has been successful in using is to frame the abortion issue as an all-or-nothing question between abortion being illegal in all circumstances or abortion being legal in all circumstances. As Gallup polling indicates, a minority of Americans think that abortion should be illegal _in all circumstances._ Thus, if the way the issue is framed to voters is this dichotomy, then abortion advocates can cobble together a majority to vote for abortion being legal in all circumstances. However, a minority of Americans _actually want_ abortion to be legal in all circumstances.
 
-Politicians campaigning for the median voter must be very careful, therefore, not to allow the issue to be framed as whether abortion should be legal or be banned. Instead, they must frame abortion policy as being a question of _under what circumstances_ abortion is to be legal and _under what circumstances_ it is to be illegal.
+Politicians campaigning for the majority voter must be very careful, therefore, not to allow the issue to be framed as whether abortion should be legal or be banned. Instead, they must frame abortion policy as being a question of _under what circumstances_ abortion is to be legal and _under what circumstances_ it is to be illegal.
 
 
-### Find the Median Voter
+### Find the Majority Voter
 
-This leads to the next important point. It is imperative for politicians campaigning for the median voter on abortion policy to _discover_ under what circumstances a majority in their electorate want abortion to be illegal. Since abortion policy is made by the legislatures of the several states in the United States, this must be done at the state level.
+This leads to the next important point. It is imperative for politicians campaigning for the majority voter on abortion policy to _discover_ under what circumstances a majority in their electorate want abortion to be illegal. Since abortion policy is made by the legislatures of the several states in the United States, this must be done at the state level.
 
 This is admittedly more challenging than the all-or-nothing framing that is working for the abortion lobby, but it can be accomplished simply by taking a survey of a representative random sample of registered voters in a given state. Furthermore, polling at the national level can give a political campaign hints on where to begin. Since a majority of Americans think that second and third trimester abortions should be generally illegal, it is likely that the electorate in many states want some kind of gestational age limit on abortion. It is therefore a matter of polling to find out the specific gestational age limit that is desired by majority of voters in a given state.
 
@@ -392,7 +603,7 @@ In addition to outright prohibition, there are likely many _regulations_ of abor
 
 ### Create Simple Messaging
 
-The abortion lobby has a stupidly simple message that they are promulgating that abortion is a "right" and that nefarious evildoers want to "take away your rights." This is an easy message on which to campaign. On the other hand, the Combined Argument and Explanation Against _Issue 1_ included in the Ohio ballots was scattered and unfocused. Campaigning for the median voter on abortion policy points the way to a much more streamlined message.
+The abortion lobby has a stupidly simple message that they are promulgating that abortion is a "right" and that nefarious evildoers want to "take away your rights." This is an easy message on which to campaign. On the other hand, the Combined Argument and Explanation Against _Issue 1_ included in the Ohio ballots was scattered and unfocused. Campaigning for the majority voter on abortion policy points the way to a much more streamlined message.
 
 This message should be something to the effect of, "Elites used unelected judges who abused their Constitutional authority in order to override the will of the American people and overturn laws in all fifty states pertaining to abortion policy. More recently, the Supreme Court returned matters of abortion policy back to American people and their duly elected representatives. I, as a candidate for ______ office, will fulfill my duty to represent the people of the state of ______. The majority of voters in the state of ______ want..."
 
@@ -401,27 +612,27 @@ Knowledge of the circumstances under which the the majority of voters in a given
 
 ## Consideration of Polar Voter Strategy
 
-Some politicians opposed to abortion argue that election losses such as those experienced in Virginia are due to use of the median voter strategy, which has led to lower voter turnout among voters opposed to abortion. There is logic to this. It is highly likely that the abortion lobby, where it has won, has won based on voter turnout.
+Some politicians opposed to abortion argue that election losses such as those experienced in Virginia are due to use of the majority voter strategy, which has led to lower voter turnout among voters opposed to abortion. There is logic to this. It is highly likely that the abortion lobby, where it has won, has won based on voter turnout.
 
 The abortion lobby has not represented the majority of Americans, but has had political successes. Indeed, rather than following public opinion, the abortion lobby appears to have changed public opinion in its favor by first imposing abortion policy against the will of the majority of Americans by way of _Roe_ and _Doe_ and then worrying about public opinion afterwards.
 
-As previously mentioned, elections in 2024 will be during a Presidential election, which typically has much higher turnout. Therefore, in the short term, strategies which aim to increase turnout at the expense of attracting median voters may be not effective next year.
+As previously mentioned, elections in 2024 will be during a Presidential election, which typically has much higher turnout. Therefore, in the short term, strategies which aim to increase turnout at the expense of attracting majority voters may be not effective next year.
 
 In the long term, the main issue with using the polar voter strategy _in opposition_ to abortion is its strong potential to backfire. Indeed, the fact that the abortion lobby has had success using the polar voter strategy is indicative _both_ of how it can be used successfully _and_ that it is currently being used successfully by the abortion lobby. Framing abortion policy as an all-or-nothing question is a tactic with which the abortion lobby has had demonstrable success. Appealing to enthusiastic minorities opposed to abortion risks creating an artificial majority for the abortion lobby's platform of legal abortion in all circumstances.
 
-The polar voter strategy trades in broader appeal among the electorate for increases in turnout among passionate voters. Whether or not this trade is a net positive for a candidate is heavily contingent on the views of voters in the candidate's electorate and the propensity of voters to vote. Thus, it is important for the candidates opposed to abortion to understand the views on abortion policy of the voters in the candidates' electorate, regardless if the median voter strategy or the polar voter strategy is ultimately used.
+The polar voter strategy trades in broader appeal among the electorate for increases in turnout among passionate voters. Whether or not this trade is a net positive for a candidate is heavily contingent on the views of voters in the candidate's electorate and the propensity of voters to vote. Thus, it is important for the candidates opposed to abortion to understand the views on abortion policy of the voters in the candidates' electorate, regardless if the majority voter strategy or the polar voter strategy is ultimately used.
 
 
 ## Do Not Be Scared of Abortion Policy
 
 Specific strategy aside, candidates for political office who hope to succeed should run their campaigns with confidence. I have noticed several Republican politicians approach the abortion issue with trepidation and almost apologetically. This is a bad appearance for any candidate for public office. People can sense when others lack confidence, and this lack of confidence does not inspire confidence in others.
 
-One of the advantages of the median voter strategy is that a candidate is armed with the knowledge that the candidate's platform is aligned with the majority of voters in the candidate's state. Candidates using the polar voter strategy must express personal conviction genuinely and appeal to an excited minority with this conviction. Either way, a candidate hemming and hawing about one's platform on abortion does not flatter a candidate.
+One of the advantages of the majority voter strategy is that a candidate is armed with the knowledge that the candidate's platform is aligned with the majority of voters in the candidate's state. Candidates using the polar voter strategy must express personal conviction genuinely and appeal to an excited minority with this conviction. Either way, a candidate hemming and hawing about one's platform on abortion does not flatter a candidate.
 
 
 ## Conclusion
 
-A majority of Democrats want abortion to be legal in all circumstances, which is a view shared by only a minority of Americans. The majority of Americans want abortion to be legal only in certain circumstances and want abortion to be generally illegal in the second and third trimester. Any candidate for public office who can successfully campaign for the median voter by rejecting an all-or-nothing framing, by identifying the abortion policy desired by a majority of voters in the candidate's electorate, and by messaging this policy in a straightforward and confident manner can exploit this weakness in Democrats' platform.
+A majority of Democrats want abortion to be legal in all circumstances, which is a view shared by only a minority of Americans. The majority of Americans want abortion to be legal only in certain circumstances and want abortion to be generally illegal in the second and third trimester. Any candidate for public office who can successfully campaign for the majority voter by rejecting an all-or-nothing framing, by identifying the abortion policy desired by a majority of voters in the candidate's electorate, and by messaging this policy in a straightforward and confident manner can exploit this weakness in Democrats' platform.
 
 It may be the case that, in certain constituencies, candidates opposed to abortion can succeed by using a strategy of campaigning for the polar voter, in which a passionate minority wins an election by way of increasing voter turnout. However, this has a strong potential to backfire, given the recent successes of the abortion lobby itself using such a strategy.
 
