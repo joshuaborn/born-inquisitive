@@ -227,5 +227,29 @@
 				]
 			]
 		}
+	},
+	{
+		"id": "gallup_abortion_by_party",
+		"type": "webpage",
+		"abstract": "This page provides Gallup's long-term trends on Americans' views about abortion by party identification.",
+		"container-title": "Gallup.com",
+		"language": "en",
+		"note": "section: Politics",
+		"title": "Abortion Trends by Party Identification",
+		"URL": "https://news.gallup.com/poll/246278/abortion-trends-party.aspx",
+		"author": [
+			{
+				"literal": "Gallup"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					17
+				]
+			]
+		}
 	}
 ]
