@@ -807,7 +807,101 @@ Gallup_abortion_legality_by_party <- tribble(
   "2020-05-01", 42, 'Democrats', 'legal_only_certain',
   "2021-05-03", 41, 'Democrats', 'legal_only_certain',
   "2022-05-02", 38, 'Democrats', 'legal_only_certain',
-  "2023-05-01", 34, 'Democrats', 'legal_only_certain'
+  "2023-05-01", 34, 'Democrats', 'legal_only_certain',
+  "1975-04-04", 25, 'Republicans', 'illegal_all',
+  "1979-02-23", 14, 'Republicans', 'illegal_all',
+  "1980-07-11", 21, 'Republicans', 'illegal_all',
+  "1981-05-08", 19, 'Republicans', 'illegal_all',
+  "1983-06-24", 15, 'Republicans', 'illegal_all',
+  "1988-09-25", 17, 'Republicans', 'illegal_all',
+  "1989-07-06", 17, 'Republicans', 'illegal_all',
+  "1990-04-05", 14, 'Republicans', 'illegal_all',
+  "1991-05-30", 21, 'Republicans', 'illegal_all',
+  "1991-09-05", 16, 'Republicans', 'illegal_all',
+  "1992-01-16", 12, 'Republicans', 'illegal_all',
+  "1993-03-12", 10, 'Republicans', 'illegal_all',
+  "1994-03-28", 20, 'Republicans', 'illegal_all',
+  "1994-09-06", 16, 'Republicans', 'illegal_all',
+  "1995-02-24", 16, 'Republicans', 'illegal_all',
+  "1995-09-22", 13, 'Republicans', 'illegal_all',
+  "1996-07-25", 21, 'Republicans', 'illegal_all',
+  "1996-09-20", 20, 'Republicans', 'illegal_all',
+  "1997-08-12", 19, 'Republicans', 'illegal_all',
+  "1997-11-06", 22, 'Republicans', 'illegal_all',
+  "1998-01-16", 21, 'Republicans', 'illegal_all',
+  "1999-04-30", 24, 'Republicans', 'illegal_all',
+  "2000-01-13", 19, 'Republicans', 'illegal_all',
+  "2000-03-30", 25, 'Republicans', 'illegal_all',
+  "2001-05-10", 27, 'Republicans', 'illegal_all',
+  "2002-05-06", 29, 'Republicans', 'illegal_all',
+  "2003-05-05", 24, 'Republicans', 'illegal_all',
+  "2004-05-02", 22, 'Republicans', 'illegal_all',
+  "2005-05-02", 31, 'Republicans', 'illegal_all',
+  "2006-05-08", 25, 'Republicans', 'illegal_all',
+  "2007-05-10", 29, 'Republicans', 'illegal_all',
+  "2008-05-08", 30, 'Republicans', 'illegal_all',
+  "2009-05-07", 35, 'Republicans', 'illegal_all',
+  "2010-05-03", 28, 'Republicans', 'illegal_all',
+  "2011-05-05", 34, 'Republicans', 'illegal_all',
+  "2012-05-03", 28, 'Republicans', 'illegal_all',
+  "2013-05-02", 28, 'Republicans', 'illegal_all',
+  "2014-05-08", 33, 'Republicans', 'illegal_all',
+  "2015-05-06", 23, 'Republicans', 'illegal_all',
+  "2016-05-04", 28, 'Republicans', 'illegal_all',
+  "2017-05-03", 28, 'Republicans', 'illegal_all',
+  "2018-05-01", 27, 'Republicans', 'illegal_all',
+  "2019-05-01", 32, 'Republicans', 'illegal_all',
+  "2020-05-01", 27, 'Republicans', 'illegal_all',
+  "2021-05-03", 31, 'Republicans', 'illegal_all',
+  "2022-05-02", 22, 'Republicans', 'illegal_all',
+  "2023-05-01", 24, 'Republicans', 'illegal_all',
+  "1975-04-04", 55, 'Republicans', 'legal_only_certain',
+  "1979-02-23", 63, 'Republicans', 'legal_only_certain',
+  "1980-07-11", 55, 'Republicans', 'legal_only_certain',
+  "1981-05-08", 55, 'Republicans', 'legal_only_certain',
+  "1983-06-24", 61, 'Republicans', 'legal_only_certain',
+  "1988-09-25", 57, 'Republicans', 'legal_only_certain',
+  "1989-07-06", 56, 'Republicans', 'legal_only_certain',
+  "1990-04-05", 54, 'Republicans', 'legal_only_certain',
+  "1991-05-30", 54, 'Republicans', 'legal_only_certain',
+  "1991-09-05", 53, 'Republicans', 'legal_only_certain',
+  "1992-01-16", 56, 'Republicans', 'legal_only_certain',
+  "1993-03-12", 51, 'Republicans', 'legal_only_certain',
+  "1994-03-28", 56, 'Republicans', 'legal_only_certain',
+  "1994-09-06", 56, 'Republicans', 'legal_only_certain',
+  "1995-02-24", 57, 'Republicans', 'legal_only_certain',
+  "1995-09-22", 59, 'Republicans', 'legal_only_certain',
+  "1996-07-25", 58, 'Republicans', 'legal_only_certain',
+  "1996-09-20", 58, 'Republicans', 'legal_only_certain',
+  "1997-08-12", 63, 'Republicans', 'legal_only_certain',
+  "1997-11-06", 54, 'Republicans', 'legal_only_certain',
+  "1998-01-16", 63, 'Republicans', 'legal_only_certain',
+  "1999-04-30", 59, 'Republicans', 'legal_only_certain',
+  "2000-01-13", 63, 'Republicans', 'legal_only_certain',
+  "2000-03-30", 52, 'Republicans', 'legal_only_certain',
+  "2001-05-10", 59, 'Republicans', 'legal_only_certain',
+  "2002-05-06", 53, 'Republicans', 'legal_only_certain',
+  "2003-05-05", 61, 'Republicans', 'legal_only_certain',
+  "2004-05-02", 65, 'Republicans', 'legal_only_certain',
+  "2005-05-02", 55, 'Republicans', 'legal_only_certain',
+  "2006-05-08", 57, 'Republicans', 'legal_only_certain',
+  "2007-05-10", 58, 'Republicans', 'legal_only_certain',
+  "2008-05-08", 58, 'Republicans', 'legal_only_certain',
+  "2009-05-07", 53, 'Republicans', 'legal_only_certain',
+  "2010-05-03", 56, 'Republicans', 'legal_only_certain',
+  "2011-05-05", 52, 'Republicans', 'legal_only_certain',
+  "2012-05-03", 61, 'Republicans', 'legal_only_certain',
+  "2013-05-02", 59, 'Republicans', 'legal_only_certain',
+  "2014-05-08", 52, 'Republicans', 'legal_only_certain',
+  "2015-05-06", 61, 'Republicans', 'legal_only_certain',
+  "2016-05-04", 59, 'Republicans', 'legal_only_certain',
+  "2017-05-03", 56, 'Republicans', 'legal_only_certain',
+  "2018-05-01", 61, 'Republicans', 'legal_only_certain',
+  "2019-05-01", 55, 'Republicans', 'legal_only_certain',
+  "2020-05-01", 59, 'Republicans', 'legal_only_certain',
+  "2021-05-03", 54, 'Republicans', 'legal_only_certain',
+  "2022-05-02", 67, 'Republicans', 'legal_only_certain',
+  "2023-05-01", 66, 'Republicans', 'legal_only_certain'
 ) |>
   mutate(
     across(Date, ymd)
@@ -929,6 +1023,63 @@ Gallup_abortion_legality_by_party |>
     )
 ```
 
+```{r plot-Gallup-abortion-legality-Republicans, cache=TRUE, fig.cap="Proportions of Republicans who responded either 'abortions should be legal only under certain circumstances' or 'illegal in all circumstances' to Gallup polling. [@gallup_abortion_by_party] "}
+Gallup_abortion_legality_by_party |>
+  filter(
+    party == 'Republicans',
+    viewpoint %in% c('legal_only_certain', 'illegal_all')
+  ) |>
+  mutate(
+    value = value / 100
+  ) |>
+  ggplot(
+    mapping = aes(
+      x = Date,
+      y = value,
+      color = viewpoint,
+      shape = viewpoint
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      linewidth = 1
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 0.8
+    ) +
+    scale_y_continuous(
+      breaks = \(x) seq(0, x[2], 0.1),
+      expand = expansion(mult = c(0, 0.05)),
+      labels = scales::label_percent(),
+      limits = c(0, NA)
+    ) +
+    scale_x_date(
+      breaks = scales::breaks_width('2 years', offset = '1 year'),
+      expand = expansion(add = 365),
+      labels = scales::label_date(format = '%Y')
+    ) +
+    scale_color_brewer(
+      label = c(
+        illegal_all = 'Illegal in all',
+        legal_only_certain = 'Legal only under certain'
+      ),
+      palette = this_palette,
+      type = 'qual'
+    ) +
+    scale_shape_manual(
+      label = c(
+        illegal_all = 'Illegal in all',
+        legal_only_certain = 'Legal only under certain'
+      ),
+      values = 21:22
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Percent of respondents'
+    )
+```
+
 Thus, while the viewpoint that abortion should be legal in all circumstances is a minority viewpoint among Americans, this viewpoint now dominates the Democrats. Since there are only two political parties in the United States that regularly win elections, the legal-abortion-in-all-cases platform of the abortion lobby has an outsized impact on American politics because it controls one of the two main political parties.
 
 
@@ -961,10 +1112,6 @@ Setting abortion policy to the majority will was a process that was occurring in
 In addition to outright prohibition, there are likely many _regulations_ of abortion that a majority of voters in a given state approve.[^regulations] For instance, Gallup polling suggests that a policy requiring abortion providers to provide information about alternatives to abortion has historically been quite popular at the national level in the United States. There are probably numerous regulations of various kinds that would be found to be popular in any given state.
 
 [^regulations]: In addition to legalizing abortion until fetal viability, _Roe v. Wade_ overturned any _regulations_ of abortions done in the first trimester. 
-
-```{r}
-
-```
 
 
 ### Create Simple Messaging
