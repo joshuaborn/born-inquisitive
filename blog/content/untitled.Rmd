@@ -662,7 +662,7 @@ The only way this can be the case is for some nontrivial number of Americans to 
 
 ### Capture of Democrats
 
-While those who think abortion should be legal in all circumstances constitute a minority of Americans, something important for politics in the United States has occurred in recent years. From 1975 to 2013, among Democrats, legal abortion in all circumstances was also a minority viewpoint, just it was for all Americans regardless of party affiliation. However, starting in 2014, about an equal number of Democrats supported legal abortion in all circumstances as did those who supported legal abortion only in certain circumstances. Now, as of 2023, a clear _majority_ of Democrats, about 60%, support legal abortion _in all circumstances._
+While those who think abortion should be legal in all circumstances constitute a minority of Americans, something important for how politics in the United States has occurred in recent years.
 
 ```{r data-Gallup-abortion-legality-by-party}
 Gallup_abortion_legality_by_party <- tribble(
@@ -969,6 +969,8 @@ Gallup_abortions_should_be_legal |>
     )
 ```
 
+From the time Gallup polling on the topic began in 1975 to the early 1990s, there was no practical difference in the proportion of Democrats and Republicans who thought abortion should be legal in all circumstances. However, from 1998 on, there has been a steady divergence such that more and more Democrats and less and less Republicans think that abortion should be legal in all circumstances, with the proportion of all Americans who think so roughly splitting the difference. 
+
 ```{r plot-Gallup-abortion-legality-Democrats, cache=TRUE, fig.cap="Proportions of Democrats who responded either 'abortions should be legal under any circumstances' or 'legal only under certain circumstances' to Gallup polling. [@gallup_abortion_by_party] "}
 Gallup_abortion_legality_by_party |>
   filter(party == 'Democrats') |>
@@ -1022,6 +1024,12 @@ Gallup_abortion_legality_by_party |>
       y = 'Percent of respondents'
     )
 ```
+
+From 1975 to 2010, the majority of Democrats thought that abortion should be legal only in certain circumstances, and a minority of Democrats thought that abortion should be legal in all circumstances. (Figure \@ref(fig:plot-Gallup-abortion-legality-Democrats)) This was similar to the distribution of viewpoints of all Americans. (Figure \@ref(fig:plot-Gallup-abortions-should-be-legal)) However, between 2010 and 2020, the proportions of Democrats who took either position began to switch. From 2021 on, the _majority_ of Democrats think that abortion should be legal in all circumstances.
+
+In this way, Democrats as a party have been captured by what is a minority viewpoint among all Americans. Approximately 60% of Democrats think that abortion should be legal in all circumstances, compared with only 34% of Americans who think that abortion should be legal in all circumstances, and only 34% of Democrats think that abortion should be legal only in certain circumstances, whereas 51% of Americans think that abortion should be legal only in certain circumstances.
+
+A similar capture has not occurred among Republicans.
 
 ```{r plot-Gallup-abortion-legality-Republicans, cache=TRUE, fig.cap="Proportions of Republicans who responded either 'abortions should be legal only under certain circumstances' or 'illegal in all circumstances' to Gallup polling. [@gallup_abortion_by_party] "}
 Gallup_abortion_legality_by_party |>
@@ -1080,7 +1088,11 @@ Gallup_abortion_legality_by_party |>
     )
 ```
 
-Thus, while the viewpoint that abortion should be legal in all circumstances is a minority viewpoint among Americans, this viewpoint now dominates the Democrats. Since there are only two political parties in the United States that regularly win elections, the legal-abortion-in-all-cases platform of the abortion lobby has an outsized impact on American politics because it controls one of the two main political parties.
+During the entirety of 1975 to present, the majority of Republicans have thought that abortion should be legal only in certain circumstances, just like the majority of Americans. The viewpoint that abortion should be illegal in all circumstances is a minority viewpoint among Republicans, just like it is among all Americans.[^illegal-all-circumstances-again]
+
+[^illegal-all-circumstances-again]: As noted in an earlier footnote, this may be in part due to the poor choice of options given to respondents by Gallup. Even among those who are strongly against abortion typically allow for at least some exception cases in which it should be legal, so "illegal in all circumstances" may be relegated to a permanent minority in Gallup polling.
+
+Thus, while the viewpoint that abortion should be legal in all circumstances is a minority viewpoint among Americans, this viewpoint now dominates the Democrats. No corresponding polar extreme in the other direction has captured Republicans. Since there are only two political parties in the United States that regularly win elections, the platform of the abortion lobby has an oversized impact on American politics because it controls one of the two main political parties, even though only a minority of Americans actually support such a platform.
 
 
 ## Recommendations for Majority Voter Strategy
