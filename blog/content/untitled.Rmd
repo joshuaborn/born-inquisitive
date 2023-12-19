@@ -30,6 +30,8 @@ showtext_auto()
 showtext_opts(dpi = 200)
 theme_update(text = element_text(family = 'open'))
 
+this_palette <- 2
+
 knitr::opts_chunk$set(
   cache = FALSE,
   dpi = 300,
@@ -239,6 +241,7 @@ Gallup_abortions_should_be_legal |>
       linewidth = 1
     ) +
     geom_point(
+      alpha = 1,
       fill = 'white',
       size = 0.8
     ) +
@@ -253,13 +256,15 @@ Gallup_abortions_should_be_legal |>
       expand = expansion(add = 365),
       labels = scales::label_date(format = '%Y')
     ) +
-    scale_color_hue(
+    scale_color_brewer(
       label = c(
         illegal_all = 'Illegal in all',
         legal_any = 'Legal under any',
         legal_only_certain = 'Legal only under certain',
         no_opinion = 'No opinion'
-      )
+      ),
+      palette = this_palette,
+      type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
@@ -301,6 +306,7 @@ Gallup_abortions_should_be_legal |>
       linewidth = 1
     ) +
     geom_point(
+      alpha = 1,
       fill = 'white',
       size = 0.8
     ) +
@@ -315,12 +321,14 @@ Gallup_abortions_should_be_legal |>
       expand = expansion(add = 365),
       labels = scales::label_date(format = '%Y')
     ) +
-    scale_color_hue(
+    scale_color_brewer(
       label = c(
         legal_any = 'Legal under any',
         at_least_some = 'At least some restrictions',
         no_opinion = 'No opinion'
-      )
+      ),
+      palette = this_palette,
+      type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
@@ -378,6 +386,7 @@ Gallup_third_trimester_legal|>
       linewidth = 1
     ) +
     geom_point(
+      alpha = 1,
       fill = 'white',
       size = 1.5
     ) +
@@ -392,13 +401,15 @@ Gallup_third_trimester_legal|>
       expand = expansion(add = 365),
       labels = scales::label_date(format = '%Y')
     ) +
-    scale_color_hue(
+    scale_color_brewer(
       label = c(
         legal = 'Should be legal',
         illegal = 'Should be illegal',
         depends = 'Depends (volunteered)',
         no_opinion = 'No opinion'
-      )
+      ),
+      palette = this_palette,
+      type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
@@ -457,6 +468,7 @@ Gallup_second_trimester_legal|>
       linewidth = 1
     ) +
     geom_point(
+      alpha = 1,
       fill = 'white',
       size = 1.5
     ) +
@@ -471,13 +483,15 @@ Gallup_second_trimester_legal|>
       expand = expansion(add = 365),
       labels = scales::label_date(format = '%Y')
     ) +
-    scale_color_hue(
+    scale_color_brewer(
       label = c(
         legal = 'Should be legal',
         illegal = 'Should be illegal',
         depends = 'Depends (volunteered)',
         no_opinion = 'No opinion'
-      )
+      ),
+      palette = this_palette,
+      type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
@@ -601,6 +615,7 @@ Gallup_overturn_roe_v_wade |>
       linewidth = 1
     ) +
     geom_point(
+      alpha = 1,
       fill = 'white',
       size = 1.5
     ) +
@@ -615,12 +630,14 @@ Gallup_overturn_roe_v_wade |>
       expand = expansion(add = 365),
       labels = scales::label_date(format = '%Y')
     ) +
-    scale_color_hue(
+    scale_color_brewer(
       label = c(
         yes_overturn = 'Yes, overturn / Good thing overturned',
         no_not_overturn = 'No, not overturn / Bad thing overturned',
         no_opinion = 'No opinion'
-      )
+      ),
+      palette = this_palette,
+      type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
@@ -816,7 +833,7 @@ Gallup_abortions_should_be_legal |>
     )
   ) +
     geom_line(
-      alpha = 0.6,
+      alpha = 0.4,
       linewidth = 1
     ) +
     geom_point(
@@ -841,6 +858,7 @@ Gallup_abortions_should_be_legal |>
         Democrats = 'Democrats',
         Republicans = 'Republicans'
       ),
+      palette = this_palette,
       type = 'qual'
     ) +
     scale_shape_manual(
@@ -872,7 +890,7 @@ Gallup_abortion_legality_by_party |>
     )
   ) +
     geom_line(
-      alpha = 0.6,
+      alpha = 0.4,
       linewidth = 1
     ) +
     geom_point(
@@ -895,6 +913,7 @@ Gallup_abortion_legality_by_party |>
         legal_any = 'Legal under any',
         legal_only_certain = 'Legal only under certain'
       ),
+      palette = this_palette,
       type = 'qual'
     ) +
     scale_shape_manual(
