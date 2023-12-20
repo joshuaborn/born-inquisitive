@@ -510,7 +510,7 @@ Gallup_second_trimester_legal|>
 
 The proportion of respondents that think second trimester abortions should be generally illegal has fluctuated between a low of `r paste0(min(Gallup_second_trimester_legal$illegal), '%')` and a high of `r paste0(max(Gallup_second_trimester_legal$illegal), '%')`.[^trend]
 
-[^trend]: While it may appear that there is a trend toward more public support for the legality of second and third trimester abortions, it should be noted that the polling with regard to trimesters of pregnancy began in 1996, which was just before the a peak in popular opinion supporting abortion restriction (Figure \@ref(fig:plot-Gallup-at-least-some-restrictions)). It may be that this apparent trend is just part of a cyclical fluctuation, it may be that this is a trend in its own right.
+[^trend]: While it may appear that there is a trend toward more public support for the legality of second and third trimester abortions, it should be noted that the polling with regard to trimesters of pregnancy began in 1996, which was just before the a peak in popular opinion supporting abortion restriction (Figure \@ref(fig:plot-Gallup-at-least-some-restrictions)). It may be that this apparent trend is just part of a cyclical fluctuation, or it may be that this is a trend in its own right.
 
 Thus, there has actually been a majority consensus among Americans for at least forty eight years. Throughout this time, a majority of Americans support at least some restrictions on abortion, thinking either that it should be legal only in certain circumstances or that it should be illegal in all circumstances, and a majority of Americans think that abortion in the second and third trimesters should be generally illegal.
 
@@ -1139,15 +1139,15 @@ Knowledge of the circumstances under which the majority of voters in a given sta
 
 ## Conclusion
 
-I am someone strongly opposed to abortion as a method of fertility control or sex selection. However, politics is not my focus. Politics is just one aspect of human civilization, and focusing on politics to the exclusion of everything else ignores most of the good that any of us could be doing with our lives.
+I am someone strongly opposed to abortion as a method of fertility control. However, politics is not my focus. Politics is just one aspect of human civilization, and focusing on politics to the exclusion of everything else ignores most of the good that any of us could be doing with our lives.
 
-On the other hand, while politics is not the only factor affecting the phenomenon of abortion, neither is it the case the effect of politics is negligible. The United States could have been a world leader in doing the hard work of putting abortion as a method of fertility control in the history books, but the policy implications of _Roe v. Wade_ changed how the American _culture_ has worked for the past fifty years, and this hard work has been left undone.
+On the other hand, while politics is not the only factor affecting the phenomenon of abortion, neither is it the case that the effect of politics is negligible. The United States could have been a world leader in doing the hard work of putting abortion as a method of fertility control in the history books, but the policy implications of _Roe v. Wade_ changed how the American _culture_ has worked for the past fifty years, and this hard work has been left undone.
 
-Thus, politics is not the only thing affecting abortion, but neither is it nothing, and politics only works in your favor when you win. In this article, I hope to have outlined how candidates opposed to abortion can win in the United States.
+Thus, with regard to abortion, politics is not everything, but neither is it nothing, and politics only works in your favor when you win. In this article, I have outlined how candidates opposed to abortion can win in the United States.
 
-It is my hope that politicians opposed to abortion can at least set abortion policy to the will of the majority. Then, all of us can do the work of changing that majority will.
+It is my hope that politicians opposed to abortion can set abortion policy to the will of the majority. Then, all of us can set about to do the work of changing that majority will.
 
-The role politicians can have in this latter enterprise is in funding. There are many ...
+The role politicians have in the former enterprise is to win elections. The role politicians can have in the latter enterprise is in _funding_ the initiatives that prevent abortions. There are two sides to this prevention: initiatives that support childcare and parenting, and initiatives that prevent unintended pregnancy.
 
 
 ## Citations
