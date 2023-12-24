@@ -254,5 +254,54 @@
 				]
 			]
 		}
+	},
+	{
+		"id": "florida-fatherhood",
+		"type": "webpage",
+		"container-title": "Florida Department of Children and Families",
+		"title": "The Responsible Fatherhood Initiative",
+		"URL": "https://www.myflfamilies.com/fatherhood",
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					19
+				]
+			]
+		}
+	},
+	{
+		"id": "virginia-building-blocks",
+		"type": "webpage",
+		"abstract": "Governor Glenn Youngkin, 74th Governor of Virginia",
+		"container-title": "Governor of Virginia | Glenn Youngkin",
+		"language": "en",
+		"title": "Governor Glenn Youngkin Launches Building Blocks for Virginia Families",
+		"URL": "https://www.governor.virginia.gov/newsroom/news-releases/2023/december/name-1018644-en.html",
+		"author": [
+			{
+				"family": "Porter",
+				"given": "Macaulay"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					19
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2023",
+					12,
+					7
+				]
+			]
+		}
 	}
 ]

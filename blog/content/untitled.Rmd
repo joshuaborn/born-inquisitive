@@ -14,7 +14,7 @@ output:
     toc_depth: 5
 summary: '[Put summary sentence here.]'
 tags: ["analysis", "induced abortion", "politics", "first-person"]
-title: 'Untitled Article'
+title: 'Analysis of Viewpoints on Abortion Policy in Gallup Polling: Abortion is Not a "Slam Dunk" for Democrats'
 ---
 
 ```{r setup, include=FALSE}
@@ -517,7 +517,7 @@ Thus, there has actually been a majority consensus among Americans for at least 
 
 ## Policy of _Roe v. Wade,_ _Doe v. Bolton,_ and Ohio's _Issue 1_
 
-The abortion laws of all fifty states of the United States from 1973 to 2022 had been overruled by the _Roe v. Wade_ and _Doe v. Bolton_ decisions. _Roe v. Wade_ overturned any laws that prohibited abortion _for any reason_ up until "viability," which was stipulated to be the time at which a fetus can live outside his or her mother's womb and was interpreted in _Roe v. Wade_ as "at about seven months (28 weeks) but may occur earlier, even at 24 weeks." [@roe_v_wade] Thus, the time before "viability" according to _Roe v. Wade_ includes the first two trimesters of pregnancy and some unspecified amount of the first month of the third trimester of pregnancy.
+The abortion laws of all fifty states of the United States from 1973 to 2022 had been overruled by the _Roe v. Wade_ and _Doe v. Bolton_ decisions. _Roe v. Wade_ overturned any laws that prohibited abortion _for any reason_ up until "viability," which was stipulated to be the time at which a fetus can live outside his or her mother's womb and was interpreted as "at about seven months (28 weeks) but may occur earlier, even at 24 weeks." [@roe_v_wade] Thus, the time before "viability" according to _Roe v. Wade_ includes the first two trimesters of pregnancy and some unspecified amount of the first month of the third trimester of pregnancy.
 
 Since the vast majority of abortions are induced before the twenty-eighth week of gestational age, [@cdc_2020] _Roe v. Wade_ already made abortion policy in all fifty states very close to legal abortion under any circumstances. Additionally, the companion decision _Doe v. Bolton_ overturned any law that prohibited abortion, even only abortions after viability, that did not have an exception for "health" reasons, and "health" was interpreted so broadly as to include things such as emotional distress. _Doe v. Bolton_ would later be used to strike down laws prohibiting abortion even after the viability threshold. [@forsythe_2013, 150-152] Thus, _Roe_ and _Doe_ together effectively legalized abortion _under any circumstances_ and _at any time throughout pregnancy._
 
@@ -1125,7 +1125,9 @@ The Gallup polling discussed in this article pertains to _nationally_ representa
 
 This is admittedly more challenging than the all-or-nothing framing that is working for the abortion lobby, but it can be accomplished simply by taking a survey of a representative random sample of registered voters in a given state. Furthermore, polling at the national level can give a political campaign hints on where to begin. Since a majority of Americans think that second and third trimester abortions should be generally illegal, it is likely that the electorate in most states want some kind of gestational age limit on abortion. Therefore, surveys should try to find out the specific gestational age limit that is desired by a majority of voters in a given state.
 
-In addition to prohibiting any restrictions on abortion until fetal viability, _Roe v. Wade_ also overturned any _regulations_ of abortions done in the first trimester. When surveying an electorate to discover majority opinions about abortion policy, candidates for political office should also discover what regulations of abortion that a majority of voters in a given state support. Again, national-level data can help inform these inquiries. For instance, Gallup polling suggests that a policy requiring abortion providers to provide information about alternatives to abortion has historically been quite popular at the national level in the United States. There are probably numerous regulations of various kinds that would be found to be popular in any given state. [@gallup_abortion_in_depth]
+In addition to prohibiting any restrictions on abortion until fetal viability, _Roe v. Wade_ also overturned any _regulations_ of abortions done in the first trimester, even those intended to to protect the health of the mother. When surveying an electorate to discover majority opinions about abortion policy, candidates for political office should also discover what regulations of abortion that a majority of voters in a given state support.
+
+Again, national-level data can help inform these inquiries. For instance, Gallup polling suggests that a policy requiring abortion providers to provide information about alternatives to abortion has historically been quite popular at the national level in the United States. There are probably numerous regulations of various kinds that would be found to be popular in any given state. [@gallup_abortion_in_depth]
 
 
 ### Create Simple Messaging
@@ -1137,17 +1139,29 @@ This message should be something to the effect of, "The majority of voters in th
 Knowledge of the circumstances under which the majority of voters in a given state want abortion to be illegal and of regulations approved by a majority of voters, as discussed in the previous section, should be used to substantiate this message. This message, in order to be effective, should be delivered directly and without apology or the hemming and hawing about things the electorate does not care about.
 
 
-## Conclusion
+## The Role of Politics
 
-I am someone strongly opposed to abortion as a method of fertility control. However, politics is not my focus. Politics is just one aspect of human civilization, and focusing on politics to the exclusion of everything else ignores most of the good that any of us could be doing with our lives.
+I am someone strongly opposed to abortion as a method of fertility control. However, politics is not my focus. Politics is just one aspect of human civilization, and focusing on politics to the exclusion of everything else ignores most of the good that any one of us could be doing with our lives.
 
-On the other hand, while politics is not the only factor affecting the phenomenon of abortion, neither is it the case that the effect of politics is negligible. The United States could have been a world leader in doing the hard work of putting abortion as a method of fertility control in the history books, but the policy implications of _Roe v. Wade_ changed how the American _culture_ has worked for the past fifty years, and this hard work has been left undone.
+On the other hand, while politics is not the only factor affecting the phenomenon of abortion, neither is it the case that the effect of politics is negligible. The United States could have been a world leader in doing the hard work of putting abortion as a method of fertility control in the history books, but the policy implications of _Roe v. Wade_ changed how the broader American culture has functioned for the past fifty years, and this hard work has been left undone.
 
 Thus, with regard to abortion, politics is not everything, but neither is it nothing, and politics only works in your favor when you win. In this article, I have outlined how candidates opposed to abortion can win in the United States.
 
-It is my hope that politicians opposed to abortion can set abortion policy to the will of the majority. Then, all of us can set about to do the work of changing that majority will.
+My hope for politicians opposed to abortion is that they can simply set abortion policy to the will of the majority. Then, all of us can set about to do the work of changing that majority will.[^abortion-lobby-opposite]
+
+[^abortion-lobby-opposite]: The abortion lobby has done the opposite: they have used judicial activism to set policy to their minority position, and then used these policy changes in an attempt to change majority opinion.
 
 The role politicians have in the former enterprise is to win elections. The role politicians can have in the latter enterprise is in _funding_ the initiatives that prevent abortions. There are two sides to this prevention: initiatives that support childcare and parenting, and initiatives that prevent unintended pregnancy.
+
+There are already signs that initiatives that support childcare and parenting are becoming a bipartisan norm in the United States. For instance, the State of Florida has appropriated $68.9 million with bipartisan support for its _Fatherhood Initiative,_ intended to promote responsible fatherhood. [@florida-fatherhood] The Republican Governor of the Commonwealth of Virginia recently announced that \$448 million annually of Commonwealth funds would go to _Building Blocks for Virginia Families_, a childcare and early education program that continues what started under his Democrat predecessor using temporary COVID-related federal funding. [@virginia-building-blocks]
+
+While initiatives supporting childcare and parenting appear to have broad bipartisan support, initiatives that aim to prevent unintended pregnancy tend to fall in between the partisan divide. The abortion lobby has largely captured public health and birth control institutions in the United States, which has led to these institutions being dominated by the view that abortion is a solution, rather than a problem. On the other hand, opposition to abortion in United States has largely been captured by religious communities, which in turn are often opposed to contraception and sex education as a matter of principle.
+
+Thus, there is a lack of institutions who take on the problem of unintended pregnancies and abortions in the United States. Yet, there are numerous symptoms that there is much to do in this regard. Those who engage in sexual intercourse without using contraception at all account for a disproportionate number of unintended pregnancies and abortions. There is abortion recidivism such that some women have multiple abortions without any intervention or change in behavior. The contraceptives we have are of limited effectiveness and so many unintended pregnancies occur while a contraceptive is being used, but despite this, we have not had a new method of contraception in over seventy years.
+
+All of this leads to over a million unintended pregnancies every year in the United States alone. This puts enormous pressure on public opinion in favor of abortion as a method of fertility control. Every two unintended pregnancies that are prevented, in the short-term, prevents one abortion on average, and in the long-term, removes some of this pressure on public opinion in favor of abortion.
+
+While there have been attempts to remove public funding from Planned Parenthood of America, since it is the leading provider of abortions in the United States, America suffers from a lack of organizations to fund _instead_ -- organizations dedicated to the prevention of unintended pregnancies through nonviolent means, rather than by running abortion clinics.
 
 
 ## Citations
