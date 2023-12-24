@@ -228,6 +228,13 @@ Gallup_abortions_should_be_legal |>
   pivot_longer(
     cols = c(legal_any, legal_only_certain, illegal_all, no_opinion)
   ) |>
+  mutate(
+    name = factor(
+      name,
+      c('legal_only_certain', 'legal_any', 'illegal_all', 'no_opinion'),
+      ordered = TRUE
+    )
+  ) |>
   ggplot(
     mapping = aes(
       x = Date,
@@ -258,22 +265,22 @@ Gallup_abortions_should_be_legal |>
     ) +
     scale_color_brewer(
       label = c(
-        illegal_all = 'Illegal in all',
-        legal_any = 'Legal under any',
-        legal_only_certain = 'Legal only under certain',
-        no_opinion = 'No opinion'
+        'Legal only under certain',
+        'Legal under any',
+        'Illegal in all',
+        'No opinion'
       ),
       palette = this_palette,
       type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
-        illegal_all = 'Illegal in all',
-        legal_any = 'Legal under any',
-        legal_only_certain = 'Legal only under certain',
-        no_opinion = 'No opinion'
+        'Legal only under certain',
+        'Legal under any',
+        'Illegal in all',
+        'No opinion'
       ),
-      values = c(21, 22, 23, 24)
+      values = 21:24
     ) +
     labs(
       x = 'Year',
@@ -293,6 +300,13 @@ Gallup_abortions_should_be_legal |>
   pivot_longer(
     cols = c(legal_any, at_least_some, no_opinion)
   ) |>
+  mutate(
+    name = factor(
+      name,
+      c('at_least_some', 'legal_any', 'no_opinion'),
+      ordered = TRUE
+    )
+  ) |>
   ggplot(
     mapping = aes(
       x = Date,
@@ -323,20 +337,20 @@ Gallup_abortions_should_be_legal |>
     ) +
     scale_color_brewer(
       label = c(
-        legal_any = 'Legal under any',
-        at_least_some = 'At least some restrictions',
-        no_opinion = 'No opinion'
+        'At least some restrictions',
+        'Legal under any',
+        'No opinion'
       ),
       palette = this_palette,
       type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
-        legal_any = 'Legal under any',
-        at_least_some = 'At least some restrictions',
-        no_opinion = 'No opinion'
+        'At least some restrictions',
+        'Legal under any',
+        'No opinion'
       ),
-      values = c(21, 22, 23)
+      values = 21:23
     ) +
     labs(
       x = 'Year',
@@ -373,6 +387,13 @@ Gallup_third_trimester_legal|>
   pivot_longer(
     cols = c(legal, illegal, depends, no_opinion)
   ) |>
+  mutate(
+    name = factor(
+      name,
+      c('illegal', 'legal', 'depends', 'no_opinion'),
+      ordered = TRUE
+    )
+  ) |>
   ggplot(
     mapping = aes(
       x = Date,
@@ -403,22 +424,22 @@ Gallup_third_trimester_legal|>
     ) +
     scale_color_brewer(
       label = c(
-        legal = 'Should be legal',
-        illegal = 'Should be illegal',
-        depends = 'Depends (volunteered)',
-        no_opinion = 'No opinion'
+        'Should be illegal',
+        'Should be legal',
+        'Depends (volunteered)',
+        'No opinion'
       ),
       palette = this_palette,
       type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
-        legal = 'Should be legal',
-        illegal = 'Should be illegal',
-        depends = 'Depends (volunteered)',
-        no_opinion = 'No opinion'
+        'Should be illegal',
+        'Should be legal',
+        'Depends (volunteered)',
+        'No opinion'
       ),
-      values = c(21, 22, 23, 24)
+      values = 21:24
     ) +
     labs(
       x = 'Year',
@@ -455,6 +476,13 @@ Gallup_second_trimester_legal|>
   pivot_longer(
     cols = c(legal, illegal, depends, no_opinion)
   ) |>
+  mutate(
+    name = factor(
+      name,
+      c('illegal', 'legal', 'depends', 'no_opinion'),
+      ordered = TRUE
+    )
+  ) |>
   ggplot(
     mapping = aes(
       x = Date,
@@ -485,22 +513,22 @@ Gallup_second_trimester_legal|>
     ) +
     scale_color_brewer(
       label = c(
-        legal = 'Should be legal',
-        illegal = 'Should be illegal',
-        depends = 'Depends (volunteered)',
-        no_opinion = 'No opinion'
+        'Should be illegal',
+        'Should be legal',
+        'Depends (volunteered)',
+        'No opinion'
       ),
       palette = this_palette,
       type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
-        legal = 'Should be legal',
-        illegal = 'Should be illegal',
-        depends = 'Depends (volunteered)',
-        no_opinion = 'No opinion'
+        'Should be illegal',
+        'Should be legal',
+        'Depends (volunteered)',
+        'No opinion'
       ),
-      values = c(21, 22, 23, 24)
+      values = 21:24
     ) +
     labs(
       x = 'Year',
