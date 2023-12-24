@@ -12,7 +12,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: '[Put summary sentence here.]'
+summary: "Gallup polling reveals that Democrats' abortion platform is only supported by a minority of Americans, but due to low voter turnout in the United States, this can sometimes still win elections."
 tags: ["analysis", "reproductive responsibility", "public opinion", "politics", "induced abortion", "first-person"]
 title: 'Analysis of Viewpoints on Abortion Policy in Gallup Polling: Abortion is Not a "Slam Dunk" for Democrats'
 ---
