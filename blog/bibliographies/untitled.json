@@ -200,13 +200,16 @@
 		"URL": "https://kgfw.com/2023/11/08/why-ohio-voters-approved-abortion-ballot-measure-according-to-exit-polling/",
 		"author": [
 			{
-				"literal": "Christine Filer"
+				"family": "Filer",
+				"given": "Christine"
 			},
 			{
-				"literal": "Gary Langer"
+				"family": "Langer",
+				"given": "Gary"
 			},
 			{
-				"literal": "Allison De Jong"
+				"family": "De Jong",
+				"given": "Allison"
 			}
 		],
 		"accessed": {

@@ -46,7 +46,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-I do not typically write much about abortion[^definition] politics. However, recently there were elections in the Virginia, where I live, and in Ohio. Several Democrats won elections in Virginia after focusing their campaigns on keeping abortion as legal as possible, and a referendum labeled _"State Issue 1 A Self-Executing Amendment Relating to Abortion and Other Reproductive Decisions"_ was passed in Ohio that replicated the policy instituted by the _Roe v. Wade_ and _Doe v. Bolton_ decisions of the Supreme Court of the United States.
+I do not typically write much about abortion[^definition] politics. However, recently there were elections in the Virginia, where I live, and in Ohio. Several Democrats won elections in Virginia after focusing their campaigns on abortion, and a referendum labeled _"State Issue 1 A Self-Executing Amendment Relating to Abortion and Other Reproductive Decisions"_ was passed in Ohio that replicated the policy instituted by the _Roe v. Wade_ and _Doe v. Bolton_ decisions of the Supreme Court of the United States.
 
 [^definition]: Unless otherwise noted, in this article the word "abortion" is used to mean induced abortion of pregnancy.
 
@@ -56,22 +56,22 @@ I do not typically write much about abortion[^definition] politics. However, rec
 
     This ambiguity can lead to misinterpretation. For instance, if a study were to report on abortions in a given population, it could be including both spontaneous and induced abortions if it were using the medical literature definition, but it could be excluding what are commonly called "miscarriages" if it were using the common definition.
 
-Because of these and other election results in the past year since the _Dobbs v. Jackson Women's Health Organization_ decision of the Supreme Court that overturned _Roe_ and _Doe,_ there have been numerous opinion articles interpreting the results as indicating that abortion policy is strong point for Democrat campaigns and a weak spot for Republican campaigns. (Before the 1990s, there was not a strong correlation between political party and views on abortion, but in 2023, there is a strong correlation between Democrats and support for legalization of abortion in all circumstances and between Republicans and support for at least some restrictions on abortion.)
+Because of these and other election results in the past year since the _Dobbs v. Jackson Women's Health Organization_ decision of the Supreme Court that overturned _Roe_ and _Doe,_ there have been numerous opinion articles interpreting the results as indicating that abortion policy is strong point for Democrat campaigns and a weak spot for Republican campaigns. (As will be seen in this article, before the 1990s, there was not a strong correlation between political party and views on abortion, but increasingly since 2000, there has been.)
 
 However, an analysis of Gallup polling on the views of Americans on abortion does not support this interpretation. A minority of Americans actually support the abortion policy advocated by Democrats. To understand how campaigning on a platform that only a minority of voters agree with can lead to victories in elections, an understanding of voting dynamics in the United States is necessary.
 
 
 ### Majority Voters versus Polar Voters in the United States
 
-The most obvious way to win an election when there is a popular vote is to find out what policy position a majority of voters in the electorate support and to campaign on that. Call this the **"majority voter strategy."** If there were only one issue, and if there were a majority position on this one issue, and if a candidate for public office were to campaign on the majority position, then it seems like a safe assumption that the that candidate would win.
+The most obvious way to win an election when there is a popular vote is to find out what policy position a majority of voters in the electorate support and to campaign on that. Let us call this the **"majority voter strategy."** If there were only one issue, and if there were a majority position on this one issue, and if a candidate for public office were to campaign on the majority position, then it seems like a safe assumption that the that candidate would win.
 
-For instance, suppose there were only one issue and on this issue, 34% of registered voters support Policy A, 51% support Policy B, and 13% support policy B. If you were a political candidate who wanted to win an election, it seems like Policy B would be the best platform. Even if all of the supporters of Policy A and Policy C voted for an alternative candidate, you would still get 51% of the vote and win the election.
+For instance, suppose there were only one issue, and on this issue 34% of registered voters support Policy A, 51% support Policy B, and 13% support policy B. If you were a political candidate who wanted to win an election, it seems like Policy B would be the best platform. Even if all of the supporters of Policy A and Policy C voted for an alternative candidate, you would still get 51% of the vote and win the election.
 
-However, there is a tacit assumption here that _all registered voters will vote._ This is simply not the case in the United States. Voter turnout in the United States is actually quite low. It is better in elections that include voting for the President of the United States, but in elections that do not include a vote for President, voter turnout is particularly low.
+However, there is a tacit assumption here that _all registered voters will vote._ This is simply not the case in the United States. Voter turnout in the United States is actually quite low. It is higher in elections that include voting for the President of the United States, but in elections that do not include a vote for President, voter turnout is particularly low.
 
-To use a concrete example, the official voter turnout for Ohio's November 7, 2023 general election, in which there was not a vote for President, was 49.63%. [@ohio_election_2023] A _minority_ of registered voters actually voted in the 2023 Ohio election. (If you were to quantify the proportion of _eligible_ voters who actually voted, it would be even lower.)
+To use a concrete example, the official voter turnout for Ohio's November 7, 2023 general election, in which there was not a vote for President, was 49.63%. [@ohio_election_2023] A _minority_ of registered voters actually voted in the 2023 Ohio general election. (If you were to quantify the proportion of _eligible_ voters who actually voted, it would be even lower.)
 
-This phenomenon is what allows political polarization to thrive in the United States. You can win an election in the United States by campaigning on a platform that is a minority position, provided that the minority is excited enoguh about the position that turnout will be higher among the minority than among the rest of the electorate. Call this the **"polar voter strategy."**
+This phenomenon is what allows political polarization to thrive in the United States. You can win an election in the United States by campaigning on a platform that is a minority position, provided that the minority is excited enough about the position that turnout will be higher among the minority than among the rest of the electorate. Let us call this the **"polar voter strategy."**
 
 For instance, suppose that those who support Policy A in the thought experiment are very excited by a candidate campaigning on Policy A, but supporters of Policy B and of Policy C are less excited about their respective positions and so are more inclined to spend the election day on working or pursuing other interests.
 
@@ -79,7 +79,7 @@ If the difference in turnout is drastic enough -- say, 80% turnout for supporter
 
 This is how running on minority positions succeeds in elections in the United States and is a big reason why political polarization is so abundant in the United States.
 
-This is, also, how Democrats win elections by campaigning on abortion. To put things in perspective, the official voter turnout in the 2023 Ohio election was 49.63%, and 56.78% of voters in the election voted for _Issue 1._ [@ohio_election_2023] Therefore, only $49.63\% \times 56.78\% = 28.18\%$ of registered voters in Ohio voted for _Issue 1._ To understand why this is the case with the specific issue of abortion policy, an understanding of public opinion on abortion in the United States is needed.
+This is, also, how Democrats win elections by campaigning on abortion. To put things in perspective, 56.78% of voters in the 2023 Ohio general election voted for _Issue 1._ [@ohio_election_2023] Because the official voter turnout was only 49.63%, this means that only 28.18% of registered voters in Ohio voted for _Issue 1._
 
 
 ## Viewpoints on Abortion in the United States
@@ -532,7 +532,7 @@ _Roe _ and _Issue 1_ legalize abortion for any reason up until viability, which 
 
 ## How the Abortion Lobby Succeeds
 
-For the sake of brevity, let us use the term "abortion lobby" to refer to the elements in American society that labor to make abortion policy match the policy of _Roe_ and _Doe_ and that was reiterated in Ohio's _Issue 1._ The abortion lobby campaigns for a set of policies that is effectively equivalent to the response to Gallup polling that "abortions should be legal under any circumstances," and so support for the platform of the abortion lobby has fluctuated between 21% and 35% of Americans.
+For the sake of brevity, let us use the term "abortion lobby" to refer to the elements in American society that labor to make abortion policy match the policy of _Roe_ and _Doe_ and that was reiterated in Ohio's _Issue 1._ The abortion lobby campaigns for a set of policies that is effectively equivalent to the response to Gallup polling that "abortions should be legal under any circumstances." Thus, support for the platform of the abortion lobby has fluctuated between 21% and 35% of Americans.
 
 How, then, has the abortion lobby succeeded in instituting its policies when it represents a minority of Americans?
 
@@ -543,7 +543,7 @@ With _Roe_ and _Doe_, the answer is obvious. The _Roe_ and _Doe_ policy was inst
 
 [^burger]: The Supreme Court vote for _Roe_ and _Doe_ was actually seven to two, not six to three, but Chief Justice Burger may have voted with the majority once he saw that a majority would vote for _Roe_ and _Doe_ just so that he could choose which Justice to assign the writing of the opinion.
 
-You could read numerous papers and books of arguments for and against doctrines such as _substantive due process_ and _selective fourteenth amendment incorporation_ on which the validity of _Roe_ and _Doe_ turn. You could also read numerous papers and books on the validity of the specific arguments and circumstances of the _Roe_ and _Doe_ decisions. Such legal aspect of the validity of the _Roe_ and _Doe_ decisions are beyond the scope of this article. 
+You could read numerous papers and books of arguments for and against doctrines labeled "substantive due process" and "selective fourteenth amendment incorporation" on which the validity of _Roe_ and _Doe_ turn. You could also read numerous papers and books on the validity of the specific arguments and circumstances of the _Roe_ and _Doe_ decisions. This legal aspect of the validity of the _Roe_ and _Doe_ decisions are beyond the scope of this article. 
 
 What is not controversial, however, is that the judiciary in the United States is very much by design not subject to popular opinion. Therefore, the use of the judiciary to achieve policy changes, regardless if you think it is valid or invalid, explains how the abortion lobby succeeded in achieving its policy goals, despite representing a minority viewpoint, for the time period of 1973 to 2022.
 
@@ -552,7 +552,7 @@ What is not controversial, however, is that the judiciary in the United States i
 
 Unlike _Roe_ and _Doe,_ Ohio's _Issue 1_ was put to a popular vote. Up until now, we have been discussing Gallup polling of a representative _nation-wide_ sample of the United States. The federal system of government in the United States entails that voting such as what was done for Ohio's _Issue 1_ is done on a state by state basis. Any one given state may have a different distribution of public opinion about abortion than what is observed nationally.
 
-However, 62.41% of voters in Ohio's 2022 general election voted for current Republican governor Mike DeWine, who is publicly opposed to abortion, compared with just 37.38% for the Democrat running against him. [@ohio_election_2022] Furthermore, the general election occurred on November 3, 2020, a few months after the _Dobbs_ decision that overturned _Roe_ and _Doe._ If the distribution of viewpoints on abortion of the citizens of Ohio differed from the national distribution such that more Ohioans support legal abortion under any circumstances than do Americans generally, then we would have expected to have seen it affect the 2022 gubernatorial election in Ohio. Therefore, this is unlikely to be the case.
+However, 62.41% of voters in Ohio's 2022 general election voted for current Republican governor Mike DeWine, who is publicly opposed to abortion, compared with just 37.38% for the Democrat running against him. [@ohio_election_2022] Furthermore, the general election occurred on November 3, 2020, a few months after the _Dobbs_ decision that overturned _Roe_ and _Doe._ If more Ohioans support legal abortion under any circumstances than do Americans generally, then we would expect this to have affected the 2022 gubernatorial election in Ohio. Therefore, this is unlikely to be the case.
 
 _Issue 1_ passed in Ohio because different people turned out to vote in the 2023 general election than did in the 2022 general election. Exit polling confirms that only 35% of voters in the 2023 Ohio general election were Republicans, the lowest proportion since 2012, and self-described "liberals" accounted for 34% of voters in the 2023 elections, compared with 20% in the 2022 elections. [@kgfw_issue_1]
 
