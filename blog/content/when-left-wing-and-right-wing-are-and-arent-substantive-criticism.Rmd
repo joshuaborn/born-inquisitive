@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 I gained a nuanced insight from reflecting on [my reading of _The Myth of Left and Right_](/myth-of-left-and-right.html) [@lewis_myth_2023] with regard to my attitudes toward the use of "left-wing" and "right-wing" in criticism.
 
-If, as the authors content, there is indeed no _logical_ coherence to what happens to constitute "left-wing" and "right-wing" in the United States, both over time and between the various issues grouped together in partisan packages, then what happens to be "left-wing" or "right-wing" is just a fad. This makes the left-right spectrum woefully inadequate to describe viewpoints, which is something that independent thinkers such as myself have bemoaned for years.
+If, as the authors contend, there is indeed no _logical_ coherence to what happens to constitute "left-wing" and "right-wing" in the United States, both over time and between the various issues grouped together in partisan packages, then what happens to be "left-wing" or "right-wing" is just a fad. This makes the left-right spectrum woefully inadequate to describe viewpoints, which is something that independent thinkers such as myself have bemoaned for years.
 
 However, there is still the social or demographic phenomenon in which partisan conformity leads to groups of viewpoints clustered together in the general population. This clustering is certainly not absolute. There are plenty of independent thinkers living in the United States. Nonetheless, there are plenty of partisan conformists, as well. 
 
