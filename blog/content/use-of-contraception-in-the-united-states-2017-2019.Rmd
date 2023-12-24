@@ -11,7 +11,7 @@ output:
     toc: true
     toc_depth: 5
 summary: "Original research on the number of persons using and not using contraception in the United States, the contraceptive methods being used, and motives for using or discontinuing contraceptive methods."
-tags: ["original research", "reproductive responsibility", "birth control", "NSFG", "third-person"]
+tags: ["analysis", "reproductive responsibility", "birth control", "NSFG", "third-person"]
 title: "Use of Contraception in the United States Reported in the 2017-2019 National Survey of Family Growth"
 ---
 

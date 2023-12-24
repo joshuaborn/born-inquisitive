@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 summary: '[Put summary sentence here.]'
-tags: ["analysis", "induced abortion", "politics", "first-person"]
+tags: ["analysis", "reproductive responsibility", "public opinion", "induced abortion", "politics", "first-person"]
 title: 'Analysis of Viewpoints on Abortion Policy in Gallup Polling: Abortion is Not a "Slam Dunk" for Democrats'
 ---
 
