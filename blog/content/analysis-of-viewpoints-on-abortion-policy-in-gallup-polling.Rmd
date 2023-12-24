@@ -2,7 +2,7 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/analysis-of-viewpoints-on-abortion-policy-in-gallup-polling.json"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2023-12-16
+date: 2023-12-24
 draft: true
 implicit-figures: true
 include-before: |
