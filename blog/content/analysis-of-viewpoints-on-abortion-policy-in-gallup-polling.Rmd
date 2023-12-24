@@ -1,6 +1,6 @@
 ---
 author: "Joshua Born"
-bibliography: "../bibliographies/untitled.json"
+bibliography: "../bibliographies/analysis-of-viewpoints-on-abortion-policy-in-gallup-polling.json"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2023-12-16
 draft: true
@@ -13,7 +13,7 @@ output:
     toc: true
     toc_depth: 5
 summary: '[Put summary sentence here.]'
-tags: ["analysis", "reproductive responsibility", "public opinion", "induced abortion", "politics", "first-person"]
+tags: ["analysis", "reproductive responsibility", "public opinion", "politics", "induced abortion", "first-person"]
 title: 'Analysis of Viewpoints on Abortion Policy in Gallup Polling: Abortion is Not a "Slam Dunk" for Democrats'
 ---
 
