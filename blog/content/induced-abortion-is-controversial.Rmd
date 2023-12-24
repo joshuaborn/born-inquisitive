@@ -105,7 +105,7 @@ Different people have radically different judgments about the practice of killin
 
 Each May, the public opinion company Gallup conducts its Values and Beliefs telephone poll on a representative sample of persons in the United States aged 18 or older, as part of the ongoing Gallup Poll Social Series. This poll contains a series of questions prompted with, "I'm going to read you a list of issues. Regardless of whether or not you think it should be legal, for each one, please tell me whether you personally believe that in general it is morally acceptable, or morally wrong."
 
-```{r Gallup-opinions-about-abortion, fig.cap='Moral opinions on induced abortion of pregnancy from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014] Each estimate is associated with some sampling error. However, Gallup does not release information needed to calculate sampling error with its Gallup Analytics summary spreadsheets. Respondents are prompted for either the "morally acceptable" or "morally wrong" answers, whereas the "depends on the situation" responses are volunteered by respondents.'}
+```{r Gallup-opinions-about-abortion, fig.cap="Moral opinions on induced abortion of pregnancy from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014] Each estimate is associated with some sampling error. However, Gallup does not release information needed to calculate sampling error with its Gallup Analytics summary spreadsheets. Respondents are prompted for either the 'morally acceptable' or 'morally wrong' answers, whereas the 'depends on the situation' responses are volunteered by respondents."}
 gallup_morality_data |>
   filter(Demographic == 'Aggregate') |>
   select(-Geography, -Demographic, -`Demographic Value`) |>
@@ -143,12 +143,14 @@ gallup_morality_data |>
       expand = expansion(add = 1),
       minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
     ) +
-    scale_color_hue(
+    scale_color_brewer(
       label = c(
         acceptable = 'Morally acceptable',
         wrong = 'Morally wrong',
         depends = 'Depends on the situation'
-      )
+      ),
+      palette = 2,
+      type = 'qual'
     ) +
     scale_shape_manual(
       label = c(
@@ -257,6 +259,10 @@ gallup_morality_data |>
       breaks = \(x) seq(x[1]+1, x[2]-1, 2),
       expand = expansion(add = 1),
       minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
+    ) +
+    scale_color_brewer(
+      palette = 2,
+      type = 'qual'
     ) +
     scale_shape_manual(
       values = c(21, 22, 23, 24)
