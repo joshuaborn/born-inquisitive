@@ -1095,42 +1095,27 @@ NSFG_2015_2019_for_calibration <- bind_cols(
   left_join(
     NSFG_2015_2019_preg_data |>
       mutate(
-        count_abortion2014 = if_else(
-          OUTCOME == 'INDUCED ABORTION' & Year == 2014,
+        count_abortions_2011_2014 = if_else(
+          OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014,
           1,
           0
         ),
-        count_abortion2013 = if_else(
-          OUTCOME == 'INDUCED ABORTION' & Year == 2013,
-          1,
-          0
-        ),
-        count_abortion2012 = if_else(
-          OUTCOME == 'INDUCED ABORTION' & Year == 2012,
-          1,
-          0
-        ),
-        count_abortion2011 = if_else(
-          OUTCOME == 'INDUCED ABORTION' & Year == 2011,
-          1,
-          0
-        ),
-        count_birth2014 = if_else(
+        count_births_2014 = if_else(
           OUTCOME == 'LIVE BIRTH' & Year == 2014,
           1,
           0
         ),
-        count_birth2013 = if_else(
+        count_births_2013 = if_else(
           OUTCOME == 'LIVE BIRTH' & Year == 2013,
           1,
           0
         ),
-        count_birth2012 = if_else(
+        count_births_2012 = if_else(
           OUTCOME == 'LIVE BIRTH' & Year == 2012,
           1,
           0
         ),
-        count_birth2011 = if_else(
+        count_births_2011 = if_else(
           OUTCOME == 'LIVE BIRTH' & Year == 2011,
           1,
           0
