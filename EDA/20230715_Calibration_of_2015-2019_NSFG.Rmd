@@ -820,8 +820,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
   ungroup()
 
 NSFG_2015_2019_fem_data <- bind_rows(
-  select(NSFG_2017_2019_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2),
-  select(NSFG_2015_2017_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2)
+  select(NSFG_2017_2019_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION),
+  select(NSFG_2015_2017_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION)
 ) |>
   mutate(
     age_group = cut(
@@ -834,7 +834,8 @@ NSFG_2015_2019_fem_data <- bind_rows(
       'Non-Hispanic White' = 2,
       'Non-Hispanic Black' = 3,
       'Non-Hispanic Other' = 4
-    )))
+    ))),
+    count_abortions = coalesce(ABORTION, 0)
   ) |> 
   left_join(
     select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
