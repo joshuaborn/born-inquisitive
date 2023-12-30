@@ -1073,62 +1073,75 @@ combined_abortion_test_harness |>
 ```{r set-calibration-flags, dependson="select-NSFG-variables"}
 indicators <- model.matrix(~age_group:HISPRACE2-1, data=NSFG_2015_2019_fem_data)
 
-colnames(indicators) <- gsub('_group|HISPRACE2', '', colnames(indicators))
+colnames(indicators) <- paste0(
+  'ind_',
+  gsub(
+    '[ :-]',
+    '_',
+    gsub('_group|HISPRACE2', '', colnames(indicators))
+  )
+)
 
 NSFG_2015_2019_for_calibration <- bind_cols(
   NSFG_2015_2019_fem_data,
   indicators
 ) |>
+  mutate(
+    across(
+      starts_with('ind_'),
+      \(x) factor(x, levels = 0:1, labels = c('No', 'Yes'))
+    )
+  ) |>
   left_join(
     NSFG_2015_2019_preg_data |>
       mutate(
-        calibrate_abortion2014 = if_else(
+        count_abortion2014 = if_else(
           OUTCOME == 'INDUCED ABORTION' & Year == 2014,
           1,
           0
         ),
-        calibrate_abortion2013 = if_else(
+        count_abortion2013 = if_else(
           OUTCOME == 'INDUCED ABORTION' & Year == 2013,
           1,
           0
         ),
-        calibrate_abortion2012 = if_else(
+        count_abortion2012 = if_else(
           OUTCOME == 'INDUCED ABORTION' & Year == 2012,
           1,
           0
         ),
-        calibrate_abortion2011 = if_else(
+        count_abortion2011 = if_else(
           OUTCOME == 'INDUCED ABORTION' & Year == 2011,
           1,
           0
         ),
-        calibrate_birth2014 = if_else(
+        count_birth2014 = if_else(
           OUTCOME == 'LIVE BIRTH' & Year == 2014,
           1,
           0
         ),
-        calibrate_birth2013 = if_else(
+        count_birth2013 = if_else(
           OUTCOME == 'LIVE BIRTH' & Year == 2013,
           1,
           0
         ),
-        calibrate_birth2012 = if_else(
+        count_birth2012 = if_else(
           OUTCOME == 'LIVE BIRTH' & Year == 2012,
           1,
           0
         ),
-        calibrate_birth2011 = if_else(
+        count_birth2011 = if_else(
           OUTCOME == 'LIVE BIRTH' & Year == 2011,
           1,
           0
         )
       ) |>
-      select(CASEID, starts_with('calibrate_')) |>
+      select(CASEID, starts_with('count_')) |>
       group_by(CASEID) |>
       summarize(across(everything(), sum)),
     by = 'CASEID'
   ) |> 
-  mutate(across(starts_with('calibrate'), \(x) coalesce(x, 0)))
+  mutate(across(starts_with('count_'), \(x) coalesce(x, 0)))
 
 rm(indicators)
 ```
@@ -1136,10 +1149,18 @@ rm(indicators)
 
 ## Counts of Cells to be Used for Calibration
 
-```{r count-cells-for-calibration, dependson="set-calibration-flags"}
+```{r count-indicators-for-calibration, dependson="set-calibration-flags"}
 NSFG_2015_2019_for_calibration |>
-  select(c(contains('Hispanic'), starts_with('calibrate_'))) |>
+  select(starts_with('ind_')) |>
   map(table) |>
-  bind_rows(.id = 'Cell Description') |>
+  bind_rows(.id = 'Indicator Variable') |>
+  gt()
+```
+
+```{r count-counts-for-calibration, dependson="set-calibration-flags"}
+NSFG_2015_2019_for_calibration |>
+  select(starts_with('count_')) |>
+  map(table) |>
+  bind_rows(.id = 'Count Variable') |>
   gt()
 ```
