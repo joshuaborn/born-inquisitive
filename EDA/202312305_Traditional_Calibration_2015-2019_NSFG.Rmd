@@ -288,7 +288,74 @@ NSFG_2015_2019_fem_data <- bind_rows(
 ```
 
 
-## Estimation Uncalibrated
+## Calibration
+
+### Set Calibration Variables
+
+```{r set-calibration-variables, dependson="select-NSFG-variables"}
+NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
+  mutate(
+    poststrat_age_race = gsub(
+      '[ -]',
+      '_',
+      paste('age', age_group, HISPRACE2, sep = '_')
+    )
+  ) |>
+  left_join(
+    NSFG_2015_2019_preg_data |>
+      group_by(CASEID) |>
+      summarize(
+        birth_in_2014 = if_else(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014),
+          'Yes',
+          'No'
+        ),
+        birth_in_2013 = if_else(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013),
+          'Yes',
+          'No'
+        ),
+        birth_in_2012 = if_else(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012),
+          'Yes',
+          'No'
+        ),
+        birth_in_2011 = if_else(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011),
+          'Yes',
+          'No'
+        )
+      ),
+    by = 'CASEID'
+  ) |>
+  mutate(across(starts_with('birth_in_'), \(x) coalesce(x, 'No')))
+```
+
+
+### Counts of Respondents Per Cell Used for Calibration
+
+```{r count-indicators-for-calibration, dependson="set-calibration-variables"}
+NSFG_2015_2019_for_calibration |>
+  count(poststrat_age_race) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(birth_in_2014) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(birth_in_2013) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(birth_in_2012) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(birth_in_2011) |>
+  gt()
+```
+
 
 ### Create NSFG Survey Object
 
@@ -302,6 +369,28 @@ NSFG_2015_2019_preg_srv <- NSFG_2015_2019_preg_data |>
   )
 ```
 
+
+### Load Target Totals for Calibration
+
+```{r load-target-totals-for-calibration}
+read_tsv(
+  here('data/NVSS/2011-2014/age.txt'),
+  name_repair = 'universal',
+  show_col_types = FALSE
+) |>
+  filter(Notes == 'Total' & !is.na(Year)) |>
+  select(Year, Births)
+```
+
+
+### Create Calibrated NSFG Survey Object
+
+```{r create-calibrated-NSFG-survey-object, dependson="create-NSFG-survey-object"}
+NSFG_2015_2019_preg_srv
+```
+
+
+## Estimation Uncalibrated
 
 ### Estimate Births Uncalibrated
 
@@ -373,6 +462,7 @@ estimate_abortions_by_domain <- function(variable, label) {
     select(-OUTCOME)
 }
 
+
 NSFG_2015_2019_unc_est_abortions <- bind_rows(
   NSFG_2015_2019_preg_srv |>
     group_by(Year, OUTCOME) |>
@@ -438,91 +528,6 @@ NSFG_2015_2019_unc_est_abortions <- bind_rows(
   estimate_abortions_by_domain('any_previous_abortions', 'No. of previous induced abortions'),
   estimate_abortions_by_domain('nativity', 'Nativity')
 )
-```
-
-
-## Calibration
-
-### Set Calibration Variables
-
-```{r set-calibration-variables, dependson="select-NSFG-variables"}
-indicators <- model.matrix(~age_group:HISPRACE2-1, data=NSFG_2015_2019_fem_data)
-
-colnames(indicators) <- paste0(
-  'ind_',
-  gsub(
-    '[ :-]',
-    '_',
-    gsub('_group|HISPRACE2', '', colnames(indicators))
-  )
-)
-
-NSFG_2015_2019_for_calibration <- bind_cols(
-  NSFG_2015_2019_fem_data,
-  indicators
-) |>
-  mutate(
-    across(
-      starts_with('ind_'),
-      \(x) factor(x, levels = 0:1, labels = c('No', 'Yes'))
-    )
-  ) |>
-  left_join(
-    NSFG_2015_2019_preg_data |>
-      mutate(
-        count_abortions_2011_2014 = if_else(
-          OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014,
-          1,
-          0
-        ),
-        count_births_2014 = if_else(
-          OUTCOME == 'LIVE BIRTH' & Year == 2014,
-          1,
-          0
-        ),
-        count_births_2013 = if_else(
-          OUTCOME == 'LIVE BIRTH' & Year == 2013,
-          1,
-          0
-        ),
-        count_births_2012 = if_else(
-          OUTCOME == 'LIVE BIRTH' & Year == 2012,
-          1,
-          0
-        ),
-        count_births_2011 = if_else(
-          OUTCOME == 'LIVE BIRTH' & Year == 2011,
-          1,
-          0
-        )
-      ) |>
-      select(CASEID, starts_with('count_')) |>
-      group_by(CASEID) |>
-      summarize(across(everything(), sum)),
-    by = 'CASEID'
-  ) |> 
-  mutate(across(starts_with('count_'), \(x) coalesce(x, 0)))
-
-rm(indicators)
-```
-
-
-### Counts of Respondents Per Cell Used for Calibration
-
-```{r count-indicators-for-calibration, dependson="set-calibration-variables"}
-NSFG_2015_2019_for_calibration |>
-  select(starts_with('ind_')) |>
-  map(table) |>
-  bind_rows(.id = 'Indicator Variable') |>
-  gt()
-```
-
-```{r count-counts-for-calibration, dependson="set-calibration-variables"}
-NSFG_2015_2019_for_calibration |>
-  select(starts_with('count_')) |>
-  map(table) |>
-  bind_rows(.id = 'Count Variable') |>
-  gt()
 ```
 
 
