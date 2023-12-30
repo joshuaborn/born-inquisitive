@@ -324,6 +324,16 @@ Date: `r pep_natmonthly_91_date`
 census_for_2015_2019 <- process_pep_natmonthly(pep_natmonthly_91) |>
   mutate(survey = '2015-2019', .before = everything())
 
+saveRDS(
+  census_for_2015_2019,
+  here('data/Census/prepared/census_for_2015_2019_all.Rds')
+)
+
+saveRDS(
+  filter(census_for_2015_2019, UNIVERSE == 'R'),
+  here('data/Census/prepared/census_for_2015_2019.Rds')
+)
+
 census_for_2015_2019 |>
   filter(UNIVERSE == 'R') |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
@@ -359,6 +369,16 @@ Date: `r pep_natmonthly_43_date`
 ```{r process-census-counts-for-2011-2015, dependson=c("define-pep-natmonthly-functions", "download-pep-natmonthly-43")}
 census_for_2011_2015 <- process_pep_natmonthly(pep_natmonthly_43) |>
   mutate(survey = '2011-2015', .before = everything())
+
+saveRDS(
+  census_for_2011_2015,
+  here('data/Census/prepared/census_for_2011_2015_all.Rds')
+)
+
+saveRDS(
+  filter(census_for_2011_2015, UNIVERSE == 'R'),
+  here('data/Census/prepared/census_for_2011_2015.Rds')
+)
 
 census_for_2011_2015 |>
   filter(UNIVERSE == 'R') |>
@@ -553,6 +573,11 @@ census_for_2006_2010 <- pep_int_charagegroups_2000_2010 |>
   process_pep_int_charagegroups() |>
   mutate(survey = '2006-2010', .before = everything())
 
+saveRDS(
+  census_for_2006_2010,
+  here('data/Census/prepared/census_for_2006_2010.Rds')
+)
+
 census_for_2006_2010 |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
   gt() |>
@@ -569,6 +594,11 @@ census_for_cycle_6 <- pep_int_charagegroups_2000_2010 |>
   filter(DATE_ == 4) |>
   process_pep_int_charagegroups() |>
   mutate(survey = 'Cycle 6', .before = everything())
+
+saveRDS(
+  census_for_cycle_6,
+  here('data/Census/prepared/census_for_cycle_6.Rds')
+)
 
 census_for_cycle_6 |>
   select(SEX_f, race_ethn_f, AGEGROUP_f, pop) |>
@@ -702,6 +732,11 @@ census_for_cycle_5 <- pep_int_charagegroups_1990_2000 |>
   filter(AGEGROUP %in% 4:9) |>
   mutate(survey = 'Cycle 5', .before = everything())
 
+saveRDS(
+  census_for_cycle_5,
+  here('data/Census/prepared/census_for_cycle_5.Rds')
+)
+
 census_for_cycle_5 |>
   select(ends_with('_f'), pop) |>
   gt() |>
@@ -803,6 +838,11 @@ census_for_cycle_4 <- read_csv(
   summarize(pop = sum(pop), .groups = 'drop') |>
   mutate(survey = 'Cycle 4', .before = everything())
 
+saveRDS(
+  census_for_cycle_4,
+  here('data/Census/prepared/census_for_cycle_4.Rds')
+)
+
 census_for_cycle_4 |>
   select(SEX_f, race_f, AGEGROUP_f, pop) |>
   gt() |>
@@ -841,6 +881,11 @@ saveRDS(census_combined, here('data/Census/combined_pep.Rds'))
 ```
 
 ```{r summarize-final-table, dependson="combine-census-counts"}
+saveRDS(
+  census_combined,
+  here('data/Census/prepared/census_combined.Rds')
+)
+
 census_combined |>
   filter(is.na(UNIVERSE) | UNIVERSE == 'R') |>
   select(!starts_with('UNIVERSE') & ends_with('_f'), pop) |>
