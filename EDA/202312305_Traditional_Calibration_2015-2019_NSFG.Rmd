@@ -368,7 +368,15 @@ NSFG_2015_2019_for_calibration |>
 
 ### Create NSFG Survey Object
 
-```{r create-NSFG-survey-object, dependson="select-NSFG-variables"}
+```{r create-NSFG-survey-objects, dependson="select-NSFG-variables"}
+NSFG_2015_2019_fem_srv <- NSFG_2015_2019_for_calibration |>
+  as_survey_design(
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2015_2019,
+    nest = TRUE
+  )
+
 NSFG_2015_2019_preg_srv <- NSFG_2015_2019_preg_data |>
   as_survey_design(
     strata = SEST,
@@ -434,16 +442,51 @@ poststrat_targets <- c(list(poststrat_pop_targets), poststrat_births_targets)
 
 ### Create Calibrated NSFG Survey Object
 
-```{r create-calibrated-NSFG-survey-object, dependson="create-NSFG-survey-object"}
-NSFG_2015_2019_preg_srv
+```{r create-calibrated-NSFG-survey-objects, dependson="create-NSFG-survey-objects"}
 ```
+
+
+### Evaluate Weights
+
+```{r summarize-weights, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
+summarize_variable <- function(tbl, col_name) {
+  summarize(
+    tbl,
+    n = sum(!is.na(get(col_name))),
+    missing = sum(is.na(get(col_name))),
+    min = min(get(col_name)),
+    p01 = quantile(get(col_name), 0.01),
+    p05 = quantile(get(col_name), 0.05),
+    q1 = quantile(get(col_name), 0.25),
+    med = median(get(col_name)),
+    q3 = quantile(get(col_name), 0.75),
+    p95 = quantile(get(col_name), 0.95),
+    p99 = quantile(get(col_name), 0.99),
+    max = max(get(col_name)),
+    mean = mean(get(col_name)),
+    sd = sd(get(col_name))
+  ) |>
+  pivot_longer(
+    where(is.numeric),
+    names_to = 'statistic',
+    values_to = col_name
+  )
+}
+
+NSFG_2015_2019_fem_srv$variables |>
+  summarize_variable('WGT2015_2019') |>
+  gt()
+```
+
+
+### Check Post-Stratification Totals
 
 
 ## Estimation Uncalibrated
 
 ### Estimate Births Uncalibrated
 
-```{r estimate-births-uncalibrated, dependson="create-NSFG-survey-object"}
+```{r estimate-births-uncalibrated, dependson="create-NSFG-survey-objects"}
 NSFG_2015_2019_unc_est_births <- bind_rows(
   NSFG_2015_2019_preg_srv |>
     group_by(Year, OUTCOME, age_group) |>
@@ -490,7 +533,7 @@ NSFG_2015_2019_unc_est_births <- bind_rows(
 
 ### Estimate Abortions Uncalibrated
 
-```{r estimate-abortions-uncalibrated, dependson="create-NSFG-survey-object"}
+```{r estimate-abortions-uncalibrated, dependson="create-NSFG-survey-objects"}
 estimate_abortions_by_domain <- function(variable, label) {
   external_vector <- c(Level = variable)
   NSFG_2015_2019_preg_srv |>
