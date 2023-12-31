@@ -10,6 +10,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+library(PracTools)
 library(dplyr)
 library(gt)
 library(haven)
@@ -447,39 +448,6 @@ poststrat_targets <- c(list(poststrat_pop_targets), poststrat_births_targets)
 ```
 
 
-### Evaluate Weights
-
-```{r summarize-weights, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
-summarize_variable <- function(tbl, col_name) {
-  summarize(
-    tbl,
-    n = sum(!is.na(get(col_name))),
-    missing = sum(is.na(get(col_name))),
-    min = min(get(col_name)),
-    p01 = quantile(get(col_name), 0.01),
-    p05 = quantile(get(col_name), 0.05),
-    q1 = quantile(get(col_name), 0.25),
-    med = median(get(col_name)),
-    q3 = quantile(get(col_name), 0.75),
-    p95 = quantile(get(col_name), 0.95),
-    p99 = quantile(get(col_name), 0.99),
-    max = max(get(col_name)),
-    mean = mean(get(col_name)),
-    sd = sd(get(col_name))
-  ) |>
-  pivot_longer(
-    where(is.numeric),
-    names_to = 'statistic',
-    values_to = col_name
-  )
-}
-
-NSFG_2015_2019_fem_srv$variables |>
-  summarize_variable('WGT2015_2019') |>
-  gt()
-```
-
-
 ### Verify Post-Stratification
 
 ```{r verify-post-stratification, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
@@ -564,6 +532,42 @@ verify_poststratification(
   gt() |>
   fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
   fmt_percent(Calib_Rel_Bias, decimals = 1)
+```
+
+
+### Evaluate Weights
+
+```{r summarize-weights, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
+summarize_weights <- function(svy) {
+  col_name <- as.character(attr(svy, 'survey_vars')$weights[[1]])
+  tbl <- svy$variables
+  summarize(
+    tbl,
+    n = sum(!is.na(get(col_name))),
+    missing = sum(is.na(get(col_name))),
+    min = min(get(col_name)),
+    p01 = quantile(get(col_name), 0.01),
+    p05 = quantile(get(col_name), 0.05),
+    q1 = quantile(get(col_name), 0.25),
+    med = median(get(col_name)),
+    q3 = quantile(get(col_name), 0.75),
+    p95 = quantile(get(col_name), 0.95),
+    p99 = quantile(get(col_name), 0.99),
+    max = max(get(col_name)),
+    mean = mean(get(col_name)),
+    sd = sd(get(col_name)),
+    deffK = deffK(get(col_name))
+  ) |>
+  pivot_longer(
+    where(is.numeric),
+    names_to = 'statistic',
+    values_to = col_name
+  )
+}
+
+NSFG_2015_2019_fem_srv |>
+  summarize_weights() |>
+  gt()
 ```
 
 
