@@ -268,6 +268,7 @@ NSFG_2015_2019_fem_data <- bind_rows(
   select(NSFG_2015_2017_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION)
 ) |>
   mutate(
+    one = 1,
     age_group = cut(
       AGER,
       breaks = c(14, 19, 24, 29, 34, 39, 44, 50),
@@ -295,7 +296,7 @@ NSFG_2015_2019_fem_data <- bind_rows(
 ```{r set-calibration-variables, dependson="select-NSFG-variables"}
 NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
   mutate(
-    poststrat_age_race = gsub(
+    poststrat_age_race = factor(gsub(
       '[ -]',
       '_',
       paste(
@@ -308,32 +309,32 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
         ),
         sep = '_'
       )
-    )
+    ))
   ) |>
   left_join(
     NSFG_2015_2019_preg_data |>
       group_by(CASEID) |>
       summarize(
-        birth_in_2014 = if_else(
+        birth_in_2014 = factor(if_else(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2014),
           'Yes',
           'No'
-        ),
-        birth_in_2013 = if_else(
+        )),
+        birth_in_2013 = factor(if_else(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2013),
           'Yes',
           'No'
-        ),
-        birth_in_2012 = if_else(
+        )),
+        birth_in_2012 = factor(if_else(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2012),
           'Yes',
           'No'
-        ),
-        birth_in_2011 = if_else(
+        )),
+        birth_in_2011 = factor(if_else(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2011),
           'Yes',
           'No'
-        )
+        ))
       ),
     by = 'CASEID'
   ) |>
@@ -389,7 +390,7 @@ NSFG_2015_2019_preg_srv <- NSFG_2015_2019_preg_data |>
 
 ### Load Target Totals for Calibration
 
-```{r load-target-totals-for-calibration, echo=FALSE, include=FALSE, eval=FALSE}
+```{r load-target-totals-for-calibration}
 poststrat_pop_targets <- readRDS(
   here('data/Census/prepared/census_for_2015_2019.Rds')
 ) |>
@@ -442,7 +443,7 @@ poststrat_targets <- c(list(poststrat_pop_targets), poststrat_births_targets)
 
 ### Create Calibrated NSFG Survey Object
 
-```{r create-calibrated-NSFG-survey-objects, dependson="create-NSFG-survey-objects"}
+```{r create-calibrated-NSFG-survey-objects, dependson=c("create-NSFG-survey-objects", "load-target-totals-for-calibration")}
 ```
 
 
@@ -479,7 +480,91 @@ NSFG_2015_2019_fem_srv$variables |>
 ```
 
 
-### Check Post-Stratification Totals
+### Verify Post-Stratification
+
+```{r verify-post-stratification, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
+verify_poststratification <- function(svy_before, svy_after, targets, variable_name) {
+  svy_before |>
+    group_by(get(variable_name)) |>
+    summarize(
+      Uncal = survey_total(one, vartype = 'ci')
+    ) |>
+    rename_with(~ gsub('get(variable_name)', variable_name, .x, fixed = TRUE)) |>
+    full_join(
+      svy_after |>
+        group_by(get(variable_name)) |>
+        summarize(
+          Calib = survey_total(one, vartype = 'ci')
+        ) |>
+        rename_with(~ gsub('get(variable_name)', variable_name, .x, fixed = TRUE))
+    ) |>
+    full_join(
+      targets
+    ) |>
+    mutate(
+      Uncal_Bias = Uncal - Freq,
+      Uncal_Rel_Bias = Uncal_Bias / Freq,
+      `Uncal_Covers?` = Freq <= Uncal_upp & Freq >= Uncal_low,
+      Calib_Bias = Calib - Freq,
+      Calib_Rel_Bias = Calib_Bias / Freq,
+      `Calib_Covers?` = Freq <= Calib_upp & Freq >= Calib_low,
+      Diff = Calib - Uncal
+    ) |>
+    select(
+      matches(variable_name), Diff, Uncal, Calib, Freq, Calib_low, Calib_upp, `Calib_Covers?`, Calib_Rel_Bias
+    )
+}
+
+verify_poststratification(
+    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_srv,
+    poststrat_pop_targets,
+    'poststrat_age_race'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+verify_poststratification(
+    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_srv,
+    poststrat_births_targets[[4]],
+    'birth_in_2014'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+verify_poststratification(
+    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_srv,
+    poststrat_births_targets[[3]],
+    'birth_in_2013'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+verify_poststratification(
+    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_srv,
+    poststrat_births_targets[[2]],
+    'birth_in_2012'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+verify_poststratification(
+    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_srv,
+    poststrat_births_targets[[1]],
+    'birth_in_2011'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+```
 
 
 ## Estimation Uncalibrated
