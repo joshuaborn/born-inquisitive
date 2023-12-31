@@ -298,7 +298,16 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
     poststrat_age_race = gsub(
       '[ -]',
       '_',
-      paste('Age', age_group, HISPRACE2, sep = '_')
+      paste(
+        'Age',
+        age_group,
+        case_when(
+          grepl('^Hispanic', HISPRACE2) ~ 'Hispanic',
+          grepl('Black', HISPRACE2) ~ 'Non-Hispanic Black',
+          .default = 'Non-Hispanic Non-Black'
+        ),
+        sep = '_'
+      )
     )
   ) |>
   left_join(
