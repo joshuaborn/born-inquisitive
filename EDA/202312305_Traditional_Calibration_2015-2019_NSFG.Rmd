@@ -546,10 +546,13 @@ verify_poststratification(
 ### Evaluate Weights
 
 ```{r summarize-weights, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
-summarize_weights <- function(x, label) {
-  tibble(
+summarize_weights <- function(x, label, useUWE = TRUE) {
+  tbl <- tibble(
     n = sum(!is.na(x)),
     missing = sum(is.na(x)),
+    positive = sum(x > 0),
+    zero = sum(x == 0),
+    negative = sum(x < 0),
     min = min(x),
     p01 = quantile(x, 0.01),
     p05 = quantile(x, 0.05),
@@ -561,9 +564,15 @@ summarize_weights <- function(x, label) {
     max = max(x),
     mean = mean(x),
     sd = sd(x),
-    deffK = deffK(x)
-  ) |>
+  )
+  if (useUWE) {
+    tbl <- bind_cols(
+      tbl,
+      tibble(UWE = deffK(x))
+    )
+  }
   pivot_longer(
+    tbl,
     where(is.numeric),
     names_to = 'statistic',
     values_to = label
@@ -571,39 +580,26 @@ summarize_weights <- function(x, label) {
 }
 
 summarize_weights(
-  NSFG_2015_2019_fem_svy$variable$WGT2015_2019,
+  weights(NSFG_2015_2019_fem_svy),
   'original_weights'
-)
-
-summarize_weights(
-  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[5]], 'oldweights'),
-  'oldweights1_1'
-)
-
-summarize_weights(
-  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[1]], 'weights'),
-  'weights_1_1'
-)
-
-summarize_weights(
-  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[2]], 'weights'),
-  'weights_1_2'
-)
-
-summarize_weights(
-  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[3]], 'weights'),
-  'weights_1_3'
-)
-
-summarize_weights(
-  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[4]], 'weights'),
-  'weights_1_4'
-)
-
-summarize_weights(
-  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[5]], 'weights'),
-  'weights_1_5'
-)
+) |> full_join(
+  summarize_weights(
+    weights(NSFG_2015_2019_fem_cal_svy),
+    'calibrated_weights'
+  ),
+  by = join_by(statistic)
+) |> full_join(
+  summarize_weights(
+    weights(NSFG_2015_2019_fem_svy) -  weights(NSFG_2015_2019_fem_cal_svy),
+    'differences',
+    useUWE = FALSE
+  ),
+  by = join_by(statistic)
+) |>
+  gt() |>
+  fmt_number(columns = where(is.numeric), decimals = 1) |>
+  fmt_number(rows = 1:5, decimals = 0) |>
+  fmt_number(rows = 17, decimals = 3)
 ```
 
 
