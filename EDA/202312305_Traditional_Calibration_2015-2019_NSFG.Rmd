@@ -298,7 +298,7 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
     poststrat_age_race = gsub(
       '[ -]',
       '_',
-      paste('age', age_group, HISPRACE2, sep = '_')
+      paste('Age', age_group, HISPRACE2, sep = '_')
     )
   ) |>
   left_join(
@@ -372,14 +372,54 @@ NSFG_2015_2019_preg_srv <- NSFG_2015_2019_preg_data |>
 
 ### Load Target Totals for Calibration
 
-```{r load-target-totals-for-calibration}
-read_tsv(
+```{r load-target-totals-for-calibration, echo=FALSE, include=FALSE, eval=FALSE}
+poststrat_pop_targets <- readRDS(
+  here('data/Census/prepared/census_for_2015_2019.Rds')
+) |>
+  filter(SEX_f == 'Female') |>
+  mutate(
+    poststrat_age_race = gsub(
+      '[ -]',
+      '_',
+      paste0(
+        gsub(' to | years', '_', AGEGROUP_f),
+        race_ethn_f
+      )
+    )
+  ) |>
+  rename(Freq = pop) |>
+  select(poststrat_age_race, Freq) |>
+  as.data.frame()
+
+poststrat_pop_total <- sum(poststrat_pop_targets$Freq)
+
+NVSS_births_2011_2014 <- read_tsv(
   here('data/NVSS/2011-2014/age.txt'),
   name_repair = 'universal',
   show_col_types = FALSE
 ) |>
   filter(Notes == 'Total' & !is.na(Year)) |>
-  select(Year, Births)
+  rename(Yes = Births) |>
+  mutate(
+    variable_name = paste0('birth_in_', Year),
+    No = poststrat_pop_total - Yes
+  ) |>
+  select(variable_name, Yes, No) |>
+  pivot_longer(c(Yes, No), values_to = 'Freq')
+
+poststrat_births_targets <- NVSS_births_2011_2014 |>
+  pull(variable_name) |>
+  unique() |>
+  lapply(function(this_variable_name) {
+    this_df <- NVSS_births_2011_2014 |>
+      filter(variable_name == this_variable_name) |>
+      select(name, Freq) |>
+      as.data.frame()
+    colnames(this_df) <- c(this_variable_name, 'Freq')
+    this_df
+  })
+
+poststrat_targets <- c(list(poststrat_pop_targets), poststrat_births_targets)
 ```
 
 
