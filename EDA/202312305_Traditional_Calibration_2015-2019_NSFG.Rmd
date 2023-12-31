@@ -19,6 +19,7 @@ library(purrr)
 library(readr)
 library(srvyr)
 library(stringr)
+library(survey)
 library(tidyr)
 
 knitr::opts_chunk$set(
@@ -445,6 +446,14 @@ poststrat_targets <- c(list(poststrat_pop_targets), poststrat_births_targets)
 ### Create Calibrated NSFG Survey Object
 
 ```{r create-calibrated-NSFG-survey-objects, dependson=c("create-NSFG-survey-objects", "load-target-totals-for-calibration")}
+NSFG_2015_2019_fem_cal_svy <- rake(
+  NSFG_2015_2019_fem_svy,
+  sample.margins = lapply(
+    poststrat_targets,
+    \(x) as.formula(paste0('~', colnames(x)[1]))
+  ),
+  population.margins = poststrat_targets
+)
 ```
 
 
@@ -475,17 +484,16 @@ verify_poststratification <- function(svy_before, svy_after, targets, variable_n
       `Uncal_Covers?` = Freq <= Uncal_upp & Freq >= Uncal_low,
       Calib_Bias = Calib - Freq,
       Calib_Rel_Bias = Calib_Bias / Freq,
-      `Calib_Covers?` = Freq <= Calib_upp & Freq >= Calib_low,
       Diff = Calib - Uncal
     ) |>
     select(
-      matches(variable_name), Diff, Uncal, Calib, Freq, Calib_low, Calib_upp, `Calib_Covers?`, Calib_Rel_Bias
+      matches(variable_name), Diff, Uncal, Calib, Freq, Calib_low, Calib_upp, Calib_Rel_Bias
     )
 }
 
 verify_poststratification(
     NSFG_2015_2019_fem_svy,
-    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
     poststrat_pop_targets,
     'poststrat_age_race'
   ) |>
@@ -495,7 +503,7 @@ verify_poststratification(
 
 verify_poststratification(
     NSFG_2015_2019_fem_svy,
-    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
     poststrat_births_targets[[4]],
     'birth_in_2014'
   ) |>
@@ -505,7 +513,7 @@ verify_poststratification(
 
 verify_poststratification(
     NSFG_2015_2019_fem_svy,
-    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
     poststrat_births_targets[[3]],
     'birth_in_2013'
   ) |>
@@ -515,7 +523,7 @@ verify_poststratification(
 
 verify_poststratification(
     NSFG_2015_2019_fem_svy,
-    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
     poststrat_births_targets[[2]],
     'birth_in_2012'
   ) |>
@@ -525,7 +533,7 @@ verify_poststratification(
 
 verify_poststratification(
     NSFG_2015_2019_fem_svy,
-    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
     poststrat_births_targets[[1]],
     'birth_in_2011'
   ) |>
@@ -538,36 +546,64 @@ verify_poststratification(
 ### Evaluate Weights
 
 ```{r summarize-weights, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
-summarize_weights <- function(svy) {
-  col_name <- as.character(attr(svy, 'survey_vars')$weights[[1]])
-  tbl <- svy$variables
-  summarize(
-    tbl,
-    n = sum(!is.na(get(col_name))),
-    missing = sum(is.na(get(col_name))),
-    min = min(get(col_name)),
-    p01 = quantile(get(col_name), 0.01),
-    p05 = quantile(get(col_name), 0.05),
-    q1 = quantile(get(col_name), 0.25),
-    med = median(get(col_name)),
-    q3 = quantile(get(col_name), 0.75),
-    p95 = quantile(get(col_name), 0.95),
-    p99 = quantile(get(col_name), 0.99),
-    max = max(get(col_name)),
-    mean = mean(get(col_name)),
-    sd = sd(get(col_name)),
-    deffK = deffK(get(col_name))
+summarize_weights <- function(x, label) {
+  tibble(
+    n = sum(!is.na(x)),
+    missing = sum(is.na(x)),
+    min = min(x),
+    p01 = quantile(x, 0.01),
+    p05 = quantile(x, 0.05),
+    q1 = quantile(x, 0.25),
+    med = median(x),
+    q3 = quantile(x, 0.75),
+    p95 = quantile(x, 0.95),
+    p99 = quantile(x, 0.99),
+    max = max(x),
+    mean = mean(x),
+    sd = sd(x),
+    deffK = deffK(x)
   ) |>
   pivot_longer(
     where(is.numeric),
     names_to = 'statistic',
-    values_to = col_name
+    values_to = label
   )
 }
 
-NSFG_2015_2019_fem_svy |>
-  summarize_weights() |>
-  gt()
+summarize_weights(
+  NSFG_2015_2019_fem_svy$variable$WGT2015_2019,
+  'original_weights'
+)
+
+summarize_weights(
+  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[5]], 'oldweights'),
+  'oldweights1_1'
+)
+
+summarize_weights(
+  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[1]], 'weights'),
+  'weights_1_1'
+)
+
+summarize_weights(
+  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[2]], 'weights'),
+  'weights_1_2'
+)
+
+summarize_weights(
+  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[3]], 'weights'),
+  'weights_1_3'
+)
+
+summarize_weights(
+  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[4]], 'weights'),
+  'weights_1_4'
+)
+
+summarize_weights(
+  attr(NSFG_2015_2019_fem_cal_svy$postStrata[[1]][[5]], 'weights'),
+  'weights_1_5'
+)
 ```
 
 
