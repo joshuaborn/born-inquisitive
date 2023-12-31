@@ -371,7 +371,7 @@ NSFG_2015_2019_for_calibration |>
 ### Create NSFG Survey Object
 
 ```{r create-NSFG-survey-objects, dependson="select-NSFG-variables"}
-NSFG_2015_2019_fem_srv <- NSFG_2015_2019_for_calibration |>
+NSFG_2015_2019_fem_svy <- NSFG_2015_2019_for_calibration |>
   as_survey_design(
     strata = SEST,
     ids = SECU,
@@ -379,7 +379,7 @@ NSFG_2015_2019_fem_srv <- NSFG_2015_2019_for_calibration |>
     nest = TRUE
   )
 
-NSFG_2015_2019_preg_srv <- NSFG_2015_2019_preg_data |>
+NSFG_2015_2019_preg_svy <- NSFG_2015_2019_preg_data |>
   as_survey_design(
     strata = SEST,
     ids = SECU,
@@ -484,8 +484,8 @@ verify_poststratification <- function(svy_before, svy_after, targets, variable_n
 }
 
 verify_poststratification(
-    NSFG_2015_2019_fem_srv,
-    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_svy,
     poststrat_pop_targets,
     'poststrat_age_race'
   ) |>
@@ -494,8 +494,8 @@ verify_poststratification(
   fmt_percent(Calib_Rel_Bias, decimals = 1)
 
 verify_poststratification(
-    NSFG_2015_2019_fem_srv,
-    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_svy,
     poststrat_births_targets[[4]],
     'birth_in_2014'
   ) |>
@@ -504,8 +504,8 @@ verify_poststratification(
   fmt_percent(Calib_Rel_Bias, decimals = 1)
 
 verify_poststratification(
-    NSFG_2015_2019_fem_srv,
-    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_svy,
     poststrat_births_targets[[3]],
     'birth_in_2013'
   ) |>
@@ -514,8 +514,8 @@ verify_poststratification(
   fmt_percent(Calib_Rel_Bias, decimals = 1)
 
 verify_poststratification(
-    NSFG_2015_2019_fem_srv,
-    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_svy,
     poststrat_births_targets[[2]],
     'birth_in_2012'
   ) |>
@@ -524,8 +524,8 @@ verify_poststratification(
   fmt_percent(Calib_Rel_Bias, decimals = 1)
 
 verify_poststratification(
-    NSFG_2015_2019_fem_srv,
-    NSFG_2015_2019_fem_srv,
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_svy,
     poststrat_births_targets[[1]],
     'birth_in_2011'
   ) |>
@@ -565,7 +565,7 @@ summarize_weights <- function(svy) {
   )
 }
 
-NSFG_2015_2019_fem_srv |>
+NSFG_2015_2019_fem_svy |>
   summarize_weights() |>
   gt()
 ```
@@ -577,7 +577,7 @@ NSFG_2015_2019_fem_srv |>
 
 ```{r estimate-births-uncalibrated, dependson="create-NSFG-survey-objects"}
 NSFG_2015_2019_unc_est_births <- bind_rows(
-  NSFG_2015_2019_preg_srv |>
+  NSFG_2015_2019_preg_svy |>
     group_by(Year, OUTCOME, age_group) |>
     summarize(
       Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
@@ -590,7 +590,7 @@ NSFG_2015_2019_unc_est_births <- bind_rows(
     select(-OUTCOME) |>
     rename(Level = age_group) |>
     mutate(Variable = 'Age group', .after = Year),
-  NSFG_2015_2019_preg_srv |>
+  NSFG_2015_2019_preg_svy |>
     group_by(Year, OUTCOME, marital_status) |>
     summarize(
       Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
@@ -603,7 +603,7 @@ NSFG_2015_2019_unc_est_births <- bind_rows(
     select(-OUTCOME) |>
     rename(Level = marital_status) |>
     mutate(Variable = 'Marital status', .after = Year),
-  NSFG_2015_2019_preg_srv |>
+  NSFG_2015_2019_preg_svy |>
     group_by(Year, OUTCOME, HISPRACE2) |>
     summarize(
       Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
@@ -625,7 +625,7 @@ NSFG_2015_2019_unc_est_births <- bind_rows(
 ```{r estimate-abortions-uncalibrated, dependson="create-NSFG-survey-objects"}
 estimate_abortions_by_domain <- function(variable, label) {
   external_vector <- c(Level = variable)
-  NSFG_2015_2019_preg_srv |>
+  NSFG_2015_2019_preg_svy |>
     group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
     summarize(
       n = unweighted(sum(one)),
@@ -645,7 +645,7 @@ estimate_abortions_by_domain <- function(variable, label) {
 
 
 NSFG_2015_2019_unc_est_abortions <- bind_rows(
-  NSFG_2015_2019_preg_srv |>
+  NSFG_2015_2019_preg_svy |>
     group_by(Year, OUTCOME) |>
     summarize(
       Est_age_under_15 = survey_total(age_under_15, vartype = 'ci'),
