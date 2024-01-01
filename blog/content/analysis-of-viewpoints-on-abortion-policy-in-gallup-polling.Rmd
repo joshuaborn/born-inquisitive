@@ -65,7 +65,7 @@ However, an analysis of Gallup polling on the views of Americans on abortion doe
 
 The most obvious way to win an election when there is a popular vote is to find out what policy position a majority of voters in the electorate support and to campaign on that. Let us call this the **"majority voter strategy."** If there were only one issue, and if there were a majority position on this one issue, and if a candidate for public office were to campaign on the majority position, then it seems like a safe assumption that the that candidate would win.
 
-For instance, suppose there were only one issue, and on this issue 34% of registered voters support Policy A, 51% support Policy B, and 13% support Policy B. If you were a political candidate who wanted to win an election, it seems like Policy B would be the best platform. Even if all of the supporters of Policy A and Policy C voted for an alternative candidate, you would still get 51% of the vote and win the election.
+For instance, suppose there were only one issue, and on this issue 34% of registered voters support Policy A, 51% support Policy B, and 13% support Policy C. If you were a political candidate who wanted to win an election, it seems like Policy B would be the best platform. Even if all of the supporters of Policy A and Policy C voted for an alternative candidate, you would still get 51% of the vote and win the election.
 
 However, there is a tacit assumption here that _all registered voters will vote._ This is simply not the case in the United States. Voter turnout in the United States is actually quite low. It is higher in elections that include voting for the President of the United States, but in elections that do not include a vote for President, voter turnout is particularly low.
 
