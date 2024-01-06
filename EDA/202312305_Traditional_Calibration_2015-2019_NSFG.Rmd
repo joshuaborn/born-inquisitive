@@ -454,6 +454,22 @@ NSFG_2015_2019_fem_cal_svy <- rake(
   ),
   population.margins = poststrat_targets
 )
+
+NSFG_2015_2019_preg_cal_svy <- NSFG_2015_2019_preg_data |>
+  select(-WGT2015_2019) |>
+  left_join(
+    tibble(
+      CASEID = pull(NSFG_2015_2019_fem_cal_svy, CASEID),
+      cal_WGT2015_2019 = weights(NSFG_2015_2019_fem_cal_svy)
+    ),
+    by = 'CASEID'
+  ) |>
+  as_survey_design(
+    strata = SEST,
+    ids = SECU,
+    weights = cal_WGT2015_2019,
+    nest = TRUE
+  )
 ```
 
 
@@ -603,16 +619,16 @@ summarize_weights(
 ```
 
 
-## Estimation Uncalibrated
+## Estimation, Uncalibrated
 
-### Estimate Births Uncalibrated
+### Estimate Births, Uncalibrated
 
 ```{r estimate-births-uncalibrated, dependson="create-NSFG-survey-objects"}
 NSFG_2015_2019_unc_est_births <- bind_rows(
   NSFG_2015_2019_preg_svy |>
     group_by(Year, OUTCOME, age_group) |>
     summarize(
-      Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
+      Unc_Est = survey_total(NBRNLV_S, vartype = 'ci'),
       n = unweighted(sum(one))
     ) |>
     ungroup() |>
@@ -625,7 +641,7 @@ NSFG_2015_2019_unc_est_births <- bind_rows(
   NSFG_2015_2019_preg_svy |>
     group_by(Year, OUTCOME, marital_status) |>
     summarize(
-      Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
+      Unc_Est = survey_total(NBRNLV_S, vartype = 'ci'),
       n = unweighted(sum(one))
     ) |>
     ungroup() |>
@@ -638,7 +654,7 @@ NSFG_2015_2019_unc_est_births <- bind_rows(
   NSFG_2015_2019_preg_svy |>
     group_by(Year, OUTCOME, HISPRACE2) |>
     summarize(
-      Est_Births = survey_total(NBRNLV_S, vartype = 'ci'),
+      Unc_Est = survey_total(NBRNLV_S, vartype = 'ci'),
       n = unweighted(sum(one))
     ) |>
     ungroup() |>
@@ -652,7 +668,7 @@ NSFG_2015_2019_unc_est_births <- bind_rows(
 ```
 
 
-### Estimate Abortions Uncalibrated
+### Estimate Abortions, Uncalibrated
 
 ```{r estimate-abortions-uncalibrated, dependson="create-NSFG-survey-objects"}
 estimate_abortions_by_domain <- function(variable, label) {
@@ -661,7 +677,7 @@ estimate_abortions_by_domain <- function(variable, label) {
     group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
     summarize(
       n = unweighted(sum(one)),
-      Est_Abortions = survey_total(one, vartype = 'ci'),
+      Unc_Est = survey_total(one, vartype = 'ci'),
       .groups = 'drop'
     ) |>
     rename(any_of(external_vector)) |>
@@ -716,9 +732,9 @@ NSFG_2015_2019_unc_est_abortions <- bind_rows(
         sub('([[:digit:]]{2})([^[:digit:]]*$)', '\\1 years\\2', .) %>% 
         str_to_sentence(),
       ColName = case_when(
-        grepl('_low', name) ~ 'Est_Abortions_low',
-        grepl('_upp', name) ~ 'Est_Abortions_upp',
-        grepl('Est_', name) ~ 'Est_Abortions',
+        grepl('_low', name) ~ 'Unc_Est_low',
+        grepl('_upp', name) ~ 'Unc_Est_upp',
+        grepl('Est_', name) ~ 'Unc_Est',
         grepl('n_', name) ~ 'n'
       )
     ) |>
@@ -744,6 +760,145 @@ NSFG_2015_2019_unc_est_abortions <- bind_rows(
 ```
 
 
+## Estimation, Calibrated
+
+### Estimate Births, Calibrated
+
+```{r estimate-births-calibrated, dependson="create-calibrated-NSFG-survey-objects"}
+NSFG_2015_2019_cal_est_births <- bind_rows(
+  NSFG_2015_2019_preg_cal_svy |>
+    group_by(Year, OUTCOME, age_group) |>
+    summarize(
+      Cal_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    select(-OUTCOME) |>
+    rename(Level = age_group) |>
+    mutate(Variable = 'Age group', .after = Year),
+  NSFG_2015_2019_preg_cal_svy |>
+    group_by(Year, OUTCOME, marital_status) |>
+    summarize(
+      Cal_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    select(-OUTCOME) |>
+    rename(Level = marital_status) |>
+    mutate(Variable = 'Marital status', .after = Year),
+  NSFG_2015_2019_preg_cal_svy |>
+    group_by(Year, OUTCOME, HISPRACE2) |>
+    summarize(
+      Cal_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    select(-OUTCOME) |>
+    rename(Level = HISPRACE2) |>
+    mutate(Variable = 'Race and ethnicity', .after = Year)
+)
+```
+
+
+### Estimate Abortions, Calibrated
+
+```{r estimate-abortions-calibrated, dependson="create-NSFG-survey-objects"}
+estimate_abortions_by_domain <- function(variable, label) {
+  external_vector <- c(Level = variable)
+   NSFG_2015_2019_preg_cal_svy |>
+    group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
+    summarize(
+      n = unweighted(sum(one)),
+      Cal_Est = survey_total(one, vartype = 'ci'),
+      .groups = 'drop'
+    ) |>
+    rename(any_of(external_vector)) |>
+    mutate(
+      Variable = label,
+      .after = Year
+    ) |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    select(-OUTCOME)
+}
+
+
+NSFG_2015_2019_cal_est_abortions <- bind_rows(
+   NSFG_2015_2019_preg_cal_svy |>
+    group_by(Year, OUTCOME) |>
+    summarize(
+      Est_age_under_15 = survey_total(age_under_15, vartype = 'ci'),
+      n_age_under_15 = unweighted(sum(age_under_15)),
+      Est_age_under_20 = survey_total(age_under_20, vartype = 'ci'),
+      n_age_under_20 = unweighted(sum(age_under_20)),
+      Est_age_15_to_17 = survey_total(age_15_to_17, vartype = 'ci'),
+      n_age_15_to_17 = unweighted(sum(age_15_to_17)),
+      Est_age_18_to_19 = survey_total(age_18_to_19, vartype = 'ci'),
+      n_age_18_to_19 = unweighted(sum(age_18_to_19)),
+      Est_age_15_to_19 = survey_total(age_15_to_19, vartype = 'ci'),
+      n_age_15_to_19 = unweighted(sum(age_15_to_19)),
+      Est_age_20_to_24 = survey_total(age_20_to_24, vartype = 'ci'),
+      n_age_20_to_24 = unweighted(sum(age_20_to_24)),
+      Est_age_25_to_29 = survey_total(age_25_to_29, vartype = 'ci'),
+      n_age_25_to_29 = unweighted(sum(age_25_to_29)),
+      Est_age_30_to_34 = survey_total(age_30_to_34, vartype = 'ci'),
+      n_age_30_to_34 = unweighted(sum(age_30_to_34)),
+      Est_age_35_to_39 = survey_total(age_35_to_39, vartype = 'ci'),
+      n_age_35_to_39 = unweighted(sum(age_35_to_39)),
+      Est_age_40_and_over = survey_total(age_40_and_over, vartype = 'ci'),
+      n_age_40_and_over = unweighted(sum(age_40_and_over))
+    ) |>
+    ungroup() |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    select(-OUTCOME) |>
+    pivot_longer(cols = starts_with(c('Est_', 'n_'))) |>
+    mutate(
+      Variable = 'Age group',
+      Level = sub('^.*_age_', '', name) %>% 
+        sub('(_low|_upp)$', '', .) %>%
+        sub('_to_', '-', .) %>% 
+        gsub('_', ' ', .) %>% 
+        sub('([[:digit:]]{2})([^[:digit:]]*$)', '\\1 years\\2', .) %>% 
+        str_to_sentence(),
+      ColName = case_when(
+        grepl('_low', name) ~ 'Cal_Est_low',
+        grepl('_upp', name) ~ 'Cal_Est_upp',
+        grepl('Est_', name) ~ 'Cal_Est',
+        grepl('n_', name) ~ 'n'
+      )
+    ) |>
+    pivot_wider(
+      id_cols = c(Year, Variable, Level),
+      names_from = ColName
+    ),
+  estimate_abortions_by_domain('gestational_age', 'Gestational age'),
+  estimate_abortions_by_domain('marital_status', 'Relationship status') |>
+    filter(Level == 'Unmarried'),
+  estimate_abortions_by_domain('relationship_status', 'Relationship status'),
+  estimate_abortions_by_domain('previous_births_topcoded4', 'No. of prior births'),
+  estimate_abortions_by_domain('previous_births_topcoded2', 'No. of prior births') |>
+    filter(Level == '>=2'),
+  estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level'),
+  estimate_abortions_by_domain('educational_attainment', 'Educational attainment'),
+  estimate_abortions_by_domain('religious_affiliation', 'Religious affiliation'),
+  estimate_abortions_by_domain('HISPRACE2', 'Race/ethnicity'),
+  estimate_abortions_by_domain('previous_abortions_topcoded3', 'No. of previous induced abortions'),
+  estimate_abortions_by_domain('any_previous_abortions', 'No. of previous induced abortions'),
+  estimate_abortions_by_domain('nativity', 'Nativity')
+)
+```
 ## Test Harness
 
 ### Create Births Test Harness
@@ -1216,14 +1371,59 @@ full_join(
   NSFG_2015_2019_unc_est_births,
   by = c('Year', 'Variable', 'Level')
 ) |>
+  full_join(
+    NSFG_2015_2019_cal_est_births,
+    by = c('Year', 'Variable', 'Level'),
+    suffix = c('.unc', '.cal')
+  ) |>
   mutate(
-    Bias = Est_Births - Births,
-    Relative_Bias = Bias / Births,
-    `Covers?` = Births <= Est_Births_upp & Births >= Est_Births_low
+    unequal_n = n.unc != n.cal,
+    Unc_Bias = Unc_Est - Births,
+    Unc_Rel_Bias = Unc_Bias / Births,
+    `Unc_Covers?` = Births <= Unc_Est_upp & Births >= Unc_Est_low,
+    Cal_Bias = Cal_Est - Births,
+    Cal_Rel_Bias = Cal_Bias / Births,
+    `Cal_Covers?` = Births <= Cal_Est_upp & Births >= Cal_Est_low,
+    Bias_Diff = abs(Cal_Bias) - abs(Unc_Bias),
+    Est_Diff = Cal_Est - Unc_Est,
+    Rel_Bias_Diff = abs(Cal_Rel_Bias) - abs(Unc_Rel_Bias),
+    `Fixed?` = if_else(
+        !`Unc_Covers?`,
+        `Cal_Covers?`,
+        NA
+    ),
+    `Broke?` = `Unc_Covers?` & !`Cal_Covers?`
+  ) |>
+  rename(
+    n = n.cal
+  ) |>
+  select(
+    Year,
+    Variable,
+    Level,
+    n,
+    Births,
+    Unc_Est,
+    Cal_Est,
+    Est_Diff,
+    Unc_Bias,
+    Cal_Bias,
+    Bias_Diff,
+    Unc_Rel_Bias,
+    Cal_Rel_Bias,
+    Rel_Bias_Diff,
+    Unc_Est_low,
+    Unc_Est_upp,
+    Cal_Est_low,
+    Cal_Est_upp,
+    `Unc_Covers?`,
+    `Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
   ) |>
   gt() |>
   fmt_number(-Year, decimal = 0) |>
-  fmt_percent(Relative_Bias, decimal = 1)
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
 ```
 
 
@@ -1252,12 +1452,56 @@ test_harness_abortions |>
     NSFG_2015_2019_unc_est_abortions,
     by = c('Year', 'Variable', 'Level')
   ) |>
+  left_join(
+    NSFG_2015_2019_cal_est_abortions,
+    by = c('Year', 'Variable', 'Level'),
+    suffix = c('.unc', '.cal')
+  ) |>
   mutate(
-    Bias = Est_Abortions - Abortions,
-    Relative_Bias = Bias / Abortions,
-    `Covers?` = Abortions <= Est_Abortions_upp & Abortions >= Est_Abortions_low
+    Unc_Bias = Unc_Est - Abortions,
+    Cal_Bias = Cal_Est - Abortions,
+    Unc_Rel_Bias = Unc_Bias / Abortions,
+    Cal_Rel_Bias = Cal_Bias / Abortions,
+    `Unc_Covers?` = Abortions <= Unc_Est_upp & Abortions >= Unc_Est_low,
+    `Cal_Covers?` = Abortions <= Cal_Est_upp & Abortions >= Cal_Est_low,
+    Bias_Diff = abs(Cal_Bias) - abs(Unc_Bias),
+    Est_Diff = Cal_Est - Unc_Est,
+    Rel_Bias_Diff = abs(Cal_Rel_Bias) - abs(Unc_Rel_Bias),
+    `Fixed?` = if_else(
+        !`Unc_Covers?`,
+        `Cal_Covers?`,
+        NA
+    ),
+    `Broke?` = `Unc_Covers?` & !`Cal_Covers?`
+  ) |>
+  rename(
+    n = n.cal
+  ) |>
+  select(
+    Year,
+    Variable,
+    Level,
+    n,
+    Abortions,
+    Unc_Est,
+    Cal_Est,
+    Est_Diff,
+    Unc_Bias,
+    Cal_Bias,
+    Bias_Diff,
+    Unc_Rel_Bias,
+    Cal_Rel_Bias,
+    Rel_Bias_Diff,
+    Unc_Est_low,
+    Unc_Est_upp,
+    Cal_Est_low,
+    Cal_Est_upp,
+    `Unc_Covers?`,
+    `Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
   ) |>
   gt() |>
   fmt_number(-Year, decimal = 0) |>
-  fmt_percent(Relative_Bias, decimal = 1)
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
 ```
