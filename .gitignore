@@ -18,5 +18,5 @@
 /blog/static/rmarkdown-libs
 /blog/word/*.docx
 /blog/word/*.pdf
+/data/
 Thumbs.db
-data/
