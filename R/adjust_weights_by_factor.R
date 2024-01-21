@@ -4,10 +4,13 @@ library(svrep)
 
 #' Adjust weights in a replicate weight survey design object
 #'
-#' `adjust_weights_by_factor()` increases the weights of all observations that
-#' match a specified predicate in a design object created by `survey` or `srvyr`
-#' in order for an estimate to match a target total. The function only works
-#' with survey design objects specified with replicate weights.
+#' `adjust_weights_by_factor()` adjusts the weights of all observations that
+#' match a selection predicate in a design object created by `survey` or `srvyr`
+#' by multiplying the weights by a given factor. Observations that do not match
+#' the selection predicate are adjusted by multiplying their weights by a
+#' complementary factor in order to keep the sum of all weights equal before
+#' and after adjustment. This function only works with survey design objects
+#' specified with replicate weights.
 #'
 #' @param svy A svyrep.design object as created by `survey` or `srvyr` packages
 #' @param selection A formula denoting which observations to select for weight
@@ -31,15 +34,26 @@ adjust_weights_by_factor <- function(svy, selection, factor) {
   )
 
   weight_cols <- grep('wgt_rep_|wgt_full_sample', colnames(df_before))
-
   weights <- df_before[weight_cols]
-  predicates <- df_before[, attr(terms(selection), which = 'term.labels')]
+
+  selected_or_not <- apply(df_before, 1, function(row) {
+    (sum(row[attr(terms(selection), which = 'term.labels')]) > 0)
+  })
+
+  sum_selected_weights <- sum(df_before[selected_or_not, 'wgt_full_sample'])
+  sum_complementary_weights <- sum(df_before[!selected_or_not, 'wgt_full_sample'])
+
+  complementary_factor <- 1 + (
+    ((1 - factor) * sum_selected_weights) / sum_complementary_weights
+  )
 
   adjusted_weights <- cbind(weights)
 
-  for (i in seq(1, nrow(weights))) {
-    if (sum(predicates[i, ]) > 0) {
+  for (i in seq(1, nrow(adjusted_weights))) {
+    if (selected_or_not[i]) {
       adjusted_weights[i, ] <- adjusted_weights[i, ] * factor
+    } else {
+      adjusted_weights[i, ] <- adjusted_weights[i, ] * complementary_factor
     }
   }
 

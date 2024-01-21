@@ -12,7 +12,7 @@ test_that('only svyrep.design objects are accepted', {
     adjust_weights_by_factor(
       test_data$rep_svy,
       ~count1 + count2 + count3 + count4 + count5 + count6,
-      2.5
+      1.3
     )
   )
 })
@@ -23,7 +23,7 @@ test_that('a svyrep.design object is returned', {
   adjusted_svy <- adjust_weights_by_factor(
     test_data$rep_svy,
     ~count1 + count2 + count3 + count4 + count5 + count6,
-    2.5
+    1.3
   )
 
   expect_contains(class(adjusted_svy), 'svyrep.design')
@@ -35,7 +35,7 @@ test_that('output data have same number of rows as input', {
   adjusted_svy <- adjust_weights_by_factor(
     test_data$rep_svy,
     ~count1 + count2 + count3 + count4 + count5 + count6,
-    2.5
+    1.3
   )
   df_after <- as_data_frame_with_weights(
     adjusted_svy,
@@ -51,7 +51,7 @@ test_that('output data have same number of rows as input', {
 
 
 test_that('observations that match the predicate have their weights adjusted', {
-  adjustment_factor <- 2.5
+  adjustment_factor <- 1.3
   test_data <- get_simple_survey_test_data()
   df_before <- as_data_frame_with_weights(
     test_data$rep_svy,
@@ -85,8 +85,8 @@ test_that('observations that match the predicate have their weights adjusted', {
 })
 
 
-test_that('observations that do not match the predicate have no change in weights', {
-  adjustment_factor <- 2.5
+test_that('sum of all weights before and after adjustment is equal', {
+  adjustment_factor <- 1.3
   test_data <- get_simple_survey_test_data()
   df_before <- as_data_frame_with_weights(
     test_data$rep_svy,
@@ -104,17 +104,8 @@ test_that('observations that do not match the predicate have no change in weight
     rep_wgt_prefix = 'REP_WGT_'
   )
 
-  weight_columns_before <- grep('_WGT', colnames(df_before))
-  weight_columns_after <- grep('_WGT', colnames(df_after))
-  predicate_columns <- grep('count', colnames(df_before))
-
-  for (i in 1:nrow(df_after)) {
-    predicate_sum <- sum(df_before[i, predicate_columns])
-    if (predicate_sum == 0) {
-      expect_equal(
-        df_after[i, weight_columns_after],
-        df_before[i, weight_columns_before]
-      )
-    }
-  }
+  expect_equal(
+    sum(df_before$FULL_SAMPLE_WGT),
+    sum(df_after$FULL_SAMPLE_WGT)
+  )
 })
