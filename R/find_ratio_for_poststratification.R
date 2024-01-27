@@ -12,7 +12,7 @@ library(survey)
 #'
 
 find_ratio_for_poststratification <- function(svy, estimators, target) {
-  if (!any(class(svy) %in% c('survey.design', 'svyrep.design'))) {
+  if (!inherits(svy, c('survey.design', 'svyrep.design'))) {
     stop('Parameter svy must be of class survey.design or svyrep.design')
   }
 

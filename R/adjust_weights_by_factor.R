@@ -23,7 +23,7 @@ library(svrep)
 #'
 
 adjust_weights_by_factor <- function(svy, selection, factor) {
-  if (!any(class(svy) == 'svyrep.design')) {
+  if (!inherits(svy, 'svyrep.design')) {
     stop('Parameter svy must be of class svyrep.design')
   }
 
