@@ -36,9 +36,9 @@ adjust_weights_by_factor <- function(svy, selection, factor) {
   weight_cols <- grep('wgt_rep_|wgt_full_sample', colnames(df_before))
   weights <- df_before[weight_cols]
 
-  selected_or_not <- apply(df_before, 1, function(row) {
-    (sum(row[attr(terms(selection), which = 'term.labels')]) > 0)
-  })
+  selected_or_not <- (
+    rowSums(df_before[attr(terms(selection), which = 'term.labels')]) > 0
+  )
 
   sum_selected_weights <- sum(df_before[selected_or_not, 'wgt_full_sample'])
   sum_complementary_weights <- sum(df_before[!selected_or_not, 'wgt_full_sample'])
