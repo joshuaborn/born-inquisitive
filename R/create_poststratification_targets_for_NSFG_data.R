@@ -5,6 +5,7 @@ library(tidyr)
 
 here('R/create_postratification_targets_for_NSFG.R')
 
+
 poststrat_pop_targets_2015_2019 <- readRDS(
   here('data/Census/prepared/census_for_2015_2019.Rds')
 ) |>
@@ -59,4 +60,21 @@ poststrat_targets_2011_2014 <- c(
 saveRDS(
   poststrat_targets_2011_2014,
   file = here('data/poststrat_targets_2015_2019.Rds')
+)
+
+
+guttmacher_APC_national <- read_csv(
+    here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
+    show_col_types = FALSE
+  ) |>
+  filter(state == 'US') |>
+  mutate(interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
+  ) |>
+  select('year', 'interpolated', 'abortionstotal')
+
+saveRDS(
+  guttmacher_APC_national,
+  file = here('data/guttmacher_APC_national.Rds')
 )

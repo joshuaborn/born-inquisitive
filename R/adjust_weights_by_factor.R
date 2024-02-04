@@ -50,6 +50,7 @@ adjust_weights_by_factor <- function(svy, selection, factor) {
   svy$pweights <- sampling_weights
 
   svy$call <- sys.call()
+  svy$adj_factors <- c(svy$adj_factors, factor)
 
   return(svy)
 

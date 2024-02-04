@@ -66,8 +66,8 @@ NSFG_2015_2019_preg_data <- bind_rows(
   )
 
 NSFG_2015_2019_fem_data <- bind_rows(
-  select(NSFG_2017_2019_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2),
-  select(NSFG_2015_2017_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2)
+  select(NSFG_2017_2019_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION),
+  select(NSFG_2015_2017_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION)
 ) |>
   mutate(
     one = 1,
@@ -81,7 +81,8 @@ NSFG_2015_2019_fem_data <- bind_rows(
       'Non-Hispanic White' = 2,
       'Non-Hispanic Black' = 3,
       'Non-Hispanic Other' = 4
-    )))
+    ))),
+    any_abortion = !is.na(ABORTION) & ABORTION > 0
   ) |>
   left_join(
     select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
@@ -129,32 +130,26 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
           'Yes',
           'No'
         ),
-        abortion_in_2014 = if_else(
-          any(OUTCOME == 'INDUCED ABORTION' & Year == 2014),
-          'Yes',
-          'No'
+        abortions_in_2014 = sum(
+          OUTCOME == 'INDUCED ABORTION' & Year == 2014,
+          na.rm = TRUE
         ),
-        abortion_in_2013 = if_else(
-          any(OUTCOME == 'INDUCED ABORTION' & Year == 2013),
-          'Yes',
-          'No'
-        ),
-        abortion_in_2012 = if_else(
-          any(OUTCOME == 'INDUCED ABORTION' & Year == 2012),
-          'Yes',
-          'No'
-        ),
-        abortion_in_2011 = if_else(
-          any(OUTCOME == 'INDUCED ABORTION' & Year == 2011),
-          'Yes',
-          'No'
+        abortions_in_2013 = sum(
+          OUTCOME == 'INDUCED ABORTION' & Year == 2013,
+          na.rm = TRUE
         )
       ),
     by = 'CASEID'
-  ) |> mutate(across(
-    c(starts_with('birth_in_'), starts_with('abortion_in_')),
-    \(x) factor(coalesce(x, 'No'), levels = c('Yes', 'No'))
-  ))
+  ) |> mutate(
+    across(
+      starts_with('birth_in_'),
+      \(x) factor(coalesce(x, 'No'), levels = c('Yes', 'No'))
+    ),
+    across(
+      starts_with('abortions_in_'),
+      \(x) coalesce(x, 0)
+    )
+  )
 
 NSFG_2015_2019_fem_svy <- as.svrepdesign(
   svydesign(

@@ -91,3 +91,24 @@ test_that('sum of all weights before and after adjustment is equal', {
     sum(weights(test_data$rep_svy, type = 'sampling'))
   )
 })
+
+
+test_that('the adjustment factor is recorded in the ', {
+  test_data <- get_simple_survey_test_data()
+
+  adjusted_svy <- adjust_weights_by_factor(
+    test_data$rep_svy,
+    ~count1 + count2 + count3 + count4 + count5 + count6,
+    1.3
+  )
+
+  expect_equal(last(adjusted_svy$adj_factor), 1.3)
+
+  readjusted_svy <- adjust_weights_by_factor(
+    adjusted_svy,
+    ~count1 + count2 + count3 + count4 + count5 + count6,
+    0.7
+  )
+
+  expect_equal(last(readjusted_svy$adj_factor), 0.7)
+})
