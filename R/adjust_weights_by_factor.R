@@ -1,5 +1,4 @@
 library(survey)
-library(svrep)
 
 
 #' Adjust weights in a replicate weight survey design object
@@ -27,43 +26,31 @@ adjust_weights_by_factor <- function(svy, selection, factor) {
     stop('Parameter svy must be of class svyrep.design')
   }
 
-  df_before <- as_data_frame_with_weights(
-    svy,
-    full_wgt_name = 'wgt_full_sample',
-    rep_wgt_prefix = 'wgt_rep_'
-  )
-
-  weight_cols <- grep('wgt_rep_|wgt_full_sample', colnames(df_before))
-  weights <- df_before[weight_cols]
-
   selected_or_not <- (
-    rowSums(df_before[attr(terms(selection), which = 'term.labels')]) > 0
+    rowSums(svy$variables[attr(terms(selection), which = 'term.labels')]) > 0
   )
 
-  sum_selected_weights <- sum(df_before[selected_or_not, 'wgt_full_sample'])
-  sum_complementary_weights <- sum(df_before[!selected_or_not, 'wgt_full_sample'])
+  sum_selected_weights <- sum(weights(svy, type = 'sampling')[selected_or_not])
+  sum_complementary_weights <- sum(
+    weights(svy, type = 'sampling')[!selected_or_not]
+  )
 
   complementary_factor <- 1 + (
     ((1 - factor) * sum_selected_weights) / sum_complementary_weights
   )
 
-  adjusted_weights <- cbind(weights)
+  sampling_weights <- weights(svy, type = 'sampling')
 
-  for (i in seq(1, nrow(adjusted_weights))) {
-    if (selected_or_not[i]) {
-      adjusted_weights[i, ] <- adjusted_weights[i, ] * factor
-    } else {
-      adjusted_weights[i, ] <- adjusted_weights[i, ] * complementary_factor
-    }
-  }
+  sampling_weights[selected_or_not] <- factor *
+    sampling_weights[selected_or_not]
 
-  svrepdesign(
-    data = cbind(
-      df_before[-weight_cols],
-      adjusted_weights
-    ),
-    type = svy$type,
-    weights = ~wgt_full_sample,
-    repweights = 'wgt_rep_'
-  )
+  sampling_weights[!selected_or_not] <- complementary_factor *
+    sampling_weights[!selected_or_not]
+
+  svy$pweights <- sampling_weights
+
+  svy$call <- sys.call()
+
+  return(svy)
+
 }
