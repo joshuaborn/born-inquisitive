@@ -1,0 +1,1599 @@
+---
+title: "Weight Adjustment of 2015-2019 NSFG using Factor Adjustment and Raking Post-stratification"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+    css: wide.css
+---
+
+```{r setup, include=FALSE}
+library(PracTools)
+library(dplyr)
+library(gt)
+library(haven)
+library(here)
+library(purrr)
+library(readr)
+library(srvyr)
+library(stringr)
+library(survey)
+library(svrep)
+library(tidyr)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi=200,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+
+## Data Preparation
+
+### Load NSFG Data
+
+```{r load-NSFG-data}
+NSFG_2017_2019_preg_raw <- read_sas(
+  data_file = here('data/NSFG/d2017_2019fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
+)
+NSFG_2015_2017_preg_raw <- read_sas(
+  data_file = here('data/NSFG/d2015_2017fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
+)
+NSFG_2011_2019_wgts <- read_sas(
+  data_file = here('data/NSFG/d2011_2019femwgt.sas7bdat')
+)
+NSFG_2017_2019_fem_raw <- read_sas(
+  data_file = here('data/NSFG/d2017_2019femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019femresp.sas7bcat')
+)
+NSFG_2015_2017_fem_raw <- read_sas(
+  data_file = here('data/NSFG/d2015_2017femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017femresp.sas7bcat')
+)
+```
+
+
+### Select NSFG Variables
+
+```{r select-NSFG-variables, dependson="load-NSFG-data"}
+NSFG_2015_2019_preg_data <- bind_rows(
+  select(
+    NSFG_2015_2017_preg_raw,
+    SECU, SEST, CASEID,
+    DATEND,
+    OUTCOME,
+    AGEPREG,
+    NBRNLV_S,
+    FMAROUT5,
+    HISPRACE2,
+    PRGLNGTH,
+    RMAROUT6,
+    PARITY,
+    POVERTY,
+    HIEDUC,
+    RELIGION,
+    PREGORDR,
+    BRNOUT
+  ),
+  select(
+    NSFG_2017_2019_preg_raw,
+    SECU, SEST, CASEID,
+    DATEND,
+    OUTCOME,
+    AGEPREG,
+    NBRNLV_S,
+    FMAROUT5,
+    HISPRACE2,
+    GEST_OTHR,
+    RMAROUT6,
+    PARITY,
+    POVERTY,
+    HIEDUC,
+    RELIGION,
+    PREGORDR,
+    BRNOUT
+  )
+) |>
+  left_join(
+    select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
+    by = join_by(CASEID)
+  ) |>
+  mutate(
+    one = 1,
+    OUTCOME = as_factor(labelled(OUTCOME, c(
+      "LIVE BIRTH" = 1,
+      "INDUCED ABORTION" = 2,
+      "STILLBIRTH" = 3,
+      "MISCARRIAGE" = 4,
+      "ECTOPIC PREGNANCY" = 5,
+      "CURRENT PREGNANCY" = 6
+    ))),
+    age_under_20 = (AGEPREG < 20),
+    age_under_15 = (AGEPREG < 15),
+    age_15_to_17 = (15 <= AGEPREG & AGEPREG <= 17),
+    age_18_to_19 = (18 <= AGEPREG & AGEPREG <= 19),
+    age_15_to_19 = (15 <= AGEPREG & AGEPREG <= 19),
+    age_20_to_24 = (20 <= AGEPREG & AGEPREG <= 24),
+    age_25_to_29 = (25 <= AGEPREG & AGEPREG <= 29),
+    age_30_to_34 = (30 <= AGEPREG & AGEPREG <= 34),
+    age_35_to_39 = (35 <= AGEPREG & AGEPREG <= 39),
+    age_40_and_over = (40 <= AGEPREG),
+    age_group = cut(
+      AGEPREG,
+      breaks = c(0, seq(20, 40, 5), Inf),
+      right = FALSE,
+      labels = c(
+        "Under 20 years",
+        "20-24 years",
+        "25-29 years",
+        "30-34 years",
+        "35-39 years",
+        "40 years and over"
+      )
+    ),
+    FMAROUT5 = as_factor(labelled(FMAROUT5, c(
+      "MARRIED" = 1,
+      "DIVORCED" = 2,
+      "WINDOWED" = 3,
+      "SEPARATED" = 4,
+      "NEVER MARRIED" = 5
+    ))),
+    marital_status = as.factor(if_else(
+      FMAROUT5 == 'MARRIED',
+      'Married',
+      'Unmarried'
+    )),
+    HISPRACE2 = as_factor(labelled(HISPRACE2, c(
+      'Hispanic' = 1,
+      'Non-Hispanic White' = 2,
+      'Non-Hispanic Black' = 3,
+      'Non-Hispanic Other' = 4
+    ))),
+    gestational_age = case_when(
+      GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
+      GEST_OTHR %in% 2:3 | PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
+    ),
+    relationship_status = case_when(
+      RMAROUT6 == 1 ~ 'Married',
+      RMAROUT6 == 5 ~ 'Cohabitating, not married',
+      RMAROUT6 == 6 ~ 'Never-married, not cohabiting',
+      RMAROUT6 %in% 2:4 ~ 'Previously married, not cohabiting'
+    ),
+    RMAROUT6 = as_factor(labelled(RMAROUT6, c(
+      "MARRIED" = 1,
+      "DIVORCED" = 2,
+      "WINDOWED" = 3,
+      "SEPARATED" = 4,
+      "COHABITING" = 5,
+      "NEVER MARRIED, NOT COHABITING" = 6
+    ))),
+    birth = if_else(
+      OUTCOME == 'LIVE BIRTH',
+      1,
+      0
+    ),
+    abortion = if_else(
+      OUTCOME == 'INDUCED ABORTION',
+      1,
+      0
+    ),
+    poverty_level = cut(
+      POVERTY,
+      breaks = c(0, 99, 199, Inf),
+      include.lowest = TRUE,
+      labels = c('<100', '100-199', '>=200')
+    ),
+    educational_attainment = case_when(
+      HIEDUC %in% 5:8 ~ '<high school',
+      HIEDUC == 9 ~ 'High school graduate/GED',
+      HIEDUC %in% 10:11 ~ 'Some college/associate degree',
+      HIEDUC %in% 12:15 ~ 'College graduate',
+    ),
+    HIEDUC = as_factor(labelled(HIEDUC, c(
+      "9TH GRADE OR LESS" = 5,
+      "10TH GRADE" = 6,
+      "11TH GRADE" = 7,
+      "12TH GRADE, NO DIPLOMA (NOR GED)" = 8,
+      "HIGH SCHOOL GRADUATE (DIPLOMA OR GED)" = 9,
+      "SOME COLLEGE BUT NO DEGREE" = 10,
+      "ASSOCIATE DEGREE IN COLLEGE/UNIVERSITY" = 11,
+      "BACHELOR'S DEGREE" = 12,
+      "MASTER'S DEGREE" = 13,
+      "DOCTORATE DEGREE" = 14,
+      "PROFESSIONAL DEGREE" = 15
+    ))),
+    religious_affiliation = case_when(
+      RELIGION == 1 ~ 'None',
+      RELIGION == 2 ~ 'Roman Catholic',
+      RELIGION == 3 ~ 'Protestant',
+      RELIGION == 4 ~ 'Other'
+    ),
+    RELIGION = as_factor(labelled(RELIGION, c(
+      "NO RELIGION" = 1,
+      "CATHOLIC" = 2,
+      "PROTESTANT" = 3,
+      "OTHER RELIGIONS" = 4
+    ))),
+    nativity = case_when(
+      BRNOUT == 1 ~ 'Foreign-born',
+      BRNOUT == 5 ~ 'U.S.-born',
+      !is.element(BRNOUT, c(1, 5)) ~ 'Unknown'
+    )
+  ) |>
+  rename(
+    Year = DATEND
+  ) |>
+  arrange(
+    CASEID, PREGORDR
+  ) |>
+  group_by(
+    CASEID
+  ) |>
+  mutate(
+    births = cumsum(birth),
+    previous_births = lag(births, default = 0),
+    previous_births_topcoded4 = factor(if_else(
+      previous_births >= 4,
+      '>=4',
+      as.character(previous_births)
+    )),
+    previous_births_topcoded2 = factor(if_else(
+      previous_births >= 2,
+      '>=2',
+      as.character(previous_births)
+    )),
+    abortions = cumsum(abortion),
+    previous_abortions = lag(abortions, default = 0),
+    previous_abortions_topcoded3 = factor(if_else(
+      previous_abortions >= 3,
+      '>=3',
+      as.character(previous_abortions)
+    )),
+    any_previous_abortions = factor(if_else(
+      previous_abortions >= 1,
+      '>=1',
+      'None'
+    ))
+  ) |>
+  ungroup()
+
+NSFG_2015_2019_fem_data <- bind_rows(
+  select(NSFG_2017_2019_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION),
+  select(NSFG_2015_2017_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION)
+) |>
+  mutate(
+    one = 1,
+    age_group = cut(
+      AGER,
+      breaks = c(14, 19, 24, 29, 34, 39, 44, 50),
+      labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
+    ),
+    HISPRACE2 = as_factor(labelled(HISPRACE2, c(
+      'Hispanic' = 1,
+      'Non-Hispanic White' = 2,
+      'Non-Hispanic Black' = 3,
+      'Non-Hispanic Other' = 4
+    ))),
+    any_abortion = !is.na(ABORTION) & ABORTION > 0
+  ) |> 
+  left_join(
+    select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
+    by = join_by(CASEID)
+  )
+```
+
+
+## Calibration
+
+### Set Calibration Variables
+
+```{r set-calibration-variables, dependson="select-NSFG-variables"}
+NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
+  mutate(
+    poststrat_age_race = factor(gsub(
+      '[ -]',
+      '_',
+      paste(
+        'Age',
+        age_group,
+        case_when(
+          grepl('^Hispanic', HISPRACE2) ~ 'Hispanic',
+          grepl('Black', HISPRACE2) ~ 'Non-Hispanic Black',
+          .default = 'Non-Hispanic Non-Black'
+        ),
+        sep = '_'
+      )
+    ))
+  ) |>
+  left_join(
+    NSFG_2015_2019_preg_data |>
+      group_by(CASEID) |>
+      summarize(
+        birth_in_2014 =  if_else(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014),
+            'Yes',
+            'No'
+          ),
+        birth_in_2013 = if_else(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013),
+          'Yes',
+          'No'
+        ),
+        birth_in_2012 = if_else(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012),
+          'Yes',
+          'No'
+        ),
+        birth_in_2011 = if_else(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011),
+          'Yes',
+          'No'
+        ),
+        abortions_in_2014 = sum(
+          OUTCOME == 'INDUCED ABORTION' & Year == 2014,
+          na.rm = TRUE
+        ),
+        abortions_in_2013 = sum(
+          OUTCOME == 'INDUCED ABORTION' & Year == 2013,
+          na.rm = TRUE
+        )
+      ),
+    by = 'CASEID'
+  ) |> mutate(
+    across(
+      starts_with('birth_in_'),
+      \(x) factor(coalesce(x, 'No'), levels = c('Yes', 'No'))
+    ),
+    across(
+      starts_with('abortions_in_'),
+      \(x) coalesce(x, 0)
+    )
+  )
+```
+
+
+### Counts of Respondents Per Cell Used for Calibration
+
+```{r count-indicators-for-calibration, dependson="set-calibration-variables"}
+NSFG_2015_2019_for_calibration |>
+  count(poststrat_age_race) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(birth_in_2014) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(birth_in_2013) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(birth_in_2012) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(birth_in_2011) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(abortions_in_2014) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(abortions_in_2013) |>
+  gt()
+```
+
+
+### Create NSFG Survey Objects
+
+```{r create-NSFG-survey-objects, dependson="select-NSFG-variables"}
+NSFG_2015_2019_fem_svy <-  as_survey_design(
+    .data = NSFG_2015_2019_for_calibration,
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2015_2019,
+    nest = TRUE
+  ) |>
+  as_survey_rep(
+    type = 'BRR'
+  )
+
+NSFG_2015_2019_preg_svy <- NSFG_2015_2019_preg_data |>
+  select(-WGT2015_2019) |>
+  left_join(
+    NSFG_2015_2019_fem_svy |>
+      as_data_frame_with_weights() |>
+      select(CASEID, contains('_WGT')),
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    type = 'BRR',
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_')
+  )
+```
+
+
+### Load Target Totals for Calibration
+
+```{r load-target-totals-for-calibration}
+poststrat_pop_targets <- readRDS(
+  here('data/Census/prepared/census_for_2015_2019.Rds')
+) |>
+  filter(SEX_f == 'Female') |>
+  mutate(
+    poststrat_age_race = gsub(
+      '[ -]',
+      '_',
+      paste0(
+        gsub(' to | years', '_', AGEGROUP_f),
+        race_ethn_f
+      )
+    )
+  ) |>
+  rename(Freq = pop) |>
+  select(poststrat_age_race, Freq) |>
+  as.data.frame()
+
+poststrat_pop_total <- sum(poststrat_pop_targets$Freq)
+
+NVSS_births_2011_2014 <- read_tsv(
+  here('data/NVSS/2011-2014/age.txt'),
+  name_repair = 'universal',
+  show_col_types = FALSE
+) |>
+  filter(Notes == 'Total' & !is.na(Year)) |>
+  rename(Yes = Births) |>
+  mutate(
+    variable_name = paste0('birth_in_', Year),
+    No = poststrat_pop_total - Yes
+  ) |>
+  select(variable_name, Yes, No) |>
+  pivot_longer(c(Yes, No), values_to = 'Freq')
+
+poststrat_births_targets <- NVSS_births_2011_2014 |>
+  pull(variable_name) |>
+  unique() |>
+  lapply(function(this_variable_name) {
+    this_df <- NVSS_births_2011_2014 |>
+      filter(variable_name == this_variable_name) |>
+      select(name, Freq) |>
+      as.data.frame()
+    colnames(this_df) <- c(this_variable_name, 'Freq')
+    this_df
+  })
+
+poststrat_targets <- c(list(poststrat_pop_targets), poststrat_births_targets)
+#poststrat_targets <- list(poststrat_pop_targets)
+
+Guttmacher_abortion_totals <- readRDS(here('data/guttmacher_APC_national.Rds'))
+```
+
+
+### Create Calibrated NSFG Survey Object
+
+```{r create-calibrated-NSFG-survey-objects, dependson=c("create-NSFG-survey-objects", "load-target-totals-for-calibration")}
+source(here('R/rake_with_factor_adjustment.R'))
+
+poststrat_abortions_total <- Guttmacher_abortion_totals |>
+  filter(year %in% 2013:2014) |>
+  pull(abortionstotal) |>
+  sum()
+
+NSFG_2015_2019_fem_cal_svy <- rake_with_factor_adjustment(
+  NSFG_2015_2019_fem_svy,
+  sample.margins = lapply(
+    poststrat_targets,
+    \(x) as.formula(paste0('~', colnames(x)[1]))
+  ),
+  population.margins = poststrat_targets,
+  factor.estimation.vars = ~abortions_in_2013 + abortions_in_2014,
+  factor.estimation.target = poststrat_abortions_total,
+  factor.adjusted.vars = ~any_abortion
+)
+
+NSFG_2015_2019_preg_cal_svy <- NSFG_2015_2019_preg_data |>
+  select(-WGT2015_2019) |>
+  left_join(
+    NSFG_2015_2019_fem_cal_svy |>
+      as_data_frame_with_weights() |>
+      select(CASEID, contains('_WGT')),
+    by = join_by('CASEID')
+  ) |>
+  as_survey_rep(
+    type = 'BRR',
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_')
+  )
+```
+
+
+### Verify Post-Stratification
+
+```{r verify-post-stratification, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
+verify_poststratification <- function(svy_before, svy_after, targets, variable_name) {
+  svy_before |>
+    group_by(get(variable_name)) |>
+    summarize(
+      Uncal = survey_total(one, vartype = 'ci')
+    ) |>
+    rename_with(~ gsub('get(variable_name)', variable_name, .x, fixed = TRUE)) |>
+    full_join(
+      svy_after |>
+        group_by(get(variable_name)) |>
+        summarize(
+          Calib = survey_total(one, vartype = 'ci')
+        ) |>
+        rename_with(~ gsub('get(variable_name)', variable_name, .x, fixed = TRUE))
+    ) |>
+    full_join(
+      targets
+    ) |>
+    mutate(
+      Uncal_Bias = Uncal - Freq,
+      Uncal_Rel_Bias = Uncal_Bias / Freq,
+      `Uncal_Covers?` = Freq <= Uncal_upp & Freq >= Uncal_low,
+      Calib_Bias = Calib - Freq,
+      Calib_Rel_Bias = Calib_Bias / Freq,
+      Diff = Calib - Uncal
+    ) |>
+    select(
+      matches(variable_name), Diff, Uncal, Calib, Freq, Calib_low, Calib_upp, Calib_Rel_Bias
+    )
+}
+
+verify_poststratification(
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
+    poststrat_pop_targets,
+    'poststrat_age_race'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+verify_poststratification(
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
+    poststrat_births_targets[[4]],
+    'birth_in_2014'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+verify_poststratification(
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
+    poststrat_births_targets[[3]],
+    'birth_in_2013'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+verify_poststratification(
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
+    poststrat_births_targets[[2]],
+    'birth_in_2012'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+verify_poststratification(
+    NSFG_2015_2019_fem_svy,
+    NSFG_2015_2019_fem_cal_svy,
+    poststrat_births_targets[[1]],
+    'birth_in_2011'
+  ) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+
+NSFG_2015_2019_fem_svy |>
+  summarize(
+    Uncal = survey_total(abortions_in_2013, vartype = 'ci'),
+  ) |>
+  mutate(Year = 2013, .before = everything()) |>
+  bind_rows(
+    NSFG_2015_2019_fem_svy |>
+      summarize(
+        Uncal = survey_total(abortions_in_2014, vartype = 'ci')
+      ) |>
+      mutate(Year = 2014, .before = everything())
+  ) |>
+  select(Year, Uncal) |>
+  full_join(
+    NSFG_2015_2019_fem_cal_svy |>
+      summarize(
+        Calib = survey_total(abortions_in_2013, vartype = 'ci'),
+      ) |>
+      mutate(Year = 2013, .before = everything()) |>
+      bind_rows(
+        NSFG_2015_2019_fem_cal_svy |>
+          summarize(
+            Calib = survey_total(abortions_in_2014, vartype = 'ci')
+          ) |>
+          mutate(Year = 2014, .before = everything())
+      ),
+    by = join_by(Year)
+  ) |>
+  full_join(
+    Guttmacher_abortion_totals |>
+      rename(Year = year, Freq = abortionstotal) |>
+      filter(Year %in% 2013:2014) |>
+      select(Year, Freq),
+    by = join_by(Year)
+  ) |>
+  mutate(
+    Diff = Calib - Uncal,
+    Calib_Rel_Bias = (Freq - Calib) / Freq
+  ) |>
+  select(Year, Uncal, Calib, Diff, Freq, Calib_low, Calib_upp, Calib_Rel_Bias) |>
+  gt() |>
+  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_percent(Calib_Rel_Bias, decimals = 1)
+```
+
+
+
+### Evaluate Weights
+
+```{r summarize-weights, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
+summarize_weights <- function(x, label, useUWE = TRUE) {
+  tbl <- tibble(
+    n = sum(!is.na(x)),
+    missing = sum(is.na(x)),
+    positive = sum(x > 0),
+    zero = sum(x == 0),
+    negative = sum(x < 0),
+    min = min(x),
+    p01 = quantile(x, 0.01),
+    p05 = quantile(x, 0.05),
+    q1 = quantile(x, 0.25),
+    med = median(x),
+    q3 = quantile(x, 0.75),
+    p95 = quantile(x, 0.95),
+    p99 = quantile(x, 0.99),
+    max = max(x),
+    mean = mean(x),
+    sd = sd(x),
+  )
+  if (useUWE) {
+    tbl <- bind_cols(
+      tbl,
+      tibble(UWE = deffK(x))
+    )
+  }
+  pivot_longer(
+    tbl,
+    where(is.numeric),
+    names_to = 'statistic',
+    values_to = label
+  )
+}
+
+summarize_weights(
+  weights(NSFG_2015_2019_fem_svy, type = 'sampling'),
+  'original_weights'
+) |> full_join(
+  summarize_weights(
+    weights(NSFG_2015_2019_fem_cal_svy, type = 'sampling'),
+    'calibrated_weights'
+  ),
+  by = join_by(statistic)
+) |> full_join(
+  summarize_weights(
+    weights(NSFG_2015_2019_fem_svy, type = 'sampling') -
+      weights(NSFG_2015_2019_fem_cal_svy, type = 'sampling'),
+    'differences',
+    useUWE = FALSE
+  ),
+  by = join_by(statistic)
+) |>
+  gt() |>
+  fmt_number(columns = where(is.numeric), decimals = 1) |>
+  fmt_number(rows = 1:5, decimals = 0) |>
+  fmt_number(rows = 17, decimals = 3)
+```
+
+
+## Estimation, Uncalibrated
+
+### Estimate Births, Uncalibrated
+
+```{r estimate-births-uncalibrated, dependson="create-NSFG-survey-objects"}
+NSFG_2015_2019_unc_est_births <- bind_rows(
+  NSFG_2015_2019_preg_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, age_group) |>
+    summarize(
+      Unc_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = age_group) |>
+    mutate(Variable = 'Age group', .after = Year),
+  NSFG_2015_2019_preg_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, marital_status) |>
+    summarize(
+      Unc_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = marital_status) |>
+    mutate(Variable = 'Marital status', .after = Year),
+  NSFG_2015_2019_preg_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, HISPRACE2) |>
+    summarize(
+      Unc_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = HISPRACE2) |>
+    mutate(Variable = 'Race and ethnicity', .after = Year)
+)
+```
+
+
+### Estimate Abortions, Uncalibrated
+
+```{r estimate-abortions-uncalibrated, dependson="create-NSFG-survey-objects"}
+estimate_abortions_by_domain <- function(variable, label) {
+  external_vector <- c(Level = variable)
+  NSFG_2015_2019_preg_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
+    summarize(
+      n = unweighted(sum(one)),
+      Unc_Est = survey_total(one, vartype = 'ci'),
+      .groups = 'drop'
+    ) |>
+    rename(any_of(external_vector)) |>
+    mutate(
+      Variable = label,
+      .after = Year
+    ) |>
+    select(-OUTCOME)
+}
+
+
+NSFG_2015_2019_unc_est_abortions <- bind_rows(
+  NSFG_2015_2019_preg_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    group_by(Year, OUTCOME) |>
+    summarize(
+      Est_age_under_15 = survey_total(age_under_15, vartype = 'ci'),
+      n_age_under_15 = unweighted(sum(age_under_15)),
+      Est_age_under_20 = survey_total(age_under_20, vartype = 'ci'),
+      n_age_under_20 = unweighted(sum(age_under_20)),
+      Est_age_15_to_17 = survey_total(age_15_to_17, vartype = 'ci'),
+      n_age_15_to_17 = unweighted(sum(age_15_to_17)),
+      Est_age_18_to_19 = survey_total(age_18_to_19, vartype = 'ci'),
+      n_age_18_to_19 = unweighted(sum(age_18_to_19)),
+      Est_age_15_to_19 = survey_total(age_15_to_19, vartype = 'ci'),
+      n_age_15_to_19 = unweighted(sum(age_15_to_19)),
+      Est_age_20_to_24 = survey_total(age_20_to_24, vartype = 'ci'),
+      n_age_20_to_24 = unweighted(sum(age_20_to_24)),
+      Est_age_25_to_29 = survey_total(age_25_to_29, vartype = 'ci'),
+      n_age_25_to_29 = unweighted(sum(age_25_to_29)),
+      Est_age_30_to_34 = survey_total(age_30_to_34, vartype = 'ci'),
+      n_age_30_to_34 = unweighted(sum(age_30_to_34)),
+      Est_age_35_to_39 = survey_total(age_35_to_39, vartype = 'ci'),
+      n_age_35_to_39 = unweighted(sum(age_35_to_39)),
+      Est_age_40_and_over = survey_total(age_40_and_over, vartype = 'ci'),
+      n_age_40_and_over = unweighted(sum(age_40_and_over))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    pivot_longer(cols = starts_with(c('Est_', 'n_'))) |>
+    mutate(
+      Variable = 'Age group',
+      Level = sub('^.*_age_', '', name) %>% 
+        sub('(_low|_upp)$', '', .) %>%
+        sub('_to_', '-', .) %>% 
+        gsub('_', ' ', .) %>% 
+        sub('([[:digit:]]{2})([^[:digit:]]*$)', '\\1 years\\2', .) %>% 
+        str_to_sentence(),
+      ColName = case_when(
+        grepl('_low', name) ~ 'Unc_Est_low',
+        grepl('_upp', name) ~ 'Unc_Est_upp',
+        grepl('Est_', name) ~ 'Unc_Est',
+        grepl('n_', name) ~ 'n'
+      )
+    ) |>
+    pivot_wider(
+      id_cols = c(Year, Variable, Level),
+      names_from = ColName
+    ),
+  estimate_abortions_by_domain('gestational_age', 'Gestational age'),
+  estimate_abortions_by_domain('marital_status', 'Relationship status') |>
+    filter(Level == 'Unmarried'),
+  estimate_abortions_by_domain('relationship_status', 'Relationship status'),
+  estimate_abortions_by_domain('previous_births_topcoded4', 'No. of prior births'),
+  estimate_abortions_by_domain('previous_births_topcoded2', 'No. of prior births') |>
+    filter(Level == '>=2'),
+  estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level'),
+  estimate_abortions_by_domain('educational_attainment', 'Educational attainment'),
+  estimate_abortions_by_domain('religious_affiliation', 'Religious affiliation'),
+  estimate_abortions_by_domain('HISPRACE2', 'Race/ethnicity'),
+  estimate_abortions_by_domain('previous_abortions_topcoded3', 'No. of previous induced abortions'),
+  estimate_abortions_by_domain('any_previous_abortions', 'No. of previous induced abortions'),
+  estimate_abortions_by_domain('nativity', 'Nativity')
+)
+```
+
+
+## Estimation, Calibrated
+
+### Estimate Births, Calibrated
+
+```{r estimate-births-calibrated, dependson="create-calibrated-NSFG-survey-objects"}
+NSFG_2015_2019_cal_est_births <- bind_rows(
+  NSFG_2015_2019_preg_cal_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, age_group) |>
+    summarize(
+      Cal_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = age_group) |>
+    mutate(Variable = 'Age group', .after = Year),
+  NSFG_2015_2019_preg_cal_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, marital_status) |>
+    summarize(
+      Cal_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = marital_status) |>
+    mutate(Variable = 'Marital status', .after = Year),
+  NSFG_2015_2019_preg_cal_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, HISPRACE2) |>
+    summarize(
+      Cal_Est = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = HISPRACE2) |>
+    mutate(Variable = 'Race and ethnicity', .after = Year)
+)
+```
+
+
+### Estimate Abortions, Calibrated
+
+```{r estimate-abortions-calibrated, dependson="create-NSFG-survey-objects"}
+estimate_abortions_by_domain <- function(variable, label) {
+  external_vector <- c(Level = variable)
+   NSFG_2015_2019_preg_cal_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
+    summarize(
+      n = unweighted(sum(one)),
+      Cal_Est = survey_total(one, vartype = 'ci'),
+      .groups = 'drop'
+    ) |>
+    rename(any_of(external_vector)) |>
+    mutate(
+      Variable = label,
+      .after = Year
+    ) |>
+    select(-OUTCOME)
+}
+
+
+NSFG_2015_2019_cal_est_abortions <- bind_rows(
+   NSFG_2015_2019_preg_cal_svy |>
+    filter(
+      Year %in% 2011:2014 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    group_by(Year, OUTCOME) |>
+    summarize(
+      Est_age_under_15 = survey_total(age_under_15, vartype = 'ci'),
+      n_age_under_15 = unweighted(sum(age_under_15)),
+      Est_age_under_20 = survey_total(age_under_20, vartype = 'ci'),
+      n_age_under_20 = unweighted(sum(age_under_20)),
+      Est_age_15_to_17 = survey_total(age_15_to_17, vartype = 'ci'),
+      n_age_15_to_17 = unweighted(sum(age_15_to_17)),
+      Est_age_18_to_19 = survey_total(age_18_to_19, vartype = 'ci'),
+      n_age_18_to_19 = unweighted(sum(age_18_to_19)),
+      Est_age_15_to_19 = survey_total(age_15_to_19, vartype = 'ci'),
+      n_age_15_to_19 = unweighted(sum(age_15_to_19)),
+      Est_age_20_to_24 = survey_total(age_20_to_24, vartype = 'ci'),
+      n_age_20_to_24 = unweighted(sum(age_20_to_24)),
+      Est_age_25_to_29 = survey_total(age_25_to_29, vartype = 'ci'),
+      n_age_25_to_29 = unweighted(sum(age_25_to_29)),
+      Est_age_30_to_34 = survey_total(age_30_to_34, vartype = 'ci'),
+      n_age_30_to_34 = unweighted(sum(age_30_to_34)),
+      Est_age_35_to_39 = survey_total(age_35_to_39, vartype = 'ci'),
+      n_age_35_to_39 = unweighted(sum(age_35_to_39)),
+      Est_age_40_and_over = survey_total(age_40_and_over, vartype = 'ci'),
+      n_age_40_and_over = unweighted(sum(age_40_and_over))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    pivot_longer(cols = starts_with(c('Est_', 'n_'))) |>
+    mutate(
+      Variable = 'Age group',
+      Level = sub('^.*_age_', '', name) %>% 
+        sub('(_low|_upp)$', '', .) %>%
+        sub('_to_', '-', .) %>% 
+        gsub('_', ' ', .) %>% 
+        sub('([[:digit:]]{2})([^[:digit:]]*$)', '\\1 years\\2', .) %>% 
+        str_to_sentence(),
+      ColName = case_when(
+        grepl('_low', name) ~ 'Cal_Est_low',
+        grepl('_upp', name) ~ 'Cal_Est_upp',
+        grepl('Est_', name) ~ 'Cal_Est',
+        grepl('n_', name) ~ 'n'
+      )
+    ) |>
+    pivot_wider(
+      id_cols = c(Year, Variable, Level),
+      names_from = ColName
+    ),
+  estimate_abortions_by_domain('gestational_age', 'Gestational age'),
+  estimate_abortions_by_domain('marital_status', 'Relationship status') |>
+    filter(Level == 'Unmarried'),
+  estimate_abortions_by_domain('relationship_status', 'Relationship status'),
+  estimate_abortions_by_domain('previous_births_topcoded4', 'No. of prior births'),
+  estimate_abortions_by_domain('previous_births_topcoded2', 'No. of prior births') |>
+    filter(Level == '>=2'),
+  estimate_abortions_by_domain('poverty_level', 'Family income as % of poverty level'),
+  estimate_abortions_by_domain('educational_attainment', 'Educational attainment'),
+  estimate_abortions_by_domain('religious_affiliation', 'Religious affiliation'),
+  estimate_abortions_by_domain('HISPRACE2', 'Race/ethnicity'),
+  estimate_abortions_by_domain('previous_abortions_topcoded3', 'No. of previous induced abortions'),
+  estimate_abortions_by_domain('any_previous_abortions', 'No. of previous induced abortions'),
+  estimate_abortions_by_domain('nativity', 'Nativity')
+)
+```
+## Test Harness
+
+### Create Births Test Harness
+
+```{r create-births-test-harness, message=FALSE}
+test_harness_births <- bind_rows(
+  read_tsv(
+      here('data/NVSS/2011-2014/age.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ) |>
+    filter(is.na(Notes)) |>
+    mutate(Level = case_when(
+      Age.of.Mother.9 %in% c(
+        'Under 15 years',
+        '15-19 years'
+      ) ~ 'Under 20 years',
+      Age.of.Mother.9 %in% c(
+        '40-44 years',
+        '45-49 years',
+        '50 years and over'
+      ) ~ '40 years and over',
+      .default = Age.of.Mother.9
+    )) |>
+    select(Year, Level, Births) |>
+    group_by(Year, Level) |>
+    summarize(Births = sum(Births), .groups = 'drop') |>
+    mutate(Variable = 'Age group', .after = Year),
+  read_tsv(
+      here('data/NVSS/2011-2014/marital_status.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ) |>
+    filter(is.na(Notes)) |>
+    rename(Level = Marital.Status) |>
+    select(Year, Level, Births) |>
+    mutate(Variable = 'Marital status'),
+  read_tsv(
+      here('data/NVSS/2011-2014/race_ethnicity.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ) |>
+    rename(
+      Hispanic.Origin = Mother.s.Hispanic.Origin,
+      Race = Mother.s.Bridged.Race
+    ) |>
+    filter(
+      (is.na(Notes) & Hispanic.Origin != 'Hispanic or Latino') |
+        (Notes == 'Total' & Hispanic.Origin == 'Hispanic or Latino')
+    ) |>
+    select(Notes, Year, Hispanic.Origin, Race, Births) |>
+    mutate(
+      Level = case_when(
+        Hispanic.Origin == 'Hispanic or Latino' ~ 'Hispanic',
+        Race == 'White' ~ 'Non-Hispanic White',
+        Race == 'Black or African American' ~ 'Non-Hispanic Black',
+        .default = 'Non-Hispanic Other'
+      )
+    ) |>
+    group_by(Year, Level) |>
+    summarize(Births = sum(Births), .groups = 'drop') |>
+    mutate(Variable = 'Race and ethnicity')
+) |>
+  arrange(-Year, Variable)
+```
+
+
+### Create Abortions Test Harness
+
+```{r load-and-process-guttmacher-APC-data}
+guttmacher_APC_national <- read_csv(
+    here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
+    show_col_types = FALSE
+  ) |>
+  filter(state == 'US') |>
+  select(-state, -notes) |>
+  mutate(interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
+  )
+
+guttmacher_APC_2014 <- guttmacher_APC_national |>
+  filter(year == 2014) |>
+  select(starts_with('abortions'))
+
+guttmacher_APC_2014_total <- pull(guttmacher_APC_2014, abortionstotal)
+
+guttmacher_APC_2012 <- guttmacher_APC_national |>
+  filter(year == 2012) |>
+  select(starts_with('abortions'))
+
+guttmacher_APC_2012_total <- pull(guttmacher_APC_2012, abortionstotal)
+
+guttmacher_APC_2011 <- guttmacher_APC_national |>
+  filter(year == 2011) |>
+  select(starts_with('abortions'))
+
+guttmacher_APC_2011_total <- pull(guttmacher_APC_2011, abortionstotal)
+```
+
+```{r create-abortions-test-harness, dependson="load-and-process-guttmacher-APC-data"}
+guttmacher_APS_2014 <- bind_rows(
+  tribble(
+    ~name, ~Level, ~PctAPS2014,
+    'abortionslt20',   'Under 20 years',     11.9,
+    'abortions1517',   '15-17 years',     3.4,
+    'abortions1819',   '18-19 years',     8.2,
+    'abortions2024',   '20-24 years',     33.6,
+    'abortions2529',   '25-29 years',     26.5,
+    'abortions3034',   '30-34 years',     15.9,
+    'abortions3539',   '35-39 years',     9.1,
+    'abortions40plus', '40 years and over',   3.1
+  ) |> mutate(
+    Variable = 'Age group',
+    .before = everything()
+  ) |>
+    left_join(
+      pivot_longer(
+        guttmacher_APC_2014,
+        cols = everything(),
+        values_to = 'TtlAPC2014'
+      ),
+      by = 'name'
+    ) |>
+    select(-name),
+  tribble(
+    ~Level, ~PctAPS2014,
+    'Married            ',               14.3,
+    'Cohabitating, not married',         31.0,
+    'Never-married, not cohabiting',     45.9,
+    'Previously married, not cohabiting', 8.8
+  ) |>  mutate(
+    Variable = 'Relationship status',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctAPS2014,
+    'Non-Hispanic White',    38.7,
+    'Non-Hispanic Black',    27.6,
+    'Hispanic',              24.8,
+    'Non-Hispanic Other',    8.8
+  ) |>  mutate(
+    Variable = 'Race/ethnicity',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctAPS2014,
+    'U.S.-born',     83.9,
+    'Foreign-born',  16.1
+  ) |>  mutate(
+    Variable = 'Nativity',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctAPS2014,
+    '<high school',                  8.9,
+    'High school graduate/GED',      27.0,
+    'Some college/associate degree', 40.9,
+    'College graduate',              23.1
+  ) |>  mutate(
+    Variable = 'Educational attainment',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctAPS2014,
+    '0',   40.7,
+    '1',   26.2,
+    '>=2', 33.1
+  ) |>  mutate(
+    Variable = 'No. of prior births',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctAPS2014,
+    '>=1', 44.8
+  ) |>  mutate(
+    Variable = 'No. of previous induced abortions',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctAPS2014,
+    '<100',    49.3,
+    '100-199', 25.7,
+    '>=200',   25.0
+  ) |>  mutate(
+    Variable = 'Family income as % of poverty level',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctAPS2014,
+    'Mainline Protestant',    17.3,
+    'Evangelical Protestant', 12.8,
+    'Roman Catholic',         23.7,
+    'Other',                  8.2,
+    'None',                   38.0
+  ) |>  mutate(
+    Variable = 'Religious affiliation',
+    .before = everything()
+  )
+) |> mutate(
+  Level = str_squish(Level),
+  PctAPS2014 = PctAPS2014 / 100,
+  TtlAPS2014 = as.integer(round(guttmacher_APC_2014_total * PctAPS2014)),
+  .before = 'TtlAPC2014'
+)
+
+
+CDC_2014 <- bind_rows(
+  tribble(
+    ~name, ~Level, ~PctCDC,
+    'abortionslt15',   'Under 15 years',   0.3,
+    'abortions1519',   '15-19 years',   10.4,
+    'abortions2024',   '20-24 years',   32.2,
+    'abortions2529',   '25-29 years',   26.7,
+    'abortions3034',   '30-34 years',   17.1,
+    'abortions3539',   '35-39 years',   9.7,
+    'abortions40plus', '40 years and over', 3.6
+  ) |> mutate(
+    Variable = 'Age group',
+    .before = everything()
+  ) |> left_join(
+    pivot_longer(
+      guttmacher_APC_2014,
+      cols = everything(),
+      values_to = 'TtlAPC'
+    ),
+    by = 'name'
+  ) |> select(-name),
+  tribble(
+    ~Level, ~PctCDC,
+    '<=8',   64.9,
+    '9-13',  26.1,
+    '14-15', 3.6,
+    '16-17', 2.2,
+    '18-20', 1.9,
+    '>=21',  1.3
+  ) |>  mutate(
+    Variable = 'Gestational age',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    'Non-Hispanic White',    38.0,
+    'Non-Hispanic Black',    36.0,
+    'Non-Hispanic Other',    7.7,
+    'Hispanic', 18.3,
+  ) |>  mutate(
+    Variable = 'Race/ethnicity',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    'Married',    14.5,
+    'Unmarried',  85.5
+  ) |>  mutate(
+    Variable = 'Relationship status',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   40.4,
+    '1',   26.0,
+    '2',   19.7,
+    '3',   8.7,
+    '>=4', 5.1
+  ) |>  mutate(
+    Variable = 'No. of prior births',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   55.1,
+    '1',   24.7,
+    '2',   11.6,
+    '>=3', 8.6
+  ) |>  mutate(
+    Variable = 'No. of previous induced abortions',
+    .before = everything()
+  )
+) |> mutate(
+  Level = str_squish(Level),
+  PctCDC = PctCDC / 100,
+  TtlCDC = as.integer(round(guttmacher_APC_2014_total * PctCDC)),
+  .before = 'TtlAPC'
+)
+
+
+CDC_2012 <- bind_rows(
+  tribble(
+    ~name, ~Level, ~PctCDC,
+    'abortionslt15',   'Under 15 years',   0.4,
+    'abortions1519',   '15-19 years',   12.2,
+    'abortions2024',   '20-24 years',   32.8,
+    'abortions2529',   '25-29 years',   25.4,
+    'abortions3034',   '30-34 years',   16.4,
+    'abortions3539',   '35-39 years',   9.1,
+    'abortions40plus', '40 years and over', 3.7
+  ) |> mutate(
+    Variable = 'Age group',
+    .before = everything()
+  ) |> left_join(
+    pivot_longer(
+      guttmacher_APC_2012,
+      cols = everything(),
+      values_to = 'TtlAPC'
+    ),
+    by = 'name'
+  ) |> select(-name),
+  tribble(
+    ~Level, ~PctCDC,
+    '<=8',   65.8,
+    '9-13',  25.6,
+    '14-15', 3.5,
+    '16-17', 1.8,
+    '18-20', 1.9,
+    '>=21',  1.3
+  ) |>  mutate(
+    Variable = 'Gestational age',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    'Non-Hispanic White',    37.6,
+    'Non-Hispanic Black',    36.7,
+    'Non-Hispanic Other',    7.0,
+    'Hispanic', 18.7,
+  ) |>  mutate(
+    Variable = 'Race/ethnicity',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    'Married',    14.7,
+    'Unmarried',  85.3
+  ) |>  mutate(
+    Variable = 'Relationship status',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   40.3,
+    '1',   26.2,
+    '2',   19.6,
+    '3',   8.7,
+    '>=4', 5.3
+  ) |>  mutate(
+    Variable = 'No. of prior births',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   55.7,
+    '1',   24.6,
+    '2',   11.0,
+    '>=3', 8.6
+  ) |>  mutate(
+    Variable = 'No. of previous induced abortions',
+    .before = everything()
+  )
+) |> mutate(
+  Level = str_squish(Level),
+  PctCDC = PctCDC / 100,
+  TtlCDC = as.integer(round(guttmacher_APC_2012_total * PctCDC)),
+  .before = 'TtlAPC'
+)
+
+
+CDC_2011 <- bind_rows(
+  tribble(
+    ~name, ~Level, ~PctCDC,
+    'abortionslt15',   'Under 15 years',   0.4,
+    'abortions1519',   '15-19 years',   13.5,
+    'abortions2024',   '20-24 years',   32.9,
+    'abortions2529',   '25-29 years',   24.9,
+    'abortions3034',   '30-34 years',   15.8,
+    'abortions3539',   '35-39 years',   8.9,
+    'abortions40plus', '40 years and over', 3.6
+  ) |> mutate(
+    Variable = 'Age group',
+    .before = everything()
+  ) |> left_join(
+    pivot_longer(
+      guttmacher_APC_2011,
+      cols = everything(),
+      values_to = 'TtlAPC'
+    ),
+    by = 'name'
+  ) |> select(-name),
+  tribble(
+    ~Level, ~PctCDC,
+    '<=8',   64.5,
+    '9-13',  26.9,
+    '14-15', 3.5,
+    '16-17', 1.9,
+    '18-20', 1.9,
+    '>=21',  1.4
+  ) |>  mutate(
+    Variable = 'Gestational age',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    'Non-Hispanic White',    37.2,
+    'Non-Hispanic Black',    36.2,
+    'Non-Hispanic Other',    7.0,
+    'Hispanic', 19.7,
+  ) |>  mutate(
+    Variable = 'Race/ethnicity',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    'Married',    14.5,
+    'Unmarried',  85.5
+  ) |>  mutate(
+    Variable = 'Relationship status',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   39.9,
+    '1',   26.5,
+    '2',   19.6,
+    '3',   8.7,
+    '>=4', 5.2
+  ) |>  mutate(
+    Variable = 'No. of prior births',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   53.7,
+    '1',   25.5,
+    '2',   11.6,
+    '>=3', 9.3
+  ) |>  mutate(
+    Variable = 'No. of previous induced abortions',
+    .before = everything()
+  )
+) |> mutate(
+  Level = str_squish(Level),
+  PctCDC = PctCDC / 100,
+  TtlCDC = as.integer(round(guttmacher_APC_2011_total * PctCDC)),
+  .before = 'TtlAPC'
+)
+
+
+test_harness_abortions <- bind_rows(
+  mutate(CDC_2014, Year = 2014, Source = 'CDC', .before = everything()),
+  mutate(CDC_2012, Year = 2012, Source = 'CDC', .before = everything()),
+  mutate(CDC_2011, Year = 2011, Source = 'CDC', .before = everything())
+) |>
+  select(-TtlAPC, -PctCDC) |>
+  rename(Abortions = TtlCDC) |>
+  bind_rows(
+    guttmacher_APS_2014 |>
+      select(-TtlAPC2014, -PctAPS2014) |>
+      mutate(Year = 2014, Source = 'APS', .before = everything()) |>
+      rename(Abortions = TtlAPS2014)
+  ) |>
+  arrange(-Year, Variable, Source)
+```
+
+
+### Compare Births Estimates with Test Harness
+
+```{r compare-births-estimates-with-test-harness, dependson=c("create-births-test-harness", "estimate-births-uncalibrated")}
+full_join(
+  test_harness_births,
+  NSFG_2015_2019_unc_est_births,
+  by = c('Year', 'Variable', 'Level')
+) |>
+  full_join(
+    NSFG_2015_2019_cal_est_births,
+    by = c('Year', 'Variable', 'Level'),
+    suffix = c('.unc', '.cal')
+  ) |>
+  mutate(
+    unequal_n = n.unc != n.cal,
+    Unc_Bias = Unc_Est - Births,
+    Unc_Rel_Bias = Unc_Bias / Births,
+    `Unc_Covers?` = Births <= Unc_Est_upp & Births >= Unc_Est_low,
+    Cal_Bias = Cal_Est - Births,
+    Cal_Rel_Bias = Cal_Bias / Births,
+    `Cal_Covers?` = Births <= Cal_Est_upp & Births >= Cal_Est_low,
+    Bias_Diff = abs(Cal_Bias) - abs(Unc_Bias),
+    Est_Diff = Cal_Est - Unc_Est,
+    Rel_Bias_Diff = abs(Cal_Rel_Bias) - abs(Unc_Rel_Bias),
+    `Fixed?` = if_else(
+        !`Unc_Covers?`,
+        `Cal_Covers?`,
+        NA
+    ),
+    `Broke?` = `Unc_Covers?` & !`Cal_Covers?`
+  ) |>
+  rename(
+    n = n.cal
+  ) |>
+  select(
+    Year,
+    Variable,
+    Level,
+    n,
+    Births,
+    Unc_Est,
+    Cal_Est,
+    #Est_Diff,
+    #Unc_Bias,
+    #Cal_Bias,
+    #Bias_Diff,
+    Unc_Rel_Bias,
+    Cal_Rel_Bias,
+    #Rel_Bias_Diff,
+    #Unc_Est_low,
+    #Unc_Est_upp,
+    #Cal_Est_low,
+    #Cal_Est_upp,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
+  ) |>
+  gt() |>
+  fmt_number(-Year, decimal = 0) |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
+```
+
+
+### Compare Abortions Estimates with Test Harness
+
+```{r compare-abortions-estimates-with-test-harness, dependson=c("create-abortions-test-harness", "estimate-births-uncalibrated")}
+test_harness_abortions |>
+  mutate(
+    Level = case_match(
+      Level,
+      '<=8' ~ '1st trimester (13 or less weeks)',
+      '9-13' ~ '1st trimester (13 or less weeks)',
+      '14-15' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '16-17' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '18-20' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '>=21' ~ '2nd or 3rd trimester (14 or more weeks)',
+      'Mainline Protestant' ~ 'Protestant',
+      'Evangelical Protestant' ~ 'Protestant',
+      .default = Level
+    )
+  ) |> 
+  group_by(Year, Source, Variable, Level) |>
+  summarize(across(everything(), sum), .groups = 'drop') |>
+  arrange(desc(Year)) |>
+  left_join(
+    NSFG_2015_2019_unc_est_abortions,
+    by = c('Year', 'Variable', 'Level')
+  ) |>
+  left_join(
+    NSFG_2015_2019_cal_est_abortions,
+    by = c('Year', 'Variable', 'Level'),
+    suffix = c('.unc', '.cal')
+  ) |>
+  mutate(
+    Unc_Bias = Unc_Est - Abortions,
+    Cal_Bias = Cal_Est - Abortions,
+    Unc_Rel_Bias = Unc_Bias / Abortions,
+    Cal_Rel_Bias = Cal_Bias / Abortions,
+    `Unc_Covers?` = Abortions <= Unc_Est_upp & Abortions >= Unc_Est_low,
+    `Cal_Covers?` = Abortions <= Cal_Est_upp & Abortions >= Cal_Est_low,
+    Bias_Diff = abs(Cal_Bias) - abs(Unc_Bias),
+    Est_Diff = Cal_Est - Unc_Est,
+    Rel_Bias_Diff = abs(Cal_Rel_Bias) - abs(Unc_Rel_Bias),
+    `Fixed?` = if_else(
+        !`Unc_Covers?`,
+        `Cal_Covers?`,
+        NA
+    ),
+    `Broke?` = `Unc_Covers?` & !`Cal_Covers?`
+  ) |>
+  rename(
+    n = n.cal
+  ) |>
+  select(
+    Year,
+    Variable,
+    Level,
+    n,
+    Abortions,
+    Unc_Est,
+    Cal_Est,
+    #Est_Diff,
+    #Unc_Bias,
+    #Cal_Bias,
+    #Bias_Diff,
+    Unc_Rel_Bias,
+    Cal_Rel_Bias,
+    #Rel_Bias_Diff,
+    #Unc_Est_low,
+    #Unc_Est_upp,
+    #Cal_Est_low,
+    #Cal_Est_upp,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    `Fixed?`,
+    #`Broke?`
+  ) |>
+  filter(n > 5) |> 
+  gt() |>
+  fmt_number(-Year, decimal = 0) |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
+```
