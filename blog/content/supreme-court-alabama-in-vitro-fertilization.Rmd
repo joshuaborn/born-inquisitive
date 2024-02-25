@@ -1,0 +1,73 @@
+---
+author: "Joshua Born"
+#bibliography: "../bibliographies/supreme-court-alabama-in-vitro-fertilization.json"
+#csl: "../bibliographies/chicago-author-date.csl"
+date: 2024-02-26
+draft: true
+implicit-figures: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: "Summary sentence here"
+tags: ["law", "reproductive responsibility", "in vitro fertilization", "first-person"]
+title: 'What Actually is in the Recent Opinions of the Supreme Court of Alabama Regarding a Case Involving In Vitro Fertilization'
+---
+
+
+Facts of the Case
+
+* The plaintiffs (the LePages, the Fondes, and the Aysennes) were three couples who had all conceived embryos through in vitro fertilization at the Center for Reproductive Medicine. Some of those embryos were then stored at the affiliated Mobile Infirmary Medical Center in cryogenic storage. Staff at the Mobile Infirmary Medical Center left a door to the cryogenic storage room unlocked. A patient wandered in through this unlocked door and attempted to handle the embryos and dropped them, leading to the death of several embryos, including the plaintiffs' embryos.
+
+
+Statute and Case History
+
+As of 2024, you could already sue for wrongful death of a fetus or embryo in Alabama. That was not what was at issue in this case. If a pregnant woman was the victim of an assault, for instance, leading to the death of her unborn child, then the woman could sue her attacker for wrongful death. What was at issue is whether you could sue for wrongful death of an _extrauterine_ embryo, i.e., a embryo outside of a womb. The relevant background is summarized below. 
+
+* In English common law, which is the unwritten and customary law of the several states of the United States when there is no statutory law (i.e., law written by legislators and passed as a bill), you could not sue for damages in the case of loss of life. This was perceived as a flaw in the common law and led to wrongful death statues being passed. Alabama passed a Wrongful Death of a Minor Act in 1872.
+
+The wrongful death cases of _LePages, Fondes, and Aysennes v. Center for Reproductive Medicine_ turned on whether extrauterine embryos constituted "minor children" according to the Wrongful Death of a Minor Act.
+
+* Alabama courts held that you could not sue for the wrongful death of unborn children under Alabama's Wrongful Death of a Minor Act of 1872.
+
+* In 2006, Alabama passed the Brody Act into law, which amended Alabama's criminal statutes such that criminal homicide laws could apply to cases involving the death of "[a] human being, including an unborn child in utero at any stage of development, regardless of viability."[^constitutional-amendment]
+
+* In _Mack v. Carmack_ in 2011, the Alabama Supreme Court decided that wrongful death lawsuits could be made in civil court for unborn children in order to bring Alabama's civil law standards for "minor child" in congruence with its criminal law standards for "human being."
+
+Thus, the original 1872 Wrongful Death of a Minor Act statute was never updated by the Alabama legislature. The Brody Act does specify "unborn child _in utero"_ [emphasis added], but the phrase "in utero" does not appear anywhere in the Wrongful Death of a Minor Act.
+
+
+
+[^constitutional-amendment]: In 2022, an amendment was passed to the Alabama Constitution that states, "This state acknowledges, declares, and affirms that it is the public policy of this state to recognize and support the sanctity of unborn life and the rights of unborn children, including the right to life," and "This state further acknowledges, declares, and affirms that it is the public policy of this state to ensure the protection of the rights of the unborn child in all manners and measures lawful and appropriate."
+
+
+Trial History
+
+* The LePages and Fondes sued the Center for wrongful death and for negligence, and the Aysennes sued the Center for wrongful death and for negligence and wantonness.
+
+* The trial court in the case dismissed both the wrongful death cases and the negligence/wantonness cases. The wrongful death cases were dismissed with the assertion that extrauterine embryos were not "minor children" under Alabama's Wrongful Death of a Minor Act, and the negligence/wantonness cases were dismissed with the assertion that extrauterine embryos were "life" and you cannot sue for negligence for loss of life.
+
+
+Opinions
+
+The long-term solution that all the judges, whether concurring or dissenting, seem to agree on is that the Alabama legislature should update the Wrongful Death of a Minor Act.
+
+* All of judges assert legislative supremacy and deny it is their role to amend laws. This is not intentional judicial activism. As soon as the State of Alabama passes a law clarifying these cases, the judges agree to apply that law. This is not like _Roe_ and _Doe_ which overturned the laws of all fifty states.
+
+* The cases were decided narrowly based on the statutes of the State of Alabama. In particular, the cases were not decided with any appeal to the U.S. Constitution, including the Fourteenth Amendment to the U.S. Constitution.
+
+* Lawmakers, in passing the Brody Act, but not updating the Wrongful Death of a Minor Act created an unsettled legal situation.
+
+* The Wrongful Death of a Minor Act hasn't been updated since 1872, long before IVF technologies existed, and should be updated regardless of the Brody Act, anyway.
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
