@@ -1,0 +1,52 @@
+---
+author: "Joshua Born"
+date: 2024-02-25
+draft: false
+implicit-figures: true
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: false
+summary: "For a better public discourse on abortion, a good start would be not including a picture of shouting protestors with every article about abortion."
+tags: ["editorial", "reproductive responsibility", "politics", "induced abortion"]
+title: "Let's Not Platform Screaming Lunatics"
+---
+
+
+## Introduction
+
+In [her article](https://www.nationalreview.com/2024/02/pro-abortion-extremists-are-targeting-conservative-states/) appearing in _National Review_ today, Kayla Bartsch reiterates many of the points I made in [my analysis](/analysis-of-viewpoints-on-abortion-policy-in-gallup-polling.html) of Ohio's _Issue 1_ referendum. She notes that Gallup polling has found for decades that legal abortion-on-demand in the second and third trimesters is actually quite unpopular in the United States. However, because voter turnout in elections in the United States is often quite low, and because the adherents of abortion liberation ideology tend to be more politically active than those who hold more moderate views on abortion, the abortion lobby can win elections running on a platform that a minority of Americans actually support.
+
+Kayla Bartsch goes on to point out that efforts similar to Ohio's _Issue 1_ are currently underway in Florida, Missouri, Montana, South Dakota, and Arkansas. Many of these initiatives, like the original version of Ohio's _Issue 1,_ are in their current form deceptive, often not even mentioning "abortion" in their front matter, and like Ohio's _Issue 1,_ the Florida initiative is currently being litigated because of this.
+
+I think the content of Kayla Bartsch's article is good, so I will take this opportunity to criticize not the author of the article, but _National Review_ the website.
+
+
+## Why a Picture of Shouting Protestors with Every Article about Abortion?
+
+It seems like every article pertaining to abortion that we encounter on the Internet comes with it a picture of protesters holding poorly crafted cardboard signs and screaming at the top of their lungs. _National Review_ has coupled Kayla Bartsch's article with yet another such picture. Let's stop doing this.
+
+One of the major points of Kayla Bartsch's article and my article is that abortion politics suffers because median voters are not as present and thus not as represented as they should be. The impoverished state of public discourse around abortion in the United States is not helping this.
+
+Anecdotally, a lot of Americans do not want to talk about abortion, not because they have no opinion on the matter, but because people naturally do not want to deal with a bunch of screaming lunatics calling them names, not listening to what they are actually saying, misrepresenting their views, shouting over them, and belittling them with snarky comments.
+
+American public life generally suffers because of this, but discourse about abortion is especially bad in this regard.
+
+Public discourse would benefit if we platform people who can communicate ideas, articulate reasons, understand the nuances of different viewpoints, and understand opposing viewpoints so well that they can explain a viewpoint with which they disagree to the satisfaction of those who hold the opposing viewpoint.
+
+Constructing such a healthier public discourse is an invitation to the median voter -- the ordinary American going about his or her day, who is not very politically minded and is turned off the demagoguery of political speech. This is precisely the sort of person Kayla Bartsch and I want to participate in elections more. (This is, incidentally, who I was up until rather recently.) Otherwise, elections in which only 49.63% of registered voters turn out to vote, as was the case in Ohio, will continue to be common.
+
+We can start to construct this healthier public discourse, at the very least, by not making shouting protesters the norm when it comes to discourse about abortion.
+
+
+## Why Do Comment Sections Even Exist?
+
+In the comment sections that accompany articles on the _National Review_ web site, like comment sections all throughout the Internet, you will see people typing in all caps and calling each other names without paying attention to what anyone else is actually saying. These people are to the online world what the screaming protesters holding cardboard signs are to the physical world. 
+
+If periodicals _did_ choose to platform healthy public discourse and deplatform screaming lunatics, one of the first things that would go would be these comment sections accessible to a general audience. (Of course, there are more specific online communities that can maintain higher standards of discourse that would be kept.)
+
+Media outlets themselves are motivated more by page impressions than healthy discourse, so it is unlikely that comment sections will be removed by media web sites themselves. Fortunately, we consumers are not powerless in this regard.
+
+I highly recommend the ["Shut Up" Comment Blocker](https://rickyromero.com/shutup/) browser extension. It is available for all the major web browsers, and gives users the ability to make comment sections on the web sites they visit invisible. This functionality can be toggled on and off either universally or on a per-site basis.
+
+Incidentally, if you are a reader of _National Review,_ I submitted a [pull request](https://github.com/panicsteve/shutup-css/pull/182) that was merged into the shutup.css project on which the "Shut Up" Comment Blocker is based, so you can install the "Shut Up" Comment Blocker right now and immediately peruse the _National Review_ web site unmolested by screaming lunatics in the comments sections.
