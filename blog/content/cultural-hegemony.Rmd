@@ -2,7 +2,7 @@
 author: "Joshua Born"
 #bibliography: "../bibliographies/myth-of-left-and-right.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2023-11-08
+date: 1965-01-01
 draft: true
 implicit-figures: true
 include-before: |
@@ -12,16 +12,10 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: ''
+summary: "Summary sentence here"
 tags: ["editorial"]
-title: 'The Marketplace of Ideas versus (Left-Wing, Professional-Class) Cultural Hegemony'
+title: 'Cultural Hegemony'
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  echo = FALSE
-)
-```
 
 
 ## The Marketplace of Ideas
