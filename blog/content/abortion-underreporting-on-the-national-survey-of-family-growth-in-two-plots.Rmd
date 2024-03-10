@@ -3,7 +3,7 @@ author: "Joshua Born"
 bibliography: "../bibliographies/abortion-underreporting-on-the-national-survey-of-family-growth.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2024-03-10
-draft: true
+draft: false
 #include-before: |
 #  ## Table of Contents
 output:
