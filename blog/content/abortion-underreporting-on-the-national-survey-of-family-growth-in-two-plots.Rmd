@@ -1,8 +1,8 @@
 ---
 author: "Joshua Born"
-bibliography: "../bibliographies/approval-of-abortion-is-conservative.bib"
+bibliography: "../bibliographies/abortion-underreporting-on-the-national-survey-of-family-growth.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2023-05-15
+date: 2024-03-10
 draft: true
 #include-before: |
 #  ## Table of Contents
@@ -10,29 +10,688 @@ output:
   blogdown::html_page:
     number_sections: false
     toc: false
-summary: "Put summary sentence here."
+summary: "After more than a year, I am still trying to get my analysis work started."
 tags: ["research update", "reproductive responsibility", "induced abortion", "NSFG", "first-person"]
 title: "Abortion Under-Reporting on the National Survey of Family Growth in Two Plots"
 ---
 
 ```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(ggsci)
+library(haven)
+library(here)
+library(lubridate)
+library(readr)
+library(scales)
+library(showtext)
+library(srvyr)
+
+font_add_google('Open Sans', 'open')
+showtext_auto()
+showtext_opts(dpi = 200)
+theme_update(text = element_text(family = 'open'))
+
 knitr::opts_chunk$set(
-  echo = FALSE
+  cache = TRUE,
+  dpi=72,
+  echo = FALSE,
+  fig.align = 'center',
+  fig.height=9,
+  fig.retina=1.5,
+  fig.width=12
 )
 ```
 
-The [National Survey of Family Growth (NSFG)](https://www.cdc.gov/nchs/nsfg/index.htm) is the premier instrument for studying reproduction in the United States via a nationally representative sample. It was specifically designed to study most of the main topics of reproductive responsibility, and because of this, I spend a lot of my research efforts with the NSFG. However, there is one major, well-established flaw with the NSFG.
+The subtitle of this blog is "a blog of independent thinking and evidence-based inquiry," which raises the question, where is the evidence-based inquiry?
 
-If there is a single variable most central to the study of reproductive responsibility, it is the phenomenon of unintended pregnancy. Estimating accurate counts of unintended pregnancies and identifying covariates of unintended pregnancy are thus essential tasks when studying reproductive responsibility. It is also a reality that many unintended pregnancies in the United States are ended by induced abortion.
+This blog was supposed to feature my research and analysis in reproductive responsibility. However, 2023 came and went and I have yet to show anything for my work.
 
-Therein lies the issue. It is known that only a small fraction of pregnancies ended by induced abortion are actually reported by respondents to the NSFG, a phenomenon known as "abortion under-reporting." [@noauthor_appendix_2021] Therefore, estimates of the number of induced abortions -- and hence estimates of the number of unintended pregnancies -- based on the public use files of the NSFG will be drastic underestimates, if no preparatory work is done first. 
+The issue is that a primary research variable for inquiry into reproductive responsibility is the prevalence of unintended pregnancies, and my primary instrument for research and analysis, the [National Survey of Family Growth (NSFG)](https://www.cdc.gov/nchs/nsfg/index.htm), suffers from a large amount of abortion under-reporting. [@lindberg_abortion_2020; @desai_impact_2021; @noauthor_appendix_2021]
 
-Doing this preparatory work to compensate for abortion under-reporting is what I am spending my nights' and weekends' research time on now. The work is a necessary prerequisite for more interesting work in the future, but is time-consuming and does not itself lead to knowledge discovery. ...
+Considering that a large proportion of unintended pregnancies end in induced abortion, if I just launched into my analysis without addressing the abortion under-reporting, then my statistics would greatly under-count the number of unintended pregnancies.
 
-In the mean time, here are two plots that illustrate the consequences of induced abortion under-reporting on the NSFG.
+I am working on a fix to the abortion under-reporting that is a standard approach often done in survey statistics in which the analysis weights of the survey responses data set are adjusted such that estimates based on the data set match values known from external sources. This is often called "post-stratification," "calibration," or "raking."[^raking]
+
+[^raking]: This latter term "raking" actually refers to a specific technique for handling multiple dimensions in this process.
+
+My main frustration is that I underestimated how much time this weights adjustment process would take and overestimated how much time I would have to work on it while simultaneously working a full-time job. Here I am more than a year later, and I have yet to actually start my analysis work and thus to learn anything from my work -- and learning new information is the actually interesting part of doing research.
+
+What I have done is spent more than a hundred hours on basically tedious tasks. This has to be done before I can move on to the interesting work, but as a result of this, not only has my analysis been delayed, but my writing has slowed to a halt, and I am not doing nearly as much reading as I would like.
+
+There is not much I can do except keep chipping away at it, but in an effort to get my writing restarted, I thought I might summarize the problem on which I am working in a short article.
 
 
-## Citation
+## Two Plots: Live Births versus Induced Abortions
+
+```{r load-data, message=FALSE}
+guttmacher_raw <- read_csv(
+  here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv')
+)
+vital_births <- read_csv(
+  here('data/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'),
+  name_repair = 'universal'
+)
+preg2017_2019 <- read_sas(
+  here('data/NSFG/d2017_2019fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
+)
+preg2015_2017 <- read_sas(
+  here('data/NSFG/d2015_2017fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
+)
+preg2013_2015 <- read_sas(
+  here('data/NSFG/d2013_2015fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2013_2015fempreg.sas7bcat')
+)
+preg2011_2013 <- read_sas(
+  here('data/NSFG/d2011_2013fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2011_2013fempreg.sas7bcat')
+)
+wgt2011_2019 <- read_sas(
+  here('data/NSFG/d2011_2019femwgt.sas7bdat')
+)
+preg2006_2010 <- read_sas(
+  here('data/NSFG/d2006_2010fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2006_2010fempreg.sas7bcat')
+)
+preg2002_2003 <- read_sas(
+  here('data/NSFG/d2002_2003fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2002_2003fempreg.sas7bcat')
+)
+preg1995_1995 <- read_sas(
+  here('data/NSFG/d1995_1995fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1995_1995fempreg.sas7bcat')
+)
+preg1985_1987 <- read_sas(
+  here('data/NSFG/d1985_1987fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1985_1987fempreg.sas7bcat')
+)
+preg1982_1983 <- read_sas(
+  here('data/NSFG/d1982_1983fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1982_1983fempreg.sas7bcat')
+)
+fem1982_1983 <- read_sas(
+  here('data/NSFG/d1982_1983femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d1982_1983femresp.sas7bcat')
+)
+```
+
+```{r calculate-census-counts-by-year, dependson="load-data"}
+guttmacher_national <- guttmacher_raw |> 
+  filter(state == 'US') |>
+  select(-state, -notes) |>
+  mutate(abortions_interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
+  )
+
+census_counts <- bind_rows(
+  guttmacher_national |>
+    filter(!abortions_interpolated) |> 
+    rename(Year = year, Total = abortionstotal) |>
+    select(Year, Total) |>
+    mutate(Outcome = 'Abortions'),
+  vital_births |> 
+    filter(Year >= 1973) |>
+    rename(Total = Birth.Number) |>
+    select(Year, Total) |>
+    mutate(Outcome = 'Births')
+)
+```
+
+```{r create-survey-objects, dependson="load-data"}
+cm_to_year_cycle5 <- function(x) {
+  x_int <- as.integer(x)
+  ifelse(
+    x_int %in% c(NA, 0, 9997, 9998, 9999),
+    NA,
+    floor((x_int - 1) / 12) + 1900
+  )
+}
+
+count_abortions_and_births <- function(tbl) {
+  mutate(
+    tbl,
+    Abortions = if_else(OUTCOME == 2, 1, 0),
+    Births = if_else(OUTCOME == 1, 1, 0),
+  )
+}
+
+preg_outcomes2015_2019 <- bind_rows(
+  select(preg2015_2017, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, PRGLNGTH),
+  select(preg2017_2019, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG)
+) |>
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+mutate(
+  Year = DATEND
+) |> 
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2015_2019,
+  nest = TRUE
+) |>
+as_survey_rep(
+  type = 'BRR'
+)
+
+preg_outcomes2011_2015 <- bind_rows(
+  select(preg2011_2013, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, PRGLNGTH) |>
+    mutate(
+      # Not sure what happened here when the data was exported from SAS, but this adjustment seems to fix it.
+      DATEND = as.numeric(DATEND) + 3653
+    ), 
+  select(preg2013_2015, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, PRGLNGTH),
+) |>
+mutate(
+  AGEPREG = floor(AGEPREG / 100)
+) |>
+left_join(
+  wgt2011_2019,
+  by = join_by(CASEID)
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  ))
+) |>
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGT2011_2015,
+  nest = TRUE
+) |>
+as_survey_rep(
+  type = 'BRR'
+)
+
+
+
+preg_outcomes2006_2010 <- select(
+  preg2006_2010, SECU, SEST, CASEID, DATEND, OUTCOME, AGEPREG, PRGLNGTH, WGTQ1Q16
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  )),
+  AGEPREG = floor(AGEPREG / 100)
+) |> 
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU,
+  weights = WGTQ1Q16,
+  nest = TRUE
+) |>
+as_survey_rep(
+  type = 'BRR'
+)
+
+
+
+preg_outcomes2002_2003 <- select(
+  preg2002_2003, SECU_P, SEST, CASEID, DATEND, OUTCOME, AGEPREG, PRGLNGTH, FINALWGT
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  )),
+  AGEPREG = floor(AGEPREG / 100)
+) |>
+count_abortions_and_births() |>
+as_survey_design(
+  strata = SEST,
+  ids = SECU_P,
+  weights = FINALWGT,
+  nest = TRUE
+) |>
+as_survey_rep(
+  type = 'BRR'
+)
+
+
+
+preg_outcomes1995_1995 <- select(
+  preg1995_1995, PANEL, COL_STR, CASEID, DATEND, OUTCOME, AGEPREG, PRGLNGTH, POST_WT
+) |>
+mutate(
+  Year = cm_to_year_cycle5(DATEND),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "STILLBIRTH" = 3,
+    "MISCARRIAGE" = 4,
+    "ECTOPIC PREGNANCY" = 5,
+    "CURRENT PREGNANCY" = 6
+  )),
+  AGEPREG = floor(AGEPREG / 100)
+) |>
+count_abortions_and_births() |>
+as_survey_design(
+  strata = COL_STR,
+  ids = PANEL,
+  weights = POST_WT,
+  nest = TRUE
+) |>
+as_survey_rep(
+  type = 'BRR'
+)
+
+
+cm_to_year_cycle4 <- function(x) {
+  x_int <- as.integer(x)
+  specials <- c(NA, 0, 99585, 99696, 99999)
+  x_modified <- if_else(
+    !is.element(x_int, specials) & x_int > 9000,
+    x_int - 90000,
+    x_int
+  )
+  ifelse(
+    x_modified %in% specials,
+    NA,
+    floor((x_modified - 1) / 12) + 1900
+  )
+}
+
+preg_outcomes1985_1987 <- select(
+  preg1985_1987, SEQNUM, OUTCOME, AGEPREG, PRGLNGTH, B14MO, W_5, starts_with('REP')
+) |>
+rename('PRGLNGTH_MON' = PRGLNGTH) |>
+mutate(
+  Year = cm_to_year_cycle4(B14MO),
+  W_5 = W_5 / 100, # From Codebook: IMPLIED DECIMAL BETWEEN POSTIONS 370 AND 371
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "MISCARRIAGE" = 3,
+    "STILLBIRTH" = 4,
+    "CURRENT PREGNANCY" = 5
+  )),
+  across(
+    starts_with('REP'),
+    ~ .x / 100 # From Codebook: THERE IS AN IMPLIED DECIMAL BEFORE THE LAST TWO DIGITS OF EACH WEIGHT.
+  ),
+  AGEPREG = floor(AGEPREG / 100),
+  PRGLNGTH = round((PRGLNGTH_MON / 10) * 4)
+) |>
+count_abortions_and_births() |>
+as_survey_rep(
+  variables = c(SEQNUM, W_5, OUTCOME, AGEPREG, PRGLNGTH, Year, Births, Abortions),
+  weights = W_5,
+  repweights = starts_with('REP'),
+  type = 'BRR'
+)
+
+
+cm_to_year_cycle3 <- function(x) {
+  x_int <- as.integer(x)
+  specials <- c(NA, 0, 9696, 9797, 9898, 9999)
+  x_modified <- if_else(
+    !is.element(x_int, specials) & x_int > 9000,
+    x_int - 9000,
+    x_int
+  )
+  ifelse(
+    x_modified %in% specials,
+    NA,
+    floor((x_modified - 1) / 12) + 1900
+  )
+}
+
+preg_outcomes1982_1983 <- left_join(
+  select(
+    preg1982_1983, CASEID, B22A, OUTCOME
+  ),
+  select(
+    fem1982_1983, CASEID, PSUCODE, PSEUDOST, PAIRNUM, FINALWT
+  ),
+  by = 'CASEID'
+) |>
+mutate(
+  PAIRNUM = if_else(
+    PSEUDOST == 21 & PSUCODE == 62,
+    2,
+    PAIRNUM
+  ),
+  FINALWT = FINALWT / 10,
+  Year = cm_to_year_cycle3(B22A),
+  OUTCOME = labelled(OUTCOME, c(
+    "LIVE BIRTH" = 1,
+    "INDUCED ABORTION" = 2,
+    "MISCARRIAGE" = 3,
+    "STILLBIRTH" = 4,
+    "CURRENT PREGNANCY" = 5
+  ))
+) |>
+count_abortions_and_births() |>
+as_survey_design(
+  strata = PSEUDOST,
+  ids = PAIRNUM,
+  weights = FINALWT,
+  nest = TRUE
+) |>
+as_survey_rep(
+  type = 'BRR'
+)
+```
+
+```{r generate-estimates, dependson=c("create-survey-objects", "calculate-census-counts-by-year")}
+estimate_births_and_abortions <- function(census_counts, survey, survey_label, begin, end) {
+  these_estimates <- survey |>
+    group_by(Year) |>
+    summarize(
+      Abortions = survey_total(Abortions, vartype = 'ci'),
+      Births = survey_total(Births, vartype = 'ci'),
+      AbortionsUnweighted = unweighted(sum(Abortions)),
+      BirthsUnweighted = unweighted(sum(Births))
+    ) |>
+    filter(!is.na(Year))
+
+  bind_rows(
+    these_estimates |>
+      select(
+        Year, starts_with('Abortions')
+      ) |>
+      rename(
+        Estimate = 'Abortions',
+        Estimate_low = 'Abortions_low',
+        Estimate_upp = 'Abortions_upp',
+        UnweightedCount = 'AbortionsUnweighted'
+      ) |>
+      mutate(
+        Outcome = 'Abortions'
+      ),
+    these_estimates |>
+      select(
+        Year, starts_with('Births')
+      ) |>
+      rename(
+        Estimate = 'Births',
+        Estimate_low = 'Births_low',
+        Estimate_upp = 'Births_upp',
+        UnweightedCount = 'BirthsUnweighted'
+      ) |>
+      mutate(
+        Outcome = 'Births'
+      )
+  ) |>
+  mutate(
+    Begin = begin,
+    End = end,
+    SurveyLabel = survey_label
+  ) |>
+  left_join(
+    census_counts,
+    by = c('Year', 'Outcome')
+  )
+}
+
+estimates <- bind_rows(
+  estimate_births_and_abortions(census_counts, preg_outcomes2015_2019, '2015-2019', my('September 2015'), my('September 2019')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2011_2015, '2011-2015', my('September 2011'), my('September 2015')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2006_2010, '2006-2010', my('June 2006'),      my('June 2010')),
+  estimate_births_and_abortions(census_counts, preg_outcomes2002_2003, 'Cycle 6', my('March 2002'),     my('March 2003')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1995_1995, 'Cycle 5', my('January 1995'),   my('October 1995')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1985_1987, 'Cycle 4', my('December 1985'),  my('March 1987')),
+  estimate_births_and_abortions(census_counts, preg_outcomes1982_1983, 'Cycle 3', my('August 1982'),    my('April 1983'))
+)
+```
+
+```{r assign-years}
+years_assignment <- tribble(
+  ~Year, ~SurveyLabel,
+  2014, '2015-2019',
+  2013, '2015-2019',
+  2012, '2015-2019',
+  2011, '2015-2019', # However, 2011-2015 seems better, even while losing October, November, December. Using a partial year sample might be biased in other ways, nonetheless.
+  2010, '2011-2015',
+  2009, '2011-2015',
+  2008, '2011-2015',
+  2007, '2011-2015',
+  2006, '2011-2015',
+  2005, '2006-2010',
+  2004, '2006-2010',
+  2003, '2006-2010',
+  2002, '2006-2010',
+  2001, 'Cycle 6',
+  2000, 'Cycle 6', # However, 2006-2010 seems better.
+  1999, 'Cycle 6', # Again, 2006-2010 seems better.
+  1998, 'Cycle 6', # Again, 2006-2010 seems better.
+  1997, 'Cycle 6', # Cycle 6 is the only option.
+  1996, 'Cycle 6', # Cycle 6 outperforms 2006-2010.
+  1995, 'Cycle 6', # Cycle 6 is the only option.
+  1994, 'Cycle 5',
+  1993, 'Cycle 5',
+  1992, 'Cycle 5',
+  1991, 'Cycle 5',
+  1990, 'Cycle 5', # No estimates cover 1990.
+  1989, 'Cycle 5',
+  1988, 'Cycle 5',
+  1987, 'Cycle 5',
+  1986, 'Cycle 5',
+  1985, 'Cycle 4',
+  1984, 'Cycle 4', # Cycle 4 does not cover in 1984.
+  1983, 'Cycle 4', # Cycle 5 outperforms Cycle 4 here.
+  1982, 'Cycle 4', # No estimates cover 1982.
+  1981, 'Cycle 4',
+  1980, 'Cycle 4',
+  1979, 'Cycle 3',
+  1978, 'Cycle 3',
+  1977, 'Cycle 3',
+  1976, 'Cycle 3',
+  1975, 'Cycle 3',
+  1974, 'Cycle 3'
+)
+```
+
+```{r live-births-composite-plot, dependson=c("assign-years", "define-plot-function", "generate-estimates"), fig.cap="Estimates of live births per year from the NSFG compared with National Vital Statistics System counts of live births per year."}
+years_assignment |>
+  left_join(estimates, by = join_by(Year, SurveyLabel)) |>
+  filter(Outcome == 'Births') |>
+  mutate(
+    Survey = factor(
+      SurveyLabel,
+      levels = c('Cycle 3', 'Cycle 4', 'Cycle 5', 'Cycle 6', '2006-2010', '2011-2015', '2015-2019'),
+      ordered = TRUE
+    )
+  ) |>
+  ggplot() +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.1, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp,
+      color = Survey
+    ),
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Estimate,
+      color = Survey
+    ),
+    fill = 'white',
+    shape = 21,
+    size = 4,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    ),
+    shape = 4,
+    size = 4,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1]+1, x[2]-1, 2),
+    expand = expansion(add = 1)
+  ) +
+  scale_color_cosmic() +
+  guides(colour = guide_legend(nrow = 1)) +
+  labs(
+    y = 'Live Births'
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    ),
+    axis.ticks.length = unit(0.25, 'cm'),
+    axis.ticks.y = element_blank(),
+    legend.position = 'top',
+    legend.title = element_blank(),
+    plot.margin = unit(c(0.25, 0.75, 0.25, 0.25), 'cm')
+  )
+```
+
+
+The National Survey of Family Growth (NSFG) is a survey administered by the National Center of Health Statistics (NCHS) and is the United States' premiere fertility survey, providing insight into pregnancy intent, frequency, and outcome, among other topics. The National Vital Statistics System (NVSS) is also administered by the NCHS and collects birth and death certificate data from the several states of the United States.
+
+The NSFG is a survey given to a randomized sample of between 8,000 to 23,000 respondents, depending on the particular iteration of the survey. The NVSS is effectively a census of all live births in the United States.
+
+If the NSFG is accurate, estimates from the NSFG should match the census counts from the NVSS. In Figure \@ref(fig:live-births-composite-plot), we can see that this is the case.
+
+The X's in Figure \@ref(fig:live-births-composite-plot) represent the number of live births in the United States in a given year taken from the NVSS, and the brackets with a circle in the middle represent 95% confidence intervals for estimates of live births in a given year calculated from the NSFG. As we can see, most of the 95% confidence intervals from the NSFG cover the corresponding year's NVSS count of live births.
+
+The various colors of the brackets in Figure \@ref(fig:live-births-composite-plot) represent which iteration of the NFSG the estimates are taken from. Based on my review, the NSFG produces accurate estimates of live births for the five to ten years before each survey iteration. Birth estimates become less reliable for years father back before the survey because more and more birth mothers have either died or aged out of the target population of the survey the longer the time period between birth and survey.
+
+Cycles 1 and 2 of the NSFG are not included in Figure \@ref(fig:live-births-composite-plot) because they only surveyed women who had ever been married. These iterations missed all of the unintended pregnancies that occur among never-married women and so are not suitable for the study of reproductive responsibility.
+
+With a few aberrations, we can see that the NSFG does a decent job with live birth estimation. The circles in Figure \@ref(fig:live-births-composite-plot) tend to follow the X's, and the brackets usually contain the X's.
+
+```{r induced-abortions-composite-plot, dependson=c("assign-years", "define-plot-function", "generate-estimates"), fig.cap="Estimates of induced abortions per year from the NSFG compared with Guttmacher Institute Abortion Provider Census counts of induced abortions per year."}
+years_assignment |>
+  left_join(estimates, by = join_by(Year, SurveyLabel)) |>
+  filter(Outcome == 'Abortions') |>
+  mutate(
+    Survey = factor(
+      SurveyLabel,
+      levels = c('Cycle 3', 'Cycle 4', 'Cycle 5', 'Cycle 6', '2006-2010', '2011-2015', '2015-2019'),
+      ordered = TRUE
+    )
+  ) |>
+  ggplot() +
+  geom_segment(
+    arrow = arrow(angle = 90, ends = 'both', length = unit(0.1, 'inches')),
+    aes(
+      x = Year,
+      xend = Year,
+      y = Estimate_low,
+      yend = Estimate_upp,
+      color = Survey
+    ),
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Estimate,
+      color = Survey
+    ),
+    fill = 'white',
+    shape = 21,
+    size = 4,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  geom_point(
+    aes(
+      x = Year,
+      y = Total
+    ),
+    shape = 4,
+    size = 4,
+    stroke = 0.75,
+    na.rm = TRUE
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    labels = scales::unit_format(unit = "M", scale = 1e-6),
+    limits = c(0, NA)
+  ) +
+  scale_x_continuous(
+    breaks = \(x) seq(x[1]+1, x[2]-1, 2),
+    expand = expansion(add = 1)
+  ) +
+  scale_color_cosmic() +
+  guides(colour = guide_legend(nrow = 1)) +
+  labs(
+    y = 'Induced Abortions'
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      color = 'black',
+      hjust = 0.5,
+      vjust = 0.65
+    ),
+    axis.ticks.length = unit(0.25, 'cm'),
+    axis.ticks.y = element_blank(),
+    legend.position = 'top',
+    legend.title = element_blank(),
+    plot.margin = unit(c(0.25, 0.75, 0.25, 0.25), 'cm')
+  )
+```
+
+
+On the other hand, the NSFG does not do a good job of estimating the number of induced abortions per year in the United States. While data on abortions in the United States are quite poor generally, the X's in Figure \@ref(fig:induced-abortions-composite-plot) are taken from the Guttmacher Institute's Abortion Provider Census (APC), which typically reports the greatest number of abortions among abortion surveys and [probably has the closest estimates to the true number](/induced-abortion-is-common.html#today).
+
+As we can see, the estimates of the number of induced abortions based on the NSFG are routinely less than half the number reported by the APC.
+
+The goal of my weight adjustment project is to make the estimates of induced abortion from the NSFG match external counts from the APC by increasing the weights of those respondents who report one or more induced abortions. This is not, of course, done as a brute force arithmetic adjustment. Care has to be taken so that other estimates, such as the total number of women in the United States and the total numbers of births by various demographic categories, remain accurate.
+
+There is more subtlety to this procedure than I originally anticipated such that it is not just a matter of plugging the NSFG data into preexisting software, running standard post-stratification and raking functions. I therefore am writing some custom programs. Other tasks -- such as going through the U.S. Census Bureau website to find the appropriate counts -- turned out to be more arduous than I expected. Ultimately this process involves a lot of trial and error -- trying something, seeing what works and what does not, making an adjustment, and trying again.
+
+Once the procedure is completed, there is still the risk of there being some bias in the adjusted estimates if those respondents who report their abortions differ substantially in properties of interest from those respondents who do not report their abortions. This is an inevitable consequence of non-reporting and cannot be helped. After weight adjustment, at least the estimates of total number of induced abortions and of live births equal external sources.
+
+I will not go too much here in my blog into actual approach I am using for weight adjustment, because I want to leave open the possibility of trying to get an academic paper out of this work and because such discussion would probably be too technical to be of interest to a general audience anyway.
+
+Once I am finished, however, I will at least make the weights themselves available here via my blog in the small chance that someone out there will find them helpful for their own work.
+
+
+## Citations
 
 ::: {#refs}
 :::
+
+## Footnote
