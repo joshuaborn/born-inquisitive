@@ -11,7 +11,7 @@ output:
     number_sections: false
     toc: false
 summary: "Put summary sentence here."
-tags: ["research update", "reproductive responsibility", "induced abortion", "NSFG", "first-person"]
+tags: ["book, article, or podcast review", "first-person"]
 title: "Book Review: The Identity Trap"
 ---
 
@@ -22,20 +22,34 @@ knitr::opts_chunk$set(
 ```
 
 
+If you have been working in corporate America over the past ten or fifteen years, you have more than likely noticed a distinct change in work culture. It was once polite to keep politics out of the workplace, a kind of unwritten rule in order to avoid vitriolic conflict and keep the peace long enough to do what all of us who are not independently wealthy must do, i.e., make a living.
+
+Now the new work culture is one in which we get email blasts from our C-level corporate overlords pontificating a style of identity politics of the Ibram X. Kendi and Robin DiAngelo variety, a culture in which we are required to go receive training at our jobs in these ideologies, a culture in which we often have to pass some sort of ideological purity test in order to be considered for promotion or hiring.
+
+If you have noticed this, you may have wondered, "How did this all happen? And how so suddenly?"
+
+_The Identity Trap,_  written by Yascha Mounk, a Johns Hopkins University professor of international affairs best known for his critique of populism _The People vs. Democracy,_ is one of the better answers I have discovered to these questions.
+
+_The Identity Trap_ tries to do three different things:
+
+1. to give a history of ideas that would later form the basis for the modern "identity synthesis," as the author calls it,
+2. to give a story as to how the identity synthesis went from obscure academic circles to taking over our work culture, and
+3. to argue against the identity synthesis in favor of a philosophical liberalism that values free speech, desegregation, and nondiscrimination.
+
 
 ## Outline
 
 * Chapter 1: Michel Foucault, rejection of the grand narrative, obsession with "discourses"
 * Chapter 2: Edward Said, criticism of "Orientalism"; Gayatri Chakravotry Spivak, strategic essentialism
 * Chapter 3: Derek Bell, rejection of civil rights movement and invention of critical race theory, Kimberlee Crenshaw, intersectionality
-* Chapter 5: Internet and social media, Tumblr\TikTok generation
+* Chapter 5: Internet and social media, Tumblr/TikTok generation
 * Chapter 6: short march
 * Chapter 7: Trump derangement syndrome redirected to person next cubicle over, Ibram X. Kendi's everybody is either racist or antiracist
 * Chapter 8: Standpoint epistemology mutated into standpoint theory
 * Chapter 9: cultural appropriation
 * Chapter 10: free speech
 * Chapter 11: desegregation vs. "progressive separatism" 
-* Chapter 12: race-neutral vs. "disparatism
+* Chapter 12: race-neutral vs. disparatism
 * Chapter 13: meritocracy vs. "structural" -isms
 * Chapter 14 and 15: arguments for (philosophical, not leftist) liberal democracy
 * Chapter 16: recommendations (including for corporate CEOs)
