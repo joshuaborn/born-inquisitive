@@ -1,0 +1,50 @@
+---
+author: "Joshua Born"
+#bibliography: "../bibliographies/abortion-underreporting-on-the-national-survey-of-family-growth.bib"
+#csl: "../bibliographies/chicago-author-date.csl"
+date: 2024-03-17
+draft: true
+#include-before: |
+#  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: false
+summary: "Put summary sentence here."
+tags: ["research update", "reproductive responsibility", "induced abortion", "NSFG", "first-person"]
+title: "Book Review: The Identity Trap"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  cache = FALSE
+)
+```
+
+
+
+## Outline
+
+* Chapter 1: Michel Foucault, rejection of the grand narrative, obsession with "discourses"
+* Chapter 2: Edward Said, criticism of "Orientalism"; Gayatri Chakravotry Spivak, strategic essentialism
+* Chapter 3: Derek Bell, rejection of civil rights movement and invention of critical race theory, Kimberlee Crenshaw, intersectionality
+* Chapter 5: Internet and social media, Tumblr\TikTok generation
+* Chapter 6: short march
+* Chapter 7: Trump derangement syndrome redirected to person next cubicle over, Ibram X. Kendi's everybody is either racist or antiracist
+* Chapter 8: Standpoint epistemology mutated into standpoint theory
+* Chapter 9: cultural appropriation
+* Chapter 10: free speech
+* Chapter 11: desegregation vs. "progressive separatism" 
+* Chapter 12: race-neutral vs. "disparatism
+* Chapter 13: meritocracy vs. "structural" -isms
+* Chapter 14 and 15: arguments for (philosophical, not leftist) liberal democracy
+* Chapter 16: recommendations (including for corporate CEOs)
+
+
+
+## Citations
+
+::: {#refs}
+:::
+
+## Footnote
