@@ -24,17 +24,32 @@ knitr::opts_chunk$set(
 
 If you have been working in corporate America over the past ten or fifteen years, you have more than likely noticed a distinct change in work culture. It was once polite to keep politics out of the workplace, a kind of unwritten rule in order to avoid vitriolic conflict and keep the peace long enough to do what all of us who are not independently wealthy must do, i.e., make a living.
 
-Now the new work culture is one in which we get email blasts from our C-level corporate overlords pontificating a style of identity politics of the Ibram X. Kendi and Robin DiAngelo variety, a culture in which we are required to go receive training at our jobs in these ideologies, a culture in which we often have to pass some sort of ideological purity test in order to be considered for promotion or hiring.
+Now the new work culture is one in which we get email blasts from our C-level corporate overlords pontificating their social commentary in a style of identity politics of the Ibram X. Kendi and Robin DiAngelo variety. As part of our paid vocations, we are often required to attend classes in this identity politics ideology under the label of "diversity, equity, and inclusion."
 
 If you have noticed this, you may have wondered, "How did this all happen? And how so suddenly?"
 
-_The Identity Trap,_  written by Yascha Mounk, a Johns Hopkins University professor of international affairs best known for his critique of populism _The People vs. Democracy,_ is one of the better answers I have discovered to these questions.
+_The Identity Trap: A Story of Ideas and Power in Our Time,_  written by Yascha Mounk -- a Johns Hopkins University professor of international affairs best known for his critique of populism _The People vs. Democracy_ -- is one of the better answers I have discovered to these questions.
 
 _The Identity Trap_ tries to do three different things:
 
 1. to give a history of ideas that would later form the basis for the modern "identity synthesis," as the author calls it,
 2. to give a story as to how the identity synthesis went from obscure academic circles to taking over our work culture, and
 3. to argue against the identity synthesis in favor of a philosophical liberalism that values free speech, desegregation, and nondiscrimination.
+
+
+## A History of Ideas
+
+The foundational ideas that the _The Identity Trap_ covers are the postmodernist rejection of the grand narrative and fascination with the power structures of "discourses" attributed to Michel Foucault, the criticism of "Orientalist" discourse attributed to Edward Said, the tactic of "strategic essentialism" attributed to Gayatri Chakravorty Spivak, the invention of critical race theory by Derrick Bell, and the popularization of concepts of "intersectionality" attributed to Bell's disciple Kimberlé Crenshaw.
+
+These are just the foundational ideas Yascha Mounk covers in Part I of _The Identity Trap_ entitled "The Origins of the Identity Synthesis." In addition, covered in later chapters are the standpoint epistemology of feminist philosophers Donna Haraway and Sandra Harding and the concept of "cultural appropriation" popularized by thinkers such as Stuart Hall and Robert S. Nelson.
+
+I have written about [essentialism](/essentialism.html) and [Kwame Anthony Appiah's critique of "cultural appropriation" as a concept](/kwame-anthony-appiahs-criticism-of-cultural-appropriation-criticism.html) previously, so I was already familiar with a few of these concepts. However, two things struck me about the history of ideas sketched out in _The Identity Trap._ The first is just how much Derrick Bell was overtly rejecting the program of the civil rights movement in his invention of critical race theory. The second is that while many of these ideas now manifest themselves to the detriment of society, some began as plausible if not good ideas in the minds' of their original thinkers.
+
+I remember doing a web search of "critical race theory" one day while spending time in an airport waiting for my flight to depart, after critical race theory first surfaced in the news cycle, and I could not actually make out _what it is._ Instead I found a word salad of jargon claiming to explain critical race theory. (This game of making a theory inexplicable seems to be a feature of certain kinds of academics, such as anti-positivist sociologists and legal theorists, and it turns out critical race theory is in the intersection of these genres.) Yascha Mounk did a better job of explaining critical race theory in one chapter in his book than all the overly verbose articles I read on my ill-fated enterprise in the airport back in the day. He does so by way of a biographical sketch of its founder Derrick Bell.
+
+...
+
+Points 1 and 2 are intertwined, because most of the foundational ideas the author covers are from many decades prior to the change in work culture that occurred starting in the 2010's. Thus, a story is needed to explain how these ideas went from being well known only in academic circles for nearly half a century to being so salient in society today.
 
 
 ## Outline
