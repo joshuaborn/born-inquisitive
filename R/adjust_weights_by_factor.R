@@ -17,11 +17,14 @@ library(survey)
 #'  than 0 is selected for weight adjustment
 #' @param factor The factor to multiply to the weight of each selected
 #'  observation
+#' @param equalize Whether or not to do a complementary adjustment to weights
+#'  not selected in order that the sum of weights before and after adjustment
+#'  are equal
 #'
 #' @value A svyrep.design object with weights adjusted
 #'
 
-adjust_weights_by_factor <- function(svy, selection, factor) {
+adjust_weights_by_factor <- function(svy, selection, factor, equalize = TRUE) {
   if (!inherits(svy, 'svyrep.design')) {
     stop('Parameter svy must be of class svyrep.design')
   }
@@ -30,22 +33,26 @@ adjust_weights_by_factor <- function(svy, selection, factor) {
     rowSums(svy$variables[attr(terms(selection), which = 'term.labels')]) > 0
   )
 
-  sum_selected_weights <- sum(weights(svy, type = 'sampling')[selected_or_not])
-  sum_complementary_weights <- sum(
-    weights(svy, type = 'sampling')[!selected_or_not]
-  )
-
-  complementary_factor <- 1 + (
-    ((1 - factor) * sum_selected_weights) / sum_complementary_weights
-  )
-
   sampling_weights <- weights(svy, type = 'sampling')
 
   sampling_weights[selected_or_not] <- factor *
     sampling_weights[selected_or_not]
 
-  sampling_weights[!selected_or_not] <- complementary_factor *
-    sampling_weights[!selected_or_not]
+  if (equalize) {
+    sum_selected_weights <- sum(
+      weights(svy, type = 'sampling')[selected_or_not]
+    )
+    sum_complementary_weights <- sum(
+      weights(svy, type = 'sampling')[!selected_or_not]
+    )
+
+    complementary_factor <- 1 + (
+      ((1 - factor) * sum_selected_weights) / sum_complementary_weights
+    )
+
+    sampling_weights[!selected_or_not] <- complementary_factor *
+      sampling_weights[!selected_or_not]
+  }
 
   svy$pweights <- sampling_weights
 

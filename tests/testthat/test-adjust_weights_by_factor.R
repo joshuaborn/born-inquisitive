@@ -75,7 +75,7 @@ test_that('observations that match the predicate have their weights adjusted', {
 })
 
 
-test_that('sum of all weights before and after adjustment is equal', {
+test_that('sum of all weights before and after adjustment is equal when requested', {
   adjustment_factor <- 1.3
 
   test_data <- get_simple_survey_test_data()
@@ -93,7 +93,26 @@ test_that('sum of all weights before and after adjustment is equal', {
 })
 
 
-test_that('the adjustment factor is recorded in the ', {
+test_that('sum of all weights before and after adjustment not equal when equalization is not requested', {
+  adjustment_factor <- 1.3
+
+  test_data <- get_simple_survey_test_data()
+
+  adjusted_svy <- adjust_weights_by_factor(
+    test_data$rep_svy,
+    ~count1 + count2 + count3 + count4 + count5 + count6,
+    adjustment_factor,
+    equalize = FALSE
+  )
+
+  expect_gt(
+    sum(weights(adjusted_svy, type = 'sampling')),
+    sum(weights(test_data$rep_svy, type = 'sampling'))
+  )
+})
+
+
+test_that('the adjustment factor is recorded in the result', {
   test_data <- get_simple_survey_test_data()
 
   adjusted_svy <- adjust_weights_by_factor(

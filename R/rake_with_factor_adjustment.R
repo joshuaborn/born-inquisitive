@@ -20,6 +20,7 @@ source(here('R/find_ratio_for_poststratification.R'))
 #' @param factor.estimation.vars A formula denoting the variables whose estimated total will be used to calculate the factor for weight adjustment
 #' @param factor.estimation.target A numeric value for the estimated total of variables in `factor.estimated.vars` will equal after factor adjustment
 #' @param factor.adjusted.vars A formula denoting the variables that denote what observations to select for weight factor adjustment. If the sum of these variables is greater than 0 for any observation, then that observation has its weight adjusted by the adjustment factor.
+#' @param equalize Value for `equalize` parameter to pass to `adjust_weights_by_factor`
 #'
 #' @value A svyrep.design object with weights adjusted
 #'
@@ -28,7 +29,7 @@ rake_with_factor_adjustment <- function(design,
   sample.margins, population.margins,
   factor.estimation.vars, factor.estimation.target, factor.adjusted.vars,
   control=list(maxit=10, epsilon=1, verbose=FALSE),
-  compress=NULL) {
+  compress=NULL, equalize=FALSE) {
 
     if (!any(class(design) == 'svyrep.design')) {
       stop('Parameter design must be of class svyrep.design')
@@ -74,7 +75,8 @@ rake_with_factor_adjustment <- function(design,
           design,
           factor.estimation.vars,
           factor.estimation.target
-        )
+        ),
+        equalize
       )
 
       new_estimate <- sum(svytotal(factor.estimation.vars, design))
