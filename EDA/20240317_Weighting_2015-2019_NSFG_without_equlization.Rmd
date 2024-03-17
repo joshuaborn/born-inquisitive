@@ -1,5 +1,5 @@
 ---
-title: "Weight Adjustment of 2015-2019 NSFG using Factor Adjustment and Raking Post-stratification"
+title: "Weight Adjustment of 2015-2019 NSFG with equalization of weight sums after adjustment turned off"
 author: "Joshua Born"
 output:
   html_document:
@@ -500,7 +500,7 @@ NSFG_2015_2019_fem_cal_svy <- rake_with_factor_adjustment(
   factor.estimation.vars = ~abortions_in_2013 + abortions_in_2014,
   factor.estimation.target = poststrat_abortions_total,
   factor.adjusted.vars = ~any_abortion,
-  equalize = TRUE
+  control = list(maxit=100, epsilon=1, verbose=FALSE)
 )
 
 NSFG_2015_2019_preg_cal_svy <- NSFG_2015_2019_preg_data |>
