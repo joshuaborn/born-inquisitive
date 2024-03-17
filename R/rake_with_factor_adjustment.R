@@ -29,7 +29,7 @@ rake_with_factor_adjustment <- function(design,
   sample.margins, population.margins,
   factor.estimation.vars, factor.estimation.target, factor.adjusted.vars,
   control=list(maxit=10, epsilon=1, verbose=FALSE),
-  compress=NULL, equalize=FALSE) {
+  compress=NULL, equalize=TRUE) {
 
     if (!any(class(design) == 'svyrep.design')) {
       stop('Parameter design must be of class svyrep.design')

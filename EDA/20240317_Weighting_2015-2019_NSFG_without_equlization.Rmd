@@ -500,6 +500,7 @@ NSFG_2015_2019_fem_cal_svy <- rake_with_factor_adjustment(
   factor.estimation.vars = ~abortions_in_2013 + abortions_in_2014,
   factor.estimation.target = poststrat_abortions_total,
   factor.adjusted.vars = ~any_abortion,
+  equalize = FALSE,
   control = list(maxit=100, epsilon=1, verbose=FALSE)
 )
 
