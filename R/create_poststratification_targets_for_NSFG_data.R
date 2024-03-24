@@ -62,7 +62,6 @@ saveRDS(
   file = here('data/poststrat_targets_2015_2019.Rds')
 )
 
-
 guttmacher_APC_national <- read_csv(
     here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
     show_col_types = FALSE
@@ -72,7 +71,9 @@ guttmacher_APC_national <- read_csv(
       c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
         2009, 2012, 2015)
   ) |>
-  select('year', 'interpolated', 'abortionstotal')
+  select('year', 'interpolated', 'abortionstotal', 'abortionslt20',
+    'abortions2024', 'abortions2529', 'abortions3034', 'abortions3539',
+    'abortions40plus')
 
 saveRDS(
   guttmacher_APC_national,
