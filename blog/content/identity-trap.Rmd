@@ -116,6 +116,25 @@ Instead, _How to Be an Antiracist_ defines "racist" as anything (and anyone) who
 This is a powerful form of defamation because "racist" rightfully comes with it a lot of social stigma, given the history of the United States and, indeed, the world. Many people are understandably averse to the prospect of being branded "racist." Thus, those who are predisposed to attack others -- whether because of Trump derangement syndrome or some other reason -- would find a lot of utility in the modern day identity synthesis as told by Ibram X. Kendi and others.
 
 
+## Arguments Against
+
+Once Yascha Mounk has given a history of the ideological origins of the identity synthesis in Part 1 of _The Identity Trap_ and gives an account of how the identity synthesis went from academic obscurity to popular culture in Part 2, he spends all of Part 3 of the book giving an argument against it.
+
+Chapter 10 of _The Identity Trap_ is an argument in favor of free speech. Chapter 11 is an argument in favor of desegregation against the neo-segregationist policies that have come to be called "progressive separatism." Chapter 12 is an argument against discriminating on race as popularized by the "race conscious" policies of identity politics. Chapter 13 is a defense of meritocracy against the presumption of bias in the idea of "structural" -isms such as "structural racism" or "structural sexism."
+
+In addition to arguing against key parts of the platform associated with identity politics, Mounk gives arguments in favor of liberal democracy (in the philosophical sense, not in the partisan-left sense) in Chapter 14 and 15.
+
+While I generally agree with the points made by Yascha Mounk in these chapters, I cannot help but judge this to be the weakest part of the book. I come to that judgement because it is the part of the book in which I learned the least and, consequently, the part of the book I had the hardest time remembering afterward.
+
+I fear that the arguments of the second half of _The Identity Trap_ are afflicted with the same "preaching to the choir" phenomenon I discussed in my [review of _The Myth of Left and Right._](/myth-of-left-and-right.html#preaching-to-the-choir) For the audience of an older generation, such as myself, who are reading the  _The Identity Trap_ because we are curious about a phenomenon that has quickly dominated public life, these arguments are part of the fabric of American public life that we grew up with. Free speech, desegregation, and the rejection of discrimination based on race or sex are almost axiomatic to us. They are the targets to which American culture aspires when it is at its best, and the principles American culture turns away from when it is at its worst.
+
+On the other hand, the people who would stand the most to encounter and seriously grapple with these arguments are those who are firmly caught in the titular identity trap -- those who will either not read the book or, if they do, dismiss the book's arguments with such glib propositions as "those are just White people ideas," as I have observed my one of my coworkers do in the past.[^white]
+
+[^white]: Incidentally, this coworker of mine was himself a White American. He also had such illuminating comments as "White people are the problem," and "I hate White people."
+
+Perhaps, then, the arguments in the second half of _The Identity Trap_ are written for a very specific audience. The audience that would benefit from them are those who grew up in the age of Tumblr or TikTok and so have had numerous encounters with identity politics while not been fully ensnared by the identity trap, and who have not encountered the arguments for classic liberal values such as free speech and nondiscrimination. 
+
+
 ## Outline
 
 * Chapter 1: Michel Foucault, rejection of the grand narrative, obsession with "discourses"
@@ -135,9 +154,9 @@ This is a powerful form of defamation because "racist" rightfully comes with it 
 
 
 
-## Citations
+## Citation
 
 ::: {#refs}
 :::
 
-## Footnote
+## Footnotes
