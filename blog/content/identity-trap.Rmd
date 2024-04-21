@@ -41,9 +41,9 @@ _The Identity Trap_ tries to do three different things:
 
 ## A History of Ideas
 
-The foundational ideas that the _The Identity Trap_ covers include
+The foundational ideas that the _The Identity Trap_ covers include:
 
-* the postmodernist rejection of the grand narrative and fascination with the power structures of "discourses" attributed to Michel Foucault,
+* the rejection of the grand narrative and fascination with the power structures of "discourses" attributed to Michel Foucault,
 * the criticism of "Orientalist" discourse attributed to Edward Said, 
 * the tactic of "strategic essentialism" attributed to Gayatri Chakravorty Spivak,
 * the invention of critical race theory by Derrick Bell,
@@ -56,20 +56,20 @@ I have written about [essentialism](/essentialism.html) and [Kwame Anthony Appia
 
 ### Derrick Bell and the Origins of Critical Race Theory
 
-I remember one day, after critical race theory became salient in the news cycle, while spending time in an airport waiting for my flight to depart, I decided to do a web search of "critical race theory" to see what the fuss was about. The only thing I remember is that I could not actually make out _what it actually was._ Instead I found a word salad of jargon claiming to explain critical race theory. (This game of making a theory inexplicable seems to be a feature of certain kinds of academics, such as the "critical theory" Frankfurt school of sociology from which critical race theory is derived.)
+I remember one day, after critical race theory became salient in the news cycle, while spending time in an airport waiting for my flight to depart, I decided to do a web search of "critical race theory" to see what the fuss was about. The only thing I remember is that I could not actually make out _what it actually was._ Instead I found a word salad of vagueness claiming to explain critical race theory. (This practice of making a theory inexplicable seems to be a feature of certain kinds of academics, such as the "critical theory" Frankfurt school of sociology from which critical race theory is derived.)
 
 Yascha Mounk did a better job of explaining critical race theory in a few pages in his book _The Identity Trap_ than all the word salad articles I read on my ill-fated enterprise in the airport. He does so by way of a biographical sketch of its founder Derrick Bell.
 
-The biographical sketch begins with a brief encounter that a young Derrick Bell had with the great civil rights lawyer William H. Hastie, in which Bell expressed a desire to continue Hastie's work and Hastie gave Bell a polite brush off, asserting that the work of the civil rights movement was mostly finished. The sketch continues with Bell's young life, law school, time in the Air Force, and arrival to his aspirational job of being a lawyer for the National Association for the Advancement of Colored People (NAACP). 
+The biographical sketch begins with a brief encounter that a young Derrick Bell had with the great civil rights lawyer William H. Hastie, in which Bell expressed a desire to continue Hastie's work and Hastie gave Bell a polite brush off, asserting that the work of the civil rights movement was mostly finished. The sketch continues with Bell's life until his arrival as a lawyer for the National Association for the Advancement of Colored People (NAACP). 
 
 Bell once wanted to follow in Hastie's footsteps, but it was during his time as an NAACP lawyer that Bell appears to have turned against the civil rights movement. He grew frustrated with what he perceived to be an absolute and ideological commitment to desegregation, even in cases when desegregation was not benefiting Black schoolchildren.
 
-Frustrated, Bell left active litigation and became an academic, learned the anti-positivist "critical theory" jargon popular in academia, and converted his frustration with the civil rights movement into a radical disapproval of the civil rights movement. He concluded that the civil rights movement had been a sham only allowed because it benefited White Americans to allow it, that the civil rights movement had done nothing to advance the status of Black Americans, and that racism was a permanent and unchanging part of American society. Thus, the aims of the civil rights movement, such as desegregation and colorblindness, were in the older Bell's views actually tools of racist oppression.
+Frustrated, Bell left active litigation and became an academic, learned the "critical theory" jargon popular in academia, and converted his frustration with the civil rights movement into a radical disapproval of the civil rights movement couched in such terms. He concluded that the civil rights movement had been a sham only allowed because it benefited White Americans to allow it, that the civil rights movement had done nothing to advance the status of Black Americans, and that racism was a permanent and unchanging part of American society. Thus, the aims of the civil rights movement, such as desegregation and colorblindness, were in the older Bell's views actually tools of racist oppression.
 
 
 ### When Good (or At Least Plausible) Ideas Go Bad
 
-The evolution of Derrick Bell's thinking is an example of a phenomenon I encountered a few times in my reading of _The Identity Trap._ I find most of the ideas of modern day identity politics (or "identity synthesis" to use Mounk's phrase) to be either counterproductive or themselves outright wrong, as does Yascha Mounk, but it is a testament to Mounk's veracity and scruples as a scholar that I found myself to be sympathetic to these ideas when reading his telling of the their origins.
+The evolution of Derrick Bell's thinking is an example of a phenomenon I encountered a few times in my reading of _The Identity Trap._ I find most of the ideas of modern day identity politics (or "identity synthesis" to use Mounk's phrase) to be counterproductive, as does Yascha Mounk, but it is a testament to Mounk's veracity and scruples as a scholar that I found myself to be sympathetic to these ideas when reading his telling of the their origins.
 
 The history of ideas in _The Identity Trap_ is not a screed of misrepresentation, hyperbole, and defamation unleashed against one's political opponents, as too often is the case with other works, but a sincere attempt to understand where ideas prominent in society today once came from and to grapple with what motivated those who first conceived of them. 
 
@@ -86,22 +86,22 @@ A more striking example of ideas going bad occurs with the transition from stand
 
 Standpoint epistemology is a theory from feminist philosophy that does _not_ make the claim that men cannot possibly understand what women experience. Rather, it first separates out two kinds of knowledge: propositional knowledge versus experiential knowledge. Propositional knowledge consists the sort that you can read in a book. Experiential knowledge, on the other hand, is knowledge you gather from your direct experiences. Neither kind of knowledge is entirely better than the other. They both have advantages and disadvantages. What is important for standpoint epistemology is that they are _different_ paths to knowledge.
 
-Standpoint epistemology then notes that in an entirely patriarchal society in which only men participate in public life and the domestic sphere is the exclusive domain of women, there is a knowledge gap between those who possess experiential knowledge of raising child, who are entirely women, and those who make public policy that affects child-rearing, who are entirely men. Standpoint epistemology admits that men in this scenario can gain _propositional_ knowledge of child-rearing, but that they will miss all the subtleties and details that come from _experiential_ knowledge of raising children.
+Standpoint epistemology then notes that in an entirely patriarchal society in which only men participate in public life and the domestic sphere is the exclusive domain of women, there is a knowledge gap between those who possess experiential knowledge of raising a child, who are entirely women, and those who make public policy that affects child-rearing, who are entirely men. Standpoint epistemology admits that men in this scenario can gain _propositional_ knowledge of child-rearing, but that they will miss all the subtleties and details that come from _experiential_ knowledge of raising children.
 
-This is actually a very good point, and it likely explains, at least in part, why human societies have often been so cruel by way of indifference paid to the plight of children. It is similar to the tragedy of war in which generals are briefed with report after report of the battlefield, but are nonetheless out of touch with what is actually going on among the common soldiers who have their boots on the ground.
+This is point well taken, and it likely explains, at least in part, why human societies have often been so cruel by way of indifference paid to the plight of children. It is similar to the tragedy of war in which generals are briefed with report after report of the battlefield, but are nonetheless out of touch with what is actually going on among the common soldiers who have their boots on the ground.
 
-Note that standpoint epistemology makes no claim that there are identity groups across which people cannot possibly understand each other. If anything, it makes the opposite claim, namely, that any given person only has the experiential knowledge that has come from that person's actual experiences. Thus, a single father and a single mother, under standpoint epistemology, both have experiential knowledge of raising a child as a single parent and likely have much that they can understand about each others' experiences because they have had a lot of experiences in common. A woman who has never raised a child does not magically get the same experiential knowledge of the single mother just because they are both categorized as women. Experiences do not map one-to-one on to identity categories.
+Note that standpoint epistemology makes no claim that there are "identity" groups across which people cannot possibly understand each other. If anything, it makes the opposite claim, namely, that any given person only has the experiential knowledge that has come from that person's actual experiences. Thus, a single father and a single mother, under standpoint epistemology, both have experiential knowledge of raising a child as a single parent and likely have much in common. Conversely, a woman who has never raised a child does not magically get the same experiential knowledge of the single mother just because they are both categorized in the same group. Experiences do not map one-to-one on to "identity" categories.
 
-Furthermore, even if experiences did map one-to-one on to identity categories, standpoint epistemology never denied that human beings are capable of propositional knowledge. Even if we will never be a Black schoolchild in the United States during desegregation, we can read the words of those who did experience desegregation, use our powers of language, abstraction, and cognitive empathy, and understand why some Black Americans came to the conclusion that they were better off without desegregation. This is not by virtue of our membership in an identity group, but by virtue of ourpossession of a functioning human brain that is not that of a sociopath.
+Furthermore, even if experiences did map one-to-one on to "identity" categories, standpoint epistemology never denied that human beings are capable of propositional knowledge. Even if we will never be a Black schoolchild in the United States during desegregation, we can read the words of those who did experience desegregation, use our powers of language and cognitive empathy, and understand why some Black Americans came to the conclusion that they were better off without desegregation. This is not by virtue of our membership in an "identity" group, but by virtue of our possession of a functioning human brain that is not that of a sociopath.
 
 
 ## How Did We Get Here?
 
 While the history of ideas that led to the modern day identity synthesis is perhaps the strongest part of _The Identity Trap,_ there have been many ideas passed around the ivory tower of academia that simply remain there, not permeating into the popular culture. Therefore, the next task that Yascha Mounk sets out to accomplish in _The Identity Trap_ is to give an accounting of how this loosely associated set of ideas that would become the identity synthesis went from academic obscurity to corporate policy.
 
-Yascha Mounk gives a plausible story, some of which involves the usual suspects. No doubt those who have grown up with social media such as Tumblr and TikTok have experienced new ways of exchanging ideas which in turn have likely affected what ideas (or misrepresentation of ideas) they have encountered during their formative years. _The Identity Trap_ devotes all of its fifth chapter to this phenomenon.
+Yascha Mounk gives his version of this story, some of which involves the usual suspects. No doubt those who have grown up with social media such as Tumblr and TikTok have experienced new ways of exchanging ideas which in turn have likely affected what ideas (or misrepresentation of ideas) they have encountered during their formative years. _The Identity Trap_ devotes all of its fifth chapter to the proliferation of social media.
 
-_The Identity Trap_ goes on to observe that this younger generation that grew up with social media has gone on to university and to professional life, making demands on school administrators and employers in ways that previous generations did not, successfully using the power of social media campaigns to get their way. Yascha Mounk calls this the "short march through the institutions" and devotes the sixth chapter of his book to it.
+The book goes on to observe that this younger generation that grew up with social media has gone on to university and to professional life, making demands on school administrators and employers in ways that previous generations did not, successfully using the power of social media campaigns to get their way. Yascha Mounk calls this the "short march through the institutions" and devotes the sixth chapter of his book to it.
 
 These aspects of Yascha Mounk's story of the ascendancy of the identity synthesis are a bit obvious and likely uncontroversial. The next two parts of his accounting are more provocative.
 
@@ -118,40 +118,36 @@ This is a powerful form of defamation because "racist" rightfully comes with it 
 
 ## Arguments Against
 
-Once Yascha Mounk has given a history of the ideological origins of the identity synthesis in Part 1 of _The Identity Trap_ and gives an account of how the identity synthesis went from academic obscurity to popular culture in Part 2, he spends all of Part 3 of the book giving an argument against it.
+Once Yascha Mounk has given a history of the ideological origins of the identity synthesis in Part 1 of _The Identity Trap_ and has given an account of how the identity synthesis went from academic obscurity to popular culture in Part 2, he spends all of Part 3 of the book giving an argument against it.
 
-Chapter 10 of _The Identity Trap_ is an argument in favor of free speech. Chapter 11 is an argument in favor of desegregation against the neo-segregationist policies that have come to be called "progressive separatism." Chapter 12 is an argument against discriminating on race as popularized by the "race conscious" policies of identity politics. Chapter 13 is a defense of meritocracy against the presumption of bias in the idea of "structural" -isms such as "structural racism" or "structural sexism."
+Chapter 10 of _The Identity Trap_ is an argument in favor of free speech against the practice of labeling dissenting opinions as "dangerous" and banning them. Chapter 11 is an argument in favor of desegregation against the neo-segregationist policies that have come to be called "progressive separatism." Chapter 12 is an argument against discriminating on race as popularized by "race conscious" policies. Chapter 13 is a defense of meritocracy against the presumption of bias in the idea of "structural" -isms such as "structural racism" or "structural sexism."
 
-In addition to arguing against key parts of the platform associated with identity politics, Mounk gives arguments in favor of liberal democracy (in the philosophical sense, not in the partisan-left sense) in Chapter 14 and 15.
+In addition to arguing against key parts of the platform associated with identity politics, Mounk gives arguments in favor of liberal democracy (in the philosophical sense, not in the partisan-left sense) in Chapter 14 and Chapter 15.
 
 While I generally agree with the points made by Yascha Mounk in these chapters, I cannot help but judge this to be the weakest part of the book. I come to that judgement because it is the part of the book in which I learned the least and, consequently, the part of the book I had the hardest time remembering afterward.
 
-I fear that the arguments of the second half of _The Identity Trap_ are afflicted with the same "preaching to the choir" phenomenon I discussed in my [review of _The Myth of Left and Right._](/myth-of-left-and-right.html#preaching-to-the-choir) For the audience of an older generation, such as myself, who are reading the  _The Identity Trap_ because we are curious about a phenomenon that has quickly dominated public life, these arguments are part of the fabric of American public life that we grew up with. Free speech, desegregation, and the rejection of discrimination based on race or sex are almost axiomatic to us. They are the targets to which American culture aspires when it is at its best, and the principles American culture turns away from when it is at its worst.
+I fear that the arguments of the second half of _The Identity Trap_ are afflicted with the same "preaching to the choir" phenomenon I discussed in my [review of _The Myth of Left and Right._](/myth-of-left-and-right.html#preaching-to-the-choir) For the audience of an older generation, such as myself, who are reading the  _The Identity Trap_ because we are curious about a phenomenon that has quickly dominated public life, these arguments are part of the fabric of American culture that we grew up with. Free speech, desegregation, and the rejection of discrimination based on race or sex are familiar to us. They are the targets to which American culture aspires when it is at its best, and the principles American culture turns away from when it is at its worst.
 
-On the other hand, the people who would stand the most to encounter and seriously grapple with these arguments are those who are firmly caught in the titular identity trap -- those who will either not read the book or, if they do, dismiss the book's arguments with such glib propositions as "those are just White people ideas," as I have observed my one of my coworkers do in the past.[^white]
+On the other hand, the people who would stand the most to encounter and seriously grapple with these arguments are those who are firmly caught in the titular identity trap -- those who will either not read the book or, if they do, dismiss the book's arguments with such glib pronouncements as "those are just White people ideas," as I have observed my one of my coworkers do in the past.[^white]
 
 [^white]: Incidentally, this coworker of mine was himself a White American. He also had such illuminating comments as "White people are the problem," and "I hate White people."
 
-Perhaps, then, the arguments in the second half of _The Identity Trap_ are written for a very specific audience. The audience that would benefit from them are those who grew up in the age of Tumblr or TikTok and so have had numerous encounters with identity politics while not been fully ensnared by the identity trap, and who have not encountered the arguments for classic liberal values such as free speech and nondiscrimination. 
+Perhaps, then, the arguments in the second half of _The Identity Trap_ are written for a very specific audience. The audience that would benefit from them are those who grew up in the age of Tumblr or TikTok, but have not been captured by the identity trap, and who have also not encountered arguments for classic liberal values such as free speech and nondiscrimination. 
 
 
-## Outline
+## Conclusion
 
-* Chapter 1: Michel Foucault, rejection of the grand narrative, obsession with "discourses"
-* Chapter 2: Edward Said, criticism of "Orientalism"; Gayatri Chakravotry Spivak, strategic essentialism
-* Chapter 3: Derek Bell, rejection of civil rights movement and invention of critical race theory, Kimberlee Crenshaw, intersectionality
-* Chapter 5: Internet and social media, Tumblr/TikTok generation
-* Chapter 6: short march
-* Chapter 7: Trump derangement syndrome redirected to person next cubicle over, Ibram X. Kendi's everybody is either racist or antiracist
-* Chapter 8: Standpoint epistemology mutated into standpoint theory
-* Chapter 9: cultural appropriation
-* Chapter 10: free speech
-* Chapter 11: desegregation vs. "progressive separatism" 
-* Chapter 12: race-neutral vs. disparatism
-* Chapter 13: meritocracy vs. "structural" -isms
-* Chapter 14 and 15: arguments for (philosophical, not leftist) liberal democracy
-* Chapter 16: recommendations (including for corporate CEOs)
+Ultimately, I found _The Identity Trap_ to be both an enjoyable and an enlightening read.
 
+[^entitativity]: For instance, I once spent far too long reading social psychology papers on the phenomenon of "entitativity."
+
+The intellectual history in Part 1 (and to a lesser extent in Part 2) is the strongest part of the book. If you are curious about concepts on which identity politics is based, then this is definitely the book for you. Yascha Mounk gives a masterful example of how to summarize oftentimes obscure and intentionally difficult academic ideas at a level not too deep and not too shallow. He skillfully gives the reader a working understanding of one idea before moving on to the next. Here you can learn what "intersectionality" or "strategic essentialism" mean from someone who is not simultaneously proselytizing to you on their behalf.
+
+The story about how these ideas have taken over our culture in Part 2 of _The Identity Trap_ is, like all such accountings, ultimately just a story. We do not have the luxury of comparing among alternative universes in search of a control group and can only examine the society we live in as it actually turned out, so our understanding of how such social phenomena came to be will never be exact science. The best that can be said about Yascha Mounk's story -- or indeed of any such story -- is that it is a plausible one, and therefore it is worth considering.
+
+While the argumentation of Part 3 of _The Identity Trap_ is, in my estimation, the weakest part of the book, I may simply not be the target audience for these arguments. They are perhaps best appreciated by those who have been tempted, but not ensnared, by the eponymous identity trap.
+
+I have tried to make sense of the proliferation of identity politics around me in various ways.[^entitativity] I found _The Identity Trap_ to be more enlightening than other attempts I have made, and if you are someone who is also trying to make sense of this conspicuous change in American culture, I would enthusiastically recommend Yascha Mounk's _The Identity Trap._
 
 
 ## Citation
