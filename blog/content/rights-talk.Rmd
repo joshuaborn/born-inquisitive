@@ -1,0 +1,52 @@
+---
+author: "Joshua Born"
+#bibliography: "../bibliographies/identity-trap.bibtex"
+#csl: "../bibliographies/chicago-author-date.csl"
+date: 2024-04-30
+draft: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+summary: "Summary"
+tags: ["book, article, or podcast review", "first-person"]
+title: "Book Review: Rights Talk"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  cache = FALSE
+)
+```
+
+
+If I were asked to identify why public discourse in the United States is broken, I would enumerate three things: 
+
+1. the "left" versus "right" spectrum and the partisanship it entails,
+2. "identity" politics, and
+3. "rights" rhetoric.
+
+I have had the pleasure of recently reading two books that I would recommend without hesitation which discuss the first two problems, namely, [_The Myth of Left and Right: How the Political Spectrum Misleads and Harms America_](/myth-of-left-and-right.html) by Hyrum and Verlan Lewis and [_The Identity Trap: A Story of Ideas and Power in Our Time_](/identity-trap.html) by Yascha Mounk.
+
+When I recently stumbled on _Rights Talk: The Impoverishment of Political Discourse_ by Mary Ann Glendon, I had hoped it would complete the hat trick, to use a hockey metaphor, by addressing my third major issue with American public discourse with a ferocity equal to the previous two treatments I had encountered. However, while I agree with the main thesis of _Rights Talk_ and found it generally edifying, I can only recommend it with some reservation, and I am still waiting for a book to excoriate fully the inane proclivity to frame every issue in terms of "rights."
+
+The main thesis of _Rights Talk_ is that there is nothing intrinsically wrong with conceiving of "rights" as an exercise in political philosophy (though even the value of such a practice there has been debated), but there is something very flawed about the way "rights" rhetoric has consumed public life in the second half of the twentieth century in the United States.
+
+According to _Rights Talk,_ the United States is an "experiment in ordered liberty" that only works through "reasoned discussion and compromise," and the main problem with the contemporary American variant of "rights" rhetoric is that it is a tactless tool used to destroy our ability to communicate and to shut down any chance at the discourse necessary to sustain this experiment. Our "rights" rhetoric does this by being a satire of the very idea of rights. This satire can be found in three perversions of "rights" rhetoric: an _absolutism_ that will not be questioned or constrained by social concerns or the rights of others, a conception of "freedom" or "liberty" that comes without any corresponding idea of _responsibility,_  and a fictional conception of the rights-bearing individual as a solitary entity instead of a social creature necessarily interdependent on many other fellow citizens.
+
+* Three perversions used to structure book
+* Perhaps not fair since _Rights Talk_ from 1993
+* Mary Ann Glendon's background, part 1
+* Contents of book
+* Better quotes about reasoned discourse
+* Mary Ann Glendon's background and transition away from midwit-ing
+
+
+## Citation
+
+::: {#refs}
+:::
+
+## Footnotes
