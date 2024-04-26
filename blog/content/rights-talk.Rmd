@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 ```
 
 
-If I were asked to identify why public discourse in the United States is broken, I would enumerate three things: 
+If I were asked to identify why politics in the United States is broken, I would enumerate three things: 
 
 1. the "left" versus "right" spectrum and the partisanship it entails,
 2. "identity" politics, and
@@ -30,11 +30,24 @@ If I were asked to identify why public discourse in the United States is broken,
 
 I have had the pleasure of recently reading two books that I would recommend without hesitation which discuss the first two problems, namely, [_The Myth of Left and Right: How the Political Spectrum Misleads and Harms America_](/myth-of-left-and-right.html) by Hyrum and Verlan Lewis and [_The Identity Trap: A Story of Ideas and Power in Our Time_](/identity-trap.html) by Yascha Mounk.
 
-When I recently stumbled on _Rights Talk: The Impoverishment of Political Discourse_ by Mary Ann Glendon, I had hoped it would complete the hat trick, to use a hockey metaphor, by addressing my third major issue with American public discourse with a ferocity equal to the previous two treatments I had encountered. However, while I agree with the main thesis of _Rights Talk_ and found it generally edifying, I can only recommend it with some reservation, and I am still waiting for a book to excoriate fully the inane proclivity to frame every issue in terms of "rights."
+When I recently stumbled on _Rights Talk: The Impoverishment of Political Discourse_ by Mary Ann Glendon, I had hoped it would complete the hat trick, to use a hockey metaphor, by addressing with a ferocity equal to the previous two treatments I had encountered the third major issue I take with American politics. However, while I agree with the main thesis of _Rights Talk_ and found it generally edifying, I can only recommend it with some reservation, and I am still waiting for a book to excoriate fully the inane proclivity to frame every issue in terms of "rights."
 
-The main thesis of _Rights Talk_ is that there is nothing intrinsically wrong with conceiving of "rights" as an exercise in political philosophy (though even the value of such a practice there has been debated), but there is something very flawed about the way "rights" rhetoric has consumed public life in the second half of the twentieth century in the United States.
+The main thesis of _Rights Talk_ is that there is nothing intrinsically wrong with conceiving of "rights" as an exercise in political philosophy (though even the value of such a practice there has been debated), but there is something very flawed about the way "rights" rhetoric has consumed political life in the United States. The United States is an "experiment in ordered liberty" that only works through "reasoned discussion and compromise," and the main problem with the contemporary American variant of "rights" rhetoric is that it ruins our ability to have a public discourse, thus ruining any chance for the experiment of the United States to succeed.
 
-According to _Rights Talk,_ the United States is an "experiment in ordered liberty" that only works through "reasoned discussion and compromise," and the main problem with the contemporary American variant of "rights" rhetoric is that it is a tactless tool used to destroy our ability to communicate and to shut down any chance at the discourse necessary to sustain this experiment. Our "rights" rhetoric does this by being a satire of the very idea of rights. This satire can be found in three perversions of "rights" rhetoric: an _absolutism_ that will not be questioned or constrained by social concerns or the rights of others, a conception of "freedom" or "liberty" that comes without any corresponding idea of _responsibility,_  and a fictional conception of the rights-bearing individual as a solitary entity instead of a social creature necessarily interdependent on many other fellow citizens.
+This is a thread that runs through all three items on my list of reasons why politics in the United States is broken. _The Myth of Left and Right_ asserts that the left-right spectrum "shuts down thinking and stirs up anger and prejudice" (85) and "we cannot have reasoned political debates when consider those 'on the other side' guilty of humanity's greatest sins." (83) _The Identity Trap_ devotes a whole chapter arguing in favor of free speech against those who would [attempt to cancel the TED Talk of a Black American for having the opinion that we should not discriminate based on race](https://colemanhughes.substack.com/p/why-is-ted-scared-of-color-blindness).
+
+Our "rights" rhetoric does this by being a satire of the very idea of rights. This satire can be found in three perversions of "rights" rhetoric: an _absolutism_ that will not be questioned or constrained by social concerns or the rights of others, a conception of "freedom" or "liberty" that comes without any corresponding idea of _responsibility,_  and a fictional conception of the rights-bearing individual as a solitary entity instead of a social creature necessarily interdependent on many other fellow citizens. _insularity_ 
+
+## Quotes
+
+* "mere assertion over reason-giving" (14)
+* "For, in its simple American form, the language of rights is the language of no compromise. The winner takes all and the loser has to get out of town. The conversation is over." (9)
+* "The maintenance of a vital democratic society, a society with a creative tension between individual freedom and the general welfare, requires that a continuing debate take place about just such matters. If political discourse all but closes out the voices on one side of the debate, liberalism itself is at risk. Yet that is precisely what our simple rights rhetoric regularly does." (110)
+* "Our stark, simple rights dialect puts a damper on the processes of public justification, communication, and deliberation upon which the continuining vitality of a democratic regime depends." (171)
+* Rights talk in its current form has been the thin end of a wedge that is turning American political discourse into a parody of itself and challenging the very notion that politics can be conducted through reasoned discussion and compromise." (171)
+
+
+## Notes
 
 * Three perversions used to structure book
 * Perhaps not fair since _Rights Talk_ from 1993
