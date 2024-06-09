@@ -378,10 +378,28 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
           OUTCOME == 'INDUCED ABORTION' & Year == 2014,
           na.rm = TRUE
         ),
+        abortion_2014_age =  case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2014 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2014 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2014 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2014 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2014 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2014 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
         abortions_in_2013 = sum(
           OUTCOME == 'INDUCED ABORTION' & Year == 2013,
           na.rm = TRUE
-        )
+        ),
+        abortion_2013_age =  case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2013 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2013 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2013 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2013 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2013 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year == 2013 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
       ),
     by = 'CASEID'
   ) |>
@@ -438,11 +456,21 @@ NSFG_2015_2019_for_calibration |>
   gt()
 
 NSFG_2015_2019_for_calibration |>
-  count(abortions_in_2014) |>
+  mutate(abortion_in_2014 = (abortions_in_2014 > 0)) |>
+  count(abortion_in_2014) |>
   gt()
 
 NSFG_2015_2019_for_calibration |>
-  count(abortions_in_2013) |>
+  mutate(abortion_in_2013 = (abortions_in_2013 > 0)) |>
+  count(abortion_in_2013) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(abortion_2014_age) |>
+  gt()
+
+NSFG_2015_2019_for_calibration |>
+  count(abortion_2013_age) |>
   gt()
 ```
 
@@ -610,7 +638,9 @@ NSFG_2015_2019_preg_cal_svy <- NSFG_2015_2019_preg_data |>
 
 ### Verify Post-Stratification
 
-```{r verify-post-stratification, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
+#### Births
+
+```{r verify-post-stratification-births, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
 verify_poststratification <- function(svy_before, svy_after, targets, variable_name) {
   svy_before |>
     group_by(get(variable_name)) |>
@@ -731,20 +761,27 @@ verify_poststratification(
   gt() |>
   fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
   fmt_percent(Calib_Rel_Bias, decimals = 1)
+```
 
+
+#### Abortions
+
+```{r verify-post-stratification-abortions, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects")}
 NSFG_2015_2019_fem_svy |>
   summarize(
+    n = unweighted(sum(abortions_in_2013)),
     Uncal = survey_total(abortions_in_2013, vartype = 'ci'),
   ) |>
   mutate(Year = 2013, .before = everything()) |>
   bind_rows(
     NSFG_2015_2019_fem_svy |>
       summarize(
+        n = unweighted(sum(abortions_in_2014)),
         Uncal = survey_total(abortions_in_2014, vartype = 'ci')
       ) |>
       mutate(Year = 2014, .before = everything())
   ) |>
-  select(Year, Uncal) |>
+  select(Year, n, Uncal) |>
   full_join(
     NSFG_2015_2019_fem_cal_svy |>
       summarize(
@@ -771,9 +808,9 @@ NSFG_2015_2019_fem_svy |>
     Diff = Calib - Uncal,
     Calib_Rel_Bias = (Freq - Calib) / Freq
   ) |>
-  select(Year, Uncal, Calib, Diff, Freq, Calib_low, Calib_upp, Calib_Rel_Bias) |>
+  select(Year, n, Uncal, Calib, Diff, Freq, Calib_low, Calib_upp, Calib_Rel_Bias) |>
   gt() |>
-  fmt_number(where(is.numeric), n_sigfig = 4, suffix = 'k') |>
+  fmt_number(Uncal:Calib_upp, n_sigfig = 4, suffix = 'k') |>
   fmt_percent(Calib_Rel_Bias, decimals = 1)
 ```
 
@@ -1727,3 +1764,101 @@ test_harness_abortions |>
   fmt_number(-Year, decimal = 0) |>
   fmt_percent(contains('Rel_Bias'), decimal = 1)
 ```
+
+
+### Compare Abortions Estimates by Age
+
+There is a pattern in which abortions among younger people are overestimated and abortions among older people are underestimated, though where the cut point between over- and under-estimation occurs varies by year. 
+
+This can be handled by extending the weight adjustment to abortion targets per year per age group. The `rake_with_factor_adjustment` function would need to be extended to handle multiple target margins for the `factor.` arguments, much as it does already for `postStratify` calls.
+
+However, I am not sure this is a wise use of work. There are 72 respondents who report abortions in 2013, and 68 respondents who report abortions in 2014, for a total of 140 respondents. This is not an unreasonable number of respondents for to base weight adjustment upon. However, if we intersect abortions-per-year with age of woman, then the number of respondents in each cell will decrease considerably. 
+
+In particular, there would be 14 respondents in the under 20 years age group, 52 respondents in the 20-24 years age group, 40 respondents in the 25-29 years age group, 16 respondents in the 30-34 years age group, 13 respondents in the 35-39 years age group, and 5 respondents in the 40 years and over age group.
+
+This might be an insufficient number of respondents in each cell on which to base weight adjustment. Perhaps some cells could be collapsed, particularly all the 30 years or older age groups could be collapsed into one cell. This would at least lead to cell counts of 14, 52, 40, and 34. 
+
+
+```{r compare-abortions-estimates-by-age, dependson=c("create-abortions-test-harness", "estimate-births-uncalibrated")}
+test_harness_abortions |>
+  mutate(
+    Level = case_match(
+      Level,
+      '<=8' ~ '1st trimester (13 or less weeks)',
+      '9-13' ~ '1st trimester (13 or less weeks)',
+      '14-15' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '16-17' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '18-20' ~ '2nd or 3rd trimester (14 or more weeks)',
+      '>=21' ~ '2nd or 3rd trimester (14 or more weeks)',
+      'Mainline Protestant' ~ 'Protestant',
+      'Evangelical Protestant' ~ 'Protestant',
+      .default = Level
+    )
+  ) |> 
+  group_by(Year, Source, Variable, Level) |>
+  summarize(across(everything(), sum), .groups = 'drop') |>
+  arrange(desc(Year)) |>
+  left_join(
+    NSFG_2015_2019_unc_est_abortions,
+    by = c('Year', 'Variable', 'Level')
+  ) |>
+  left_join(
+    NSFG_2015_2019_cal_est_abortions,
+    by = c('Year', 'Variable', 'Level'),
+    suffix = c('.unc', '.cal')
+  ) |>
+  mutate(
+    Unc_Bias = Unc_Est - Abortions,
+    Cal_Bias = Cal_Est - Abortions,
+    Unc_Rel_Bias = Unc_Bias / Abortions,
+    Cal_Rel_Bias = Cal_Bias / Abortions,
+    `Unc_Covers?` = Abortions <= Unc_Est_upp & Abortions >= Unc_Est_low,
+    `Cal_Covers?` = Abortions <= Cal_Est_upp & Abortions >= Cal_Est_low,
+    Bias_Diff = abs(Cal_Bias) - abs(Unc_Bias),
+    Est_Diff = Cal_Est - Unc_Est,
+    Rel_Bias_Diff = abs(Cal_Rel_Bias) - abs(Unc_Rel_Bias),
+    `Fixed?` = if_else(
+        !`Unc_Covers?`,
+        `Cal_Covers?`,
+        NA
+    ),
+    `Broke?` = `Unc_Covers?` & !`Cal_Covers?`
+  ) |>
+  rename(
+    n = n.cal
+  ) |>
+  select(
+    Source,
+    Year,
+    Variable,
+    Level,
+    n,
+    Abortions,
+    #Unc_Est,
+    Cal_Est,
+    #Est_Diff,
+    #Unc_Bias,
+    #Cal_Bias,
+    #Bias_Diff,
+    #Unc_Rel_Bias,
+    Cal_Rel_Bias,
+    #Rel_Bias_Diff,
+    #Unc_Est_low,
+    #Unc_Est_upp,
+    #Cal_Est_low,
+    #Cal_Est_upp,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    #`Fixed?`,
+    #`Broke?`
+  ) |>
+  filter(n > 5 & Variable == 'Age group') |>
+  pivot_wider(
+    names_from = 'Year',
+    values_from = c('n', 'Abortions', 'Cal_Est', 'Cal_Rel_Bias')
+  ) |>
+  gt() |>
+  fmt_number(decimal = 0) |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
+```
+
