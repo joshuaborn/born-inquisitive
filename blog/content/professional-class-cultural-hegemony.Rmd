@@ -1,0 +1,66 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2024-07-10
+draft: true
+implicit-figures: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: "Summary sentence here"
+tags: ["editorial"]
+title: 'Professional-Class Cultural Hegemony'
+---
+
+
+The United States of America is a heavily polarized, partisan place. However, as I described in my [review](/myth-of-left-and-right.html) of _The Myth of Left and Right_ by Hyrum and Verlan Lewis [-@lewis_myth_2023], I do not believe the left-right spectrum has any utility as a description of socio-political viewpoints in the United States.
+
+As summarized by the authors of _The Myth of Left and Right,_ what has constituted the "left-wing" viewpoint or the "right-wing" viewpoint on many issues has not been consistent over time, even just within the confines of United States, let alone when considering other places. Furthermore, logically, there is no reason to believe that socio-political viewpoints would in general come in one of two packages. Indeed, empirically, people have to be _conditioned_ into thinking in terms of the left-right spectrum in the first place, because a binary spectrum is so unnatural.
+
+This raises the question of how are we to understand the polarization that characterizes American politics. I discovered what I believe to be my answer to this question when listening to a podcast a couple of years ago. The podcast in question was [episode 40 of season 3 of _Conversations with Coleman_](https://pca.st/1l7zid0r) in which Coleman Hughes interviewed David Sacks. 
+
+Coleman Hughes is an author and commentator who advocates for colorblindness of the sort popularized in the civil rights era in American race politics, and David Sacks is an entrepreneur in the software industry who was the founding CEO of PayPal. 
+
+The answer I discovered in their discussion, however, did not originate with either David Sacks or Coleman Hughes, but is due largely to the work of [Ruy Teixeira](https://substack.com/@theliberalpatriot), political scientist and co-author of _The Emerging Democratic Majority_ in 2002 and of _Where Have All the Democrats Gone?_ in 2023.
+
+
+## Bullets
+
+
+### The Marketplace of Ideas
+
+* Free speech
+* Persuasion
+* Appeal to different values
+* Information
+* Diversity of viewpoints
+* Values-free ideal
+
+
+### Cultural Hegemony
+
+* Silence opposition
+  * Censorship
+  * Getting people fired (i.e., "cancellation")
+* Misrepresent opposing views
+* Frame disagreement binary
+* Defame others
+* More subtle
+  * Don't hire or promote people with viewpoints that differ from the orthodoxy
+  * Create incentives in social structures for people to adopt the orthodoxy
+
+
+### The University and the _Quid Pro Quo_ of Modern Society
+
+* Left-wing capture of universities
+* People want to make more money and have job security
+* Some true believers, many more going along with the crowd, few openly going against the grain
+* Exodus of working class from the left-wing
+
+
+## Citations
