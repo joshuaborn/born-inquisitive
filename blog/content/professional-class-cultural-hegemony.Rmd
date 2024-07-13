@@ -13,20 +13,29 @@ output:
     toc: true
     toc_depth: 5
 summary: "Summary sentence here"
-tags: ["editorial"]
+tags: ["editorial", "first-person"]
 title: 'Professional-Class Cultural Hegemony'
 ---
 
 
-The United States of America is a heavily polarized, partisan place. However, as I described in my [review](/myth-of-left-and-right.html) of _The Myth of Left and Right_ by Hyrum and Verlan Lewis [-@lewis_myth_2023], I do not believe the left-right spectrum has any utility as a description of socio-political viewpoints in the United States.
+The United States of America is a heavily polarized, partisan place. However, as I described in my [review](/myth-of-left-and-right.html) of _The Myth of Left and Right_ by Hyrum and Verlan Lewis [-@lewis_myth_2023], I do not believe the left-right spectrum has any utility as a [description of socio-political viewpoints](when-left-wing-and-right-wing-are-and-arent-substantive-criticism.html) in the United States. Therefore, the left-right spectrum does not explain this partisan polarization.
 
-As summarized by the authors of _The Myth of Left and Right,_ what has constituted the "left-wing" viewpoint or the "right-wing" viewpoint on many issues has not been consistent over time, even just within the confines of United States, let alone when considering other places. Furthermore, logically, there is no reason to believe that socio-political viewpoints would in general come in one of two packages. Indeed, empirically, people have to be _conditioned_ into thinking in terms of the left-right spectrum in the first place, because a binary spectrum is so unnatural.
+This raises the question of how to understand the polarization that characterizes American politics. I discovered what I believe to be my answer to this question a couple of years ago when listening to [episode 40 of season 3 of _Conversations with Coleman_](https://pca.st/1l7zid0r) in which Coleman Hughes interviewed David Sacks. 
 
-This raises the question of how are we to understand the polarization that characterizes American politics. I discovered what I believe to be my answer to this question when listening to a podcast a couple of years ago. The podcast in question was [episode 40 of season 3 of _Conversations with Coleman_](https://pca.st/1l7zid0r) in which Coleman Hughes interviewed David Sacks. 
+Coleman Hughes is an columnist, podcaster, and book author who comments on race politics in the United States, and David Sacks is an entrepreneur in the software industry who was the founding CEO of PayPal. 
 
-Coleman Hughes is an author and commentator who advocates for colorblindness of the sort popularized in the civil rights era in American race politics, and David Sacks is an entrepreneur in the software industry who was the founding CEO of PayPal. 
+However, the answer to the question of political polarization in the United States does not come directly from either David Sacks or Coleman Hughes, but from the work of [Ruy Teixeira](https://substack.com/@theliberalpatriot), which they discussed.
 
-The answer I discovered in their discussion, however, did not originate with either David Sacks or Coleman Hughes, but is due largely to the work of [Ruy Teixeira](https://substack.com/@theliberalpatriot), political scientist and co-author of _The Emerging Democratic Majority_ in 2002 and of _Where Have All the Democrats Gone?_ in 2023.
+Ruy Texeira is a political scientist, Democrat, and co-author of _The Emerging Democratic Majority_ in 2002 and of _Where Have All the Democrats Gone?_ in 2023. Since the 1990s, neither party in the United States has been able to build a national majority. In 2002, Ruy Texeira predicted that the Democrats would soon have such a majority, but this did not happen, which led to his 2023 book and his ongoing political science work.
+
+
+## Professional Class and the Working Class
+
+Ruy Texeira has a simple answer to why this majority did not emerge. Define the "professional class" as those in the United States who have a four-year degree from a university, and define the "working class" as those who do not. The United States is still a majority working class country, with about two-thirds of the United States working class by this definition.
+
+According to the work of Ruy Texeira, the biggest polarization in the United States in who votes for which party occurs not between men and women, between White Americans and Black Americans, between Latinos and non-Latinos, etc. The biggest gaps in voting preferences occur between the professional class voters and working class voters. This is not just a phenomenon in party voting preference, but on many specific issues as well, the biggest gap in viewpoints occurs between professional class and working classs voters.
+
+
 
 
 ## Bullets
