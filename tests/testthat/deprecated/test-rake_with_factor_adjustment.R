@@ -2,6 +2,7 @@ library(here)
 library(srvyr)
 
 source(here('tests/data/simple_survey.R'))
+source(here('R/deprecated/rake_with_factor_adjustment.R'))
 
 
 test_that('only svyrep.design objects are accepted', {

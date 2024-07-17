@@ -599,7 +599,7 @@ Guttmacher_abortion_totals <- readRDS(here('data/guttmacher_APC_national.Rds'))
 ### Create Calibrated NSFG Survey Object
 
 ```{r create-calibrated-NSFG-survey-objects, dependson=c("create-NSFG-survey-objects", "load-target-totals-for-calibration")}
-source(here('R/rake_with_factor_adjustment.R'))
+source(here('R/deprecated/rake_with_factor_adjustment.R'))
 
 poststrat_abortions_total <- Guttmacher_abortion_totals |>
   filter(year %in% 2013:2014) |>

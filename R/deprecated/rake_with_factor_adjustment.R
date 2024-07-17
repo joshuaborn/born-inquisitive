@@ -1,8 +1,8 @@
 library(here)
 library(survey)
 
-source(here('R/adjust_weights_by_factor.R'))
-source(here('R/find_ratio_for_poststratification.R'))
+source(here('R/deprecated/adjust_weights_by_factor.R'))
+source(here('R/deprecated/find_ratio_for_poststratification.R'))
 
 
 #' Perform raking poststratification adjustment with special step of factor adjustment

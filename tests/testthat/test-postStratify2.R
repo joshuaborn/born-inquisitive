@@ -1,4 +1,5 @@
 library(here)
+library(survey)
 library(srvyr)
 
 source(here('tests/data/simple_survey.R'))
