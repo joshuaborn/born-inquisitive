@@ -15,10 +15,6 @@ library(srvyr)
 #'
 #' @value A svyrep.design object with weights adjusted
 #'
-#svy <- original_svy
-#targets <- target_totals
-#targets <- get_target_totals()[-2,]
-#adj_factor_strata <- ~abortion_2013_2014_age
 
 postStratify2 <- function(svy, adj_factor_strata, targets, weight_adj_strata) {
   if (!inherits(svy, 'svyrep.design')) {
