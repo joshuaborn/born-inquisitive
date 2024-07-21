@@ -114,18 +114,37 @@ As Peter Berkowitz, himself a long-time academic, discussed in a [recent talk](h
 
 What has happened since the rise in prominence of "diversity, equity, and inclusion (DEI)" initiatives in admissions and hiring, is that these unwritten rules have now become written down and more public. In order to be considered for graduate admissions or hiring, applicants now must submit "diversity statements" that are policed for the "correct" viewpoints.
 
-DEI initiatives can be a way to entrench political biases in hiring and admissions. For instance, someone who advocates "race conscious" public policy that discriminates on race in a "diversity statement" might have their application passed on to the next phase of the review process, whereas if someone like Coleman Hughes were to apply to graduate school and write in his "diversity statement" that he believed we should not discriminate on race in public policy, then his application can be discarded before the next phase of the process. 
+DEI initiatives can be a way to entrench political biases in hiring and admissions. For instance, someone who advocates "race conscious" public policy that discriminates on race in a "diversity statement" might have their application passed on to the next phase of the review process, whereas if someone like Coleman Hughes were to apply to graduate school and write in his "diversity statement" that he believed we should not discriminate on race in public policy, then his application can be discarded before the next phase of the process.[^fire-statement]
 
-Furthermore, DEI initiatives in hiring and admissions are spreading outside of academia into the broader work world. While many who pprove of DEI do so out of honorable motives and a desire for those that face prejudice to be treated fairly, these DEI initiatives give true believers in the cultural hegemony an opportunity to abuse their power to promote those who share their viewpoints and hinder those who differ from their viewpoints from advancing in society.
+[^fire-statement]: This is the main concern of the Foundation for Individual Rights and Expression (FIRE) in its [Statement on the Use of Diversity, Equity, and Inclusion Criteria in Faculty Hiring and Evaluation](https://www.thefire.org/research-learn/fire-statement-use-diversity-equity-and-inclusion-criteria-faculty-hiring-and).
+
+Furthermore, DEI initiatives in hiring and admissions are spreading outside of academia into the broader work world. While many who approve of DEI do so out of honorable motives and a desire for those that face prejudice to be treated fairly, these DEI initiatives give true believers in the cultural hegemony an opportunity to abuse their power to promote those who share their viewpoints and hinder those who differ from their viewpoints from advancing in society.
 
 Regardless if someone thinks that race-neutral or race-discriminatory public policies are the best approach, people like Coleman Hughes should not be excluded from academia or from the discourse at large. Excluding such viewpoints impoverishes the entirety of the discourse, and we are all worse off for this deplatforming.
 
 
 ### Misrepresentation and Defamation
 
+Once viewpoints that deviate from the orthodoxy favored by the cultural hegemony are deplatformed, the proponents of the cultural hegemony are left to explain why people disagree with the hegemony's orthodoxy at all. It is in this void that another hegemonic tactic is deployed: the misrepresentation of alternative viewpoints in order to make them unappealing. 
+
+This recalls a humorous anecdote from my days as an undergraduate university student in which I was asked, "Do you support Communism?" When I replied in the negative, I was immediately told, "Then go tell poor people you want them to starve!"[^holodomor]
+
+[^holodomor]: In light of the Holodomor, in which millions of people were starved to death in a man-made famine in the Soviet Union in the period from 1932-1933, this was a very tasteless choice defamatory accusation.
+
+While this is an obviously facile example of a viewpoint being misrepresented, it illustrates well the technique of misrepresentation. If people did believe my lack of support of Communism was due to my desire for "poor people to starve," then people would be less inclined to deviate from Communism, which for many decades was the cultural hegemony of eastern Europe and other areas.
+
+Because of the prominence of [identity politics](/identity-trap.html) in the United States, many if not most of these misrepresentations of alternative viewpoints involve some invocation of "racist," "misogynistic," "homophobic," "transphobic," etc. Thus, misrepresentation of alternative viewpoints and defamation of the people who hold them are typically intertwined.
+
+Coleman Hughes spoke about the ubiquity of people being called "racist" during his time at university:
+
+> And so I was definitely in that 1% that rebelled when I was at Columbia. I tried writing for the student newspaper, but it was so absolutely captured by students with far left ideology that, you know, I could hardly write a sentence without them trying to fact check me on a book they'd never read.
+> 
+> And so I, you know, at some point gave up and just started -- I had a hunger to not just say things I was supposed to say to get along. And I also had -- I think what my friend Kmele Foster calls "the melanin force field," which is, you know, the fact -- the fact of the matter is as a -- as a Black person, a lot of the people critiquing me on campus were White. And in their mind that gave them less standing to critique me if I did have contrarian views and in some way made it easier for me socially to actually be honest about what I thought, I think relatively, because I couldn't really be called a "racist," which was just a ubiquitous slur hurled at people.
 
 
 ### Fear and Self-Censorship
+
+
 
 
 ## The False Binary
@@ -134,8 +153,6 @@ Regardless if someone thinks that race-neutral or race-discriminatory public pol
 ## Bullet List
 
 * Hegemonic Tactics
-  * Misrepresentation of opposing views -- need concrete examples
-  * Defamation, e.g., "racist," "sexist," "homophobic," "transphobic"
   * Fear of being fired
   * Self-censorship
 * The False Binary
@@ -150,3 +167,9 @@ Regardless if someone thinks that race-neutral or race-discriminatory public pol
 
 
 ## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
