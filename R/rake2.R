@@ -23,21 +23,21 @@ source(here('R/postStratify2.R'))
 #' @value A svyrep.design object with weights adjusted
 #'
 
-control <- list(maxit=10, epsilon=1, verbose=FALSE)
-compress <- NULL
-
-
 rake2 <- function(design,
   sample.margins, population.margins,
   control=list(maxit=10, epsilon=1, verbose=FALSE),
   compress=NULL) {
 
-    if (!any(class(design) == 'svyrep.design')) {
+    if (!inherits(design, 'svyrep.design')) {
       stop('Parameter design must be of class svyrep.design')
     }
 
     if (is.null(compress))
       compress <- inherits(design$repweights, 'repweights_compressed')
+
+    original_weights <- weights(design, 'sampling')
+    original_repweights <- weights(design, 'analysis')
+    original_repfactors <- weights(design, 'replication')
 
     design$degf <- NULL
 
@@ -62,10 +62,20 @@ rake2 <- function(design,
     ff <- formula(paste("~", paste(allterms, collapse="+"), sep=""))
     oldtable <- svytable(ff, design)
 
+    #if (control$verbose)
+    #    print(oldtable)
+
+    oldpoststrata <- design$postStrata
     iter <- 0
     converged <- FALSE
 
     while(iter < control$maxit) {
+
+      if (control$verbose) {
+        print(paste('rake2 iteration', iter))
+      }
+
+      design$postStrata <- NULL
 
       for(i in 1:number_of_margins) {
         design <- postStratify(
@@ -78,10 +88,16 @@ rake2 <- function(design,
 
       newtable <- svytable(ff, design)
 
+      #if (control$verbose)
+      #  print(newtable)
+
       delta <- max(abs(oldtable - newtable))
 
       if (delta < control$epsilon){
         converged <- TRUE
+        if (control$verbose) {
+          print('Converged!')
+        }
         break
       }
 
@@ -90,7 +106,42 @@ rake2 <- function(design,
       iter <- iter + 1
     }
 
+    ## changed in 3.6-3 to allow the projections to be iterated
+    ## in svyrecvar
+    rakestrata <- design$postStrata
+    if(!is.null(rakestrata)) {
+      class(rakestrata) <- "raking"
+      design$postStrata <- c(oldpoststrata, list(rakestrata))
+    }
+
     design$call <- sys.call()
+
+    # There is an issue with NaN values sometimes getting into the weights
+    # matrix. Thus far, the original values have been all zeroes, which makes
+    # sense because R can only create NaN values in limited cases involving 0
+    # and/or Inf values.
+    #
+    # In order to make this function complete without error in these cases,
+    # replace all NaN weights with 0 if the original weight was 0.
+    design$repweights[
+      is.nan(design$repweights) &
+        original_repweights[is.nan(design$repweights)] == 0
+    ] <- 0
+
+    # There is another issue with entire replicates sometimes becoming NaN after
+    # weight adjustment. In these cases, fall back on the less precise method of
+    # using the main adjusted weight multiplied by the original factors to
+    # regenerate the replicate.
+    if (any(colSums(is.nan(design$repweights)) > 0)) {
+      which_replicates <- which(colSums(is.nan(design$repweights)) > 0)
+      if (control$verbose)
+          print(paste(
+            'Replicates',
+            paste(which_replicates, collapse= ', '),
+            'have NaN values after raking and will be recalculated based on the main adjusted weight and the original replicate weight factors.'
+          ))
+      design$repweights[, which_replicates] <- design$pweights * original_repfactors[, which_replicates]
+    }
 
     if (compress)
       design$repweights <- compressWeights(design$repweights)
