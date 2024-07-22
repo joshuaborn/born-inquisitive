@@ -24,43 +24,71 @@ poststrat_pop_targets_2015_2019 <- readRDS(
   select(poststrat_age_race, Freq) |>
   as.data.frame()
 
+
 poststrat_pop_total_2015_2019 <- sum(poststrat_pop_targets_2015_2019$Freq)
 
-NVSS_births_2011_2014 <- read_tsv(
-  here('data/NVSS/2011-2014/age.txt'),
-  name_repair = 'universal',
-  show_col_types = FALSE
-) |>
-  filter(Notes == 'Total' & !is.na(Year)) |>
-  rename(Yes = Births) |>
-  mutate(
-    variable_name = paste0('birth_in_', Year),
-    No = poststrat_pop_total_2015_2019 - Yes
-  ) |>
-  select(variable_name, Yes, No) |>
-  pivot_longer(c(Yes, No), values_to = 'Freq')
 
-poststrat_births_targets_2011_2014 <- NVSS_births_2011_2014 |>
-  pull(variable_name) |>
-  unique() |>
-  lapply(function(this_variable_name) {
-    this_df <- NVSS_births_2011_2014 |>
-      filter(variable_name == this_variable_name) |>
-      select(name, Freq) |>
-      as.data.frame()
-    colnames(this_df) <- c(this_variable_name, 'Freq')
-    this_df
+NVSS_age_2011_2014 <- read_tsv(
+    here('data/NVSS/2011-2014/age.txt'),
+    name_repair = 'universal',
+    show_col_types = FALSE
+  ) |>
+  filter(!is.na(Year) | !is.na(Age.of.Mother.9)) |>
+  mutate(
+    Variable = paste0('birth_', Year, '_age'),
+    Level = case_when(
+      Age.of.Mother.9.Code %in% c('15', '15-19') ~ 'Under 20 years',
+      Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ '40 years and over',
+      is.na(Age.of.Mother.9.Code) ~ 'Other',
+      .default = Age.of.Mother.9
+    ),
+    Freq = if_else(
+      !is.na(Notes) & Notes == 'Total',
+      poststrat_pop_total_2015_2019 - Births,
+      Births
+    )
+  ) |>
+  group_by(Variable, Level) |>
+  summarize(Freq = sum(Freq), .groups = 'drop') |>
+  group_by(Variable) |>
+  group_split() |>
+  lapply(function(tbl) {
+    variable_name <- first(pull(tbl, Variable))
+    tbl <- select(tbl, -Variable)
+    names(tbl) <- c(variable_name, 'Freq')
+    tbl
   })
 
-poststrat_targets_2011_2014 <- c(
-  list(poststrat_pop_targets_2015_2019),
-  poststrat_births_targets_2011_2014
-)
 
-saveRDS(
-  poststrat_targets_2011_2014,
-  file = here('data/poststrat_targets_2015_2019.Rds')
-)
+NVSS_marital_status_2011_2014 <- read_tsv(
+    here('data/NVSS/2011-2014/marital_status.txt'),
+    name_repair = 'universal',
+    show_col_types = FALSE
+  ) |>
+  filter(!is.na(Year) | !is.na(Marital.Status)) |>
+  mutate(
+    Variable = paste0('birth_', Year, '_marital_status'),
+    Level = if_else(
+      !is.na(Marital.Status),
+      Marital.Status,
+      'Other'
+    ),
+    Freq = if_else(
+      !is.na(Notes) & Notes == 'Total',
+      poststrat_pop_total_2015_2019 - Births,
+      Births
+    )
+  ) |>
+  select(Variable, Level, Freq) |>
+  group_by(Variable) |>
+  group_split() |>
+  lapply(function(tbl) {
+    variable_name <- first(pull(tbl, Variable))
+    tbl <- select(tbl, -Variable)
+    names(tbl) <- c(variable_name, 'Freq')
+    tbl
+  })
+
 
 guttmacher_APC_national <- read_csv(
     here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
@@ -71,11 +99,46 @@ guttmacher_APC_national <- read_csv(
       c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
         2009, 2012, 2015)
   ) |>
-  select('year', 'interpolated', 'abortionstotal', 'abortionslt20',
-    'abortions2024', 'abortions2529', 'abortions3034', 'abortions3539',
-    'abortions40plus')
+  select('year', 'interpolated', 'abortionslt20', 'abortions2024',
+    'abortions2529', 'abortions3034', 'abortions3539', 'abortions40plus',
+    'abortionstotal')
+
+
+guttmacher_APC_2013_2014_age <- guttmacher_APC_national |>
+  filter(year %in% 2013:2014) |>
+  rename(
+    `Other` = abortionstotal,
+    `Under 20 years` = abortionslt20,
+    `20-24 years` = abortions2024,
+    `25-29 years` = abortions2529,
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539,
+    `40 years and over` = abortions40plus
+  ) |>
+  summarize(across(3:9, sum)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = 'abortion_2013_2014_age',
+    values_to = 'Freq'
+  ) |>
+  mutate(
+    Freq = if_else(
+      abortion_2013_2014_age == 'Other',
+      poststrat_pop_total_2015_2019 - Freq,
+      Freq
+    )
+  )
+
+
+poststrat_targets_2015_2019 <- c(
+  list(poststrat_pop_targets_2015_2019),
+  NVSS_age_2011_2014,
+  NVSS_marital_status_2011_2014,
+  list(guttmacher_APC_2013_2014_age)
+)
+
 
 saveRDS(
-  guttmacher_APC_national,
-  file = here('data/guttmacher_APC_national.Rds')
+  poststrat_targets_2015_2019,
+  file = here('data/poststrat_targets_2015_2019.Rds')
 )
