@@ -3,7 +3,7 @@ library(here)
 library(readr)
 library(tidyr)
 
-here('R/create_postratification_targets_for_NSFG.R')
+here('tests/data/create_postratification_targets_for_NSFG.R')
 
 
 poststrat_pop_targets_2015_2019 <- readRDS(
