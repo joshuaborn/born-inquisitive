@@ -5,57 +5,8 @@ library(srvyr)
 source(here('tests/data/simple_survey.R'))
 
 
-get_female_population_count <- function() {
-  readRDS(
-    here('data/Census/prepared/census_for_2015_2019.Rds')
-  ) |>
-    filter(SEX_f == 'Female') |>
-    pull(pop) |>
-    sum()
-}
-
-
 get_target_totals <- function() {
-  tbl <- readRDS(here('data/guttmacher_APC_national.Rds')) |>
-    filter(year %in% 2013:2014) |>
-    summarize(across(starts_with('abortions'), sum)) |>
-    select(-abortionstotal) |>
-    rename(
-      `Under 20 years` = abortionslt20,
-      `20-24 years` = abortions2024,
-      `25-29 years` = abortions2529,
-      `30-34 years` = abortions3034,
-      `35-39 years` = abortions3539,
-      `40 years and over` = abortions40plus
-    ) |>
-    pivot_longer(
-      everything(),
-      names_to = 'abortion_2013_2014_age',
-      values_to = 'Freq'
-    )
-
-  tbl |>
-    bind_rows(
-      data.frame(
-        abortion_2013_2014_age = 'Other',
-        Freq = get_female_population_count() - sum(pull(tbl, Freq))
-      )
-    ) |>
-    mutate(
-      abortion_2013_2014_age = factor(
-        abortion_2013_2014_age,
-        ordered = TRUE,
-        levels = c(
-          'Under 20 years',
-          '20-24 years',
-          '25-29 years',
-          '30-34 years',
-          '35-39 years',
-          '40 years and over',
-          'Other'
-        )
-      )
-    )
+  readRDS(here('data/poststrat_targets_2015_2019.Rds'))[[10]]
 }
 
 

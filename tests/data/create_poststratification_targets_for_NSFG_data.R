@@ -36,11 +36,23 @@ NVSS_age_2011_2014 <- read_tsv(
   filter(!is.na(Year) | !is.na(Age.of.Mother.9)) |>
   mutate(
     Variable = paste0('birth_', Year, '_age'),
-    Level = case_when(
-      Age.of.Mother.9.Code %in% c('15', '15-19') ~ 'Under 20 years',
-      Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ '40 years and over',
-      is.na(Age.of.Mother.9.Code) ~ 'Other',
-      .default = Age.of.Mother.9
+    Level = factor(
+      case_when(
+        Age.of.Mother.9.Code %in% c('15', '15-19') ~ 'Under 20 years',
+        Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ '40 years and over',
+        is.na(Age.of.Mother.9.Code) ~ 'Other',
+        .default = Age.of.Mother.9
+      ),
+      levels = c(
+        'Under 20 years',
+        '20-24 years',
+        '25-29 years',
+        '30-34 years',
+        '35-39 years',
+        '40 years and over',
+        'Other'
+      ),
+      ordered = TRUE
     ),
     Freq = if_else(
       !is.na(Notes) & Notes == 'Total',
@@ -50,6 +62,7 @@ NVSS_age_2011_2014 <- read_tsv(
   ) |>
   group_by(Variable, Level) |>
   summarize(Freq = sum(Freq), .groups = 'drop') |>
+  arrange(Variable, Level) |>
   group_by(Variable) |>
   group_split() |>
   lapply(function(tbl) {
@@ -68,10 +81,18 @@ NVSS_marital_status_2011_2014 <- read_tsv(
   filter(!is.na(Year) | !is.na(Marital.Status)) |>
   mutate(
     Variable = paste0('birth_', Year, '_marital_status'),
-    Level = if_else(
-      !is.na(Marital.Status),
-      Marital.Status,
-      'Other'
+    Level = factor(
+      if_else(
+        !is.na(Marital.Status),
+        Marital.Status,
+        'Other'
+      ),
+      levels = c(
+        'Married',
+        'Unmarried',
+        'Other'
+      ),
+      ordered = TRUE
     ),
     Freq = if_else(
       !is.na(Notes) & Notes == 'Total',
@@ -122,12 +143,26 @@ guttmacher_APC_2013_2014_age <- guttmacher_APC_national |>
     values_to = 'Freq'
   ) |>
   mutate(
+    abortion_2013_2014_age = factor(
+      abortion_2013_2014_age,
+      levels = c(
+        'Under 20 years',
+        '20-24 years',
+        '25-29 years',
+        '30-34 years',
+        '35-39 years',
+        '40 years and over',
+        'Other'
+      ),
+      ordered = TRUE
+    ),
     Freq = if_else(
       abortion_2013_2014_age == 'Other',
       poststrat_pop_total_2015_2019 - Freq,
       Freq
     )
-  )
+  ) |>
+  arrange(abortion_2013_2014_age)
 
 
 poststrat_targets_2015_2019 <- c(
