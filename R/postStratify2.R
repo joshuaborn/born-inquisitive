@@ -1,4 +1,6 @@
+library(dplyr)
 library(srvyr)
+library(tidyr)
 
 
 #' Post-stratification in which the post-strata assignments used to calculate
