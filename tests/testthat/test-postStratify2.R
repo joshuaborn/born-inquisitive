@@ -1,6 +1,7 @@
+library(dplyr)
 library(here)
-library(survey)
 library(srvyr)
+library(survey)
 
 source(here('tests/data/simple_survey.R'))
 
@@ -51,6 +52,22 @@ test_that('output data have same number of rows as input', {
   expect_equal(
     nrow(adjusted_svy),
     nrow(original_svy)
+  )
+})
+
+
+test_that('each replicate of weights is post-stratified separately', {
+  original_svy <- readRDS(here('data/NSFG_2015_2019_fem_svy.Rds'))
+  adjusted_svy <- postStratify2(
+    original_svy,
+    ~abortion_2013_2014_age,
+    get_target_totals(),
+    ~abortion_age
+  )
+
+  expect(
+    !all(weights(adjusted_svy, 'replication') %in% c(0, 2)),
+    'not all replicate weight factors should still be 0 or 2 after post-stratification'
   )
 })
 
@@ -129,9 +146,10 @@ test_that('different levels in targets and adj_factor_strata results in an error
       get_target_totals()[-2,],
       ~abortion_age
     ),
-    'The levels of the variable denoted by adj_factor_strata must be identical to the levels in the targets data frame'
+    'The levels specified in the data set and those specified target totals must be identical'
   )
 })
+
 
 test_that('different levels in weight_adj_strata and adj_factor_strata results in an error', {
   expect_error(
