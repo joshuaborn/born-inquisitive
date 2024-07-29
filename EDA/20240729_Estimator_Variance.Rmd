@@ -1,0 +1,519 @@
+---
+title: "Estimator Variance Due to Post-Stratification"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+    css: wide.css
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(haven)
+library(here)
+library(readr)
+library(srvyr)
+library(survey)
+library(svrep)
+library(tidyr)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi=200,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+
+## Data Preparation
+
+### Load NSFG Data
+
+```{r load-NSFG-data}
+NSFG_2017_2019_preg_raw <- read_sas(
+  data_file = here('data/NSFG/d2017_2019fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019fempreg.sas7bcat')
+)
+NSFG_2015_2017_preg_raw <- read_sas(
+  data_file = here('data/NSFG/d2015_2017fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017fempreg.sas7bcat')
+)
+NSFG_2011_2019_wgts <- read_sas(
+  data_file = here('data/NSFG/d2011_2019femwgt.sas7bdat')
+)
+NSFG_2017_2019_fem_raw <- read_sas(
+  data_file = here('data/NSFG/d2017_2019femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d2017_2019femresp.sas7bcat')
+)
+NSFG_2015_2017_fem_raw <- read_sas(
+  data_file = here('data/NSFG/d2015_2017femresp.sas7bdat'),
+  catalog_file = here('data/NSFG/d2015_2017femresp.sas7bcat')
+)
+```
+
+
+### Select NSFG Variables
+
+```{r select-NSFG-variables, dependson="load-NSFG-data"}
+NSFG_2015_2019_preg_data <- bind_rows(
+  select(
+    NSFG_2015_2017_preg_raw,
+    SECU, SEST, CASEID,
+    DATEND,
+    OUTCOME,
+    PREGORDR,
+    FMAROUT5,
+    AGEPREG
+  ),
+  select(
+    NSFG_2017_2019_preg_raw,
+    SECU, SEST, CASEID,
+    DATEND,
+    OUTCOME,
+    PREGORDR,
+    FMAROUT5,
+    AGEPREG
+  )
+) |>
+  left_join(
+    select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
+    by = join_by(CASEID)
+  ) |>
+  mutate(
+    one = 1,
+    OUTCOME = as_factor(labelled(OUTCOME, c(
+      "LIVE BIRTH" = 1,
+      "INDUCED ABORTION" = 2,
+      "STILLBIRTH" = 3,
+      "MISCARRIAGE" = 4,
+      "ECTOPIC PREGNANCY" = 5,
+      "CURRENT PREGNANCY" = 6
+    ))),
+    FMAROUT5 = as_factor(labelled(FMAROUT5, c(
+      "MARRIED" = 1,
+      "DIVORCED" = 2,
+      "WINDOWED" = 3,
+      "SEPARATED" = 4,
+      "NEVER MARRIED" = 5
+    ))),
+    marital_status = as.factor(if_else(
+      FMAROUT5 == 'MARRIED',
+      'Married',
+      'Unmarried'
+    )),
+  ) |>
+  rename(
+    Year = DATEND
+  ) |>
+  arrange(
+    CASEID, PREGORDR
+  )
+
+NSFG_2015_2019_fem_data <- bind_rows(
+  select(NSFG_2017_2019_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION),
+  select(NSFG_2015_2017_fem_raw, CASEID, SEST, SECU, AGER, HISPRACE2, ABORTION)
+) |>
+  mutate(
+    one = 1,
+    age_group = cut(
+      AGER,
+      breaks = c(14, 19, 24, 29, 34, 39, 44, 50),
+      labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
+    ),
+    HISPRACE2 = as_factor(labelled(HISPRACE2, c(
+      'Hispanic' = 1,
+      'Non-Hispanic White' = 2,
+      'Non-Hispanic Black' = 3,
+      'Non-Hispanic Other' = 4
+    ))),
+    any_abortion = !is.na(ABORTION) & ABORTION > 0
+  ) |>
+  left_join(
+    select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
+    by = join_by(CASEID)
+  )
+```
+
+
+### Set Calibration Variables
+
+```{r set-calibration-variables, dependson="select-NSFG-variables"}
+NSFG_2015_2019_fem_data_for_calibration <- NSFG_2015_2019_fem_data |>
+  mutate(
+    poststrat_age_race = factor(gsub(
+      '[ -]',
+      '_',
+      paste(
+        'Age',
+        age_group,
+        case_when(
+          grepl('^Hispanic', HISPRACE2) ~ 'Hispanic',
+          grepl('Black', HISPRACE2) ~ 'Non-Hispanic Black',
+          .default = 'Non-Hispanic Non-Black'
+        ),
+        sep = '_'
+      )
+    ))
+  ) |>
+  left_join(
+    NSFG_2015_2019_preg_data |>
+      group_by(CASEID) |>
+      summarize(
+        abortion_age =  case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & AGEPREG < 20)  ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
+        abortion_2013_2014_age = factor(
+          case_when(
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG < 20) ~ 'Under 20 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 24) ~ '20-24 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 29) ~ '25-29 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 34) ~ '30-34 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 39) ~ '35-39 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG >= 40) ~ '40 years and over',
+            .default = 'Other'
+          ),
+          ordered = TRUE,
+          levels = c(
+            'Under 20 years',
+            '20-24 years',
+            '25-29 years',
+            '30-34 years',
+            '35-39 years',
+            '40 years and over'
+          )
+        )
+      ),
+    by = 'CASEID'
+  ) |>
+  mutate(
+    across(
+      ends_with('_age'),
+      function(x) {
+        factor(
+          coalesce(x, 'Other'),
+          ordered = TRUE,
+          levels = c(
+            'Under 20 years',
+            '20-24 years',
+            '25-29 years',
+            '30-34 years',
+            '35-39 years',
+            '40 years and over',
+            'Other'
+          )
+        )
+      }
+    )
+  )
+```
+
+
+## Before Post-Stratification
+
+### Taylor Linearization
+
+```{r create-NSFG-survey, dependson="select-NSFG-variables"}
+NSFG_2015_2019_fem_svy <-  as_survey_design(
+    .data = NSFG_2015_2019_fem_data_for_calibration,
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2015_2019,
+    nest = TRUE
+  )
+
+NSFG_2015_2019_fem_svy
+svytotal(~abortion_age, NSFG_2015_2019_fem_svy, deff = 'replace')
+
+NSFG_2015_2019_fem_svy |> 
+  group_by(abortion_age) |>
+  summarize(
+    abortion_age = survey_total(one, vartype = 'ci')
+  )
+```
+
+
+### Jackknife
+
+```{r create-jackknife-replicate-weights, dependson="create-NSFG-survey"}
+NSFG_2015_2019_fem_svy_jackknife <- as.svrepdesign(
+  design = NSFG_2015_2019_fem_svy,
+  type = 'JKn'
+)
+
+paste(
+  ncol(weights(NSFG_2015_2019_fem_svy_jackknife, 'analysis')),
+  'replicates'
+)
+
+paste(
+  'UWE',
+  PracTools::deffK(weights(NSFG_2015_2019_fem_svy_jackknife, 'sampling'))
+)
+
+svytotal(~abortion_age, NSFG_2015_2019_fem_svy_jackknife, deff = 'replace')
+
+NSFG_2015_2019_fem_svy_jackknife |>
+  as_survey_rep() |>
+  group_by(abortion_age) |>
+  summarize(
+    abortion_age = survey_total(one, vartype = 'ci')
+  )
+```
+
+
+### Bootstrap
+
+```{r create-bootstrap-replicate-weights, dependson="create-NSFG-survey"}
+NSFG_2015_2019_fem_svy_bootstrap <- as.svrepdesign(
+  design = NSFG_2015_2019_fem_svy,
+  type = 'bootstrap',
+  replicates = 100
+)
+
+paste(
+  ncol(weights(NSFG_2015_2019_fem_svy_bootstrap, 'analysis')),
+  'replicates'
+)
+
+paste(
+  'UWE',
+  PracTools::deffK(weights(NSFG_2015_2019_fem_svy_bootstrap, 'sampling'))
+)
+
+svytotal(~abortion_age, NSFG_2015_2019_fem_svy_bootstrap, deff = 'replace')
+
+NSFG_2015_2019_fem_svy_bootstrap |>
+  as_survey_rep() |>
+  group_by(abortion_age) |>
+  summarize(
+    abortion_age = survey_total(one, vartype = 'ci')
+  )
+```
+
+
+## Post-Stratification
+
+
+### Load Target Totals for Post-Stratification
+
+```{r load-target-totals-for-post-stratification}
+census_pop_targets_2015_2019 <- readRDS(
+  here('data/Census/prepared/census_for_2015_2019.Rds')
+) |>
+  filter(SEX_f == 'Female') |>
+  mutate(
+    poststrat_age_race = gsub(
+      '[ -]',
+      '_',
+      paste0(
+        gsub(' to | years', '_', AGEGROUP_f),
+        race_ethn_f
+      )
+    )
+  ) |>
+  rename(Freq = pop) |>
+  select(poststrat_age_race, Freq) |>
+  as.data.frame()
+
+
+census_pop_total_2015_2019 <- sum(census_pop_targets_2015_2019$Freq)
+
+
+guttmacher_APC_national <- read_csv(
+    here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
+    show_col_types = FALSE
+  ) |>
+  filter(state == 'US') |>
+  mutate(interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
+  ) |>
+  select('year', 'interpolated', 'abortionslt20', 'abortions2024',
+    'abortions2529', 'abortions3034', 'abortions3539', 'abortions40plus',
+    'abortionstotal')
+
+
+guttmacher_APC_2013_2014_age <- guttmacher_APC_national |>
+  filter(year %in% 2013:2014) |>
+  rename(
+    `Other` = abortionstotal,
+    `Under 20 years` = abortionslt20,
+    `20-24 years` = abortions2024,
+    `25-29 years` = abortions2529,
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539,
+    `40 years and over` = abortions40plus
+  ) |>
+  summarize(across(3:9, sum)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = 'abortion_2013_2014_age',
+    values_to = 'Freq'
+  ) |>
+  mutate(
+    abortion_2013_2014_age = factor(
+      abortion_2013_2014_age,
+      levels = c(
+        'Under 20 years',
+        '20-24 years',
+        '25-29 years',
+        '30-34 years',
+        '35-39 years',
+        '40 years and over',
+        'Other'
+      ),
+      ordered = TRUE
+    ),
+    Freq = if_else(
+      abortion_2013_2014_age == 'Other',
+      census_pop_total_2015_2019 - Freq,
+      Freq
+    )
+  ) |>
+  arrange(abortion_2013_2014_age)
+
+
+poststrat_targets_2015_2019 <- c(
+  list(census_pop_targets_2015_2019),
+  list(guttmacher_APC_2013_2014_age)
+)
+```
+
+
+### Run Post-Stratification
+
+```{r post-stratify-jackknife, dependson=c("create-jackknife-replicate-weights", "load-target-totals-for-post-stratification")}
+source(here('R/postStratify2.R'))
+
+NSFG_2015_2019_fem_svy_jackknife_post <- postStratify2(
+  NSFG_2015_2019_fem_svy_jackknife,
+  ~abortion_2013_2014_age,
+  poststrat_targets_2015_2019[[2]],
+  ~abortion_age,
+  verbose=TRUE
+)
+```
+
+```{r post-stratify-bootstrap, dependson=c("create-bootstrap-replicate-weights", "load-target-totals-for-post-stratification")}
+NSFG_2015_2019_fem_svy_bootstrap_post <- postStratify2(
+  NSFG_2015_2019_fem_svy_bootstrap,
+  ~abortion_2013_2014_age,
+  poststrat_targets_2015_2019[[2]],
+  ~abortion_age,
+  verbose=TRUE
+)
+```
+
+
+## After Post-Stratification
+
+### Jackknife
+
+```{r, jackknife-after-post-stratification, dependson="post-stratify-jackknife"}
+ncol(weights(NSFG_2015_2019_fem_svy_jackknife_post, 'analysis'))
+
+svytotal(~abortion_age, NSFG_2015_2019_fem_svy_jackknife_post, deff = 'replace')
+
+NSFG_2015_2019_fem_svy_jackknife_post$adj_factors$main
+
+NSFG_2015_2019_fem_svy_jackknife_post$adj_factors$replicates
+
+weights(NSFG_2015_2019_fem_svy_jackknife_post, 'sampling')
+
+NSFG_2015_2019_fem_svy_jackknife_post |>
+  as_survey_rep() |>
+  group_by(abortion_age) |>
+  summarize(
+    abortion_age = survey_total(one, vartype = 'ci')
+  )
+```
+
+
+### Bootstrap
+
+```{r, bootstrap-after-post-stratification, dependson="post-stratify-bootstrap"}
+ncol(weights(NSFG_2015_2019_fem_svy_bootstrap_post, 'analysis'))
+
+svytotal(~abortion_age, NSFG_2015_2019_fem_svy_bootstrap_post, deff = 'replace')
+
+NSFG_2015_2019_fem_svy_bootstrap_post |>
+  as_survey_rep() |>
+  group_by(abortion_age) |>
+  summarize(
+    abortion_age = survey_total(one, vartype = 'ci')
+  )
+```
+
+
+## Comparison
+
+```{r summarize-weights, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects"), include=FALSE, eval=FALSE}
+summarize_weights <- function(x, label, useUWE = TRUE) {
+  tbl <- tibble(
+    n = sum(!is.na(x)),
+    missing = sum(is.na(x)),
+    positive = sum(x > 0),
+    zero = sum(x == 0),
+    negative = sum(x < 0),
+    min = min(x),
+    p01 = quantile(x, 0.01),
+    p05 = quantile(x, 0.05),
+    q1 = quantile(x, 0.25),
+    med = median(x),
+    q3 = quantile(x, 0.75),
+    p95 = quantile(x, 0.95),
+    p99 = quantile(x, 0.99),
+    max = max(x),
+    mean = mean(x),
+    sd = sd(x),
+  )
+  if (useUWE) {
+    tbl <- bind_cols(
+      tbl,
+      tibble(UWE = deffK(x))
+    )
+  }
+  pivot_longer(
+    tbl,
+    where(is.numeric),
+    names_to = 'statistic',
+    values_to = label
+  )
+}
+
+summarize_weights(
+  weights(NSFG_2015_2019_fem_svy, type = 'sampling'),
+  'original_weights'
+) |> full_join(
+  summarize_weights(
+    weights(NSFG_2015_2019_fem_cal_svy, type = 'sampling'),
+    'calibrated_weights'
+  ),
+  by = join_by(statistic)
+) |> full_join(
+  summarize_weights(
+    weights(NSFG_2015_2019_fem_svy, type = 'sampling') -
+      weights(NSFG_2015_2019_fem_cal_svy, type = 'sampling'),
+    'differences',
+    useUWE = FALSE
+  ),
+  by = join_by(statistic)
+) |>
+  gt() |>
+  fmt_number(columns = where(is.numeric), decimals = 1) |>
+  fmt_number(rows = 1:5, decimals = 0) |>
+  fmt_number(rows = 17, decimals = 3)
+```
+
