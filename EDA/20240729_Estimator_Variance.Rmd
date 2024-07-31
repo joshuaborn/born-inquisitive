@@ -174,25 +174,14 @@ NSFG_2015_2019_fem_data_for_calibration <- NSFG_2015_2019_fem_data |>
           any(OUTCOME == 'INDUCED ABORTION' & AGEPREG >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
-        abortion_2013_2014_age = factor(
-          case_when(
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG < 20) ~ 'Under 20 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 24) ~ '20-24 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 29) ~ '25-29 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 34) ~ '30-34 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 39) ~ '35-39 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG >= 40) ~ '40 years and over',
-            .default = 'Other'
-          ),
-          ordered = TRUE,
-          levels = c(
-            'Under 20 years',
-            '20-24 years',
-            '25-29 years',
-            '30-34 years',
-            '35-39 years',
-            '40 years and over'
-          )
+        abortion_2013_2014_age = case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
         )
       ),
     by = 'CASEID'
@@ -215,6 +204,11 @@ NSFG_2015_2019_fem_data_for_calibration <- NSFG_2015_2019_fem_data |>
           )
         )
       }
+    ),
+    abortion_age = if_else(
+      abortion_age != abortion_2013_2014_age & abortion_2013_2014_age != 'Other',
+      abortion_2013_2014_age,
+      abortion_age
     )
   )
 ```
@@ -404,6 +398,16 @@ NSFG_2015_2019_fem_svy_jackknife_post <- postStratify2(
   ~abortion_age,
   verbose=TRUE
 )
+
+paste(
+  ncol(weights(NSFG_2015_2019_fem_svy_jackknife_post, 'analysis')),
+  'replicates'
+)
+
+paste(
+  'UWE',
+  PracTools::deffK(weights(NSFG_2015_2019_fem_svy_jackknife_post, 'sampling'))
+)
 ```
 
 ```{r post-stratify-bootstrap, dependson=c("create-bootstrap-replicate-weights", "load-target-totals-for-post-stratification")}
@@ -414,6 +418,16 @@ NSFG_2015_2019_fem_svy_bootstrap_post <- postStratify2(
   ~abortion_age,
   verbose=TRUE
 )
+
+paste(
+  ncol(weights(NSFG_2015_2019_fem_svy_bootstrap_post, 'analysis')),
+  'replicates'
+)
+
+paste(
+  'UWE',
+  PracTools::deffK(weights(NSFG_2015_2019_fem_svy_bootstrap_post, 'sampling'))
+)
 ```
 
 
@@ -422,21 +436,36 @@ NSFG_2015_2019_fem_svy_bootstrap_post <- postStratify2(
 ### Jackknife
 
 ```{r, jackknife-after-post-stratification, dependson="post-stratify-jackknife"}
-ncol(weights(NSFG_2015_2019_fem_svy_jackknife_post, 'analysis'))
+svytotal(~abortion_2013_2014_age, NSFG_2015_2019_fem_svy_jackknife_post, deff = 'replace')
+
+NSFG_2015_2019_fem_svy_jackknife_post |>
+  as_survey_rep() |>
+  group_by(abortion_2013_2014_age) |>
+  summarize(
+    Freq = survey_total(one, vartype = 'ci')
+  )
 
 svytotal(~abortion_age, NSFG_2015_2019_fem_svy_jackknife_post, deff = 'replace')
-
-NSFG_2015_2019_fem_svy_jackknife_post$adj_factors$main
-
-NSFG_2015_2019_fem_svy_jackknife_post$adj_factors$replicates
-
-weights(NSFG_2015_2019_fem_svy_jackknife_post, 'sampling')
 
 NSFG_2015_2019_fem_svy_jackknife_post |>
   as_survey_rep() |>
   group_by(abortion_age) |>
   summarize(
-    abortion_age = survey_total(one, vartype = 'ci')
+    Freq = survey_total(one, vartype = 'ci')
+  )
+
+NSFG_2015_2019_fem_svy_jackknife_post |>
+  as_data_frame_with_weights() |>
+  group_by(abortion_2013_2014_age) |>
+  summarize(across(starts_with('REP_WGT'), sum)) |>
+  pivot_longer(-abortion_2013_2014_age) |>
+  pivot_wider(
+    id_cols = name,
+    names_from = abortion_2013_2014_age,
+    values_from = value
+  ) |>
+  summarize(
+    mean = across(-name, sd)
   )
 ```
 
@@ -457,63 +486,9 @@ NSFG_2015_2019_fem_svy_bootstrap_post |>
 ```
 
 
-## Comparison
+## Ideas
 
-```{r summarize-weights, dependson=c("create-NSFG-survey-objects", "create-calibrated-NSFG-survey-objects"), include=FALSE, eval=FALSE}
-summarize_weights <- function(x, label, useUWE = TRUE) {
-  tbl <- tibble(
-    n = sum(!is.na(x)),
-    missing = sum(is.na(x)),
-    positive = sum(x > 0),
-    zero = sum(x == 0),
-    negative = sum(x < 0),
-    min = min(x),
-    p01 = quantile(x, 0.01),
-    p05 = quantile(x, 0.05),
-    q1 = quantile(x, 0.25),
-    med = median(x),
-    q3 = quantile(x, 0.75),
-    p95 = quantile(x, 0.95),
-    p99 = quantile(x, 0.99),
-    max = max(x),
-    mean = mean(x),
-    sd = sd(x),
-  )
-  if (useUWE) {
-    tbl <- bind_cols(
-      tbl,
-      tibble(UWE = deffK(x))
-    )
-  }
-  pivot_longer(
-    tbl,
-    where(is.numeric),
-    names_to = 'statistic',
-    values_to = label
-  )
-}
-
-summarize_weights(
-  weights(NSFG_2015_2019_fem_svy, type = 'sampling'),
-  'original_weights'
-) |> full_join(
-  summarize_weights(
-    weights(NSFG_2015_2019_fem_cal_svy, type = 'sampling'),
-    'calibrated_weights'
-  ),
-  by = join_by(statistic)
-) |> full_join(
-  summarize_weights(
-    weights(NSFG_2015_2019_fem_svy, type = 'sampling') -
-      weights(NSFG_2015_2019_fem_cal_svy, type = 'sampling'),
-    'differences',
-    useUWE = FALSE
-  ),
-  by = join_by(statistic)
-) |>
-  gt() |>
-  fmt_number(columns = where(is.numeric), decimals = 1) |>
-  fmt_number(rows = 1:5, decimals = 0) |>
-  fmt_number(rows = 17, decimals = 3)
-```
-
+* Reduce variance introduced by post-stratification.
+  * Extend the time frame for abortions used to calculate post-stratification adjustment factors to more years before 2013-2014.
+  * Reduce number of levels that age.
+* Examine standard error and CI of estimate of some quantity I actually care about in my analysis. Perhaps the situation isn't as bad as it seems.
