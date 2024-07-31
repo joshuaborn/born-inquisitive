@@ -206,6 +206,24 @@ derived_fem <- data_fem |>
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 39) ~ '35-39 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG >= 40) ~ '40 years and over',
           .default = 'Other'
+        ),
+        abortion_2011_2014_age = case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
+        abortion_2011plus_age = case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
         )
       ),
     by = 'CASEID'
@@ -233,6 +251,11 @@ derived_fem <- data_fem |>
       abortion_age != abortion_2013_2014_age & abortion_2013_2014_age != 'Other',
       abortion_2013_2014_age,
       abortion_age
+    ),
+    abortion_2011plus_age = if_else(
+      abortion_2011plus_age != abortion_2011_2014_age & abortion_2011_2014_age != 'Other',
+      abortion_2011_2014_age,
+      abortion_2011plus_age
     )
   )
 ```
@@ -362,6 +385,46 @@ guttmacher_APC_2013_2014_age <- guttmacher_APC_national |>
   ) |>
   arrange(abortion_2013_2014_age)
 
+guttmacher_APC_2011_2014_age <- guttmacher_APC_national |>
+  filter(year %in% 2011:2014) |>
+  rename(
+    `Other` = abortionstotal,
+    `Under 20 years` = abortionslt20,
+    `20-24 years` = abortions2024,
+    `25-29 years` = abortions2529,
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539,
+    `40 years and over` = abortions40plus
+  ) |>
+  summarize(across(3:9, sum)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = 'Levels',
+    values_to = 'Freq'
+  ) |>
+  mutate(
+    abortion_2011_2014_age = factor(
+      Levels,
+      levels = c(
+        'Under 20 years',
+        '20-24 years',
+        '25-29 years',
+        '30-34 years',
+        '35-39 years',
+        '40 years and over',
+        'Other'
+      ),
+      ordered = TRUE
+    ),
+    Freq = if_else(
+      abortion_2011_2014_age == 'Other',
+      census_pop_total_2015_2019 - Freq,
+      Freq
+    )
+  ) |>
+  arrange(abortion_2011_2014_age) |>
+  select(abortion_2011_2014_age, Freq)
+
 
 poststrat_targets_2015_2019 <- c(
   list(census_pop_targets_2015_2019),
@@ -384,9 +447,22 @@ post_fem <- postStratify2(
 )
 ```
 
+```{r create-post-stratified-female-survey2, dependson="create-jackknife-female-survey"}
+source(here('R/postStratify2.R'))
+
+post_fem2 <- postStratify2(
+  rep_fem,
+  ~abortion_2011_2014_age,
+  guttmacher_APC_2011_2014_age,
+  ~abortion_2011plus_age,
+  verbose=TRUE
+)
+```
+
+
 ### Create Post-Stratified Pregnancies Survey Object
 
-```{r create-post-stratified-pregnancies-survey, dependson="create-jackknife-female-survey"}
+```{r create-post-stratified-pregnancies-survey, dependson="create-post-stratified-female-survey"}
 post_preg <- data_preg |>
   select(-WGT2015_2019) |>
   left_join(
@@ -406,10 +482,28 @@ post_preg <- data_preg |>
   )
 ```
 
+```{r create-post-stratified-pregnancies-survey2, dependson="create-post-stratified-female-survey2"}
+post_preg2 <- data_preg |>
+  select(-WGT2015_2019) |>
+  left_join(
+    post_fem |>
+      as_data_frame_with_weights(
+        full_wgt_name = "FULL_SAMPLE_WGT",
+        rep_wgt_prefix = "REP_WGT_"
+      ) |>
+      select(CASEID, contains('_WGT')),
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    type = 'JKn',
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    rscales = post_fem2$rscales
+  )
+```
 
 
-## Comparison
-
+## Estimates using `abortion_2013_2014_age` and `abortion_age`
 
 ### UWE
 
@@ -792,10 +886,391 @@ bind_rows(list(
 ```
 
 
+## Estimates using `abortion_2011_2014_age` and `abortion_2011plus_age`
+
+### UWE
+
+```{r uwe2, dependson="create-post-stratified-female-survey"}
+data.frame(
+  survey = c('Original', 'Replicate Weights', 'Post-Stratified'),
+  UWE = c(
+    deffK(weights(svy_fem, 'sampling')),
+    deffK(weights(rep_fem, 'sampling')),
+    deffK(weights(post_fem2, 'sampling'))
+  )
+) |> gt()
+```
+
+
+### `abortion_2011plus_age` Post-Strata
+
+```{r abortion-2011plus-age, dependson="create-post-stratified-female-survey"}
+bind_rows(list(
+  rep_fem |>
+    group_by(abortion_2011plus_age) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ),
+  post_fem2 |>
+    group_by(abortion_2011plus_age) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    )
+)) |> inner_join(
+  bind_rows(list(
+    rep_fem |>
+      group_by(abortion_2011plus_age) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ),
+    post_fem2 |>
+      group_by(abortion_2011plus_age) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      )
+  )),
+  by = join_by(abortion_2011plus_age, post_strat, Freq, n)
+) |>
+  select(abortion_2011plus_age, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(abortion_2011plus_age, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
+### `abortion_2011_2014_age` Post-Strata
+
+```{r abortion-2011-2014-age, dependson="create-post-stratified-female-survey"}
+bind_rows(list(
+  rep_fem |>
+    group_by(abortion_2011_2014_age) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ),
+  post_fem2 |>
+    group_by(abortion_2011_2014_age) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    )
+)) |> inner_join(
+  bind_rows(list(
+    rep_fem |>
+      group_by(abortion_2011_2014_age) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ),
+    post_fem2 |>
+      group_by(abortion_2011_2014_age) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      )
+  )),
+  by = join_by(abortion_2011_2014_age, post_strat, Freq, n)
+) |>
+  select(abortion_2011_2014_age, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(abortion_2011_2014_age, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
+### Total Pregnancies from 2011 to 2014
+
+```{r total-pregnancies-2011-2014-2, dependson="create-post-stratified-pregnancies-survey"}
+bind_rows(list(
+  rep_preg |>
+    group_by(DATECON) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ) |>
+    filter(DATECON %in% 2011:2014),
+  post_preg2 |>
+    group_by(DATECON) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    ) |>
+    filter(DATECON %in% 2011:2014)
+)) |> inner_join(
+  bind_rows(list(
+    rep_preg |>
+      group_by(DATECON) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ) |>
+      filter(DATECON %in% 2011:2014),
+    post_preg2 |>
+      group_by(DATECON) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      ) |>
+      filter(DATECON %in% 2011:2014)
+  )),
+  by = join_by(DATECON, post_strat, Freq, n)
+) |>
+  select(DATECON, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(DATECON, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
+### Pregnancies from 2011 to 2014 by `intent`
+
+```{r pregnancies-by-intent-2011-2014-2, dependson="create-post-stratified-pregnancies-survey"}
+bind_rows(list(
+  rep_preg |>
+    group_by(DATECON, intent) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ) |>
+    filter(DATECON %in% 2011:2014),
+  post_preg2 |>
+    group_by(DATECON, intent) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    ) |>
+    filter(DATECON %in% 2011:2014)
+)) |> inner_join(
+  bind_rows(list(
+    rep_preg |>
+      group_by(DATECON, intent) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ) |>
+      filter(DATECON %in% 2011:2014),
+    post_preg2 |>
+      group_by(DATECON, intent) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      ) |>
+      filter(DATECON %in% 2011:2014)
+  )),
+  by = join_by(DATECON, intent, post_strat, Freq, n)
+) |>
+  select(DATECON, intent, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(DATECON, intent, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
+### Pregnancies from 2011 to 2014 by `WANTRESP`
+
+```{r pregnancies-by-wantresp-2011-2014-2, dependson="create-post-stratified-pregnancies-survey"}
+bind_rows(list(
+  rep_preg |>
+    group_by(DATECON, WANTRESP) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ) |>
+    filter(DATECON %in% 2011:2014),
+  post_preg2 |>
+    group_by(DATECON, WANTRESP) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    ) |>
+    filter(DATECON %in% 2011:2014)
+)) |> inner_join(
+  bind_rows(list(
+    rep_preg |>
+      group_by(DATECON, WANTRESP) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ) |>
+      filter(DATECON %in% 2011:2014),
+    post_preg2 |>
+      group_by(DATECON, WANTRESP) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      ) |>
+      filter(DATECON %in% 2011:2014)
+  )),
+  by = join_by(DATECON, WANTRESP, post_strat, Freq, n)
+) |>
+  select(DATECON, WANTRESP, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(DATECON, WANTRESP, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
 ## Ideas
 
 * Reduce variance introduced by post-stratification.
-  * Extend the time frame for abortions used to calculate post-stratification adjustment factors to more years before 2013-2014.
   * Reduce number of levels for age.
-  * Limit time frame for abortions making respondent eligible for adjustment post-strata.
   * Reverse precedent of level assignment in adjustment post-strata.
