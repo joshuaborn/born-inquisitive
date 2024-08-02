@@ -288,7 +288,7 @@ NVSS_marital_status_2011_2014 <- read_tsv(
 ```
 
 
-## Split by Age
+## Estimates after Raking using 5-level Abortion Post-Stratification Variable
 
 ```{r split-by-age, dependson=c("select-pregnancies-variables", "select-female-respondents-variables", "create-post-stratification-targets")}
 derived_fem <- data_fem |>
@@ -541,6 +541,348 @@ post_fem <- rake2(
     NULL,
     NULL,
     ~abortion_2011plus_poststrat
+  ),
+  control=list(maxit=25, epsilon=1, verbose=TRUE)
+)
+
+post_preg <- data_preg |>
+  select(-WGT2015_2019) |>
+  left_join(
+    post_fem |>
+      as_data_frame_with_weights(
+        full_wgt_name = "FULL_SAMPLE_WGT",
+        rep_wgt_prefix = "REP_WGT_"
+      ) |>
+      select(CASEID, contains('_WGT')),
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    type = 'JKn',
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    rscales = post_fem$rscales
+  )
+
+data.frame(
+  survey = c('Original', 'Replicate Weights', 'Post-Stratified'),
+  UWE = c(
+    deffK(weights(svy_fem, 'sampling')),
+    deffK(weights(rep_fem, 'sampling')),
+    deffK(weights(post_fem, 'sampling'))
+  )
+) |> gt()
+
+bind_rows(list(
+  rep_preg |>
+    group_by(DATECON, intent) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ) |>
+    filter(DATECON %in% 2011:2014),
+  post_preg |>
+    group_by(DATECON, intent) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    ) |>
+    filter(DATECON %in% 2011:2014)
+)) |> inner_join(
+  bind_rows(list(
+    rep_preg |>
+      group_by(DATECON, intent) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ) |>
+      filter(DATECON %in% 2011:2014),
+    post_preg |>
+      group_by(DATECON, intent) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      ) |>
+      filter(DATECON %in% 2011:2014)
+  )),
+  by = join_by(DATECON, intent, post_strat, Freq, n)
+) |>
+  select(DATECON, intent, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(DATECON, intent, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
+
+## Estimates after Raking using 6-level Abortion Post-Stratification Variable
+
+```{r six-level, dependson=c("select-pregnancies-variables", "select-female-respondents-variables", "create-post-stratification-targets")}
+derived_fem <- data_fem |>
+  mutate(
+    poststrat_age_race = factor(gsub(
+      '[ -]',
+      '_',
+      paste(
+        'Age',
+        age_group,
+        case_when(
+          grepl('^Hispanic', HISPRACE2) ~ 'Hispanic',
+          grepl('Black', HISPRACE2) ~ 'Non-Hispanic Black',
+          .default = 'Non-Hispanic Non-Black'
+        ),
+        sep = '_'
+      )
+    ))
+  ) |>
+  left_join(
+    data_preg |>
+      group_by(CASEID) |>
+      summarize(
+        abortion_2011_2014_age = case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
+        abortion_2011plus_age = case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
+        birth_2014_marital_status =  case_when(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & FMAROUT5 == 'MARRIED') ~ 'Married',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014) ~ 'Unmarried',
+          .default = 'Other'
+        ),
+        birth_2013_marital_status =  case_when(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013 & FMAROUT5 == 'MARRIED') ~ 'Married',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013) ~ 'Unmarried',
+          .default = 'Other'
+        ),
+        birth_2012_marital_status =  case_when(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012 & FMAROUT5 == 'MARRIED') ~ 'Married',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012) ~ 'Unmarried',
+          .default = 'Other'
+        ),
+        birth_2011_marital_status =  case_when(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011 & FMAROUT5 == 'MARRIED') ~ 'Married',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011) ~ 'Unmarried',
+          .default = 'Other'
+        ),
+        birth_2014_age = case_when(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
+        birth_2013_age =  case_when(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2013 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
+        birth_2012_age =  case_when(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2012 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        ),
+        birth_2011_age =  case_when(
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2011 & AGEPREG >= 40) ~ '40 years and over',
+          .default = 'Other'
+        )
+      ),
+    by = 'CASEID'
+  ) |>
+  mutate(
+    across(
+      ends_with('_age'),
+      function(x) {
+        factor(
+          coalesce(x, 'Other'),
+          levels = c(
+            'Under 20 years',
+            '20-24 years',
+            '25-29 years',
+            '30-34 years',
+            '35-39 years',
+            '40 years and over',
+            'Other'
+          )
+        )
+      }
+    ),
+    across(
+      ends_with('_marital_status'),
+      function(x) {
+        factor(
+          coalesce(x, 'Other'),
+          ordered = TRUE,
+          levels = c(
+            'Married',
+            'Unmarried',
+            'Other'
+          )
+        )
+      }
+    ),
+    abortion_2011plus_age = if_else(
+      abortion_2011plus_age != abortion_2011_2014_age & abortion_2011_2014_age != 'Other',
+      abortion_2011_2014_age,
+      abortion_2011plus_age
+    )
+  )
+
+svy_fem <- as_survey_design(
+    .data = derived_fem,
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2015_2019,
+    nest = TRUE
+  )
+
+rep_fem <- as_survey_rep(
+  .data = svy_fem,
+  type = 'JKn'
+)
+
+rep_preg <- data_preg |>
+  select(-WGT2015_2019) |>
+  left_join(
+    rep_fem |>
+      as_data_frame_with_weights(
+        full_wgt_name = "FULL_SAMPLE_WGT",
+        rep_wgt_prefix = "REP_WGT_"
+      ) |>
+      select(CASEID, contains('_WGT')),
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    type = 'JKn',
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    rscales = rep_fem$rscales
+  )
+
+guttmacher_APC_2011_2014_age <- guttmacher_APC_national |>
+  filter(year %in% 2011:2014) |>
+  rename(
+    `Other` = abortionstotal,
+    `Under 20 years` = abortionslt20,
+    `20-24 years` = abortions2024,
+    `25-29 years` = abortions2529,
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539,
+    `40 years and over` = abortions40plus
+  ) |>
+  summarize(across(3:9, sum)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = 'Levels',
+    values_to = 'Freq'
+  ) |>
+  mutate(
+    abortion_2011_2014_age = factor(
+      Levels,
+      levels = c(
+        'Under 20 years',
+        '20-24 years',
+        '25-29 years',
+        '30-34 years',
+        '35-39 years',
+        '40 years and over',
+        'Other'
+      ),
+      ordered = TRUE
+    ),
+    Freq = if_else(
+      abortion_2011_2014_age == 'Other',
+      census_pop_total_2015_2019 - Freq,
+      Freq
+    )
+  ) |>
+  arrange(abortion_2011_2014_age) |>
+  select(abortion_2011_2014_age, Freq)
+
+poststrat_targets_2015_2019 <- c(
+  list(census_pop_targets_2015_2019),
+  NVSS_age_2011_2014,
+  NVSS_marital_status_2011_2014,
+  list(guttmacher_APC_2011_2014_age)
+)
+
+source(here('R/rake2.R'))
+
+post_fem <- rake2(
+  rep_fem,
+  sample.margins = lapply(
+    poststrat_targets_2015_2019,
+    \(x) as.formula(paste0('~', colnames(x)[1]))
+  ),
+  population.margins = poststrat_targets_2015_2019,
+  weight_adj_strata = list(
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    ~abortion_2011plus_age
   ),
   control=list(maxit=25, epsilon=1, verbose=TRUE)
 )
