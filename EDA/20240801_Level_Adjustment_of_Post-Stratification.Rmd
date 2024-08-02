@@ -1552,7 +1552,256 @@ bind_rows(list(
 ```
 
 
+## With 1 Level
+
+```{r with-1-levels, dependson=c("select-pregnancies-variables", "select-female-respondents-variables")}
+derived_fem <- data_fem |>
+  mutate(
+    poststrat_age_race = factor(gsub(
+      '[ -]',
+      '_',
+      paste(
+        'Age',
+        age_group,
+        case_when(
+          grepl('^Hispanic', HISPRACE2) ~ 'Hispanic',
+          grepl('Black', HISPRACE2) ~ 'Non-Hispanic Black',
+          .default = 'Non-Hispanic Non-Black'
+        ),
+        sep = '_'
+      )
+    ))
+  ) |>
+  left_join(
+    data_preg |>
+      group_by(CASEID) |>
+      summarize(
+        abortion_2011_2014 = if_else(
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014),
+          'Abortion reported',
+          'No abortion reported'
+        ),
+        abortion_2011plus = if_else(
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011),
+          'Abortion reported',
+          'No abortion reported'
+        )
+      ),
+    by = 'CASEID'
+  ) |>
+  mutate(
+    across(
+      starts_with('abortion_'),
+      function(x) {
+        factor(
+          coalesce(x, 'No abortion reported'),
+          levels = c(
+            'Abortion reported',
+            'No abortion reported'
+          )
+        )
+      }
+    )
+  )
+
+svy_fem <- as_survey_design(
+    .data = derived_fem,
+    strata = SEST,
+    ids = SECU,
+    weights = WGT2015_2019,
+    nest = TRUE
+  )
+
+rep_fem <- as_survey_rep(
+  .data = svy_fem,
+  type = 'JKn'
+)
+
+rep_preg <- data_preg |>
+  select(-WGT2015_2019) |>
+  left_join(
+    rep_fem |>
+      as_data_frame_with_weights(
+        full_wgt_name = "FULL_SAMPLE_WGT",
+        rep_wgt_prefix = "REP_WGT_"
+      ) |>
+      select(CASEID, contains('_WGT')),
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    type = 'JKn',
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    rscales = rep_fem$rscales
+  )
+
+census_pop_targets_2015_2019 <- readRDS(
+  here('data/Census/prepared/census_for_2015_2019.Rds')
+) |>
+  filter(SEX_f == 'Female') |>
+  mutate(
+    poststrat_age_race = gsub(
+      '[ -]',
+      '_',
+      paste0(
+        gsub(' to | years', '_', AGEGROUP_f),
+        race_ethn_f
+      )
+    )
+  ) |>
+  rename(Freq = pop) |>
+  select(poststrat_age_race, Freq) |>
+  as.data.frame()
+
+census_pop_total_2015_2019 <- sum(census_pop_targets_2015_2019$Freq)
+
+guttmacher_APC_national <- read_csv(
+    here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
+    show_col_types = FALSE
+  ) |>
+  filter(state == 'US') |>
+  mutate(interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
+  ) |>
+  select('year', 'interpolated', 'abortionslt20', 'abortions2024',
+    'abortions2529', 'abortions3034', 'abortions3539', 'abortions40plus',
+    'abortionstotal')
+
+
+guttmacher_APC_2011_2014 <- guttmacher_APC_national |>
+  filter(year %in% 2011:2014) |>
+  select(abortionstotal) |>
+  summarize(
+    Freq = sum(abortionstotal)
+  ) |>
+  mutate(
+    abortion_2011_2014 = 'Abortion reported',
+    .before = everything()
+  ) %>%
+  add_row(
+    abortion_2011_2014 = 'No abortion reported',
+    Freq = census_pop_total_2015_2019 - pull(., Freq)
+  ) |>
+  mutate(
+    abortion_2011_2014 = factor(
+      abortion_2011_2014,
+      levels = c(
+        'Abortion reported',
+        'No abortion reported'
+      )
+    )
+  )
+
+source(here('R/postStratify2.R'))
+
+post_fem <- postStratify2(
+  rep_fem,
+  ~abortion_2011_2014,
+  guttmacher_APC_2011_2014,
+  ~abortion_2011plus,
+  verbose=TRUE
+)
+
+post_preg <- data_preg |>
+  select(-WGT2015_2019) |>
+  left_join(
+    post_fem |>
+      as_data_frame_with_weights(
+        full_wgt_name = "FULL_SAMPLE_WGT",
+        rep_wgt_prefix = "REP_WGT_"
+      ) |>
+      select(CASEID, contains('_WGT')),
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    type = 'JKn',
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    rscales = post_fem$rscales
+  )
+
+data.frame(
+  survey = c('Original', 'Replicate Weights', 'Post-Stratified'),
+  UWE = c(
+    deffK(weights(svy_fem, 'sampling')),
+    deffK(weights(rep_fem, 'sampling')),
+    deffK(weights(post_fem, 'sampling'))
+  )
+) |> gt()
+
+bind_rows(list(
+  rep_preg |>
+    group_by(DATECON, intent) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ) |>
+    filter(DATECON %in% 2011:2014),
+  post_preg |>
+    group_by(DATECON, intent) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    ) |>
+    filter(DATECON %in% 2011:2014)
+)) |> inner_join(
+  bind_rows(list(
+    rep_preg |>
+      group_by(DATECON, intent) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ) |>
+      filter(DATECON %in% 2011:2014),
+    post_preg |>
+      group_by(DATECON, intent) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      ) |>
+      filter(DATECON %in% 2011:2014)
+  )),
+  by = join_by(DATECON, intent, post_strat, Freq, n)
+) |>
+  select(DATECON, intent, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(DATECON, intent, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
 # Ideas
 
-* Try with just one-level abortion adjustment.
 * Try raking with other variables to see if this reduces estimator variance.
