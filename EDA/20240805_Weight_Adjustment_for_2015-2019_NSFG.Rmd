@@ -592,31 +592,41 @@ data.frame(
 
 #### By Entropy
 
-These are observations with a squared weight that is more than 10 times the mean of all squared weights in the post-stratified survey, but not in the original survey.
-
 ```{r extreme-entropy, dependson="create-survey-objects"}
-after_fem$variables |>
-  select(CASEID, FULL_SAMPLE_WGT) |>
-  mutate(
-    mean_squared_weight_after = mean(FULL_SAMPLE_WGT^2),
-    squared_weight_after = FULL_SAMPLE_WGT^2
-  ) |>
+entropy_extreme_before <- before_fem$variables |>
+  select(CASEID, WGT2015_2019) |>
   filter(
-    squared_weight_after > 10 * mean_squared_weight_after
-  ) |>
+    WGT2015_2019^2 > 10 * mean(WGT2015_2019^2)
+  )
+
+entropy_extreme_after <-  after_fem$variables |>
+  select(CASEID, FULL_SAMPLE_WGT) |>
+  filter(
+    FULL_SAMPLE_WGT^2 > 10 * mean(FULL_SAMPLE_WGT^2)
+  )
+
+data.frame(
+  Label = c(
+    'Total Observations',
+    'Extreme Weights Before',
+    'Extreme Weights After',
+    'Difference'
+  ),
+  Count = c(
+    nrow(after_fem),
+    nrow(entropy_extreme_before),
+    nrow(entropy_extreme_after),
+    nrow(entropy_extreme_after) - nrow(entropy_extreme_before)
+  )
+) |>
+  gt() |>
+  fmt_number(decimal = 0)
+
+entropy_extreme_after |>
   anti_join(
-    before_fem$variables |>
-      select(CASEID, WGT2015_2019) |>
-      mutate(
-        mean_squared_weight_before = mean(WGT2015_2019^2),
-        squared_weight_before = WGT2015_2019^2
-      ) |>
-      filter(
-        squared_weight_before > 10 * mean_squared_weight_before
-      ),
+    entropy_extreme_before,
     by = join_by(CASEID)
   ) |>
-  select(-ends_with('squared_weight_after')) |>
   left_join(
     before_fem$variables |>
       select(
@@ -640,23 +650,44 @@ after_fem$variables |>
   fmt_number(contains('WGT'), decimal = 0)
 ```
 
+These are observations with a squared weight that is more than 10 times the mean of all squared weights in the post-stratified survey, but not in the original survey.
+
 
 #### By Inter-Quartile Range (IQR)
 
-These are observations with a weight that is more than 5 times the IQR greater than the median of weight in the post-stratified survey, but not in the original survey.
-
 ```{r extreme-iqr, dependson="create-survey-objects"}
-after_fem$variables |>
+iqr_extreme_after <- after_fem$variables |>
   select(CASEID, FULL_SAMPLE_WGT) |>
   filter(
     FULL_SAMPLE_WGT > 5 * IQR(FULL_SAMPLE_WGT) + median(FULL_SAMPLE_WGT)
-  ) |>
+  )
+
+iqr_extreme_before <- before_fem$variables |>
+  select(CASEID, WGT2015_2019) |>
+  filter(
+    WGT2015_2019 > 5 * IQR(WGT2015_2019) + median(WGT2015_2019)
+  )
+
+data.frame(
+  Label = c(
+    'Total Observations',
+    'Extreme Weights Before',
+    'Extreme Weights After',
+    'Difference'
+  ),
+  Count = c(
+    nrow(after_fem),
+    nrow(iqr_extreme_before),
+    nrow(iqr_extreme_after),
+    nrow(iqr_extreme_after) - nrow(iqr_extreme_before)
+  )
+) |>
+  gt() |>
+  fmt_number(decimal = 0)
+
+iqr_extreme_after |>
   anti_join(
-    before_fem$variables |>
-      select(CASEID, WGT2015_2019) |>
-      filter(
-        WGT2015_2019 > 5 * IQR(WGT2015_2019) + median(WGT2015_2019)
-      ),
+    iqr_extreme_before,
     by = join_by(CASEID)
   ) |>
   left_join(
@@ -682,4 +713,4 @@ after_fem$variables |>
   fmt_number(contains('WGT'), decimal = 0)
 ```
 
-This turns out to be a proper superset of the entropy-based extreme weights.
+These are observations with a weight that is more than 5 times the IQR greater than the median of weight in the post-stratified survey, but not in the original survey. This turns out to be a proper superset of the entropy-based extreme weights.
