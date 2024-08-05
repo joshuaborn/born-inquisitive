@@ -587,3 +587,99 @@ data.frame(
   fmt_number()
 ```
 
+
+### Observations with Extreme Weights
+
+#### By Entropy
+
+These are observations with a squared weight that is more than 10 times the mean of all squared weights in the post-stratified survey, but not in the original survey.
+
+```{r extreme-entropy, dependson="create-survey-objects"}
+after_fem$variables |>
+  select(CASEID, FULL_SAMPLE_WGT) |>
+  mutate(
+    mean_squared_weight_after = mean(FULL_SAMPLE_WGT^2),
+    squared_weight_after = FULL_SAMPLE_WGT^2
+  ) |>
+  filter(
+    squared_weight_after > 10 * mean_squared_weight_after
+  ) |>
+  anti_join(
+    before_fem$variables |>
+      select(CASEID, WGT2015_2019) |>
+      mutate(
+        mean_squared_weight_before = mean(WGT2015_2019^2),
+        squared_weight_before = WGT2015_2019^2
+      ) |>
+      filter(
+        squared_weight_before > 10 * mean_squared_weight_before
+      ),
+    by = join_by(CASEID)
+  ) |>
+  select(-ends_with('squared_weight_after')) |>
+  left_join(
+    before_fem$variables |>
+      select(
+        CASEID,
+        WGT2015_2019,
+        abortion_2011_2014_age,
+        abortion_2011plus_age,
+        poststrat_age_race,
+        birth_2014_marital_status,
+        birth_2013_marital_status,
+        birth_2012_marital_status,
+        birth_2011_marital_status,
+        birth_2014_age,
+        birth_2013_age,
+        birth_2012_age,
+        birth_2011_age
+      ),
+    by = join_by(CASEID)
+  ) |> 
+  gt() |>
+  fmt_number(contains('WGT'), decimal = 0)
+```
+
+
+#### By Inter-Quartile Range (IQR)
+
+These are observations with a weight that is more than 5 times the IQR greater than the median of weight in the post-stratified survey, but not in the original survey.
+
+```{r extreme-iqr, dependson="create-survey-objects"}
+after_fem$variables |>
+  select(CASEID, FULL_SAMPLE_WGT) |>
+  filter(
+    FULL_SAMPLE_WGT > 5 * IQR(FULL_SAMPLE_WGT) + median(FULL_SAMPLE_WGT)
+  ) |>
+  anti_join(
+    before_fem$variables |>
+      select(CASEID, WGT2015_2019) |>
+      filter(
+        WGT2015_2019 > 5 * IQR(WGT2015_2019) + median(WGT2015_2019)
+      ),
+    by = join_by(CASEID)
+  ) |>
+  left_join(
+    before_fem$variables |>
+      select(
+        CASEID,
+        WGT2015_2019,
+        abortion_2011_2014_age,
+        abortion_2011plus_age,
+        poststrat_age_race,
+        birth_2014_marital_status,
+        birth_2013_marital_status,
+        birth_2012_marital_status,
+        birth_2011_marital_status,
+        birth_2014_age,
+        birth_2013_age,
+        birth_2012_age,
+        birth_2011_age
+      ),
+    by = join_by(CASEID)
+  ) |>
+  gt() |>
+  fmt_number(contains('WGT'), decimal = 0)
+```
+
+This turns out to be a proper superset of the entropy-based extreme weights.
