@@ -159,9 +159,7 @@ data_fem <- bind_rows(
   left_join(
     select(weights_2011_2019, CASEID, WGT2015_2019),
     by = join_by(CASEID)
-  )
-
-before_fem <- data_fem |>
+  ) |>
   mutate(
     poststrat_age_race = factor(gsub(
       '[ -]',
@@ -273,7 +271,8 @@ before_fem <- data_fem |>
             '35-39 years',
             '40 years and over',
             'Other'
-          )
+          ),
+          order = TRUE
         )
       }
     ),
@@ -296,7 +295,9 @@ before_fem <- data_fem |>
       abortion_2011_2014_age,
       abortion_2011plus_age
     )
-  ) |> 
+  )
+
+before_fem <- data_fem |>
   as_survey_design(
     strata = SEST,
     ids = SECU,
@@ -482,7 +483,7 @@ poststrat_targets_2015_2019 <- c(
 
 ### Raking Post-Stratifications
 
-```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets")}
+```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets"), eval=FALSE}
 source(here('R/rake2.R'))
 
 weight_adj_strata_2015_2019 <- list()
@@ -503,7 +504,7 @@ post_fem <- rake2(
 
 ### Saving of Adjusted Weights
 
-```{r save-adjusted-weights, dependson="rake-post-stratifications"}
+```{r save-adjusted-weights, dependson="rake-post-stratifications", eval=FALSE}
 post_fem |>
   as_data_frame_with_weights(
     full_wgt_name = "FULL_SAMPLE_WGT",
@@ -714,3 +715,230 @@ iqr_extreme_after |>
 ```
 
 These are observations with a weight that is more than 5 times the IQR greater than the median of weight in the post-stratified survey, but not in the original survey. This turns out to be a proper superset of the entropy-based extreme weights.
+
+
+### Post-Stratification Targets
+
+```{r verify-post-stratification, dependson="create-survey-objects"}
+after_fem |>
+  group_by(poststrat_age_race) |>
+  summarize(
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[1]],
+    by = join_by(poststrat_age_race)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(birth_2011_age) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[2]],
+    by = join_by(birth_2011_age)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(birth_2012_age) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[3]],
+    by = join_by(birth_2012_age)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(birth_2013_age) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[4]],
+    by = join_by(birth_2013_age)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(birth_2014_age) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[5]],
+    by = join_by(birth_2014_age)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(birth_2011_marital_status) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[6]],
+    by = join_by(birth_2011_marital_status)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(birth_2012_marital_status) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[7]],
+    by = join_by(birth_2012_marital_status)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(birth_2013_marital_status) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[8]],
+    by = join_by(birth_2013_marital_status)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(birth_2014_marital_status) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[9]],
+    by = join_by(birth_2014_marital_status)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+
+after_fem |>
+  group_by(abortion_2011_2014_age) |>
+  summarize(
+    Count = n(),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    poststrat_targets_2015_2019[[10]],
+    by = join_by(abortion_2011_2014_age)
+  ) |>
+  mutate(
+    Diff = Est - Freq
+  ) |>
+  gt() |>
+  fmt_number(c(Est, Freq), decimal = 0) |>
+  fmt_number(c(Est_se, Diff), decimal = 2)
+```
+
+
+### Abortion Adjustments
+
+```{r find-average-abortion-adjustment, dependson="create-survey-objects"}
+before_fem |>
+  group_by(abortion_2011_2014_age) |>
+  summarize(
+    Count = n(),
+    Before = survey_total(one)
+  ) |>
+  full_join(
+    after_fem |>
+      group_by(abortion_2011_2014_age) |>
+      summarize(
+        After = survey_total(one)
+      ),
+    by = join_by(abortion_2011_2014_age)
+  ) |>
+  mutate(
+    Factor = After / Before
+  ) |>
+  gt() |>
+  fmt_number(decimal = 0) |>
+  fmt_number(Factor, decimal = 2)
+
+before_fem |>
+  group_by(abortion_2011plus_age) |>
+  summarize(
+    Count = n(),
+    Before = survey_total(one)
+  ) |>
+  full_join(
+    after_fem |>
+      group_by(abortion_2011plus_age) |>
+      summarize(
+        After = survey_total(one)
+      ),
+    by = join_by(abortion_2011plus_age)
+  ) |>
+  mutate(
+    Factor = After / Before
+  ) |>
+  gt() |>
+  fmt_number(decimal = 0) |>
+  fmt_number(Factor, decimal = 2)
+```
+
+
+### Counts of Pregnancies by Year, by Intent, and by Outcome
+
+
+### Test Harnesses
