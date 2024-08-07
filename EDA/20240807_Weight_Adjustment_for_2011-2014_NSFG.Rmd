@@ -1,0 +1,213 @@
+---
+title: "Weight Adjustment for 2011-2015 NSFG"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+    css: wide.css
+---
+
+```{r setup, include=FALSE}
+library(PracTools)
+library(dplyr)
+library(gt)
+library(haven)
+library(here)
+library(readr)
+library(srvyr)
+library(stringr)
+library(survey)
+library(svrep)
+library(tidyr)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi=200,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+
+
+### Creation of Post-Stratification Targets
+
+```{r create-post-stratification-targets}
+census_pop_targets <- readRDS(
+  here('data/Census/prepared/census_for_2011_2015.Rds')
+) |>
+  filter(SEX_f == 'Female') |>
+  mutate(
+    poststrat_age_race = gsub(
+      '[ -]',
+      '_',
+      paste0(
+        gsub(' to | years', '_', AGEGROUP_f),
+        race_ethn_f
+      )
+    )
+  ) |>
+  rename(Freq = pop) |>
+  select(poststrat_age_race, Freq) |>
+  as.data.frame()
+
+
+census_pop_total <- sum(census_pop_targets$Freq)
+
+
+guttmacher_APC_national <- read_csv(
+    here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
+    show_col_types = FALSE
+  ) |>
+  filter(state == 'US') |>
+  mutate(interpolated = year %in%
+      c(1983, 1986, 1989, 1990, 1993, 1994, 1997, 1998, 2001, 2002, 2003, 2006,
+        2009, 2012, 2015)
+  ) |>
+  select('year', 'interpolated', 'abortionslt20', 'abortions2024',
+    'abortions2529', 'abortions3034', 'abortions3539', 'abortions40plus',
+    'abortionstotal')
+
+guttmacher_APC_age <- guttmacher_APC_national |>
+  filter(year %in% 2006:2010) |>
+  rename(
+    `Other` = abortionstotal,
+    `Under 20 years` = abortionslt20,
+    `20-24 years` = abortions2024,
+    `25-29 years` = abortions2529,
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539,
+    `40 years and over` = abortions40plus
+  ) |>
+  summarize(across(3:9, sum)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = 'Levels',
+    values_to = 'Freq'
+  ) |>
+  mutate(
+    abortion_2006_2010_age = factor(
+      Levels,
+      levels = c(
+        'Under 20 years',
+        '20-24 years',
+        '25-29 years',
+        '30-34 years',
+        '35-39 years',
+        '40 years and over',
+        'Other'
+      ),
+      ordered = TRUE
+    ),
+    Freq = if_else(
+      abortion_2006_2010_age == 'Other',
+      census_pop_total - Freq,
+      Freq
+    )
+  ) |>
+  arrange(abortion_2006_2010_age) |>
+  select(abortion_2006_2010_age, Freq)
+
+
+NVSS_age <- bind_rows(
+  read_tsv(
+    here('data/NVSS/2006-2010/age.txt'),
+    name_repair = 'universal',
+    show_col_types = FALSE
+  ),
+  read_tsv(
+    here('data/NVSS/2006-2010/age_2006.txt'),
+    name_repair = 'universal',
+    show_col_types = FALSE
+  )
+) |>
+  filter(!is.na(Year) | !is.na(Age.of.Mother.9)) |>
+  mutate(
+    Variable = paste0('birth_', Year, '_age'),
+    Level = factor(
+      case_when(
+        Age.of.Mother.9.Code %in% c('15', '15-19') ~ 'Under 20 years',
+        Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ '40 years and over',
+        is.na(Age.of.Mother.9.Code) ~ 'Other',
+        .default = Age.of.Mother.9
+      ),
+      levels = c(
+        'Under 20 years',
+        '20-24 years',
+        '25-29 years',
+        '30-34 years',
+        '35-39 years',
+        '40 years and over',
+        'Other'
+      ),
+      ordered = TRUE
+    ),
+    Freq = if_else(
+      !is.na(Notes) & Notes == 'Total',
+      census_pop_total - Births,
+      Births
+    )
+  ) |>
+  group_by(Variable, Level) |>
+  summarize(Freq = sum(Freq), .groups = 'drop') |>
+  arrange(Variable, Level) |>
+  group_by(Variable) |>
+  group_split() |>
+  lapply(function(tbl) {
+    variable_name <- first(pull(tbl, Variable))
+    tbl <- select(tbl, -Variable)
+    names(tbl) <- c(variable_name, 'Freq')
+    tbl
+  })
+
+
+NVSS_marital_status <- read_tsv(
+    here('data/NVSS/2006-2010/marital_status.txt'),
+    name_repair = 'universal',
+    show_col_types = FALSE
+  ) |>
+  filter(!is.na(Year) | !is.na(Marital.Status)) |>
+  mutate(
+    Variable = paste0('birth_', Year, '_marital_status'),
+    Level = factor(
+      if_else(
+        !is.na(Marital.Status),
+        Marital.Status,
+        'Other'
+      ),
+      levels = c(
+        'Married',
+        'Unmarried',
+        'Other'
+      ),
+      ordered = TRUE
+    ),
+    Freq = if_else(
+      !is.na(Notes) & Notes == 'Total',
+      census_pop_total - Births,
+      Births
+    )
+  ) |>
+  select(Variable, Level, Freq) |>
+  group_by(Variable) |>
+  group_split() |>
+  lapply(function(tbl) {
+    variable_name <- first(pull(tbl, Variable))
+    tbl <- select(tbl, -Variable)
+    names(tbl) <- c(variable_name, 'Freq')
+    tbl
+  })
+
+
+poststrat_targets <- c(
+  list(census_pop_targets),
+  NVSS_age,
+  NVSS_marital_status,
+  list(guttmacher_APC_age)
+)
+```
