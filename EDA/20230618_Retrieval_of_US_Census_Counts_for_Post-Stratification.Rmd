@@ -123,9 +123,10 @@ pep_int_charagegroups1990_2000_state02 |>
 
 ### 1980-1990 Intercensals
 
-* It does not appear that the 1980-1990 Intercensal data sets are available through the API. "Estimates of the Population of Counties in the United States by Age, Sex, and Race" is available as a downloadable Microsoft Excel file for each year. See file `pe-02-1986.xls`. It will have to be parsed and summed up to the national estimates.
+* It does not appear that the 1980-1990 Intercensal data sets are available through the API. "Estimates of the Population of Counties in the United States by Age, Sex, and Race" is available as a downloadable Microsoft Excel file for each year. See file `pe-02-1986.xls` at [this web site](https://www.census.gov/data/tables/time-series/demo/popest/1980s-county.html). It will have to be parsed and summed up to the national estimates.
 * The file does not specify what the universe used is, so it is likely the "Resident" population universe.
 * The Cycle 4 NSFG was post-stratified by "by age, race, marital status, and parity (the number of live births the woman has had) obtained from the U.S. Bureau of the Census." Marital status and parity are not in the PEP. However, sex, age group, and race are available, these will be used in the calibration.
+* The Cycle 3 NSFG can use the `pe-02-1982.xls`. Since this Cycle was added to the analysis later, the Census target totals still need to be processed.
 
 
 ## Downloads and Processing
