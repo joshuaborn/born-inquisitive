@@ -17,6 +17,29 @@ tags: ["editorial", "first-person"]
 title: 'Professional Class Cultural Hegemony'
 ---
 
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(here)
+library(readr)
+library(showtext)
+
+font_add_google('Open Sans', 'open')
+showtext_auto()
+showtext_opts(dpi = 200)
+theme_update(text = element_text(family = 'open'))
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi = 300,
+  echo = FALSE,
+  fig.align = 'center',
+  fig.height = 3.75,
+  fig.retina = 1,
+  fig.width = 5
+)
+```
+
 
 ## Introduction
 
@@ -214,7 +237,7 @@ What is much more likely is that three or four of the rays out of center of the 
 
 ## Cultural Hegemony, Abortion Advocacy, and Me
 
-A curious thing about both David Sacks and Coleman Hughes is that they criticize the workings of the cultural hegemony when it comes to identity politics, etc., but they themselves are dominated by the cultural hegemony when it comes to the issue that started the "culture war" in the United States in the first place, namely, abortion.[^degrees]
+A curious thing about both David Sacks and Coleman Hughes is that they criticize the workings of the cultural hegemony when it comes to identity politics, etc., but they themselves are dominated by the cultural hegemony when it comes to the issue that started the "culture war" in the United States in the first place, i.e., abortion.[^degrees]
 
 [^degrees]: This is to different degrees. Davis Sacks is an advocate for abortion liberation ideology, while Coleman Hughes supports abortion-on-demand while acknowledging that it is a philosophically thorny issue and that mass abortion is a "suboptimal" form of reproductive management.
 
@@ -223,17 +246,21 @@ Why would contemporary professional class Americans notice the cultural hegemony
 
 ### Open and Honest Discourse
 
-As recently as the 1960s, American society could have a discourse about abortion. The case of Sherri Finkbine and "thalidomide babies" -- i.e., babies with severe developmental issues due to the use of thalidomide as a medication by their mothers -- was brought to public attention, including the cover of _Life_ magazine on August 10, 1962, prompting discussion on the issue of abortion. National Opinion Research Center polling in December 1965 found 77% to 83% Americans opposed to abortion for economic or discretionary reasons, but a 55% to 56% majority of Americans approving of abortion in the case of serious fetal defect and in the case of rape. [@forsythe_2013, 70-73]
+As recently as the 1960s, American society could have a discourse about abortion. In the early 1960s, the case of Sherri Finkbine and "thalidomide babies" -- i.e., babies with severe developmental issues due to the use of thalidomide as a medication by their mothers -- was brought to public attention, including as the cover story of _Life_ magazine on August 10, 1962. This attention prompted widepsread discussion on the issue of abortion.
 
-The regular legislative process was active throughout the 1960s, with nearly every state legislature in the United States considering bills with regard to abortion. Fourteen states had passed exceptions to their criminal abortion laws for circumstances such as severe fetal deformity or rape. Four states had allowed some version of "abortion-on-demand" (i.e., for any reason, including economic or discretionary reasons), but nine states had overtly voted down such bills in their legislatures. At the end of the decade, abortion-on-demand was illegal in forty-six out of fifty states, and had remained legal in New York only by governor's veto. [@forsythe_2013, 74-76]
+By mid-decade, National Opinion Research Center polling in December 1965 found an overwhelming 77% to 83% Americans opposed to abortion for economic or discretionary reasons, but a 55% to 56% majority of Americans approved of abortion in the case of serious fetal defect and in the case of rape. [@forsythe_2013, 70-73]
+
+The regular legislative process was active throughout the 1960s, with nearly every state legislature in the United States considering bills with regard to abortion. Fourteen states had passed exceptions to their criminal abortion laws for circumstances such as severe fetal deformity or rape. Four states had allowed some version of "abortion-on-demand" (i.e., for any reason, including economic or discretionary reasons), but nine states had overtly voted down abortion-on-demand bills in their legislatures. At the end of the decade, abortion-on-demand was illegal in forty-six out of fifty states, and had remained legal in New York only by governor's veto.[^governor] [@forsythe_2013, 74-76]
+
+[^governor]: The governor in question was Nelson Rockefeller, brother of abortion-advocacy financier John D. Rockefeller III.
 
 Two mutually supporting phenomena happened since then: the political movement that made abortion-on-demand legal in all fifty states, and the cultural shift that changed the framing of the discourse from abortion as a social problem to abortion as a social good. The political movement was mainly driven by judicial activism, which is beyond the scope of this article, whereas the change in the discourse has been driven by the very phenomenon of professional class cultural hegemony discussed here.
 
-The moral status of the human fetus has been controversial and debated for millennia, at least as far back as the time of Plato and Aristotle, yet the cultural hegemony has declared those who reach a conclusion that abortion as a method of fertility control is morally wrong do not believe what they actually say, and instead are secretly "misogynists" who "hate women" and want to "control women's bodies" because they are against "gender equality" and "women's freedom."
+The moral status of the human fetus has been controversial and debated for millennia, at least as far back as the time of Plato and Aristotle, yet the cultural hegemony has declared that those who reach a conclusion that abortion as a method of fertility control is morally wrong do not actually believe what they say, and instead are secretly "misogynists" who "hate women" and want to "control women's bodies" because they are against "gender equality" and "women's freedom."
 
 Thus, for decades now, by way of universities and the organizations downstream of the universities, the cultural hegemony has been deplatforming those opposed to abortion, misrepresenting the views of those opposed to abortion, and defaming those who hold such views.
 
-Nowadays, if we attempt to express what we truly believe in an academic paper or an op-ed in the mainstream media, our words will not be allowed past editorial review. You are not allowed to write about "life" or "death" occurring in the womb. You are not allowed to describe abortion as an act of "killing." Such discussion is dismissed as "inflammatory" by the cultural hegemony and censored, but these words get at what is the _actual_ and _central_ point of disagreement about abortion, as it has been for thousands of years.
+Nowadays, if those of us who have moral compunction about abortion attempt to express what we truly believe in an academic paper or an op-ed in the mainstream media, our words will not be allowed past editorial review. You are not allowed to write about "life" or "death" occurring in the womb. You are not allowed to describe abortion as an act of "killing." Such discussion is dismissed as "inflammatory" by the cultural hegemony and censored, but these words get at what is the _actual_ and _central_ point of disagreement about abortion, as it has been for thousands of years.
 
 What has been the effect of this on the discourse? The latest FIRE survey on free speech on campus asked students what topics are "difficult to have an open and honest conversation about on their campus." The response of "abortion" was the most common answer to this question, with 49% of respondents giving "abortion" as an answer. Incidentally, the only other topics that come close are also topics on which the cultural hegemony is very active, namely "gun control" (43%), "racial inequality" (42%), and "transgender rights" (42%). [@fire_2024]
 
@@ -242,10 +269,117 @@ The effect of the cultural hegemony is to ruin the possibility of an open and ho
 
 ### Education, Money, and Power
 
+The movement to destigmatize abortion in the United States has been a classic case of the cultural hegemony at work, funded by billionaires of the coastal elite against popular sentiments of the less wealthy and less powerful masses.
+
+* Forsythe book and Secular Pro-Life articles about billionaires funding abortion advocacy
+
+In my article "[Induced Abortion is Controversial](/induced-abortion-is-controversial.html)," I discussed how abortion has been the most controversial moral issue identified in Gallup's annual Values and Beliefs polling since its inception in 2001, with the United States nearly split in half between those who find abortion to be "in general" either "morally wrong" or "morally acceptable." However, an interesting thing occurs when you examine the results of same polling, broken down by whether respondents have a college degree or not. 
+
+```{r plot-acceptable-abortion-by-education, message=FALSE, cache=TRUE, fig.cap='Percentage of responses that induced abortion of pregnancy "in general" is "morally acceptable" by whether respondent is college graduate, from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014]'}
+read_csv(
+  here('data/Gallup/morality-abortion.csv'),
+  name_repair = 'universal'
+  ) |>
+  filter(Demographic == 'Education2') |>
+  mutate(
+    Percent_acceptable = as.numeric(sub("%", "", Morally.acceptable))
+  ) |>
+  select(Time, Demographic.Value, Percent_acceptable) |> 
+  arrange(Time, Demographic.Value) |>
+  ggplot(
+    mapping = aes(
+      x = Time,
+      y = Percent_acceptable,
+      color = Demographic.Value,
+      shape = Demographic.Value
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      linewidth = 1
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 1.5
+    ) +
+    scale_y_continuous(
+      expand = expansion(mult = c(0, 0.05)),
+      limits = c(0, NA)
+    ) +
+    scale_x_continuous(
+      breaks = \(x) seq(x[1]+1, x[2]-1, 2),
+      expand = expansion(add = 1),
+      minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
+    ) +
+    scale_color_brewer(
+      palette = 2,
+      type = 'qual'
+    ) +
+    scale_shape_manual(
+      values = c(21, 22, 23)
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Percent Judging Abortion to be Morally Acceptable'
+    ) +
+    theme_classic() +
+    theme(
+      axis.line.x.bottom = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.line.y.left = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.text.x = element_text(
+        angle = 45,
+        color = 'black',
+        hjust = 0.5,
+        vjust = 0.65
+      ),
+      axis.text.y = element_text(
+        color = 'black',
+        margin = margin(r = 0)
+      ),
+      axis.ticks.y = element_blank(),
+      axis.ticks.x = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.title.x = element_text(
+        margin = margin(t = 2)
+      ),
+      axis.title.y = element_text(
+        margin = margin(r = 10)
+      ),
+      legend.margin = margin(t = 0, b = 0),
+      legend.position = 'top',
+      legend.title = element_blank(),
+      panel.grid.major = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      panel.grid.minor = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      plot.margin = margin(t = 0)
+  )
+```
+
+Depending on the year, there is a noticeable gap of up to twenty five percentage points in the proportion of those who find abortion morally acceptable by whether the respondent is a college graduate. Since college graduates have spent four years or more at a university and are more likely to have family and friends who are also college graduates, they have on average more exposure to the cultural hegemony than working class people. The effects of this on their views on abortion can be seen.
+
+Furthermore, because of the economic advantages that college graduates enjoy in the United States, there is a noticeable gap in average wealth between those who judge abortion to be morally acceptable and those who find it to be morally wrong.
+
+* Secular Pro-Life articles on average wealth of those opposed to abortion versus those advocating abortion
+
+Thus, while it is the case that the _people_ of the United States have been split on abortion, one side of this split has managed to run away with almost all of American institutions such as universities, government, and media organizations.
+
 * While views on abortion have been near 50/50 split, only one side of this split has been able to completely override the other in terms of political dominance and in research opportunities
 * Explains how United States is 50/50 on abortion, but academia is more like 99/1 and that 1% is currently being cancelled
-* Secular Pro-Life articles about billionaires funding abortion advocacy and on average wealth of those opposed to abortion versus those advocating abortion
-* Look at Gallup Values and Beliefs polling data by education level
 
 
 ### My Career Mistakes
