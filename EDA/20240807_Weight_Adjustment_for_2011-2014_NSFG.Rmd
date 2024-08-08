@@ -656,3 +656,22 @@ post_fem <- rake2(
   partial=TRUE
 )
 ```
+
+
+### Saving of Adjusted Weights
+
+```{r save-adjusted-weights, dependson="rake-post-stratifications"}
+post_fem |>
+  as_data_frame_with_weights(
+    full_wgt_name = "FULL_SAMPLE_WGT",
+    rep_wgt_prefix = "REP_WGT_"
+  ) |>
+  select(CASEID, contains('_WGT')) |>
+  arrange(CASEID) |>
+  saveRDS(here('data/NSFG/adjusted_2011_2015_weights.Rds'))
+
+saveRDS(
+  post_fem$rscales,
+  here('data/NSFG/adjusted_2011_2015_rscales.Rds')
+)
+```
