@@ -149,7 +149,8 @@ data_preg <- bind_rows(
       "ECTOPIC PREGNANCY" = 5,
       "CURRENT PREGNANCY" = 6
     ))),
-    Year = year(cm_to_date(DATEND))
+    Year = year(cm_to_date(DATEND)),
+    AgeAtEndOfPregnancy = as.integer(AGEPREG / 100)
     
     #Variables used in...
     #one = 1,
@@ -278,8 +279,8 @@ data_fem <- bind_rows(
     one = 1,
     age_group = cut(
       AGER,
-      breaks = c(14, 19, 24, 29, 34, 39, 44, 50),
-      labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
+      breaks = c(14, 19, 24, 29, 34, 39, 45),
+      labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44')
     ),
     HISPRACE2 = as_factor(labelled(HISPRACE2, c(
       'Hispanic' = 1,
@@ -313,21 +314,21 @@ data_fem <- bind_rows(
       group_by(CASEID) |>
       summarize(
         abortion_2006_2010_age = case_when(
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AGEPREG < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AGEPREG <= 24) ~ '20-24 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AGEPREG <= 29) ~ '25-29 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AGEPREG <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AGEPREG <= 39) ~ '35-39 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AGEPREG >= 40) ~ '40 years and over',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
         abortion_2006plus_age = case_when(
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AGEPREG < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AGEPREG <= 24) ~ '20-24 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AGEPREG <= 29) ~ '25-29 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AGEPREG <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AGEPREG <= 39) ~ '35-39 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AGEPREG >= 40) ~ '40 years and over',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
         birth_2006_marital_status =  case_when(
@@ -356,48 +357,48 @@ data_fem <- bind_rows(
           .default = 'Other'
         ),
         birth_2006_age = case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AGEPREG < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AGEPREG <= 24) ~ '20-24 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AGEPREG <= 29) ~ '25-29 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AGEPREG <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AGEPREG <= 39) ~ '35-39 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AGEPREG >= 40) ~ '40 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
         birth_2007_age =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AGEPREG < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AGEPREG <= 24) ~ '20-24 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AGEPREG <= 29) ~ '25-29 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AGEPREG <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AGEPREG <= 39) ~ '35-39 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AGEPREG >= 40) ~ '40 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
         birth_2008_age =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AGEPREG < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AGEPREG <= 24) ~ '20-24 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AGEPREG <= 29) ~ '25-29 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AGEPREG <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AGEPREG <= 39) ~ '35-39 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AGEPREG >= 40) ~ '40 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
         birth_2009_age =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AGEPREG < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AGEPREG <= 24) ~ '20-24 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AGEPREG <= 29) ~ '25-29 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AGEPREG <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AGEPREG <= 39) ~ '35-39 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AGEPREG >= 40) ~ '40 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
         birth_2010_age =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AGEPREG < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AGEPREG <= 24) ~ '20-24 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AGEPREG <= 29) ~ '25-29 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AGEPREG <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AGEPREG <= 39) ~ '35-39 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AGEPREG >= 40) ~ '40 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy >= 40) ~ '40 years and over',
           .default = 'Other'
         )
       ),
@@ -475,6 +476,7 @@ census_pop_targets <- readRDS(
   ) |>
   rename(Freq = pop) |>
   select(poststrat_age_race, Freq) |>
+  filter(!grepl('45_49', poststrat_age_race)) |>
   as.data.frame()
 
 
@@ -639,8 +641,8 @@ poststrat_targets <- c(
 ```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets")}
 source(here('R/rake2.R'))
 
-weight_adj_strata_2015_2019 <- list()
-weight_adj_strata_2015_2019[[12]] <- ~abortion_2006plus_age
+weight_adj_strata <- list()
+weight_adj_strata[[12]] <- ~abortion_2006plus_age
 
 post_fem <- rake2(
   before_fem,
@@ -650,6 +652,7 @@ post_fem <- rake2(
   ),
   population.margins = poststrat_targets,
   weight_adj_strata = weight_adj_strata,
-  control=list(maxit=25, epsilon=1, verbose=TRUE)
+  control=list(maxit=25, epsilon=1, verbose=TRUE),
+  partial=TRUE
 )
 ```

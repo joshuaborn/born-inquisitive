@@ -26,7 +26,7 @@ source(here('R/postStratify2.R'))
 rake2 <- function(design,
   sample.margins, population.margins, weight_adj_strata=NULL,
   control=list(maxit=10, epsilon=1, verbose=FALSE),
-  compress=NULL) {
+  compress=NULL, partial=FALSE) {
 
     if (!inherits(design, 'svyrep.design')) {
       stop('Parameter design must be of class svyrep.design')
@@ -60,7 +60,7 @@ rake2 <- function(design,
 
     allterms <- unlist(lapply(sample.margins, all.vars))
     ff <- formula(paste("~", paste(allterms, collapse="+"), sep=""))
-    oldtable <- svytable(ff, design)
+    oldtable <- svytotal(ff, design)
 
     #if (control$verbose)
     #    print(oldtable)
@@ -92,12 +92,13 @@ rake2 <- function(design,
             design,
             strata[[i]],
             population.margins[[i]],
-            compress=FALSE
+            compress=FALSE,
+            partial=partial
           )
         }
       }
 
-      newtable <- svytable(ff, design)
+      newtable <- svytotal(ff, design)
 
       #if (control$verbose)
       #  print(newtable)
