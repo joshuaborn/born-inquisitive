@@ -92,6 +92,9 @@ data_preg <- bind_rows(
     FMAROUT5,
     OUTCOME,
     
+    # Variable used in pregnancy counts
+    WANTRESP
+    
     #BRNOUT,
     #DATECON,
     #HIEDUC,
@@ -102,7 +105,6 @@ data_preg <- bind_rows(
     #PRGLNGTH,
     #RELIGION,
     #RMAROUT6,
-    #WANTRESP
   ),
   select(
     raw_preg_2013_2015,
@@ -114,6 +116,9 @@ data_preg <- bind_rows(
     FMAROUT5,
     OUTCOME,
     
+    # Variable used in pregnancy counts
+    WANTRESP
+    
     #BRNOUT,
     #DATECON,
     #GEST_OTHR,
@@ -124,7 +129,6 @@ data_preg <- bind_rows(
     #PREGORDR,
     #RELIGION,
     #RMAROUT6,
-    #WANTRESP
   )
 ) |>
   left_join(
@@ -150,10 +154,17 @@ data_preg <- bind_rows(
       "CURRENT PREGNANCY" = 6
     ))),
     Year = year(cm_to_date(DATEND)),
-    AgeAtEndOfPregnancy = as.integer(AGEPREG / 100)
+    AgeAtEndOfPregnancy = as.integer(AGEPREG / 100),
+    
+    # Variable used for pregnancy counts
+    one = 1,
+    intent = as.factor(if_else(
+      WANTRESP %in% 1:2,
+      'Intended',
+      'Unintended'
+    ))
     
     #Variables used in...
-    #one = 1,
     #HISPRACE2 = as_factor(labelled(HISPRACE2, c(
     #  'Hispanic' = 1,
     #  'Non-Hispanic White' = 2,
@@ -183,11 +194,6 @@ data_preg <- bind_rows(
     #  GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
     #  GEST_OTHR %in% 2:3 | PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
     #),
-    #intent = as.factor(if_else(
-    #  WANTRESP %in% 1:2,
-    #  'Intended',
-    #  'Unintended'
-    #)),
     #marital_status = as.factor(if_else(
     #  FMAROUT5 == 'MARRIED',
     #  'Married',
@@ -1124,4 +1130,231 @@ before_fem |>
   gt() |>
   fmt_number(decimal = 0) |>
   fmt_number(Factor, decimal = 2)
+```
+
+
+### Counts of Pregnancies
+
+#### By Year
+
+```{r pregnancies-per-year, dependson="create-survey-objects"}
+bind_rows(list(
+  before_preg |>
+    group_by(Year) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ) |>
+    filter(Year %in% 2006:2010),
+  after_preg |>
+    group_by(Year) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    ) |>
+    filter(Year %in% 2006:2010)
+)) |> inner_join(
+  bind_rows(list(
+    before_preg |>
+      group_by(Year) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ) |>
+      filter(Year %in% 2006:2010),
+    after_preg |>
+      group_by(Year) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      ) |>
+      filter(Year %in% 2006:2010)
+  )),
+  by = join_by(Year, post_strat, Freq, n)
+) |>
+  select(Year, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(Year, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
+#### By Year and Intent
+
+```{r pregnancies-per-year-by-intent, dependson="create-survey-objects"}
+bind_rows(list(
+  before_preg |>
+    group_by(Year, intent) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ) |>
+    filter(Year %in% 2006:2010),
+  after_preg |>
+    group_by(Year, intent) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    ) |>
+    filter(Year %in% 2006:2010)
+)) |> inner_join(
+  bind_rows(list(
+    before_preg |>
+      group_by(Year, intent) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ) |>
+      filter(Year %in% 2006:2010),
+    after_preg |>
+      group_by(Year, intent) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      ) |>
+      filter(Year %in% 2006:2010)
+  )),
+  by = join_by(Year, intent, post_strat, Freq, n)
+) |>
+  select(Year, intent, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(Year, intent, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
+```
+
+
+#### By Year and Outcome
+
+```{r pregnancies-per-year-by-outcome, dependson="create-survey-objects"}
+bind_rows(list(
+  before_preg |>
+    group_by(Year, OUTCOME) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'before'
+    ) |>
+    filter(Year %in% 2006:2010),
+  after_preg |>
+    group_by(Year, OUTCOME) |>
+    summarize(
+      n = n(),
+      Freq = survey_total(one, vartype = 'se')
+    ) |>
+    mutate(
+      RSE = Freq_se / Freq,
+      post_strat = 'after'
+    ) |>
+    filter(Year %in% 2006:2010)
+)) |> inner_join(
+  bind_rows(list(
+    before_preg |>
+      group_by(Year, OUTCOME) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'before'
+      ) |>
+      filter(Year %in% 2006:2010),
+    after_preg |>
+      group_by(Year, OUTCOME) |>
+      summarize(
+        n = n(),
+        Freq = survey_total(one, vartype = 'ci')
+      ) |>
+      mutate(
+        Freq_CI_range = Freq_upp - Freq_low,
+        Rel_CI = Freq_CI_range / Freq,
+        post_strat = 'after'
+      ) |>
+      filter(Year %in% 2006:2010)
+  )),
+  by = join_by(Year, OUTCOME, post_strat, Freq, n)
+) |>
+  select(Year, OUTCOME, post_strat, everything()) |>
+  mutate(
+    post_strat = factor(
+      post_strat,
+      levels = c('before', 'after'),
+      ordered = TRUE
+    )
+  ) |>
+  arrange(Year, OUTCOME, post_strat) |>
+  gt() |>
+  fmt_number(
+    starts_with('Freq'),
+    decimals = 0
+  ) |>
+  fmt_percent(
+    c(RSE, Rel_CI)
+  )
 ```
