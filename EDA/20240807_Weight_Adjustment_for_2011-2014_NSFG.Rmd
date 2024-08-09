@@ -93,13 +93,15 @@ data_preg <- bind_rows(
     OUTCOME,
     
     # Variable used in pregnancy counts
-    WANTRESP
+    WANTRESP,
+    
+    # Variable used in births test harness
+    NBRNLV_S,
+    HISPRACE2,
     
     #BRNOUT,
     #DATECON,
     #HIEDUC,
-    #HISPRACE2,
-    #NBRNLV_S,
     #POVERTY,
     #PREGORDR,
     #PRGLNGTH,
@@ -117,14 +119,16 @@ data_preg <- bind_rows(
     OUTCOME,
     
     # Variable used in pregnancy counts
-    WANTRESP
+    WANTRESP,
+    
+    # Variable used in births test harness
+    NBRNLV_S,
+    HISPRACE2,
     
     #BRNOUT,
     #DATECON,
     #GEST_OTHR,
     #HIEDUC,
-    #HISPRACE2,
-    #NBRNLV_S,
     #POVERTY,
     #PREGORDR,
     #RELIGION,
@@ -162,28 +166,34 @@ data_preg <- bind_rows(
       WANTRESP %in% 1:2,
       'Intended',
       'Unintended'
-    ))
+    )),
+    
+    # Variable used for births test harness
+    HISPRACE2 = as_factor(labelled(HISPRACE2, c(
+      'Hispanic' = 1,
+      'Non-Hispanic White' = 2,
+      'Non-Hispanic Black' = 3,
+      'Non-Hispanic Other' = 4
+    ))),
+    age_group = cut(
+      as.integer(AGEPREG / 100),
+      breaks = c(0, seq(20, 35, 5), Inf),
+      right = FALSE,
+      labels = c(
+        "Under 20 years",
+        "20-24 years",
+        "25-29 years",
+        "30-34 years",
+        "35 years and over"
+      )
+    ),
+    marital_status = as.factor(if_else(
+      FMAROUT5 == 'MARRIED',
+      'Married',
+      'Unmarried'
+    )),
     
     #Variables used in...
-    #HISPRACE2 = as_factor(labelled(HISPRACE2, c(
-    #  'Hispanic' = 1,
-    #  'Non-Hispanic White' = 2,
-    #  'Non-Hispanic Black' = 3,
-    #  'Non-Hispanic Other' = 4
-    #))),
-    #age_group = cut(
-    #  AGEPREG,
-    #  breaks = c(0, seq(20, 40, 5), Inf),
-    #  right = FALSE,
-    #  labels = c(
-    #    "Under 20 years",
-    #    "20-24 years",
-    #    "25-29 years",
-    #    "30-34 years",
-    #    "35-39 years",
-    #    "40 years and over"
-    #  )
-    #),
     #educational_attainment = case_when(
     #  HIEDUC %in% 5:8 ~ '<high school',
     #  HIEDUC == 9 ~ 'High school graduate/GED',
@@ -194,11 +204,6 @@ data_preg <- bind_rows(
     #  GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
     #  GEST_OTHR %in% 2:3 | PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
     #),
-    #marital_status = as.factor(if_else(
-    #  FMAROUT5 == 'MARRIED',
-    #  'Married',
-    #  'Unmarried'
-    #)),
     #nativity = case_when(
     #  BRNOUT == 1 ~ 'Foreign-born',
     #  BRNOUT == 5 ~ 'U.S.-born',
@@ -1357,4 +1362,247 @@ bind_rows(list(
   fmt_percent(
     c(RSE, Rel_CI)
   )
+```
+
+
+### Test Harnesses
+
+#### Births Test Harness Creation
+
+```{r create-births-test-harness, message=FALSE}
+test_harness_births <- bind_rows(
+  bind_rows(
+    read_tsv(
+      here('data/NVSS/2006-2010/age_2006.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ),
+    read_tsv(
+      here('data/NVSS/2006-2010/age.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ),
+  ) |>
+    filter(is.na(Notes)) |>
+    mutate(Level = case_when(
+      Age.of.Mother.9 %in% c(
+        'Under 15 years',
+        '15-19 years'
+      ) ~ 'Under 20 years',
+      Age.of.Mother.9 %in% c(
+        '35-39 years',
+        '40-44 years',
+        '45-49 years',
+        '50 years and over'
+      ) ~ '35 years and over',
+      .default = Age.of.Mother.9
+    )) |>
+    select(Year, Level, Births) |>
+    group_by(Year, Level) |>
+    summarize(Births = sum(Births), .groups = 'drop') |>
+    mutate(Variable = 'Age group', .after = Year),
+  bind_rows(
+    read_tsv(
+      here('data/NVSS/2006-2010/marital_status_2006.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ),
+    read_tsv(
+      here('data/NVSS/2006-2010/marital_status.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ),
+  ) |>
+    filter(is.na(Notes)) |>
+    rename(Level = Marital.Status) |>
+    select(Year, Level, Births) |>
+    mutate(Variable = 'Marital status'),
+  bind_rows(
+    read_tsv(
+      here('data/NVSS/2006-2010/race_ethnicity_2006.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ),
+    read_tsv(
+      here('data/NVSS/2006-2010/race_ethnicity.txt'),
+      name_repair = 'universal',
+      show_col_types = FALSE
+    ),
+  ) |>
+    rename(
+      Hispanic.Origin = Mother.s.Hispanic.Origin,
+      Race = Mother.s.Bridged.Race
+    ) |>
+    filter(
+      (is.na(Notes) & Hispanic.Origin != 'Hispanic or Latino') |
+        (Notes == 'Total' & Hispanic.Origin == 'Hispanic or Latino')
+    ) |>
+    select(Notes, Year, Hispanic.Origin, Race, Births) |>
+    mutate(
+      Level = case_when(
+        Hispanic.Origin == 'Hispanic or Latino' ~ 'Hispanic',
+        Race == 'White' ~ 'Non-Hispanic White',
+        Race == 'Black or African American' ~ 'Non-Hispanic Black',
+        .default = 'Non-Hispanic Other'
+      )
+    ) |>
+    group_by(Year, Level) |>
+    summarize(Births = sum(Births), .groups = 'drop') |>
+    mutate(Variable = 'Race and ethnicity')
+) |>
+  arrange(-Year, Variable)
+```
+
+
+#### Estimation of Births per Year by Subdomain
+
+```{r estimate-births, dependson="create-survey-objects"}
+births_estimates_before <- bind_rows(
+  before_preg |>
+    filter(
+      Year %in% 2006:2010 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, age_group) |>
+    summarize(
+      Est_Before = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = age_group) |>
+    mutate(Variable = 'Age group', .after = Year),
+  before_preg |>
+    filter(
+      Year %in% 2006:2010 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, marital_status) |>
+    summarize(
+      Est_Before = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = marital_status) |>
+    mutate(Variable = 'Marital status', .after = Year),
+  before_preg |>
+    filter(
+      Year %in% 2006:2010 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, HISPRACE2) |>
+    summarize(
+      Est_Before = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = HISPRACE2) |>
+    mutate(Variable = 'Race and ethnicity', .after = Year)
+)
+
+
+births_estimates_after <- bind_rows(
+  after_preg |>
+    filter(
+      Year %in% 2006:2010 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, age_group) |>
+    summarize(
+      Est_After = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = age_group) |>
+    mutate(Variable = 'Age group', .after = Year),
+  after_preg |>
+    filter(
+      Year %in% 2006:2010 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, marital_status) |>
+    summarize(
+      Est_After = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = marital_status) |>
+    mutate(Variable = 'Marital status', .after = Year),
+  after_preg |>
+    filter(
+      Year %in% 2006:2010 & OUTCOME == 'LIVE BIRTH'
+    ) |>
+    group_by(Year, OUTCOME, HISPRACE2) |>
+    summarize(
+      Est_After = survey_total(NBRNLV_S, vartype = 'ci'),
+      n = unweighted(sum(one))
+    ) |>
+    ungroup() |>
+    select(-OUTCOME) |>
+    rename(Level = HISPRACE2) |>
+    mutate(Variable = 'Race and ethnicity', .after = Year)
+)
+```
+
+
+#### Comparisons Births Estimates with Test Harness
+
+```{r compare-births-estimates-with-test-harness, dependson=c("create-births-test-harness", "estimate-births")}
+full_join(
+  test_harness_births,
+  births_estimates_before,
+  by = c('Year', 'Variable', 'Level')
+) |>
+  full_join(
+    births_estimates_after,
+    by = c('Year', 'Variable', 'Level'),
+    suffix = c('.before', '.after')
+  ) |>
+  mutate(
+    unequal_n = n.before != n.after,
+    Bias_Before = Est_Before - Births,
+    Rel_Bias_Before = Bias_Before / Births,
+    `Covers_Before?` = Births <= Est_Before_upp & Births >= Est_Before_low,
+    Bias_After = Est_After - Births,
+    Rel_Bias_After = Bias_After / Births,
+    `Covers_After?` = Births <= Est_After_upp & Births >= Est_After_low,
+    Bias_Diff = abs(Bias_After) - abs(Bias_Before),
+    Est_Diff = Est_After - Est_Before,
+    Rel_Bias_Diff = abs(Rel_Bias_After) - abs(Rel_Bias_Before),
+    `Fixed?` = if_else(
+        !`Covers_Before?`,
+        `Covers_After?`,
+        NA
+    ),
+    `Broke?` = `Covers_Before?` & !`Covers_After?`
+  ) |>
+  rename(
+    n = n.after
+  ) |>
+  select(
+    Year,
+    Variable,
+    Level,
+    n,
+    Births,
+    Est_Before,
+    #Est_Before_low,
+    #Est_Before_upp,
+    Est_After,
+    Est_After_low,
+    Est_After_upp,
+    #Est_Diff,
+    #Bias_Before,
+    #Bias_After,
+    #Bias_Diff,
+    Rel_Bias_Before,
+    Rel_Bias_After,
+    #Rel_Bias_Diff,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
+  ) |>
+  gt() |>
+  fmt_number(-Year, decimal = 0) |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
 ```
