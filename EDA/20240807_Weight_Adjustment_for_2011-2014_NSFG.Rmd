@@ -95,18 +95,13 @@ data_preg <- bind_rows(
     # Variable used in pregnancy counts
     WANTRESP,
     
-    # Variable used in births test harness
+    # Variables used in births test harness
     NBRNLV_S,
     HISPRACE2,
     
-    #BRNOUT,
-    #DATECON,
-    #HIEDUC,
-    #POVERTY,
-    #PREGORDR,
-    #PRGLNGTH,
-    #RELIGION,
-    #RMAROUT6,
+    # Variables used in abortions test harness based on CDC reports
+    PRGLNGTH,
+    PREGORDR
   ),
   select(
     raw_preg_2013_2015,
@@ -121,18 +116,13 @@ data_preg <- bind_rows(
     # Variable used in pregnancy counts
     WANTRESP,
     
-    # Variable used in births test harness
+    # Variables used in births test harness
     NBRNLV_S,
     HISPRACE2,
     
-    #BRNOUT,
-    #DATECON,
-    #GEST_OTHR,
-    #HIEDUC,
-    #POVERTY,
-    #PREGORDR,
-    #RELIGION,
-    #RMAROUT6,
+    # Variables used in abortions test harness based on CDC reports
+    PRGLNGTH,
+    PREGORDR
   )
 ) |>
   left_join(
@@ -187,90 +177,64 @@ data_preg <- bind_rows(
         "35 years and over"
       )
     ),
+    age_group6 = cut(
+      as.integer(AGEPREG / 100),
+      breaks = c(0, seq(20, 40, 5), Inf),
+      right = FALSE,
+      labels = c(
+        "Under 20 years",
+        "20-24 years",
+        "25-29 years",
+        "30-34 years",
+        "35-39 years",
+        "40 years and over"
+      )
+    ),
     marital_status = as.factor(if_else(
       FMAROUT5 == 'MARRIED',
       'Married',
       'Unmarried'
     )),
     
-    #Variables used in...
-    #educational_attainment = case_when(
-    #  HIEDUC %in% 5:8 ~ '<high school',
-    #  HIEDUC == 9 ~ 'High school graduate/GED',
-    #  HIEDUC %in% 10:11 ~ 'Some college/associate degree',
-    #  HIEDUC %in% 12:15 ~ 'College graduate',
-    #),
-    #gestational_age = case_when(
-    #  GEST_OTHR == 1 | PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
-    #  GEST_OTHR %in% 2:3 | PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
-    #),
-    #nativity = case_when(
-    #  BRNOUT == 1 ~ 'Foreign-born',
-    #  BRNOUT == 5 ~ 'U.S.-born',
-    #  !is.element(BRNOUT, c(1, 5)) ~ 'Unknown'
-    #),
-    #poverty_level = cut(
-    #  POVERTY,
-    #  breaks = c(0, 99, 199, Inf),
-    #  include.lowest = TRUE,
-    #  labels = c('<100', '100-199', '>=200')
-    #),
-    #relationship_status = case_when(
-    #  RMAROUT6 == 1 ~ 'Married',
-    #  RMAROUT6 == 5 ~ 'Cohabitating, not married',
-    #  RMAROUT6 == 6 ~ 'Never-married, not cohabiting',
-    #  RMAROUT6 %in% 2:4 ~ 'Previously married, not cohabiting'
-    #),
-    #religious_affiliation = case_when(
-    #  RELIGION == 1 ~ 'None',
-    #  RELIGION == 2 ~ 'Roman Catholic',
-    #  RELIGION == 3 ~ 'Protestant',
-    #  RELIGION == 4 ~ 'Other'
-    #),
-    #birth = if_else(
-    #  OUTCOME == 'LIVE BIRTH',
-    #  1,
-    #  0
-    #),
-    #abortion = if_else(
-    #  OUTCOME == 'INDUCED ABORTION',
-    #  1,
-    #  0
-    #)
-  )
-  #arrange(
-  #  CASEID, PREGORDR
-  #) |>
-  #group_by(
-  #  CASEID
-  #) |>
-  #mutate(
-  #  births = cumsum(birth),
-  #  previous_births = lag(births, default = 0),
-  #  previous_births_topcoded4 = factor(if_else(
-  #    previous_births >= 4,
-  #    '>=4',
-  #    as.character(previous_births)
-  #  )),
-  #  previous_births_topcoded2 = factor(if_else(
-  #    previous_births >= 2,
-  #    '>=2',
-  #    as.character(previous_births)
-  #  )),
-  #  abortions = cumsum(abortion),
-  #  previous_abortions = lag(abortions, default = 0),
-  #  previous_abortions_topcoded3 = factor(if_else(
-  #    previous_abortions >= 3,
-  #    '>=3',
-  #    as.character(previous_abortions)
-  #  )),
-  #  any_previous_abortions = factor(if_else(
-  #    previous_abortions >= 1,
-  #    '>=1',
-  #    'None'
-  #  ))
-  #) |>
-  #ungroup()
+    # Variables used in abortions test harness based on CDC reports
+    gestational_age = case_when(
+      PRGLNGTH %in% 0:13 ~ '1st trimester (13 or less weeks)',
+      PRGLNGTH %in% 14:95 ~ '2nd or 3rd trimester (14 or more weeks)'
+    ),
+    birth = if_else(
+      OUTCOME == 'LIVE BIRTH',
+      1,
+      0
+    ),
+    abortion = if_else(
+      OUTCOME == 'INDUCED ABORTION',
+      1,
+      0
+    )
+  ) |>
+  arrange(
+    CASEID, PREGORDR
+  ) |>
+  group_by(
+    CASEID
+  ) |>
+  mutate(
+    births = cumsum(birth),
+    previous_births = lag(births, default = 0),
+    previous_births_topcoded4 = factor(if_else(
+      previous_births >= 4,
+      '>=4',
+      as.character(previous_births)
+    )),
+    abortions = cumsum(abortion),
+    previous_abortions = lag(abortions, default = 0),
+    previous_abortions_topcoded3 = factor(if_else(
+      previous_abortions >= 3,
+      '>=3',
+      as.character(previous_abortions)
+    ))
+  ) |>
+  ungroup()
 
 data_fem <- bind_rows(
   select(
@@ -648,7 +612,7 @@ poststrat_targets <- c(
 
 ### Post-Stratifications
 
-```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets")}
+```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets"), eval=FALSE}
 source(here('R/rake2.R'))
 
 weight_adj_strata <- list()
@@ -669,7 +633,7 @@ post_fem <- rake2(
 
 ### Saving of Adjusted Weights
 
-```{r save-adjusted-weights, dependson="rake-post-stratifications"}
+```{r save-adjusted-weights, dependson="rake-post-stratifications", eval=FALSE}
 post_fem |>
   as_data_frame_with_weights(
     full_wgt_name = "FULL_SAMPLE_WGT",
@@ -1584,6 +1548,244 @@ full_join(
     Level,
     n,
     Births,
+    Est_Before,
+    #Est_Before_low,
+    #Est_Before_upp,
+    Est_After,
+    Est_After_low,
+    Est_After_upp,
+    #Est_Diff,
+    #Bias_Before,
+    #Bias_After,
+    #Bias_Diff,
+    Rel_Bias_Before,
+    Rel_Bias_After,
+    #Rel_Bias_Diff,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
+  ) |>
+  gt() |>
+  fmt_number(-Year, decimal = 0) |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
+```
+
+
+#### Abortions Test Harness Creation
+
+```{r create-abortions-test-harness, dependson="create-post-stratification-targets"}
+guttmacher_APC_2010 <- guttmacher_APC_national |>
+  filter(year == 2010) |>
+  select(starts_with('abortions'))
+
+guttmacher_APC_2010_total <- pull(guttmacher_APC_2010, abortionstotal)
+
+guttmacher_APC_2009 <- guttmacher_APC_national |>
+  filter(year == 2009) |>
+  select(starts_with('abortions'))
+
+guttmacher_APC_2009_total <- pull(guttmacher_APC_2009, abortionstotal)
+
+guttmacher_APC_2008 <- guttmacher_APC_national |>
+  filter(year == 2008) |>
+  select(starts_with('abortions'))
+
+guttmacher_APC_2008_total <- pull(guttmacher_APC_2008, abortionstotal)
+
+guttmacher_APC_2007 <- guttmacher_APC_national |>
+  filter(year == 2007) |>
+  select(starts_with('abortions'))
+
+guttmacher_APC_2007_total <- pull(guttmacher_APC_2007, abortionstotal)
+
+guttmacher_APC_2006 <- guttmacher_APC_national |>
+  filter(year == 2006) |>
+  select(starts_with('abortions'))
+
+guttmacher_APC_2006_total <- pull(guttmacher_APC_2006, abortionstotal)
+
+
+CDC_2010 <- bind_rows(
+  tribble(
+    ~name, ~Level, ~PctCDC,
+    'abortionslt20',   'Under 20 years',    15.6,
+    'abortions2024',   '20-24 years',       34.0,
+    'abortions2529',   '25-29 years',       25.4,
+    'abortions3034',   '30-34 years',       15.9,
+    'abortions3539',   '35-39 years',        9.2,
+    'abortions40plus', '40 years and over',  3.5
+  ) |> mutate(
+    Variable = 'Age group',
+    .before = everything()
+  ) |> left_join(
+    pivot_longer(
+      guttmacher_APC_2010,
+      cols = everything(),
+      values_to = 'TtlAPC'
+    ),
+    by = 'name'
+  ) |> select(-name),
+  tribble(
+    ~Level, ~PctCDC,
+    '1st trimester (13 or less weeks)',       92.0,
+    '2nd or 3rd trimester (14 or more weeks)', 8.0
+  ) |>  mutate(
+    Variable = 'Gestational age',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    'Non-Hispanic White',    39.2,
+    'Non-Hispanic Black',    31.7,
+    'Non-Hispanic Other',     6.2,
+    'Hispanic',              22.9
+  ) |>  mutate(
+    Variable = 'Race/ethnicity',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    'Married',    14.7,
+    'Unmarried',  85.3
+  ) |>  mutate(
+    Variable = 'Relationship status',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   40.3,
+    '1',   26.3,
+    '2',   19.7,
+    '3',    8.5,
+    '>=4',  5.2
+  ) |>  mutate(
+    Variable = 'No. of prior births',
+    .before = everything()
+  ),
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   55.4,
+    '1',   24.9,
+    '2',   11.2,
+    '>=3',  8.5
+  ) |>  mutate(
+    Variable = 'No. of previous induced abortions',
+    .before = everything()
+  )
+) |> mutate(
+  Level = str_squish(Level),
+  PctCDC = PctCDC / 100,
+  TtlCDC = as.integer(round(guttmacher_APC_2010_total * PctCDC)),
+  .before = 'TtlAPC'
+)
+
+
+test_harness_abortions <- bind_rows(
+  mutate(CDC_2010, Year = 2010, Source = 'CDC', .before = everything()),
+) |>
+  select(-TtlAPC, -PctCDC) |>
+  rename(Abortions = TtlCDC) |>
+  arrange(-Year, Source, Variable)
+```
+
+
+#### Estimation of Abortions per Year by Subdomain
+
+```{r estimate-abortions, dependson="create-survey-objects"}
+estimate_abortions_by_domain <- function(svy, variable, label) {
+  external_vector <- c(Level = variable)
+  svy |>
+    filter(
+      Year %in% 2010:2010 & OUTCOME == 'INDUCED ABORTION'
+    ) |>
+    group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
+    summarize(
+      n = unweighted(sum(one)),
+      Est = survey_total(one, vartype = 'ci'),
+      .groups = 'drop'
+    ) |>
+    rename(any_of(external_vector)) |>
+    mutate(
+      Variable = label,
+      .after = Year
+    ) |>
+    select(-OUTCOME)
+}
+
+abortions_estimates_before <- bind_rows(
+  estimate_abortions_by_domain(before_preg, 'age_group6', 'Age group'),
+  estimate_abortions_by_domain(before_preg, 'gestational_age', 'Gestational age'),
+  estimate_abortions_by_domain(before_preg, 'marital_status', 'Relationship status'),
+  estimate_abortions_by_domain(before_preg, 'HISPRACE2', 'Race/ethnicity'),
+  estimate_abortions_by_domain(before_preg, 'previous_births_topcoded4', 'No. of prior births'),
+  estimate_abortions_by_domain(before_preg, 'previous_abortions_topcoded3', 'No. of previous induced abortions'),
+) |>
+  arrange(Year, Variable) |>
+  rename(
+    Est_Before = Est,
+    Est_Before_low = Est_low,
+    Est_Before_upp = Est_upp
+  )
+
+abortions_estimates_after <- bind_rows(
+  estimate_abortions_by_domain(after_preg, 'age_group6', 'Age group'),
+  estimate_abortions_by_domain(after_preg, 'gestational_age', 'Gestational age'),
+  estimate_abortions_by_domain(after_preg, 'marital_status', 'Relationship status'),
+  estimate_abortions_by_domain(after_preg, 'HISPRACE2', 'Race/ethnicity'),
+  estimate_abortions_by_domain(after_preg, 'previous_births_topcoded4', 'No. of prior births'),
+  estimate_abortions_by_domain(after_preg, 'previous_abortions_topcoded3', 'No. of previous induced abortions')
+) |>
+  arrange(Year, Variable) |>
+  rename(
+    Est_After = Est,
+    Est_After_low = Est_low,
+    Est_After_upp = Est_upp
+  )
+```
+
+
+#### Comparison of Abortions Estimates with Test Harness
+
+```{r compare-abortions-estimates-with-test-harness, dependson=c("create-abortions-test-harness", "estimate-abortions")}
+left_join(
+  test_harness_abortions,
+  abortions_estimates_before,
+  by = c('Year', 'Variable', 'Level')
+) |>
+  left_join(
+    abortions_estimates_after,
+    by = c('Year', 'Variable', 'Level'),
+    suffix = c('.before', '.after')
+  ) |>
+  mutate(
+    unequal_n = n.before != n.after,
+    Bias_Before = Est_Before - Abortions,
+    Rel_Bias_Before = Bias_Before / Abortions,
+    `Covers_Before?` = Abortions <= Est_Before_upp & Abortions >= Est_Before_low,
+    Bias_After = Est_After - Abortions,
+    Rel_Bias_After = Bias_After / Abortions,
+    `Covers_After?` = Abortions <= Est_After_upp & Abortions >= Est_After_low,
+    Bias_Diff = abs(Bias_After) - abs(Bias_Before),
+    Est_Diff = Est_After - Est_Before,
+    Rel_Bias_Diff = abs(Rel_Bias_After) - abs(Rel_Bias_Before),
+    `Fixed?` = if_else(
+        !`Covers_Before?`,
+        `Covers_After?`,
+        NA
+    ),
+    `Broke?` = `Covers_Before?` & !`Covers_After?`
+  ) |>
+  rename(
+    n = n.after
+  ) |>
+  select(
+    Year,
+    Source,
+    Variable,
+    Level,
+    n,
+    Abortions,
     Est_Before,
     #Est_Before_low,
     #Est_Before_upp,
