@@ -1354,11 +1354,10 @@ test_harness_births <- bind_rows(
         '15-19 years'
       ) ~ 'Under 20 years',
       Age.of.Mother.9 %in% c(
-        '35-39 years',
         '40-44 years',
         '45-49 years',
         '50 years and over'
-      ) ~ '35 years and over',
+      ) ~ '40 years and over',
       .default = Age.of.Mother.9
     )) |>
     select(Year, Level, Births) |>
@@ -1426,14 +1425,14 @@ births_estimates_before <- bind_rows(
     filter(
       Year %in% 2006:2010 & OUTCOME == 'LIVE BIRTH'
     ) |>
-    group_by(Year, OUTCOME, age_group) |>
+    group_by(Year, OUTCOME, age_group6) |>
     summarize(
       Est_Before = survey_total(NBRNLV_S, vartype = 'ci'),
       n = unweighted(sum(one))
     ) |>
     ungroup() |>
     select(-OUTCOME) |>
-    rename(Level = age_group) |>
+    rename(Level = age_group6) |>
     mutate(Variable = 'Age group', .after = Year),
   before_preg |>
     filter(
@@ -1469,14 +1468,14 @@ births_estimates_after <- bind_rows(
     filter(
       Year %in% 2006:2010 & OUTCOME == 'LIVE BIRTH'
     ) |>
-    group_by(Year, OUTCOME, age_group) |>
+    group_by(Year, OUTCOME, age_group6) |>
     summarize(
       Est_After = survey_total(NBRNLV_S, vartype = 'ci'),
       n = unweighted(sum(one))
     ) |>
     ungroup() |>
     select(-OUTCOME) |>
-    rename(Level = age_group) |>
+    rename(Level = age_group6) |>
     mutate(Variable = 'Age group', .after = Year),
   after_preg |>
     filter(
