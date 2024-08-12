@@ -1580,12 +1580,6 @@ guttmacher_APC_2010 <- guttmacher_APC_national |>
 
 guttmacher_APC_2010_total <- pull(guttmacher_APC_2010, abortionstotal)
 
-guttmacher_APC_2009 <- guttmacher_APC_national |>
-  filter(year == 2009) |>
-  select(starts_with('abortions'))
-
-guttmacher_APC_2009_total <- pull(guttmacher_APC_2009, abortionstotal)
-
 guttmacher_APC_2008 <- guttmacher_APC_national |>
   filter(year == 2008) |>
   select(starts_with('abortions'))
@@ -1606,6 +1600,8 @@ guttmacher_APC_2006_total <- pull(guttmacher_APC_2006, abortionstotal)
 
 
 CDC_2010 <- bind_rows(
+  
+  # Table 4
   tribble(
     ~name, ~Level, ~PctCDC,
     'abortionslt20',   'Under 20 years',    15.6,
@@ -1625,6 +1621,8 @@ CDC_2010 <- bind_rows(
     ),
     by = 'name'
   ) |> select(-name),
+  
+  # Table 8
   tribble(
     ~Level, ~PctCDC,
     '1st trimester (13 or less weeks)',       92.0,
@@ -1633,28 +1631,34 @@ CDC_2010 <- bind_rows(
     Variable = 'Gestational age',
     .before = everything()
   ),
+  
+  # Table 12
   tribble(
     ~Level, ~PctCDC,
-    'Non-Hispanic White',    39.2,
-    'Non-Hispanic Black',    31.7,
-    'Non-Hispanic Other',     6.2,
-    'Hispanic',              22.9
+    'Non-Hispanic White',    36.8,
+    'Non-Hispanic Black',    35.7,
+    'Non-Hispanic Other',     6.5,
+    'Hispanic',              21.0
   ) |>  mutate(
     Variable = 'Race/ethnicity',
     .before = everything()
   ),
+  
+  # Table 17
   tribble(
     ~Level, ~PctCDC,
-    'Married',    14.7,
-    'Unmarried',  85.3
+    'Married',    15.7,
+    'Unmarried',  84.3
   ) |>  mutate(
     Variable = 'Relationship status',
     .before = everything()
   ),
+  
+  # Table 18
   tribble(
     ~Level, ~PctCDC,
     '0',   40.3,
-    '1',   26.3,
+    '1',   26.6,
     '2',   19.7,
     '3',    8.5,
     '>=4',  5.2
@@ -1662,6 +1666,8 @@ CDC_2010 <- bind_rows(
     Variable = 'No. of prior births',
     .before = everything()
   ),
+  
+  # Table 19
   tribble(
     ~Level, ~PctCDC,
     '0',   55.4,
@@ -1673,15 +1679,103 @@ CDC_2010 <- bind_rows(
     .before = everything()
   )
 ) |> mutate(
-  Level = str_squish(Level),
-  PctCDC = PctCDC / 100,
-  TtlCDC = as.integer(round(guttmacher_APC_2010_total * PctCDC)),
-  .before = 'TtlAPC'
-)
+    Level = str_squish(Level),
+    PctCDC = PctCDC / 100,
+    TtlCDC = as.integer(round(guttmacher_APC_2010_total * PctCDC)),
+    .before = 'TtlAPC'
+  )
+
+
+CDC_2008 <- bind_rows(
+  
+  # Table 4
+  tribble(
+    ~name, ~Level, ~PctCDC,
+    'abortionslt20',   'Under 20 years',    16.6,
+    'abortions2024',   '20-24 years',       32.7,
+    'abortions2529',   '25-29 years',       24.4,
+    'abortions3034',   '30-34 years',       14.4,
+    'abortions3539',   '35-39 years',        8.8,
+    'abortions40plus', '40 years and over',  3.1
+  ) |> mutate(
+    Variable = 'Age group',
+    .before = everything()
+  ) |> left_join(
+    pivot_longer(
+      guttmacher_APC_2008,
+      cols = everything(),
+      values_to = 'TtlAPC'
+    ),
+    by = 'name'
+  ) |> select(-name),
+  
+  # Table 8
+  tribble(
+    ~Level, ~PctCDC,
+    '1st trimester (13 or less weeks)',       91.5,
+    '2nd or 3rd trimester (14 or more weeks)', 8.5
+  ) |>  mutate(
+    Variable = 'Gestational age',
+    .before = everything()
+  ),
+  
+  # Table 14
+  tribble(
+    ~Level, ~PctCDC,
+    'Non-Hispanic White',    37.2,
+    'Non-Hispanic Black',    35.5,
+    'Non-Hispanic Other',     6.3,
+    'Hispanic',              21.1
+  ) |>  mutate(
+    Variable = 'Race/ethnicity',
+    .before = everything()
+  ),
+  
+  # Table 17
+  tribble(
+    ~Level, ~PctCDC,
+    'Married',    15.7,
+    'Unmarried',  84.3
+  ) |>  mutate(
+    Variable = 'Relationship status',
+    .before = everything()
+  ),
+  
+  # Table 18
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   40.6,
+    '1',   26.5,
+    '2',   19.5,
+    '3',    8.5,
+    '>=4',  4.8
+  ) |>  mutate(
+    Variable = 'No. of prior births',
+    .before = everything()
+  ),
+  
+  # Table 19
+  tribble(
+    ~Level, ~PctCDC,
+    '0',   55.6,
+    '1',   25.3,
+    '2',   11.1,
+    '>=3',  8.0
+  ) |>  mutate(
+    Variable = 'No. of previous induced abortions',
+    .before = everything()
+  )
+) |> mutate(
+    Level = str_squish(Level),
+    PctCDC = PctCDC / 100,
+    TtlCDC = as.integer(round(guttmacher_APC_2008_total * PctCDC)),
+    .before = 'TtlAPC'
+  )
 
 
 test_harness_abortions <- bind_rows(
   mutate(CDC_2010, Year = 2010, Source = 'CDC', .before = everything()),
+  mutate(CDC_2008, Year = 2008, Source = 'CDC', .before = everything()),
 ) |>
   select(-TtlAPC, -PctCDC) |>
   rename(Abortions = TtlCDC) |>
@@ -1696,7 +1790,7 @@ estimate_abortions_by_domain <- function(svy, variable, label) {
   external_vector <- c(Level = variable)
   svy |>
     filter(
-      Year %in% 2010:2010 & OUTCOME == 'INDUCED ABORTION'
+      Year %in% c(2008, 2010) & OUTCOME == 'INDUCED ABORTION'
     ) |>
     group_by(across(all_of(c('Year', 'OUTCOME', variable)))) |>
     summarize(
