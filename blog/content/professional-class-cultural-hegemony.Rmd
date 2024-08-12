@@ -14,7 +14,7 @@ output:
     toc_depth: 5
 summary: "Summary sentence here"
 tags: ["editorial", "first-person"]
-title: 'Professional Class Cultural Hegemony'
+title: 'Professional-Class Cultural Hegemony'
 ---
 
 ```{r setup, include=FALSE}
@@ -56,15 +56,15 @@ The phenomenon that explains polarization in the United States is that of _cultu
 
 ## Voter Polarization between the Professional Class and the Working Class
 
-Ruy Texeira uses the label "professional class" for those in the United States who have a four-year degree from a university and uses the label "working class" for those who do not. By this definition, the United States is a majority working class country, with about two-thirds of the United States categorized as working class.
+Ruy Texeira uses the label "professional class" for those in the United States who have a four-year degree from a university and uses the label "working class" for those who do not. By this definition, the United States is a majority working-class country, with about two-thirds of the United States categorized as working class.
 
-According to the work of Texeira, the biggest polarization in the United States in party preference and in viewpoints on numerous issues occurs between professional class voters and working class voters.
+According to the work of Texeira, the biggest polarization in the United States in party preference and in viewpoints on numerous issues occurs between professional-class voters and working-class voters.
 
-Texeira's explanation for the lack of emergence of a clear national majority voting for Democrats as predicted in his 2002 book is that working class voters are leaving the Democratic Party, despite the Democratic Party being the twentieth century "home" for working class voters.
+Texeira's explanation for the lack of emergence of a clear national majority voting for Democrats as predicted in his 2002 book is that working-class voters are leaving the Democratic Party, despite the Democratic Party being the twentieth century "home" for working-class voters.
 
-There are probably many explanations for this phenomenon. For instance, Democrats in the 1990s moved away from New Deal and Great Society economic policies in favor of "neo-liberal" economic policies that favored free trade. A prominent example of this is the public dissatisfaction, especially among working class voters, with the bipartisan support for the North American Free Trade Agreement (NAFTA), which led to third-party candidate Ross Perot becoming a serious contender in 1996 for the election of President of the United States.
+There are probably many explanations for this phenomenon. For instance, Democrats in the 1990s moved away from New Deal and Great Society economic policies in favor of "neo-liberal" economic policies that favored free trade. A prominent example of this is the public dissatisfaction, especially among working-class voters, with the bipartisan support for the North American Free Trade Agreement (NAFTA), which led to third-party candidate Ross Perot becoming a serious contender in 1996 for the election of President of the United States.
 
-However, one the more enduring reasons Democrats have lost much of the working class vote is that the party caters heavily to the interests, cultural values, and biases of the professional class, either neglecting the viewpoints of the working class or expressing outright contempt toward working class voters. This is an ongoing theme of Texeira's blog [_The Liberal Patriot_](https://substack.com/@theliberalpatriot).
+However, one the more enduring reasons Democrats have lost much of the working-class vote is that the party caters heavily to the interests, cultural values, and biases of the professional class, either neglecting the viewpoints of the working class or expressing outright contempt toward working-class voters. This is an ongoing theme of Texeira's blog [_The Liberal Patriot_](https://substack.com/@theliberalpatriot).
 
 
 ## The University as the Origin of the Cultural Hegemony
@@ -75,7 +75,7 @@ Therefore, whatever culture is prominent at elite universities trickles down thr
 
 Furthermore, almost all the institutional leadership positions in the United States, whether in Fortune 500 companies or government, are occupied by members of the professional class, i.e., by people who have at least four-year university degrees. Thus, almost all positions of leadership in the United States are occupied by people who have been indoctrinated, for four years if not more, in the cultural biases that come down from a select few on high.
 
-This phenomenon is exacerbated by a positive feedback loop created by the job of journalist becoming a professional class occupation instead of a working class occupation. The information the public receives via mass media is filtered and framed according to the biases of a culture that ultimately comes from a few prestigious people.
+This phenomenon is exacerbated by a positive feedback loop created by the job of journalist becoming a professional-class occupation instead of a working-class occupation. The information the public receives via mass media is filtered and framed according to the biases of a culture that ultimately comes from a few prestigious people.
 
 
 ## Cultural Hegemony Explains Polarization in the United States
@@ -180,7 +180,7 @@ While it is still a minority of students and faculty on campus who outright self
 
 ### Professional Organizations and Arguments from Authority
 
-Once it has been seen that the cultural hegemony in the United States is specifically a _professional class_ cultural hegemony that proceeds from the university system out into the rest of society, it becomes obvious why proponents of the cultural hegemony so often resort to arguments from authority, particularly citing official-sounding pronouncements from professional organizations.
+Once it has been seen that the cultural hegemony in the United States is specifically a _professional-class_ cultural hegemony that proceeds from the university system out into the rest of society, it becomes obvious why proponents of the cultural hegemony so often resort to arguments from authority, particularly citing official-sounding pronouncements from professional organizations.
 
 Professional organizations are dominated by the cultural hegemony because they are directly downstream of _academia_ (and perhaps because they tend to attract a higher ratio of true believers to go-alongs). Thus, professional organizations are often mouthpieces for the orthodoxy of the cultural hegemony.
 
@@ -199,9 +199,9 @@ As discussed in _The Myth of Left and Right,_ a binary spectrum -- whether it is
 
 However, the left-right labeling [does explain certain _people_](when-left-wing-and-right-wing-are-and-arent-substantive-criticism.html) who adhere themselves to partisan conformity, even if they are adhering to a fad that is transient, ephemeral, and unnecessary. This is true of partisan conformists whether they identify themselves as "left-wing" or "right-wing."
 
-Taking a more social view, the phenomenon of professional class cultural hegemony partly explains the emergence of this partisan conformity in the first place, but for only one of the (currently) popular versions of the left-right spectrum.
+Taking a more social view, the phenomenon of professional-class cultural hegemony partly explains the emergence of this partisan conformity in the first place, but for only one of the (currently) popular versions of the left-right spectrum.
 
-The original popular use of the left-right spectrum in the United States was over whether someone supported the New Deal, with "left" denoting degree of support for the New Deal and "right" denoting degree someone rejected the New Deal. [@lewis_2023, Chapter 2] This has little to do with the professional class cultural hegemony. Indeed, regardless of whether someone thought it the best way forward, the New Deal was largely targeted at the concerns of the working class.
+The original popular use of the left-right spectrum in the United States was over whether someone supported the New Deal, with "left" denoting degree of support for the New Deal and "right" denoting degree someone rejected the New Deal. [@lewis_2023, Chapter 2] This has little to do with the professional-class cultural hegemony. Indeed, regardless of whether someone thought it the best way forward, the New Deal was largely targeted at the concerns of the working class.
 
 Today, however, "left-wing" is sometimes used to denote the degree of conformity someone has to to a set of _cultural_ norms such as identity politics, abortion[^definition] liberation ideology, and aversion to firearms. These are (currently) the norms fashionable among the cultural hegemons, i.e., administrators of elite universities and billionaires who own media outlets.
 
@@ -213,11 +213,11 @@ Today, however, "left-wing" is sometimes used to denote the degree of conformity
 
     This ambiguity can lead to misinterpretation. For instance, if a study were to report on abortions in a given population, it could be including both spontaneous and induced abortions if it were using the medical literature definition, but it could be excluding what are commonly called "miscarriages" if it were using the common definition.
 
-For this one -- and only this one -- specific use of "left-wing," the term "left-wing" is synonymous with domination by the professional class cultural hegemony. The degree to which someone is either a true believer using hegemonic tactics to promote these viewpoints or a go-along acquiescing to these viewpoints can be a measure of how "left-wing" someone is, but only for this limited definition of "left-wing."
+For this one -- and only this one -- specific use of "left-wing," the term "left-wing" is synonymous with domination by the professional-class cultural hegemony. The degree to which someone is either a true believer using hegemonic tactics to promote these viewpoints or a go-along acquiescing to these viewpoints can be a measure of how "left-wing" someone is, but only for this limited definition of "left-wing."
 
 Where does this leave the corresponding term "right-wing?" More generally, what kind of left-right spectrum does this specific definition of "left-wing" lead to?
 
-It does _not_ lead to a left-right spectrum, at least not a binary one. Under this definition, there is a specific culture -- the one promoted by people who have an outsized impact on American society -- and then there are _all the other ones._ "Right-wing" under this specific definition is a catch-all for all the people who do not conform to the professional class cultural hegemony. Under this specific definition, "right-wing" is just dissent.
+It does _not_ lead to a left-right spectrum, at least not a binary one. Under this definition, there is a specific culture -- the one promoted by people who have an outsized impact on American society -- and then there are _all the other ones._ "Right-wing" under this specific definition is a catch-all for all the people who do not conform to the professional-class cultural hegemony. Under this specific definition, "right-wing" is just dissent.
 
 Instead of a linear spectrum with "left-wing" on one side and "right-wing" on the other, this definition leads to a star-burst pattern, with "left-wing" constituting an area of conformity to the cultural hegemony in the the middle of the pattern, and many lines away from this middle, each representing one of the many ways an individual can disagree with the cultural hegemony.
 
@@ -264,7 +264,7 @@ A curious thing about both David Sacks and Coleman Hughes is that they criticize
 
 [^degrees]: This is to different degrees. Davis Sacks is an advocate for abortion liberation ideology, while Coleman Hughes supports abortion-on-demand while acknowledging that it is a philosophically thorny issue and that mass abortion is a "suboptimal" form of reproductive management.
 
-Why would contemporary professional class Americans notice the cultural hegemony when it comes to race or gender ideologies, but not when it comes to abortion? Simply, the process of cultural hegemony is farther along with regard to abortion, and the process of cultural hegemony is still less advanced with regard to other issues. Thus, in order to understand the effects that the cultural hegemony has on society, we need only look at what has happened to the discourse on abortion in the United States.
+Why would contemporary professional-class Americans notice the cultural hegemony when it comes to race or gender ideologies, but not when it comes to abortion? Simply, the process of cultural hegemony is farther along with regard to abortion, and the process of cultural hegemony is still less advanced with regard to other issues. Thus, in order to understand the effects that the cultural hegemony has on society, we need only look at what has happened to the discourse on abortion in the United States.
 
 
 ### Open and Honest Discourse
@@ -277,7 +277,7 @@ The regular legislative process was active throughout the 1960s, with nearly eve
 
 [^governor]: The governor in question was Nelson Rockefeller, brother of abortion-advocacy financier John D. Rockefeller III.
 
-Two mutually supporting phenomena happened since then: the political movement that made abortion-on-demand legal in all fifty states, and the cultural shift that changed the framing of the discourse from abortion as a social problem to abortion as a social good. The political movement was mainly driven by judicial activism, which is beyond the scope of this article, whereas the change in the discourse has been driven by the very phenomenon of professional class cultural hegemony discussed here.
+Two mutually supporting phenomena happened since then: the political movement that made abortion-on-demand legal in all fifty states, and the cultural shift that changed the framing of the discourse from abortion as a social problem to abortion as a social good. The political movement was mainly driven by judicial activism, which is beyond the scope of this article, whereas the change in the discourse has been driven by the very phenomenon of professional-class cultural hegemony discussed here.
 
 The moral status of the human fetus has been controversial and debated for millennia, at least as far back as the time of Plato and Aristotle, yet the cultural hegemony has declared that those who reach a conclusion that abortion as a method of fertility control is morally wrong do not actually believe what they say, and instead are secretly "misogynists" who "hate women" and want to "control women's bodies" because they are against "gender equality" and "women's freedom."
 
@@ -389,7 +389,7 @@ read_csv(
   )
 ```
 
-Depending on the year, there is a noticeable gap of up to twenty five percentage points in the proportion of those who find abortion morally acceptable by whether the respondent is a college graduate. Since college graduates have spent four years or more at a university and are more likely to have family and friends who are also college graduates, they have on average more exposure to the cultural hegemony than working class people. The effects of this on their views on abortion can be seen.
+Depending on the year, there is a noticeable gap of up to twenty five percentage points in the proportion of those who find abortion morally acceptable by whether the respondent is a college graduate. Since college graduates have spent four years or more at a university and are more likely to have family and friends who are also college graduates, they have on average more exposure to the cultural hegemony than working-class people. The effects of this on their views on abortion can be seen.
 
 Furthermore, because of the economic advantages that college graduates enjoy in the United States, there is a noticeable gap in viewpoints on abortion based on income. Recent Gallup polling [found that](https://secularprolife.org/2024/06/economic-elites-pour-millions-into-abortion-advocacy/) a majority (54%) of those with an annual income of \$40,000 or less identified as "pro-life," while a similar majority (also 54%) with an annual income of \$40,000 or more identified as "pro-choice." Among those with an annual income of more than $100,000, there is an even larger majority who identify as "pro-choice."
 
@@ -397,9 +397,9 @@ Thus, people with more influence on society and more money tend to have more app
 
 However, even more important than these differences in viewpoints by educational level or income is the effect that the extremely wealthy have had on views on abortion. From the get go, abortion advocacy in the United States has been funded by some of the richest people in America, such as John D. Rockefeller III, Warren Buffet, and Bill and Melinda Gates. There have been no billionaires of this level of wealth to fund opposition to abortion.
 
-The movement to destigmatize abortion in the United States has been a classic case of the cultural hegemony at work, funded by a few billionaires over the popular sentiments of the less wealthy and less powerful masses. In time, through the _quid pro quo_ of the university system and reinforcement by professional class media outlets, the views of the billionaires have spread from a minority of Americans to about half or so of the country. Since the half of the country that subscribes to the views of these few billionaires is the more affluent and powerful half of the country, cultural hegemony has been achieved.
+The movement to destigmatize abortion in the United States has been a classic case of the cultural hegemony at work, funded by a few billionaires over the popular sentiments of the less wealthy and less powerful masses. In time, through the _quid pro quo_ of the university system and reinforcement by professional-class media outlets, the views of the billionaires have spread from a minority of Americans to about half or so of the country. Since the half of the country that subscribes to the views of these few billionaires is the more affluent and powerful half of the country, cultural hegemony has been achieved.
 
-Thus, while it is the case that the _people_ of the United States are split on abortion, only one side of this split has managed to run away with almost all of American institutions -- universities, media organizations, professional associations, government bureaucracy -- through the process of professional class cultural hegemony.
+Thus, while it is the case that the _people_ of the United States are split on abortion, only one side of this split has managed to run away with almost all of American institutions -- universities, media organizations, professional associations, government bureaucracy -- through the process of professional-class cultural hegemony.
 
 In a country that is split virtually in half on whether abortion is morally wrong or morally acceptable, is it the case that about half of researchers study abortion as a social ill and half of researchers study abortion as a social good? Far from it. It is closer to the case there are _no_ professionally employed researchers studying abortion as a social problem, and that _all of them_ study abortion as a social good. For example, I have only ever found one public health researcher who studies abortion as a social problem, rather than a social good, and this researcher is [currently being cancelled](https://assaultonscience.org).[^others]
 
