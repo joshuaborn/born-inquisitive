@@ -1937,7 +1937,7 @@ left_join(
 
 ```{r abortions-by-year-by-age, dependson=c("create-post-stratification-targets", "create-survey-objects")}
 guttmacher_APC_national |>
-  filter(year %in% 2006:2010) |>
+  filter(year %in% 2006:2015) |>
   rename(Year = year, Abortions = abortionstotal) |>
   select(Year, Abortions) |>
   left_join(
@@ -1947,7 +1947,7 @@ guttmacher_APC_national |>
         n = unweighted(sum(abortion)),
         Est = survey_total(abortion, vartype = 'ci')
       ) |>
-      filter(Year %in% 2006:2010) |>
+      filter(Year %in% 2006:2015) |>
       rename(
         Est_Before = Est,
         Est_Before_low = Est_low,
@@ -1962,7 +1962,7 @@ guttmacher_APC_national |>
         n = unweighted(sum(abortion)),
         Est = survey_total(abortion, vartype = 'ci')
       ) |>
-      filter(Year %in% 2006:2010) |>
+      filter(Year %in% 2006:2015) |>
       rename(
         Est_After = Est,
         Est_After_low = Est_low,
@@ -2019,7 +2019,7 @@ guttmacher_APC_national |>
   fmt_percent(contains('Rel_Bias'), decimal = 1)
 
 guttmacher_APC_national |>
-  filter(year %in% 2006:2010) |>
+  filter(year %in% 2006:2015) |>
   rename(
     Year = year,
     `Under 20 years` = abortionslt20,
@@ -2042,7 +2042,7 @@ guttmacher_APC_national |>
         n = unweighted(sum(abortion)),
         Est = survey_total(abortion, vartype = 'ci')
       ) |>
-      filter(Year %in% 2006:2010) |>
+      filter(Year %in% 2006:2015) |>
       rename(
         Level = age_group6,
         Est_Before = Est,
@@ -2058,7 +2058,7 @@ guttmacher_APC_national |>
         n = unweighted(sum(abortion)),
         Est = survey_total(abortion, vartype = 'ci')
       ) |>
-      filter(Year %in% 2006:2010) |>
+      filter(Year %in% 2006:2015) |>
       rename(
         Level = age_group6,
         Est_After = Est,
