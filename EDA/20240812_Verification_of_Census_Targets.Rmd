@@ -339,7 +339,7 @@ svy15_17 |>
 
 ```{r compare-estimates-2013-2015, dependson=c("load-raw-data", "specify-target-totals-from-documentation")}
 data13_15 <- raw_fem_2013_2015 |>
-  select(CASEID, SEST, SECU, WGT2013_2015, AGER, RACE, HISPANIC) |>
+  select(CASEID, SEST, SECU, WGT2013_2015, AGER, RACE, HISP) |>
   mutate(
     one = 1,
     age_group = cut(
@@ -354,7 +354,7 @@ data13_15 <- raw_fem_2013_2015 |>
         'Age',
         age_group,
         case_when(
-          HISPANIC == 1 ~ 'Hispanic',
+          HISP == 1 ~ 'Hispanic',
           RACE == 1 ~ 'Non-Hispanic Black',
           .default = 'Non-Hispanic Non-Black'
         ),
@@ -394,7 +394,7 @@ svy13_15 |>
 
 ```{r compare-estimates-2011-2013, dependson=c("load-raw-data", "specify-target-totals-from-documentation")}
 data11_13 <- raw_fem_2011_2013 |>
-  select(CASEID, SEST, SECU, WGT2011_2013, AGER, RACE, HISPANIC) |>
+  select(CASEID, SEST, SECU, WGT2011_2013, AGER, RACE, HISP) |>
   mutate(
     one = 1,
     age_group = cut(
@@ -409,7 +409,7 @@ data11_13 <- raw_fem_2011_2013 |>
         'Age',
         age_group,
         case_when(
-          HISPANIC == 1 ~ 'Hispanic',
+          HISP == 1 ~ 'Hispanic',
           RACE == 1 ~ 'Non-Hispanic Black',
           .default = 'Non-Hispanic Non-Black'
         ),
