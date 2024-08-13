@@ -1,0 +1,111 @@
+---
+title: "Verification of Census Counts Used in Post-Stratification"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+    css: wide.css
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(here)
+library(tibble)
+library(gt)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi=200,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+
+### Compare 2015-2019 Targets with Original 2015-2017 and 2017-2019 Targets
+
+```{r}
+readRDS(
+  here('data/Census/prepared/census_for_2015_2019.Rds')
+) |>
+  filter(SEX_f == 'Female') |>
+  mutate(
+    poststrat_age_race = gsub(
+      '[ -]',
+      '_',
+      paste0(
+        gsub(' to | years', '_', AGEGROUP_f),
+        race_ethn_f
+      )
+    )
+  ) |>
+  rename(MyTarget = pop) |>
+  select(poststrat_age_race, MyTarget) |>
+  full_join(
+    tribble(
+       ~Theirs17_19, ~poststrat_age_race,
+      1501808, 'Age_15_19_Non_Hispanic_Black',
+      1588120, 'Age_20_24_Non_Hispanic_Black',
+      1832548, 'Age_25_29_Non_Hispanic_Black',
+      1561910, 'Age_30_34_Non_Hispanic_Black',
+      1502718, 'Age_35_39_Non_Hispanic_Black',
+      1354692, 'Age_40_44_Non_Hispanic_Black',
+      1402470, 'Age_45_49_Non_Hispanic_Black',
+      2364573, 'Age_15_19_Hispanic',
+      2292692, 'Age_20_24_Hispanic',
+      2319186, 'Age_25_29_Hispanic',
+      2145325, 'Age_30_34_Hispanic',
+      2147094, 'Age_35_39_Hispanic',
+      2006586, 'Age_40_44_Hispanic',
+      1857318, 'Age_45_49_Hispanic',
+      5572796, 'Age_15_19_Non_Hispanic_Non_Black',
+      6070213, 'Age_20_24_Non_Hispanic_Non_Black',
+      7288890, 'Age_25_29_Non_Hispanic_Non_Black',
+      7164179, 'Age_30_34_Non_Hispanic_Non_Black',
+      7059902, 'Age_35_39_Non_Hispanic_Non_Black',
+      6488082, 'Age_40_44_Non_Hispanic_Non_Black',
+      7150824, 'Age_45_49_Non_Hispanic_Non_Black'
+    ),
+    by = join_by(poststrat_age_race)
+  ) |>
+  full_join(
+    tribble(
+       ~Theirs15_17, ~poststrat_age_race,
+      1519880, 'Age_15_19_Non_Hispanic_Black',
+      1654845, 'Age_20_24_Non_Hispanic_Black',
+      1723537, 'Age_25_29_Non_Hispanic_Black',
+      1508048, 'Age_30_34_Non_Hispanic_Black',
+      1451485, 'Age_35_39_Non_Hispanic_Black',
+      1350570, 'Age_40_44_Non_Hispanic_Black',
+      1397935, 'Age_45_49_Non_Hispanic_Black',
+      2270479, 'Age_15_19_Hispanic',
+      2263325, 'Age_20_24_Hispanic',
+      2183216, 'Age_25_29_Hispanic',
+      2113468, 'Age_30_34_Hispanic',
+      2068823, 'Age_35_39_Hispanic',
+      1942468, 'Age_40_44_Hispanic',
+      1755392, 'Age_45_49_Hispanic',
+      5663957, 'Age_15_19_Non_Hispanic_Non_Black',
+      6258438, 'Age_20_24_Non_Hispanic_Non_Black',
+      7250571, 'Age_25_29_Non_Hispanic_Non_Black',
+      7123702, 'Age_30_34_Non_Hispanic_Non_Black',
+      6813279, 'Age_35_39_Non_Hispanic_Non_Black',
+      6559123, 'Age_40_44_Non_Hispanic_Non_Black',
+      7345545, 'Age_45_49_Non_Hispanic_Non_Black'
+    ),
+    by = join_by(poststrat_age_race)
+  ) |>
+  mutate(
+    TheirsInter = (Theirs17_19 + Theirs15_17) / 2,
+    DiffInter = TheirsInter - MyTarget,
+    Diff17_19 = Theirs17_19 - MyTarget,
+    Diff15_17 = Theirs15_17 - MyTarget
+  ) |>
+  gt() |>
+  fmt_number(decimal = 0)
+```
