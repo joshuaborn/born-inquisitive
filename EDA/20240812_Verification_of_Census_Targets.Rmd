@@ -79,6 +79,50 @@ targets15_17 <- tribble(
   6559123, 'Age_40_44_Non_Hispanic_Non_Black',
   7345545, 'Age_45_49_Non_Hispanic_Non_Black'
 )
+
+targets13_15 <- tribble(
+  ~Theirs13_15, ~poststrat_age_race,
+  1518731, 'Age_15_19_Non_Hispanic_Black',
+  1722220, 'Age_20_24_Non_Hispanic_Black',
+  1580865, 'Age_25_29_Non_Hispanic_Black',
+  1492205, 'Age_30_34_Non_Hispanic_Black',
+  1377694, 'Age_35_39_Non_Hispanic_Black',
+  1403751, 'Age_40_44_Non_Hispanic_Black',
+  2192179, 'Age_15_19_Hispanic',
+  2233143, 'Age_20_24_Hispanic',
+  2084503, 'Age_25_29_Hispanic',
+  2106319, 'Age_30_34_Hispanic',
+  2000371, 'Age_35_39_Hispanic',
+  1893581, 'Age_40_44_Hispanic',
+  5715472, 'Age_15_19_Non_Hispanic_Non_Black',
+  6516762, 'Age_20_24_Non_Hispanic_Non_Black',
+  7059255, 'Age_25_29_Non_Hispanic_Non_Black',
+  7048187, 'Age_30_34_Non_Hispanic_Non_Black',
+  6539703, 'Age_35_39_Non_Hispanic_Non_Black',
+  7006825, 'Age_40_44_Non_Hispanic_Non_Black'
+)
+
+targets11_13 <- tribble(
+  ~Theirs11_13, ~poststrat_age_race,
+  1567994, 'Age_15_19_Non_Hispanic_Black',
+  1661735, 'Age_20_24_Non_Hispanic_Black',
+  1487951, 'Age_25_29_Non_Hispanic_Black',
+  1456005, 'Age_30_34_Non_Hispanic_Black',
+  1340371, 'Age_35_39_Non_Hispanic_Black',
+  1412020, 'Age_40_44_Non_Hispanic_Black',
+  2144110, 'Age_15_19_Hispanic',
+  2105193, 'Age_20_24_Hispanic',
+  2025936, 'Age_25_29_Hispanic',
+  2036033, 'Age_30_34_Hispanic',
+  1927903, 'Age_35_39_Hispanic',
+  1784861, 'Age_40_44_Hispanic',
+  5834887, 'Age_15_19_Non_Hispanic_Non_Black',
+  6571515, 'Age_20_24_Non_Hispanic_Non_Black',
+  6934209, 'Age_25_29_Non_Hispanic_Non_Black',
+  6849804, 'Age_30_34_Non_Hispanic_Non_Black',
+  6442521, 'Age_35_39_Non_Hispanic_Non_Black',
+  7304315, 'Age_40_44_Non_Hispanic_Non_Black',
+)
 ```
 
 
@@ -140,51 +184,11 @@ readRDS(
   rename(MyTarget = pop) |>
   select(poststrat_age_race, MyTarget) |>
   full_join(
-    tribble(
-      ~Theirs11_13, ~poststrat_age_race,
-      1567994, 'Age_15_19_Non_Hispanic_Black',
-      1661735, 'Age_20_24_Non_Hispanic_Black',
-      1487951, 'Age_25_29_Non_Hispanic_Black',
-      1456005, 'Age_30_34_Non_Hispanic_Black',
-      1340371, 'Age_35_39_Non_Hispanic_Black',
-      1412020, 'Age_40_44_Non_Hispanic_Black',
-      2144110, 'Age_15_19_Hispanic',
-      2105193, 'Age_20_24_Hispanic',
-      2025936, 'Age_25_29_Hispanic',
-      2036033, 'Age_30_34_Hispanic',
-      1927903, 'Age_35_39_Hispanic',
-      1784861, 'Age_40_44_Hispanic',
-      5834887, 'Age_15_19_Non_Hispanic_Non_Black',
-      6571515, 'Age_20_24_Non_Hispanic_Non_Black',
-      6934209, 'Age_25_29_Non_Hispanic_Non_Black',
-      6849804, 'Age_30_34_Non_Hispanic_Non_Black',
-      6442521, 'Age_35_39_Non_Hispanic_Non_Black',
-      7304315, 'Age_40_44_Non_Hispanic_Non_Black',
-    ),
+    targets11_13,
     by = join_by(poststrat_age_race)
   ) |>
   full_join(
-    tribble(
-      ~Theirs13_15, ~poststrat_age_race,
-      1518731, 'Age_15_19_Non_Hispanic_Black',
-      1722220, 'Age_20_24_Non_Hispanic_Black',
-      1580865, 'Age_25_29_Non_Hispanic_Black',
-      1492205, 'Age_30_34_Non_Hispanic_Black',
-      1377694, 'Age_35_39_Non_Hispanic_Black',
-      1403751, 'Age_40_44_Non_Hispanic_Black',
-      2192179, 'Age_15_19_Hispanic',
-      2233143, 'Age_20_24_Hispanic',
-      2084503, 'Age_25_29_Hispanic',
-      2106319, 'Age_30_34_Hispanic',
-      2000317, 'Age_35_39_Hispanic',
-      1893581, 'Age_40_44_Hispanic',
-      5715472, 'Age_15_19_Non_Hispanic_Non_Black',
-      6516762, 'Age_20_24_Non_Hispanic_Non_Black',
-      7059255, 'Age_25_29_Non_Hispanic_Non_Black',
-      7048187, 'Age_30_34_Non_Hispanic_Non_Black',
-      6539703, 'Age_35_39_Non_Hispanic_Non_Black',
-      7006825, 'Age_40_44_Non_Hispanic_Non_Black'
-    ),
+    targets13_15,
     by = join_by(poststrat_age_race)
   ) |>
   mutate(
@@ -223,7 +227,7 @@ raw_fem_2015_2017 <- read_sas(
 
 ## Comparison of Estimates of NSFG 2017-2019 with Target Totals from Documentation
 
-```{r compare-estimates-2017-2019, dependson="load-raw-data"}
+```{r compare-estimates-2017-2019, dependson=c("load-raw-data", "specify-target-totals-from-documentation")}
 data17_19 <- raw_fem_2017_2019 |>
   select(CASEID, SEST, SECU, WGT2017_2019, AGER, HISPANIC, RACE) |>
   mutate(
@@ -278,7 +282,7 @@ svy17_19 |>
 
 ## Comparison of Estimates of NSFG 2015-2017 with Target Totals from Documentation
 
-```{r compare-estimates-2015-2017, dependson="load-raw-data"}
+```{r compare-estimates-2015-2017, dependson=c("load-raw-data", "specify-target-totals-from-documentation")}
 data15_17 <- raw_fem_2015_2017 |>
   select(CASEID, SEST, SECU, WGT2015_2017, AGER, RACE, HISPANIC) |>
   mutate(
@@ -324,6 +328,116 @@ svy15_17 |>
   ) |>
   mutate(
     Diff = Theirs15_17 - Est
+  ) |>
+  select(-Est_se) |>
+  gt() |>
+  fmt_number(decimal = 0)
+```
+
+
+## Comparison of Estimates of NSFG 2013-2015 with Target Totals from Documentation
+
+```{r compare-estimates-2013-2015, dependson=c("load-raw-data", "specify-target-totals-from-documentation")}
+data13_15 <- raw_fem_2013_2015 |>
+  select(CASEID, SEST, SECU, WGT2013_2015, AGER, RACE, HISPANIC) |>
+  mutate(
+    one = 1,
+    age_group = cut(
+      AGER,
+      breaks = c(14, 19, 24, 29, 34, 39, 50),
+      labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44')
+    ),
+    poststrat_age_race = factor(gsub(
+      '[ -]',
+      '_',
+      paste(
+        'Age',
+        age_group,
+        case_when(
+          HISPANIC == 1 ~ 'Hispanic',
+          RACE == 1 ~ 'Non-Hispanic Black',
+          .default = 'Non-Hispanic Non-Black'
+        ),
+        sep = '_'
+      )
+    ))
+  )
+
+svy13_15 <-  as_survey_design(
+  .data = data13_15,
+  ids = SECU,
+  strata = SEST,
+  weights = WGT2013_2015,
+  nest = TRUE
+)
+
+svy13_15 |>
+  group_by(poststrat_age_race) |>
+  summarize(
+    n = unweighted(sum(one)),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    targets13_15,
+    by = join_by(poststrat_age_race)
+  ) |>
+  mutate(
+    Diff = Theirs13_15 - Est
+  ) |>
+  select(-Est_se) |>
+  gt() |>
+  fmt_number(decimal = 0)
+```
+
+
+## Comparison of Estimates of NSFG 2011-2013 with Target Totals from Documentation
+
+```{r compare-estimates-2011-2013, dependson=c("load-raw-data", "specify-target-totals-from-documentation")}
+data11_13 <- raw_fem_2011_2013 |>
+  select(CASEID, SEST, SECU, WGT2011_2013, AGER, RACE, HISPANIC) |>
+  mutate(
+    one = 1,
+    age_group = cut(
+      AGER,
+      breaks = c(14, 19, 24, 29, 34, 39, 50),
+      labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44')
+    ),
+    poststrat_age_race = factor(gsub(
+      '[ -]',
+      '_',
+      paste(
+        'Age',
+        age_group,
+        case_when(
+          HISPANIC == 1 ~ 'Hispanic',
+          RACE == 1 ~ 'Non-Hispanic Black',
+          .default = 'Non-Hispanic Non-Black'
+        ),
+        sep = '_'
+      )
+    ))
+  )
+
+svy11_13 <-  as_survey_design(
+  .data = data11_13,
+  ids = SECU,
+  strata = SEST,
+  weights = WGT2011_2013,
+  nest = TRUE
+)
+
+svy11_13 |>
+  group_by(poststrat_age_race) |>
+  summarize(
+    n = unweighted(sum(one)),
+    Est = survey_total(one)
+  ) |>
+  full_join(
+    targets11_13,
+    by = join_by(poststrat_age_race)
+  ) |>
+  mutate(
+    Diff = Theirs11_13 - Est
   ) |>
   select(-Est_se) |>
   gt() |>
