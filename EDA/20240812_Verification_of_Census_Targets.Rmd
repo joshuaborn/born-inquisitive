@@ -225,7 +225,7 @@ raw_fem_2015_2017 <- read_sas(
 
 ```{r compare-estimates-2017-2019, dependson="load-raw-data"}
 data17_19 <- raw_fem_2017_2019 |>
-  select(CASEID, SEST, SECU, WGT2017_2019, AGER, HISPRACE2) |>
+  select(CASEID, SEST, SECU, WGT2017_2019, AGER, HISPANIC, RACE) |>
   mutate(
     one = 1,
     age_group = cut(
@@ -233,12 +233,6 @@ data17_19 <- raw_fem_2017_2019 |>
       breaks = c(14, 19, 24, 29, 34, 39, 44, 50),
       labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
     ),
-    #HISPRACE2 = as_factor(labelled(HISPRACE2, c(
-    #  'Hispanic' = 1,
-    #  'Non-Hispanic White' = 2,
-    #  'Non-Hispanic Black' = 3,
-    #  'Non-Hispanic Other' = 4
-    #))),
     poststrat_age_race = factor(gsub(
       '[ -]',
       '_',
@@ -246,8 +240,8 @@ data17_19 <- raw_fem_2017_2019 |>
         'Age',
         age_group,
         case_when(
-          HISPRACE2 == 1 ~ 'Hispanic',
-          HISPRACE2 == 3 ~ 'Non-Hispanic Black',
+          HISPANIC == 1 ~ 'Hispanic',
+          RACE == 1 ~ 'Non-Hispanic Black',
           .default = 'Non-Hispanic Non-Black'
         ),
         sep = '_'
@@ -286,7 +280,7 @@ svy17_19 |>
 
 ```{r compare-estimates-2015-2017, dependson="load-raw-data"}
 data15_17 <- raw_fem_2015_2017 |>
-  select(CASEID, SEST, SECU, WGT2015_2017, AGER, HISPRACE2) |>
+  select(CASEID, SEST, SECU, WGT2015_2017, AGER, RACE, HISPANIC) |>
   mutate(
     one = 1,
     age_group = cut(
@@ -294,12 +288,6 @@ data15_17 <- raw_fem_2015_2017 |>
       breaks = c(14, 19, 24, 29, 34, 39, 44, 50),
       labels = c('15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49')
     ),
-    #HISPRACE2 = as_factor(labelled(HISPRACE2, c(
-    #  'Hispanic' = 1,
-    #  'Non-Hispanic White' = 2,
-    #  'Non-Hispanic Black' = 3,
-    #  'Non-Hispanic Other' = 4
-    #))),
     poststrat_age_race = factor(gsub(
       '[ -]',
       '_',
@@ -307,8 +295,8 @@ data15_17 <- raw_fem_2015_2017 |>
         'Age',
         age_group,
         case_when(
-          HISPRACE2 == 1 ~ 'Hispanic',
-          HISPRACE2 == 3 ~ 'Non-Hispanic Black',
+          HISPANIC == 1 ~ 'Hispanic',
+          RACE == 1 ~ 'Non-Hispanic Black',
           .default = 'Non-Hispanic Non-Black'
         ),
         sep = '_'
