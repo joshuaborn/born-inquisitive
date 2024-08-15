@@ -1,0 +1,138 @@
+---
+title: "Preparation of NVSS Natality Data"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+    css: wide.css
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(gt)
+library(here)
+library(readr)
+
+knitr::opts_chunk$set(
+  cache = FALSE,
+  dpi=200,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+
+## 1994
+
+```{r 1994, }
+NVSS_1994 <- read_csv(
+  here('data/NVSS/natality1994us.csv'),
+  col_select = c('datayear', 'stsubocc', 'mage8', 'mrace3', 'ormoth')
+)
+
+NVSS_1994 |>
+  group_by(datayear) |>
+  count() |>
+  ungroup() |>
+  gt() |>
+  fmt_number('n', decimal = 0)
+
+NVSS_1994 |>
+  group_by(stsubocc) |>
+  count() |>
+  ungroup() |>
+  gt() |>
+  fmt_number('n', decimal = 0)
+
+NVSS_1994_fct <- NVSS_1994 |>
+  mutate(
+    demographic_category = factor(
+      case_when(
+        ormoth %in% 1:5 ~ 'Hispanic',
+        mrace3 == 3 ~ 'Non-Hispanic Black',
+        .default = 'Non-Hispanic Non-Black'
+      )
+    ),
+    mage8 = factor(
+      mage8,
+      levels = 1:8,
+      labels = c(
+        "Under 15 years",
+        "15-19 years",
+        "20-24 years",
+        "25-29 years",
+        "30-34 years",
+        "35-39 years",
+        "40-44 years",
+        "45-49 years"
+      )
+    ),
+    mrace3 = factor(
+      mrace3,
+      levels = 1:3,
+      labels = c(
+        "White",
+        "Other",
+        "Black"
+      )
+    ),
+    ormoth = factor(
+      ormoth,
+      levels = c(0:5, 9),
+      labels = c(
+        "Non-Hispanic",
+        "Mexican",
+        "Puerto Rican",
+        "Cuban",
+        "Central or South American",
+        "Other or unknown Hispanic",
+        "Origin unknown or not stated"
+      )
+    )
+  )
+
+NVSS_1994_fct |>
+  group_by(mage8) |>
+  count() |>
+  ungroup() |>
+  gt() |>
+  fmt_number('n', decimal = 0)
+
+NVSS_1994_fct |>
+  group_by(mrace3) |>
+  count() |>
+  ungroup() |>
+  gt() |>
+  fmt_number('n', decimal = 0)
+
+NVSS_1994_fct |>
+  group_by(ormoth) |>
+  count() |>
+  ungroup() |>
+  gt() |>
+  fmt_number('n', decimal = 0)
+
+NVSS_1994_fct |>
+  group_by(demographic_category) |>
+  count() |>
+  ungroup() |>
+  gt() |>
+  fmt_number('n', decimal = 0)
+
+NVSS_1994_cross <- NVSS_1994_fct |>
+  group_by(demographic_category, mage8) |>
+  count() |>
+  ungroup()
+
+saveRDS(NVSS_1994_cross, here('data/NVSS/natality1994us_crosstabs.Rds'))
+
+NVSS_1994_cross |>
+  gt() |>
+  fmt_number('n', decimal = 0)
+```
+
