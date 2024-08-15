@@ -290,12 +290,12 @@ data_fem <- bind_rows(
           .default = 'Other'
         ),
         abortion_2011plus_age = case_when(
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 24) ~ '20-24 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 29) ~ '25-29 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG <= 39) ~ '35-39 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2011 & AGEPREG >= 40) ~ '40 years and over',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2011 & AGEPREG < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2011 & AGEPREG <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2011 & AGEPREG <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2011 & AGEPREG <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2011 & AGEPREG <= 39) ~ '35-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2011 & AGEPREG >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
         birth_2014_marital_status =  case_when(
@@ -646,7 +646,7 @@ poststrat_targets_2015_2019 <- c(
 
 ### Raking Post-Stratifications
 
-```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets"), eval=FALSE}
+```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets"), eval=TRUE}
 source(here('R/rake2.R'))
 
 weight_adj_strata_2015_2019 <- list()
@@ -667,7 +667,7 @@ post_fem <- rake2(
 
 ### Saving of Adjusted Weights
 
-```{r save-adjusted-weights, dependson="rake-post-stratifications", eval=FALSE}
+```{r save-adjusted-weights, dependson="rake-post-stratifications", eval=TRUE}
 post_fem |>
   as_data_frame_with_weights(
     full_wgt_name = "FULL_SAMPLE_WGT",

@@ -314,11 +314,11 @@ data_fem <- bind_rows(
           .default = 'Other'
         ),
         abortion_2006plus_age = case_when(
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2006 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2006 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2006 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2006 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2006 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2006_marital_status =  case_when(
