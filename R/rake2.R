@@ -62,8 +62,8 @@ rake2 <- function(design,
     ff <- formula(paste("~", paste(allterms, collapse="+"), sep=""))
     oldtable <- svytotal(ff, design)
 
-    #if (control$verbose)
-    #    print(oldtable)
+    if (control$verbose)
+        print(oldtable)
 
     oldpoststrata <- design$postStrata
     iter <- 0
@@ -99,8 +99,8 @@ rake2 <- function(design,
 
       newtable <- svytotal(ff, design)
 
-      #if (control$verbose)
-      #  print(newtable)
+      if (control$verbose)
+        print(newtable)
 
       delta <- max(abs(oldtable - newtable))
 
