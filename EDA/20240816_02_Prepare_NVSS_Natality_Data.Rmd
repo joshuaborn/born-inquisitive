@@ -15,6 +15,7 @@ library(dplyr)
 library(gt)
 library(here)
 library(readr)
+library(tidyr)
 
 knitr::opts_chunk$set(
   cache = FALSE,
@@ -29,26 +30,12 @@ knitr::opts_chunk$set(
 
 
 ```{r helper-functions}
-explore_NVSS_data <- function(year) {
+load_natality_data <- function(year) {
   read_csv(
     here(paste0('data/NVSS/natality', year, 'us.csv')),
-    n_max = 100
-  )
-}
-
-process_NVSS_data_94 <- function(year) {
-  read_csv(
-    here(paste0('data/NVSS/natality', year, 'us.csv')),
-    col_select = c('datayear', 'stsubocc', 'mage8', 'mrace', 'ormoth')
-  ) |>
-  mutate(
-    demographic_category = factor(
-      case_when(
-        ormoth %in% 1:5 ~ 'Hispanic',
-        mrace == 2 ~ 'Non-Hispanic Black',
-        .default = 'Non-Hispanic Non-Black'
-      )
-    ),
+    col_select = c('datayear', 'stsubocc', 'mage8'),
+    col_types = 'nnf'
+  ) |> mutate(
     mage8 = factor(
       mage8,
       levels = 1:8,
@@ -62,172 +49,110 @@ process_NVSS_data_94 <- function(year) {
         "40-44 years",
         "45-49 years"
       )
-    ),
-    ormoth = factor(
-      ormoth,
-      levels = c(0:5, 9),
-      labels = c(
-        "Non-Hispanic",
-        "Mexican",
-        "Puerto Rican",
-        "Cuban",
-        "Central or South American",
-        "Other or unknown Hispanic",
-        "Origin unknown or not stated"
-      )
-    ),
-    mrace = factor(
-      mrace,
-      levels = c(1:7, seq(18, 78, by = 10)),
-      labels = c(
-        "White",
-        "Black",
-        "American Indian",
-        "Chinese",
-        "Japanese",
-        "Hawaiian",
-        "Filipino",
-        "Asian Indian",
-        "Korean",
-        "Samoan",
-        "Vietnamese",
-        "Guamanian",
-        "Other Asian or Pacific Islander",
-        "Combined other Asian or Pacific Islander"
-      )
     )
   )
 }
 
-process_NVSS_data_91 <- function(year) {
-  read_csv(
-    here(paste0('data/NVSS/natality', year, 'us.csv')),
-    col_select = c('datayear', 'stsubocc', 'mage8', 'mrace', 'ormoth')
-  ) |>
-  mutate(
-    mage8 = factor(
-      mage8,
-      levels = 1:8,
-      labels = c(
-        "Under 15 years",
-        "15-19 years",
-        "20-24 years",
-        "25-29 years",
-        "30-34 years",
-        "35-39 years",
-        "40-44 years",
-        "45-49 years"
-      )
-    ),
-    mrace = factor(
-      mrace,
-      levels = 1:9,
-      labels = c(
-        "White",
-        "Black",
-        "American Indian",
-        "Chinese",
-        "Japanese",
-        "Hawaiian",
-        "Filipino",
-        "Other Asian or Pacific Islander",
-        "All other races"
-      )
-    )
-  )
-}
-
-process_NVSS_data_88 <- function(year) {
-  read_csv(
-    here(paste0('data/NVSS/natality', year, 'us.csv')),
-    col_select = c('datayear', 'stsubocc', 'mage8', 'mrace')
-  ) |>
-  mutate(
-    mage8 = factor(
-      mage8,
-      levels = 1:8,
-      labels = c(
-        "Under 15 years",
-        "15-19 years",
-        "20-24 years",
-        "25-29 years",
-        "30-34 years",
-        "35-39 years",
-        "40-44 years",
-        "45-49 years"
-      )
-    ),
-    mrace = factor(
-      mrace,
-      levels = 0:9,
-      labels = c(
-        "Other Asian or Pacific Islander",
-        "White",
-        "Black",
-        "American Indian",
-        "Chinese",
-        "Japanese",
-        "Hawaiian",
-        "Other nonwhite",
-        "Filipino",
-        "Not stated"
-      )
-    )
-  )
-}
-
-count_levels <- function(tbl, year, variable_name) {
+count_natality_levels <- function(tbl, year, variable_name) {
   tbl |>
     group_by(get(variable_name)) |>
     count() |>
     ungroup() |>
-    mutate(Year = year, Variable = variable_name, .before = everything()) |>
-    rename(Level = `get(variable_name)`)
+    mutate(
+      Year = year,
+      Variable = variable_name,
+      .before = everything()
+    )
 }
 
 summarize_natality_year <- function(tbl, year) {
   bind_rows(
-    count_levels('datayear'),
-    count_levels('stsubocc'),
-    count_levels('mage8'),
-    count_levels('mrace3'),
-    count_levels('ormoth'),
-    count_levels('demographic_category')
+    tbl |>
+      group_by(datayear) |>
+      count() |>
+      ungroup() |>
+      mutate(
+        Year = year,
+        Variable = 'datayear',
+        .before = everything()
+      ),
+    tbl |>
+      group_by(stsubocc) |>
+      count() |>
+      ungroup() |>
+      mutate(
+        Year = year,
+        Variable = 'stsubocc',
+        .before = everything()
+      ),
+    tbl |>
+      group_by(mage8) |>
+      count() |>
+      ungroup() |>
+      mutate(
+        Year = year,
+        Variable = 'mage8',
+        .before = everything()
+      )
   )
-}
-
-crosstabulate_natality_year <- function(tbl, year) {
-  tbl |>
-    group_by(demographic_category, mage8) |>
-    count() |>
-    ungroup()
 }
 
 process_natality_year <- function(year) {
-  tbl <- load_NVSS_data(year)
-  list(
-    summary = summarize_natality_year(tbl, year),
-    crosstab = crosstabulate_natality_year(tbl, year)
+  summarize_natality_year(
+    load_natality_data(year),
+    year
   )
 }
 ```
 
-```{r}
+
+```{r processing-of-data}
 years <- 1994:1974
 
-NVSS_1994 <- process_NVSS_data_94(1994)
-NVSS_1993 <- process_NVSS_data_94(1993)
-NVSS_1992 <- process_NVSS_data_94(1992)
+natality_data <- Map(process_natality_year, years)
 
-NVSS_1991 <- process_NVSS_data_91(1991)
-NVSS_1990 <- process_NVSS_data_91(1990)
-NVSS_1989 <- process_NVSS_data_91(1989)
-
-NVSS_1988 <- process_NVSS_data_88(1988)
+combined_natality_tbl <- Reduce(bind_rows, natality_data, tibble())
 ```
 
 
-```{r}
-#saveRDS(NVSS_1992_cross, here('data/NVSS/natality1992us_crosstabs.Rds'))
+```{r check-of-datayear}
+combined_natality_tbl |>
+  filter(Variable == 'datayear') |>
+  select(Year, datayear, n) |>
+  gt() |>
+  fmt_number(n, decimal = 0)
 ```
 
+
+```{r check-of-stsubocc}
+combined_natality_tbl |>
+  filter(Variable == 'stsubocc') |>
+  select(Year, stsubocc, n) |>
+  pivot_wider(
+    names_from = Year,
+    values_from = n
+  ) |>
+  gt() |>
+  fmt_number(decimal = 0)
+```
+
+
+```{r check-of-mage8}
+combined_natality_tbl |>
+  filter(Variable == 'mage8') |>
+  select(Year, mage8, n) |>
+  pivot_wider(
+    names_from = Year,
+    values_from = n
+  ) |>
+  gt() |>
+  fmt_number(decimal = 0)
+```
+
+
+```{r saving-to-Rds}
+combined_natality_tbl |>
+  filter(Variable == 'mage8') |>
+  select(Year, mage8, n) |>
+  saveRDS(here('data/NVSS/natality_by_age_1974-1994us.Rds'))
+```
