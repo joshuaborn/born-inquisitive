@@ -33,8 +33,8 @@ knitr::opts_chunk$set(
 load_natality_data <- function(year) {
   read_csv(
     here(paste0('data/NVSS/natality', year, 'us.csv')),
-    col_select = c('datayear', 'stsubocc', 'mage8'),
-    col_types = 'nnf'
+    col_select = c('datayear', 'stsubocc', 'mage8', 'recwt'),
+    col_types = 'nnfn'
   ) |> mutate(
     mage8 = factor(
       mage8,
@@ -56,7 +56,7 @@ load_natality_data <- function(year) {
 count_natality_levels <- function(tbl, year, variable_name) {
   tbl |>
     group_by(get(variable_name)) |>
-    count() |>
+    summarize(n = sum(recwt)) |>
     ungroup() |>
     mutate(
       Year = year,
@@ -69,7 +69,7 @@ summarize_natality_year <- function(tbl, year) {
   bind_rows(
     tbl |>
       group_by(datayear) |>
-      count() |>
+      summarize(n = sum(recwt)) |>
       ungroup() |>
       mutate(
         Year = year,
@@ -78,7 +78,7 @@ summarize_natality_year <- function(tbl, year) {
       ),
     tbl |>
       group_by(stsubocc) |>
-      count() |>
+      summarize(n = sum(recwt)) |>
       ungroup() |>
       mutate(
         Year = year,
@@ -87,7 +87,7 @@ summarize_natality_year <- function(tbl, year) {
       ),
     tbl |>
       group_by(mage8) |>
-      count() |>
+      summarize(n = sum(recwt)) |>
       ungroup() |>
       mutate(
         Year = year,
