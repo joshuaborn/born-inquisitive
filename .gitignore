@@ -3,6 +3,7 @@
 **/*_files/
 **/EDA/*.html
 **/reports/*.html
+**/NSFG_weight_adjustments/*.html
 .DS_Store
 .RData
 .Rhistory
