@@ -848,6 +848,20 @@ before_fem |>
 ```
 
 
+### Number of Respondents with Multiple Abortions in Analysis Period
+
+```{r}
+data_preg |>
+  filter(OUTCOME == 'INDUCED ABORTION') |>
+  group_by(CASEID) |>
+  summarize(`Abortions in Analysis Period` = n(), .groups = 'drop') |>
+  group_by(`Abortions in Analysis Period`) |>
+  count() |>
+  ungroup() |>
+  gt()
+```
+
+
 ### Abortions
 
 This survey will cover years 1974 to 1979.
