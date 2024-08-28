@@ -202,6 +202,7 @@ data_fem <- select(
     data_preg |>
       group_by(CASEID) |>
       summarize(
+        abortions_1974_1979 = sum(OUTCOME == 'INDUCED ABORTION' & Year %in% 1974:1979),
         abortion_1974_1979_age = case_when(
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1974:1979 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1974:1979 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
@@ -272,6 +273,8 @@ data_fem <- select(
     by = 'CASEID'
   ) |>
   mutate(
+    abortions_1974_1979 = coalesce(abortions_1974_1979, 0),
+    abortions_1974_1979_multiplier = max(abortions_1974_1979, 1),
     across(
       starts_with('birth_'),
       function(x) {
