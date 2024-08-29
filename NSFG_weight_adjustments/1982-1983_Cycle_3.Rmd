@@ -274,7 +274,11 @@ data_fem <- select(
   ) |>
   mutate(
     abortions_1974_1979 = coalesce(abortions_1974_1979, 0),
-    abortions_1974_1979_multiplier = max(abortions_1974_1979, 1),
+    abortions_1974_1979_multiplier = if_else(
+      abortions_1974_1979 >= 1,
+      abortions_1974_1979,
+      1
+    ),
     across(
       starts_with('birth_'),
       function(x) {
@@ -495,13 +499,16 @@ NVSS_age <- readRDS(here('data/NVSS/natality_by_age_1974-1994us.Rds')) |>
 source(here('R/rake2.R'))
   
 post_stratification_targets <- c(
-  demographic_targets,
+  list(guttmacher_APC_age),
   NVSS_age,
-  list(guttmacher_APC_age)
+  demographic_targets
 )
 
-weight_adj_strata <- list()
-weight_adj_strata[[length(post_stratification_targets)]] <- ~abortion_1974plus_age
+extras <- replicate(length(post_stratification_targets), NULL)
+extras[[1]] <- c(
+  ~abortions_1974_1979_multiplier,
+  ~abortion_1974plus_age
+)
 
 post_fem <- rake2(
   before_fem,
@@ -510,7 +517,7 @@ post_fem <- rake2(
     \(x) as.formula(paste0('~', colnames(x)[1]))
   ),
   population.margins = post_stratification_targets,
-  weight_adj_strata = weight_adj_strata,
+  extras = extras,
   control=list(maxit=50, epsilon=1, verbose=FALSE)
 )
 ```
@@ -668,131 +675,13 @@ data.frame(
 
 ```{r verify-post-stratification, dependson="create-survey-objects"}
 after_fem |>
-  group_by(race_age_marital_history) |>
-  summarize(
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    post_stratification_targets[[1]],
-    by = join_by(race_age_marital_history)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_1974_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    post_stratification_targets[[2]],
-    by = join_by(birth_1974_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_1975_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    post_stratification_targets[[3]],
-    by = join_by(birth_1975_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_1976_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    post_stratification_targets[[4]],
-    by = join_by(birth_1976_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_1977_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    post_stratification_targets[[5]],
-    by = join_by(birth_1977_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_1978_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    post_stratification_targets[[6]],
-    by = join_by(birth_1978_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_1979_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    post_stratification_targets[[7]],
-    by = join_by(birth_1979_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
   group_by(abortion_1974_1979_age) |>
   summarize(
     Count = n(),
-    Est = survey_total(one)
+    Est = survey_total(abortions_1974_1979_multiplier)
   ) |>
   full_join(
-    post_stratification_targets[[8]],
+    post_stratification_targets[[1]],
     by = join_by(abortion_1974_1979_age)
   ) |>
   mutate(
@@ -801,6 +690,39 @@ after_fem |>
   gt() |>
   fmt_number(c(Est, Freq), decimal = 0) |>
   fmt_number(c(Est_se, Diff), decimal = 2)
+
+check_poststratifications <- function(targets) {
+  variable_name <- colnames(targets)[1]
+
+  estimates <- after_fem |>
+    group_by(get(variable_name)) |>
+    summarize(
+      n = n(),
+      Est = survey_total(one)
+    )
+  
+  colnames(estimates)[1] <- variable_name
+  
+  full_join(
+    estimates,
+    targets,
+    by = variable_name
+  ) |>
+    mutate(
+      Diff = Est - Freq
+    ) |>
+    gt() |>
+    fmt_number(c(Est, Freq), decimal = 0) |>
+    fmt_number(c(Est_se, Diff), decimal = 2)
+}
+
+check_poststratifications(post_stratification_targets[[2]])
+check_poststratifications(post_stratification_targets[[3]])
+check_poststratifications(post_stratification_targets[[4]])
+check_poststratifications(post_stratification_targets[[5]])
+check_poststratifications(post_stratification_targets[[6]])
+check_poststratifications(post_stratification_targets[[7]])
+check_poststratifications(post_stratification_targets[[8]])
 ```
 
 
