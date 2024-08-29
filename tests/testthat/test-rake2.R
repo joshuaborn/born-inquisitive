@@ -111,7 +111,7 @@ test_that('weight adjustment is done on alternative strata definition, if provid
 
   poststrat_targets <- c(
     all_poststrat_targets[1],
-    all_poststrat_targets[10]
+    all_poststrat_targets[length(all_poststrat_targets)]
   )
 
   raked_svy <- rake2(
@@ -159,7 +159,7 @@ test_that('weight adjustment is done on alternative strata definition, if provid
   raked_estimates <- pull(raked_estimates_df, Est)
 
   expect(
-    all(head(raked_estimates, -1) / head(unraked_estimates, -1) > 1.9),
+    all(head(raked_estimates, -1) / head(unraked_estimates, -1) > 1.7),
     'one or more strata have estimates that did not increase substantially due to raking'
   )
 

@@ -7,7 +7,8 @@ source(here('tests/data/simple_survey.R'))
 
 
 get_target_totals <- function() {
-  readRDS(here('data/poststrat_targets_2015_2019.Rds'))[[10]]
+  poststrat_targets <- readRDS(here('data/poststrat_targets_2015_2019.Rds'))
+  poststrat_targets[[length(poststrat_targets)]]
 }
 
 
@@ -19,7 +20,7 @@ test_that('only svyrep.design objects are accepted', {
   expect_no_error(
     postStratify2(
       readRDS(here('data/NSFG_2015_2019_fem_svy.Rds')),
-      ~abortion_2013_2014_age,
+      ~abortion_2011_2014_age,
       get_target_totals(),
       ~abortion_age
     )
@@ -31,7 +32,7 @@ test_that('a svyrep.design object is returned', {
   expect_s3_class(
     postStratify2(
       readRDS(here('data/NSFG_2015_2019_fem_svy.Rds')),
-      ~abortion_2013_2014_age,
+      ~abortion_2011_2014_age,
       get_target_totals(),
       ~abortion_age
     ),
@@ -44,7 +45,7 @@ test_that('output data have same number of rows as input', {
   original_svy <- readRDS(here('data/NSFG_2015_2019_fem_svy.Rds'))
   adjusted_svy <- postStratify2(
     original_svy,
-    ~abortion_2013_2014_age,
+    ~abortion_2011_2014_age,
     get_target_totals(),
     ~abortion_age
   )
@@ -60,7 +61,7 @@ test_that('each replicate of weights is post-stratified separately', {
   original_svy <- readRDS(here('data/NSFG_2015_2019_fem_svy.Rds'))
   adjusted_svy <- postStratify2(
     original_svy,
-    ~abortion_2013_2014_age,
+    ~abortion_2011_2014_age,
     get_target_totals(),
     ~abortion_age
   )
@@ -77,7 +78,7 @@ test_that('each stratum level has its weights adjusted by the appropriate factor
 
   original_est_adj <- original_svy |>
     as_survey_rep() |>
-    group_by(abortion_2013_2014_age) |>
+    group_by(abortion_2011_2014_age) |>
     summarize(Freq = survey_total(vartype = NULL))
 
   target_totals <- get_target_totals()
@@ -85,11 +86,11 @@ test_that('each stratum level has its weights adjusted by the appropriate factor
   adj_factors <- original_est_adj |>
     inner_join(
       target_totals,
-      by = join_by(abortion_2013_2014_age),
+      by = join_by(abortion_2011_2014_age),
       suffix = c('_original', '_target')
     ) |>
     mutate(adj_factor = Freq_target / Freq_original) |>
-    select(abortion_2013_2014_age, adj_factor)
+    select(abortion_2011_2014_age, adj_factor)
 
   pop_targets <- original_svy |>
     as_survey_rep() |>
@@ -97,7 +98,7 @@ test_that('each stratum level has its weights adjusted by the appropriate factor
     summarize(Freq = survey_total(vartype = NULL)) |>
     inner_join(
       adj_factors |>
-        rename(abortion_age = abortion_2013_2014_age),
+        rename(abortion_age = abortion_2011_2014_age),
       by = join_by(abortion_age)
     ) |>
     mutate(
@@ -106,7 +107,7 @@ test_that('each stratum level has its weights adjusted by the appropriate factor
 
   adjusted_svy <- postStratify2(
     original_svy,
-    ~abortion_2013_2014_age,
+    ~abortion_2011_2014_age,
     target_totals,
     ~abortion_age
   )
@@ -126,7 +127,7 @@ test_that('each stratum level has its weights adjusted by the appropriate factor
 test_that('the adjustment factor is recorded in the result', {
   adjusted_svy <- postStratify2(
     readRDS(here('data/NSFG_2015_2019_fem_svy.Rds')),
-    ~abortion_2013_2014_age,
+    ~abortion_2011_2014_age,
     get_target_totals(),
     ~abortion_age
   )
@@ -142,7 +143,7 @@ test_that('different levels in targets and adj_factor_strata results in an error
   expect_error(
     postStratify2(
       readRDS(here('data/NSFG_2015_2019_fem_svy.Rds')),
-      ~abortion_2013_2014_age,
+      ~abortion_2011_2014_age,
       get_target_totals()[-2,],
       ~abortion_age
     ),
@@ -155,9 +156,9 @@ test_that('different levels in weight_adj_strata and adj_factor_strata results i
   expect_error(
     postStratify2(
       readRDS(here('data/NSFG_2015_2019_fem_svy.Rds')),
-      ~abortion_2013_2014_age,
+      ~abortion_2011_2014_age,
       get_target_totals(),
-      ~birth_2014_marital_status
+      ~HISPRACE2
     ),
     'The levels of the variable denoted by adj_factor_strata must be identical to the levels of the variable denoted by weight_adj_strata'
   )

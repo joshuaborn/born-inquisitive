@@ -73,44 +73,6 @@ NVSS_age_2011_2014 <- read_tsv(
   })
 
 
-NVSS_marital_status_2011_2014 <- read_tsv(
-    here('data/NVSS/2011-2014/marital_status.txt'),
-    name_repair = 'universal',
-    show_col_types = FALSE
-  ) |>
-  filter(!is.na(Year) | !is.na(Marital.Status)) |>
-  mutate(
-    Variable = paste0('birth_', Year, '_marital_status'),
-    Level = factor(
-      if_else(
-        !is.na(Marital.Status),
-        Marital.Status,
-        'Other'
-      ),
-      levels = c(
-        'Married',
-        'Unmarried',
-        'Other'
-      ),
-      ordered = TRUE
-    ),
-    Freq = if_else(
-      !is.na(Notes) & Notes == 'Total',
-      poststrat_pop_total_2015_2019 - Births,
-      Births
-    )
-  ) |>
-  select(Variable, Level, Freq) |>
-  group_by(Variable) |>
-  group_split() |>
-  lapply(function(tbl) {
-    variable_name <- first(pull(tbl, Variable))
-    tbl <- select(tbl, -Variable)
-    names(tbl) <- c(variable_name, 'Freq')
-    tbl
-  })
-
-
 guttmacher_APC_national <- read_csv(
     here('data/Guttmacher/NationalAndStatePregnancy_PublicUse.csv'),
     show_col_types = FALSE
@@ -125,8 +87,8 @@ guttmacher_APC_national <- read_csv(
     'abortionstotal')
 
 
-guttmacher_APC_2013_2014_age <- guttmacher_APC_national |>
-  filter(year %in% 2013:2014) |>
+guttmacher_APC_2011_2014_age <- guttmacher_APC_national |>
+  filter(year %in% 2011:2014) |>
   rename(
     `Other` = abortionstotal,
     `Under 20 years` = abortionslt20,
@@ -139,12 +101,12 @@ guttmacher_APC_2013_2014_age <- guttmacher_APC_national |>
   summarize(across(3:9, sum)) |>
   pivot_longer(
     cols = everything(),
-    names_to = 'abortion_2013_2014_age',
+    names_to = 'abortion_2011_2014_age',
     values_to = 'Freq'
   ) |>
   mutate(
-    abortion_2013_2014_age = factor(
-      abortion_2013_2014_age,
+    abortion_2011_2014_age = factor(
+      abortion_2011_2014_age,
       levels = c(
         'Under 20 years',
         '20-24 years',
@@ -157,19 +119,18 @@ guttmacher_APC_2013_2014_age <- guttmacher_APC_national |>
       ordered = TRUE
     ),
     Freq = if_else(
-      abortion_2013_2014_age == 'Other',
+      abortion_2011_2014_age == 'Other',
       poststrat_pop_total_2015_2019 - Freq,
       Freq
     )
   ) |>
-  arrange(abortion_2013_2014_age)
+  arrange(abortion_2011_2014_age)
 
 
 poststrat_targets_2015_2019 <- c(
   list(poststrat_pop_targets_2015_2019),
   NVSS_age_2011_2014,
-  NVSS_marital_status_2011_2014,
-  list(guttmacher_APC_2013_2014_age)
+  list(guttmacher_APC_2011_2014_age)
 )
 
 

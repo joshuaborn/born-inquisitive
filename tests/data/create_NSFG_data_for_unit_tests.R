@@ -97,8 +97,7 @@ NSFG_2015_2019_fem_data <- bind_rows(
       'Non-Hispanic White' = 2,
       'Non-Hispanic Black' = 3,
       'Non-Hispanic Other' = 4
-    ))),
-    any_abortion = !is.na(ABORTION) & ABORTION > 0
+    )))
   ) |>
   left_join(
     select(NSFG_2011_2019_wgts, CASEID, WGT2015_2019),
@@ -126,54 +125,6 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
     NSFG_2015_2019_preg_data |>
       group_by(CASEID) |>
       summarize(
-        birth_in_2014 =  if_else(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2014),
-            'Yes',
-            'No'
-          ),
-        birth_in_2013 = if_else(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2013),
-          'Yes',
-          'No'
-        ),
-        birth_in_2012 = if_else(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2012),
-          'Yes',
-          'No'
-        ),
-        birth_in_2011 = if_else(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2011),
-          'Yes',
-          'No'
-        ),
-        abortions_in_2014 = sum(
-          OUTCOME == 'INDUCED ABORTION' & Year == 2014,
-          na.rm = TRUE
-        ),
-        abortions_in_2013 = sum(
-          OUTCOME == 'INDUCED ABORTION' & Year == 2013,
-          na.rm = TRUE
-        ),
-        birth_2014_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2014) ~ 'Unmarried',
-          .default = 'Other'
-        ),
-        birth_2013_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2013 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2013) ~ 'Unmarried',
-          .default = 'Other'
-        ),
-        birth_2012_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2012 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2012) ~ 'Unmarried',
-          .default = 'Other'
-        ),
-        birth_2011_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2011 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2011) ~ 'Unmarried',
-          .default = 'Other'
-        ),
         birth_2014_age = case_when(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & AGEPREG < 20) ~ 'Under 20 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2014 & AGEPREG <= 24) ~ '20-24 years',
@@ -219,14 +170,14 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
           any(OUTCOME == 'INDUCED ABORTION' & AGEPREG >= 40) ~ '40 years and over',
           .default = 'Other'
         ),
-        abortion_2013_2014_age = factor(
+        abortion_2011_2014_age = factor(
           case_when(
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG < 20) ~ 'Under 20 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 24) ~ '20-24 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 29) ~ '25-29 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 34) ~ '30-34 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG <= 39) ~ '35-39 years',
-            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2013:2014 & AGEPREG >= 40) ~ '40 years and over',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG < 20) ~ 'Under 20 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 24) ~ '20-24 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 29) ~ '25-29 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 34) ~ '30-34 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG <= 39) ~ '35-39 years',
+            any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014 & AGEPREG >= 40) ~ '40 years and over',
             .default = 'Other'
           ),
           ordered = TRUE,
@@ -238,7 +189,8 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
             '35-39 years',
             '40 years and over'
           )
-        )
+        ),
+        abortions_2011_2014 = sum(OUTCOME == 'INDUCED ABORTION' & Year %in% 2011:2014)
       ),
     by = 'CASEID'
   ) |>
@@ -262,25 +214,7 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
       }
     ),
     across(
-      ends_with('_marital_status'),
-      function(x) {
-        factor(
-          coalesce(x, 'Other'),
-          ordered = TRUE,
-          levels = c(
-            'Married',
-            'Unmarried',
-            'Other'
-          )
-        )
-      }
-    ),
-    across(
-      starts_with('birth_in_'),
-      \(x) factor(coalesce(x, 'No'), levels = c('Yes', 'No'))
-    ),
-    across(
-      starts_with('abortions_in_'),
+      starts_with('abortions_'),
       \(x) coalesce(x, 0)
     )
   )
@@ -293,7 +227,7 @@ NSFG_2015_2019_fem_svy <- as.svrepdesign(
     weights = ~WGT2015_2019,
     nest = TRUE
   ),
-  type = 'BRR'
+  type = 'JKn'
 )
 
 saveRDS(NSFG_2015_2019_fem_svy, here('data/NSFG_2015_2019_fem_svy.Rds'))
