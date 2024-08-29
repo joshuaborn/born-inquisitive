@@ -216,7 +216,8 @@ NSFG_2015_2019_for_calibration <- NSFG_2015_2019_fem_data |>
     across(
       starts_with('abortions_'),
       \(x) coalesce(x, 0)
-    )
+    ),
+    abortions_2011_2014_multiplier = if_else(abortions_2011_2014 < 1, 1, abortions_2011_2014)
   )
 
 NSFG_2015_2019_fem_svy <- as.svrepdesign(

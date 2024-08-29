@@ -3,7 +3,9 @@ library(survey)
 
 #' Post-stratification in which the post-strata assignments used to calculate
 #' the adjustment factors and the post-strata assignments used for weight
-#' adjustment differ
+#' adjustment differ. Additionally, estimates for calculating the
+#' post-stratification adjustment are made using `svyby` and a numeric variable
+#' that serves as a multiplier.
 #'
 #' @param svy A svyrep.design object as created by `survey` or `srvyr` packages
 #' @param adj_factor_strata Assignment of observations to strata that are used
@@ -16,7 +18,7 @@ library(survey)
 #' @value A svyrep.design object with weights adjusted
 #'
 
-postStratify2 <- function(svy, adj_factor_strata, targets, weight_adj_strata, compress=NULL, verbose=FALSE) {
+postStratify2 <- function(svy, adj_factor_strata, multiplier, targets, weight_adj_strata, compress=NULL, verbose=FALSE) {
 
   if (!inherits(svy, 'svyrep.design')) {
     stop('Parameter svy must be of class svyrep.design')
@@ -42,18 +44,25 @@ postStratify2 <- function(svy, adj_factor_strata, targets, weight_adj_strata, co
     stop('The levels of the variable denoted by adj_factor_strata must be identical to the levels of the variable denoted by weight_adj_strata')
   }
 
-  estimates <- svytotal(adj_factor_strata, svy, return.replicates = TRUE)
-  estimates_row_labels <- names(estimates$mean)
-  targets_row_labels <- paste0(adj_factor_col, as.character(targets[[adj_factor_col]]))
+  estimates <- svyby(
+    multiplier,
+    adj_factor_strata,
+    svy,
+    svytotal,
+    return.replicates = TRUE
+  )
 
-  if (!isTRUE(all.equal(estimates_row_labels, targets_row_labels))) {
+  estimates_levels <- estimates[,1]
+  targets_levels <- targets[[adj_factor_col]]
+
+  if (!isTRUE(all.equal(estimates_levels, targets_levels))) {
     stop('The levels specified in the data set and those specified target totals must be identical')
   }
 
   original_repfactors <- weights(svy, 'replication')
 
-  adj_factors_main <- targets$Freq / as.vector(estimates$mean)
-  adj_factors_replicates <- targets$Freq / t(as.matrix(estimates$replicates))
+  adj_factors_main <- targets$Freq / estimates[,2]
+  adj_factors_replicates <- targets$Freq / t(as.matrix(attr(estimates, 'replicates')))
   n_replicates <- ncol(adj_factors_replicates)
   attributes(adj_factors_replicates) <- NULL
   adj_factors_replicates <- matrix(adj_factors_replicates, ncol = n_replicates)

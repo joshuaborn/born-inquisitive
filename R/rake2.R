@@ -15,8 +15,8 @@ source(here('R/postStratify2.R'))
 #'
 #' @param design A svyrep.design object as created by `survey` or `srvyr` packages
 #' @param sample.margins list of formulas or data frames describing sample margins, which must not contain missing values
-#' @param adjustment.strata list of formulas of post-strata to be used for the actual weight adjustment, with `NULL` elements in list where post-strata are identical to those used in `sample.margins`
 #' @param population.margins list of tables or data frames describing corresponding population margins
+#' @param extras list of pairs of formula specifying 1. post-strata to be used for the actual weight adjustment and 2. multiplication factor for estimates, with `NULL` elements in list where post-strata are identical to those used in `sample.margins`
 #' @param control	`maxit` controls the number of iterations. Convergence is declared if the maximum change in a table entry is less than `epsilon`. If `epsilon`<1 it is taken to be a fraction of the total sampling weight.
 #' @param compress If `design` has replicate weights, attempt to compress the new replicate weight matrix? When `NULL`, will attempt to compress if the original weight matrix was compressed
 #'
@@ -24,7 +24,7 @@ source(here('R/postStratify2.R'))
 #'
 
 rake2 <- function(design,
-  sample.margins, population.margins, weight_adj_strata=NULL,
+  sample.margins, population.margins, extras=NULL,
   control=list(maxit=10, epsilon=1, verbose=FALSE),
   compress=NULL) {
 
@@ -78,12 +78,13 @@ rake2 <- function(design,
       design$postStrata <- NULL
 
       for(i in 1:number_of_margins) {
-        if (!is.null(weight_adj_strata) & !is.null(weight_adj_strata[[i]])) {
+        if (!is.null(extras) & !is.null(extras[[i]])) {
           design <- postStratify2(
             design,
             strata[[i]],
+            extras[[i]][[1]],
             population.margins[[i]],
-            weight_adj_strata[[i]],
+            extras[[i]][[2]],
             compress=FALSE,
             verbose=control$verbose
           )

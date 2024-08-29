@@ -121,7 +121,10 @@ test_that('weight adjustment is done on alternative strata definition, if provid
       \(x) as.formula(paste0('~', colnames(x)[1]))
     ),
     population.margins = poststrat_targets,
-    weight_adj_strata = list(NULL, ~abortion_age),
+    extras = list(
+      NULL,
+      c(~abortions_2011_2014_multiplier, ~abortion_age)
+    ),
     control = list(maxit=20, epsilon=1, verbose=FALSE)
   )
 
