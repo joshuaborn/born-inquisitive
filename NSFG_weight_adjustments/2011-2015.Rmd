@@ -165,18 +165,6 @@ data_preg <- bind_rows(
       'Non-Hispanic Black' = 3,
       'Non-Hispanic Other' = 4
     ))),
-    age_group = cut(
-      as.integer(AGEPREG / 100),
-      breaks = c(0, seq(20, 35, 5), Inf),
-      right = FALSE,
-      labels = c(
-        "Under 20 years",
-        "20-24 years",
-        "25-29 years",
-        "30-34 years",
-        "35 years and over"
-      )
-    ),
     age_group6 = cut(
       as.integer(AGEPREG / 100),
       breaks = c(0, seq(20, 40, 5), Inf),
@@ -211,9 +199,9 @@ data_preg <- bind_rows(
       PRGLNGTH %in% 18:20 ~ '18-20', 
       PRGLNGTH %in% 21:95 ~ '>=21'  
     ),
-    birth = if_else(
+    births = if_else(
       OUTCOME == 'LIVE BIRTH',
-      1,
+      NBRNLV_S,
       0
     ),
     abortion = if_else(
@@ -229,7 +217,6 @@ data_preg <- bind_rows(
     CASEID
   ) |>
   mutate(
-    births = cumsum(birth),
     previous_births = lag(births, default = 0),
     previous_births_topcoded4 = factor(if_else(
       previous_births >= 4,
@@ -298,6 +285,7 @@ data_fem <- bind_rows(
     data_preg |>
       group_by(CASEID) |>
       summarize(
+        abortions_2006_2010 = sum(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010),
         abortion_2006_2010_age = case_when(
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy < 20) ~ 'Under 20 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
@@ -312,31 +300,6 @@ data_fem <- bind_rows(
           any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
-          .default = 'Other'
-        ),
-        birth_2006_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006) ~ 'Unmarried',
-          .default = 'Other'
-        ),
-        birth_2007_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007) ~ 'Unmarried',
-          .default = 'Other'
-        ),
-        birth_2008_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008) ~ 'Unmarried',
-          .default = 'Other'
-        ),
-        birth_2009_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009) ~ 'Unmarried',
-          .default = 'Other'
-        ),
-        birth_2010_marital_status =  case_when(
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & FMAROUT5 == 'MARRIED') ~ 'Married',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010) ~ 'Unmarried',
           .default = 'Other'
         ),
         birth_2006_age = case_when(
@@ -383,6 +346,12 @@ data_fem <- bind_rows(
     by = 'CASEID'
   ) |>
   mutate(
+    abortions_2006_2010 = coalesce(abortions_2006_2010, 0),
+    abortions_2006_2010_multiplier = if_else(
+      abortions_2006_2010 >= 1,
+      abortions_2006_2010,
+      1
+    ),
     across(
       ends_with('_age'),
       function(x) {
@@ -397,20 +366,6 @@ data_fem <- bind_rows(
             'Other'
           ),
           order = TRUE
-        )
-      }
-    ),
-    across(
-      ends_with('_marital_status'),
-      function(x) {
-        factor(
-          coalesce(x, 'Other'),
-          ordered = TRUE,
-          levels = c(
-            'Married',
-            'Unmarried',
-            'Other'
-          )
         )
       }
     ),
@@ -564,79 +519,35 @@ NVSS_age <- bind_rows(
     names(tbl) <- c(variable_name, 'Freq')
     tbl
   })
-
-
-NVSS_marital_status <- bind_rows(
-    read_tsv(
-      here('data/NVSS/2006-2010/marital_status.txt'),
-      name_repair = 'universal',
-      show_col_types = FALSE
-    ),
-    read_tsv(
-      here('data/NVSS/2006-2010/marital_status_2006.txt'),
-      name_repair = 'universal',
-      show_col_types = FALSE
-    )
-  ) |>
-  filter(!is.na(Year) | !is.na(Marital.Status)) |>
-  mutate(
-    Variable = paste0('birth_', Year, '_marital_status'),
-    Level = factor(
-      if_else(
-        !is.na(Marital.Status),
-        Marital.Status,
-        'Other'
-      ),
-      levels = c(
-        'Married',
-        'Unmarried',
-        'Other'
-      ),
-      ordered = TRUE
-    ),
-    Freq = if_else(
-      !is.na(Notes) & Notes == 'Total',
-      census_pop_total - Births,
-      Births
-    )
-  ) |>
-  select(Variable, Level, Freq) |>
-  group_by(Variable) |>
-  group_split() |>
-  lapply(function(tbl) {
-    variable_name <- first(pull(tbl, Variable))
-    tbl <- select(tbl, -Variable)
-    names(tbl) <- c(variable_name, 'Freq')
-    tbl
-  })
-
-
-poststrat_targets <- c(
-  list(census_pop_targets),
-  NVSS_age,
-  NVSS_marital_status,
-  list(guttmacher_APC_age)
-)
 ```
 
 
 ### Post-Stratifications
 
-```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets"), eval=FALSE}
+```{r rake-post-stratifications, dependson=c("data-preparation", "create-post-stratification-targets")}
 source(here('R/rake2.R'))
 
-weight_adj_strata <- list()
-weight_adj_strata[[12]] <- ~abortion_2006plus_age
+post_stratification_targets <- c(
+  list(guttmacher_APC_age),
+  NVSS_age,
+  list(census_pop_targets)
+)
+
+extras <- replicate(length(post_stratification_targets), NULL)
+extras[[1]] <- c(
+  ~abortions_2006_2010_multiplier,
+  ~abortion_2006plus_age
+)
 
 post_fem <- rake2(
   before_fem,
   sample.margins = lapply(
-    poststrat_targets,
+    post_stratification_targets,
     \(x) as.formula(paste0('~', colnames(x)[1]))
   ),
-  population.margins = poststrat_targets,
-  weight_adj_strata = weight_adj_strata,
-  control=list(maxit=25, epsilon=1, verbose=TRUE)
+  population.margins = post_stratification_targets,
+  extras = extras,
+  control=list(maxit=25, epsilon=1, verbose=FALSE)
 )
 ```
 
@@ -762,35 +673,6 @@ data.frame(
 ) |>
   gt() |>
   fmt_number(decimal = 0)
-
-entropy_extreme_after |>
-  anti_join(
-    entropy_extreme_before,
-    by = join_by(CASEID)
-  ) |>
-  left_join(
-    before_fem$variables |>
-      select(
-        CASEID,
-        WGT2011_2015,
-        abortion_2006_2010_age,
-        abortion_2006plus_age,
-        poststrat_age_race,
-        birth_2010_marital_status,
-        birth_2009_marital_status,
-        birth_2008_marital_status,
-        birth_2007_marital_status,
-        birth_2006_marital_status,
-        birth_2010_age,
-        birth_2009_age,
-        birth_2008_age,
-        birth_2007_age,
-        birth_2006_age
-      ),
-    by = join_by(CASEID)
-  ) |> 
-  gt() |>
-  fmt_number(contains('WGT'), decimal = 0)
 ```
 
 
@@ -825,35 +707,6 @@ data.frame(
 ) |>
   gt() |>
   fmt_number(decimal = 0)
-
-iqr_extreme_after |>
-  anti_join(
-    iqr_extreme_before,
-    by = join_by(CASEID)
-  ) |>
-  left_join(
-    before_fem$variables |>
-      select(
-        CASEID,
-        WGT2011_2015,
-        abortion_2006_2010_age,
-        abortion_2006plus_age,
-        poststrat_age_race,
-        birth_2010_marital_status,
-        birth_2009_marital_status,
-        birth_2008_marital_status,
-        birth_2007_marital_status,
-        birth_2006_marital_status,
-        birth_2010_age,
-        birth_2009_age,
-        birth_2008_age,
-        birth_2007_age,
-        birth_2006_age
-      ),
-    by = join_by(CASEID)
-  ) |>
-  gt() |>
-  fmt_number(contains('WGT'), decimal = 0)
 ```
 
 
@@ -861,199 +714,13 @@ iqr_extreme_after |>
 
 ```{r verify-post-stratification, dependson="create-survey-objects"}
 after_fem |>
-  group_by(poststrat_age_race) |>
-  summarize(
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[1]],
-    by = join_by(poststrat_age_race)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2006_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[2]],
-    by = join_by(birth_2006_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2007_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[3]],
-    by = join_by(birth_2007_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2008_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[4]],
-    by = join_by(birth_2008_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2009_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[5]],
-    by = join_by(birth_2009_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2010_age) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[6]],
-    by = join_by(birth_2010_age)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2006_marital_status) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[7]],
-    by = join_by(birth_2006_marital_status)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2007_marital_status) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[8]],
-    by = join_by(birth_2007_marital_status)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2008_marital_status) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[9]],
-    by = join_by(birth_2008_marital_status)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2009_marital_status) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[10]],
-    by = join_by(birth_2009_marital_status)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
-  group_by(birth_2010_marital_status) |>
-  summarize(
-    Count = n(),
-    Est = survey_total(one)
-  ) |>
-  full_join(
-    poststrat_targets[[11]],
-    by = join_by(birth_2010_marital_status)
-  ) |>
-  mutate(
-    Diff = Est - Freq
-  ) |>
-  gt() |>
-  fmt_number(c(Est, Freq), decimal = 0) |>
-  fmt_number(c(Est_se, Diff), decimal = 2)
-
-after_fem |>
   group_by(abortion_2006_2010_age) |>
   summarize(
     Count = n(),
-    Est = survey_total(one)
+    Est = survey_total(abortions_2006_2010_multiplier)
   ) |>
   full_join(
-    poststrat_targets[[12]],
+    post_stratification_targets[[1]],
     by = join_by(abortion_2006_2010_age)
   ) |>
   mutate(
@@ -1062,6 +729,39 @@ after_fem |>
   gt() |>
   fmt_number(c(Est, Freq), decimal = 0) |>
   fmt_number(c(Est_se, Diff), decimal = 2)
+
+check_poststratifications <- function(targets) {
+  variable_name <- colnames(targets)[1]
+
+  estimates <- after_fem |>
+    group_by(get(variable_name)) |>
+    summarize(
+      n = n(),
+      Est = survey_total(one)
+    )
+  
+  colnames(estimates)[1] <- variable_name
+  
+  full_join(
+    estimates,
+    targets,
+    by = variable_name
+  ) |>
+    mutate(
+      Diff = Est - Freq
+    ) |>
+    gt() |>
+    fmt_number(c(Est, Freq), decimal = 0) |>
+    fmt_number(c(Est_se, Diff), decimal = 2)
+}
+
+check_poststratifications(post_stratification_targets[[2]])
+check_poststratifications(post_stratification_targets[[3]])
+check_poststratifications(post_stratification_targets[[4]])
+check_poststratifications(post_stratification_targets[[5]])
+check_poststratifications(post_stratification_targets[[6]])
+check_poststratifications(post_stratification_targets[[7]])
+
 ```
 
 
@@ -1112,9 +812,385 @@ before_fem |>
 ```
 
 
-### Counts of Pregnancies
+### Abortions
 
-#### By Year
+This survey will cover years 2006 to 2010.
+
+```{r abortions, dependson=c("create-post-stratification-targets", "create-survey-objects")}
+guttmacher_APC_national |>
+  filter(year %in% 2006:2010) |>
+  summarize(Abortions = sum(abortionstotal)) |>
+  cbind(
+    before_preg |>
+      group_by(Year) |>
+      summarize(
+        n = unweighted(sum(abortion)),
+        Est = survey_total(abortion, vartype = 'ci')
+      ) |>
+      filter(Year %in% 2006:2010) |>
+      select(-Year) |>
+      summarize(across(everything(), sum)) |>
+      rename(
+        Est_Before = Est,
+        Est_Before_low = Est_low,
+        Est_Before_upp = Est_upp
+      )
+  ) |>
+  cbind(
+    after_preg |>
+      group_by(Year) |>
+      summarize(
+        Est = survey_total(abortion, vartype = 'ci')
+      ) |>
+      filter(Year %in% 2006:2010) |>
+      select(-Year) |>
+      summarize(across(everything(), sum)) |>
+      rename(
+        Est_After = Est,
+        Est_After_low = Est_low,
+        Est_After_upp = Est_upp
+      )
+  ) |>
+  mutate(
+    Bias_Before = Est_Before - Abortions,
+    Rel_Bias_Before = Bias_Before / Abortions,
+    `Covers_Before?` = Abortions <= Est_Before_upp & Abortions >= Est_Before_low,
+    Bias_After = Est_After - Abortions,
+    Rel_Bias_After = Bias_After / Abortions,
+    `Covers_After?` = Abortions <= Est_After_upp & Abortions >= Est_After_low,
+    Bias_Diff = abs(Bias_After) - abs(Bias_Before),
+    Est_Diff = Est_After - Est_Before,
+    Rel_Bias_Diff = abs(Rel_Bias_After) - abs(Rel_Bias_Before),
+    `Fixed?` = if_else(
+        !`Covers_Before?`,
+        `Covers_After?`,
+        NA
+    ),
+    `Broke?` = `Covers_Before?` & !`Covers_After?`
+  ) |>
+  select(
+    n,
+    Abortions,
+    Est_Before,
+    #Est_Before_low,
+    #Est_Before_upp,
+    Est_After,
+    Est_After_low,
+    Est_After_upp,
+    #Est_Diff,
+    #Bias_Before,
+    #Bias_After,
+    #Bias_Diff,
+    Rel_Bias_Before,
+    Rel_Bias_After,
+    #Rel_Bias_Diff,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
+  ) |>
+  gt() |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
+```
+
+
+### Abortions by Age
+
+This survey will cover years 2006 to 2010.
+
+```{r abortions-by-age, dependson=c("create-post-stratification-targets", "create-survey-objects")}
+guttmacher_APC_national |>
+  filter(year %in% 2006:2010) |>
+  select(-abortionstotal) |>
+  summarize(across(starts_with('abortions'), sum)) |>
+  rename(
+    `Under 20 years` = abortionslt20,
+    `20-24 years` = abortions2024,
+    `25-29 years` = abortions2529,
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539,
+    `40 years and over` = abortions40plus
+  ) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = 'age_group6',
+    values_to = 'Abortions'
+  ) |>
+  inner_join(
+    before_preg |>
+      group_by(age_group6, Year) |>
+      summarize(
+        n = unweighted(sum(abortion)),
+        Est = survey_total(abortion, vartype = 'ci')
+      ) |>
+      filter(Year %in% 2006:2010) |>
+      select(-Year) |>
+      summarize(across(c('n', starts_with('Est')), sum)) |>
+      rename(
+        Est_Before = Est,
+        Est_Before_low = Est_low,
+        Est_Before_upp = Est_upp
+      ),
+    by = join_by(age_group6)
+  ) |>
+  inner_join(
+    after_preg |>
+      group_by(age_group6, Year) |>
+      summarize(
+        Est = survey_total(abortion, vartype = 'ci')
+      ) |>
+      filter(Year %in% 2006:2010) |>
+      select(-Year) |>
+      summarize(across(starts_with('Est'), sum)) |>
+      rename(
+        Est_After = Est,
+        Est_After_low = Est_low,
+        Est_After_upp = Est_upp
+      ),
+    by = join_by(age_group6)
+  ) |>
+  mutate(
+    Bias_Before = Est_Before - Abortions,
+    Rel_Bias_Before = Bias_Before / Abortions,
+    `Covers_Before?` = Abortions <= Est_Before_upp & Abortions >= Est_Before_low,
+    Bias_After = Est_After - Abortions,
+    Rel_Bias_After = Bias_After / Abortions,
+    `Covers_After?` = Abortions <= Est_After_upp & Abortions >= Est_After_low,
+    Bias_Diff = abs(Bias_After) - abs(Bias_Before),
+    Est_Diff = Est_After - Est_Before,
+    Rel_Bias_Diff = abs(Rel_Bias_After) - abs(Rel_Bias_Before),
+    `Fixed?` = if_else(
+        !`Covers_Before?`,
+        `Covers_After?`,
+        NA
+    ),
+    `Broke?` = `Covers_Before?` & !`Covers_After?`
+  ) |>
+  select(
+    age_group6,
+    n,
+    Abortions,
+    Est_Before,
+    #Est_Before_low,
+    #Est_Before_upp,
+    Est_After,
+    Est_After_low,
+    Est_After_upp,
+    #Est_Diff,
+    #Bias_Before,
+    #Bias_After,
+    #Bias_Diff,
+    Rel_Bias_Before,
+    Rel_Bias_After,
+    #Rel_Bias_Diff,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
+  ) |>
+  gt() |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
+```
+
+
+### Abortions by Year
+
+This survey will cover years 2006 to 2010.
+
+```{r abortions-by-year, dependson=c("create-post-stratification-targets", "create-survey-objects")}
+guttmacher_APC_national |>
+  filter(year %in% 2006:2015) |>
+  rename(Year = year, Abortions = abortionstotal) |>
+  select(Year, Abortions) |>
+  left_join(
+    before_preg |>
+      group_by(Year) |>
+      summarize(
+        n = unweighted(sum(abortion)),
+        Est = survey_total(abortion, vartype = 'ci')
+      ) |>
+      filter(Year %in% 2006:2015) |>
+      rename(
+        Est_Before = Est,
+        Est_Before_low = Est_low,
+        Est_Before_upp = Est_upp
+      ),
+    by = 'Year'
+  ) |>
+  left_join(
+    after_preg |>
+      group_by(Year) |>
+      summarize(
+        n = unweighted(sum(abortion)),
+        Est = survey_total(abortion, vartype = 'ci')
+      ) |>
+      filter(Year %in% 2006:2015) |>
+      rename(
+        Est_After = Est,
+        Est_After_low = Est_low,
+        Est_After_upp = Est_upp
+      ),
+    by = 'Year',
+    suffix = c('.before', '.after')
+  ) |>
+  mutate(
+    unequal_n = n.before != n.after,
+    Bias_Before = Est_Before - Abortions,
+    Rel_Bias_Before = Bias_Before / Abortions,
+    `Covers_Before?` = Abortions <= Est_Before_upp & Abortions >= Est_Before_low,
+    Bias_After = Est_After - Abortions,
+    Rel_Bias_After = Bias_After / Abortions,
+    `Covers_After?` = Abortions <= Est_After_upp & Abortions >= Est_After_low,
+    Bias_Diff = abs(Bias_After) - abs(Bias_Before),
+    Est_Diff = Est_After - Est_Before,
+    Rel_Bias_Diff = abs(Rel_Bias_After) - abs(Rel_Bias_Before),
+    `Fixed?` = if_else(
+        !`Covers_Before?`,
+        `Covers_After?`,
+        NA
+    ),
+    `Broke?` = `Covers_Before?` & !`Covers_After?`
+  ) |>
+  rename(
+    n = n.after
+  ) |>
+  select(
+    Year,
+    n,
+    Abortions,
+    Est_Before,
+    #Est_Before_low,
+    #Est_Before_upp,
+    Est_After,
+    Est_After_low,
+    Est_After_upp,
+    #Est_Diff,
+    #Bias_Before,
+    #Bias_After,
+    #Bias_Diff,
+    Rel_Bias_Before,
+    Rel_Bias_After,
+    #Rel_Bias_Diff,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
+  ) |>
+  gt() |>
+  fmt_number(-Year, decimal = 0) |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
+```
+
+
+### Abortions by Year by Age
+
+This survey will cover years 2006 to 2010.
+
+```{r abortions-by-year-by-age, dependson=c("create-post-stratification-targets", "create-survey-objects")}
+guttmacher_APC_national |>
+  filter(year %in% 2006:2015) |>
+  rename(
+    Year = year,
+    `Under 20 years` = abortionslt20,
+    `20-24 years` = abortions2024,
+    `25-29 years` = abortions2529,
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539,
+    `40 years and over` = abortions40plus
+  ) |>
+  pivot_longer(
+    cols = contains('years'),
+    names_to = 'Level',
+    values_to = 'Abortions'
+  ) |>
+  select(Year, Level, Abortions) |>
+  left_join(
+    before_preg |>
+      group_by(Year, age_group6) |>
+      summarize(
+        n = unweighted(sum(abortion)),
+        Est = survey_total(abortion, vartype = 'ci')
+      ) |>
+      filter(Year %in% 2006:2015) |>
+      rename(
+        Level = age_group6,
+        Est_Before = Est,
+        Est_Before_low = Est_low,
+        Est_Before_upp = Est_upp
+      ),
+    by = c('Year', 'Level')
+  ) |>
+  left_join(
+    after_preg |>
+      group_by(Year, age_group6) |>
+      summarize(
+        n = unweighted(sum(abortion)),
+        Est = survey_total(abortion, vartype = 'ci')
+      ) |>
+      filter(Year %in% 2006:2015) |>
+      rename(
+        Level = age_group6,
+        Est_After = Est,
+        Est_After_low = Est_low,
+        Est_After_upp = Est_upp
+      ),
+    by = c('Year', 'Level'),
+    suffix = c('.before', '.after')
+  ) |>
+  mutate(
+    unequal_n = n.before != n.after,
+    Bias_Before = Est_Before - Abortions,
+    Rel_Bias_Before = Bias_Before / Abortions,
+    `Covers_Before?` = Abortions <= Est_Before_upp & Abortions >= Est_Before_low,
+    Bias_After = Est_After - Abortions,
+    Rel_Bias_After = Bias_After / Abortions,
+    `Covers_After?` = Abortions <= Est_After_upp & Abortions >= Est_After_low,
+    Bias_Diff = abs(Bias_After) - abs(Bias_Before),
+    Est_Diff = Est_After - Est_Before,
+    Rel_Bias_Diff = abs(Rel_Bias_After) - abs(Rel_Bias_Before),
+    `Fixed?` = if_else(
+        !`Covers_Before?`,
+        `Covers_After?`,
+        NA
+    ),
+    `Broke?` = `Covers_Before?` & !`Covers_After?`
+  ) |>
+  rename(
+    n = n.after
+  ) |>
+  select(
+    Year,
+    Level,
+    n,
+    Abortions,
+    Est_Before,
+    #Est_Before_low,
+    #Est_Before_upp,
+    Est_After,
+    Est_After_low,
+    Est_After_upp,
+    #Est_Diff,
+    #Bias_Before,
+    #Bias_After,
+    #Bias_Diff,
+    Rel_Bias_Before,
+    Rel_Bias_After,
+    #Rel_Bias_Diff,
+    #`Unc_Covers?`,
+    #`Cal_Covers?`,
+    `Fixed?`,
+    `Broke?`
+  ) |>
+  group_by(Year) |>
+  gt() |>
+  fmt_number(-Year, decimal = 0) |>
+  fmt_percent(contains('Rel_Bias'), decimal = 1)
+```
+
+
+### Pregnancies by Year
+
+This survey will cover years 2006 to 2010.
 
 ```{r pregnancies-per-year, dependson="create-survey-objects"}
 bind_rows(list(
@@ -1178,6 +1254,7 @@ bind_rows(list(
     )
   ) |>
   arrange(Year, post_strat) |>
+  group_by(Year) |>
   gt() |>
   fmt_number(
     starts_with('Freq'),
@@ -1189,7 +1266,9 @@ bind_rows(list(
 ```
 
 
-#### By Year and Intent
+### Pregnancies by Year and Intent
+
+This survey will cover years 2006 to 2010.
 
 ```{r pregnancies-per-year-by-intent, dependson="create-survey-objects"}
 bind_rows(list(
@@ -1253,6 +1332,7 @@ bind_rows(list(
     )
   ) |>
   arrange(Year, intent, post_strat) |>
+  group_by(Year) |>
   gt() |>
   fmt_number(
     starts_with('Freq'),
@@ -1264,7 +1344,9 @@ bind_rows(list(
 ```
 
 
-#### By Year and Outcome
+### Pregnancies by Year and Outcome
+
+This survey will cover years 2006 to 2010.
 
 ```{r pregnancies-per-year-by-outcome, dependson="create-survey-objects"}
 bind_rows(list(
@@ -1328,6 +1410,7 @@ bind_rows(list(
     )
   ) |>
   arrange(Year, OUTCOME, post_strat) |>
+  group_by(Year) |>
   gt() |>
   fmt_number(
     starts_with('Freq'),
@@ -1519,6 +1602,8 @@ births_estimates_after <- bind_rows(
 
 #### Comparisons Births Estimates with Test Harness
 
+This survey will cover years 2006 to 2010.
+
 ```{r compare-births-estimates-with-test-harness, dependson=c("create-births-test-harness", "estimate-births")}
 full_join(
   test_harness_births,
@@ -1575,6 +1660,7 @@ full_join(
     `Fixed?`,
     `Broke?`
   ) |>
+  group_by(Year) |>
   gt() |>
   fmt_number(-Year, decimal = 0) |>
   fmt_percent(contains('Rel_Bias'), decimal = 1)
@@ -1870,6 +1956,8 @@ abortions_estimates_after <- bind_rows(
 
 #### Comparison of Abortions Estimates with Test Harness
 
+This survey will cover years 2006 to 2010.
+
 ```{r compare-abortions-estimates-with-test-harness, dependson=c("create-abortions-test-harness", "estimate-abortions")}
 left_join(
   test_harness_abortions,
@@ -1927,191 +2015,7 @@ left_join(
     `Fixed?`,
     `Broke?`
   ) |>
-  gt() |>
-  fmt_number(-Year, decimal = 0) |>
-  fmt_percent(contains('Rel_Bias'), decimal = 1)
-```
-
-
-#### Abortions by Year by Age
-
-```{r abortions-by-year-by-age, dependson=c("create-post-stratification-targets", "create-survey-objects")}
-guttmacher_APC_national |>
-  filter(year %in% 2006:2015) |>
-  rename(Year = year, Abortions = abortionstotal) |>
-  select(Year, Abortions) |>
-  left_join(
-    before_preg |>
-      group_by(Year) |>
-      summarize(
-        n = unweighted(sum(abortion)),
-        Est = survey_total(abortion, vartype = 'ci')
-      ) |>
-      filter(Year %in% 2006:2015) |>
-      rename(
-        Est_Before = Est,
-        Est_Before_low = Est_low,
-        Est_Before_upp = Est_upp
-      ),
-    by = 'Year'
-  ) |>
-  left_join(
-    after_preg |>
-      group_by(Year) |>
-      summarize(
-        n = unweighted(sum(abortion)),
-        Est = survey_total(abortion, vartype = 'ci')
-      ) |>
-      filter(Year %in% 2006:2015) |>
-      rename(
-        Est_After = Est,
-        Est_After_low = Est_low,
-        Est_After_upp = Est_upp
-      ),
-    by = 'Year',
-    suffix = c('.before', '.after')
-  ) |>
-  mutate(
-    unequal_n = n.before != n.after,
-    Bias_Before = Est_Before - Abortions,
-    Rel_Bias_Before = Bias_Before / Abortions,
-    `Covers_Before?` = Abortions <= Est_Before_upp & Abortions >= Est_Before_low,
-    Bias_After = Est_After - Abortions,
-    Rel_Bias_After = Bias_After / Abortions,
-    `Covers_After?` = Abortions <= Est_After_upp & Abortions >= Est_After_low,
-    Bias_Diff = abs(Bias_After) - abs(Bias_Before),
-    Est_Diff = Est_After - Est_Before,
-    Rel_Bias_Diff = abs(Rel_Bias_After) - abs(Rel_Bias_Before),
-    `Fixed?` = if_else(
-        !`Covers_Before?`,
-        `Covers_After?`,
-        NA
-    ),
-    `Broke?` = `Covers_Before?` & !`Covers_After?`
-  ) |>
-  rename(
-    n = n.after
-  ) |>
-  select(
-    Year,
-    n,
-    Abortions,
-    Est_Before,
-    #Est_Before_low,
-    #Est_Before_upp,
-    Est_After,
-    Est_After_low,
-    Est_After_upp,
-    #Est_Diff,
-    #Bias_Before,
-    #Bias_After,
-    #Bias_Diff,
-    Rel_Bias_Before,
-    Rel_Bias_After,
-    #Rel_Bias_Diff,
-    #`Unc_Covers?`,
-    #`Cal_Covers?`,
-    `Fixed?`,
-    `Broke?`
-  ) |>
-  gt() |>
-  fmt_number(-Year, decimal = 0) |>
-  fmt_percent(contains('Rel_Bias'), decimal = 1)
-
-guttmacher_APC_national |>
-  filter(year %in% 2006:2015) |>
-  rename(
-    Year = year,
-    `Under 20 years` = abortionslt20,
-    `20-24 years` = abortions2024,
-    `25-29 years` = abortions2529,
-    `30-34 years` = abortions3034,
-    `35-39 years` = abortions3539,
-    `40 years and over` = abortions40plus
-  ) |>
-  pivot_longer(
-    cols = contains('years'),
-    names_to = 'Level',
-    values_to = 'Abortions'
-  ) |>
-  select(Year, Level, Abortions) |>
-  left_join(
-    before_preg |>
-      group_by(Year, age_group6) |>
-      summarize(
-        n = unweighted(sum(abortion)),
-        Est = survey_total(abortion, vartype = 'ci')
-      ) |>
-      filter(Year %in% 2006:2015) |>
-      rename(
-        Level = age_group6,
-        Est_Before = Est,
-        Est_Before_low = Est_low,
-        Est_Before_upp = Est_upp
-      ),
-    by = c('Year', 'Level')
-  ) |>
-  left_join(
-    after_preg |>
-      group_by(Year, age_group6) |>
-      summarize(
-        n = unweighted(sum(abortion)),
-        Est = survey_total(abortion, vartype = 'ci')
-      ) |>
-      filter(Year %in% 2006:2015) |>
-      rename(
-        Level = age_group6,
-        Est_After = Est,
-        Est_After_low = Est_low,
-        Est_After_upp = Est_upp
-      ),
-    by = c('Year', 'Level'),
-    suffix = c('.before', '.after')
-  ) |>
-  mutate(
-    unequal_n = n.before != n.after,
-    Bias_Before = Est_Before - Abortions,
-    Rel_Bias_Before = Bias_Before / Abortions,
-    `Covers_Before?` = Abortions <= Est_Before_upp & Abortions >= Est_Before_low,
-    Bias_After = Est_After - Abortions,
-    Rel_Bias_After = Bias_After / Abortions,
-    `Covers_After?` = Abortions <= Est_After_upp & Abortions >= Est_After_low,
-    Bias_Diff = abs(Bias_After) - abs(Bias_Before),
-    Est_Diff = Est_After - Est_Before,
-    Rel_Bias_Diff = abs(Rel_Bias_After) - abs(Rel_Bias_Before),
-    `Fixed?` = if_else(
-        !`Covers_Before?`,
-        `Covers_After?`,
-        NA
-    ),
-    `Broke?` = `Covers_Before?` & !`Covers_After?`
-  ) |>
-  rename(
-    n = n.after
-  ) |>
-  select(
-    Year,
-    Level,
-    n,
-    Abortions,
-    Est_Before,
-    #Est_Before_low,
-    #Est_Before_upp,
-    Est_After,
-    Est_After_low,
-    Est_After_upp,
-    #Est_Diff,
-    #Bias_Before,
-    #Bias_After,
-    #Bias_Diff,
-    Rel_Bias_Before,
-    Rel_Bias_After,
-    #Rel_Bias_Diff,
-    #`Unc_Covers?`,
-    #`Cal_Covers?`,
-    `Fixed?`,
-    `Broke?`
-  ) |>
+  group_by(Year) |>
   gt() |>
   fmt_number(-Year, decimal = 0) |>
   fmt_percent(contains('Rel_Bias'), decimal = 1)
