@@ -1,5 +1,5 @@
 ---
-title: "NSFG Cycle 3 (1982) Weight Adjustment"
+title: "Cycle 3 (1982) NSFG Weight Adjustment"
 author: "Joshua Born"
 output:
   html_document:
@@ -332,6 +332,25 @@ before_fem <- data_fem |>
   as_survey_rep(
     type = 'BRR'
   )
+```
+
+
+### Pregnancies Counts
+
+```{r check-counts-of-pregnancies, dependson="data-preparation"}
+data_preg |>
+  filter(Year %in% 1974:1979, OUTCOME %in% c('INDUCED ABORTION', 'LIVE BIRTH')) |>
+  group_by(OUTCOME, age_group6) |>
+  count() |>
+  ungroup(age_group6) |>
+  gt()
+
+data_preg |>
+  filter(Year %in% 1974:1979, OUTCOME %in% c('INDUCED ABORTION', 'LIVE BIRTH')) |>
+  group_by(OUTCOME, Year) |>
+  count() |>
+  ungroup(Year) |>
+  gt()
 ```
 
 
@@ -770,20 +789,6 @@ before_fem |>
   gt() |>
   fmt_number(decimal = 0) |>
   fmt_number(Factor, decimal = 2)
-```
-
-
-### Number of Respondents with Multiple Abortions in Analysis Period
-
-```{r}
-data_preg |>
-  filter(OUTCOME == 'INDUCED ABORTION') |>
-  group_by(CASEID) |>
-  summarize(`Abortions in Analysis Period` = n(), .groups = 'drop') |>
-  group_by(`Abortions in Analysis Period`) |>
-  count() |>
-  ungroup() |>
-  gt()
 ```
 
 
