@@ -212,12 +212,6 @@ data_fem <- select(
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1974:1979 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
           .default = 'Other'
         ),
-        in_1974_abortion = any(OUTCOME == 'INDUCED ABORTION' & Year == 1974),
-        in_1975_abortion = any(OUTCOME == 'INDUCED ABORTION' & Year == 1975),
-        in_1976_abortion = any(OUTCOME == 'INDUCED ABORTION' & Year == 1976),
-        in_1977_abortion = any(OUTCOME == 'INDUCED ABORTION' & Year == 1977),
-        in_1978_abortion = any(OUTCOME == 'INDUCED ABORTION' & Year == 1978),
-        in_1979_abortion = any(OUTCOME == 'INDUCED ABORTION' & Year == 1979),
         abortion_1974plus_age = case_when(
           any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
@@ -284,10 +278,6 @@ data_fem <- select(
       abortions_1974_1979 >= 1,
       abortions_1974_1979,
       1
-    ),
-    across(
-      starts_with('in_'),
-      function(x) { coalesce(x, FALSE) }
     ),
     across(
       starts_with('birth_'),
@@ -419,27 +409,6 @@ guttmacher_APC_national <- read_csv(
     'abortionstotal')
 
 
-guttmacher_APC_year <- guttmacher_APC_national |>
-  select(year, abortionstotal) |>
-  filter(year %in% 1974:1979) |>
-  mutate(
-    Variable = paste0('in_', year, '_abortion'),
-    `TRUE` = abortionstotal,
-    `FALSE` = population_total - abortionstotal,
-    .keep = 'unused'
-  ) |>
-  pivot_longer(
-    c('TRUE', 'FALSE')
-  ) |>
-  group_by(Variable) |>
-  group_split() |>
-  lapply(function(tbl) {
-    variable_name <- first(pull(tbl, Variable))
-    tbl <- select(tbl, -Variable)
-    names(tbl) <- c(variable_name, 'Freq')
-    tbl
-  })
-
 guttmacher_APC_age <- guttmacher_APC_national |>
   select(-abortions40plus, -abortionstotal) |>
   filter(year %in% 1974:1979) |>
@@ -550,7 +519,6 @@ source(here('R/rake2.R'))
   
 post_stratification_targets <- c(
   list(guttmacher_APC_age),
-  guttmacher_APC_year,
   NVSS_age,
   demographic_targets
 )
@@ -569,7 +537,7 @@ post_fem <- rake2(
   ),
   population.margins = post_stratification_targets,
   extras = extras,
-  control=list(maxit=150, epsilon=1, verbose=TRUE)
+  control=list(maxit=50, epsilon=1, verbose=FALSE)
 )
 ```
 
