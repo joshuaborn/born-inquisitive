@@ -1,5 +1,5 @@
 ---
-title: "NSFG Cycle 4 (1988) Weight Adjustment"
+title: "Cycle 4 (1988) NSFG Weight Adjustment"
 author: "Joshua Born"
 output:
   html_document:
@@ -256,18 +256,18 @@ data_fem <- select(
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy >= 25 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 39) ~ '30-39 years',
-          #any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          #any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 39) ~ '30-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1980:1985 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
           .default = 'Other'
         ),
         abortion_1980plus_age = case_when(
           any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 25 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 39) ~ '30-39 years',
-          #any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          #any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 39) ~ '30-39 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1980 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
           .default = 'Other'
         ),
         birth_1985_age = case_when(
@@ -354,7 +354,9 @@ data_fem <- select(
             'Under 20 years',
             '20-24 years',
             '25-29 years',
-            '30-39 years',
+            '30-34 years',
+            '35-39 years',
+            #'30-39 years',
             'Other'
           ),
           order = TRUE
@@ -447,17 +449,19 @@ guttmacher_APC_national <- read_csv(
 guttmacher_APC_age <- guttmacher_APC_national |>
   select(-abortions40plus, -abortionstotal) |>
   filter(year %in% 1980:1985) |>
-  mutate(
-    abortions3039 = abortions3034 + abortions3539,
-    .keep = 'unused'
-  ) |>
+  #mutate(
+  #  abortions3039 = abortions3034 + abortions3539,
+  #  .keep = 'unused'
+  #) |>
   rename(
     `Under 20 years` = abortionslt20,
     `20-24 years` = abortions2024,
     `25-29 years` = abortions2529,
-    `30-39 years` = abortions3039
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539
+    #`30-39 years` = abortions3039
   ) |>
-  summarize(across(3:6, sum)) |>
+  summarize(across(3:7, sum)) |>
   pivot_longer(
     cols = everything(),
     names_to = 'abortion_1980_1985_age',
@@ -476,9 +480,9 @@ guttmacher_APC_age <- guttmacher_APC_national |>
         'Under 20 years',
         '20-24 years',
         '25-29 years',
-        '30-39 years',
-        #'30-34 years',
-        #'35-39 years',
+        #'30-39 years',
+        '30-34 years',
+        '35-39 years',
         'Other'
       ),
       ordered = TRUE
