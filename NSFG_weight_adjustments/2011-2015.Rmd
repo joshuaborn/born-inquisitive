@@ -1,5 +1,5 @@
 ---
-title: "Weight Adjustment for 2011-2015 NSFG"
+title: "2011-2015 NSFG Weight Adjustment"
 author: "Joshua Born"
 output:
   html_document:
@@ -291,7 +291,8 @@ data_fem <- bind_rows(
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2006:2010 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         abortion_2006plus_age = case_when(
@@ -299,7 +300,8 @@ data_fem <- bind_rows(
           any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'INDUCED ABORTION' & Year > 2006 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2006_age = case_when(
@@ -307,7 +309,8 @@ data_fem <- bind_rows(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2006 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2007_age =  case_when(
@@ -315,7 +318,8 @@ data_fem <- bind_rows(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2007 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2008_age =  case_when(
@@ -323,7 +327,8 @@ data_fem <- bind_rows(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2008 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2009_age =  case_when(
@@ -331,7 +336,8 @@ data_fem <- bind_rows(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2009 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2010_age =  case_when(
@@ -339,7 +345,8 @@ data_fem <- bind_rows(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2010 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         )
       ),
@@ -362,7 +369,8 @@ data_fem <- bind_rows(
             '20-24 years',
             '25-29 years',
             '30-34 years',
-            '35 years and over',
+            '35-39 years',
+            #'35 years and over',
             'Other'
           ),
           order = TRUE
@@ -391,7 +399,7 @@ before_fem <- data_fem |>
 
 ### Creation of Post-Stratification Targets
 
-```{r create-post-stratification-targets}
+```{r create-post-stratification-targets, message=FALSE}
 census_pop_targets <- readRDS(
   here('data/Census/prepared/census_for_2011_2015.Rds')
 ) |>
@@ -428,18 +436,19 @@ guttmacher_APC_national <- read_csv(
     'abortions2529', 'abortions3034', 'abortions3539', 'abortions40plus',
     'abortionstotal')
 
+
 guttmacher_APC_age <- guttmacher_APC_national |>
   filter(year %in% 2006:2010) |>
+  mutate(
+    Other = abortionstotal - abortions40plus,
+    .keep = 'unused'
+  ) |>
   rename(
-    `Other` = abortionstotal,
     `Under 20 years` = abortionslt20,
     `20-24 years` = abortions2024,
     `25-29 years` = abortions2529,
-    `30-34 years` = abortions3034
-  ) |>
-  mutate(
-    `35 years and over` = abortions3539 + abortions40plus,
-    .keep = 'unused'
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539
   ) |>
   summarize(across(3:8, sum)) |>
   pivot_longer(
@@ -455,7 +464,7 @@ guttmacher_APC_age <- guttmacher_APC_national |>
         '20-24 years',
         '25-29 years',
         '30-34 years',
-        '35 years and over',
+        '35-39 years',
         'Other'
       ),
       ordered = TRUE
@@ -488,7 +497,7 @@ NVSS_age <- bind_rows(
     Level = factor(
       case_when(
         Age.of.Mother.9.Code %in% c('15', '15-19') ~ 'Under 20 years',
-        Age.of.Mother.9.Code %in% c('35-39', '40-44', '45-49', '50+') ~ '35 years and over',
+        Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ 'Other',
         is.na(Age.of.Mother.9.Code) ~ 'Other',
         .default = Age.of.Mother.9
       ),
@@ -497,7 +506,7 @@ NVSS_age <- bind_rows(
         '20-24 years',
         '25-29 years',
         '30-34 years',
-        '35 years and over',
+        '35-39 years',
         'Other'
       ),
       ordered = TRUE
@@ -554,7 +563,7 @@ post_fem <- rake2(
 
 ### Saving of Adjusted Weights
 
-```{r save-adjusted-weights, dependson="rake-post-stratifications", eval=FALSE}
+```{r save-adjusted-weights, dependson="rake-post-stratifications"}
 post_fem |>
   as_data_frame_with_weights(
     full_wgt_name = "FULL_SAMPLE_WGT",
