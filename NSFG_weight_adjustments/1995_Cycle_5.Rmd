@@ -1,5 +1,5 @@
 ---
-title: "NSFG Cycle 5 (1995) Weight Adjustment"
+title: "Cycle 5 (1995) NSFG Weight Adjustment"
 author: "Joshua Born"
 output:
   html_document:
@@ -266,21 +266,30 @@ data_fem <- select(
     data_preg |>
       group_by(CASEID) |>
       summarize(
-        abortions_1986_1994 = sum(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1994),
-        abortion_1986_1994_age = case_when(
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1994 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1994 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1994 & AgeAtEndOfPregnancy >= 25 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1994 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1994 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+        abortions_1991_1994 = sum(OUTCOME == 'INDUCED ABORTION' & Year %in% 1991:1994),
+        abortion_1991_1994_age = case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1991:1994 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1991:1994 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1991:1994 & AgeAtEndOfPregnancy >= 25 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1991:1994 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1991:1994 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
           .default = 'Other'
         ),
-        abortion_1986plus_age = case_when(
-          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1986 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1986 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1986 & AgeAtEndOfPregnancy >= 25 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1986 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1986 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+        abortions_1986_1990 = sum(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1990),
+        abortion_1986_1990_age = case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1990 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1990 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1990 & AgeAtEndOfPregnancy >= 25 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1990 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 1986:1990 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          .default = 'Other'
+        ),
+        abortion_1991plus_age = case_when(
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1991 & AgeAtEndOfPregnancy <= 19) ~ 'Under 20 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1991 & AgeAtEndOfPregnancy >= 20 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1991 & AgeAtEndOfPregnancy >= 25 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1991 & AgeAtEndOfPregnancy >= 30 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 1991 & AgeAtEndOfPregnancy >= 35 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
           .default = 'Other'
         ),
         birth_1994_age = case_when(
@@ -359,10 +368,16 @@ data_fem <- select(
     by = 'CASEID'
   ) |>
   mutate(
-    abortions_1986_1994 = coalesce(abortions_1986_1994, 0),
-    abortions_1986_1994_multiplier = if_else(
-      abortions_1986_1994 >= 1,
-      abortions_1986_1994,
+    abortions_1991_1994 = coalesce(abortions_1991_1994, 0),
+    abortions_1991_1994_multiplier = if_else(
+      abortions_1991_1994 >= 1,
+      abortions_1991_1994,
+      1
+    ),
+    abortions_1986_1990 = coalesce(abortions_1986_1990, 0),
+    abortions_1986_1990_multiplier = if_else(
+      abortions_1986_1990 >= 1,
+      abortions_1986_1990,
       1
     ),
     across(
@@ -382,10 +397,10 @@ data_fem <- select(
         )
       }
     ),
-    abortion_1986plus_age = if_else(
-      abortion_1986plus_age != abortion_1986_1994_age & abortion_1986_1994_age != 'Other',
-      abortion_1986_1994_age,
-      abortion_1986plus_age
+    abortion_1991plus_age = if_else(
+      abortion_1991plus_age != abortion_1991_1994_age & abortion_1991_1994_age != 'Other',
+      abortion_1991_1994_age,
+      abortion_1991plus_age
     )
   )
 
@@ -494,9 +509,9 @@ guttmacher_APC_national <- read_csv(
     'abortions2529', 'abortions3034', 'abortions3539', 'abortions40plus',
     'abortionstotal')
 
-guttmacher_APC_age <- guttmacher_APC_national |>
+guttmacher_APC_age_1986_1990 <- guttmacher_APC_national |>
   select(-abortions40plus) |>
-  filter(year %in% 1986:1994) |>
+  filter(year %in% 1986:1990) |>
   rename(
     `Other` = abortionstotal,
     `Under 20 years` = abortionslt20,
@@ -508,18 +523,57 @@ guttmacher_APC_age <- guttmacher_APC_national |>
   summarize(across(3:7, sum)) |>
   pivot_longer(
     cols = everything(),
-    names_to = 'abortion_1986_1994_age',
+    names_to = 'abortion_1986_1990_age',
     values_to = 'Freq'
   ) |>
-  select(abortion_1986_1994_age, Freq) %>%
+  select(abortion_1986_1990_age, Freq) %>%
   bind_rows(summarize(
     .,
-    abortion_1986_1994_age = 'Other',
+    abortion_1986_1990_age = 'Other',
     Freq = population_total - sum(Freq)
   )) |>
   mutate(
-    abortion_1986_1994_age = factor(
-      abortion_1986_1994_age,
+    abortion_1986_1990_age = factor(
+      abortion_1986_1990_age,
+      levels = c(
+        'Under 20 years',
+        '20-24 years',
+        '25-29 years',
+        '30-34 years',
+        '35-39 years',
+        'Other'
+      ),
+      ordered = TRUE
+    )
+  )
+
+
+guttmacher_APC_age_1991_1994 <- guttmacher_APC_national |>
+  select(-abortions40plus) |>
+  filter(year %in% 1991:1994) |>
+  rename(
+    `Other` = abortionstotal,
+    `Under 20 years` = abortionslt20,
+    `20-24 years` = abortions2024,
+    `25-29 years` = abortions2529,
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539
+  ) |>
+  summarize(across(3:7, sum)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = 'abortion_1991_1994_age',
+    values_to = 'Freq'
+  ) |>
+  select(abortion_1991_1994_age, Freq) %>%
+  bind_rows(summarize(
+    .,
+    abortion_1991_1994_age = 'Other',
+    Freq = population_total - sum(Freq)
+  )) |>
+  mutate(
+    abortion_1991_1994_age = factor(
+      abortion_1991_1994_age,
       levels = c(
         'Under 20 years',
         '20-24 years',
@@ -598,15 +652,20 @@ NVSS_age <- readRDS(here('data/NVSS/natality_by_age_1974-1994us.Rds')) |>
 source(here('R/rake2.R'))
   
 post_stratification_targets <- c(
-  list(guttmacher_APC_age),
+  list(guttmacher_APC_age_1991_1994),
+  list(guttmacher_APC_age_1986_1990),
   demographic_targets,
   NVSS_age
 )
 
 extras <- replicate(length(post_stratification_targets), NULL)
 extras[[1]] <- c(
-  ~abortions_1986_1994_multiplier,
-  ~abortion_1986plus_age
+  ~abortions_1991_1994_multiplier,
+  ~abortion_1991plus_age
+)
+extras[[2]] <- c(
+  ~abortions_1986_1990_multiplier,
+  ~abortion_1986_1990_age
 )
 
 post_fem <- rake2(
@@ -784,14 +843,14 @@ data.frame(
 
 ```{r verify-post-stratification, dependson="create-survey-objects"}
 after_fem |>
-  group_by(abortion_1986_1994_age) |>
+  group_by(abortion_1991_1994_age) |>
   summarize(
     Count = n(),
-    Est = survey_total(abortions_1986_1994_multiplier)
+    Est = survey_total(abortions_1991_1994_multiplier)
   ) |>
   full_join(
     post_stratification_targets[[1]],
-    by = join_by(abortion_1986_1994_age)
+    by = join_by(abortion_1991_1994_age)
   ) |>
   mutate(
     Diff = Est - Freq
@@ -836,6 +895,7 @@ check_poststratifications(post_stratification_targets[[10]])
 check_poststratifications(post_stratification_targets[[11]])
 check_poststratifications(post_stratification_targets[[12]])
 check_poststratifications(post_stratification_targets[[13]])
+check_poststratifications(post_stratification_targets[[14]])
 ```
 
 
@@ -843,18 +903,18 @@ check_poststratifications(post_stratification_targets[[13]])
 
 ```{r find-average-abortion-adjustment, dependson="create-survey-objects"}
 before_fem |>
-  group_by(abortion_1986_1994_age) |>
+  group_by(abortion_1986_1990_age) |>
   summarize(
     Count = n(),
     Before = survey_total(one)
   ) |>
   full_join(
     after_fem |>
-      group_by(abortion_1986_1994_age) |>
+      group_by(abortion_1986_1990_age) |>
       summarize(
         After = survey_total(one)
       ),
-    by = join_by(abortion_1986_1994_age)
+    by = join_by(abortion_1986_1990_age)
   ) |>
   mutate(
     Factor = After / Before
@@ -864,18 +924,39 @@ before_fem |>
   fmt_number(Factor, decimal = 2)
 
 before_fem |>
-  group_by(abortion_1986plus_age) |>
+  group_by(abortion_1991_1994_age) |>
   summarize(
     Count = n(),
     Before = survey_total(one)
   ) |>
   full_join(
     after_fem |>
-      group_by(abortion_1986plus_age) |>
+      group_by(abortion_1991_1994_age) |>
       summarize(
         After = survey_total(one)
       ),
-    by = join_by(abortion_1986plus_age)
+    by = join_by(abortion_1991_1994_age)
+  ) |>
+  mutate(
+    Factor = After / Before
+  ) |>
+  gt() |>
+  fmt_number(decimal = 0) |>
+  fmt_number(Factor, decimal = 2)
+
+before_fem |>
+  group_by(abortion_1991plus_age) |>
+  summarize(
+    Count = n(),
+    Before = survey_total(one)
+  ) |>
+  full_join(
+    after_fem |>
+      group_by(abortion_1991plus_age) |>
+      summarize(
+        After = survey_total(one)
+      ),
+    by = join_by(abortion_1991plus_age)
   ) |>
   mutate(
     Factor = After / Before
