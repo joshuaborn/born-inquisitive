@@ -358,20 +358,18 @@ guttmacher_APC_national <- read_csv(
 
 
 guttmacher_APC_age <- guttmacher_APC_national |>
-  select(-abortions40plus) |>
+  mutate(
+    Other = abortionstotal - abortions40plus,
+    .keep = 'unused'
+  ) |>
   filter(year %in% 1995:2001) |>
   rename(
-    `Other` = abortionstotal,
     `Under 20 years` = abortionslt20,
     `20-24 years` = abortions2024,
     `25-29 years` = abortions2529,
     `30-34 years` = abortions3034,
     `35-39 years` = abortions3539
   ) |>
-  #mutate(
-  #  `35 years and over` = abortions3539 + abortions40plus,
-  #  .keep = 'unused'
-  #) |>
   summarize(across(3:8, sum)) |>
   pivot_longer(
     cols = everything(),
@@ -387,7 +385,6 @@ guttmacher_APC_age <- guttmacher_APC_national |>
         '25-29 years',
         '30-34 years',
         '35-39 years',
-        #'35 years and over',
         'Other'
       ),
       ordered = TRUE
@@ -413,7 +410,6 @@ NVSS_age <- read_tsv(
     Level = factor(
       case_when(
         Age.of.Mother.Code %in% c('15', '15-19') ~ 'Under 20 years',
-        #Age.of.Mother.Code %in% c('35-39', '40-44', '45-49', '50+') ~ '35 years and over',
         Age.of.Mother.Code %in% c('40-44', '45-49', '50+') ~ 'Other',
         is.na(Age.of.Mother.Code) ~ 'Other',
         .default = Age.of.Mother
@@ -424,7 +420,6 @@ NVSS_age <- read_tsv(
         '25-29 years',
         '30-34 years',
         '35-39 years',
-        #'40 years and over',
         'Other'
       ),
       ordered = TRUE
@@ -437,7 +432,6 @@ NVSS_age <- read_tsv(
   ) |>
   group_by(Variable, Level) |>
   summarize(Freq = sum(Freq), .groups = 'drop') |>
-  filter(Level != '40 years and over') |>
   arrange(Variable, Level) |>
   group_by(Variable) |>
   group_split() |>

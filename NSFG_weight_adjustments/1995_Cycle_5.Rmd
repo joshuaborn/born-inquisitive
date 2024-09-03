@@ -510,10 +510,12 @@ guttmacher_APC_national <- read_csv(
     'abortionstotal')
 
 guttmacher_APC_age_1986_1990 <- guttmacher_APC_national |>
-  select(-abortions40plus) |>
+  mutate(
+    Other = abortionstotal - abortions40plus,
+    .keep = 'unused'
+  ) |>
   filter(year %in% 1986:1990) |>
   rename(
-    `Other` = abortionstotal,
     `Under 20 years` = abortionslt20,
     `20-24 years` = abortions2024,
     `25-29 years` = abortions2529,
@@ -549,10 +551,12 @@ guttmacher_APC_age_1986_1990 <- guttmacher_APC_national |>
 
 
 guttmacher_APC_age_1991_1994 <- guttmacher_APC_national |>
-  select(-abortions40plus) |>
+  mutate(
+    Other = abortionstotal - abortions40plus,
+    .keep = 'unused'
+  ) |>
   filter(year %in% 1991:1994) |>
   rename(
-    `Other` = abortionstotal,
     `Under 20 years` = abortionslt20,
     `20-24 years` = abortions2024,
     `25-29 years` = abortions2529,

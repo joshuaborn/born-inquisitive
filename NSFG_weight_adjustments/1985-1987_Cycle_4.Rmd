@@ -449,17 +449,12 @@ guttmacher_APC_national <- read_csv(
 guttmacher_APC_age <- guttmacher_APC_national |>
   select(-abortions40plus, -abortionstotal) |>
   filter(year %in% 1980:1985) |>
-  #mutate(
-  #  abortions3039 = abortions3034 + abortions3539,
-  #  .keep = 'unused'
-  #) |>
   rename(
     `Under 20 years` = abortionslt20,
     `20-24 years` = abortions2024,
     `25-29 years` = abortions2529,
     `30-34 years` = abortions3034,
     `35-39 years` = abortions3539
-    #`30-39 years` = abortions3039
   ) |>
   summarize(across(3:7, sum)) |>
   pivot_longer(
@@ -480,7 +475,6 @@ guttmacher_APC_age <- guttmacher_APC_national |>
         'Under 20 years',
         '20-24 years',
         '25-29 years',
-        #'30-39 years',
         '30-34 years',
         '35-39 years',
         'Other'

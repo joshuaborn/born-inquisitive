@@ -343,13 +343,11 @@ guttmacher_APC_age <- guttmacher_APC_national |>
     .keep = 'unused'
   ) |>
   rename(
-    #`Other` = abortionstotal,
     `Under 20 years` = abortionslt20,
     `20-24 years` = abortions2024,
     `25-29 years` = abortions2529,
     `30-34 years` = abortions3034,
-    `35-39 years` = abortions3539,
-    #`40 years and over` = abortions40plus
+    `35-39 years` = abortions3539
   ) |>
   summarize(across(3:8, sum)) |>
   pivot_longer(
@@ -366,7 +364,6 @@ guttmacher_APC_age <- guttmacher_APC_national |>
         '25-29 years',
         '30-34 years',
         '35-39 years',
-        #'35 years and over',
         'Other'
       ),
       ordered = TRUE
@@ -403,7 +400,6 @@ NVSS_age <- bind_rows(
     Level = factor(
       case_when(
         Age.of.Mother.9.Code %in% c('15', '15-19') ~ 'Under 20 years',
-        #Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ '40 years and over',
         Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ 'Other',
         is.na(Age.of.Mother.9.Code) ~ 'Other',
         .default = Age.of.Mother.9
@@ -414,7 +410,6 @@ NVSS_age <- bind_rows(
         '25-29 years',
         '30-34 years',
         '35-39 years',
-        #'35 years and over',
         'Other'
       ),
       ordered = TRUE
