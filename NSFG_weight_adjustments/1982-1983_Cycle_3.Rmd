@@ -335,32 +335,6 @@ before_fem <- data_fem |>
 ```
 
 
-### Pregnancies Counts
-
-```{r check-counts-of-pregnancies, dependson="data-preparation"}
-data_preg |>
-  filter(Year %in% 1974:1979, OUTCOME == 'INDUCED ABORTION') |>
-  group_by(OUTCOME, age_group6) |>
-  count() |>
-  ungroup(age_group6) |>
-  gt()
-
-data_preg |>
-  filter(Year %in% 1974:1979, OUTCOME == 'LIVE BIRTH') |>
-  group_by(OUTCOME, Year, age_group6) |>
-  count() |>
-  ungroup(age_group6) |>
-  gt()
-
-data_preg |>
-  filter(Year %in% 1974:1979, OUTCOME == 'INDUCED ABORTION') |>
-  group_by(OUTCOME, age_group6) |>
-  count() |>
-  ungroup(age_group6) |>
-  gt()
-```
-
-
 ### Recreation of Demographic Post-Stratification Targets
 
 ```{r create-demographic-post-stratification-targets, dependson="data-preparation"}
