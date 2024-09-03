@@ -1,5 +1,5 @@
 ---
-title: "NSFG 2006-2010 Weight Adjustment"
+title: "2006-2010 NSFG Weight Adjustment"
 author: "Joshua Born"
 output:
   html_document:
@@ -123,18 +123,6 @@ data_preg <- select(
       'Non-Hispanic Black' = 3,
       'Non-Hispanic Other' = 4
     ))),
-    age_group = cut(
-      as.integer(AGEPREG / 100),
-      breaks = c(0, seq(20, 35, 5), Inf),
-      right = FALSE,
-      labels = c(
-        "Under 20 years",
-        "20-24 years",
-        "25-29 years",
-        "30-34 years",
-        "35 years and over"
-      )
-    ),
     age_group6 = cut(
       as.integer(AGEPREG / 100),
       breaks = c(0, seq(20, 40, 5), Inf),
@@ -215,7 +203,8 @@ data_fem <- select(
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2002:2005 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2002:2005 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2002:2005 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2002:2005 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2002:2005 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'INDUCED ABORTION' & Year %in% 2002:2005 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         abortion_2002plus_age = case_when(
@@ -223,7 +212,8 @@ data_fem <- select(
           any(OUTCOME == 'INDUCED ABORTION' & Year >= 2002 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year >= 2002 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'INDUCED ABORTION' & Year >= 2002 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2002 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'INDUCED ABORTION' & Year >= 2002 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'INDUCED ABORTION' & Year >= 2002 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2002_age = case_when(
@@ -231,7 +221,8 @@ data_fem <- select(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2002 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2002 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2002 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2002 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2002 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2002 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2003_age =  case_when(
@@ -239,7 +230,8 @@ data_fem <- select(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2003 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2003 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2003 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2003 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2003 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2003 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2004_age =  case_when(
@@ -247,7 +239,8 @@ data_fem <- select(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2004 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2004 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2004 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2004 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2004 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2004 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         ),
         birth_2005_age =  case_when(
@@ -255,7 +248,8 @@ data_fem <- select(
           any(OUTCOME == 'LIVE BIRTH' & Year == 2005 & AgeAtEndOfPregnancy <= 24) ~ '20-24 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2005 & AgeAtEndOfPregnancy <= 29) ~ '25-29 years',
           any(OUTCOME == 'LIVE BIRTH' & Year == 2005 & AgeAtEndOfPregnancy <= 34) ~ '30-34 years',
-          any(OUTCOME == 'LIVE BIRTH' & Year == 2005 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
+          any(OUTCOME == 'LIVE BIRTH' & Year == 2005 & AgeAtEndOfPregnancy <= 39) ~ '35-39 years',
+          #any(OUTCOME == 'LIVE BIRTH' & Year == 2005 & AgeAtEndOfPregnancy >= 35) ~ '35 years and over',
           .default = 'Other'
         )
       ),
@@ -278,7 +272,8 @@ data_fem <- select(
             '20-24 years',
             '25-29 years',
             '30-34 years',
-            '35 years and over',
+            '35-39 years',
+            #'35 years and over',
             'Other'
           ),
           order = TRUE
@@ -340,18 +335,21 @@ guttmacher_APC_national <- read_csv(
     'abortions2529', 'abortions3034', 'abortions3539', 'abortions40plus',
     'abortionstotal')
 
+
 guttmacher_APC_age <- guttmacher_APC_national |>
   filter(year %in% 2002:2005) |>
+  mutate(
+    Other = abortionstotal - abortions40plus,
+    .keep = 'unused'
+  ) |>
   rename(
-    `Other` = abortionstotal,
+    #`Other` = abortionstotal,
     `Under 20 years` = abortionslt20,
     `20-24 years` = abortions2024,
     `25-29 years` = abortions2529,
-    `30-34 years` = abortions3034
-  ) |>
-  mutate(
-    `35 years and over` = abortions3539 + abortions40plus,
-    .keep = 'unused'
+    `30-34 years` = abortions3034,
+    `35-39 years` = abortions3539,
+    #`40 years and over` = abortions40plus
   ) |>
   summarize(across(3:8, sum)) |>
   pivot_longer(
@@ -367,7 +365,8 @@ guttmacher_APC_age <- guttmacher_APC_national |>
         '20-24 years',
         '25-29 years',
         '30-34 years',
-        '35 years and over',
+        '35-39 years',
+        #'35 years and over',
         'Other'
       ),
       ordered = TRUE
@@ -404,7 +403,8 @@ NVSS_age <- bind_rows(
     Level = factor(
       case_when(
         Age.of.Mother.9.Code %in% c('15', '15-19') ~ 'Under 20 years',
-        Age.of.Mother.9.Code %in% c('35-39', '40-44', '45-49', '50+') ~ '35 years and over',
+        #Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ '40 years and over',
+        Age.of.Mother.9.Code %in% c('40-44', '45-49', '50+') ~ 'Other',
         is.na(Age.of.Mother.9.Code) ~ 'Other',
         .default = Age.of.Mother.9
       ),
@@ -413,7 +413,8 @@ NVSS_age <- bind_rows(
         '20-24 years',
         '25-29 years',
         '30-34 years',
-        '35 years and over',
+        '35-39 years',
+        #'35 years and over',
         'Other'
       ),
       ordered = TRUE
