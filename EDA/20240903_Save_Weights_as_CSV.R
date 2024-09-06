@@ -1,6 +1,14 @@
 library(here)
 library(readr)
 
+process_weights <- function(input_file, output_file) {
+  readRDS(here(paste0('data/NSFG/', input_file, '.Rds'))) |>
+    write_csv(
+      here(paste0('blog/static/weights/', output_file, '.csv')),
+      progress = TRUE
+    )
+}
+
 input_files <- c(
   'adjusted_2006_2010_weights',
   'adjusted_2011_2015_weights',
@@ -21,14 +29,35 @@ output_files <- c(
   'NSFG_2002_2003_cycle_6_weights'
 )
 
-process_weights <- function(input_file, output_file) {
-  readRDS(here(paste0('data/NSFG/', input_file, '.Rds'))) |>
-    write_csv(
-      here(paste0('blog/static/weights/', output_file, '.csv')),
-      progress = TRUE
-    )
-}
-
 for (i in 1:length(input_files)) {
   process_weights(input_files[i], output_files[i])
+}
+
+
+process_rscales <- function(input_file, output_file) {
+  write_csv(
+    data.frame(
+      rscale = readRDS(here(paste0('data/NSFG/', input_file, '.Rds')))
+    ),
+    here(paste0('blog/static/weights/', output_file, '.csv')),
+    progress = TRUE
+  )
+}
+
+input_rscales_files <- c(
+  'adjusted_2006_2010_rscales',
+  'adjusted_2011_2015_rscales',
+  'adjusted_2015_2019_rscales',
+  'adjusted_cycle_5_rscales'
+)
+
+output_rscales_files <- c(
+  'NSFG_2006_2010_rscales',
+  'NSFG_2011_2015_rscales',
+  'NSFG_2015_2019_rscales',
+  'NSFG_1995_cycle_5_rscales'
+)
+
+for (i in 1:length(input_rscales_files)) {
+  process_rscales(input_rscales_files[i], output_rscales_files[i])
 }
