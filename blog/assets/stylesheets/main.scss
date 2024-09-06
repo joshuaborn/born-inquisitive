@@ -356,6 +356,12 @@ main {
       padding: 0 0.5rem;
     }
 
+    pre.r {
+      border: 1px solid #eaeaea;
+      margin: 1rem;
+      padding: 0.5rem;
+    }
+
     figure, .figure, .float {
       @include smaller();
       max-width: 100%;
