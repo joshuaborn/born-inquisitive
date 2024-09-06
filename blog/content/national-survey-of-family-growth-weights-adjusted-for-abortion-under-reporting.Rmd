@@ -62,7 +62,7 @@ Such analyses have been done in the past, and they have attempted to compensate 
 
 Herein are provided survey weights for NSFG public use data files that have been adjusted to compensate for abortion under-reporting. Incorporating the adjustments for abortion under-reporting into the survey weights has the advantage that once these adjusted weights are used, all of the full range of statistical methodologies available in the analysis of surveys can be used, and they can be used without any back-of-the-envelope arithmetic adjustments.
 
-For instance, using these adjusted weights, regression analysis can be done with unintended pregnancy as one of the model variables simply by using the `svyglm` function of the `survey` package in the R statistical programming language or by using the `SURVEYREG` or `SURVEYLOGISTIC` procedures of the SAS statistical programming language.
+For instance, using these adjusted weights, regression analysis can be done with unintended pregnancy as one of the model variables simply by using the `svyglm` function of the [`survey`](https://r-survey.r-forge.r-project.org/survey/) package in the R statistical programming language or by using the `SURVEYREG` or `SURVEYLOGISTIC` procedures of the SAS statistical programming language.
 
 The weight adjustments were made using a modified form of _post-stratification,_ which is a technique in which survey weights are adjusted such that estimates match totals retrieved from an external source. The weights included with the public-use data files of the NSFG have already been post-stratified in order to make the estimates of population counts based on the NSFG data match external population counts from the U.S. Census Bureau and others.
 
@@ -338,16 +338,146 @@ run;
 
 #### Female Respondents File -- Balanced Repeated Replication
 
-#### Female Respondents File -- Jackknife
+The below R program will print out estimates of the population of women in the United States of reproductive age by age, based on the Cycle 6 (2002) of the NSFG, which uses the balanced repeated replication weight scheme.
+
+The program assumes the female respondents file of the Cycle 6 (2002) of the NSFG is loaded as a data frame in the `cycle_6_femresp` variable, and that the path to the weights file is stored in the `weights_path` variable.
+
+The program uses the [`srvyr`](http://gdfe.co/srvyr/) library and two [`tidyverse`](https://www.tidyverse.org/) libraries to process input and output from the `survey` library.
+
+```{r eval=FALSE}
+library(dplyr)
+library(readr)
+library(srvyr)
+
+cycle_6_weights <- read_csv(paste0(weights_path, 'NSFG_2002_2003_cycle_6_weights.csv'))
+
+cycle_6_femresp |>
+  mutate(
+    CASEID = as.numeric(CASEID)
+  ) |>
+  left_join(
+    cycle_6_weights,
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    type = 'BRR'
+  ) |>
+  group_by(
+    AGER
+  ) |>
+  summarize(
+    est_pop = survey_total(vartype = 'ci')
+  )
+```
+
 
 #### Pregnancies File -- Balanced Repeated Replication
 
+The below R program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the Cycle 6 (2002) of the NSFG. Assumptions are similar to the example program above.
+
+```{r eval=FALSE}
+library(dplyr)
+library(readr)
+library(srvyr)
+
+cycle_6_weights <- read_csv(paste0(weights_path, 'NSFG_2002_2003_cycle_6_weights.csv'))
+
+cycle_6_pregs |>
+  mutate(
+    CASEID = as.numeric(CASEID)
+  ) |>
+  left_join(
+    cycle_6_weights,
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    type = 'BRR'
+  ) |>
+  filter(
+    1141 <= DATEND & DATEND <= 1224
+  ) |>
+  group_by(
+    OUTCOME
+  ) |>
+  summarize(
+    est_num = survey_total(vartype = 'ci')
+  )
+```
+
+
+#### Female Respondents File -- Jackknife
+
+The below R program prints out estimates of the population of women in the United States of reproductive age by age, based on the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Because of this, the jackknife coefficients must also be loaded.
+
+```{r eval=FALSE}
+library(dplyr)
+library(readr)
+library(srvyr)
+
+weights_2006_2010 <- read_csv(paste0(weights_path, 'NSFG_2006_2010_weights.csv'))
+jkcoefs_2006_2010 <- read_csv(paste0(weights_path, 'NSFG_2006_2010_jkcoefs.csv'))
+
+femresp_2006_2010 |>
+  left_join(
+    weights_2006_2010,
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    type = 'JKn',
+    rscales = jkcoefs_2006_2010$JKCoefficient
+  ) |>
+  group_by(
+    AGER
+  ) |>
+  summarize(
+    est_pop = survey_total(vartype = 'ci')
+  )
+```
+
+
 #### Pregnancies File -- Jackknife
+
+The below R program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition.
+
+```{r eval=FALSE}
+library(dplyr)
+library(readr)
+library(srvyr)
+
+weights_2006_2010 <- read_csv(paste0(weights_path, 'NSFG_2006_2010_weights.csv'))
+jkcoefs_2006_2010 <- read_csv(paste0(weights_path, 'NSFG_2006_2010_jkcoefs.csv'))
+
+fempreg_2006_2010 |>
+  left_join(
+    weights_2006_2010,
+    by = join_by(CASEID)
+  ) |>
+  as_survey_rep(
+    weights = FULL_SAMPLE_WGT,
+    repweights = starts_with('REP_WGT_'),
+    type = 'JKn',
+    rscales = jkcoefs_2006_2010$JKCoefficient
+  ) |>
+  filter(
+    1225 <= DATEND & DATEND <= 1272
+  ) |>
+  group_by(
+    OUTCOME
+  ) |>
+  summarize(
+    est_num = survey_total(vartype = 'ci')
+  )
+```
 
  
 ## Remaining to Do
 
-* Example programs for using the replicate weights and R
 * Citations
     * Of tables
     * To papers\document
