@@ -10,6 +10,7 @@ output:
   blogdown::html_page:
     number_sections: false
     toc: true
+    toc_depth: 5
 summary: "These weights can be used for analysis of unintended pregnancies in the United States, such as of contraceptive efficacy and failure."
 tags: ["analysis", "reproductive responsibility", "induced abortion", "NSFG", "third-person"]
 title: "National Survey of Family Growth Weights Adjusted for Abortion Under-Reporting"
@@ -153,13 +154,200 @@ Each file contains a column for the `CASEID` of each female respondent in the da
 
 [^male]: Starting with the Cycle 6 (2002) of the NSFG, male respondents were surveyed. However, male respondents are given a separate survey questionnaire that does not contain a contraceptive use calendar. No attempt was made to derive weights adjusted for abortion under-reporting for male respondents.
 
-These replicate weights can be used with either the female respondent files or the pregnancies files of the NSFG public use data files. Examples are below.
- 
+Additionally, for those replicate weights that use the jackknife scheme, some statistical software requires a list of scaling factors. Scaling factors for survey weights that use the jackknife scheme are included in the CSV files linked below.
+
+* [Cycle 5 (1995)](/weights/NSFG_1995_cycle_5_jkcoefs.csv)
+* [2006-2010](/weights/NSFG_2006_2010_jkcoefs.csv)
+* [2011-2015](/weights/NSFG_2011_2015_jkcoefs.csv)
+* [2015-2019](/weights/NSFG_2015_2019_jkcoefs.csv)
+
+
+### Example SAS Programs
+
+#### Female Respondents File -- Balanced Repeated Replication
+
+The below SAS program will print out estimates of the population of women in the United States of reproductive age by age, based on the Cycle 6 (2002) of the NSFG, which uses the balanced repeated replication weight scheme.
+
+The program assumes there is a SAS library set up called `nsfgdata` that contains a table called `d2002_2003femresp` which contains the SAS data table of female respondents file of the Cycle 6 (2002) of the NSFG, as set up by the example programs on the NSFG web site. The `&weights_path.` macro variable is assumbed to contain the path to the weights file.
+
+```{r eval=FALSE}
+data cycle6_fem_resp;
+    set nsfgdata.d2002_2003femresp(rename=(CASEID=CASEID_char));
+    CASEID=input(CASEID_char, 8.);
+    drop CASEID_char;
+run;
+
+proc import
+    file="&weights_path./NSFG_2002_2003_cycle_6_weights.csv"
+    dbms=csv
+    out=cycle6_weights;
+run;
+
+proc sort data=cycle6_fem_resp;
+    by CASEID;
+run;
+
+proc sort data=cycle6_weights;
+    by CASEID;
+run;
+
+data cycle6_fem_resp_adj;
+    merge cycle6_fem_resp(drop=FINALWGT) cycle6_weights;
+    by CASEID;
+run;
+
+proc surveyfreq data=cycle6_fem_resp_adj varmethod=BRR;
+    tables AGER;
+    weight FULL_SAMPLE_WGT;
+    repweights REP_WGT_:;
+run;
+```
+
+
+#### Pregnancies File -- Balanced Repeated Replication
+
+The below SAS program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the Cycle 6 (2002) of the NSFG. Assumptions are similar to the example program above. An additional detail is that when merging the adjusted weights to the pregnancies file, `CASEID`s that do not correspond to any pregnancies should be discarded, otherwise spurious rows will be introduced.
+
+```{r eval=FALSE}
+data cycle6_pregs;
+    set nsfgdata.d2002_2003fempreg(rename=(CASEID=CASEID_char));
+    CASEID=input(CASEID_char, 8.);
+    drop CASEID_char;
+run;
+
+proc import
+    file="&weights_path./NSFG_2002_2003_cycle_6_weights.csv"
+    dbms=csv
+    out=cycle6_weights;
+run;
+
+proc sort data=cycle6_pregs;
+    by CASEID;
+run;
+
+proc sort data=cycle6_weights;
+    by CASEID;
+run;
+
+data cycle6_pregs_adj;
+    merge cycle6_pregs(drop=FINALWGT in=in_pregs) cycle6_weights;
+    by CASEID;
+    if in_pregs;
+run;
+
+proc surveyfreq data=cycle6_pregs_adj varmethod=BRR;
+    tables OUTCOME;
+    weight FULL_SAMPLE_WGT;
+    repweights REP_WGT_:;
+    where 1141 <= DATEND <= 1224;
+run;
+```
+
+
+#### Female Respondents File -- Jackknife
+
+The below SAS program also prints out estimates of the population of women in the United States of reproductive age by age, but based on the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Because of this, the jackknife coefficients must also be loaded.
+
+```{r eval=FALSE}
+data fem_resp_2006_2010;
+    format CASEID 8.;
+    length CASEID 8;
+    set nsfgdata.d2006_2010femresp;
+run;
+
+proc import
+    file="&weights_path./NSFG_2006_2010_weights.csv"
+    dbms=csv
+    out=weights_2006_2010;
+run;
+
+proc sort data=fem_resp_2006_2010;
+    by CASEID;
+run;
+
+proc sort data=weights_2006_2010;
+    by CASEID;
+run;
+
+data fem_resp_2006_2010_adj;
+    merge fem_resp_2006_2010(drop=FINALWGT30) weights_2006_2010;
+    by CASEID;
+run;
+
+proc import
+    file="&weights_path./NSFG_2006_2010_jkcoefs.csv"
+    dbms=csv
+    out=jkcoefs_2006_2010;
+run;
+
+proc surveyfreq data=fem_resp_2006_2010_adj varmethod=jackknife;
+    tables AGER;
+    weight FULL_SAMPLE_WGT;
+    repweights REP_WGT_: / jkcoefs=jkcoefs_2006_2010;
+run;
+```
+
+
+#### Pregnancies File -- Jackknife
+
+The below SAS program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Thus, the jackknife coefficients must be loaded to use the weights.
+
+```{r eval=FALSE}
+data pregs_2006_2010;
+    format CASEID 8.;
+    length CASEID 8;
+    set nsfgdata.d2006_2010fempreg;
+run;
+
+proc import
+    file="&weights_path./NSFG_2006_2010_weights.csv"
+    dbms=csv
+    out=weights_2006_2010;
+run;
+
+proc sort data=pregs_2006_2010;
+    by CASEID;
+run;
+
+proc sort data=weights_2006_2010;
+    by CASEID;
+run;
+
+data pregs_2006_2010_adj;
+    merge pregs_2006_2010(drop=FINALWGT30 in=in_pregs) weights_2006_2010;
+    by CASEID;
+    if in_pregs;
+run;
+
+proc import
+    file="&weights_path./NSFG_2006_2010_jkcoefs.csv"
+    dbms=csv
+    out=jkcoefs_2006_2010;
+run;
+
+proc surveyfreq data=pregs_2006_2010_adj varmethod=jackknife;
+    tables OUTCOME;
+    weight FULL_SAMPLE_WGT;
+    repweights REP_WGT_: / jkcoefs=jkcoefs_2006_2010;
+    where 1225 <= DATEND <= 1272;
+run;
+```
+
+
+### Example R Programs
+
+#### Female Respondents File -- Balanced Repeated Replication
+
+#### Female Respondents File -- Jackknife
+
+#### Pregnancies File -- Balanced Repeated Replication
+
+#### Pregnancies File -- Jackknife
+
  
 ## Remaining to Do
 
-* Rscales
-* Example programs for using the replicate weights in SAS and R
+* Example programs for using the replicate weights and R
 * Citations
     * Of tables
     * To papers\document
