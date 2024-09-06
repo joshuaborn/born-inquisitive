@@ -37,7 +37,7 @@ for (i in 1:length(input_files)) {
 process_rscales <- function(input_file, output_file) {
   write_csv(
     data.frame(
-      rscale = readRDS(here(paste0('data/NSFG/', input_file, '.Rds')))
+      JKCoefficient = readRDS(here(paste0('data/NSFG/', input_file, '.Rds')))
     ),
     here(paste0('blog/static/weights/', output_file, '.csv')),
     progress = TRUE
@@ -52,10 +52,10 @@ input_rscales_files <- c(
 )
 
 output_rscales_files <- c(
-  'NSFG_2006_2010_rscales',
-  'NSFG_2011_2015_rscales',
-  'NSFG_2015_2019_rscales',
-  'NSFG_1995_cycle_5_rscales'
+  'NSFG_2006_2010_jkcoefs',
+  'NSFG_2011_2015_jkcoefs',
+  'NSFG_2015_2019_jkcoefs',
+  'NSFG_1995_cycle_5_jkcoefs'
 )
 
 for (i in 1:length(input_rscales_files)) {
