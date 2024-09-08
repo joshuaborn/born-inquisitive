@@ -3,7 +3,7 @@ author: "Joshua Born"
 bibliography: "../bibliographies/national-survey-of-family-growth-weights-adjusted-for-abortion-under-reporting.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2024-09-08
-draft: true 
+draft: false
 include-before: |
   ## Table of Contents
 output:
