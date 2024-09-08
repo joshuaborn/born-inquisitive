@@ -1,7 +1,7 @@
 ---
 author: "Joshua Born"
-#bibliography: "../bibliographies/identity-trap.bibtex"
-#csl: "../bibliographies/chicago-author-date.csl"
+bibliography: "../bibliographies/national-survey-of-family-growth-weights-adjusted-for-abortion-under-reporting.bib"
+csl: "../bibliographies/chicago-author-date.csl"
 date: 2024-09-04
 draft: true 
 include-before: |
@@ -38,13 +38,13 @@ The Appendix 2 "Topic-Specific Notes" to the User's Guide of the 2017-2019 NSFG 
 > Therefore, as in previous surveys, the NSFG staff advises NSFG data users that, generally speaking, NSFG data on abortion should not be used for substantive research focused on the determinants or consequences of abortion. The NSFG abortion data can be used for:
 >
 > 1. methodological studies of factors affecting abortion reporting.
-> 2. studies of contraceptive efficacy, but only after the data are adjusted for the under-reporting of abortion.
+> 2. studies of contraceptive efficacy, but only after the data are adjusted for the under-reporting of abortion. [@noauthor_appendix_2021]
 
 This issue has been known for some time,[^attempt] and it appears to be due to some number of respondents simply not reporting their pregnancies that ended in induced abortion. The Public Use Data Tape Documentation for Cycle 3 (1982) of the NSFG states:
 
 > As in the past in surveys of this kind, abortions were underreported by NSFG respondents. The number of induced abortions in the 5 years before the survey represents about 47 percent of the number reported during 1977-1981 by the Alan Guttmacher Institute...
 >
-> With due allowance for samping variability, estimates of numbers of live births and of miscarriages and stillbirths correspond fairly well to information from other data sources. It appears that, rather than misreporting pregnancy outcomes, the majority of the underreporting is the result of women not reporting at all the pregnancies that ended in abortions.
+> With due allowance for samping variability, estimates of numbers of live births and of miscarriages and stillbirths correspond fairly well to information from other data sources. It appears that, rather than misreporting pregnancy outcomes, the majority of the underreporting is the result of women not reporting at all the pregnancies that ended in abortions. [@noauthor_public_1986]
 
 [^attempt]: An attempt has been made to address this issue by introducing a self-administered portion of the survey, but this did not ameliorate the issue. The User's Guide for Cycle 5 (1995) of the NSFG states:
 
@@ -53,20 +53,20 @@ This issue has been known for some time,[^attempt] and it appears to be due to s
     > This figure represents about 54 percent of the number reported for that period by the Alan Guttmacher Institute (AGI)... The number of abortions reported in the 5 years prior to the 1988 NSFG was only 41 percent of the number reported by AGI. Thus the reporting of abortions appears to be more complete in Cycle 5 than in Cycle 4 of the NSFG. This increase in reporting may be attributable to the use of incentives and Audio-CASI in 1995, but despite these methodological innovations, there still remains a large degree of under-reporting of abortion.
     
 
-As a result of this, any analyses involving counts of pregnancies -- especially unintended pregnancies -- based on unadjusted NSFG data would be flawed. For instance, analysis of contraceptive efficacy based on unadjusted NSFG data would underestimate contraceptive failure due to the under-counting of pregnancies resulting from contraceptive failure that ended in induced abortion.
+As a result of this, any analyses involving counts of pregnancies -- especially unintended pregnancies -- based on unadjusted NSFG data would be flawed. For instance, analysis of contraceptive efficacy based on unadjusted NSFG data would underestimate contraceptive failure due to the under-counting of pregnancies that ended in induced abortion which resulted from contraceptive failure.
 
-Such analyses have been done in the past, and they have attempted to compensate for the abortion under-reporting in the NSFG data by using back-of-the-envelope arithmetic adjustments. While such approaches are plausible, they have the disadvantage of limiting what statistical methodologies can be used in the analysis to just those that are amenable to such adjustments.
+Such analyses have been done in the past, and they have attempted to compensate for the abortion under-reporting in the NSFG data by using back-of-the-envelope arithmetic adjustments. [@contraceptive_failure_2017; @contraceptive_failure_2008; @contraceptive_failure_1999; @contraceptive_failure_1992; @contraceptive_failure_1986] While such approaches are plausible, they have the disadvantage of limiting what statistical methodologies can be used in the analysis to just those that are amenable to such adjustments.
 
 
 ## Weights to Compensate for Abortion Under-Reporting
 
 Herein are provided survey weights for NSFG public use data files that have been adjusted to compensate for abortion under-reporting. Incorporating the adjustments for abortion under-reporting into the survey weights has the advantage that once these adjusted weights are used, all of the full range of statistical methodologies available in the analysis of surveys can be used, and they can be used without any back-of-the-envelope arithmetic adjustments.
 
-For instance, using these adjusted weights, regression analysis can be done with unintended pregnancy as one of the model variables simply by using the `svyglm` function of the [`survey`](https://r-survey.r-forge.r-project.org/survey/) package in the R statistical programming language or by using the `SURVEYREG` or `SURVEYLOGISTIC` procedures of the SAS statistical programming language.
+For instance, using these adjusted weights, regression analysis can be done with unintended pregnancy as one of the model variables simply by using the `svyglm` function of the [`survey` library](https://r-survey.r-forge.r-project.org/survey/) for the R statistical programming language or by using the `SURVEYREG` or `SURVEYLOGISTIC` procedures of the SAS statistical programming language.
 
-The weight adjustments were made using a modified form of _post-stratification,_ which is a technique in which survey weights are adjusted such that estimates match totals retrieved from an external source. The weights included with the public-use data files of the NSFG have already been post-stratified in order to make the estimates of population counts based on the NSFG data match external population counts from the U.S. Census Bureau and others.
+The weight adjustments were made using a modified form of _post-stratification,_ which is a technique in which survey weights are adjusted such that estimates match totals retrieved from an external source. [@lohr_sampling_2021, 329] The weights included with the public-use data files of the NSFG have already been post-stratified in order to make the estimates of population counts based on the NSFG data match external population counts from the U.S. Census Bureau and others. [@weighting-design]
 
-The adjusted survey weights were produced by performing additional post-stratifications using the technique of _raking,_ in which multiple post-stratifications can be done simultaneously.
+The adjusted survey weights were produced by performing additional post-stratifications using the technique of _raking,_ in which multiple post-stratifications can be done simultaneously. [@lohr_sampling_2021, 331]
 
 
 ### Post-Stratification Dimensions
@@ -84,14 +84,14 @@ The post-stratifications performed on the weights for each survey given this tre
 
 The targets for post-stratifications based on population counts of demographic categories were replicated from the NSFG data sets themselves, based on documentation of each NSFG survey's weighting procedures.
 
-Targets for post-stratification of live births by age per year were taken from the [National Vital Statistics Service](https://www.cdc.gov/nchs/nvss/index.htm)'s natality data. For 1995 and after, these came by way of the [CDC WONDER](https://wonder.cdc.gov/natality.html) system. For years before 1995, these came from data files prepared by the [National Bureau of Economic Research](https://www.nber.org/research/data/vital-statistics-natality-birth-data).[^rationale-for-births]:
+Targets for post-stratification of live births by age per year were taken from the National Vital Statistics Service's natality data. For 1995 and after, these came by way of the CDC WONDER system. [@cdc-wonder] For years before 1995, these came from data files prepared by the National Bureau of Economic Research.[^rationale-for-births] [@nber_vital_2023]
 
 [^rationale-for-births]: The NSFG [already estimates live births well](/abortion-underreporting-on-the-national-survey-of-family-growth-in-two-plots.html#two-plots-live-births-versus-induced-abortions). The inclusion of post-stratifications to live births has several advantages.
   1. It maintains and improves the accuracy of the estimates of live births per year.
   2. It reduces the variance of estimates of pregnancies per year.
   Both these compensate for any loss of accuracy or increase in estimator variance due to weight inflation to adjust for abortion under-reporting.
 
-Targets for post-stratification of induced abortions by age per analysis period were taken from a [data set created by Guttmacher Institute personnel](https://osf.io/kthnf/) based on total counts from the Guttmacher Institute's Abortion Provider Census with age distributions inferred from Abortion Surveillance Reports of the Centers for Disease Control and Prevention. Post-stratifications to number of induced abortions were done for the entirety of each survey's analysis period rather than by year like live births due to insufficient numbers of respondents reporting abortions to divide up respondents by year.
+Targets for post-stratification of induced abortions by age per analysis period were taken from a data set created by Guttmacher Institute personnel based on total counts from the Guttmacher Institute's Abortion Provider Census with age distributions inferred from Abortion Surveillance Reports of the Centers for Disease Control and Prevention. [@maddow-zimet_pregnancies_2022] Post-stratifications to number of induced abortions were done for the entirety of each survey's analysis period rather than by year like live births due to insufficient numbers of respondents reporting abortions to divide up respondents by year.
 
 
 ### Analysis Periods
@@ -100,7 +100,7 @@ Adjusted survey weights are provided for Cycle 3 (1982) of the NSFG through the 
 
 [^why-not-combine]: Additionally, the 2015-2019 NSFG expanded its target population to women from ages 15 to 49 from women ages 15 to 44, so combining the 2015-2019 with data from 2011-2015 would result in losing the over-44 respondents from the 2011-2015 data.
 
-The analysis periods for each survey were hand-selected in order to give the most accurate estimates that would give complete coverage for all years from 1974 to 2014, and this is summarized in the table below.
+The analysis periods for each survey were hand-selected in order to give the most accurate estimates that would give complete coverage for all years from 1974 to 2014, and this is summarized in Table \@ref(tab:analysis-periods).
 
 | Analysis Period(s)   | Survey         |
 |----------------------|----------------|
@@ -112,20 +112,23 @@ The analysis periods for each survey were hand-selected in order to give the mos
 | 2006-2010            | 2011-2015      |
 | 2011-2014            | 2015-2019      |
 
+Table: (\#tab:analysis-periods) Analysis periods assigned to each edition of NSFG survey. 
+
+
 The analysis period of Cycle 5 of the NSFG is particularly long, and so was divided into two separate analysis periods. 
 
-When using the adjusted weights, estimates of the number of births in each year of a survey's analysis period and estimates of the number of induced abortions in the entirety of each survey's analysis period should match external counts.[^multiple-abortions]
+When using the adjusted weights, estimates of the number of births in each year of a survey's analysis period, and estimates of the number of induced abortions in the entirety of each survey's analysis period should match external counts.
 
-[^multiple-abortions]: There are many respondents to the NSFG who report multiple induced abortions during a survey's analysis period. One of the ways that typical post-stratification was modified specifically for the abortion post-stratification was to handle these multiplicative factors.
+In order to accomplish this, estimates for calculation of post-stratification adjustments were based on the number of abortions a respondent reported as occurring in the analysis period, since there are many respondents to the NSFG who report multiple abortions. This was a departure from typical post-stratification done.
 
-In addition to applying adjustments to the weight of each respondent reporting an abortion in a survey's analysis period, weight adjustments were applied to any respondent reporting an abortion _after_ the analysis period, based on the adjustment done for respondents reporting abortions during the analysis period. This was done so that the contraceptive use calendar, which includes many respondent-months that occur after a survey's analysis period, could be used for analysis. This is a departure from how post-stratification is typically done.
+In addition to applying adjustments to the weight of each respondent reporting an abortion in a survey's analysis period, weight adjustments were applied to any respondent reporting an abortion _after_ the analysis period, based on the adjustment done for respondents reporting abortions during the analysis period. This was done so that the contraceptive use calendar, which includes many respondent-months that occur after a survey's analysis period, could be used for analysis. This was another a departure from how post-stratification is typically done.
 
 
 ### Replicate Weight Schemes
 
-This and other departures from typical post-stratification necessitated the use of replicate weights. Any adjustments made to the main survey weights were also performed upon all replicate weights, which ensures that estimation error can be calculated by statistical software.
+These departures from typical post-stratification necessitated the use of replicate weights. Any adjustments made to the main survey weights were also performed upon all replicate weights, which ensures that the standard errors of estimates can be calculated by statistical software.
 
-The public use data file for Cycle 4 (1985) of the NSFG is distributed with replicate weights. Replicate weights for other surveys were calculated before raking post-stratification was done. What replicate weight scheme was used depended on the structure of strata and clusters in the public use data files, and this summarized in the table below.
+The public use data file for Cycle 4 (1985) of the NSFG is distributed with replicate weights. Replicate weights for other surveys were calculated before raking post-stratification was done. What replicate weight scheme was used depended on the structure of strata and clusters in the public use data files, and this is summarized in Table \@ref(tab:replace-weight-schemes).
 
 | Survey         | Replicate Weight Scheme             |
 |----------------|-------------------------------------|
@@ -136,6 +139,8 @@ The public use data file for Cycle 4 (1985) of the NSFG is distributed with repl
 | 2006-2010      | Jackknife                           |
 | 2011-2015      | Jackknife                           |
 | 2015-2019      | Jackknife                           |
+
+Table: (\#tab:replace-weight-schemes) Replicate weight schemes used for each version of the NSFG.
 
 
 ### Data Files Containing Adjusted Weights
@@ -154,7 +159,7 @@ Each file contains a column for the `CASEID` of each female respondent in the da
 
 [^male]: Starting with the Cycle 6 (2002) of the NSFG, male respondents were surveyed. However, male respondents are given a separate survey questionnaire that does not contain a contraceptive use calendar. No attempt was made to derive weights adjusted for abortion under-reporting for male respondents.
 
-Additionally, for those replicate weights that use the jackknife scheme, some statistical software requires a list of scaling factors. Scaling factors for survey weights that use the jackknife scheme are included in the CSV files linked below.
+Additionally, for those replicate weights that use the jackknife scheme, statistical software requires the jackknife coefficients for each stratum. Coefficients for survey weights that use the jackknife scheme are included in the CSV files linked below.
 
 * [Cycle 5 (1995)](/weights/NSFG_1995_cycle_5_jkcoefs.csv)
 * [2006-2010](/weights/NSFG_2006_2010_jkcoefs.csv)
@@ -358,7 +363,8 @@ run;
 
 ### Example R Programs
 
-The example R programs use the [`srvyr`](http://gdfe.co/srvyr/) library and two [`tidyverse`](https://www.tidyverse.org/) libraries to process input and output from the `survey` library.
+The example R programs use the [`srvyr` library](http://gdfe.co/srvyr/) and two [`tidyverse` libraries](https://www.tidyverse.org/) to process input and output from the `survey` library.
+
 
 #### Female Respondents File -- Balanced Repeated Replication
 
@@ -515,12 +521,11 @@ fempreg_2006_2010 |>
   )
 ```
 
- 
-## Remaining to Do
 
-* Citations
-    * Of tables
-    * To papers\document
+## Citations
+
+::: {#refs}
+:::
 
 
 ## Footnotes
