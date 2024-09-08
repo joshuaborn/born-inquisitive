@@ -168,7 +168,11 @@ Additionally, for those replicate weights that use the jackknife scheme, some st
 
 The below SAS program will print out estimates of the population of women in the United States of reproductive age by age, based on the Cycle 6 (2002) of the NSFG, which uses the balanced repeated replication weight scheme.
 
-The program assumes there is a SAS library set up called `nsfgdata` that contains a table called `d2002_2003femresp` which contains the SAS data table of female respondents file of the Cycle 6 (2002) of the NSFG, as set up by the example programs on the NSFG web site. The `&weights_path.` macro variable is assumbed to contain the path to the weights file.
+Program prerequisites:
+
+* `nsfgdata` is a SAS library that contains the table `d2002_2003femresp`.
+* `d2002_2003femresp` is the female respondents data table of the Cycle 6 (2002) of the NSFG, as set up by the example programs on the NSFG web site.
+* The `&weights_path.` macro variable is contains the path to the weights file.
 
 ```{r eval=FALSE}
 data cycle6_fem_resp;
@@ -206,7 +210,13 @@ run;
 
 #### Pregnancies File -- Balanced Repeated Replication
 
-The below SAS program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the Cycle 6 (2002) of the NSFG. Assumptions are similar to the example program above. An additional detail is that when merging the adjusted weights to the pregnancies file, `CASEID`s that do not correspond to any pregnancies should be discarded, otherwise spurious rows will be introduced.
+The below SAS program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the Cycle 6 (2002) of the NSFG. When merging the weights table to the pregnancies table, `CASEID`s that do not correspond to any pregnancies should be discarded, otherwise spurious rows will be introduced.
+
+Program prerequisites:
+
+* `nsfgdata` is a SAS library that contains the table `d2002_2003fempreg`.
+* `d2002_2003fempreg` is the pregnancies data table of the Cycle 6 (2002) of the NSFG, as set up by the example programs on the NSFG web site.
+* The `&weights_path.` macro variable is contains the path to the weights file.
 
 ```{r eval=FALSE}
 data cycle6_pregs;
@@ -247,6 +257,12 @@ run;
 #### Female Respondents File -- Jackknife
 
 The below SAS program also prints out estimates of the population of women in the United States of reproductive age by age, but based on the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Because of this, the jackknife coefficients must also be loaded.
+
+Program prerequisites:
+
+* `nsfgdata` is a SAS library that contains the table `d2006_2010femresp`.
+* `d2006_2010femresp` is the female respondents data table of the 2006-2010 version of the NSFG, as set up by the example programs on the NSFG web site.
+* The `&weights_path.` macro variable is contains the path to the weights file and jackknife coefficients file.
 
 ```{r eval=FALSE}
 data fem_resp_2006_2010;
@@ -292,6 +308,12 @@ run;
 
 The below SAS program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Thus, the jackknife coefficients must be loaded to use the weights.
 
+Program prerequisites:
+
+* `nsfgdata` is a SAS library that contains the table `d2006_2010fempreg`.
+* `d2006_2010fempreg` is the pregnancies data table of the 2006-2010 version of the NSFG, as set up by the example programs on the NSFG web site.
+* The `&weights_path.` macro variable is contains the path to the weights file and jackknife coefficients file.
+
 ```{r eval=FALSE}
 data pregs_2006_2010;
     format CASEID 8.;
@@ -336,13 +358,16 @@ run;
 
 ### Example R Programs
 
+The example R programs use the [`srvyr`](http://gdfe.co/srvyr/) library and two [`tidyverse`](https://www.tidyverse.org/) libraries to process input and output from the `survey` library.
+
 #### Female Respondents File -- Balanced Repeated Replication
 
 The below R program will print out estimates of the population of women in the United States of reproductive age by age, based on the Cycle 6 (2002) of the NSFG, which uses the balanced repeated replication weight scheme.
 
-The program assumes the female respondents file of the Cycle 6 (2002) of the NSFG is loaded as a data frame in the `cycle_6_femresp` variable, and that the path to the weights file is stored in the `weights_path` variable.
+Program prerequisites:
 
-The program uses the [`srvyr`](http://gdfe.co/srvyr/) library and two [`tidyverse`](https://www.tidyverse.org/) libraries to process input and output from the `survey` library.
+* The `cycle_6_femresp` variable contains the female respondents data table of the Cycle 6 (2002) of the NSFG.
+* The path to the weights file is stored in the `weights_path` variable.
 
 ```{r eval=FALSE}
 library(dplyr)
@@ -375,7 +400,12 @@ cycle_6_femresp |>
 
 #### Pregnancies File -- Balanced Repeated Replication
 
-The below R program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the Cycle 6 (2002) of the NSFG. Assumptions are similar to the example program above.
+The below R program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the Cycle 6 (2002) of the NSFG.
+
+Program prerequisites:
+
+* The `cycle_6_pregs` variable contains the pregnancies data table of the Cycle 6 (2002) of the NSFG.
+* The path to the weights file is stored in the `weights_path` variable.
 
 ```{r eval=FALSE}
 library(dplyr)
@@ -413,6 +443,11 @@ cycle_6_pregs |>
 
 The below R program prints out estimates of the population of women in the United States of reproductive age by age, based on the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Because of this, the jackknife coefficients must also be loaded.
 
+Program prerequisites:
+
+* The `femresp_2006_2010` variable contains the female respondents data table of the Cycle 6 (2002) of the NSFG.
+* The path to both the weights file and the jackknife coefficients file is stored in the `weights_path` variable.
+
 ```{r eval=FALSE}
 library(dplyr)
 library(readr)
@@ -444,6 +479,11 @@ femresp_2006_2010 |>
 #### Pregnancies File -- Jackknife
 
 The below R program will print out estimates of the number of pregnancies by pregnancy outcome in the analysis period of the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition.
+
+Program prerequisites:
+
+* The `fempreg_2006_2010` variable contains the pregnancies data table of the Cycle 6 (2002) of the NSFG.
+* The path to both the weights file and the jackknife coefficients file is stored in the `weights_path` variable.
 
 ```{r eval=FALSE}
 library(dplyr)
