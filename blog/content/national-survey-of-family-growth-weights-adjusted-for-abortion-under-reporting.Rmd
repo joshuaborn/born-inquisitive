@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 The [National Survey of Family Growth (NSFG)](https://www.cdc.gov/nchs/nsfg/index.htm) is the premiere fertility survey of the United States. It began in 1973, and since its inception has been designed and administered by the National Center for Health Statistics, which is now an agency within the U.S. Department of Health and Human Services' Centers for Disease Control and Prevention.
 
-However, there is a known issue with the NSFG data that affects any analyses involving counts of pregnancies generally and counts of unintended pregnancies especially. Less than half of pregnancies ending in induced abortion have been reported by respondents to the NSFG.
+However, there is a known issue with the NSFG data that affects any analyses involving counts of pregnancies generally and counts of unintended pregnancies especially. Less than half of pregnancies ending in induced abortion have been reported by respondents to the NSFG. This is is [depicted graphically in a previous article](/abortion-underreporting-on-the-national-survey-of-family-growth-in-two-plots.html#two-plots-live-births-versus-induced-abortions).
 
 The Appendix 2 "Topic-Specific Notes" to the User's Guide of the 2017-2019 NSFG states:
 
@@ -79,6 +79,8 @@ The post-stratifications performed on the weights for each survey given this tre
 
 [^parity]: "Parity" in this context refers to the number of live births that a given respondent has had.
 
+The births by age and abortions by age dimensions only included post-strata for women under 40 years of age for most of the NSFG surveys. Because the target population of the NSFG before 2015 was women 15 years to 44 years of age, there were insufficient numbers of respondents reporting pregnancies while aged 40 years or more in order to do post-stratification. In 2015, the target population was extended to women aged 15 years to 49 years, so a post-stratum for women aged 40 years or more at the end of pregnancy was included in the weight adjustments for the 2015-2019 NSFG.
+
 
 ### Post-Stratification Targets
 
@@ -87,9 +89,11 @@ The targets for post-stratifications based on population counts of demographic c
 Targets for post-stratification of live births by age per year were taken from the National Vital Statistics Service's natality data. For 1995 and after, these came by way of the CDC WONDER system. [@cdc-wonder] For years before 1995, these came from data files prepared by the National Bureau of Economic Research.[^rationale-for-births] [@nber_vital_2023]
 
 [^rationale-for-births]: The NSFG [already estimates live births well](/abortion-underreporting-on-the-national-survey-of-family-growth-in-two-plots.html#two-plots-live-births-versus-induced-abortions). The inclusion of post-stratifications to live births has several advantages.
-  1. It maintains and improves the accuracy of the estimates of live births per year.
-  2. It reduces the variance of estimates of pregnancies per year.
-  Both these compensate for any loss of accuracy or increase in estimator variance due to weight inflation to adjust for abortion under-reporting.
+
+    1. It maintains and improves the accuracy of the estimates of live births per year.
+    2. It reduces the variance of estimates of pregnancies per year.
+
+    Both these compensate for any loss of accuracy or increase in estimator variance due to weight inflation to adjust for abortion under-reporting.
 
 Targets for post-stratification of induced abortions by age per analysis period were taken from a data set created by Guttmacher Institute personnel based on total counts from the Guttmacher Institute's Abortion Provider Census with age distributions inferred from Abortion Surveillance Reports of the Centers for Disease Control and Prevention. [@maddow-zimet_pregnancies_2022] Post-stratifications to number of induced abortions were done for the entirety of each survey's analysis period rather than by year like live births due to insufficient numbers of respondents reporting abortions to divide up respondents by year.
 
@@ -117,7 +121,7 @@ Table: (\#tab:analysis-periods) Analysis periods assigned to each edition of NSF
 
 The analysis period of Cycle 5 of the NSFG is particularly long, and so was divided into two separate analysis periods. 
 
-When using the adjusted weights, estimates of the number of births in each year of a survey's analysis period, and estimates of the number of induced abortions in the entirety of each survey's analysis period should match external counts.
+When using the adjusted weights, estimates of the number of births in each year of a survey's analysis period and estimates of the number of induced abortions in the entirety of each survey's analysis period should match external counts for women less than 40 years of age.
 
 In order to accomplish this, estimates for calculation of post-stratification adjustments were based on the number of abortions a respondent reported as occurring in the analysis period, since there are many respondents to the NSFG who report multiple abortions. This was a departure from typical post-stratification done.
 
@@ -171,7 +175,7 @@ Additionally, for those replicate weights that use the jackknife scheme, statist
 
 #### Female Respondents File -- Balanced Repeated Replication
 
-The below SAS program will print out estimates of the population of women in the United States of reproductive age by age, based on the Cycle 6 (2002) of the NSFG, which uses the balanced repeated replication weight scheme.
+The below SAS program will print out estimates of the population of women in the United States by age, based on the Cycle 6 (2002) of the NSFG, which uses the balanced repeated replication weight scheme.
 
 Program prerequisites:
 
@@ -261,7 +265,7 @@ run;
 
 #### Female Respondents File -- Jackknife
 
-The below SAS program also prints out estimates of the population of women in the United States of reproductive age by age, but based on the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Because of this, the jackknife coefficients must also be loaded.
+The below SAS program also prints out estimates of the population of women in the United States by age, but based on the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Because of this, the jackknife coefficients must also be loaded.
 
 Program prerequisites:
 
@@ -368,7 +372,7 @@ The example R programs use the [`srvyr` library](http://gdfe.co/srvyr/) and two 
 
 #### Female Respondents File -- Balanced Repeated Replication
 
-The below R program will print out estimates of the population of women in the United States of reproductive age by age, based on the Cycle 6 (2002) of the NSFG, which uses the balanced repeated replication weight scheme.
+The below R program will print out estimates of the population of women in the United States of by age, based on the Cycle 6 (2002) of the NSFG, which uses the balanced repeated replication weight scheme.
 
 Program prerequisites:
 
@@ -447,7 +451,7 @@ cycle_6_pregs |>
 
 #### Female Respondents File -- Jackknife
 
-The below R program prints out estimates of the population of women in the United States of reproductive age by age, based on the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Because of this, the jackknife coefficients must also be loaded.
+The below R program prints out estimates of the population of women in the United States by age, based on the 2006-2010 version of the NSFG, which uses jackknife replicate weight scheme instead of balanced repeated repetition. Because of this, the jackknife coefficients must also be loaded.
 
 Program prerequisites:
 
