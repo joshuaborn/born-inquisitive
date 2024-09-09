@@ -2,7 +2,7 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2024-07-10
+date: 2024-09-09
 draft: true
 implicit-figures: true
 include-before: |
@@ -47,7 +47,7 @@ The United States of America is a heavily polarized, partisan place. However, as
 
 This raises the question of how to understand the polarization that characterizes American politics. I discovered what I believe to be the best answer to this question a couple of years ago when listening to [episode 40 of season 3 of _Conversations with Coleman_](https://pca.st/1l7zid0r) in which Coleman Hughes interviewed David Sacks.
 
-Coleman Hughes is a columnist, podcaster, and book author who comments on race politics in the United States, and David Sacks is an entrepreneur in the software industry who was the founding CEO of PayPal. However, the explanation of political polarization discussed on the podcast ultimately came from neither David Sacks nor Coleman Hughes, but from the work of Ruy Teixeira, which they discussed.
+Coleman Hughes is an author and podcaster who comments on race politics in the United States, and David Sacks is an entrepreneur in the software industry who was the founding CEO of PayPal. However, the explanation of political polarization discussed on the podcast ultimately came from neither David Sacks nor Coleman Hughes, but from the work of Ruy Teixeira, which they discussed.
 
 Ruy Texeira is a political scientist and co-author of _The Emerging Democratic Majority_ in 2002 and of _Where Have All the Democrats Gone?_ in 2023. The former 2002 book predicted that the Democratic Party would soon have a national voting majority. This did not happen, which led to the latter 2023 book and his ongoing political science work.
 
@@ -86,7 +86,7 @@ As David Sacks discussed during his _Conversations with Coleman_ interview:
 
 The most dramatic polarization we see in the United States is between the professional class and the working class, and this is because the professional class has more exposure to the cultural hegemony, while the working class has less exposure to the cultural hegemony. Furthermore, the working class outnumbers the professional class, but the professional class wields more power than the working class, which in a democracy sows discord.
 
-The working class might poll more "conservative" on a social issue, depending on how the pollsters frame the issue and what (ultimately arbitrary) definition of "conservative" is being used. The professional class might poll more "left-wing" than the working class on an issue, based an fleeting and arbitrary characterizations of the left-right spectrum. But all of these labels miss the point that the schism itself is caused by the phenomenon of professional class cultural hegemony.
+The working class might poll more "conservative" on a social issue, depending on how the pollsters frame the issue and what (ultimately arbitrary) definition of "conservative" is being used. The professional class might poll more "left-wing" than the working class on an issue, based an fleeting and arbitrary characterizations of the left-right spectrum. But all of these labels miss the point that the schism itself is caused by the phenomenon of professional-class cultural hegemony.
 
 If the views of the pseudo-aristocracy that runs the Ivy League and the _New York Times_ were "right-wing" or "conservative," then this schism in American society would still exist, but with a reversing of the labels; there would be a more "right-wing" or "conservative" hegemony compared with a more "left-wing" or "progressive" rest of the country. The source of the polarization itself is the amount of exposure to the cultural hegemony people receive and the amount of power they have in society by virtue of institutional leadership and economic wealth.
 
@@ -123,13 +123,20 @@ Because of this tension within the professional class, it is not enough for the 
 
 Probably one the most profound methods of the cultural hegemony is the deplatforming of alternative viewpoints. If the people dominated by the cultural hegemony are simply not exposed to viewpoints other than those of the cultural hegemony, then they are much less likely to deviate from that orthodoxy.
 
-This can manifest itself in two ways, one more public and one more subtle. The first, more public way is through the efforts to "cancel" public figures who deviate from the orthodoxy of the cultural hegemony. Incidentally, Coleman Hughes, less than a year after this podcast was published, was himself the object of an attempted cancellation.
+This can manifest itself in two ways, one more public and one more subtle.
+
+#### Public Cancellation
+
+The first, more public way is through the efforts to "cancel" public figures who deviate from the orthodoxy of the cultural hegemony. Incidentally, Coleman Hughes, less than a year after this podcast was published, was himself the object of an attempted cancellation.
 
 Like a lot of commentary professionals, Coleman Hughes did a [TED talk](https://colemanhughes.substack.com/p/why-is-ted-scared-of-color-blindness). His talk expressed the opinion that one should not judge others based on their race, either in personal life or public policy. The talk would be singled out by an "employee resource group" entitled "Black\@TED" as upsetting, leading to much back and forth between Hughes and the executives at TED.
 
 TED would go on to release Hughes' talk, but with the condition that Hughes would also have to release another video debating his viewpoint with someone who disagreed with his opinion. [In the end](https://colemanhughes.substack.com/p/my-last-word-on-ted), it appears that TED released, but did not promote Coleman Hughes' talk, leading to far fewer views than a TED talk typically receives.
 
 Numerous articles have discussed this "cancel culture" phenomena, leading to many takes on just how prominent it is in our society. This is beyond the scope of this article. However, I will point out that these cancellations are just one aspect of the much larger phenomenon of cultural hegemony. Indeed, public cancellation is not even the most prolific form of deplatforming done by the cultural hegemony.
+
+
+#### Selection for Admissions, Hiring, or Promotion
 
 The second, more subtle, and much more prolific way that deplatforming occurs is in the selection process of admissions, hiring, and promotion. This, like a lot of aspects of the cultural hegemony, has begun in _academia._
 
@@ -165,13 +172,22 @@ Coleman Hughes spoke about the ubiquity of people being called "racist" during h
 Many people in the United States today rightfully try to avoid racist viewpoints. Misrepresenting viewpoints alternative to the ones advanced by the cultural hegemony as "racist," etc., thus discourages individuals from considering the alternative viewpoints. If people who are dominated by the cultural hegemony have never encountered an actual good faith exposition of an alternative viewpoint due to deplatforming, then this kind of misrepresentation is that much more effective at keeping those dominated by the cultural hegemony away from the viewpoint.
 
 
+#### Redefinition of Words
+
+One of the most common hegemonic techniques for misrepresentation and defamation -- and, indeed, to control people's thinking in general -- is to control people's language. Thus, proponents of the cultural hegemony are fond of redefining commonly used words.
+
+For instance, one of the main reasons claimed for the attempt to cancel Coleman Hughes' TED Talk was that his views -- i.e., that we should not judge an individual based on the individual's race -- were alleged to be "racist." 
+
+**_This section will be expanded with discussion of the debate with Jamelle Bowie and of "Antiracist" neo-racism._**
+
+
 ### Fear and Self-Censorship
 
 In addition to the removal of individuals that occurs through public cancellations or through ideological bias in admissions, hiring, and promotion, there is a silencing effect on individuals who remain. For every one person who is fired for expressing viewpoints unpopular with the cultural hegemony, there are many more who see this occur and are scared into self-censorship. As David Sacks said:
 
 > And a lot of it has to do with the cancellation tactics that they're willing to use -- the way that they will smear anybody who disagrees with their agenda. If you're part of that, again, that 80, 90% of the herd, you just don't want to stick your neck out. And there's just no upside for you in challenging the untruths and being called -- being accused of something. So this is a huge part of the dynamic.
 
-As is typical with the cultural hegemony, this phenomenon begins at the university and spreads outward into the rest of society, as reported by the Foundation for Individual Rights and Expression (FIRE). Their most recent report on free speech on campus found that "just over a quarter of students (26%) reported that they feel pressure to avoid discussing controversial topics in their classes," and that "at least a quarter of students said they self-censor 'fairly often' or 'very often' during conversations with other students, with professors, and during classroom discussions (25%, 27%, and 28%, respectively.)" [@fire_2024] 
+As is typical with the cultural hegemony, this phenomenon begins at the university and spreads outward into the rest of society, as reported by the Foundation for Individual Rights and Expression (FIRE). Their recent report on free speech on campus found that "just over a quarter of students (26%) reported that they feel pressure to avoid discussing controversial topics in their classes," and that "at least a quarter of students said they self-censor 'fairly often' or 'very often' during conversations with other students, with professors, and during classroom discussions (25%, 27%, and 28%, respectively.)" [@fire_2024] 
 
 The situation is even worse for professors. A 2022 survey found that "roughly one-third (34%) of faculty said they often feel they can not express their opinions on a subject because of how students, colleagues, or the administration would respond," and that "the percentages of faculty who said they were very or extremely likely to self-censor in different contexts ranged from 25% (in academic publications) to 45% (on social media)." [@fire_2022]
 
@@ -233,7 +249,7 @@ Thus, even under this definition, the binary left-right spectrum makes no sense,
 
 However, this star-burst model does help explain what is going on when people dominated by the cultural hegemony use terms like "right-wing," "conservative," "alt right," or "far right." People dominated by the cultural hegemony, be they true believers or go-alongs, have been prejudiced away from viewpoints that deviate from the cultural hegemony. These terms induce a knee-jerk reaction to avoid serious consideration of alternative viewpoints and to default back to conformity to the cultural hegemony.
 
-Renowned economist Melissa Kearney relates an anecdote illustrating this phenomenon in which she received push back against her work:
+Renowned economist Melissa Kearney relates an anecdote illustrating this phenomenon in which she received pushback against her work:
 
 > I thought about a conversation I had recently had with a different economist in a different setting who reacted negatively when I mentioned the importance of family structure to children's outcomes. He bristled, suggesting to me that I sounded "socially conservative," in a way that implied "not academically serious." I countered, "You are always talking about the things you are doing for your kids and how much time their activities take up in your life. Why would you be offended by the suggestion that maybe other kids would also benefit from having the involvement of two parents, and in particular a father, in their lives?" [@kearney_2023]
 
@@ -251,7 +267,7 @@ One flaw (of many) of this fallacy is that it conceives of all the other rays of
 
 This knee-jerk aversion to viewpoints outside the cultural hegemony by way of arguments from partisanship has expanded to other phrases in addition to "conservative" or "right-wing" by use of the concept of a "dog whistle." Some people dominated by the cultural hegemony espouse the belief that there are certain special codes in "right-wing" circles, which are called "dog whistles," that "right-wing" speakers use to communicate their alleged evildoing to other "right-wing" listeners in ways that sound innocent to the uninitiated.
 
-These special codes are called "dog whistles" because much as dogs can hear the sounds made by special whistles that human beings cannot, the common person does not understand these alleged special codes, it is alleged, but both the "right-wing" audience and the special "left-wing" critics can. As expected, most of these special codes are construed to mean "racism," "misogyny," "homophobia," "transphobia," etc.
+These special codes are called "dog whistles" because much as dogs can hear the sounds made by special whistles that human beings cannot, the common person does not understand these special codes, it is alleged, but both the "right-wing" audience and the special "left-wing" critics can. As expected, most of these special codes are construed to mean "racism," "misogyny," "homophobia," "transphobia," etc.
 
 This is a level of paranoia and conspiracy thinking that poisons any possibility of engagement in the public discourse necessary to sustain a self-governing society. When people are metaphorically going through all the books in the library to cross out "Western civilization" and pencil in "White supremacy," there is no more room for rational thought. 
 
@@ -285,18 +301,20 @@ Two mutually supporting phenomena happened since then: the political movement th
 
 The moral status of the human fetus has been controversial and debated for millennia, at least as far back as the time of Plato and Aristotle, yet the cultural hegemony has declared that those who reach a conclusion that abortion as a method of fertility control is morally wrong do not actually believe what they say, and instead are secretly "misogynists" who "hate women" and want to "control women's bodies" because they are against "gender equality" and "women's freedom."
 
+**_This is an example of controlling language to control thinking._**
+
 Thus, for decades now, by way of universities and the organizations downstream of the universities, the cultural hegemony has been deplatforming those opposed to abortion, misrepresenting the views of those opposed to abortion, and defaming those who hold such views.
 
 Nowadays, if those of us who have moral compunction about abortion attempt to express what we truly believe in an academic paper or an op-ed in the mainstream media, our words will not be allowed past editorial review. You are not allowed to write about "life" or "death" occurring in the womb. You are not allowed to describe abortion as an act of "killing." Such discussion is dismissed as "inflammatory" by the cultural hegemony and censored, but these words get at what is the _actual_ and _central_ point of disagreement about abortion, as it has been for thousands of years.
 
-What has been the effect of this on the discourse? The latest FIRE survey on free speech on campus asked students what topics are "difficult to have an open and honest conversation about on their campus." The response of "abortion" was the most common answer to this question, with 49% of respondents giving "abortion" as an answer. Incidentally, the only other topics that come close are also topics on which the cultural hegemony is very active, namely "gun control" (43%), "racial inequality" (42%), and "transgender rights" (42%). [@fire_2024]
+What has been the effect of this on the discourse? A recent FIRE survey on free speech on campus asked students what topics are "difficult to have an open and honest conversation about on their campus." The response of "abortion" was the most common answer to this question, with 49% of respondents giving "abortion" as an answer. Unsurprisingly, the only other topics that come close are also topics on which the cultural hegemony is very active, namely "gun control" (43%), "racial inequality" (42%), and "transgender rights" (42%). [@fire_2024]
 
 The effect of the cultural hegemony is to ruin the possibility of an open and honest discourse. One might look at the survey responses as akin to a glass half full, rather than half empty, since 51% of students did not respond "abortion" to the question. However, it is likely that many of those who do not _believe_ it is difficult to have an open and honest discussion about abortion on campus are the people _making it_ difficult. For those who are dominated by the cultural hegemony, all the deplatforming, misrepresentation, and defamation _is_ what they _think_ is an "open and honest" discussion.
 
 
 ### Education, Money, and Power
 
-In my article "[Induced Abortion is Controversial](/induced-abortion-is-controversial.html)," I discussed how abortion has been the most controversial moral issue identified in Gallup's annual Values and Beliefs polling since the survey's inception in 2001, with the United States nearly split in half between those who find abortion to be "in general" either "morally wrong" or "morally acceptable." However, an interesting thing occurs when you examine the results of same polling, broken down by whether respondents have a college degree or not.
+In my article "[Induced Abortion is Controversial](/induced-abortion-is-controversial.html)," I discussed how abortion has been the most controversial moral issue identified in Gallup's annual Values and Beliefs polling since the survey's inception in 2001, with the United States nearly split in half between those who find abortion to be "in general" either "morally wrong" or "morally acceptable." However, an interesting thing occurs when you examine the results of the same polling, broken down by whether respondents have a college degree or not.
 
 ```{r plot-acceptable-abortion-by-education, message=FALSE, cache=TRUE, fig.cap='Percentage of responses that induced abortion of pregnancy "in general" is "morally acceptable" by whether respondent is college graduate, from the Gallup Poll Social Series, Values and Beliefs. [@gallup_how_2014]'}
 read_csv(
@@ -399,7 +417,7 @@ Furthermore, because of the economic advantages that college graduates enjoy in 
 
 Thus, people with more influence on society and more money tend to have more approving views of abortion, while those with less money and influence are more likely to judge abortion to be morally wrong.
 
-However, even more important than these differences in viewpoints by educational level or income is the effect that the extremely wealthy have had on views on abortion. From the get go, abortion advocacy in the United States has been funded by some of the richest people in America, such as John D. Rockefeller III, Warren Buffet, and Bill and Melinda Gates. There have been no billionaires of this level of wealth to fund opposition to abortion.
+However, even more important than these differences in viewpoints by educational level or income is the effect that the extremely wealthy have had on views on abortion. From the get go, abortion advocacy in the United States has been funded by some of the richest people in America, such as John D. Rockefeller III and Warren Buffet. There have been no billionaires of this level of wealth to fund opposition to abortion.
 
 The movement to destigmatize abortion in the United States has been a classic case of the cultural hegemony at work, funded by a few billionaires over the popular sentiments of the less wealthy and less powerful masses. In time, through the _quid pro quo_ of the university system and reinforcement by professional-class media outlets, the views of the billionaires have spread from a minority of Americans to about half or so of the country. Since the half of the country that subscribes to the views of these few billionaires is the more affluent and powerful half of the country, cultural hegemony has been achieved.
 
@@ -409,12 +427,15 @@ In a country that is split virtually in half on whether abortion is morally wron
 
 [^others]: There may, of course, be plenty of professors and researchers in fields not directly studying abortion-related topics who privately have moral compunction about abortion.
 
-How can it be said, when half of Americans view abortion as morally wrong, that an _academia_ which entirely views abortion as a social good serves America? This _academia_ does not serve America. It serves America's aristocracy and excludes the half of America that dissents from the hegemony of the aristocracy.
+How can it be said, when half of Americans view abortion as morally wrong, that an _academia_ which entirely views abortion as a social good works for America -- all of America? This _academia_ does not work for America. It serves America's aristocracy, excluding the half of America that dissents from the hegemony of the aristocracy.
 
 
 ### My Career Mistakes
 
+* Two goals: research subject-matter expert, and do a social good
 * My naivete about this explains the bad decisions I made in trying to pursue research career
+    * Billionaires decide what technology gets progress, not researchers
+    * Any research about abortion that does not 
 * When there was less sorting on views on abortion between the two parties, Democrats had to moderate their abortion platform, which means I grew up in an era when the cultural hegemony around abortion was less obvious
   
 
