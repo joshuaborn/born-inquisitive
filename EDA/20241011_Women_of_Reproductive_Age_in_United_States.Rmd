@@ -1,0 +1,87 @@
+---
+title: "Number of Women of Reproductive Age in the United States"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+    css: wide.css
+---
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(gt)
+library(here)
+library(readxl)
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi=200,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+
+## For 1940-1979
+
+https://www.census.gov/data/tables/time-series/demo/popest/pre-1980-national.html
+
+```{r load-data-from-excel-files, message=FALSE, warning=FALSE}
+load_Census_year <- function(year) {
+  read_xls(
+    here(paste0('data/Census/pe-11-', 10 * (year %/% 10), 's.xls')),
+    sheet = as.character(year),
+    skip = 9,
+    col_names = FALSE
+  ) |>
+  as_tibble() %>%
+  mutate(
+    Year = year,
+    Age = as.integer(.[[1]]),
+    Population.Female.All = as.integer(.[[4]])
+  ) |>
+  filter(!is.na(Age)) |>
+  select(Year, Age, Population.Female.All)
+}
+
+Census_1940_1979 <- Reduce(
+  \(x, y) bind_rows(list(x, load_Census_year(y))),
+  1941:1979,
+  load_Census_year(1940)
+) |> View()
+```
+
+
+## For 1980-1989
+
+https://www.census.gov/data/datasets/time-series/demo/popest/1980s-national.html
+
+```{r load-data-from-fixed-width-file}
+load_Census_fixed_width <- function(code) {
+  read_fwf(
+    here(paste0('data/Census/1980-1989/E', code, 'RQI.TXT')),
+    fwf_cols(
+      Series = c(1, 2),
+      Month = c(3, 4),
+      Year = c(5, 6),
+      Age = c(7, 10),
+      Population = c(12, 21),
+      Population.Male.All = c(22, 31),
+      Population.Female.All = c(32, 41)
+    )
+  )
+}
+
+Census_1980_1989 <- Reduce(
+  \(x, y) bind_rows(list(x, load_Census_fixed_width(y))),
+  c(8182, 8283, 8384, 8485, 8586, 8687, 8788, 8889, 8990),
+  load_Census_fixed_width(8081)
+)
+```
+
