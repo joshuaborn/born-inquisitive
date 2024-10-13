@@ -1,0 +1,62 @@
+---
+author: "Joshua Born"
+bibliography: "../bibliographies/some-researchers-do-not-realize-that-moral-convictions-against-abortion-exist.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2024-10-13
+draft: false
+#include-before: |
+#  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: false
+summary: "Is this actual ignorance or feigned ignorance for rhetorical purposes?"
+tags: ["editorial", "first-person", "induced abortion"]
+title: "Some Researchers Do Not Realize that Moral Convictions against Abortion Exist"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  cache = FALSE
+)
+```
+
+
+Lately I have been reading academic papers on unintended pregnancy, now that I have concluded working on my adjusted weights for the National Survey of Family Growth and am ramping up my analysis work on reproductive responsibility. One thing that I have noticed is that researchers are getting more and more overtly opinionated in their conformity to the cultural hegemony's attitude that abortion[^definition] is, for lack of a more succinct way to put it, good. This should not be news to anyone who has been following public discourse in the United States.
+
+[^definition]: Unless otherwise noted, in this article the word "abortion" is used to mean induced abortion of pregnancy.
+
+    Technically, the word "abortion" is a generic term. Any process that is aborted before it comes to completion can, in theory, be labeled "abortion." However, because of its association with abortion of pregnancy and the emotional weight of such occurrence, the word "abortion" is usually used to mean abortion of pregnancy.
+
+    Furthermore, even if we just consider "abortion" to mean abortion of pregnancy, there is ambiguity because in the medical literature the word "abortion" is used to mean two different things: spontaneous abortion, which is commonly called "miscarriage" in the vernacular, occurs when a pregnancy terminates without anyone's intervention; induced abortion occurs when a pregnancy is terminated on purpose. When "abortion" is used in the vernacular it is commonly used to mean induced abortion.
+
+    This ambiguity can lead to misinterpretation. For instance, if a study were to report on abortions in a given population, it could be including both spontaneous and induced abortions if it were using the medical literature definition, but it could be excluding what are commonly called "miscarriages" if it were using the common definition.
+
+As I write about in my article on the professional-class cultural hegemony phenomenon, one program of the cultural hegemony in the United States has been to deplatform those morally opposed to abortion. While I was reading an academic paper the other day, I realized one interesting consequence of this deplatforming and the intellectual bubble it creates is that there appear to be researchers who appear ignorant of the fact that people with moral convictions against abortion exist.
+
+Bearak _et al._ [-@bearak_global_2018] found that the rate at which unintended pregnancies are aborted tends to be lower in regions of the world that had more restrictions on abortion, and speculated:
+
+> The lower propensity to abort an unintended pregnancy in countries which prohibit abortion might follow from a number of factors. These might be settings where a woman’s or couple’s motivation to avoid an unintended birth is, on average, relatively weak. Women might also experience cultural barriers, social and personal stigma when considering terminating an unintended pregnancy, or concrete barriers to realising their reproductive preferences. Additionally, women might be deterred from terminating pregnancies by barriers to accessing a safe and legal procedure. Research on variation in these drivers of unintended fertility across settings is needed.
+
+Of all the reasons for this correlation that are speculated, the authors failed to raise what to me is the most obvious one: there are likely more people, as a proportion of the population, morally opposed to abortion in these regions. This would lead to both
+
+1. more restrictive abortion laws, insofar as the political process is responsive to the will of the people, _and_
+2. less women who _want_ to abort an unintended pregnancy _because_ they find it morally reprehensible.
+
+If you grow up in the lack of viewpoint diversity that the cultural hegemony creates artificially, perhaps you have never had a candid conversation about abortion with someone who does have such a moral conviction. You could thus wind up, in an act of supreme solipsism, not realizing that such people exist.
+
+This lack of realization that such people exist, in turn, would lead you to write paragraphs like this. And it also leads you to be a worse researcher because you are too ignorant to even acknowledge that [abortion is controversial](/induced-abortion-is-controversial.html), which is a fact that you could glean just be looking at publicly available polling data.
+
+This ignorance is likely exacerbated by the generic generalization sung like a refrain by agents of the cultural hegemony that "women want abortion," "women want abortion." Generic generalizations, as I have [written about](/fallacy-of-generic-thinking.html), are always wrong, and this refrain could be corrected to "_some_ women want abortion, and _some_ do not" before proceeding to quantify how many in any given population actually do or do not. Indeed, such quantification would be informative in the analysis of why, in certain regions of the world, less unintended pregnancies are aborted than others.
+
+Perhaps I am being duped when I take the words of Bearak _et al._ at face value. Perhaps the authors actually do realize that there are people who have moral convictions against abortion all over the world, and the authors are themselves determined agents of the cultural hegemony in deplatforming women who choose not to abort in an effort to exterminate moral convictions against abortion from human civilization.
+
+Either way, regardless of whether Bearak _et al._ are themselves ignorant because of the cultural hegemony or strategically feigning ignorance in order to further the cultural hegemony, the result is their research is worse because it does not allow for the fact that people who do not agree with their viewpoints might exist.
+
+
+## Citation
+
+::: {#refs}
+:::
+
+## Footnote
