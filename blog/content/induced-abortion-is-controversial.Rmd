@@ -132,7 +132,8 @@ gallup_morality_data |>
     ) +
     geom_point(
       fill = 'white',
-      size = 1.5
+      size = 1.5,
+      shape = 21
     ) +
     scale_y_continuous(
       expand = expansion(mult = c(0, 0.05)),
