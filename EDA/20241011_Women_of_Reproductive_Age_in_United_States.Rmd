@@ -15,6 +15,7 @@ library(dplyr)
 library(gt)
 library(here)
 library(readxl)
+library(readr)
 
 knitr::opts_chunk$set(
   cache = TRUE,
@@ -54,7 +55,7 @@ Census_1940_1979 <- Reduce(
   \(x, y) bind_rows(list(x, load_Census_year(y))),
   1941:1979,
   load_Census_year(1940)
-) |> View()
+)
 ```
 
 
@@ -84,4 +85,37 @@ Census_1980_1989 <- Reduce(
   load_Census_fixed_width(8081)
 )
 ```
+
+
+```{r data-processing, dependson=c("load-data-from-excel-files", "load-data-from-fixed-width-file")}
+Census_by_age <- bind_rows(list(
+  Census_1940_1979,
+  Census_1980_1989 |>
+    filter(Month == 7) |>
+    mutate(Year = Year + 1900)
+)) |>
+  mutate(
+    across(c(Year, Population.Female.All), as.integer),
+    Age.Group = cut(
+      Age,
+      c(14, 19, 24, 29, 34, 39, 44),
+      labels = c(
+        "[15,19]",
+        "[20,24]",
+        "[25,29]",
+        "[30,34]",
+        "[35,39]",
+        "[40,44]"
+      ),
+      ordered_result = TRUE
+    )
+  ) |>
+  filter(!is.na(Age.Group)) |>
+  group_by(Year, Age.Group) |>
+  summarize(Population.Female = sum(Population.Female.All))
+
+Census_reproductive_age <- Census_by_age |>
+  summarize(Population.Female.Reproductive.Age = sum(Population.Female))
+```
+
 
