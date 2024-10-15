@@ -155,8 +155,43 @@ Census_2000_2009 <- getCensus(
     ),
     .keep = "unused"
   ) |>
-  filter(!is.na(Year) & HISP == 0 & RACE == 0 & SEX == 2) |>
-  as_tibble()
+  filter(!is.na(Year) & HISP == 0 & RACE == 0 & SEX == 2)
+```
+
+
+### For 2010-2019
+
+https://www.census.gov/data/developers/data-sets/popest-popproj/popest.Vintage_2019.html#list-tab-2014455046
+
+```{r load-2010-2019-data-from-API}
+Sys.setenv("CENSUS_KEY" = "7c06499a2432f6947e76ee1cf0876fc4ee43ce98")
+
+Census_2010_2019 <- getCensus(
+  name = "pep/charage",
+  vintage = 2019,
+  region = "us:1",
+  vars = c("DATE_CODE", "DATE_DESC", "SEX", "AGE", "AGE_DESC", "RACE", "HISP", "POP")
+) |>
+  mutate(
+    Age = as.numeric(AGE),
+    Population.Female = POP,
+    Year = case_match(
+      DATE_CODE,
+      "3" ~ 2010,
+      "4" ~ 2011,
+      "5" ~ 2012,
+      "6" ~ 2013,
+      "7" ~ 2014,
+      "8" ~ 2015,
+      "9" ~ 2016,
+      "10" ~ 2017,
+      "11" ~ 2018,
+      "12" ~ 2019,
+      .default = NA
+    ),
+    .keep = "unused"
+  ) |>
+  filter(!is.na(Year) & HISP == 0 & RACE == 0 & SEX == 2)
 ```
 
 
@@ -173,6 +208,10 @@ Census_by_age <- bind_rows(list(
   ),
   select(
     Census_2000_2009,
+    Year, Age, Population.Female
+  ),
+  select(
+    Census_2010_2019,
     Year, Age, Population.Female
   )
 )) |>
@@ -202,7 +241,6 @@ Census_reproductive_age <- Census_by_age |>
 
 
 ## Plots
-
 
 ```{r women-of-reproductive-age-by-age-group-plot, dependson="data-processing", warning=FALSE}
 Census_by_age |>
