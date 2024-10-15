@@ -11,6 +11,7 @@ output:
 
 
 ```{r setup, include=FALSE}
+library(censusapi)
 library(dplyr)
 library(ggplot2)
 library(gt)
@@ -50,10 +51,10 @@ load_Census_year <- function(year) {
   mutate(
     Year = year,
     Age = as.integer(.[[1]]),
-    Population.Female.All = as.integer(.[[4]])
+    Population.Female = as.integer(.[[4]])
   ) |>
   filter(!is.na(Age)) |>
-  select(Year, Age, Population.Female.All)
+  select(Year, Age, Population.Female)
 }
 
 Census_1940_1979 <- Reduce(
@@ -80,8 +81,8 @@ load_Census_fixed_width <- function(code) {
       Year = c(5, 6),
       Age = c(7, 10),
       Population = c(12, 21),
-      Population.Male.All = c(22, 31),
-      Population.Female.All = c(32, 41)
+      Population.Male = c(22, 31),
+      Population.Female = c(32, 41)
     ),
     show_col_types = FALSE
   )
@@ -91,19 +92,49 @@ Census_1980_1989 <- Reduce(
   \(x, y) bind_rows(list(x, load_Census_fixed_width(y))),
   c(8182, 8283, 8384, 8485, 8586, 8687, 8788, 8889, 8990),
   load_Census_fixed_width(8081)
-)
+) |>
+ filter(Month == 7) |>
+ mutate(Year = Year + 1900)
 ```
 
 
-```{r data-processing, dependson=c("load-data-from-excel-files", "load-data-from-fixed-width-file")}
+### For 1990-2021
+
+```{r load-data-from-API}
+Sys.setenv("CENSUS_KEY" = "7c06499a2432f6947e76ee1cf0876fc4ee43ce98")
+
+Census_1990_1999 <- getCensus(
+  name = "pep/int_natrespop",
+  vintage = 1990,
+  vars = c("YEAR", "MONTH", "AGE", "POPULATION_FEMALES")
+) |>
+  mutate(
+    Year = as.numeric(YEAR),
+    Age = as.numeric(AGE),
+    .keep = "unused"
+  ) |>
+  rename(
+    Month = MONTH,
+    Population.Female = POPULATION_FEMALES
+  ) |>
+  filter(Month == 'July')
+```
+
+
+```{r data-processing, dependson=c("load-data-from-excel-files", "load-data-from-fixed-width-file", "load-data-from-API")}
 Census_by_age <- bind_rows(list(
   Census_1940_1979,
-  Census_1980_1989 |>
-    filter(Month == 7) |>
-    mutate(Year = Year + 1900)
+  select(
+    Census_1980_1989,
+    Year, Age, Population.Female
+  ),
+  select(
+    Census_1990_1999,
+    Year, Age, Population.Female
+  )
 )) |>
   mutate(
-    across(c(Year, Population.Female.All), as.integer),
+    across(c(Year, Population.Female), as.integer),
     Age.Group = cut(
       Age,
       c(14, 19, 24, 29, 34, 39, 44),
@@ -120,10 +151,10 @@ Census_by_age <- bind_rows(list(
   ) |>
   filter(!is.na(Age.Group)) |>
   group_by(Year, Age.Group) |>
-  summarize(Population.Female = sum(Population.Female.All), .groups = "drop_last")
+  summarize(Population.Female = sum(Population.Female), .groups = "drop_last")
 
 Census_reproductive_age <- Census_by_age |>
-  summarize(Population.Female.Reproductive.Age = sum(Population.Female), .groups = "drop")
+  summarize(Population.Female = sum(Population.Female), .groups = "drop")
 ```
 
 
@@ -219,7 +250,7 @@ Census_reproductive_age |>
   ggplot(
     mapping = aes(
       x = Year,
-      y = Population.Female.Reproductive.Age
+      y = Population.Female
     )
   ) +
     geom_line(
@@ -294,4 +325,3 @@ Census_reproductive_age |>
       plot.margin = margin(t = 0)
   )
 ```
-
