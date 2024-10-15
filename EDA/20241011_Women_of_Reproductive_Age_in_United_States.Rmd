@@ -98,9 +98,11 @@ Census_1980_1989 <- Reduce(
 ```
 
 
-### For 1990-2021
+### For 1990-1999
 
-```{r load-data-from-API}
+https://www.census.gov/data/developers/data-sets/popest-popproj/popest.1990-2000_Intercensals.html#list-tab-2014455046
+
+```{r load-1990-1999-data-from-API}
 Sys.setenv("CENSUS_KEY" = "7c06499a2432f6947e76ee1cf0876fc4ee43ce98")
 
 Census_1990_1999 <- getCensus(
@@ -121,7 +123,44 @@ Census_1990_1999 <- getCensus(
 ```
 
 
-```{r data-processing, dependson=c("load-data-from-excel-files", "load-data-from-fixed-width-file", "load-data-from-API")}
+### For 2000-2009
+
+https://www.census.gov/data/developers/data-sets/popest-popproj/popest.2000-2010_Intercensals.html#list-tab-2014455046
+
+```{r load-2000-2009-data-from-API}
+Sys.setenv("CENSUS_KEY" = "7c06499a2432f6947e76ee1cf0876fc4ee43ce98")
+
+Census_2000_2009 <- getCensus(
+  name = "pep/int_charage",
+  vintage = 2000,
+  region = "us:1",
+  vars = c("GEONAME", "DATE_", "DATE_DESC", "SEX", "AGE", "AGE_DESC", "RACE", "HISP", "POP")
+) |>
+  mutate(
+    Age = as.numeric(AGE),
+    Population.Female = POP,
+    Year = case_match(
+      DATE_,
+      "2" ~ 2000,
+      "3" ~ 2001,
+      "4" ~ 2002,
+      "5" ~ 2003,
+      "6" ~ 2004,
+      "7" ~ 2005,
+      "8" ~ 2006,
+      "9" ~ 2007,
+      "10" ~ 2008,
+      "11" ~ 2009,
+      .default = NA
+    ),
+    .keep = "unused"
+  ) |>
+  filter(!is.na(Year) & HISP == 0 & RACE == 0 & SEX == 2) |>
+  as_tibble()
+```
+
+
+```{r data-processing, dependson=c("load-data-from-excel-files", "load-data-from-fixed-width-file", "load-1990-1999-data-from-API", "load-2000-2009-data-from-API")}
 Census_by_age <- bind_rows(list(
   Census_1940_1979,
   select(
@@ -130,6 +169,10 @@ Census_by_age <- bind_rows(list(
   ),
   select(
     Census_1990_1999,
+    Year, Age, Population.Female
+  ),
+  select(
+    Census_2000_2009,
     Year, Age, Population.Female
   )
 )) |>
@@ -156,6 +199,9 @@ Census_by_age <- bind_rows(list(
 Census_reproductive_age <- Census_by_age |>
   summarize(Population.Female = sum(Population.Female), .groups = "drop")
 ```
+
+
+## Plots
 
 
 ```{r women-of-reproductive-age-by-age-group-plot, dependson="data-processing", warning=FALSE}
@@ -249,8 +295,6 @@ Census_by_age |>
 
 The dashed line denotes where Census estimates represent just the resident population of the United States, not including overseas armed forces population.
 
-
-## Plots
 
 ```{r total-women-of-reproductive-age-plot, dependson="data-processing"}
 Census_reproductive_age |>
