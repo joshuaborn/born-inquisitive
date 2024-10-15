@@ -168,6 +168,11 @@ Census_by_age |>
       shape = Age.Group
     )
   ) +
+    geom_vline(
+      xintercept = 1980,
+      linetype = 2,
+      linewidth = 0.25
+    ) + 
     geom_line(
       alpha = 0.4,
       linewidth = 0.75
@@ -242,6 +247,8 @@ Census_by_age |>
   )
 ```
 
+The dashed line denotes where Census estimates represent just the resident population of the United States, not including overseas armed forces population.
+
 
 ## Plots
 
@@ -253,6 +260,11 @@ Census_reproductive_age |>
       y = Population.Female
     )
   ) +
+    geom_vline(
+      xintercept = 1980,
+      linetype = 2,
+      linewidth = 0.25
+    ) + 
     geom_line(
       alpha = 0.4,
       color = 'blue',
@@ -325,3 +337,5 @@ Census_reproductive_age |>
       plot.margin = margin(t = 0)
   )
 ```
+
+The dashed line denotes where Census estimates represent just the resident population of the United States, not including overseas armed forces population.
