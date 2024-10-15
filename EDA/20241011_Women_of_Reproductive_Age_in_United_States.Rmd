@@ -161,6 +161,8 @@ Census_2000_2009 <- getCensus(
 
 ### For 2010-2019
 
+The 2010-2020 intercensal estimates are not out yet, so unlike the other data, these are postcensal rather intercensal.
+
 https://www.census.gov/data/developers/data-sets/popest-popproj/popest.Vintage_2019.html#list-tab-2014455046
 
 ```{r load-2010-2019-data-from-API}
