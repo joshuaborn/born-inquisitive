@@ -242,14 +242,12 @@ Census_reproductive_age <- Census_by_age |>
 
 ## Plots
 
-```{r women-of-reproductive-age-by-age-group-plot, dependson="data-processing", warning=FALSE}
-Census_by_age |>
+```{r total-women-of-reproductive-age-plot, dependson="data-processing"}
+Census_reproductive_age |>
   ggplot(
     mapping = aes(
       x = Year,
-      y = Population.Female,
-      color = Age.Group,
-      shape = Age.Group
+      y = Population.Female
     )
   ) +
     geom_vline(
@@ -259,31 +257,30 @@ Census_by_age |>
     ) + 
     geom_line(
       alpha = 0.4,
-      linewidth = 0.75
+      color = 'blue',
+      linewidth = 1.5
     ) +
     geom_point(
+      color = 'blue',
       fill = 'white',
-      size = 1.5
+      size = 2,
+      shape = 21
+    ) +
+    scale_shape_manual(
+      values = 21
     ) +
     scale_y_continuous(,
-      breaks = \(x) seq(0, x[2]+1e6, 5e5),
-      expand = expansion(mult = c(0, 0.05)),
+      breaks = \(x) seq(0, x[2]+1e6, 2e6),
       labels = scales::label_number(suffix = "M", scale = 1e-6),
-      limits = c(4e6, NA),
-      minor_breaks = NULL
     ) +
     scale_x_continuous(
       breaks = \(x) seq(x[1]+1, x[2]-1, 2),
       expand = expansion(add = 1),
       minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
     ) +
-    scale_color_brewer(
-      palette = 2,
-      type = "qual"
-    ) + 
     labs(
       x = 'Year',
-      y = 'Female Population of United States by Age Group'
+      y = 'Female Population of United States of Reproductive Age (15-44 years)'
     ) +
     theme_classic() +
     theme(
@@ -333,13 +330,14 @@ Census_by_age |>
 
 The dashed line denotes where Census estimates represent just the resident population of the United States, not including overseas armed forces population.
 
-
-```{r total-women-of-reproductive-age-plot, dependson="data-processing"}
-Census_reproductive_age |>
+```{r women-of-reproductive-age-by-age-group-plot, dependson="data-processing", warning=FALSE}
+Census_by_age |>
   ggplot(
     mapping = aes(
       x = Year,
-      y = Population.Female
+      y = Population.Female,
+      color = Age.Group,
+      shape = Age.Group
     )
   ) +
     geom_vline(
@@ -349,30 +347,31 @@ Census_reproductive_age |>
     ) + 
     geom_line(
       alpha = 0.4,
-      color = 'blue',
-      linewidth = 1.5
+      linewidth = 0.75
     ) +
     geom_point(
-      color = 'blue',
       fill = 'white',
-      size = 2,
-      shape = 21
-    ) +
-    scale_shape_manual(
-      values = 21
+      size = 1.5
     ) +
     scale_y_continuous(,
-      breaks = \(x) seq(0, x[2]+1e6, 2e6),
+      breaks = \(x) seq(0, x[2]+1e6, 5e5),
+      expand = expansion(mult = c(0, 0.05)),
       labels = scales::label_number(suffix = "M", scale = 1e-6),
+      limits = c(4e6, NA),
+      minor_breaks = NULL
     ) +
     scale_x_continuous(
       breaks = \(x) seq(x[1]+1, x[2]-1, 2),
       expand = expansion(add = 1),
       minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
     ) +
+    scale_color_brewer(
+      palette = 2,
+      type = "qual"
+    ) + 
     labs(
       x = 'Year',
-      y = 'Female Population of United States of Reproductive Age (15-44 years)'
+      y = 'Female Population of United States by Age Group'
     ) +
     theme_classic() +
     theme(
