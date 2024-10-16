@@ -241,6 +241,13 @@ Census_reproductive_age <- Census_by_age |>
   summarize(Population.Female = sum(Population.Female), .groups = "drop")
 ```
 
+```{r data-persistence, dependson="data-processing"}
+saveRDS(
+  Census_by_age,
+  here('data/Census/women_of_reproductive_age_1940-2019.Rds')
+)
+```
+
 
 ## Plots
 
