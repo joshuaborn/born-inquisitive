@@ -1,0 +1,244 @@
+---
+author: "Joshua Born"
+#bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
+#csl: "../bibliographies/chicago-author-date.csl"
+date: 2024-10-18
+draft: true
+include-before: |
+  ## Table of Contents
+output:
+  blogdown::html_page:
+    number_sections: false
+    toc: true
+    toc_depth: 5
+summary: "This is a summary sentence."
+tags: ["analysis", "reproductive responsibility", "third-person"]
+title: "Live Births in the United States, 1940-2019"
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(here)
+library(showtext)
+
+font_add_google('Open Sans', 'open')
+showtext_auto()
+showtext_opts(dpi = 200)
+theme_update(text = element_text(family = 'open'))
+
+knitr::opts_chunk$set(
+  cache = TRUE,
+  dpi = 300,
+  echo = FALSE,
+  fig.align = 'center',
+  fig.height = 3.75,
+  fig.retina = 1,
+  fig.width = 5
+)
+```
+
+
+## Introduction
+
+
+## Data Source
+
+
+## Plots
+
+```{r total-births-plot, fig.cap="Total births in the United States"}
+readRDS(here('data/NVSS/births_1909-2019.Rds')) |>
+  ggplot(
+    mapping = aes(
+      x = Year,
+      y = Births
+    )
+  ) +
+    geom_vline(
+      xintercept = 1967.5,
+      linetype = 2,
+      linewidth = 0.25
+    ) + 
+    geom_line(
+      alpha = 0.4,
+      color = 'blue',
+      linewidth = 1.25
+    ) +
+    geom_point(
+      color = 'blue',
+      fill = 'white',
+      size = 1.25,
+      shape = 21
+    ) +
+    scale_shape_manual(
+      values = 21
+    ) +
+    scale_y_continuous(,
+      #breaks = \(x) seq(x[1], x[2]+1e6, 2e5),
+      labels = scales::label_number(suffix = "M", scale = 1e-6),
+    ) +
+    scale_x_continuous(
+      breaks = \(x) seq(x[1]+1, x[2]-1, 4),
+      expand = expansion(add = 1),
+      minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
+    ) +
+    labs(
+      x = 'Year',
+      y = 'Live Births in the United States'
+    ) +
+    theme_classic() +
+    theme(
+      axis.line.x.bottom = element_line(
+        color = 'black',
+        linewidth = 0.3
+      ),
+      axis.line.y.left = element_line(
+        color = 'black',
+        linewidth = 0.3
+      ),
+      axis.text.x = element_text(
+        angle = 45,
+        color = 'black',
+        hjust = 0.5,
+        vjust = 0.65
+      ),
+      axis.text.y = element_text(
+        color = 'black',
+        margin = margin(r = 0)
+      ),
+      axis.ticks.y = element_blank(),
+      axis.ticks.x = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.title.x = element_text(
+        margin = margin(t = 2)
+      ),
+      axis.title.y = element_text(
+        margin = margin(r = 10)
+      ),
+      panel.grid.major = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      panel.grid.minor = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      panel.grid.minor.x = element_blank(),
+      plot.margin = margin(t = 0)
+  )
+```
+
+Figure \@ref(fig:total-births-plot) 
+
+
+```{r births-by-age-group-plot, dependson="load-data", warning=FALSE, fig.height=4, fig.cap="Live births in United States by age group"}
+readRDS(here('data/NVSS/births_by_age_group_1968-2019.Rds')) |>
+  filter(Age.Group %in% c(
+    '[15,19]',
+    '[20,24]',
+    '[25,29]',
+    '[30,34]',
+    '[35,39]',
+    '[40,44]'
+  )) |>
+  ggplot(
+    mapping = aes(
+      x = Year,
+      y = Births,
+      color = Age.Group,
+      shape = Age.Group
+    )
+  ) +
+    geom_line(
+      alpha = 0.4,
+      linewidth = 0.75
+    ) +
+    geom_point(
+      fill = 'white',
+      size = 0.75
+    ) +
+    scale_y_continuous(,
+      breaks = \(x) seq(0, x[2], 2e5),
+      expand = expansion(mult = c(0, 0.05)),
+      labels = scales::label_number(suffix = "M", scale = 1e-6),
+      limits = c(0, NA),
+      minor_breaks = NULL
+    ) +
+    scale_x_continuous(
+      breaks = \(x) seq(x[1]+1, x[2]-1, 2),
+      expand = expansion(add = 1),
+      minor_breaks = \(x) seq(x[1]+1, x[2]-1, 1)
+    ) +
+    scale_color_brewer(
+      palette = 2,
+      type = "qual"
+    ) +
+    guides(color = guide_legend(nrow = 1)) +
+    labs(
+      x = 'Year',
+      y = 'Live Births in the United States by Age of Mother',
+      color = 'Age (years)',
+      shape = 'Age (years)'
+    ) +
+    theme_classic() +
+    theme(
+      axis.line.x.bottom = element_line(
+        color = 'black',
+        linewidth = 0.3
+      ),
+      axis.line.y.left = element_line(
+        color = 'black',
+        linewidth = 0.3
+      ),
+      axis.text.x = element_text(
+        angle = 45,
+        color = 'black',
+        hjust = 0.5,
+        vjust = 0.65
+      ),
+      axis.text.y = element_text(
+        color = 'black',
+        margin = margin(r = 0)
+      ),
+      axis.ticks.y = element_blank(),
+      axis.ticks.x = element_line(
+        color = 'black',
+        linewidth = 0.2
+      ),
+      axis.title.x = element_text(
+        margin = margin(t = 2)
+      ),
+      axis.title.y = element_text(
+        margin = margin(r = 10)
+      ),
+      legend.box.margin = margin(t = 0, r = 0, b = -10, l = 0, unit = "pt"),
+      legend.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"),
+      legend.position = 'top',
+      panel.grid.major = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      panel.grid.minor = element_line(
+        color = 'gray',
+        linetype = 3,
+        linewidth = 0.25
+      ),
+      panel.grid.minor.x = element_blank(),
+      plot.margin = margin(t = 0)
+  )
+```
+
+
+## Citations
+
+::: {#refs}
+:::
+
+
+## Footnotes
