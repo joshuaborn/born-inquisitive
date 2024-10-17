@@ -1,9 +1,9 @@
 ---
 author: "Joshua Born"
-#bibliography: "../bibliographies/approval-of-abortion-is-conservative.bib"
-#csl: "../bibliographies/chicago-author-date.csl"
-date: 2024-10-16
-draft: true
+bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
+csl: "../bibliographies/chicago-author-date.csl"
+date: 2024-10-17
+draft: false
 include-before: |
   ## Table of Contents
 output:
@@ -41,7 +41,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Women of reproductive age is an often used quantity in fertility studies, most commonly as a denominator in calculating rates and ratios. "Reproductive age" is typically taken in fertility studies to be between 15 years and 44 years of age.
+The number of women of reproductive age is an often-used quantity in fertility studies, most commonly as a denominator in calculating rates and ratios. "Reproductive age" is typically taken in fertility studies to be between 15 years and 44 years of age.
 
 
 ## Data Source
@@ -50,9 +50,9 @@ Data were taken from the United States Census Bureau's Population Estimates Prog
 
 The United States has a decennial[^decennial] census that is mandated by the U.S. Constitution and is taken as being the authoritative count of the population of the United States.
 
-To fill in the population estimates for years in which a decennial census was not taken, the PEP calculates postcensal estimates and intercensal estimates. Postcensal estimates take the most recent decennial census as a starting point and adjust these counts based on population change during the time after the decennial census. Intercensal estimates are generally more accurate than postcensal estimates because they are based on both an earlier decennial census and a later decennial census, calculating population estimates in between the two.
+To fill in the population estimates for years in which a decennial census was not taken, the PEP calculates postcensal estimates and intercensal estimates. Postcensal estimates take the most recent decennial census as a starting point and adjust population estimates based on change during the time after the decennial census. Intercensal estimates are generally more accurate than postcensal estimates because they are based on both an earlier decennial census and a later decennial census, calculating population estimates in between the two.
 
-[^decennial]: The census is "decennial" in that it is done once every decade, on the turn of the decade, in 1970, 1980, etc.
+[^decennial]: The census is "decennial" in that it is done once every decade, on the turn of the decade, in 1970, 1980, _etc._
 
 The 2010-2020 intercensal estimates are not yet available. Therefore, the below estimates of women of reproductive age in the United States are based on intercensal estimates for the period of 1940 to 2009 and postcensal estimates for 2010 to 2019.
 
@@ -156,7 +156,9 @@ women_of_reproductive_age |>
   )
 ```
 
-Discuss Figure \@ref(fig:total-women-of-reproductive-age-plot) here.
+Figure \@ref(fig:total-women-of-reproductive-age-plot) shows that the number of women of reproductive age in the United States has been increasing throughout the analysis period. Thus, even if rates of live birth, induced abortion, _etc.,_ were to remain fixed, it would be expected that the total numbers of births, abortions, _etc.,_ would increase.
+
+The increase in the number of women of reproductive age is roughly "S" shaped, with a period of more rapid increase in between 1960 and 1990 and a plateau of population increase in the 2000s.
 
 
 ```{r women-of-reproductive-age-by-age-group-plot, dependson="load-data", warning=FALSE, fig.height=4, fig.cap="Number of women aged 15 years to 44 years in the United States by age group, based on estimates from the U.S. Census' Population Estimates Program. Estimates left of the dashed line include both the resident population of the United States and members of the armed forces overseas, whereas estimates right of the dashed line include only the resident population of the United States."}
@@ -253,10 +255,28 @@ women_of_reproductive_age |>
   )
 ```
 
-Discuss Figure \@ref(fig:women-of-reproductive-age-by-age-group-plot) here.
+The number of women of reproductive age in the United States is broken down by age group in Figure \@ref(fig:women-of-reproductive-age-by-age-group-plot). There appear to be several cohorts in which population size reached a local maximum. The most prominent are women who were aged 15-19 years in 1976 and thus born some time in 1957 to 1961. The local maximum from this cohort is reflected through all six age groups in successive years after 1976.
+
+Additionally, another local maximum appears among women aged 15 to 19 in 2008, consisting of women born in the period between 1989 and 1993. Within the analysis period, this is reflected again among women aged 20 to 24 and among women aged 25 to 29.
+
+The patterns in the change of the teenage population are of interest for analysis of reproductive responsibility because the teenage population is particularly susceptible to unintended pregnancy due to a combination of high fecundity and behavioral immaturity. Thus, if an apparent decline in unintended pregnancies in the 1980 to 1992 time period were discovered, the possibility would still remain that this reflects only a decline in the number of teenagers in this time period.
 
 
 ## Editorial Note
+
+Fertility surveys and analyses of reproduction often focus on women. On the one hand, this is expedient. The female population of reproductive age is the limiting factor in fertility: ten women and one man could conceivably have ten children in one year, but ten men and one woman cannot. Furthermore, because of the more intimate relationship women have with pregnancy than do men, women can perhaps be expected to have more accurate recall and reporting of events pertaining to reproduction than men.
+
+On the other hand, the focus on women in analyses of reproduction has the unfortunate effect of framing reproduction as a "women's issue" and thus abdicating male reproductive responsibility. This is particularly unfortunate because the United States is going through a period in which more and more children are growing up fatherless, to the detriment of children's outcomes. [@kearney_2023]
+
+Furthermore, every unintended pregnancy is not just the result of the knowledge, attitudes, and behavior of a woman, but also the knowledge, attitudes, and behavior a man. Expectations of reproductive responsibility from men should be equal to expectations from women. This is the case, if not for moral reasons, then at least for practical ones.
+
+Unfortunately, most of the data that are available for the analysis of reproductive responsibility are focused on women. Where there is corresponding data available for men, analyses will be repeated for men. Otherwise, this editorial note will be repeated as a footnote in subsequent analyses.
+
+
+## Citation
+
+::: {#refs}
+:::
 
 
 ## Footnote
