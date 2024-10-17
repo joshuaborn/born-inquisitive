@@ -11,7 +11,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: "The number of women of an age associated with childbearing is an often used quantity in fertility studies, most commonly as a denominator in calculating rates and ratios."
+summary: "The number of women of an age associated with childbearing in the United States from 1940 to 2019 is quantified and discussed."
 tags: ["analysis", "reproductive responsibility", "third-person"]
 title: "Women of Reproductive Age in the United States, 1940-2019"
 ---
@@ -41,7 +41,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The first number quantified for the analysis of reproductive responsibility investigated in this blog is the number of women of reproductive age in the United States over a time period slightly larger than the time period of analysis. "Reproductive age" is typically taken in fertility studies to be between 15 years and 44 years of age.
+Women of reproductive age is an often used quantity in fertility studies, most commonly as a denominator in calculating rates and ratios. "Reproductive age" is typically taken in fertility studies to be between 15 years and 44 years of age.
 
 
 ## Data Source
@@ -50,15 +50,15 @@ Data were taken from the United States Census Bureau's Population Estimates Prog
 
 The United States has a decennial[^decennial] census that is mandated by the U.S. Constitution and is taken as being the authoritative count of the population of the United States.
 
-To fill in the population estimates for years in which a decennial census was not taken, the PEP calculates postcensal estimates and intercensal estimates. Postcensal estimates take the most recent decennial census as a starting point and adjust these counts based on population change during the time after the decennial census. The PEP's intercensal estimates are generally more accurate than postcensal estimates because they take into account both an earlier decennial census and a later decennial census, calculating population estimates in between the two.
+To fill in the population estimates for years in which a decennial census was not taken, the PEP calculates postcensal estimates and intercensal estimates. Postcensal estimates take the most recent decennial census as a starting point and adjust these counts based on population change during the time after the decennial census. Intercensal estimates are generally more accurate than postcensal estimates because they are based on both an earlier decennial census and a later decennial census, calculating population estimates in between the two.
 
 [^decennial]: The census is "decennial" in that it is done once every decade, on the turn of the decade, in 1970, 1980, etc.
 
-The 2010-2020 intercensal estimates are not available yet. Therefore, the below estimates of women of reproductive age in the United States are based on intercensal estimates for the period of 1940 to 2009 and postcensal estimates for 2010 to 2019.
+The 2010-2020 intercensal estimates are not yet available. Therefore, the below estimates of women of reproductive age in the United States are based on intercensal estimates for the period of 1940 to 2009 and postcensal estimates for 2010 to 2019.
 
-Furthermore, the only estimates available from PEP for the time period before 1980 are estimates of both the resident population of the United States _and_ members of the United States armed forces living abroad. Members of the armed forces living abroad are not included in the target population of the National Survey of Family Growth, which is the main instrument used for analysis here, and therefore should not be included in the numbers used for denominators.
+Furthermore, the only estimates available from the PEP for the time period before 1980 are estimates of both the resident population of the United States _and_ members of the United States armed forces living abroad. Members of the armed forces living abroad are not included in the target population of the National Survey of Family Growth, which is the main instrument used for analysis here, and therefore should not be included in the numbers used for denominators.
 
-However, these are the only data available from the PEP for before 1980. For 1980 and after, the PEP provides estimates for just the resident population of the United States, and so these are used for 1980 and after. Fortunately, the inclusion of members of the armed forces living abroad in the estimates for before 1980 do not appear to result in a substantial discontinuity.
+However, these are the only data available from the PEP for before 1980. For 1980 and after, the PEP provides estimates for the resident population of the United States not including members of the armed forces living abroad, and so these are used for 1980 and after. Fortunately, the inclusion of members of the armed forces living abroad in the estimates for before 1980 do not appear to result in a substantial discontinuity.
 
 Data for the period 1940-1979 were taken from Excel files available [here](https://www.census.gov/data/tables/time-series/demo/popest/pre-1980-national.html). Data for the period 1980-1989 were taken from fixed-width format text files available [here](https://www.census.gov/data/datasets/time-series/demo/popest/1980s-national.html). Data for the period of 1990-2019 were taken from the [Census API](https://www.census.gov/data/developers.html), using the "Resident Population by Single Year of Age and Sex" from the [1990-2000 Intercensals](https://www.census.gov/data/developers/data-sets/popest-popproj/popest.1990-2000_Intercensals.html#list-tab-2014455046), the "Demographic Characteristics Estimates by Single Year of Age" from the [2000-2010 Intercensals](https://www.census.gov/data/developers/data-sets/popest-popproj/popest.2000-2010_Intercensals.html#list-tab-2014455046), and the "Demographic Characteristics Estimates by Single Year of Age and Sex" from the [Vintage 2019 Postcensals](https://www.census.gov/data/developers/data-sets/popest-popproj/popest.Vintage_2019.html#list-tab-2014455046).
 
@@ -69,7 +69,7 @@ Data for the period 1940-1979 were taken from Excel files available [here](https
 women_of_reproductive_age <- readRDS(here('data/Census/women_of_reproductive_age_1940-2019.Rds'))
 ```
 
-```{r total-women-of-reproductive-age-plot, dependson="load-data", fig.cap="Total number of women aged 15 years to 44 years in the United States, based on estimates from the U.S. Census' Population Estimates Program. The dashed line denotes where Census estimates represent just the resident population of the United States, not including overseas armed forces population."}
+```{r total-women-of-reproductive-age-plot, dependson="load-data", fig.cap="Total number of women aged 15 years to 44 years in the United States, based on estimates from the U.S. Census' Population Estimates Program. Estimates left of the dashed line include both the resident population of the United States and members of the armed forces overseas, whereas estimates right of the dashed line include only the resident population of the United States."}
 women_of_reproductive_age |>
   summarize(Population.Female = sum(Population.Female), .groups = "drop") |>
   ggplot(
