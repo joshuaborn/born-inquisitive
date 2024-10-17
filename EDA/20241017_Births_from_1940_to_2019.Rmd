@@ -29,174 +29,97 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r processing-of-data-1940-1967}
-raw_births_1940_1967 <- read_csv(here('data/NVSS/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv')) 
-percent_distribution_1940_1967 <- read_csv( here('data/NVSS/NCHS_-_Percent_Distribution_of_Births_for_Females_by_Age_Group__United_States.csv'))
-
-births_1940_1967 <- percent_distribution_1940_1967 |>
-  mutate(
-    `Age Group` = factor(
-      `Age Group`,
-      levels = c(
-        "Less than 15 Years",
-        "15-19 Years",
-        "20-24 Years",
-        "25-29 Years",
-        "30-34 Years",
-        "35-39 Years",
-        "40-44 Years",
-        "45+ Years"
-      ),
-      ordered = TRUE
-    )
-  ) |>
-  left_join(
-    raw_births_1940_1967,
-    by = join_by(Year)
-  ) |>
-  mutate(
-    Births = round(`Percentage of Births` * `Birth Number`)
-  ) |>
-  select(Year, `Age Group`, Births) |>
-  arrange(Year, `Age Group`)
-```
-
-
 ```{r helper-functions}
 load_natality_1968_2019 <- function(year) {
   if (year <= 1971) {
     these_data <- read_csv(
-      here(paste0('data/NVSS/natality', year, 'us.csv')),
-      col_select = c('datayear', 'mage8'),
-      col_types = 'nnfn'
-    ) |> mutate(
-      recwt = 2
-    )
+        here(paste0('data/NVSS/natality', year, 'us.csv')),
+        col_select = c('mage8'),
+        col_types = 'f'
+      ) |>
+      mutate(recwt = 2) |>
+      rename(Age.Group = mage8)
+  } else if (year >= 2006) {
+    these_data <- read_csv(
+        here(paste0('data/NVSS/natality', year, 'us.csv')),
+        col_select = c('mager9'),
+        col_types = 'f'
+      ) |>
+      mutate(recwt = 1) |>
+      rename(Age.Group = mager9)
+  } else if (year >= 2003) {
+    these_data <- read_csv(
+        here(paste0('data/NVSS/natality', year, 'us.csv')),
+        col_select = c('mager9', 'recwt'),
+        col_types = 'fn'
+      ) |>
+      rename(Age.Group = mager9)
   } else {
     these_data <- read_csv(
-      here(paste0('data/NVSS/natality', year, 'us.csv')),
-      col_select = c('datayear', 'mage8', 'recwt'),
-      col_types = 'nnfn'
-    )
+        here(paste0('data/NVSS/natality', year, 'us.csv')),
+        col_select = c('mage8', 'recwt'),
+        col_types = 'fn'
+      ) |>
+      rename(Age.Group = mage8)
   }
   these_data |>
     mutate(
-      mage8 = factor(
-        mage8,
+      Age.Group = factor(
+        Age.Group,
         levels = 1:9,
         labels = c(
-          "Less than 15 Years",
-          "15-19 Years",
-          "20-24 Years",
-          "25-29 Years",
-          "30-34 Years",
-          "35-39 Years",
-          "40-44 Years",
-          "45-49 years",
-          "50-54 years"
+          "[0,15]",
+          "[15,19]",
+          "[20,24]",
+          "[25,29]",
+          "[30,34]",
+          "[35,39]",
+          "[40,44]",
+          "[45,49]",
+          "[50,54]"
         ),
         ordered = TRUE
-      )
-    )
-}
-
-summarize_natality_year <- function(tbl, year) {
-  bind_rows(
-    tbl |>
-      group_by(datayear) |>
-      summarize(n = sum(recwt)) |>
-      ungroup() |>
-      mutate(
-        Year = year,
-        Variable = 'datayear',
-        .before = everything()
       ),
-    tbl |>
-      group_by(mage8) |>
-      summarize(n = sum(recwt)) |>
-      ungroup() |>
-      mutate(
-        Year = year,
-        Variable = 'mage8',
-        .before = everything()
-      )
-  )
-}
-
-process_natality_year <- function(year) {
-  summarize_natality_year(
-    load_natality_1968_2019(year),
-    year
-  )
+      Year = year
+    ) |>
+    group_by(Year, Age.Group) |>
+    summarize(Births = sum(recwt), .groups = 'drop')
 }
 ```
 
 
 ```{r processing-of-data-1968-2019}
-years_1968_2019 <- 1968:2001
+births_by_age_group_1968_2019 <- Map(load_natality_1968_2019, 1968:2019) |>
+  bind_rows() |>
+  filter(!is.na(Age.Group))
 
-natality_1968_2019 <- Map(process_natality_year, years_1968_2019)
-
-combined_natality_1968_2019 <- Reduce(bind_rows, natality_1968_2019, tibble())
+saveRDS(
+  births_by_age_group_1968_2019,
+  here('data/NVSS/births_by_age_group_1968-2019.Rds')
+)
 ```
 
 
-```{r check-of-datayear}
-combined_natality_1968_2019 |>
-  filter(Variable == 'datayear') |>
-  select(Year, datayear, n) |>
-  gt() |>
-  fmt_number(n, decimal = 0)
+```{r processing-of-data-1909-1967}
+births_1909_1967 <- read_csv(here(
+  'data/NVSS/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'
+  )) |>
+  rename(Births = `Birth Number`) |>
+  select(Year, Births)
 ```
 
 
-```{r check-of-mage8}
-combined_natality_1968_2019 |>
-  filter(Variable == 'mage8') |>
-  select(Year, mage8, n) |>
-  pivot_wider(
-    names_from = Year,
-    values_from = n
+```{r combination-of-data-sets}
+births_1909_2019 <- births_by_age_group_1968_2019 |>
+  group_by(Year) |>
+  summarize(Births = sum(Births), .groups = 'drop') |>
+  bind_rows(
+    filter(births_1909_1967, Year < 1968)
   ) |>
-  gt() |>
-  fmt_number(decimal = 0)
-```
+  arrange(Year)
 
-
-```{r combination}
-combined_natality_1968_2019 |>
-  filter(Variable == 'mage8') |>
-  mutate(
-    `Age Group` = factor(
-      if_else(
-        mage8 %in% c("45-49 years", "50-54 years"),
-        "45+ Years",
-        mage8
-      ),
-      labels = c(
-        "Less than 15 Years",
-        "15-19 Years",
-        "20-24 Years",
-        "25-29 Years",
-        "30-34 Years",
-        "35-39 Years",
-        "40-44 Years",
-        "45+ Years"
-      ),
-      ordered = TRUE
-    )
-  ) |>
-  group_by(Year, `Age Group`) |>
-  summarize(Births.NBER = sum(n), .groups = 'drop') |>
-  inner_join(
-    rename(births_1940_1967, Births.Visual = Births),
-    by = join_by(Year, `Age Group`) 
-  ) |>
-  gt() |>
-  fmt_number(starts_with('Births'), decimal = 0)
-```
-
-
-```{r saving-of-data}
-#saveRDS(here('data/NVSS/births_by_age_group_1968-2019.Rds'))
+saveRDS(
+  births_1909_2019,
+  here('data/NVSS/births_1909-2019.Rds')
+)
 ```
