@@ -203,7 +203,9 @@ women_of_reproductive_age |>
     guides(color = guide_legend(nrow = 1)) +
     labs(
       x = 'Year',
-      y = 'Female Population of United States by Age Group'
+      y = 'Female Population of United States by Age',
+      color = 'Age (years)',
+      shape = 'Age (years)'
     ) +
     theme_classic() +
     theme(
@@ -239,7 +241,6 @@ women_of_reproductive_age |>
       legend.box.margin = margin(t = 0, r = 0, b = -10, l = 0, unit = "pt"),
       legend.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"),
       legend.position = 'top',
-      legend.title = element_blank(),
       panel.grid.major = element_line(
         color = 'gray',
         linetype = 3,
