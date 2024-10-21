@@ -2,7 +2,7 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2024-10-21
+date: 2024-10-22
 draft: true
 implicit-figures: true
 include-before: |
@@ -146,7 +146,7 @@ What has happened since the rise in prominence of "diversity, equity, and inclus
 
 For instance, someone who advocates "race conscious" public policy that discriminates on race in a "diversity statement" might have their application passed on to the next phase of the review process, whereas if someone like Coleman Hughes were to apply to graduate school and write in his "diversity statement" that he believed we should not discriminate on race in public policy, then his application can be discarded before the next phase of the process.
 
-This is indeed happening. In the "Year End Summary Report: 2019-2019" of the "Initiative to Advance Faculty Diversity, Equity and Inclusion in the Life Science at UC Berkeley," the review process for applications to faculty positions in life sciences at UC Berkeley was described thus:
+This is indeed happening. In the "Year End Summary Report: 2018-2019" of the "Initiative to Advance Faculty Diversity, Equity and Inclusion in the Life Science at UC Berkeley," the review process for applications to faculty positions in life sciences at UC Berkeley was described thus:
 
 > A total of 993 applications were received, of which 893 met basic qualifications. The [Life Sciences Initiative] Committee conducted a first review and evaluated candidates based solely on contributions to diversity, equity and inclusion. Only candidates that met a high standard in this area were advanced for further review, narrowing the pool down to 214 for serious consideration. The remaining applications were then opened to review by the departmental ad-hoc search committees for short-list consideration. [@rebecca_heald_year_2020]
 
@@ -468,11 +468,48 @@ How can it be said, when half of Americans view abortion as morally wrong, that 
 
 ### My Career Mistakes
 
-* Two goals: research subject-matter expert, and do a social good
-* My naivete about this explains the bad decisions I made in trying to pursue research career
-    * Billionaires decide what technology gets progress, not researchers
-    * Any research about abortion that does not 
-* When there was less sorting on views on abortion between the two parties, Democrats had to moderate their abortion platform, which means I grew up in an era when the cultural hegemony around abortion was less obvious
+This article is largely what I wish I could tell myself twenty years ago. I have spent most of my adult life not paying attention to politics, much to my detriment.
+
+My problem is that I wanted (and still want) to live a life of scholarship, and scholarship in turn is centered on the university system, which is the belly of the beast of the cultural hegemony. Thus, I have been unwittingly trying to find my voice among institutions and people who do not think I, because of my views on abortion, should be allowed to have a voice. You cannot "find yourself" among people constantly trying to deplatform and slander you.
+
+The effect of all this is that I have wasted many years and much money. I had a lucrative career as a software engineer, and I saved up a lot of money for me to go back to university. My initial back-to-school plan was to become a life scientist so that I could do research on developing innovative contraceptive technologies. This seemed to check a lot of boxes for me because I was "following my interests." However, this was dumb for a variety of reasons.[^reasons]
+
+[^reasons]: More reasons include:
+
+    * Technological development is not limited by the number of people who want to work in research. There are actually too many aspiring scientists and not enough jobs for them. Research and development is limited by how billion-dollar funds are allocated, not by availability of human talent.
+    * A lot of science research is, to be frank, fake. Science careers are a game of accumulating prestige in a publish-or-perish world in which getting papers in prestigious journals is the main measure of success and a prerequisite for career advancement. The pursuit of truth is secondary. It should not be surprising that this is led to high profile data fraud cases in recent years. Even when there is not outright fraud, a lot of time is spent trying to _make something_ out of whatever is at hand that you can publish.
+    * Laboratory life sciences in particular are quite boring. Once you get passed undergraduate level classes, you are mostly memorizing acronyms of proteins and metabolic pathways, setting up commerically-sold kits of fluids and cell cultures, and operating expensive machinery.
+    * Science career prospects are terrible, as one would expect given there are too many aspiring scientists and not enough jobs for them. Aspiring scientists are paid very little, have to pursue years and years of education, have to move around all over the country to pursue limited opportunities, and ultimately quite often have to find alternative work anyway.
+
+The reason most germane to this article is simply that the people who decide admissions, hiring, and promotions in _academia_ do not want me around. I was so naive that I even applied to a life sciences department at UC Berkeley in 2019, right before the infamous "Initiative to Advance Faculty Diversity, Equity and Inclusion in the Life Science at UC Berkeley" report was discovered by the popular culture. I did so because one of the few scientists doing research pertinent to contraceptive technology was a faculty member there.
+
+The important takeaway from all of this is you cannot go through life "pursuing your interests." I thought if I was doing something I believed in, studied diligently, got good grades, and ticked all the boxes off, I would finally find my path. This is not how the world works. We live in a culture dominated by a hegemony.
+
+After my abortive biology career, I made another mistake of pivoting into a master's degree in statistics. In retrospect, I should have just admitted my mistake and returned to software engineering, but I was still clinging onto the idea of finding a more intellectually fulfilling career. I spent two years working as a statistician after earning my master's degree. I found myself no closer to research work and the pursuits of the life of the mind, but I was closer to the cultural hegemony, receiving emails from C-suite executives proclaiming their abortion-is-liberation ideology to the whole company.
+
+I could have spent the years in which I pursued additional university education and then an alternative career doing almost anything else, and it would have been more productive. I could have kept working as a software engineer and saved up money for an early retirement so that I could pursue my intellectual interests full-time. I could have developed hobbies. I could have started a family.
+
+The opportunity cost of this misadventure was great. In just raw economic dollars, I forsook just greater than one million dollars in lost salary. In terms of other lost opportunities, I will never know how much I missed.
+
+One of the reasons I avoided politics is that many if not most people interested in politics are partisans. I have gone at length in this blog discussing the [fallacies](/tags/fallacies.html) of people who think this way. I do not think that way, so I tacitly assumed politics was not for me.
+
+I will always have heterodox values and beliefs. I will always be an independent thinker. This is how I am, but it is not the world I live in. I live in a world of tribalism and uncritical conformist parrots.
+
+In retrospect, my best chances to have the intellectual life I wanted would have been to lean into "right-wing" spaces. I could have been a lawyer, a journalist, or an economist, since these are the few scholarly fields that have carved out "right-wing" areas within them (though the "right-wing" spaces are still subcultures within the larger culture that is dominated by the hegemony).
+
+Since I enjoy quantitative research more than legal argumentation or short-form articles about the news cycle, I think economics would have been the best fit for me, especially if I got a coveted spot at a "right-leaning" think tank.
+
+Knowing what I know now, I would have avoided any topics related to abortion for my actual paid career work. I would have studied something banal like retirement or housing costs or economic inequality and social mobility. Once I became secure in my career, then I would have done research in reproductive responsibility on the side.
+
+Such is hindsight.
+
+
+### How I Could Be So Naive
+
+* Half-and-half
+* Big sort
+* Pennsylvania
+* Not plugged into politics
   
 
 ## Conclusion
