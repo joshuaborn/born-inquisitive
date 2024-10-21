@@ -2,7 +2,7 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2024-09-09
+date: 2024-10-21
 draft: true
 implicit-figures: true
 include-before: |
@@ -47,7 +47,7 @@ The United States of America is a heavily polarized, partisan place. However, as
 
 This raises the question of how to understand the polarization that characterizes American politics. I discovered what I believe to be the best answer to this question a couple of years ago when listening to [episode 40 of season 3 of _Conversations with Coleman_](https://pca.st/1l7zid0r) in which Coleman Hughes interviewed David Sacks.
 
-Coleman Hughes is an author and podcaster who comments on race politics in the United States, and David Sacks is an entrepreneur in the software industry who was the founding CEO of PayPal. However, the explanation of political polarization discussed on the podcast ultimately came from neither David Sacks nor Coleman Hughes, but from the work of Ruy Teixeira, which they discussed.
+Coleman Hughes is an author and podcaster who comments on race politics in the United States, and David Sacks is an entrepreneur in the software industry who was the founding CEO of PayPal. However, the explanation of political polarization featured herein ultimately came from neither David Sacks nor Coleman Hughes, but from the work of Ruy Teixeira, which they discussed.
 
 Ruy Texeira is a political scientist and co-author of _The Emerging Democratic Majority_ in 2002 and of _Where Have All the Democrats Gone?_ in 2023. The former 2002 book predicted that the Democratic Party would soon have a national voting majority. This did not happen, which led to the latter 2023 book and his ongoing political science work.
 
@@ -69,7 +69,7 @@ However, one the more enduring reasons Democrats have lost much of the working-c
 
 ## The University as the Origin of the Cultural Hegemony
 
-The cultural hegemony we experience in the United States has its origin in the university system. American universities are very hierarchical and elitist. There is a glut of individuals who hold PhDs, and very few jobs for them in _academia._ Graduate students and post-doctoral fellows gravitate to the most highly ranked universities out of necessity in order to advance their careers. Most professors even at more lowly ranked universities come from the most highly ranked universities in some way. Thus, there is a scramble among academics to get names like "Harvard" or "Yale" or "UC Berkeley" on their _curricula vitae._
+The cultural hegemony we experience in the United States has its origin in the university system. American universities are very hierarchical and elitist. There is a glut of individuals who hold PhDs, and very few jobs for them in _academia._ Graduate students and post-doctoral fellows gravitate to the most highly ranked universities out of necessity in order to advance their careers. Most professors even at more lowly ranked universities come from the most highly ranked universities, by way of graduate school, post-doctoral fellowships, _etc._ Thus, there is a scramble among academics to get names like "Harvard" or "Yale" or "UC Berkeley" on their _curricula vitae._
 
 Therefore, whatever culture is prominent at elite universities trickles down throughout the university system as personnel radiate out from elite universities throughout the rest of the university system.
 
@@ -103,11 +103,11 @@ Even though a lot of people are motivated by the socio-economic structures of ou
 > 
 > So I tend to think that the first is that you can rebel against it. I tend to think that maybe 1% of the students do this and then -- and those people tend to become either founders, which is why I can stay in business having the views I have, or they tend to become kind of more conservative or independent media personalities.
 >
-> I think the vast majority are kind of go along to get along. They let this ideology wash over them. They're more interested in professional advancement. And so they're not super ideological, but they're kind of predisposed to accepting the sort of the dominant ideology of the professional class. I'd say that's probably about 80% of the students. 
+> I think the vast majority are kind of "go along to get along." They let this ideology wash over them. They're more interested in professional advancement. And so they're not super ideological, but they're kind of predisposed to accepting the sort of the dominant ideology of the professional class. I'd say that's probably about 80% of the students. 
 > 
 > And then I think the other 19% are true believers. And then they go on and staff, they tend to do the professional class jobs that don't pay very well.
 > 
-> So I think the sort of go along to get along types go work at McKinsey and Goldman Sachs, and the true believers go staff the nonprofits and the activist groups and the Democratic Party and the foundations and, and the media -- you know, they go on to, sort of, mainstream media jobs.
+> So I think the sort of "go along to get along" types go work at McKinsey and Goldman Sachs, and the true believers go staff the nonprofits and the activist groups and the Democratic Party and the foundations and, and the media -- you know, they go on to, sort of, mainstream media jobs.
 
 Using David Sacks' terminology, among the professional class, there is a minority of _true believers_ in the cultural hegemony, an even smaller minority of overt _rebels_ against the cultural hegemony, and a vast majority of _go-alongs_ who give lukewarm agreement to the cultural hegemony so that they can reap the economic benefits of a university degree.
 
@@ -150,7 +150,7 @@ This is indeed happening. In the "Year End Summary Report: 2019-2019" of the "In
 
 > A total of 993 applications were received, of which 893 met basic qualifications. The [Life Sciences Initiative] Committee conducted a first review and evaluated candidates based solely on contributions to diversity, equity and inclusion. Only candidates that met a high standard in this area were advanced for further review, narrowing the pool down to 214 for serious consideration. The remaining applications were then opened to review by the departmental ad-hoc search committees for short-list consideration. [@rebecca_heald_year_2020]
 
-This report, which was later removed from UC Berkeley's public website, details how 76% of qualified applicants were cut from the application process "based solely on contributions to diversity, equity and inclusion." Based on how the University of California system evaluates "contributions to diversity, equity and inclusion," it is clear that succesful Black academics like Thomas Sowell, Glenn Loury, or John McWhorter would score very low on "diversity, equity and inclusion" evaluation because of their political viewpoints, and so would not have even been considered for hiring by UC Berkeley.
+This report, which was later removed from UC Berkeley's public website, details how 76% of qualified applicants were cut from the application process "based solely on contributions to diversity, equity and inclusion." In light of how the University of California system evaluates "contributions to diversity, equity and inclusion," successful Black academics like Thomas Sowell, Glenn Loury, or John McWhorter would score very low on "diversity, equity and inclusion" evaluation because of their socio-political viewpoints, and so would not have even been considered for hiring by UC Berkeley.
 
 Thus, DEI initiatives are a way to entrench political biases in admissions, hiring, and promotion decisions. In order to be considered for admissions, hiring, or promotion, the cultural hegemony's true believers police applicants by way of their "diversity statements" to make sure they have the "correct" viewpoints. 
 
@@ -167,9 +167,9 @@ This recalls a humorous anecdote from my days as an undergraduate university stu
 
 While this is an obviously facile example of a viewpoint being misrepresented, it illustrates well the technique of misrepresentation. If people did believe my lack of support of Communism was due to my desire for "poor people to starve," then people would be less inclined to deviate from Communism, which for many decades was the cultural hegemony of eastern Europe and other areas.
 
-Because of the prominence of [identity politics](/identity-trap.html) in the United States, many if not most of these misrepresentations of alternative viewpoints involve some invocation of "racist," "misogynistic," "homophobic," "transphobic," etc. Thus, misrepresentation of alternative viewpoints and defamation of the people who hold them are typically intertwined.
+Because of the prominence of [identity politics](/identity-trap.html) in the United States, many if not most of these misrepresentations of alternative viewpoints involve some invocation of "racist," "misogynistic," "homophobic," "transphobic," _etc._ Thus, misrepresentation of alternative viewpoints and defamation of the people who hold them are typically intertwined.
 
-To be sure, there is _some_ amount of racism, sexism, etc., in human civilization, and this prejudice[^literal] explains _some_ of the viewpoints held by _some_ people. We can be sure that it is not the case that 0% of viewpoints in the world can be attributed to bigotry. But we can also be sure that it is not the case that 100% of viewpoints that deviate from the cultural hegemony can be attributed to bigotry, though that is what some would like us to believe. 
+To be sure, there is _some_ amount of racism, sexism, _etc.,_ in human civilization, and this prejudice[^literal] explains _some_ of the viewpoints held by _some_ people. We can be sure that it is not the case that 0% of viewpoints in the world can be attributed to bigotry. But we can also be sure that it is not the case that 100% of viewpoints that deviate from the cultural hegemony can be attributed to bigotry, though that is what some would like us to believe. 
 
 [^literal]: It should be pointed out that when many academics use words like "racism" or "sexism," they are not using the common dictionary definitions of these words which define them as a kind of prejudice. Rather, they are used with highly specialized meanings that differ from the common usage and do _not_ mean prejudice. For the sake of brevity, I have just used the common dictionary definitions here.
 
@@ -179,7 +179,7 @@ Coleman Hughes spoke about the ubiquity of people being called "racist" during h
 > 
 > And so I, you know, at some point gave up and just started -- I had a hunger to not just say things I was supposed to say to get along. And I also had -- I think what my friend Kmele Foster calls "the melanin force field," which is, you know, the fact -- the fact of the matter is as a -- as a black person, a lot of the people critiquing me on campus were white. And in their mind that gave them less standing to critique me if I did have contrarian views and in some way made it easier for me socially to actually be honest about what I thought, I think relatively, because I couldn't really be called a "racist," which was just a ubiquitous slur hurled at people.
 
-Many people in the United States today rightfully try to avoid racist viewpoints. Misrepresenting viewpoints alternative to the ones advanced by the cultural hegemony as "racist," etc., thus discourages individuals from considering the alternative viewpoints. If people who are dominated by the cultural hegemony have never encountered an actual good faith exposition of an alternative viewpoint due to deplatforming, then this kind of misrepresentation is that much more effective at keeping those dominated by the cultural hegemony away from the viewpoint.
+Many people in the United States today rightfully try to avoid racist viewpoints. Misrepresenting viewpoints alternative to the ones advanced by the cultural hegemony as "racist," _etc.,_ thus discourages individuals from considering the alternative viewpoints. If people who are dominated by the cultural hegemony have never encountered an actual good faith exposition of an alternative viewpoint due to deplatforming, then this kind of misrepresentation is that much more effective at keeping those dominated by the cultural hegemony away from the viewpoint.
 
 
 #### Redefinition of Words
@@ -188,7 +188,7 @@ One of the most common hegemonic techniques for misrepresentation and defamation
 
 For instance, one of the main reasons claimed for the attempt to cancel Coleman Hughes' TED Talk was the allegation that his viewpoint that we should not judge an individual based on the individual's race was "racist." 
 
-This may strike many of us as backward. Indeed, if we use the common definition of "racism" that most of us are familiar with, i.e., a prejudice based on an individual's skin color, etc., then alleging Coleman Hughes' viewpoint to be "racist" is self-contradictory.
+This may strike many of us as backward. Indeed, if we use the common definition of "racism" that most of us are familiar with, i.e., a prejudice based on an individual's skin color, _etc.,_ then alleging Coleman Hughes' viewpoint to be "racist" is self-contradictory.
 
 However, if you are familiar with the academic literature, you might be aware that academics for decades now have been redefining the word "racism" to suit their own ends. This came up when Coleman Hughes had his [debate](https://www.youtube.com/watch?v=gNo8en2iJAc) to satisfy TED's extra requirement on releasing Hughes' TED Talk. The person he debated, Jamelle Bouie, was quick to redefine "racism" away from the common definition.
 
@@ -212,13 +212,13 @@ While it is still a minority of students and faculty on campus who outright self
 
 ### Arguments from Authority and Professional Organizations
 
-Once it has been seen that the cultural hegemony in the United States is specifically a _professional-class_ cultural hegemony that proceeds from the university system out into the rest of society, it becomes obvious why proponents of the cultural hegemony so often resort to arguments from authority, particularly citing official-sounding pronouncements from professional organizations.
+Once we see that the cultural hegemony in the United States is specifically a _professional-class_ cultural hegemony that proceeds from the university system out into the rest of society, it becomes obvious why proponents of the cultural hegemony so often resort to arguments from authority, particularly citing official-sounding pronouncements from professional organizations.
 
 Professional organizations are dominated by the cultural hegemony because they are directly downstream of _academia_ (and perhaps because they tend to attract a higher ratio of true believers to go-alongs). Thus, professional organizations are often mouthpieces for the orthodoxy of the cultural hegemony.
 
 Many of these official-sounding pronouncements are _value judgements_ and as such are [not true-or-false claims](/moral-skepticism.html) amenable to expertise. Just as we would not feel compelled to agree with the value judgements of a random person standing on a soapbox shouting into a public square, we should not feel compelled to agree with the value judgements of any professional organization.
 
-Sometimes these official-sounding pronouncements do contain some assertions about supposed facts. In these cases, again, the alleged authority of the organization is not helpful in resolving the truth or falsity of the factual question. Instead, we should resolve questions of truth or falsity based on what the evidence indicates, the quality of the evidence, how it was observed, what alternative hypotheses might better explain the evidence, etc.
+Sometimes these official-sounding pronouncements do contain some assertions about supposed facts. In these cases, again, the alleged authority of the organization is not helpful in resolving the truth or falsity of the factual question. Instead, we should resolve questions of truth or falsity based on what the evidence indicates, the quality of the evidence, how it was observed, what alternative hypotheses might better explain the evidence, _etc._
 
 Either way, the argument that we should feel compelled to agree with a statement merely because a professional organization says so is fallacious. The converse is, of course, also true; we should not feel compelled to disagree with a statement just because a professional organization says so. However, arguments from authority are usually of the former, not latter, variety.
 
@@ -231,7 +231,7 @@ As discussed in _The Myth of Left and Right,_ a binary spectrum -- whether it is
 
 However, the left-right labeling [does explain certain _people_](when-left-wing-and-right-wing-are-and-arent-substantive-criticism.html) who adhere themselves to partisan conformity, even if they are adhering to a fad that is transient, ephemeral, and unnecessary. This is true of partisan conformists whether they identify themselves as "left-wing" or "right-wing."
 
-Taking a more social view, the phenomenon of professional-class cultural hegemony partly explains the emergence of this partisan conformity in the first place, but for only one of the (currently) popular versions of the left-right spectrum.
+Taking a broader view, the phenomenon of professional-class cultural hegemony partly explains the emergence of this partisan conformity in the first place, but for only one of the (currently) popular versions of the left-right spectrum.
 
 The original popular use of the left-right spectrum in the United States was over whether someone supported the New Deal, with "left" denoting degree of support for the New Deal and "right" denoting degree someone rejected the New Deal. [@lewis_2023, Chapter 2] This has little to do with the professional-class cultural hegemony. Indeed, regardless of whether someone thought it the best way forward, the New Deal was largely targeted at the problems of the working class.
 
@@ -275,7 +275,7 @@ This "argument from partisanship" merits no analysis because it itself proceeds 
 
 One flaw (of many) of this fallacy is that it conceives of all the other rays of viewpoints that deviate from the cultural hegemony as if they were the same. However, even if it were the case that there were only two viewpoints in the universe, it still would not justify adopting a viewpoint without any reasoning. Such behavior is indicative of minds so subdued by the cultural hegemony that they are basically inactive.
 
-Perhaps three or four of the rays out of center of the star-burst pattern are the rays of racism, sexism, etc. However, all of the other rays represent ways of thinking and feeling that deviate from the thoughts and feelings of the hegemons of culture in the United States and that are _not_ racism, sexism, etc. People subjugated to the cultural hegemony are therefore alienated from the great diversity and wealth of human experience, thinking, and values.
+Perhaps three or four of the rays out of center of the star-burst pattern are the rays of racism, sexism, _etc._ However, all of the other rays represent ways of thinking and feeling that deviate from the thoughts and feelings of the hegemons of culture in the United States and that are _not_ racism, sexism, _etc._ People subjugated to the cultural hegemony are therefore alienated from the great diversity and wealth of human experience, thinking, and values.
 
 
 ## Other Misnomers for the Cultural Hegemony
@@ -291,7 +291,7 @@ More importantly, there actually is a political philosophy of liberalism, which 
 
 Since the political foundation of the United States is largely derived from thinkers like John Locke, the United States has a lot of liberalism built into it. Free speech and freedom of religion are enshrined in First Amendment to the U.S. Constitution. The entirety of the system of government in the United States is an experiment in representative government. Therefore, we are all liberals to some extent because we have inherited (philosophical) liberalism.
 
-If anything, the cultural hegemony, in its hostility to free speech and in its attempts to shut down the marketplace of ideas, is rather _illiberal_ compared to the norms of the United States for the past several centuries. Thus, not only is "liberal" an inaccurate term to use to describe the cultural hegemony, it is the opposite of what the cultural hegemony actually is.
+If anything, the cultural hegemony, in its hostility to free speech and in its attempts to shut down the marketplace of ideas, is rather _illiberal_ compared to the norms of the United States for the past several centuries. Thus, not only is "liberal" an inaccurate term to use to describe the cultural hegemony, it is often the opposite of what the cultural hegemony actually is.
 
 
 ### "Progressive"
@@ -300,11 +300,11 @@ Similarly, proponents of the cultural hegemony are sometimes called "progressive
 
 For one, there already was a "progressive" movement in the United States in the first three decades of the twentieth century. The cultural hegemony today with its emphasis on identity politics and abortion-is-liberation ideology has very little to do with the ideas of Upton Sinclair or the political careers of Theodore Roosevelt or Woodrow Wilson.
 
-Indeed, the progressive movement of the early twentieth century was largely characterized as a rebellion of the middle class against the upper class, whereas the professional-class cultural hegemony today is an elitist phenomenon that flows from prestigious universities out to the rest of the country and is funded by billionaires. Like "liberal," the term "progressive" is not only inaccurate when applied to the cultural hegemony, but opposite to what the cultural hegemony actually is.
+Indeed, the progressive movement of the early twentieth century was largely characterized as a rebellion of the middle class against the upper class, whereas the professional-class cultural hegemony today is an elitist phenomenon that flows from prestigious universities out to the rest of the country and is funded by billionaires. Like "liberal," the term "progressive" is not only inaccurate when applied to the cultural hegemony, but often opposite to what the cultural hegemony actually is.
 
 Furthermore, there is a larger problem with people calling themselves "progressives." Everyone wants what is good. Everyone wants for the society in which they live more of what is good and less of what is bad. It is just that people have different value judgements about what constitutes "good." Thus, if anyone is a "progressive," then everyone is a "progressive." The term has no substance because a label is only useful if it picks out some individuals from a population, but not others.
 
-People who appoint themselves as "progressives" as if it is a useful identifier are thus nothing more than conceited. Such people have the conceit that they are the only ones who care about improving society. They are necessarily dismissive of all the other judgements in the world about what is good and what constitutes progress to the point that they think the word "progressive" uniquely describes them.
+People who appoint themselves as "progressives" as if it is a useful identifier are thus nothing more than conceited. Such people have the conceit that they are the only ones who care about improving society. They are necessarily dismissive of all the other judgements in the world about what _constitutes_ progress to the point that they think the word "progressive" uniquely describes them.
 
 
 ### Why So Many Misnomers?
@@ -318,7 +318,7 @@ The fact that the most popular terms for the professional-class cultural hegemon
 
 ## Cultural Hegemony, Abortion Advocacy, and Me
 
-A curious thing about both David Sacks and Coleman Hughes is that they criticize the workings of the cultural hegemony when it comes to identity politics, etc., but they themselves are dominated by the cultural hegemony when it comes to the issue that started the "culture war" in the United States in the first place, i.e., abortion.[^degrees]
+A curious thing about both David Sacks and Coleman Hughes is that they criticize the workings of the cultural hegemony when it comes to identity politics, _etc.,_ but they themselves are dominated by the cultural hegemony when it comes to the issue that started the "culture war" in the United States in the first place, i.e., abortion.[^degrees]
 
 [^degrees]: This is to different degrees. Davis Sacks is an advocate for abortion liberation ideology, while Coleman Hughes supports abortion-on-demand while acknowledging that it is a philosophically thorny issue and that mass abortion is a "suboptimal" form of reproductive management.
 
@@ -337,11 +337,11 @@ Therefore, the normal legislative process was active throughout the 1960s, with 
 
 Two mutually supporting phenomena happened since then: the political _coup d'état_ that made abortion-on-demand legal in all fifty states, and the cultural shift that changed the framing of the discourse from abortion as a social problem to abortion as liberation. The political _coup d'état_ was accomplished by judicial activism, which is beyond the scope of this article, whereas the change in the discourse has been driven by the very phenomenon of professional-class cultural hegemony discussed here.
 
-The moral status of the human fetus has been controversial and debated for millennia, at least as far back as the time of Plato and Aristotle, yet the cultural hegemony has declared that those who reach a conclusion that abortion as a method of fertility control is morally wrong do not actually believe what they say, and instead are secretly "misogynists" who "hate women" and want to "control women's bodies" because they are against "gender equality" and "women's freedom."
+The moral status of the human fetus has been controversial and debated for millennia, at least as far back as the time of Plato and Aristotle, yet the cultural hegemony has declared that those who reach a conclusion that abortion is homicide do not actually believe what they say, and instead are secretly "misogynists" who "hate women" and want to "control women's bodies" because they are against "gender equality" and "women's freedom."
 
-This is an example of how, for decades now, by way of universities and the organizations downstream of the universities, the cultural hegemony has been deplatforming those opposed to abortion, misrepresenting the views of those opposed to abortion, defaming those who hold such views, crowding the professional organizations and government bureaucracies with shills for abortion, and indoctrinating people to arbitrarily dimiss any criticism of abortion by way of partisan appeals.
+This is a result of how, for decades now, by way of universities and the organizations downstream of the universities, the cultural hegemony has been deplatforming those opposed to abortion, misrepresenting the views of those opposed to abortion, defaming those who hold such views, crowding the professional organizations and government bureaucracies with shills for abortion, and indoctrinating people to arbitrarily dismiss any criticism of abortion because such criticism is "right-wing."
 
-Nowadays, if those of us who have moral compunction about abortion attempt to express what we truly believe in an academic paper or an op-ed in the mainstream media, our words will not be allowed past editorial review. You are not allowed to write about "life" or "death" occurring in the womb. You are not allowed to describe abortion as an act of "killing." Such discussion is dismissed as "inflammatory" by the cultural hegemony and censored, but these words get at what is the _actual_ and _central_ point of disagreement about abortion, as it has been for thousands of years. This is an example of how the cultural hegemony controls thinking by controlling language.
+Nowadays, if those of us who have moral compunction about abortion attempt to express what we truly believe in an academic paper or an op-ed in the mainstream media, our words will not be allowed past editorial review. You are not allowed to write about "life" or "death" occurring in the womb. You are not allowed to describe abortion as an act of "killing." Such discussion is dismissed by the cultural hegemony and censored, but these words get at what is the _actual_ and _central_ point of disagreement about abortion, as it has been for thousands of years. This is an example of how the cultural hegemony controls thinking by controlling language.
 
 What has been the effect of this on the discourse? A recent FIRE survey on free speech on campus asked students what topics are "difficult to have an open and honest conversation about on their campus." The response of "abortion" was the most common answer to this question, with 49% of respondents giving "abortion" as an answer. Unsurprisingly, the only other topics that come close are also topics on which the cultural hegemony is very active, namely "gun control" (43%), "racial inequality" (42%), and "transgender rights" (42%). [@fire_2024]
 
@@ -459,11 +459,11 @@ The movement to destigmatize abortion in the United States has been a classic ca
 
 Thus, while it is the case that the _people_ of the United States are split on abortion, only one side of this split has managed to run away with almost all of American institutions -- universities, media organizations, professional associations, government bureaucracy -- through the process of professional-class cultural hegemony.
 
-In a country that is split virtually in half on whether abortion is morally wrong or morally acceptable, is it the case that about half of researchers study abortion as a social ill and half of researchers study abortion as a social good? Far from it. It is closer to the case there are _no_ professionally employed researchers studying abortion as a social problem, and that _all of them_ study abortion as a social good. For example, I have only ever found one public health researcher who studies abortion as a social problem, rather than a social good, and this researcher is [currently being cancelled](https://assaultonscience.org).[^others]
+In a country that is split virtually in half on whether abortion is morally wrong or morally acceptable, do half of researchers study abortion as a social ill while the other half of researchers study abortion as a social good? Far from it. It is closer to the case there are _no_ professionally employed researchers studying abortion as a social problem, and that _all of them_ study abortion as a social good. For example, I have only ever found one public health researcher who studies abortion as a social problem, rather than a social good, and this researcher is [currently being cancelled](https://assaultonscience.org).[^others]
 
 [^others]: There may, of course, be plenty of professors and researchers in fields not directly studying abortion-related topics who privately have moral compunction about abortion.
 
-How can it be said, when half of Americans view abortion as morally wrong, that an _academia_ which entirely views abortion as a social good is "inclusive" of America -- all Americans? For all its talk of "inclusion," _academia_ excludes half of America based on viewpoint. This is an _academia_ that is in service of the cultural hegemony, not the people, of the United States.
+How can it be said, when half of Americans view abortion as morally wrong, that an _academia_ which entirely views abortion as a social good is "inclusive" of America -- all Americans? For all its talk of "inclusion," _academia_ excludes half of America based on viewpoint. This is an _academia_ that serves cultural hegemony, not the people, of the United States.
 
 
 ### My Career Mistakes
