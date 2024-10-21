@@ -1,0 +1,158 @@
+---
+title: "Total Pregnancies and Pregnancies by Age of Mother in United States, 1974-2014"
+author: "Joshua Born"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 5
+    css: wide.css
+---
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(gt)
+library(haven)
+library(here)
+library(srvyr)
+library(tidyr)
+
+knitr::opts_chunk$set(
+  cache=FALSE,
+  dpi=200,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.height=9.6,
+  fig.retina=1.5,
+  fig.width=9.6
+)
+```
+
+
+```{r}
+raw_preg_1982_1983 <- read_sas(
+  data_file = here('data/NSFG/d1982_1983fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d1982_1983fempreg.sas7bcat')
+)
+
+weights_1982_1983 <- readRDS(here('data/NSFG/adjusted_cycle_3_weights.Rds'))
+
+preg_1982_1983 <- raw_preg_1982_1983 |> select(
+    CASEID,
+    AGEPREG,
+    YRPREG
+  ) |>
+  mutate(
+    Year = if_else(
+      !is.na(YRPREG) & YRPREG != 99,
+      1900 + YRPREG,
+      NA
+    ),
+    YRPREG = as_factor(labelled(YRPREG, c(
+      "CURRENT PREGNANCY" = NA,
+      "BEFORE 1970" = 60,
+      "YEAR NOT ASCERTAINED" = 99
+    ))),
+    Age = as.integer(AGEPREG / 100),
+    AgeGroup = cut(
+      Age,
+      breaks = c(0, seq(15, 40, 5), Inf),
+      right = FALSE,
+      labels = c(
+        "Under 15 years",
+        "15-19 years",
+        "20-24 years",
+        "25-29 years",
+        "30-34 years",
+        "35-39 years",
+        "40 years and over"
+      )
+    )
+  ) |>
+  left_join(
+    weights_1982_1983,
+    by = join_by(CASEID)
+  )
+
+svy_preg_1982_1983 <- as_survey_rep(
+  preg_1982_1983,
+  weights = FULL_SAMPLE_WGT,
+  repweights = starts_with('REP_WGT_'),
+  type = 'BRR'
+)
+
+analysis_years_1982_1983 <- 1974:1979
+
+total_pregnancies_1982_1983 <- svy_preg_1982_1983 |>
+  group_by(Year) |>
+  summarize(
+    total_pregnancies = survey_total(vartype = 'ci')
+  ) |>
+  filter(Year %in% analysis_years_1982_1983)
+
+pregnancies_by_age_1982_1983 <- svy_preg_1982_1983 |>
+  group_by(Year, AgeGroup) |>
+  summarize(
+    total_pregnancies = survey_total(vartype = 'ci')
+  ) |>
+  filter(Year %in% analysis_years_1982_1983)
+```
+
+
+## Average Pregnancies per Year in 1974-1979
+
+```{r}
+total_pregnancies_1982_1983 |>
+  select(-Year) |>
+  summarize(across(everything(), sum)) |>
+  mutate(across(everything(), \(x) x / length(analysis_years_1982_1983))) |>
+  gt() |>
+  fmt_integer()
+```
+
+
+## Pregnancies in Each Year in 1974-1979
+
+```{r}
+gt(total_pregnancies_1982_1983) |>
+  fmt_integer(-Year)
+```
+
+
+## Average Pregnancies per Year by Age Group in 1974-1979
+
+```{r}
+pregnancies_by_age_1982_1983 |>
+  ungroup() |>
+  select(-Year) |>
+  group_by(AgeGroup) |>
+  summarize(across(everything(), sum)) |>
+  mutate(across(-AgeGroup, \(x) x / length(analysis_years_1982_1983))) |>
+  gt() |>
+  fmt_integer()
+```
+
+
+## Pregnancies by Age Group in Each Year in 1974-1979
+
+```{r}
+gt(pregnancies_by_age_1982_1983) |>
+  fmt_integer(-Year)
+```
+
+
+## Pregnancies by Age Group in Each Year in 1974-1979 -- Wide Table
+
+```{r}
+pregnancies_by_age_1982_1983 |>
+  ungroup() |>
+  pivot_wider(
+    id_cols = AgeGroup,
+    names_from = Year,
+    names_prefix = 'pregnancies_',
+    values_from = total_pregnancies
+  ) |>
+  gt() |>
+  fmt_integer()
+```
