@@ -19,7 +19,7 @@ library(srvyr)
 library(tidyr)
 
 knitr::opts_chunk$set(
-  cache=FALSE,
+  cache=TRUE,
   dpi=200,
   echo = TRUE,
   fig.align = 'center',
@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r}
+```{r process-1982-1983}
 raw_preg_1982_1983 <- read_sas(
   data_file = here('data/NSFG/d1982_1983fempreg.sas7bdat'),
   catalog_file = here('data/NSFG/d1982_1983fempreg.sas7bcat')
@@ -100,51 +100,59 @@ pregnancies_by_age_1982_1983 <- svy_preg_1982_1983 |>
 ```
 
 
-## Average Pregnancies per Year in 1974-1979
+## Average Pregnancies per Year
 
-```{r}
+```{r average-pregnancies, dependson=c("process-1982-1983")}
 total_pregnancies_1982_1983 |>
   select(-Year) |>
   summarize(across(everything(), sum)) |>
-  mutate(across(everything(), \(x) x / length(analysis_years_1982_1983))) |>
+  mutate(
+    across(everything(), \(x) x / length(analysis_years_1982_1983)),
+    Years = paste0(analysis_years_1982_1983[1], '-', tail(analysis_years_1982_1983, 1)),
+    .before = everything()
+  ) |>
   gt() |>
   fmt_integer()
 ```
 
 
-## Pregnancies in Each Year in 1974-1979
+## Pregnancies in Each Year
 
-```{r}
+```{r pregnancies-each-year, dependson=c("process-1982-1983")}
 gt(total_pregnancies_1982_1983) |>
   fmt_integer(-Year)
 ```
 
 
-## Average Pregnancies per Year by Age Group in 1974-1979
+## Average Pregnancies per Year by Age Group
 
-```{r}
+```{r average-pregnancies-by-age, dependson=c("process-1982-1983")}
 pregnancies_by_age_1982_1983 |>
   ungroup() |>
   select(-Year) |>
   group_by(AgeGroup) |>
   summarize(across(everything(), sum)) |>
-  mutate(across(-AgeGroup, \(x) x / length(analysis_years_1982_1983))) |>
+  mutate(
+    across(-AgeGroup, \(x) x / length(analysis_years_1982_1983)),
+    Years = paste0(analysis_years_1982_1983[1], '-', tail(analysis_years_1982_1983, 1)),
+    .before = everything()
+  ) |>
   gt() |>
   fmt_integer()
 ```
 
 
-## Pregnancies by Age Group in Each Year in 1974-1979
+## Pregnancies by Age Group in Each Year
 
-```{r}
+```{r pregnancies-each-year-by-age, dependson=c("process-1982-1983")}
 gt(pregnancies_by_age_1982_1983) |>
   fmt_integer(-Year)
 ```
 
 
-## Pregnancies by Age Group in Each Year in 1974-1979 -- Wide Table
+## Pregnancies by Age Group in Each Year -- Wide Table
 
-```{r}
+```{r wide-pregnancies-each-year-by-age, dependson=c("process-1982-1983")}
 pregnancies_by_age_1982_1983 |>
   ungroup() |>
   pivot_wider(
