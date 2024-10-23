@@ -2,8 +2,8 @@
 author: "Joshua Born"
 bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
 csl: "../bibliographies/chicago-author-date.csl"
-date: 2024-10-22
-draft: true
+date: 2024-10-23
+draft: false
 implicit-figures: true
 include-before: |
   ## Table of Contents
@@ -12,7 +12,7 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: "Summary sentence here"
+summary: "The culture of the United States is dominated by a hegemony that comes ultimately from a small number of people, facilitated by the university system and the balance of money and power."
 tags: ["editorial", "first-person"]
 title: 'Professional-Class Cultural Hegemony'
 ---
@@ -86,7 +86,7 @@ As David Sacks discussed during his _Conversations with Coleman_ interview:
 
 The most dramatic polarization we see in the United States is between the professional class and the working class, and this is because the professional class has more exposure to the cultural hegemony, while the working class has less exposure to the cultural hegemony. Furthermore, the working class outnumbers the professional class, but the professional class wields more power than the working class, which in a democracy sows discord.
 
-The working class might poll more "conservative" on a social issue, depending on how the pollsters frame the issue and what (ultimately arbitrary) definition of "conservative" is being used. The professional class might poll more "left-wing" than the working class on an issue, based an fleeting and arbitrary characterizations of the left-right spectrum. But all of these labels miss the point that the schism itself is caused by the phenomenon of professional-class cultural hegemony.
+The working class might poll more "conservative" on a social issue, depending on how the pollsters frame the issue and what (ultimately arbitrary) definition of "conservative" is being used. The professional class might poll more "left-wing" than the working class on an issue, based on fleeting and arbitrary characterizations of the left-right spectrum. But all of these labels miss the point that the schism itself is caused by the phenomenon of professional-class cultural hegemony.
 
 If the views of the pseudo-aristocracy that runs the Ivy League and the _New York Times_ were "right-wing" or "conservative," then this schism in American society would still exist, but with a reversing of the labels; there would be a more "right-wing" or "conservative" hegemony compared with a more "left-wing" or "progressive" rest of the country. The source of the polarization itself is the amount of exposure to the cultural hegemony people receive and the amount of power they have in society by virtue of institutional leadership and economic wealth.
 
@@ -105,7 +105,7 @@ Even though a lot of people are motivated by the socio-economic structures of ou
 >
 > I think the vast majority are kind of "go along to get along." They let this ideology wash over them. They're more interested in professional advancement. And so they're not super ideological, but they're kind of predisposed to accepting the sort of the dominant ideology of the professional class. I'd say that's probably about 80% of the students. 
 > 
-> And then I think the other 19% are true believers. And then they go on and staff, they tend to do the professional class jobs that don't pay very well.
+> And then I think the other 19% are true believers. And then they go on and staff -- they tend to do the professional class jobs that don't pay very well.
 > 
 > So I think the sort of "go along to get along" types go work at McKinsey and Goldman Sachs, and the true believers go staff the nonprofits and the activist groups and the Democratic Party and the foundations and, and the media -- you know, they go on to, sort of, mainstream media jobs.
 
@@ -121,7 +121,7 @@ Because of this tension within the professional class, it is not enough for the 
 
 ### Deplatforming 
 
-Probably one the most profound methods of the cultural hegemony is the deplatforming of alternative viewpoints. If the people dominated by the cultural hegemony are simply not exposed to viewpoints other than those of the cultural hegemony, then they are much less likely to deviate from that orthodoxy.
+One of the most profound methods of the cultural hegemony is the deplatforming of alternative viewpoints. If the people dominated by the cultural hegemony are simply not exposed to viewpoints other than those of the cultural hegemony, then they are much less likely to deviate from that orthodoxy.
 
 This can manifest itself in two ways, one more public and one more subtle.
 
@@ -175,7 +175,7 @@ To be sure, there is _some_ amount of racism, sexism, _etc.,_ in human civilizat
 
 Coleman Hughes spoke about the ubiquity of people being called "racist" during his time at university:
 
-> And so I was definitely in that 1% that rebelled when I was at Columbia. I tried writing for the student newspaper, but it was so absolutely captured by students with far left ideology that, you know, I could hardly write a sentence without them trying to fact check me on a book they'd never read.
+> And so I was definitely in that 1% that rebelled when I was at Columbia. I tried writing for the student newspaper, but it was so absolutely captured by students with far-left ideology that, you know, I could hardly write a sentence without them trying to fact check me on a book they'd never read.
 > 
 > And so I, you know, at some point gave up and just started -- I had a hunger to not just say things I was supposed to say to get along. And I also had -- I think what my friend Kmele Foster calls "the melanin force field," which is, you know, the fact -- the fact of the matter is as a -- as a black person, a lot of the people critiquing me on campus were white. And in their mind that gave them less standing to critique me if I did have contrarian views and in some way made it easier for me socially to actually be honest about what I thought, I think relatively, because I couldn't really be called a "racist," which was just a ubiquitous slur hurled at people.
 
@@ -205,7 +205,7 @@ In addition to the removal of individuals that occurs through public cancellatio
 
 As is typical with the cultural hegemony, this phenomenon begins at the university and spreads outward into the rest of society, as reported by the Foundation for Individual Rights and Expression (FIRE). Their recent report on free speech on campus found that "just over a quarter of students (26%) reported that they feel pressure to avoid discussing controversial topics in their classes," and that "at least a quarter of students said they self-censor 'fairly often' or 'very often' during conversations with other students, with professors, and during classroom discussions (25%, 27%, and 28%, respectively.)" [@fire_2024] 
 
-The situation is even worse for professors. A 2022 survey found that "roughly one-third (34%) of faculty said they often feel they can not express their opinions on a subject because of how students, colleagues, or the administration would respond," and that "the percentages of faculty who said they were very or extremely likely to self-censor in different contexts ranged from 25% (in academic publications) to 45% (on social media)." [@fire_2022]
+The situation is even worse for professors. A 2022 survey found that "roughly one-third (34%) of faculty said they often feel they cannot express their opinions on a subject because of how students, colleagues, or the administration would respond," and that "the percentages of faculty who said they were very or extremely likely to self-censor in different contexts ranged from 25% (in academic publications) to 45% (on social media)." [@fire_2022]
 
 While it is still a minority of students and faculty on campus who outright self-censor for fear of reprisals, majorities of both students and faculty at least worry about repercussions to their speech. "More than half of students (56%) expressed worry about damaging their reputation because of someone misunderstanding what they have said or done,"  [@fire_2024] and "more than half of faculty (52%) reported being worried about losing their jobs or reputation because someone misunderstands something they have said or done, takes it out of context, or posts something from their past online." [@fire_2022]
 
@@ -233,7 +233,7 @@ However, the left-right labeling [does explain certain _people_](when-left-wing-
 
 Taking a broader view, the phenomenon of professional-class cultural hegemony partly explains the emergence of this partisan conformity in the first place, but for only one of the (currently) popular versions of the left-right spectrum.
 
-The original popular use of the left-right spectrum in the United States was over whether someone supported the New Deal, with "left" denoting degree of support for the New Deal and "right" denoting degree someone rejected the New Deal. [@lewis_2023, Chapter 2] This has little to do with the professional-class cultural hegemony. Indeed, regardless of whether someone thought it the best way forward, the New Deal was largely targeted at the problems of the working class.
+The original popular use of the left-right spectrum in the United States was over whether someone supported the New Deal, with "left" denoting degree of support for the New Deal and "right" denoting degree someone rejected the New Deal. [@lewis_2023, Chapter 2] This has little to do with the professional-class cultural hegemony. Indeed, regardless of whether someone thought it was the best way forward, the New Deal was largely targeted at the problems of the working class.
 
 Today, however, "left-wing" is sometimes used to denote the degree of conformity someone has to to a set of _cultural_ norms such as identity politics, abortion[^definition] destigmatization, and aversion to firearms. These are (currently) the norms fashionable among the cultural hegemons, i.e., administrators of elite universities, activists, and the billionaires who fund them.
 
@@ -291,7 +291,7 @@ More importantly, there actually is a political philosophy of liberalism, which 
 
 Since the political foundation of the United States is largely derived from thinkers like John Locke, the United States has a lot of liberalism built into it. Free speech and freedom of religion are enshrined in First Amendment to the U.S. Constitution. The entirety of the system of government in the United States is an experiment in representative government. Therefore, we are all liberals to some extent because we have inherited (philosophical) liberalism.
 
-If anything, the cultural hegemony, in its hostility to free speech and in its attempts to shut down the marketplace of ideas, is rather _illiberal_ compared to the norms of the United States for the past several centuries. Thus, not only is "liberal" an inaccurate term to use to describe the cultural hegemony, it is often the opposite of what the cultural hegemony actually is.
+If anything, the cultural hegemony, in its hostility to free speech and in its attempts to shut down the marketplace of ideas, is rather _illiberal_ compared to the norms of the United States for the past several centuries. Thus, not only is "liberal" an inaccurate term to use to describe the cultural hegemony, but it is often the opposite of what the cultural hegemony actually is.
 
 
 ### "Progressive"
@@ -335,7 +335,7 @@ Therefore, the normal legislative process was active throughout the 1960s, with 
 
 [^governor]: The governor in question was Nelson Rockefeller, brother of abortion-advocacy financier John D. Rockefeller III.
 
-Two mutually supporting phenomena happened since then: the political _coup d'état_ that made abortion-on-demand legal in all fifty states, and the cultural shift that changed the framing of the discourse from abortion as a social problem to abortion as liberation. The political _coup d'état_ was accomplished by judicial activism, which is beyond the scope of this article, whereas the change in the discourse has been driven by the very phenomenon of professional-class cultural hegemony discussed here.
+Two mutually supporting phenomena have happened since then: the political _coup d'état_ that made abortion-on-demand legal in all fifty states, and the cultural shift that changed the framing of the discourse from abortion as a social problem to abortion as liberation. The political _coup d'état_ was accomplished by judicial activism, which is beyond the scope of this article, whereas the change in the discourse has been driven by the very phenomenon of professional-class cultural hegemony discussed here.
 
 The moral status of the human fetus has been controversial and debated for millennia, at least as far back as the time of Plato and Aristotle, yet the cultural hegemony has declared that those who reach a conclusion that abortion is homicide do not actually believe what they say, and instead are secretly "misogynists" who "hate women" and want to "control women's bodies" because they are against "gender equality" and "women's freedom."
 
@@ -345,7 +345,7 @@ Nowadays, if those of us who have moral compunction about abortion attempt to ex
 
 What has been the effect of this on the discourse? A recent FIRE survey on free speech on campus asked students what topics are "difficult to have an open and honest conversation about on their campus." The response of "abortion" was the most common answer to this question, with 49% of respondents giving "abortion" as an answer. Unsurprisingly, the only other topics that come close are also topics on which the cultural hegemony is very active, namely "gun control" (43%), "racial inequality" (42%), and "transgender rights" (42%). [@fire_2024]
 
-The effect of the cultural hegemony is to ruin the possibility of an open and honest discourse. One might look at the survey responses as akin to a glass half full, rather than half empty, since 51% of students did not respond "abortion" to the question. However, it is likely that many of those who do not _believe_ it is difficult to have an open and honest discussion about abortion on campus are the people _making it_ difficult. For those who are dominated by the cultural hegemony, all the deplatforming, misrepresentation, and defamation _is_ what they _think_ is an "open and honest" discussion.
+The effect of the cultural hegemony is to ruin the possibility of an open and honest discourse. One might look at the survey responses as akin to a glass half full, rather than half empty, since 51% of students did not respond "abortion" to the question. However, it is likely that many of those who do not _believe_ it is difficult to have an open and honest discussion about abortion on campus are the people who are _making it_ difficult. For those who are dominated by the cultural hegemony, all the deplatforming, misrepresentation, and defamation _is_ what they _think_ is an "open and honest" discussion.
 
 
 ### Education, Money, and Power
@@ -447,13 +447,13 @@ read_csv(
   )
 ```
 
-Depending on the year, there is a noticeable gap of up to twenty five percentage points in the proportion of those who find abortion morally acceptable by whether the respondent is a college graduate. Since college graduates have spent four years or more at a university and are more likely to have family and friends who are also college graduates, they have on average more exposure to the cultural hegemony than working-class people. The effects of this on their views on abortion can be seen.
+Depending on the year, there is a noticeable gap of up to twenty-five percentage points in the proportion of those who find abortion morally acceptable by whether the respondent is a college graduate. Since college graduates have spent four years or more at a university and are more likely to have family and friends who are also college graduates, they have on average more exposure to the cultural hegemony than working-class people. The effects of this on their views on abortion can be seen.
 
 Furthermore, because of the economic advantages that college graduates enjoy in the United States, there is a noticeable gap in viewpoints on abortion based on income. Recent Gallup polling [found that](https://secularprolife.org/2024/06/economic-elites-pour-millions-into-abortion-advocacy/) a majority (54%) of those with an annual income of \$40,000 or less identified as "pro-life," while a similar majority (also 54%) with an annual income of \$40,000 or more identified as "pro-choice." Among those with an annual income of more than $100,000, there is an even larger majority who identify as "pro-choice."
 
 Thus, people with more influence on society and more money tend to have more approving views of abortion, while those with less money and influence are more likely to judge abortion to be morally wrong.
 
-However, even more important than these differences in viewpoints by educational level or income is the effect that the extremely wealthy have had on views on abortion. From the get go, abortion advocacy in the United States has been funded by some of the richest people in the world, such as John D. Rockefeller III. [@forsythe_2013, 59-62]
+However, even more important than these differences in viewpoints by educational level or income is the effect that the extremely wealthy have had on views on abortion. From the get-go, abortion advocacy in the United States has been funded by some of the richest people in the world, such as John D. Rockefeller III. [@forsythe_2013, 59-62]
 
 The movement to destigmatize abortion in the United States has been a classic case of the cultural hegemony at work, funded by a few billionaires over the popular sentiments of the less wealthy and less powerful masses. In time, through the _quid pro quo_ of the university system and reinforcement by professional-class media outlets, the views of the billionaires have spread from a minority of Americans to about half or so of the country. Since the half of the country that subscribes to the views of these few billionaires is the more affluent and powerful half of the country, cultural hegemony has been achieved.
 
@@ -476,16 +476,16 @@ The effect of all this is that I have wasted many years and much money. I had a 
 
 [^reasons]: More reasons include:
 
-    * Technological development is not limited by the number of people who want to work in research. There are actually too many aspiring scientists and not enough jobs for them. Research and development is limited by how billion-dollar funds are allocated, not by availability of human talent.
-    * A lot of science research is, to be frank, fake. Science careers are a game of accumulating prestige in a publish-or-perish world in which getting papers in prestigious journals is the main measure of success and a prerequisite for career advancement. The pursuit of truth is secondary. It should not be surprising that this is led to high profile data fraud cases in recent years. Even when there is not outright fraud, a lot of time is spent trying to _make something_ out of whatever is at hand that you can publish.
-    * Laboratory life sciences in particular are quite boring. Once you get passed undergraduate level classes, you are mostly memorizing acronyms of proteins and metabolic pathways, setting up commerically-sold kits of fluids and cell cultures, and operating expensive machinery.
-    * Science career prospects are terrible, as one would expect given there are too many aspiring scientists and not enough jobs for them. Aspiring scientists are paid very little, have to pursue years and years of education, have to move around all over the country to pursue limited opportunities, and ultimately quite often have to find alternative work anyway.
+    * Technological development is not limited by the number of people who want to work in research. There are actually too many aspiring scientists and not enough jobs for them. Research and development are limited by how billion-dollar funds are allocated, not by availability of human talent.
+    * A lot of science research is, to be frank, fake. Science careers are a game of accumulating prestige in a publish-or-perish world in which getting papers in prestigious journals is the main measure of success and a prerequisite for career advancement. The pursuit of truth is secondary. It should not be surprising that this has led to high profile data fraud cases in recent years. Even when there is not outright fraud, a lot of time is spent trying to _make something_ out of whatever is at hand that you can publish.
+    * Laboratory life sciences in particular are quite boring. Once you get passed undergraduate level classes, you are mostly memorizing acronyms of proteins and metabolic pathways, setting up commerically-sold kits of fluids and cell cultures, and pushing buttons on expensive machinery that someone else has designed and programmed.
+    * Science career prospects are terrible, as one would expect given there are too many aspiring scientists and not enough jobs for them. Aspiring scientists are paid very little, have to pursue years and years of education, have to move around all over the country to pursue limited opportunities, and ultimately have to find alternative work usually, anyway.
 
 The reason most germane to this article is simply that the people who decide admissions, hiring, and promotions in _academia_ do not want me around. I was so naive that I even applied to a life sciences department at UC Berkeley in 2019, right before the infamous "Initiative to Advance Faculty Diversity, Equity and Inclusion in the Life Science at UC Berkeley" report was discovered by the popular culture. I did so because one of the few scientists doing research pertinent to contraceptive technology was a faculty member there.
 
 The important takeaway from all of this is you cannot go through life "pursuing your interests." I thought if I was doing something I believed in, studied diligently, got good grades, and ticked all the boxes off, I would finally find my path. This is not how the world works. We live in a culture dominated by a hegemony.
 
-After my abortive biology career, I made another mistake of pivoting into a master's degree in statistics. In retrospect, I should have just admitted my mistake and returned to software engineering, but I was still clinging onto the idea of finding a more intellectually fulfilling career. I spent two years working as a statistician after earning my master's degree. I found myself no closer to research work and the pursuits of the life of the mind, but I was closer to the cultural hegemony, receiving emails from C-suite executives proclaiming their abortion-is-liberation ideology to the whole company.
+After my abortive biology career, I made another mistake of pivoting into a master's degree in statistics. In retrospect, I should have just admitted my mistake and returned to software engineering, but I was still clinging onto the idea of finding a more intellectually fulfilling career. I spent two years working as a statistician after earning my master's degree. I found myself no closer to research work or the pursuits of the life of the mind, but I was closer to the cultural hegemony, receiving emails from C-suite executives proclaiming their abortion-is-liberation ideology to the whole company.
 
 I could have spent the years in which I pursued additional university education and then an alternative career doing almost anything else, and it would have been more productive. I could have kept working as a software engineer and saved up money for an early retirement so that I could pursue my intellectual interests full-time. I could have developed hobbies. I could have started a family.
 
@@ -506,13 +506,13 @@ Knowing what I know now, I would have avoided any topics related to abortion for
 
 Given the state of today's popular culture with regard to abortion, one might wonder how I could be so naive.
 
-In my defense, I was born before what has been called the "Big Sort." In the twentieth century, there were both "liberal" Republican politicians and "conservative" Republican politicians, and there were both "conservative" Democrat politicians and "liberal" Democrat politicians. There were rural areas were Democrats were more successful, and there were metropolitan areas where Republicans were more successful.
+In my defense, I was born before what has been called the "Big Sort." In the twentieth century, there were both "liberal" Republican politicians and "conservative" Republican politicians, and there were both "conservative" Democrat politicians and "liberal" Democrat politicians. There were rural areas where Democrats were more successful, and there were metropolitan areas where Republicans were more successful.
 
 In the twenty first century, after the Big Sort, "conservatives" accumulated in the Republican Party and "liberals" in the Democratic Party. Furthermore, Republicans began to dominate in rural areas while Democrats dominated politics in metropolitan areas. This led a clustering of abortion advocacy among Democrats and, more importantly, made maximalist abortion advocacy a _more_ potent platform in the United States because abortion became an issue that Democrats could use to excite their base.
 
 Before the Big Sort, politicians more often had to appeal to undecided and swing voters in order to gain an advantage in an election. Issues like abortion that divided the country were not issues that were good for this. However, after the Big Sort, politicians have become more likely to emphasize issues that excite people among their voter base in order to increase voter turnout, even if their stance on these issues alienates people who were not going to vote for them anyway.
 
-Because of the Big Sort, the dynamics of politics around "culture war" issues like abortion has changed. As a result, the cultural hegemony is more flagrant and less moderate about abortion now than in the twentieth century.
+Because of the Big Sort, the dynamics of politics around "culture war" issues like abortion have changed. As a result, the cultural hegemony is more flagrant and less moderate about abortion now than in the twentieth century.
 
 When I was growing up, in the 1990s and early 2000s, the United States Congress passed a partial-birth abortion ban no less than _four_ times, with bipartisan support that included senior Democratic members of Congress. During this time frame, the official rhetoric of Democrats was that abortion should be "safe, legal, and _rare"_ and there was at least lip service to treating abortion as a social ill that ought to be reduced.
 
@@ -520,19 +520,30 @@ Those days are over. The rhetoric now is that abortion is "healthcare" and of no
 
 When I was at university (for the first time), I lived in Pennsylvania, which had just had Governor Bob Casey Sr., a "pro-life" Democrat, succeeded by Governor Tom Ridge, a "pro-choice" Republican. Because of this, the platforms of politicians on abortion in Pennsylvania were _not_ sorted by party, and you had to check each individual politician's platform on abortion regardless of party affiliation.
 
-In short, when I was young, views on abortion were less sorted and in the aggregate more moderate. One can imagine, growing up in that environment, how I could look at the [Gallup polling](/induced-abortion-is-controversial.html) that indicated the country was divided roughly in half on abortion and think, "well, this is divisive, but if half the country agrees with me, I should be able to find my path."
+In short, when I was young, views on abortion were less sorted and, in the aggregate, more moderate. One can imagine, growing up in that environment, how I could look at the [Gallup polling](/induced-abortion-is-controversial.html) that indicated the country was divided roughly in half on abortion and think, "well, this is divisive, but if half the country agrees with me, I should be able to find my path."
 
-In this way, I was naive. The opportunities we have in life are not determined by the views of half of all Americans; they are determined by the views of a small number of billionaires and cultural elites. There are dozens of think tanks at which researchers can seek full-time employment to do research that supports activists to advocate for fundamentalist abortion policy that rejects any restrictions, regulations, and reporting of abortion.
+In this way, I was naive. The opportunities we have in life are not determined by the views of all Americans; they are determined by the views of a small number of billionaires and cultural elites. There are dozens of think tanks at which researchers can seek full-time employment to do research that supports activists to advocate for fundamentalist abortion policy that rejects any restrictions, regulations, and reporting of abortion.
 
 In contrast, I have only ever found one think tank -- the [Lozier Institute](https://lozierinstitute.org/) -- that treats abortion as a social problem, rather than as a social good, and it is basically a shell organization that gives honorary fellowships to researchers, but does not employ researchers itself.
 
 Thus, it is true that I was naive, and I should have realized that research in reproductive responsibility was a dead end before I went down this path. However, given the way American political life has changed in the past twenty to thirty years, it is understandable how I was so naive.
 
-The principal flaw in my worldview was not paying attention to politics in the United States for the past twenty years or so. In avoiding politics, I accidentally avoided living my life to the fullest.
+The principal flaw in my worldview was not paying attention to politics in the United States over the past twenty years. In avoiding politics, I accidentally avoided living my life to the fullest.
 
 
 ## Conclusion
 
+The university system in the United States is an elitist, hierarchical system whose culture is dominated by a small number of people. Those who acquiesce themselves to this culture enjoy, on average, more money and power in American society, and the institutions downstream of the university system -- such as media, government bureaucracies, and professional organizations -- reinforce the dominance of this culture. This establishes a foundation for cultural hegemony in the United States.
+
+Because many people are not "true believers" in the the cultural hegemony, but instead just go along with it, the cultural hegemony uses dishonorable tactics in order to maintain its hegemonic status, such as the deplatforming, misrepresentation, and defamation of contrary viewpoints, arguments from authority, and invocations of partisanship without argument.
+
+It is mistaken to call this hegemony "liberal" because it depends on illiberal tactics, and it is mistaken to call this hegemony "progressive" because, among other reasons, it promotes the values of the billionaire class over the values of those with less economic wealth.
+
+One effect of the cultural hegemony is to stifle open and honest discourse about "culture war" issues such as abortion, race relations, firearms policy, _etc.,_ making discourse difficult if not impossible. This can be seen in surveys done by the Foundation for Individual Rights and Expression (FIRE) on the state of speech on university campuses.
+
+Another effect of the cultural hegemony is to cause polarization on issues based on whether or not individuals have a college degree and based on the amount of economic wealth individuals possess, as seen in Gallup polling and in the work of Ruy Teixeira and others.
+
+In this way, it is possible for the people of the United States to be split nearly in half on an issue, and yet for all of the academic and research institutions in the United States to be aligned with only the maximalist versions of one side of the issue, such as in the case for the issue of abortion.
 
 
 ## Citations
