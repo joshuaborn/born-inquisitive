@@ -246,9 +246,70 @@ pregnancies_by_age_1995_1995 <- svy_preg_1995_1995 |>
 ```
 
 
+```{r process-2002-2003, warning=FALSE, dependson="century-month-helper"}
+raw_preg_2002_2003 <- read_sas(
+  data_file = here('data/NSFG/d2002_2003fempreg.sas7bdat'),
+  catalog_file = here('data/NSFG/d2002_2003fempreg.sas7bcat')
+)
+
+weights_2002_2003 <- readRDS(here('data/NSFG/adjusted_cycle_6_weights.Rds'))
+
+preg_2002_2003 <- raw_preg_2002_2003 |> select(
+    CASEID,
+    AGEPREG,
+    DATEND
+  ) |>
+  mutate(
+    Year = year(cm_to_date(DATEND)),
+    Age = as.integer(AGEPREG / 100),
+    AgeGroup = cut(
+      Age,
+      breaks = c(0, seq(15, 40, 5), Inf),
+      right = FALSE,
+      labels = c(
+        "Under 15 years",
+        "15-19 years",
+        "20-24 years",
+        "25-29 years",
+        "30-34 years",
+        "35-39 years",
+        "40 years and over"
+      )
+    )
+  ) |>
+  left_join(
+    weights_2002_2003,
+    by = join_by(CASEID)
+  )
+
+svy_preg_2002_2003 <- as_survey_rep(
+  preg_2002_2003,
+  weights = FULL_SAMPLE_WGT,
+  repweights = starts_with('REP_WGT_'),
+  type = 'BRR'
+)
+
+analysis_years_2002_2003 <- 1995:2001
+
+total_pregnancies_2002_2003 <- svy_preg_2002_2003 |>
+  group_by(Year) |>
+  summarize(
+    total_pregnancies = survey_total(vartype = 'ci')
+  ) |>
+  filter(Year %in% analysis_years_2002_2003)
+
+pregnancies_by_age_2002_2003 <- svy_preg_2002_2003 |>
+  group_by(Year, AgeGroup) |>
+  summarize(
+    total_pregnancies = survey_total(vartype = 'ci')
+  ) |>
+  filter(Year %in% analysis_years_2002_2003)
+```
+
+
 ## Average Pregnancies per Year
 
-```{r average-pregnancies, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995")}
+```{r average-pregnancies, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995", "process-2002-2003")}
 process_average_pregnancies <- function(estimates, analysis_years) {
   estimates |>
     filter(Year %in% analysis_years) |>
@@ -277,6 +338,10 @@ bind_rows(
   process_average_pregnancies(
     total_pregnancies_1995_1995,
     1991:1994
+  ),
+  process_average_pregnancies(
+    total_pregnancies_2002_2003,
+    analysis_years_2002_2003
   )
 ) |>
   gt() |>
@@ -286,11 +351,12 @@ bind_rows(
 
 ## Pregnancies in Each Year
 
-```{r pregnancies-each-year, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995")}
+```{r pregnancies-each-year, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995", "process-2002-2003")}
 bind_rows(
   total_pregnancies_1982_1983,
   total_pregnancies_1985_1987,
-  total_pregnancies_1995_1995
+  total_pregnancies_1995_1995,
+  total_pregnancies_2002_2003
 ) |>
   gt() |>
   fmt_integer(-Year)
@@ -299,7 +365,7 @@ bind_rows(
 
 ## Average Pregnancies per Year by Age Group
 
-```{r average-pregnancies-by-age, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995")}
+```{r average-pregnancies-by-age, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995", "process-2002-2003")}
 process_average_pregnancies_by_age <- function(estimates, analysis_years) {
   estimates |>
     ungroup() |>
@@ -330,6 +396,10 @@ bind_rows(
   process_average_pregnancies_by_age(
     pregnancies_by_age_1995_1995,
     1991:1994
+  ),
+  process_average_pregnancies_by_age(
+    pregnancies_by_age_2002_2003,
+    analysis_years_2002_2003
   )
 ) |>
   group_by(Years) |>
@@ -340,11 +410,12 @@ bind_rows(
 
 ## Pregnancies by Age Group in Each Year
 
-```{r pregnancies-each-year-by-age, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995")}
+```{r pregnancies-each-year-by-age, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995", "process-2002-2003")}
 bind_rows(
   pregnancies_by_age_1982_1983,
   pregnancies_by_age_1985_1987,
-  pregnancies_by_age_1995_1995
+  pregnancies_by_age_1995_1995,
+  pregnancies_by_age_2002_2003
 ) |>
   gt() |>
   fmt_integer(-Year)
@@ -353,7 +424,7 @@ bind_rows(
 
 ## Pregnancies by Age Group in Each Year -- Wide Table
 
-```{r wide-pregnancies-each-year-by-age, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995")}
+```{r wide-pregnancies-each-year-by-age, dependson=c("process-1982-1983", "process-1985-1987", "process-1995-1995", "process-2002-2003")}
 process_pregnancies_by_age_wide <- function(estimates) {
   estimates |>
     ungroup() |>
@@ -372,6 +443,10 @@ full_join(
 ) |>
 full_join(
   process_pregnancies_by_age_wide(pregnancies_by_age_1995_1995),
+  by = join_by(AgeGroup)
+) |>
+full_join(
+  process_pregnancies_by_age_wide(pregnancies_by_age_2002_2003),
   by = join_by(AgeGroup)
 ) |>
   gt() |>
