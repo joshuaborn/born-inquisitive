@@ -1,6 +1,6 @@
 ---
 author: "Joshua Born"
-bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
+bibliography: "../bibliographies/cultural-hegemony.bib"
 csl: "../bibliographies/chicago-author-date.csl"
 date: 2024-10-23
 draft: false
@@ -12,9 +12,9 @@ output:
     number_sections: false
     toc: true
     toc_depth: 5
-summary: "The culture of the United States is dominated by a hegemony that comes ultimately from a small number of people, facilitated by the university system and the balance of money and power."
+summary: "The culture of the United States is dominated by a hegemony based on the university system and resultant institutions and on tactics such as deplatforming and misrepresentation."
 tags: ["editorial", "first-person"]
-title: 'Professional-Class Cultural Hegemony'
+title: 'Cultural Hegemony in the United States'
 ---
 
 ```{r setup, include=FALSE}
