@@ -18,7 +18,7 @@ library(readr)
 library(tidyr)
 
 knitr::opts_chunk$set(
-  cache=FALSE,
+  cache=TRUE,
   dpi=200,
   echo = TRUE,
   fig.align = 'center',
@@ -88,7 +88,7 @@ load_natality_1968_2019 <- function(year) {
 ```
 
 
-```{r processing-of-data-1968-2019}
+```{r processing-of-data-1968-2019, dependson="helper-functions"}
 births_by_age_group_1968_2019 <- Map(load_natality_1968_2019, 1968:2019) |>
   bind_rows() |>
   filter(!is.na(Age.Group))
@@ -100,16 +100,43 @@ saveRDS(
 ```
 
 
-```{r processing-of-data-1909-1967}
+```{r processing-of-data-1909-1967, dependson="processing-of-data-1968-2019"}
 births_1909_1967 <- read_csv(here(
   'data/NVSS/NCHS_-_Births_and_General_Fertility_Rates__United_States.csv'
   )) |>
   rename(Births = `Birth Number`) |>
   select(Year, Births)
+
+births_by_age_group_1909_1967 <- read_csv(here(
+  'data/NVSS/NCHS_-_Percent_Distribution_of_Births_for_Females_by_Age_Group__United_States.csv'
+)) |>
+  left_join(
+    rename(births_1909_1967, Total.Births = Births),
+    by = join_by(Year)
+  ) |>
+  mutate(
+    Age.Group = factor(
+      case_match(
+        `Age Group`,
+        'Less than 15 Years' ~ '[0,15]',
+        '15-19 Years' ~ '[15,19]',
+        '20-24 Years' ~ '[20,24]',
+        '25-29 Years' ~ '[25,29]',
+        '30-34 Years' ~ '[30,34]',
+        '35-39 Years' ~ '[35,39]',
+        '40-44 Years' ~ '[40,44]',
+        '45+ Years' ~ '[45,Inf)'
+      ),
+      levels = c(levels(births_by_age_group_1968_2019$Age.Group)[1:7], '[45,Inf)'),
+      ordered = TRUE
+    ),
+    Births = `Percentage of Births` * Total.Births
+  ) |>
+  select(Year, Age.Group, Births)
 ```
 
 
-```{r combination-of-data-sets}
+```{r combination-of-data-sets, dependson=c("processing-of-data-1968-2019", "processing-of-data-1909-1967")}
 births_1909_2019 <- births_by_age_group_1968_2019 |>
   group_by(Year) |>
   summarize(Births = sum(Births), .groups = 'drop') |>
@@ -121,5 +148,31 @@ births_1909_2019 <- births_by_age_group_1968_2019 |>
 saveRDS(
   births_1909_2019,
   here('data/NVSS/births_1909-2019.Rds')
+)
+
+births_by_age_group_1909_2019 <- births_by_age_group_1968_2019 |>
+  mutate(
+    Age.Group.Old = as.character(Age.Group),
+    Age.Group = factor(
+      if_else(
+        Age.Group.Old %in% c('[40,44]', '[45,49]'),
+        '[45,Inf)',
+        Age.Group
+      ),
+      levels = levels(births_by_age_group_1909_1967$Age.Group),
+      ordered = TRUE
+    )
+  ) |>
+  group_by(Year, Age.Group) |>
+  summarize(Births = sum(Births), .groups = 'drop') |>
+  bind_rows(
+    births_by_age_group_1909_1967 |>
+      filter(Year < 1968)
+  ) |>
+  arrange(Year, Age.Group)
+
+saveRDS(
+  births_by_age_group_1909_2019,
+  here('data/NVSS/births_by_age_group_1909-2019.Rds')
 )
 ```
