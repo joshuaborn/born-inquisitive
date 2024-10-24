@@ -2,7 +2,7 @@
 author: "Joshua Born"
 #bibliography: "../bibliographies/professional-class-cultural-hegemony.bib"
 #csl: "../bibliographies/chicago-author-date.csl"
-date: 2024-10-18
+date: 2024-10-24
 draft: true
 include-before: |
   ## Table of Contents
@@ -13,7 +13,7 @@ output:
     toc_depth: 5
 summary: "This is a summary sentence."
 tags: ["analysis", "reproductive responsibility", "third-person"]
-title: "Live Births in the United States, 1940-2019"
+title: "Live Births in the United States, 1909-2019"
 ---
 
 ```{r setup, include=FALSE}
@@ -41,8 +41,16 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
+While the analysis of reproductive responsibility in the United States done herein is primarily based on estimates from the National Survey of Family Growth (NSFG), the number of live births in the United States is known from the [National Vital Statistics System (NVSS)](https://www.cdc.gov/nchs/nvss/index.htm) of the National Center for Health Statistics (NCHS), which collects at the federal level birth certificate data collected by the several states of the United States.
 
-## Data Source
+As [discussed and graphed previously](/abortion-underreporting-on-the-national-survey-of-family-growth-in-two-plots.html#two-plots-live-births-versus-induced-abortions), NSFG estimates of live births are generally consistent with the counting done by the NVSS. Nonetheless, the NVSS counts are more accurate and ought to be used whenever possible.
+
+
+## Data Sources
+
+The NVSS makes [detailed public use data files](https://www.cdc.gov/nchs/data_access/VitalStatsOnline.htm) available for birth data from 1968 on. These public use data files are converted to [more readily usable formats](https://www.nber.org/research/data/vital-statistics-natality-birth-data) by the National Bureau of Economic Research. These converted data files were the source for the number of births in the United States in the plots below from 1968 on.
+
+For births from 1909 to 1967, data were taken from the [Data Visualization Gallery](https://www.cdc.gov/nchs/data-visualization/natality-trends/) of the NCHS. The percent distribution of births by age group for the period 1909 to 1967 is of relatively low resolution (one tenth of a percent), and so fluctuations in these numbers should be viewed with some skepticism.
 
 
 ## Plots
